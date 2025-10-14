@@ -1,0 +1,14 @@
+# Backup Schedule Configuration
+# Add these to your crontab: crontab -e
+
+# Daily incremental backups (2 AM)
+0 2 * * * /home/simon/Desktop/Learning\ Management\ System\ Academy/scripts/enhanced_backup_strategy.sh
+
+# Weekly full VM snapshots (Sunday 1 AM)
+0 1 * * 0 ssh root@136.243.155.166 "qm snapshot 106 weekly-$(date +%Y%m%d)"
+
+# Monthly archive backup (1st of month at 3 AM)
+0 3 1 * * /home/simon/Desktop/Learning\ Management\ System\ Academy/scripts/enhanced_backup_strategy.sh && tar czf /home/simon/Desktop/Learning\ Management\ System\ Academy/archives/monthly_backup_$(date +%Y%m).tar.gz /home/simon/Desktop/Learning\ Management\ System\ Academy/backups/
+
+# Database backup every 6 hours
+0 */6 * * * ssh root@136.243.155.166 "sudo -u postgres pg_dump geoneural_enterprise > /tmp/geoneural_enterprise_$(date +%Y%m%d_%H%M%S).sql"

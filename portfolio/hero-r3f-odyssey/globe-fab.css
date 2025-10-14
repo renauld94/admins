@@ -1,0 +1,125 @@
+/* Floating Action Button - Globe Infrastructure Link */
+.globe-fab {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
+    border-radius: 50%;
+    box-shadow: 0 8px 24px rgba(14, 165, 233, 0.4), 
+                0 0 0 0 rgba(14, 165, 233, 0.6);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    animation: pulse-fab 3s ease-in-out infinite;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.globe-fab:hover {
+    transform: scale(1.1) rotate(10deg);
+    box-shadow: 0 12px 32px rgba(14, 165, 233, 0.6),
+                0 0 0 8px rgba(14, 165, 233, 0.1);
+    animation: none;
+}
+
+.globe-fab:active {
+    transform: scale(0.95);
+}
+
+.globe-fab svg {
+    width: 32px;
+    height: 32px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.globe-fab .globe-icon {
+    animation: rotate-globe 20s linear infinite;
+}
+
+.globe-fab:hover .globe-icon {
+    animation: rotate-globe 4s linear infinite;
+}
+
+.globe-fab .network-pulse {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    animation: network-pulse 2s ease-out infinite;
+    pointer-events: none;
+}
+
+.globe-fab-tooltip {
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    margin-bottom: 12px;
+    padding: 8px 16px;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(14, 165, 233, 0.3);
+    border-radius: 8px;
+    color: #f1f5f9;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.globe-fab:hover .globe-fab-tooltip {
+    opacity: 1;
+}
+
+@keyframes pulse-fab {
+    0%, 100% {
+        box-shadow: 0 8px 24px rgba(14, 165, 233, 0.4), 
+                    0 0 0 0 rgba(14, 165, 233, 0.6);
+    }
+    50% {
+        box-shadow: 0 8px 24px rgba(14, 165, 233, 0.4), 
+                    0 0 0 12px rgba(14, 165, 233, 0);
+    }
+}
+
+@keyframes rotate-globe {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes network-pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .globe-fab {
+        bottom: 24px;
+        right: 24px;
+        width: 56px;
+        height: 56px;
+    }
+    
+    .globe-fab svg {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .globe-fab-tooltip {
+        display: none;
+    }
+}

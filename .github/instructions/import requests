@@ -1,0 +1,16 @@
+import requests
+
+MOODLE_URL = "http://<your-moodle-domain>/webservice/rest/server.php"
+TOKEN = "d064098d4b034908098411e5f5f43d55"
+FUNCTION = "core_course_create_sections"
+
+data = {
+    "wstoken": TOKEN,
+    "moodlewsrestformat": "json",
+    "wsfunction": FUNCTION,
+    "sections[0][courseid]": 3,
+    "sections[0][name]": "New Section Name"
+}
+
+response = requests.post(MOODLE_URL, data=data)
+print(response.json())

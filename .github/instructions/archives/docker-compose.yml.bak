@@ -1,0 +1,108 @@
+version: "3.8"
+
+services:
+
+  jupyterhub:
+    image: jupyterhub/jupyterhub:latest
+    container_name: jupyterhub
+    ports:
+      - "8000:8000"
+    volumes:
+      - learning-platform_jupyterhub_data:/srv/jupyterhub
+    restart: unless-stopped
+    networks:
+      - web
+
+  moodle:
+    image: bitnami/moodle:latest
+    container_name: moodle
+    ports:
+      - "8081:80"
+    environment:
+      - MOODLE_DATABASE_HOST=moodle-db
+      - MOODLE_DATABASE_USER=bn_moodle
+      - MOODLE_DATABASE_PASSWORD=moodle_pass
+      - MOODLE_DATABASE_NAME=bitnami_moodle
+    volumes:
+      - learning-platform_moodle_data:/bitnami/moodle
+      - learning-platform_moodle_apache_data:/bitnami/apache
+    depends_on:
+      - moodle-db
+    restart: unless-stopped
+    networks:
+      - web
+
+  moodle-db:
+    image: bitnami/mariadb:latest
+    container_name: moodle-db
+    environment:
+      - MARIADB_ROOT_PASSWORD=root_pass
+      - MARIADB_DATABASE=bitnami_moodle
+      - MARIADB_USER=bn_moodle
+      - MARIADB_PASSWORD=moodle_pass
+    volumes:
+      - learning-platform_db_data:/bitnami/mariadb
+    restart: unless-stopped
+    networks:
+      - web
+
+  bitbucket:
+    image: atlassian/bitbucket-server:latest
+    container_name: bitbucket
+    ports:
+      - "7990:7990"
+      - "7999:7999"
+    volumes:
+      - learning-platform_bitbucket_data:/var/atlassian/application-data/bitbucket
+    restart: unless-stopped
+    networks:
+      - web
+
+  ml-api:
+    image: learning-platform-ml-api:latest
+    container_name: ml-api
+    ports:
+      - "8001:8000"
+    restart: unless-stopped
+    networks:
+      - web
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:latest
+    container_name: mlflow
+    command: mlflow server --host 0.0.0.0 --port 5000 --backend-store-uri sqlite:///mlflow.db --default-artifact-root /mlruns
+    volumes:
+      - ./mlruns:/mlruns
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+    networks:
+      - web
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx-proxy
+    ports:
+      - "8080:80"
+    volumes:
+      - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - jupyterhub
+      - ml-api
+      - mlflow
+      - moodle
+      - bitbucket
+    restart: unless-stopped
+    networks:
+      - web
+
+volumes:
+  learning-platform_jupyterhub_data:
+  learning-platform_moodle_data:
+  learning-platform_moodle_apache_data:
+  learning-platform_db_data:
+  learning-platform_bitbucket_data:
+
+networks:
+  web:
+    name: learning-platform_web

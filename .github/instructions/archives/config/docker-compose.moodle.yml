@@ -1,0 +1,168 @@
+version: '3.8'
+
+networks:
+  webproxy:
+    external: true
+
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /etc/nginx/vhost.d
+      - /usr/share/nginx/html
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - /etc/nginx/certs:/etc/nginx/certs
+    environment:
+      - CLIENT_MAX_BODY_SIZE=100m
+    networks:
+      - webproxy
+
+  nginx-proxy-acme:
+    image: nginxproxy/acme-companion
+    container_name: nginx-proxy-acme
+    restart: always
+    depends_on:
+      - nginx-proxy
+    environment:
+      DEFAULT_EMAIL: sn.renauld@gmail.com
+      NGINX_PROXY_CONTAINER: nginx-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /etc/acme.sh
+      - /etc/nginx/certs:/etc/nginx/certs
+      - /etc/nginx/vhost.d:/etc/nginx/vhost.d
+      - /usr/share/nginx/html
+    networks:
+      - webproxy
+
+  jupyterhub:
+    build:
+      context: .
+      dockerfile: Dockerfile.jupyterhub
+    container_name: jupyterhub
+    user: root
+    environment:
+      - VIRTUAL_HOST=jupyter-datalabsimon.duckdns.org
+      - LETSENCRYPT_HOST=jupyter-datalabsimon.duckdns.org
+      - LETSENCRYPT_EMAIL=sn.renauld@gmail.com
+      - VIRTUAL_PORT=8000
+    volumes:
+      - /usr/share/nginx/html
+      - learning-platform_jupyterhub_data:/srv/jupyterhub
+      - ./config/jupyterhub/jupyterhub_config.py:/srv/jupyterhub/jupyterhub_config.py:ro
+    restart: unless-stopped
+    networks:
+      - webproxy
+
+  ml-api:
+    build:
+      context: ./ml-api
+      dockerfile: Dockerfile
+    container_name: ml-api
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    environment:
+      - VIRTUAL_HOST=ml-api-datalabsimon.duckdns.org
+      - LETSENCRYPT_HOST=ml-api-datalabsimon.duckdns.org
+      - LETSENCRYPT_EMAIL=sn.renauld@gmail.com
+    volumes:
+      - /usr/share/nginx/html
+    restart: unless-stopped
+    networks:
+      - webproxy
+
+  moodle-db:
+    image: bitnami/mariadb:latest
+    container_name: moodle-db
+    environment:
+      - ALLOW_EMPTY_PASSWORD=no
+      - MARIADB_ROOT_PASSWORD=root_pass
+      - MARIADB_DATABASE=bitnami_moodle
+      - MARIADB_USER=bn_moodle
+      - MARIADB_PASSWORD=moodle_pass
+      - MARIADB_CHARACTER_SET=utf8mb4
+      - MARIADB_COLLATE=utf8mb4_unicode_ci
+    volumes:
+      - learning-platform_learning-platform_db_data:/bitnami/mariadb
+      - ./config/mariadb/my_custom.cnf:/bitnami/mariadb/conf/my_custom.cnf:ro
+    restart: unless-stopped
+    networks:
+      - webproxy
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "bn_moodle", "-pmoodle_pass"]
+      timeout: 5s
+      retries: 5
+
+  moodle:
+    image: bitnami/moodle:latest
+    container_name: moodle
+    environment:
+      - VIRTUAL_HOST=moodle-datalabsimon.duckdns.org
+      - LETSENCRYPT_HOST=moodle-datalabsimon.duckdns.org
+      - LETSENCRYPT_EMAIL=sn.renauld@gmail.com
+      - VIRTUAL_PORT=8080
+      - MOODLE_DATABASE_HOST=moodle-db
+      - MOODLE_DATABASE_PORT_NUMBER=3306
+      - MOODLE_DATABASE_USER=bn_moodle
+      - MOODLE_DATABASE_PASSWORD=moodle_pass
+      - MOODLE_DATABASE_NAME=bitnami_moodle
+      - MOODLE_USERNAME=admin
+      - MOODLE_PASSWORD=StrongPass123
+      - MOODLE_EMAIL=sn.renauld@gmail.com
+      - MOODLE_SKIP_BOOTSTRAP=no
+      - MOODLE_SITE_NAME=Johnson & Johnson Python Academy Learning Platform
+      - APACHE_HTTP_PORT_NUMBER=8080
+      - MOODLE_HOST=moodle-datalabsimon.duckdns.org
+      - MOODLE_WWWROOT=http://moodle-datalabsimon.duckdns.org
+      - CLIENT_MAX_BODY_SIZE=100m
+    depends_on:
+      moodle-db:
+        condition: service_healthy
+    volumes:
+      - /usr/share/nginx/html
+      - learning-platform_learning-platform_moodle_data:/bitnami/moodle
+    restart: unless-stopped
+    networks:
+      - webproxy
+
+#  bitbucket:
+#    image: atlassian/bitbucket-server:latest
+#    container_name: bitbucket
+#    environment:
+#      - VIRTUAL_HOST=bitbucket-datalabsimon.duckdns.org
+#      - LETSENCRYPT_HOST=bitbucket-datalabsimon.duckdns.org
+#      - LETSENCRYPT_EMAIL=sn.renauld@gmail.com
+#    volumes:
+#      - learning-platform_bitbucket_data:/var/atlassian/application-data/bitbucket
+#    restart: unless-stopped
+#    networks:
+#      - webproxy
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:latest
+    container_name: mlflow
+    command: mlflow server --host 0.0.0.0 --port 5000 --backend-store-uri sqlite:///mlflow.db --default-artifact-root /mlruns
+    environment:
+      - VIRTUAL_HOST=mlflow-datalabsimon.duckdns.org
+      - LETSENCRYPT_HOST=mlflow-datalabsimon.duckdns.org
+      - LETSENCRYPT_EMAIL=sn.renauld@gmail.com
+    volumes:
+      - /usr/share/nginx/html
+      - ./mlruns:/mlruns
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+    networks:
+      - webproxy
+
+volumes:
+  learning-platform_jupyterhub_data:
+  learning-platform_learning-platform_db_data:
+    external: true
+  learning-platform_learning-platform_moodle_data:
+    external: true
+  learning-platform_bitbucket_data:

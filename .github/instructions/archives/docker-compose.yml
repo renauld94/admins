@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  moodle-db:
+    image: bitnami/mariadb:latest
+    container_name: moodle-db
+    environment:
+      - ALLOW_EMPTY_PASSWORD=no
+      - MARIADB_ROOT_PASSWORD=moodle_root_password
+      - MARIADB_USER=bn_moodle
+      - MARIADB_PASSWORD=moodle_db_password
+      - MARIADB_DATABASE=bitnami_moodle
+    volumes:
+      - learning-platform_db_data:/bitnami/mariadb
+    restart: unless-stopped
+
+  moodle:
+    image: bitnami/moodle:4.3.3
+    container_name: moodle
+    environment:
+      - MOODLE_DATABASE_HOST=moodle-db
+      - MOODLE_DATABASE_PORT_NUMBER=3306
+      - MOODLE_DATABASE_USER=bn_moodle
+      - MOODLE_DATABASE_PASSWORD=moodle_db_password
+      - MOODLE_DATABASE_NAME=bitnami_moodle
+      - MOODLE_USERNAME=admin
+      - MOODLE_PASSWORD=StrongPass123
+      - MOODLE_EMAIL=sn.renauld@gmail.com
+      - MOODLE_SITE_NAME=Johnson & Johnson Python Academy Learning Platform
+      - APACHE_HTTP_PORT_NUMBER=8080
+      - MOODLE_HOST=localhost
+      - MOODLE_WWWROOT=http://localhost:8081
+      - CLIENT_MAX_BODY_SIZE=100m
+    depends_on:
+      - moodle-db
+    restart: unless-stopped
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./moodle_data:/bitnami/moodle
+
+volumes:
+  learning-platform_db_data:
+

@@ -1,0 +1,12 @@
+FROM jupyterhub/jupyterhub:latest
+
+# Install git (required for pip install from GitHub)
+RUN apt-get update && apt-get install -y git
+
+# Copy your JupyterHub config into the image
+COPY config/jupyterhub/jupyterhub_config.py /srv/jupyterhub/jupyterhub_config.py
+
+# Install JupyterLab and LTI authenticator packages
+RUN pip install --upgrade pip \
+ && pip install jupyterlab \
+ && pip install jupyterhub-ltiauthenticator

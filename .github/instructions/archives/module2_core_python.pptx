@@ -1,0 +1,23 @@
+from pptx import Presentation
+
+slides = [
+    ("Module 2: Core Python Overview", "Welcome to Module 2: Core Python. This module covers essential Python concepts including variables, data types, control structures, functions, modules, data structures, file I/O, error handling, regular expressions, and object-oriented programming."),
+    ("Session 2.1: Welcome & Introduction", "Overview of Core Python and its importance."),
+    ("Session 2.2: Python Basics (Variables, Types, Ops)", "Variables, data types, and basic operations.\n\nx = 10\nname = \"Simon\""),
+    ("Session 2.3: Control Structures (If, Loops)", "Conditional statements and loops.\n\nif x > 5:\n    print(\"Greater\")\nfor i in range(5):\n    print(i)"),
+    ("Session 2.4: Functions and Modules", "Defining functions, parameters, return values, and modules.\n\ndef greet(name):\n    return f\"Hello, {name}\""),
+    ("Session 2.5: Data Structures", "Lists, tuples, sets, dictionaries.\n\nmy_list = [1, 2, 3]\nmy_dict = {\"name\": \"Simon\", \"age\": 30}"),
+    ("Session 2.6: File I/O", "Reading and writing files in Python.\n\nwith open(\"file.txt\") as f:\n    data = f.read()"),
+    ("Session 2.7: Error and Exception Handling", "Try/except blocks, handling exceptions.\n\ntry:\n    x = 1 / 0\nexcept ZeroDivisionError:\n    print(\"Error\")"),
+    ("Session 2.8: Regular Expressions", "Pattern matching with re module.\n\nimport re\nre.match(r\"^\\w+\", \"Simon\")"),
+    ("Session 2.9: Classes and OOP", "Object-oriented programming basics.\n\nclass Person:\n    def __init__(self, name):\n        self.name = name"),
+    ("Module 2 Summary", "Review of key concepts and next steps.")
+]
+
+prs = Presentation()
+for title, content in slides:
+    slide = prs.slides.add_slide(prs.slide_layouts[1])
+    slide.shapes.title.text = title
+    slide.placeholders[1].text = content
+
+prs.save("module2_core_python.pptx")

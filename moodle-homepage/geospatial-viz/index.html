@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Geospatial Infrastructure Intelligence — simondatalab.de</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="geodash.css">
+  <style>
+    body { background: var(--bg-primary); }
+    .page-shell { padding-top: 84px; }
+    .hero-compact { background: var(--bg-gradient-hero); color: var(--text-white); padding: 72px 0 36px; }
+    .hero-compact .section-container { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+    .hero-compact h1 { color: var(--text-white); margin-bottom: .25rem; }
+    .hero-compact p { color: rgba(255,255,255,.85); margin: 0; }
+    .ops-dashboard-section { padding-top: 32px; }
+  </style>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://unpkg.com/three@0.160.0/build/three.min.js" defer></script>
+</head>
+<body>
+  <nav class="main-navigation">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16 2L28 8V24L16 30L4 24V8L16 2Z" fill="#2563eb" />
+          <path d="M16 8L20 10V18L16 20L12 18V10L16 8Z" fill="white" />
+          <circle cx="16" cy="14" r="2" fill="#2563eb" />
+        </svg>
+        <span>simondatalab.de</span>
+      </div>
+      <ul class="nav-menu">
+        <li><a href="https://www.simondatalab.de/" class="nav-link">Home</a></li>
+        <li><a href="#operations-dashboard" class="nav-link">Geospatial Dashboard</a></li>
+      </ul>
+      <a class="cta-button" href="https://www.simondatalab.de/">Back to Site</a>
+    </div>
+  </nav>
+
+  <div class="page-shell">
+    <section class="hero-compact">
+      <div class="section-container">
+        <div>
+          <div class="hero-badge"><span class="badge-text">Infrastructure Intelligence</span></div>
+          <h1>Geospatial Operations</h1>
+          <p>Live query stream and performance analytics for WMS/WFS/WCS/WPS and custom map layers.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Drop-in ops dashboard from homepage styles/JS -->
+    <section id="operations-dashboard" class="content-section ops-dashboard-section">
+      <div class="section-container">
+        <div class="ops-status-strip">
+          <div class="ops-brand">
+            <a href="https://www.simondatalab.de/" target="_blank" rel="noopener">simondatalab.de</a>
+            <span class="divider">•</span>
+            <span>Infrastructure Intelligence</span>
+          </div>
+          <div class="ops-kpis">
+            <div class="kpi"><span class="kpi-label">QUERY RATE</span><span class="kpi-value" id="kpi-query-rate">0 q/s</span></div>
+            <div class="kpi"><span class="kpi-label">AVG LATENCY</span><span class="kpi-value" id="kpi-latency">0 ms</span></div>
+            <div class="kpi"><span class="kpi-label">CACHE HIT</span><span class="kpi-value" id="kpi-cache">0%</span></div>
+            <div class="kpi"><span class="kpi-label">ACTIVE CLIENTS</span><span class="kpi-value" id="kpi-clients">0</span></div>
+          </div>
+        </div>
+
+        <div class="ops-controls">
+          <div class="left">
+            <button class="btn-secondary" id="btn-pause-stream" aria-pressed="false">PAUSE</button>
+            <div class="stream-tags">
+              <span class="tag on" data-layer="neuralglobe">NeuralGlobeMap</span>
+              <span class="tag" data-layer="wms">WMS GetMap</span>
+              <span class="tag" data-layer="wfs">WFS GetFeature</span>
+              <span class="tag" data-layer="wcs">WCS GetCoverage</span>
+              <span class="tag" data-layer="wps">WPS Process</span>
+            </div>
+          </div>
+          <div class="right">
+            <label class="time-range">Time Range
+              <select id="time-range-select">
+                <option value="60">60s</option>
+                <option value="300">5m</option>
+                <option value="900">15m</option>
+                <option value="3600">1h</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="ops-grid">
+          <div class="panel" id="panel-stream">
+            <div class="panel-header"><h3>Live Query Stream</h3></div>
+            <div class="panel-body stream-list" id="live-stream" aria-live="polite"></div>
+          </div>
+          <div class="panel" id="panel-performance">
+            <div class="panel-header"><h3>Performance Analytics</h3></div>
+            <div class="panel-body">
+              <div class="metric-quad">
+                <div class="metric-pod"><div class="pod-label">QUERY VOLUME</div><div class="pod-chart" id="chart-volume"></div></div>
+                <div class="metric-pod"><div class="pod-label">RESPONSE TIME (P95)</div><div class="pod-chart" id="chart-latency"></div></div>
+                <div class="metric-pod"><div class="pod-label">ERROR RATE</div><div class="pod-chart" id="chart-error"></div></div>
+                <div class="metric-pod"><div class="pod-label">MEMORY USAGE</div><div class="pod-chart" id="chart-memory"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="panel" id="panel-layers">
+            <div class="panel-header"><h3>Layer Activity</h3></div>
+            <div class="panel-body"><div class="panel-chart" id="chart-layers"></div></div>
+          </div>
+          <div class="panel" id="panel-3d">
+            <div class="panel-header"><h3>3D Globe</h3><div class="muted small" id="three-meta">Three.js accelerated</div></div>
+            <div class="panel-body">
+              <canvas id="globe-canvas" aria-label="Rotating globe visualization" role="img"></canvas>
+            </div>
+          </div>
+          <div class="panel admin-only" id="panel-resources">
+            <div class="panel-header"><h3>System Resources</h3></div>
+            <div class="panel-body">
+              <div class="resource-bars">
+                <div class="resource"><div class="label">CPU</div><div class="bar"><span id="bar-cpu"></span></div><div class="val" id="val-cpu">0%</div></div>
+                <div class="resource"><div class="label">MEMORY</div><div class="bar"><span id="bar-mem"></span></div><div class="val" id="val-mem">0%</div></div>
+                <div class="resource"><div class="label">NETWORK</div><div class="bar"><span id="bar-net"></span></div><div class="val" id="val-net">0%</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="panel" id="panel-timeline">
+            <div class="panel-header"><h3>Query Timeline</h3><div class="muted small" id="timeline-meta">Window: 60s • Queries: 0</div></div>
+            <div class="panel-body"><div class="panel-chart" id="chart-timeline"></div></div>
+          </div>
+          <div class="panel" id="panel-ai">
+            <div class="panel-header"><h3>AI Insights</h3><div class="muted small">Backed by OpenWebUI + Ollama</div></div>
+            <div class="panel-body">
+              <form id="ai-form" class="ai-form" autocomplete="off">
+                <label for="ai-model" class="ai-label">Model</label>
+                <select id="ai-model" class="ai-input">
+                  <option value="llama">LLaMA</option>
+                  <option value="phi">Phi</option>
+                  <option value="mistral">Mistral</option>
+                </select>
+                <label for="ai-prompt" class="ai-label">Prompt</label>
+                <textarea id="ai-prompt" class="ai-input" rows="3" placeholder="Ask for anomaly analysis, performance tuning advice, or layer optimization"></textarea>
+                <div class="ai-actions">
+                  <button type="submit" id="ai-submit" class="btn-primary">Run Analysis</button>
+                  <span id="ai-status" class="muted small" aria-live="polite"></span>
+                </div>
+              </form>
+              <div id="ai-output" class="ai-output" aria-live="polite"></div>
+            </div>
+          </div>
+          <div class="panel admin-only" id="panel-alerts">
+            <div class="panel-header"><h3>Alerts & Anomalies</h3></div>
+            <div class="panel-body"><ul class="alerts" id="alerts"></ul></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="../app.js"></script>
+  <script src="geodash.js" defer></script>
+  <script>
+    // initializeOpsDashboard is triggered on DOMContentLoaded in app.js.
+  </script>
+</body>
+</html>

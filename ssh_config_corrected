@@ -1,0 +1,99 @@
+# Clean SSH config (generated 2025-10-06)
+Host jump
+    HostName 136.243.155.166
+    Port 2222
+    User root
+    IdentityFile ~/.ssh/jump_host_ed25519
+    IdentitiesOnly yes
+    StrictHostKeyChecking accept-new
+    ServerAliveInterval 30
+    ServerAliveCountMax 4
+
+Host geoserver-vm
+    HostName 10.0.0.106
+    User simonadmin
+    ProxyJump jump
+    IdentityFile ~/.ssh/vm106_ed25519
+    IdentitiesOnly yes
+    StrictHostKeyChecking accept-new
+    ServerAliveInterval 30
+    ServerAliveCountMax 4
+
+Host enterprise-vm106
+    HostName 10.0.0.106
+    User simonadmin
+    ProxyJump jump
+    IdentityFile ~/.ssh/vm106_ed25519
+    IdentitiesOnly yes
+    StrictHostKeyChecking accept-new
+    ServerAliveInterval 30
+    ServerAliveCountMax 4
+
+# Default (keep multiplexing off until stable)
+Host *
+    ControlMaster no
+    ControlPersist no
+    IdentitiesOnly yes
+
+Host bastion-sdld
+  HostName 136.243.155.166
+  Port 2222
+  User root
+  IdentityFile ~/.ssh/jump_host_ed25519
+  IdentitiesOnly yes
+
+Host portfolio-vm150
+  HostName 10.0.0.150
+  User root
+  ProxyJump bastion-sdld
+  IdentityFile ~/.ssh/id_rsa
+  IdentitiesOnly yes
+
+# Alternative CT 150 access via port 22
+Host ct150-proxmox
+    HostName 136.243.155.166
+    User root
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    IdentitiesOnly yes
+
+Host ct150-direct
+    HostName 10.0.0.150
+    User root
+    Port 22
+    ProxyJump ct150-proxmox
+    IdentityFile ~/.ssh/id_rsa
+    IdentitiesOnly yes
+
+
+Host ai-services-vm159
+    HostName 10.0.0.110
+    User simonadmin
+    ProxyJump jump
+    IdentityFile ~/.ssh/vm159_ed25519
+    IdentitiesOnly yes
+    StrictHostKeyChecking accept-new
+    ServerAliveInterval 30
+    ServerAliveCountMax 4
+
+Host ollama-vm159
+    HostName 10.0.0.110
+    User simonadmin
+    ProxyJump jump
+    IdentityFile ~/.ssh/vm159_ed25519
+    IdentitiesOnly yes
+    StrictHostKeyChecking accept-new
+    ServerAliveInterval 30
+    ServerAliveCountMax 4
+    LocalForward 11434 localhost:11434
+
+Host openwebui-vm159
+    HostName 10.0.0.110
+    User simonadmin
+    ProxyJump jump
+    IdentityFile ~/.ssh/vm159_ed25519
+    IdentitiesOnly yes
+    StrictHostKeyChecking accept-new
+    ServerAliveInterval 30
+    ServerAliveCountMax 4
+    LocalForward 3001 localhost:3001

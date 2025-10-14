@@ -1,0 +1,59 @@
+version: '3.3'
+services:
+  moodle:
+    image: bitnami/moodle:latest
+    container_name: moodle-databricks
+    ports:
+      - "8086:8080"
+    environment:
+      - MOODLE_DATABASE_TYPE=pgsql
+      - MOODLE_DATABASE_HOST=moodle-postgres
+      - MOODLE_DATABASE_PORT_NUMBER=5432
+      - MOODLE_DATABASE_NAME=moodle
+      - MOODLE_DATABASE_USER=moodleuser
+      - MOODLE_DATABASE_PASSWORD=moodle_password
+      - MOODLE_USERNAME=admin
+      - MOODLE_PASSWORD=Admin123!
+      - MOODLE_EMAIL=admin@example.com
+      - MOODLE_SITE_NAME=Learning Management System Academy
+      - APACHE_HTTP_PORT_NUMBER=80
+      - APACHE_HTTPS_PORT_NUMBER=0
+    volumes:
+      - ./moodle:/opt/bitnami/moodle
+      - ./moodledata:/bitnami/moodledata
+      - ./moodle/config.php:/opt/bitnami/moodle/config.php
+      # NOTE: do not mount the mod/databricks plugin from the host (it is defective in this snapshot)
+    command: >
+      bash -c "
+        sed -i 's/;extension=pdo_pgsql/extension=pdo_pgsql/' /opt/bitnami/php/etc/php.ini &&
+        rm -f /opt/bitnami/apache/conf/vhosts/moodle-https-vhost.conf &&
+        /opt/bitnami/scripts/moodle/run.sh
+      "
+    depends_on:
+      - postgres
+    networks:
+      - moodle-network
+
+  postgres:
+    image: postgres:15
+    container_name: moodle-postgres
+    environment:
+      - POSTGRES_DB=moodle
+      - POSTGRES_USER=moodleuser
+      - POSTGRES_PASSWORD=moodle_password
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    networks:
+      - moodle-network
+
+volumes:
+  moodle_data:
+    driver: local
+  moodledata_data:
+    driver: local
+  postgres_data:
+    driver: local
+
+networks:
+  moodle-network:
+    driver: bridge
