@@ -1,3 +1,7 @@
+#!/usr/bin/env bash
+# Thin wrapper to preserve compatibility — forwards to ./scripts/DEPLOY_READY.sh
+SCRIPT_DIR="$(dirname "$0")"
+exec "$SCRIPT_DIR/scripts/DEPLOY_READY.sh" "$@"
 #!/bin/bash
 
 # Learning Odyssey - Ready for Deployment
@@ -104,5 +108,6 @@ else
     echo "   - ./deploy-full.sh (comprehensive)"
     echo ""
     echo "📋 Files ready for deployment:"
-    ls -la *.sh *.tar.gz | grep -E "(deploy|learning-odyssey)" || true
+    ls -la *.sh *.tar.gz | grep -E "(deploy|learning-odyssey)"
 fi
+
