@@ -31,7 +31,14 @@ class NeuralGeoServerViz {
         this.camera = null;
         this.renderer = null;
         this.controls = null;
-        this.clock = new THREE.Clock();
+        
+        try {
+            this.clock = new THREE.Clock();
+        } catch (error) {
+            console.warn('Clock initialization failed, using fallback timing');
+            this.clock = { getElapsedTime: () => Date.now() * 0.001 };
+        }
+        
         this.performanceOptimizer = null;
         
         // Data structures
@@ -113,14 +120,33 @@ class NeuralGeoServerViz {
         
         container.appendChild(this.renderer.domElement);
         
-        // Controls setup
-        this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
-        this.controls.enableDamping = true;
-        this.controls.dampingFactor = 0.05;
-        this.controls.screenSpacePanning = false;
-        this.controls.minDistance = 10;
-        this.controls.maxDistance = 200;
-        this.controls.maxPolarAngle = Math.PI / 2;
+        // Controls setup - use the globally available OrbitControls
+        console.log('🔍 Checking OrbitControls availability...');
+        console.log('THREE available:', typeof THREE !== 'undefined');
+        console.log('THREE.OrbitControls available:', !!(THREE && THREE.OrbitControls));
+        
+        if (THREE && THREE.OrbitControls) {
+            try {
+                this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
+                console.log('✅ OrbitControls initialized successfully');
+            } catch (error) {
+                console.error('❌ Error initializing OrbitControls:', error);
+                console.log('🔄 Falling back to basic controls');
+                this.setupBasicControls();
+            }
+        } else {
+            // Fallback: basic controls
+            console.warn('⚠️ OrbitControls not available, using basic controls');
+            this.setupBasicControls();
+        }
+        if (this.controls) {
+            this.controls.enableDamping = true;
+            this.controls.dampingFactor = 0.05;
+            this.controls.screenSpacePanning = false;
+            this.controls.minDistance = 10;
+            this.controls.maxDistance = 200;
+            this.controls.maxPolarAngle = Math.PI / 2;
+        }
         
         // Handle resize
         window.addEventListener('resize', () => this.handleResize());
@@ -135,6 +161,48 @@ class NeuralGeoServerViz {
         }
         
         console.log('✅ Three.js setup completed');
+    }
+    
+    setupBasicControls() {
+        // Basic mouse controls without OrbitControls
+        let isMouseDown = false;
+        let mouseX = 0;
+        let mouseY = 0;
+        
+        this.renderer.domElement.addEventListener('mousedown', (event) => {
+            isMouseDown = true;
+            mouseX = event.clientX;
+            mouseY = event.clientY;
+        });
+        
+        this.renderer.domElement.addEventListener('mouseup', () => {
+            isMouseDown = false;
+        });
+        
+        this.renderer.domElement.addEventListener('mousemove', (event) => {
+            if (!isMouseDown) return;
+            
+            const deltaX = event.clientX - mouseX;
+            const deltaY = event.clientY - mouseY;
+            
+            this.camera.position.x += deltaX * 0.01;
+            this.camera.position.y -= deltaY * 0.01;
+            
+            mouseX = event.clientX;
+            mouseY = event.clientY;
+        });
+        
+        this.renderer.domElement.addEventListener('wheel', (event) => {
+            const scale = event.deltaY > 0 ? 1.1 : 0.9;
+            this.camera.position.multiplyScalar(scale);
+            
+            // Limit zoom
+            const distance = this.camera.position.length();
+            if (distance < 10) this.camera.position.normalize().multiplyScalar(10);
+            if (distance > 200) this.camera.position.normalize().multiplyScalar(200);
+        });
+        
+        console.log('✅ Basic controls setup completed');
     }
     
     async setupScene() {
@@ -978,7 +1046,9 @@ class NeuralGeoServerViz {
     
     resetCamera() {
         this.camera.position.set(0, 0, 50);
-        this.controls.reset();
+        if (this.controls && this.controls.reset) {
+            this.controls.reset();
+        }
     }
     
     async createFallbackData() {
@@ -1014,8 +1084,10 @@ class NeuralGeoServerViz {
             
             const time = this.clock.getElapsedTime();
             
-            // Update controls
-            this.controls.update();
+            // Update controls if available
+            if (this.controls && this.controls.update) {
+                this.controls.update();
+            }
             
             // Update performance optimizations
             if (this.performanceOptimizer) {

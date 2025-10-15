@@ -156,3 +156,4 @@ echo "• /config/movies_channels.m3u (6 channels)"
 echo ""
 echo "🌐 Go back to Jellyfin and try adding these tuners!"
 echo "📋 Use the paths above (starting with /config/)"
+

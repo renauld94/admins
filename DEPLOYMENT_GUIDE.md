@@ -175,3 +175,4 @@ Your students will embark on a journey from data literacy to mastery, guided by 
 **Deployment Status**: Ready for Launch 🚀  
 **Course URL**: [https://moodle.simondatalab.de/course/view.php?id=2](https://moodle.simondatalab.de/course/view.php?id=2)  
 **Last Updated**: October 14, 2025
+

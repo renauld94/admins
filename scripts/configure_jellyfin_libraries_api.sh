@@ -118,3 +118,4 @@ echo "📋 Next Steps:"
 echo "1. Add media files to the library folders"
 echo "2. Configure Live TV with the 2000+ free channels"
 echo "3. Refresh libraries after adding content"
+

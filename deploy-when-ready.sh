@@ -579,3 +579,4 @@ echo "6. Save and return to course"
 
 echo ""
 print_success "Your Learning Odyssey is ready to launch! 🌌✨"
+

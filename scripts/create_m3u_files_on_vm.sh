@@ -54,3 +54,4 @@ echo "  - /config/iptv_movies.m3u"
 echo ""
 echo "🌐 You can now use these paths in Jellyfin Live TV setup!"
 echo "📺 Try adding a tuner with path: /config/iptv_global.m3u"
+

@@ -66,7 +66,7 @@ A stunning integration of your neural visualization with GeoServer infrastructur
 ```bash
 cd "/home/simon/Desktop/Learning Management System Academy"
 chmod +x setup-geoneural-lab.sh
-./setup-geoneural-lab.sh
+./scripts/setup-geoneural-lab.sh
 ```
 
 ### **2. Access Your Epic Lab**

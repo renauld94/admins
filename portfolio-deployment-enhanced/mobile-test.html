@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Dropdown Test</title>
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; }
+        .mobile-nav { 
+            display: block; /* Always visible for testing */
+            position: relative;
+            width: 100%;
+            background: #f0f0f0;
+            padding: 20px;
+        }
+        .mobile-nav-menu { list-style: none; margin: 0; padding: 0; }
+        .mobile-nav-menu li { border-bottom: 1px solid #ddd; }
+        .nav-link { 
+            display: block; 
+            padding: 15px; 
+            text-decoration: none; 
+            color: #333; 
+        }
+        .mobile-dropdown { position: relative; }
+        .mobile-dropdown-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            padding: 15px;
+            border: none;
+            background: #0ea5e9;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .mobile-dropdown-menu { 
+            display: none;
+            background: #e0e0e0;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+        .mobile-dropdown.open .mobile-dropdown-menu { 
+            display: block;
+        }
+        .admin-badge {
+            background: red;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+        .status {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: white;
+            padding: 10px;
+            border: 1px solid #ccc;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="status" id="status">Ready...</div>
+    
+    <div class="mobile-nav active" id="mobile-navigation">
+        <ul class="mobile-nav-menu">
+            <li><a href="#about" class="nav-link">About</a></li>
+            <li><a href="#experience" class="nav-link">Experience</a></li>
+            
+            <!-- Mobile Admin Dropdown -->
+            <li class="mobile-dropdown">
+                <button class="mobile-dropdown-toggle" onclick="toggleMobileDropdown()" aria-expanded="false">
+                    Admin Tools
+                    <span class="admin-badge">Admin</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6,9 12,15 18,9"></polyline>
+                    </svg>
+                </button>
+                <ul class="mobile-dropdown-menu" aria-hidden="true">
+                    <li><a href="#" class="nav-link">Grafana</a></li>
+                    <li><a href="#" class="nav-link">Open WebUI</a></li>
+                    <li><a href="#" class="nav-link">Ollama</a></li>
+                    <li><a href="#" class="nav-link">GeoServer</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        function updateStatus(message) {
+            document.getElementById('status').textContent = message;
+            console.log(message);
+        }
+        
+        function toggleMobileDropdown() {
+            updateStatus('Toggle function called!');
+            
+            const mobileDropdown = document.querySelector('.mobile-dropdown');
+            const mobileMenu = document.querySelector('.mobile-dropdown-menu');
+            const toggle = document.querySelector('.mobile-dropdown-toggle');
+            
+            updateStatus(`Elements found: dropdown=${!!mobileDropdown}, menu=${!!mobileMenu}, toggle=${!!toggle}`);
+            
+            if (mobileDropdown && mobileMenu && toggle) {
+                const isOpen = mobileDropdown.classList.contains('open');
+                updateStatus(`Current state: ${isOpen ? 'open' : 'closed'}`);
+                
+                if (isOpen) {
+                    mobileDropdown.classList.remove('open');
+                    toggle.setAttribute('aria-expanded', 'false');
+                    mobileMenu.setAttribute('aria-hidden', 'true');
+                    updateStatus('Dropdown closed');
+                } else {
+                    mobileDropdown.classList.add('open');
+                    toggle.setAttribute('aria-expanded', 'true');
+                    mobileMenu.setAttribute('aria-hidden', 'false');
+                    updateStatus('Dropdown opened');
+                }
+            } else {
+                updateStatus('ERROR: Elements not found!');
+            }
+        }
+
+        // Add touch event listeners for mobile
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggle = document.querySelector('.mobile-dropdown-toggle');
+            if (toggle) {
+                toggle.addEventListener('touchstart', function(e) {
+                    updateStatus('Touch start detected');
+                });
+                
+                toggle.addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                    updateStatus('Touch end - calling toggle');
+                    toggleMobileDropdown();
+                });
+                
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    updateStatus('Click detected - calling toggle');
+                    toggleMobileDropdown();
+                });
+                
+                updateStatus('Event listeners added');
+            } else {
+                updateStatus('ERROR: Toggle button not found');
+            }
+        });
+    </script>
+</body>
+</html>

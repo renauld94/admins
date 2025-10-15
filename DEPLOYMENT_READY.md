@@ -193,3 +193,4 @@ The journey from data literacy to mastery awaits! 🚀✨
 **Package Size**: 61KB  
 **Course URL**: [https://moodle.simondatalab.de/course/view.php?id=2](https://moodle.simondatalab.de/course/view.php?id=2)  
 **Created**: October 14, 2025
+

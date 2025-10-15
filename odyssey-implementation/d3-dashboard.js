@@ -798,3 +798,4 @@ document.addEventListener('DOMContentLoaded', () => {
         window.dispatchEvent(event);
     }, 5000);
 });
+

@@ -102,3 +102,4 @@ echo ""
 echo "🌐 Check your Jellyfin Live TV section now!"
 echo "📺 You should see all the new tuners added"
 echo "🔄 If channels don't appear, wait a few minutes for the guide to refresh"
+

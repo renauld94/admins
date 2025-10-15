@@ -56,3 +56,4 @@ Instead of local files, use direct URLs to M3U playlists:
 **Use what's working!** You have 9 free TV channels that are working perfectly. This is a solid Live TV setup. The API issues can be resolved later, but you have a functional system right now.
 
 **Go to Live TV and enjoy your 9 free channels!** 📺✨
+

@@ -211,3 +211,4 @@ echo "2. Go to Admin Panel → Live TV"
 echo "3. Add new M3U tuners with the enhanced files"
 echo "4. Refresh Guide Data"
 echo "5. Enjoy 129+ free channels!"
+

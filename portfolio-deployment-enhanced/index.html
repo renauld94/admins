@@ -13,6 +13,10 @@
     <meta property="og:description" content="Senior Data Scientist & Innovation Strategist specializing in healthcare analytics and enterprise data governance" />
     <meta property="og:url" content="https://simondatalab.de" />
     
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="alternate icon" href="data:image/x-icon;," />
+    
     <!-- Performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -35,7 +39,7 @@
         <script defer src="https://d3js.org/d3.v7.min.js"></script>
         <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
         <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        <script src="three-loader.js"></script>
 </head>
 
 <body>
@@ -118,7 +122,7 @@
                     
                     <!-- Mobile Admin Dropdown -->
                     <li class="mobile-dropdown">
-                        <button class="mobile-dropdown-toggle" onclick="toggleMobileDropdown()" aria-expanded="false">
+                        <button class="mobile-dropdown-toggle" aria-expanded="false">
                             Admin Tools
                             <span class="admin-badge">Admin</span>
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -716,7 +720,7 @@
                                 </div>
                                 <div>
                                     <h4>Email</h4>
-                                    <a href="/cdn-cgi/l/email-protection#fc9499909093bc8f95919392989d889d909d9ed29899"><span class="__cf_email__" data-cfemail="1d75787171725d6e74707273797c697c717c7f337978">[email&#160;protected]</span></a>
+                                    <a href="mailto:simon@simondatalab.de">simon@simondatalab.de</a>
                                 </div>
                             </div>
 
@@ -828,7 +832,7 @@
 
                 <div class="footer-connect">
                     <h4>Connect</h4>
-                    <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e9818c858586a99a808486878d889d8885888bc78d8c">[email&#160;protected]</a></p>
+                    <p><a href="mailto:simon@simondatalab.de">simon@simondatalab.de</a></p>
                     <p class="footer-availability">
                         <span class="status-dot available"></span>
                         Available for select projects
@@ -843,7 +847,7 @@
         </div>
     </footer>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+
     
     <!-- Desktop Admin Dropdown JavaScript -->
     <script>
@@ -867,24 +871,66 @@
         }
         
         function toggleMobileDropdown() {
+            console.log('🔧 Mobile dropdown toggle clicked');
+            
             const mobileDropdown = document.querySelector('.mobile-dropdown');
             const mobileMenu = document.querySelector('.mobile-dropdown-menu');
             const toggle = document.querySelector('.mobile-dropdown-toggle');
             
+            console.log('📱 Elements found:', {
+                mobileDropdown: !!mobileDropdown,
+                mobileMenu: !!mobileMenu,
+                toggle: !!toggle
+            });
+            
             if (mobileDropdown && mobileMenu && toggle) {
                 const isOpen = mobileDropdown.classList.contains('open');
+                console.log('📱 Current state - isOpen:', isOpen);
                 
                 if (isOpen) {
                     mobileDropdown.classList.remove('open');
                     toggle.setAttribute('aria-expanded', 'false');
                     mobileMenu.setAttribute('aria-hidden', 'true');
+                    console.log('📱 Dropdown closed');
                 } else {
                     mobileDropdown.classList.add('open');
                     toggle.setAttribute('aria-expanded', 'true');
                     mobileMenu.setAttribute('aria-hidden', 'false');
+                    console.log('📱 Dropdown opened');
                 }
+            } else {
+                console.error('❌ Mobile dropdown elements not found');
             }
         }
+        
+        // Alternative event listener for mobile dropdown (fallback)
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileDropdownToggle = document.querySelector('.mobile-dropdown-toggle');
+            if (mobileDropdownToggle) {
+                // Add event listeners for both click and touch
+                mobileDropdownToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('📱 Event listener: Mobile dropdown clicked');
+                    toggleMobileDropdown();
+                });
+                
+                mobileDropdownToggle.addEventListener('touchstart', function(e) {
+                    console.log('📱 Touch start on mobile dropdown');
+                });
+                
+                mobileDropdownToggle.addEventListener('touchend', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('📱 Event listener: Mobile dropdown touched');
+                    toggleMobileDropdown();
+                });
+                
+                console.log('✅ Mobile dropdown event listeners added');
+            } else {
+                console.warn('⚠️ Mobile dropdown toggle not found');
+            }
+        });
         
         // Close dropdowns when clicking outside
         document.addEventListener('click', function(event) {
@@ -929,73 +975,173 @@
             emit(e,p){(this.listeners[e]||[]).forEach(f=>{try{f(p);}catch(err){console.warn('event handler error',err)}});}
         };
         
-        // Wait for Three.js to be loaded, then load the neural GeoServer visualization
-        function waitForThreeJS() {
-            if (typeof THREE !== 'undefined') {
-                console.log('✅ [NEURAL GEOSERVER] Three.js detected, loading neural GeoServer visualization...');
+
+        
+        // Listen for THREE.js ready event
+        window.addEventListener('threeJsReady', () => {
+            console.log('🎯 [NEURAL GEOSERVER] Received THREE.js ready event');
+            setTimeout(() => {
+                if (typeof THREE !== 'undefined') {
+                    console.log('✅ [NEURAL GEOSERVER] THREE.js confirmed available, starting neural visualization...');
+                    loadNeuralVisualization();
+                } else {
+                    console.error('❌ [NEURAL GEOSERVER] THREE.js not available despite ready event');
+                }
+            }, 200);
+        });
+        
+        function loadNeuralVisualization() {
+            console.log('🚀 Loading Epic Neural Visualization...');
+            
+            // Try to load the Epic Neural to Cosmos visualization first
+            const epicScript = document.createElement('script');
+            epicScript.src = './epic-neural-cosmos-viz.js';
+            epicScript.onload = () => {
+                console.log('✅ Epic Neural Cosmos Viz loaded');
                 
-                // Load the performance optimizer first
-                const perfScript = document.createElement('script');
-                perfScript.src = './neural-geoserver-performance.js?v=PERF20250113';
-                perfScript.onload = () => {
-                    // Then load the neural GeoServer visualization
-                    const script = document.createElement('script');
-                    script.src = './neural-geoserver-viz.js?v=NEURAL20250113';
-                script.onload = () => {
-                    console.log('✅ [NEURAL GEOSERVER] Neural GeoServer visualization loaded successfully');
-                    console.log('🌌 Real-time GeoServer layers as neural clusters with synaptic connections');
-                    
-                    // Initialize the visualization
-                    if (window.NeuralGeoServerViz) {
-                        const viz = new window.NeuralGeoServerViz('hero-visualization', {
-                            geoserverUrl: 'https://www.simondatalab.de/geospatial-viz',
-                            proxmoxUrl: 'https://136.243.155.166:8006',
-                            particleCount: 10000,
-                            enableGPUAcceleration: true,
-                            enableLOD: true,
-                            enableFrustumCulling: true,
-                            updateInterval: 5000
+                // Initialize epic visualization
+                if (window.EpicNeuralToCosmosViz) {
+                    try {
+                        const epicViz = new window.EpicNeuralToCosmosViz('hero-visualization', {
+                            autoTransition: true,
+                            transitionDuration: 20000, // 20 seconds per phase for portfolio
+                            particleCount: 2500,
+                            enableInteraction: true
                         });
                         
-                        // Store reference globally
-                        window.neuralGeoServerViz = viz;
+                        window.epicNeuralViz = epicViz;
                         
                         // Emit success event
                         window.__HERO_EVENT_BUS__?.emit('hero:mounted', {
                             ts: Date.now(),
-                            variant: 'neural-geoserver-viz',
+                            variant: 'epic-neural-cosmos-viz',
                             mobile: false,
-                            stats: viz.getStats()
+                            stats: epicViz.getStats()
                         });
+                        
+                        console.log('🎉 Epic Neural to Cosmos Visualization initialized successfully');
+                        return; // Success, don't load fallbacks
+                        
+                    } catch (error) {
+                        console.warn('⚠️ Epic visualization failed to initialize:', error);
+                        loadSimpleVisualization();
                     }
-                };
-                script.onerror = (err) => {
-                    console.error('❌ [NEURAL GEOSERVER] Failed to load neural GeoServer visualization:', err);
-                    const mount = document.getElementById('hero-visualization');
-                    if (mount) {
-                        mount.innerHTML = `
-                            <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #0ea5e9; text-align: center; padding: 2rem;">
-                                <div>
-                                    <div style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">🌌 Neural GeoServer</div>
-                                    <div style="font-size: 1rem; opacity: 0.8;">Real-time Geospatial Intelligence</div>
-                                    <div style="font-size: 0.8rem; opacity: 0.6; margin-top: 1rem;">Loading neural-spatial system...</div>
-                                </div>
-                            </div>
-                        `;
-                    }
-                };
-                document.head.appendChild(script);
-                };
-                document.head.appendChild(perfScript);
-            } else {
-                console.log('⏳ [NEURAL GEOSERVER] Waiting for Three.js to load...');
-                setTimeout(waitForThreeJS, 100);
-            }
+                } else {
+                    console.warn('⚠️ Epic visualization class not found');
+                    loadSimpleVisualization();
+                }
+            };
+            epicScript.onerror = (err) => {
+                console.warn('⚠️ Failed to load epic neural visualization:', err);
+                loadSimpleVisualization();
+            };
+            document.head.appendChild(epicScript);
         }
         
-        // Start waiting for Three.js
-        waitForThreeJS();
+        function loadSimpleVisualization() {
+            console.log('🔄 Loading Simple Neural Viz as fallback...');
+            
+            // Load simple neural viz as fallback
+            const simpleScript = document.createElement('script');
+            simpleScript.src = './simple-neural-viz.js';
+            simpleScript.onload = () => {
+                console.log('✅ Simple Neural Viz loaded');
+                
+                // Initialize simple visualization
+                if (window.SimpleNeuralViz) {
+                    const simpleViz = new window.SimpleNeuralViz('hero-visualization', {
+                        particleCount: 2000
+                    });
+                    
+                    window.simpleNeuralViz = simpleViz;
+                    
+                    // Emit success event
+                    window.__HERO_EVENT_BUS__?.emit('hero:mounted', {
+                        ts: Date.now(),
+                        variant: 'simple-neural-viz',
+                        mobile: false,
+                        stats: simpleViz.getStats()
+                    });
+                    
+                    console.log('✅ Simple Neural Visualization initialized successfully');
+                }
+                
+                // Now try to load the advanced GeoServer visualization as enhancement
+                loadAdvancedVisualization();
+            };
+            simpleScript.onerror = (err) => {
+                console.error('❌ Failed to load simple neural visualization:', err);
+                showFallbackVisualization();
+            };
+            document.head.appendChild(simpleScript);
+        }
+        
+        function loadAdvancedVisualization() {
+            console.log('🔄 Loading advanced GeoServer visualization...');
+            
+            const perfScript = document.createElement('script');
+            perfScript.src = './neural-geoserver-performance.js?v=PERF20250113';
+            perfScript.onload = () => {
+                const script = document.createElement('script');
+                script.src = './neural-geoserver-viz.js?v=NEURAL20250113';
+                script.onload = () => {
+                    console.log('✅ Advanced GeoServer visualization loaded');
+                    
+                    // Replace simple viz with advanced one if it loads successfully
+                    try {
+                        if (window.NeuralGeoServerViz && window.simpleNeuralViz) {
+                            window.simpleNeuralViz.destroy();
+                            
+                            const viz = new window.NeuralGeoServerViz('hero-visualization', {
+                                geoserverUrl: 'https://www.simondatalab.de/geospatial-viz',
+                                proxmoxUrl: 'https://136.243.155.166:8006',
+                                particleCount: 8000,
+                                enableGPUAcceleration: true,
+                                enableLOD: true,
+                                enableFrustumCulling: true,
+                                updateInterval: 5000
+                            });
+                            
+                            window.neuralGeoServerViz = viz;
+                            
+                            window.__HERO_EVENT_BUS__?.emit('hero:upgraded', {
+                                ts: Date.now(),
+                                variant: 'neural-geoserver-viz',
+                                stats: viz.getStats()
+                            });
+                            
+                            console.log('🎉 Advanced Neural GeoServer visualization active');
+                        }
+                    } catch (error) {
+                        console.warn('⚠️ Advanced visualization failed, keeping simple version:', error);
+                    }
+                };
+                script.onerror = () => {
+                    console.warn('⚠️ Advanced visualization failed to load, simple version remains active');
+                };
+                document.head.appendChild(script);
+            };
+            perfScript.onerror = () => {
+                console.warn('⚠️ Performance optimizer unavailable, simple visualization remains active');
+            };
+            document.head.appendChild(perfScript);
+        }
+        
+        function showFallbackVisualization() {
+            const mount = document.getElementById('hero-visualization');
+            if (mount) {
+                mount.innerHTML = `
+                    <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #0ea5e9; text-align: center; padding: 2rem;">
+                        <div>
+                            <div style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">🌌 Neural GeoServer</div>
+                            <div style="font-size: 1rem; opacity: 0.8;">Real-time Geospatial Intelligence</div>
+                            <div style="font-size: 0.8rem; opacity: 0.6; margin-top: 1rem;">Initialization in progress...</div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
     </script>
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"a692c27878ce44268a9edec45ed0be20","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+
 </body>
 </html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THREE.js Test</title>
+    <style>
+        body { margin: 0; padding: 20px; font-family: Arial, sans-serif; }
+        #status { background: #f0f0f0; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+        #container { width: 400px; height: 300px; border: 1px solid #ccc; }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+    </style>
+</head>
+<body>
+    <h1>THREE.js Loading Test</h1>
+    <div id="status">Loading...</div>
+    <div id="container"></div>
+
+    <script src="three-loader.js"></script>
+    <script>
+        const statusEl = document.getElementById('status');
+        const containerEl = document.getElementById('container');
+        
+        function updateStatus(message, type = 'info') {
+            const p = document.createElement('p');
+            p.className = type;
+            p.textContent = `${new Date().toLocaleTimeString()}: ${message}`;
+            statusEl.appendChild(p);
+            console.log(message);
+        }
+        
+        updateStatus('Starting THREE.js test...');
+        
+        window.addEventListener('threeJsReady', () => {
+            updateStatus('THREE.js ready event received', 'success');
+            
+            if (typeof THREE !== 'undefined') {
+                updateStatus('✅ THREE.js is available globally', 'success');
+                updateStatus(`THREE.js version: ${THREE.REVISION}`, 'info');
+                
+                if (THREE.OrbitControls) {
+                    updateStatus('✅ OrbitControls is available', 'success');
+                } else {
+                    updateStatus('⚠️ OrbitControls not available', 'error');
+                }
+                
+                // Create a simple scene
+                try {
+                    const scene = new THREE.Scene();
+                    const camera = new THREE.PerspectiveCamera(75, 400/300, 0.1, 1000);
+                    const renderer = new THREE.WebGLRenderer();
+                    
+                    renderer.setSize(400, 300);
+                    containerEl.appendChild(renderer.domElement);
+                    
+                    // Create a cube
+                    const geometry = new THREE.BoxGeometry();
+                    const material = new THREE.MeshBasicMaterial({ color: 0x0ea5e9 });
+                    const cube = new THREE.Mesh(geometry, material);
+                    scene.add(cube);
+                    
+                    camera.position.z = 5;
+                    
+                    // Animation loop
+                    function animate() {
+                        requestAnimationFrame(animate);
+                        cube.rotation.x += 0.01;
+                        cube.rotation.y += 0.01;
+                        renderer.render(scene, camera);
+                    }
+                    animate();
+                    
+                    updateStatus('✅ THREE.js scene created successfully!', 'success');
+                    
+                } catch (error) {
+                    updateStatus('❌ Error creating THREE.js scene: ' + error.message, 'error');
+                }
+                
+            } else {
+                updateStatus('❌ THREE.js not available despite ready event', 'error');
+            }
+        });
+        
+        // Timeout fallback
+        setTimeout(() => {
+            if (typeof THREE === 'undefined') {
+                updateStatus('❌ THREE.js loading timeout after 10 seconds', 'error');
+            }
+        }, 10000);
+    </script>
+</body>
+</html>

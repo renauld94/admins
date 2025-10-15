@@ -55,7 +55,7 @@ Your neural visualization has been transformed into a **STUNNING** GeoNeural Lab
 ### **To Activate the Complete GeoNeural Lab**
 ```bash
 cd "/home/simon/Desktop/Learning Management System Academy"
-./setup-geoneural-lab.sh
+./scripts/setup-geoneural-lab.sh
 ```
 
 This will:

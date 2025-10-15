@@ -115,3 +115,4 @@ The direct URL approach is actually better because:
 ---
 
 **Ready to add 1300+ free TV channels to your Jellyfin!** 🚀
+
