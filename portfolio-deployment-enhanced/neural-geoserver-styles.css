@@ -24,8 +24,41 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.9);
     z-index: 1000;
+    overflow: hidden;
+}
+
+/* Epic Neural Loading Animation */
+.epic-neural-loading {
+    background: radial-gradient(circle at center, rgba(14, 165, 233, 0.1) 0%, rgba(0, 0, 0, 0.95) 100%);
+    position: relative;
+}
+
+.epic-neural-loading::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(14, 165, 233, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 60%, rgba(6, 182, 212, 0.05) 0%, transparent 50%);
+    animation: neuralPulse 4s ease-in-out infinite;
+    z-index: 1;
+}
+
+@keyframes neuralPulse {
+    0%, 100% { 
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% { 
+        opacity: 0.6;
+        transform: scale(1.05);
+    }
 }
 
 .neural-geoserver-loading-content {
@@ -62,6 +95,62 @@
 @keyframes neural-spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+/* Enhanced spinner for epic loading */
+.epic-neural-loading .loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(14, 165, 233, 0.2);
+    border-top: 4px solid #0ea5e9;
+    border-right: 4px solid #8b5cf6;
+    border-radius: 50%;
+    animation: epicSpin 2s ease-in-out infinite;
+    margin: 0 auto 1rem;
+    position: relative;
+    z-index: 2;
+    box-shadow: 
+        0 0 20px rgba(14, 165, 233, 0.3),
+        inset 0 0 20px rgba(139, 92, 246, 0.1);
+}
+
+.epic-neural-loading .loading-spinner::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    border: 2px solid rgba(6, 182, 212, 0.3);
+    border-radius: 50%;
+    animation: epicSpin 3s linear infinite reverse;
+}
+
+.epic-neural-loading .loading-spinner::after {
+    content: '';
+    position: absolute;
+    top: -16px;
+    left: -16px;
+    right: -16px;
+    bottom: -16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    animation: epicSpin 4s linear infinite;
+}
+
+@keyframes epicSpin {
+    0% { 
+        transform: rotate(0deg) scale(1);
+        opacity: 1;
+    }
+    50% { 
+        transform: rotate(180deg) scale(1.1);
+        opacity: 0.8;
+    }
+    100% { 
+        transform: rotate(360deg) scale(1);
+        opacity: 1;
+    }
 }
 
 /* Layer Metadata Overlay */
