@@ -193,3 +193,4 @@ echo "1. Use the working URL/format combination"
 echo "2. If API doesn't work, use manual web interface"
 echo "3. If URLs are blocked, use alternative sources"
 
+

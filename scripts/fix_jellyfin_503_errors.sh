@@ -74,3 +74,4 @@ echo ""
 echo "🌐 Access Jellyfin: http://136.243.155.166:8096/web/"
 echo "🔐 Login as: simonadmin"
 
+

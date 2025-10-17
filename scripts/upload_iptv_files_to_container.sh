@@ -31,3 +31,4 @@ echo "  - /config/iptv_movies.m3u"
 echo ""
 echo "🌐 Now you can use these paths in Jellyfin Live TV setup!"
 
+

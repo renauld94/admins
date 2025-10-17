@@ -122,3 +122,4 @@ echo "   - /media/tvshows (for TV shows)"
 echo "   - /media/music (for music)"
 echo "6. Refresh libraries after adding content"
 
+

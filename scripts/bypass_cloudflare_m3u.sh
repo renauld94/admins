@@ -163,3 +163,4 @@ echo "🌐 Check your Jellyfin Live TV section now!"
 echo "📺 Go to: http://136.243.155.166:8096/web/#/home.html"
 echo "🔄 If channels don't appear, try adding tuners manually with the local file paths"
 
+

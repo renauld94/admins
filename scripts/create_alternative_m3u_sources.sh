@@ -95,3 +95,4 @@ echo "Solution 3: Use User-Agent header"
 echo "  - Set User-Agent to: Jellyfin/10.10.7"
 echo "  - Or try: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
 
+

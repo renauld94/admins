@@ -156,3 +156,4 @@ echo "🌐 Check your Jellyfin Live TV section now!"
 echo "📺 You should see 5 new tuners with 1300+ channels"
 echo "🔄 If channels don't appear immediately, wait a few minutes for the guide to refresh"
 
+

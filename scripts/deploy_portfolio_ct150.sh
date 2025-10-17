@@ -5,12 +5,12 @@
 # Author: Simon Renauld
 # Date: $(date)
 
-set -e
+set -euo pipefail
 
 SERVER_IP="10.0.0.150"
 SERVER_USER="root"
 SERVER_PATH="/var/www/html"
-LOCAL_FILES="/home/simon/Desktop/Learning Management System Academy/portfolio/hero-r3f-odyssey"
+LOCAL_FILES="/home/simon/Learning-Management-System-Academy/portfolio-deployment-enhanced"
 
 echo "🚀 Starting portfolio deployment to CT 150 server ($SERVER_IP)..."
 
@@ -24,17 +24,13 @@ echo "📁 Local portfolio directory: $LOCAL_FILES"
 echo "🌐 Target server: $SERVER_USER@$SERVER_IP:$SERVER_PATH"
 
 # Test server connectivity
-echo "🔍 Testing server connectivity..."
-if ! ping -c 2 $SERVER_IP > /dev/null 2>&1; then
-    echo "❌ Error: Cannot reach server $SERVER_IP"
-    echo "💡 Please check:"
-    echo "   - Server is running"
-    echo "   - Network connectivity"
-    echo "   - Firewall settings"
+echo "🔍 Testing SSH connectivity to $SERVER_USER@$SERVER_IP ..."
+if ! ssh -o ConnectTimeout=10 -o BatchMode=yes "$SERVER_USER@$SERVER_IP" "echo ok" > /dev/null 2>&1; then
+    echo "❌ Error: Cannot establish SSH to $SERVER_USER@$SERVER_IP"
+    echo "💡 If access requires ProxyJump via Proxmox (port 2222), use scripts/deploy_portfolio_proxyjump.sh"
     exit 1
 fi
-
-echo "✅ Server is reachable"
+echo "✅ SSH connectivity verified"
 
 # Create backup on server
 echo "📦 Creating backup on server..."

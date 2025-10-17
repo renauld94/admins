@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Model Performance Optimization - Infrastructure Analysis</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            color: #e2e8f0;
+            overflow: hidden;
+        }
+
+        #container {
+            width: 1920px;
+            height: 1080px;
+            position: relative;
+            background: #0f172a;
+        }
+
+        .header {
+            position: absolute;
+            top: 60px;
+            left: 80px;
+            right: 80px;
+            z-index: 10;
+        }
+
+        .title {
+            font-size: 64px;
+            font-weight: 300;
+            color: #f8fafc;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+        }
+
+        .subtitle {
+            font-size: 32px;
+            color: #64748b;
+            font-weight: 300;
+        }
+
+        .metrics-container {
+            position: absolute;
+            top: 280px;
+            left: 80px;
+            right: 80px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+        }
+
+        .metric-card {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(100, 116, 139, 0.3);
+            border-radius: 12px;
+            padding: 40px 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .metric-label {
+            font-size: 18px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .metric-value {
+            font-size: 72px;
+            font-weight: 200;
+            color: #f8fafc;
+            line-height: 1;
+            margin-bottom: 15px;
+        }
+
+        .metric-change {
+            font-size: 20px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        .improvement {
+            color: #10b981;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .chart-container {
+            position: absolute;
+            bottom: 100px;
+            left: 80px;
+            right: 80px;
+        }
+
+        .axis-label {
+            font-size: 14px;
+            fill: #64748b;
+            font-weight: 500;
+        }
+
+        .grid-line {
+            stroke: rgba(100, 116, 139, 0.2);
+            stroke-width: 1;
+        }
+
+        .bar {
+            transition: all 0.3s ease;
+        }
+
+        .timeline-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 80px;
+            right: 80px;
+            height: 4px;
+            background: rgba(100, 116, 139, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .timeline-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #06b6d4);
+            border-radius: 2px;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        .watermark {
+            position: absolute;
+            bottom: 60px;
+            right: 80px;
+            font-size: 18px;
+            color: #475569;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .metric-card {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .metric-card:nth-child(1) { animation-delay: 0.1s; }
+        .metric-card:nth-child(2) { animation-delay: 0.2s; }
+        .metric-card:nth-child(3) { animation-delay: 0.3s; }
+        .metric-card:nth-child(4) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div class="header">
+            <div class="title">AI Model Performance Optimization</div>
+            <div class="subtitle">Infrastructure-Driven Machine Learning Excellence</div>
+        </div>
+
+        <div class="metrics-container">
+            <div class="metric-card">
+                <div class="metric-label">GPU Utilization</div>
+                <div class="metric-value">91<span style="font-size: 48px; color: #64748b;">%</span></div>
+                <div class="metric-change improvement">+24% Improvement</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">Training Time</div>
+                <div class="metric-value">3.4<span style="font-size: 48px; color: #64748b;">h</span></div>
+                <div class="metric-change improvement">34% Faster</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">Inference Latency</div>
+                <div class="metric-value">45<span style="font-size: 48px; color: #64748b;">ms</span></div>
+                <div class="metric-change improvement">75% Reduction</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">Cost Efficiency</div>
+                <div class="metric-value">80<span style="font-size: 48px; color: #64748b;">%</span></div>
+                <div class="metric-change improvement">+45% Better</div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <svg id="performance-chart" width="1760" height="400"></svg>
+        </div>
+
+        <div class="timeline-indicator">
+            <div class="timeline-progress" id="timeline"></div>
+        </div>
+
+        <div class="watermark">SIMONDATALAB.DE</div>
+    </div>
+
+    <script>
+        // Configuration
+        const duration = 15000; // 15 seconds total animation
+        const chartWidth = 1760;
+        const chartHeight = 400;
+        const margin = { top: 40, right: 40, bottom: 60, left: 80 };
+        const width = chartWidth - margin.left - margin.right;
+        const height = chartHeight - margin.top - margin.bottom;
+
+        // Data for before/after comparison
+        const data = [
+            { metric: 'GPU Usage', before: 67, after: 91, unit: '%', color: '#8b5cf6' },
+            { metric: 'Memory Efficiency', before: 67, after: 89, unit: '%', color: '#3b82f6' },
+            { metric: 'Training Speed', before: 5.2, after: 3.4, unit: 'hours', color: '#10b981', inverse: true },
+            { metric: 'Inference Time', before: 180, after: 45, unit: 'ms', color: '#f59e0b', inverse: true }
+        ];
+
+        // Create SVG
+        const svg = d3.select('#performance-chart')
+            .append('g')
+            .attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+        // Scales
+        const x = d3.scaleBand()
+            .domain(data.map(d => d.metric))
+            .range([0, width])
+            .padding(0.3);
+
+        const yMax = d3.max(data, d => Math.max(d.before, d.after)) * 1.1;
+        const y = d3.scaleLinear()
+            .domain([0, yMax])
+            .range([height, 0]);
+
+        // Grid lines
+        svg.append('g')
+            .attr('class', 'grid')
+            .selectAll('line')
+            .data(y.ticks(5))
+            .join('line')
+            .attr('class', 'grid-line')
+            .attr('x1', 0)
+            .attr('x2', width)
+            .attr('y1', d => y(d))
+            .attr('y2', d => y(d));
+
+        // X Axis
+        svg.append('g')
+            .attr('transform', `translate(0, ${height})`)
+            .call(d3.axisBottom(x))
+            .selectAll('text')
+            .attr('class', 'axis-label')
+            .style('font-size', '16px')
+            .style('fill', '#94a3b8');
+
+        // Y Axis
+        svg.append('g')
+            .call(d3.axisLeft(y).ticks(5))
+            .selectAll('text')
+            .attr('class', 'axis-label')
+            .style('font-size', '14px')
+            .style('fill', '#94a3b8');
+
+        // Remove axis lines
+        svg.selectAll('.domain').remove();
+        svg.selectAll('.tick line').remove();
+
+        // Animation phases
+        let currentPhase = 0;
+        const phases = [
+            { name: 'before', duration: 3000 },
+            { name: 'comparison', duration: 6000 },
+            { name: 'after', duration: 4000 },
+            { name: 'final', duration: 2000 }
+        ];
+
+        // Animate bars
+        function animatePhase(phase) {
+            if (phase === 0) {
+                // Show "before" bars
+                svg.selectAll('.bar-before')
+                    .data(data)
+                    .join('rect')
+                    .attr('class', 'bar bar-before')
+                    .attr('x', d => x(d.metric))
+                    .attr('width', x.bandwidth())
+                    .attr('y', height)
+                    .attr('height', 0)
+                    .attr('fill', d => d.color)
+                    .attr('opacity', 0.6)
+                    .transition()
+                    .duration(1500)
+                    .attr('y', d => y(d.before))
+                    .attr('height', d => height - y(d.before));
+
+                // Add labels
+                svg.selectAll('.label-before')
+                    .data(data)
+                    .join('text')
+                    .attr('class', 'label-before')
+                    .attr('x', d => x(d.metric) + x.bandwidth() / 2)
+                    .attr('y', d => y(d.before) - 10)
+                    .attr('text-anchor', 'middle')
+                    .style('fill', '#f8fafc')
+                    .style('font-size', '18px')
+                    .style('font-weight', '500')
+                    .style('opacity', 0)
+                    .text(d => `${d.before}${d.unit === '%' ? '%' : ''}`)
+                    .transition()
+                    .duration(1500)
+                    .style('opacity', 1);
+
+            } else if (phase === 1) {
+                // Show comparison - add "after" bars
+                svg.selectAll('.bar-after')
+                    .data(data)
+                    .join('rect')
+                    .attr('class', 'bar bar-after')
+                    .attr('x', d => x(d.metric) + x.bandwidth() * 0.5)
+                    .attr('width', x.bandwidth() * 0.5)
+                    .attr('y', height)
+                    .attr('height', 0)
+                    .attr('fill', d => d.color)
+                    .attr('opacity', 1)
+                    .transition()
+                    .duration(2000)
+                    .attr('y', d => y(d.after))
+                    .attr('height', d => height - y(d.after));
+
+                // Update before bars
+                svg.selectAll('.bar-before')
+                    .transition()
+                    .duration(1000)
+                    .attr('width', x.bandwidth() * 0.5);
+
+                // Add after labels
+                svg.selectAll('.label-after')
+                    .data(data)
+                    .join('text')
+                    .attr('class', 'label-after')
+                    .attr('x', d => x(d.metric) + x.bandwidth() * 0.75)
+                    .attr('y', d => y(d.after) - 10)
+                    .attr('text-anchor', 'middle')
+                    .style('fill', '#10b981')
+                    .style('font-size', '18px')
+                    .style('font-weight', 'bold')
+                    .style('opacity', 0)
+                    .text(d => `${d.after}${d.unit === '%' ? '%' : ''}`)
+                    .transition()
+                    .delay(1000)
+                    .duration(1500)
+                    .style('opacity', 1);
+
+            } else if (phase === 2) {
+                // Fade out before bars, keep after
+                svg.selectAll('.bar-before')
+                    .transition()
+                    .duration(1500)
+                    .attr('opacity', 0.2);
+
+                svg.selectAll('.label-before')
+                    .transition()
+                    .duration(1500)
+                    .style('opacity', 0.3);
+
+                svg.selectAll('.bar-after')
+                    .transition()
+                    .duration(1500)
+                    .attr('width', x.bandwidth())
+                    .attr('x', d => x(d.metric));
+
+                svg.selectAll('.label-after')
+                    .transition()
+                    .duration(1500)
+                    .attr('x', d => x(d.metric) + x.bandwidth() / 2);
+            }
+        }
+
+        // Timeline animation
+        let startTime = Date.now();
+        function updateTimeline() {
+            const elapsed = Date.now() - startTime;
+            const progress = Math.min((elapsed / duration) * 100, 100);
+            document.getElementById('timeline').style.width = progress + '%';
+
+            // Trigger phase animations
+            const phaseTime = elapsed;
+            if (phaseTime > 1000 && currentPhase === 0) {
+                animatePhase(0);
+                currentPhase = 1;
+            } else if (phaseTime > 5000 && currentPhase === 1) {
+                animatePhase(1);
+                currentPhase = 2;
+            } else if (phaseTime > 11000 && currentPhase === 2) {
+                animatePhase(2);
+                currentPhase = 3;
+            }
+
+            if (elapsed < duration) {
+                requestAnimationFrame(updateTimeline);
+            } else {
+                // Loop animation
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
+            }
+        }
+
+        // Start animation
+        setTimeout(() => {
+            updateTimeline();
+        }, 500);
+
+        // Add legend
+        const legend = svg.append('g')
+            .attr('transform', `translate(${width - 300}, -10)`);
+
+        legend.append('rect')
+            .attr('width', 20)
+            .attr('height', 20)
+            .attr('fill', '#64748b')
+            .attr('opacity', 0.6);
+
+        legend.append('text')
+            .attr('x', 30)
+            .attr('y', 15)
+            .style('fill', '#94a3b8')
+            .style('font-size', '14px')
+            .text('Before Optimization');
+
+        legend.append('rect')
+            .attr('x', 200)
+            .attr('width', 20)
+            .attr('height', 20)
+            .attr('fill', '#10b981');
+
+        legend.append('text')
+            .attr('x', 230)
+            .attr('y', 15)
+            .style('fill', '#94a3b8')
+            .style('font-size', '14px')
+            .text('After Optimization');
+    </script>
+</body>
+</html>

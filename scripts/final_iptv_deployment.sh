@@ -117,3 +117,4 @@ echo "   1. Go to Settings → Live TV"
 echo "   2. Add TV Provider → M3U Tuner"
 echo "   3. Use the URLs above for each tuner"
 
+

@@ -53,3 +53,4 @@ echo "3. Keep your other settings"
 echo "4. Click Save"
 echo "5. Enjoy 1000+ channels!"
 
+

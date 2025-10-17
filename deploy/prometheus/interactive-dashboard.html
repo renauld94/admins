@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infrastructure Monitoring | Simon Renauld - Data Engineering</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #fff;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease-in;
+        }
+
+        h1 {
+            font-size: 48px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            opacity: 0.8;
+        }
+
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 48px rgba(102, 126, 234, 0.4);
+        }
+
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .metric-title {
+            font-size: 16px;
+            font-weight: 600;
+            opacity: 0.9;
+        }
+
+        .metric-icon {
+            font-size: 24px;
+        }
+
+        .metric-value {
+            font-size: 48px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 10px 0;
+        }
+
+        .metric-unit {
+            font-size: 18px;
+            opacity: 0.6;
+        }
+
+        .metric-chart {
+            margin-top: 20px;
+            height: 100px;
+        }
+
+        .sparkline {
+            fill: none;
+            stroke: #667eea;
+            stroke-width: 2;
+            filter: drop-shadow(0 0 5px #667eea);
+        }
+
+        .area {
+            fill: url(#gradient);
+            opacity: 0.3;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 10px;
+            transition: width 1s ease;
+            box-shadow: 0 0 10px #667eea;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #4ade80;
+            box-shadow: 0 0 10px #4ade80;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tech-stack {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+        }
+
+        .tech-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            margin: 5px;
+            background: rgba(102, 126, 234, 0.2);
+            border: 1px solid #667eea;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 18px;
+            opacity: 0.6;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 32px; }
+            .metric-value { font-size: 36px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🚀 AI Infrastructure Monitoring</h1>
+        <p class="subtitle">
+            <span class="status-indicator"></span>
+            Live metrics from Proxmox AI Server
+        </p>
+    </div>
+
+    <div id="dashboard" class="dashboard-container">
+        <div class="loading">Loading metrics from Prometheus...</div>
+    </div>
+
+    <div class="tech-stack">
+        <h3 style="margin-bottom: 15px;">Tech Stack</h3>
+        <span class="tech-badge">Prometheus</span>
+        <span class="tech-badge">Grafana</span>
+        <span class="tech-badge">Node Exporter</span>
+        <span class="tech-badge">Docker</span>
+        <span class="tech-badge">Proxmox</span>
+        <span class="tech-badge">ZFS</span>
+        <span class="tech-badge">D3.js</span>
+    </div>
+
+    <script>
+        // Configuration
+        const PROMETHEUS_URL = 'https://prometheus.simondatalab.de';
+        const REFRESH_INTERVAL = 15000; // 15 seconds
+
+        // Utility functions
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 B';
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return (bytes / Math.pow(k, i)).toFixed(2) + ' ' + sizes[i];
+        }
+
+        function formatPercent(value) {
+            return value.toFixed(1) + '%';
+        }
+
+        function formatUptime(seconds) {
+            const days = Math.floor(seconds / 86400);
+            const hours = Math.floor((seconds % 86400) / 3600);
+            return `${days}d ${hours}h`;
+        }
+
+        // Fetch data from Prometheus
+        async function fetchPrometheusQuery(query) {
+            try {
+                const url = `${PROMETHEUS_URL}/api/v1/query?query=${encodeURIComponent(query)}`;
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.status === 'success' && data.data.result.length > 0) {
+                    return parseFloat(data.data.result[0].value[1]);
+                }
+                return null;
+            } catch (error) {
+                console.error('Error fetching from Prometheus:', error);
+                return null;
+            }
+        }
+
+        async function fetchPrometheusRange(query, duration = '1h') {
+            try {
+                const end = Math.floor(Date.now() / 1000);
+                const start = end - (duration === '1h' ? 3600 : 86400);
+                const url = `${PROMETHEUS_URL}/api/v1/query_range?query=${encodeURIComponent(query)}&start=${start}&end=${end}&step=60`;
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.status === 'success' && data.data.result.length > 0) {
+                    return data.data.result[0].values.map(v => ({
+                        time: v[0] * 1000,
+                        value: parseFloat(v[1])
+                    }));
+                }
+                return [];
+            } catch (error) {
+                console.error('Error fetching range from Prometheus:', error);
+                return [];
+            }
+        }
+
+        // Create metric card
+        function createMetricCard(config) {
+            const card = document.createElement('div');
+            card.className = 'metric-card';
+            card.innerHTML = `
+                <div class="metric-header">
+                    <span class="metric-title">${config.title}</span>
+                    <span class="metric-icon">${config.icon}</span>
+                </div>
+                <div class="metric-value" id="${config.id}-value">--</div>
+                <div class="metric-unit">${config.unit}</div>
+                ${config.showProgress ? '<div class="progress-bar"><div class="progress-fill" id="' + config.id + '-progress"></div></div>' : ''}
+                <svg class="metric-chart" id="${config.id}-chart"></svg>
+            `;
+            return card;
+        }
+
+        // Draw sparkline chart
+        function drawSparkline(elementId, data, color = '#667eea') {
+            const svg = d3.select(`#${elementId}`);
+            svg.selectAll('*').remove();
+
+            if (!data || data.length === 0) return;
+
+            const width = svg.node().getBoundingClientRect().width;
+            const height = 100;
+            const margin = { top: 10, right: 10, bottom: 10, left: 10 };
+
+            const x = d3.scaleTime()
+                .domain(d3.extent(data, d => new Date(d.time)))
+                .range([margin.left, width - margin.right]);
+
+            const y = d3.scaleLinear()
+                .domain([0, d3.max(data, d => d.value) * 1.1])
+                .range([height - margin.bottom, margin.top]);
+
+            // Gradient
+            const gradient = svg.append('defs')
+                .append('linearGradient')
+                .attr('id', `gradient-${elementId}`)
+                .attr('x1', '0%')
+                .attr('y1', '0%')
+                .attr('x2', '0%')
+                .attr('y2', '100%');
+
+            gradient.append('stop')
+                .attr('offset', '0%')
+                .attr('stop-color', color)
+                .attr('stop-opacity', 0.5);
+
+            gradient.append('stop')
+                .attr('offset', '100%')
+                .attr('stop-color', color)
+                .attr('stop-opacity', 0);
+
+            // Area
+            const area = d3.area()
+                .x(d => x(new Date(d.time)))
+                .y0(height - margin.bottom)
+                .y1(d => y(d.value))
+                .curve(d3.curveMonotoneX);
+
+            svg.append('path')
+                .datum(data)
+                .attr('class', 'area')
+                .attr('d', area)
+                .attr('fill', `url(#gradient-${elementId})`);
+
+            // Line
+            const line = d3.line()
+                .x(d => x(new Date(d.time)))
+                .y(d => y(d.value))
+                .curve(d3.curveMonotoneX);
+
+            const path = svg.append('path')
+                .datum(data)
+                .attr('class', 'sparkline')
+                .attr('d', line)
+                .attr('stroke', color);
+
+            // Animate
+            const pathLength = path.node().getTotalLength();
+            path
+                .attr('stroke-dasharray', pathLength)
+                .attr('stroke-dashoffset', pathLength)
+                .transition()
+                .duration(1500)
+                .attr('stroke-dashoffset', 0);
+        }
+
+        // Update dashboard
+        async function updateDashboard() {
+            console.log('Fetching metrics...');
+
+            // CPU Usage
+            const cpuUsage = await fetchPrometheusQuery(
+                '100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle",job="proxmox-host"}[5m])) * 100)'
+            );
+            if (cpuUsage !== null) {
+                document.getElementById('cpu-value').textContent = cpuUsage.toFixed(1);
+                const progress = document.getElementById('cpu-progress');
+                if (progress) progress.style.width = cpuUsage + '%';
+            }
+
+            const cpuHistory = await fetchPrometheusRange(
+                '100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle",job="proxmox-host"}[5m])) * 100)'
+            );
+            if (cpuHistory.length > 0) {
+                drawSparkline('cpu-chart', cpuHistory, '#f59e0b');
+            }
+
+            // Memory Usage
+            const memTotal = await fetchPrometheusQuery('node_memory_MemTotal_bytes{job="proxmox-host"}');
+            const memAvail = await fetchPrometheusQuery('node_memory_MemAvailable_bytes{job="proxmox-host"}');
+            if (memTotal && memAvail) {
+                const memUsage = ((memTotal - memAvail) / memTotal) * 100;
+                document.getElementById('memory-value').textContent = memUsage.toFixed(1);
+                const progress = document.getElementById('memory-progress');
+                if (progress) progress.style.width = memUsage + '%';
+            }
+
+            const memHistory = await fetchPrometheusRange(
+                '100 * (1 - (node_memory_MemAvailable_bytes{job="proxmox-host"} / node_memory_MemTotal_bytes{job="proxmox-host"}))'
+            );
+            if (memHistory.length > 0) {
+                drawSparkline('memory-chart', memHistory, '#10b981');
+            }
+
+            // Disk Usage
+            const diskTotal = await fetchPrometheusQuery('node_filesystem_size_bytes{job="proxmox-host",mountpoint="/"}');
+            const diskFree = await fetchPrometheusQuery('node_filesystem_free_bytes{job="proxmox-host",mountpoint="/"}');
+            if (diskTotal && diskFree) {
+                const diskUsage = ((diskTotal - diskFree) / diskTotal) * 100;
+                document.getElementById('disk-value').textContent = diskUsage.toFixed(1);
+                const progress = document.getElementById('disk-progress');
+                if (progress) progress.style.width = diskUsage + '%';
+            }
+
+            // Network Traffic (MB/s)
+            const netRx = await fetchPrometheusQuery('irate(node_network_receive_bytes_total{job="proxmox-host",device!="lo"}[5m]) / 1024 / 1024');
+            if (netRx !== null) {
+                document.getElementById('network-value').textContent = netRx.toFixed(2);
+            }
+
+            const netHistory = await fetchPrometheusRange(
+                'irate(node_network_receive_bytes_total{job="proxmox-host",device!="lo"}[5m]) / 1024 / 1024'
+            );
+            if (netHistory.length > 0) {
+                drawSparkline('network-chart', netHistory, '#3b82f6');
+            }
+
+            // System Load
+            const load1 = await fetchPrometheusQuery('node_load1{job="proxmox-host"}');
+            if (load1 !== null) {
+                document.getElementById('load-value').textContent = load1.toFixed(2);
+            }
+
+            // Uptime
+            const uptime = await fetchPrometheusQuery('node_time_seconds{job="proxmox-host"} - node_boot_time_seconds{job="proxmox-host"}');
+            if (uptime !== null) {
+                document.getElementById('uptime-value').textContent = formatUptime(uptime);
+            }
+
+            console.log('Metrics updated successfully');
+        }
+
+        // Initialize dashboard
+        async function initDashboard() {
+            const dashboard = document.getElementById('dashboard');
+            dashboard.innerHTML = '';
+
+            const metrics = [
+                { id: 'cpu', title: 'CPU Usage', icon: '🔥', unit: '%', showProgress: true },
+                { id: 'memory', title: 'Memory Usage', icon: '💾', unit: '%', showProgress: true },
+                { id: 'disk', title: 'Disk Usage', icon: '💿', unit: '%', showProgress: true },
+                { id: 'network', title: 'Network RX', icon: '🌐', unit: 'MB/s', showProgress: false },
+                { id: 'load', title: 'System Load (1m)', icon: '⚡', unit: 'avg', showProgress: false },
+                { id: 'uptime', title: 'Uptime', icon: '⏱️', unit: '', showProgress: false }
+            ];
+
+            metrics.forEach(metric => {
+                dashboard.appendChild(createMetricCard(metric));
+            });
+
+            // Initial update
+            await updateDashboard();
+
+            // Update every 15 seconds
+            setInterval(updateDashboard, REFRESH_INTERVAL);
+        }
+
+        // Start
+        initDashboard();
+    </script>
+</body>
+</html>
