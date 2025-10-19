@@ -306,3 +306,22 @@ Course Content → GeoServer → WMS Layers → Interactive Learning Maps → St
 - Compliance automation and reporting
 
 This architecture represents a comprehensive data intelligence platform that scales from individual learning to enterprise analytics, with geospatial capabilities and advanced ML operations integrated throughout the learning ecosystem.
+
+
+## 🚀 Technology Stack & Expertise
+
+<div align="center">
+
+| 🧑‍💻 **Programming Languages** | ☁️ **Cloud & Infrastructure** | 🗄️ **Data Platforms** | 🤖 **ML & Analytics Frameworks** | 🛠️ **Data Engineering Tools** |
+|:-----------------------------:|:----------------------------:|:---------------------:|:-------------------------------:|:-----------------------------:|
+| Python (Expert)<br>SQL (Expert)<br>R<br>JavaScript<br>Bash<br>Scala | AWS<br>Azure<br>GCP<br>Docker<br>Kubernetes<br>Terraform<br>Ansible<br>GitLab CI/CD<br>GitHub Actions | PostgreSQL<br>MySQL<br>MongoDB<br>Redis<br>Elasticsearch<br>PostGIS<br>Snowflake<br>BigQuery | Pandas<br>NumPy<br>SciPy<br>scikit-learn<br>XGBoost<br>LightGBM<br>TensorFlow<br>PyTorch<br>Spark MLlib | Apache Airflow<br>Spark<br>Kafka<br>Flink<br>dbt<br>Great Expectations<br>MLflow<br>DVC |
+
+</div>
+
+### Highlights
+
+- **Programming Languages:** Python & SQL for core analytics, R for statistics, JavaScript for web, Bash/Scala for automation and big data.
+- **Cloud & Infrastructure:** Multi-cloud (AWS, Azure, GCP), containerization (Docker, Kubernetes), infrastructure-as-code (Terraform, Ansible), CI/CD automation.
+- **Data Platforms:** Relational (PostgreSQL, MySQL), NoSQL (MongoDB), caching/search (Redis, Elasticsearch), spatial (PostGIS), cloud warehouses (Snowflake, BigQuery).
+- **ML & Analytics Frameworks:** Full stack from Pandas/NumPy/SciPy to ML (scikit-learn, XGBoost, LightGBM), deep learning (TensorFlow, PyTorch), distributed ML (Spark MLlib).
+- **Data Engineering Tools:** Orchestration (Airflow), streaming (Kafka, Flink), transformation/quality (dbt, Great Expectations), experiment tracking/versioning (MLflow, DVC).
