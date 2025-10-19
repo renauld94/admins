@@ -44,6 +44,16 @@ class EpicNeuralToCosmosViz {
         
         // Performance
         this.frameCount = 0;
+        this.frameTimeSum = 0;
+        this.frameSamples = 0;
+        this.dynamicQuality = { pixelRatioAdjusted: false, step: 0 };
+
+        // Device capabilities
+        this.isMobile = (typeof window !== 'undefined' && (
+            (window.matchMedia && window.matchMedia('(max-width: 768px)').matches) ||
+            /Mobi|Android/i.test(navigator.userAgent || '')
+        ));
+        this.reduceMotion = (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) || false;
         
         this.init();
     }
@@ -98,7 +108,9 @@ class EpicNeuralToCosmosViz {
         });
         
         this.renderer.setSize(container.clientWidth, container.clientHeight);
-        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    // Start with a conservative pixel ratio; we'll adapt dynamically if needed
+    const initialPR = Math.min(window.devicePixelRatio || 1, 1.75);
+    this.renderer.setPixelRatio(initialPR);
         this.renderer.outputEncoding = THREE.sRGBEncoding;
         this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
         this.renderer.toneMappingExposure = 1.2;
@@ -123,11 +135,11 @@ class EpicNeuralToCosmosViz {
         if (THREE && THREE.OrbitControls) {
             this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
             this.controls.enableDamping = true;
-            this.controls.dampingFactor = 0.05;
+            this.controls.dampingFactor = this.isMobile ? 0.08 : 0.05;
             this.controls.minDistance = 10;
             this.controls.maxDistance = 500;
-            this.controls.autoRotate = true;
-            this.controls.autoRotateSpeed = 0.5;
+            this.controls.autoRotate = this.isMobile ? false : true;
+            this.controls.autoRotateSpeed = this.isMobile ? 0.25 : 0.5;
         }
     }
     
@@ -171,7 +183,7 @@ class EpicNeuralToCosmosViz {
         const phase = this.phases.neuron;
         
         // Individual neuron with dendrites and synapses
-        const neuronCount = 50;
+        const neuronCount = this._scaledCount(50, 20);
         const geometry = new THREE.BufferGeometry();
         const positions = new Float32Array(neuronCount * 3);
         const colors = new Float32Array(neuronCount * 3);
@@ -199,7 +211,9 @@ class EpicNeuralToCosmosViz {
             sizes[i] = 2 + Math.random() * 3;
         }
         
-        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    // Mark as dynamic, we animate these positions each frame
+    geometry.attributes.position.setUsage(THREE.DynamicDrawUsage);
         geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
         geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
         
@@ -222,7 +236,16 @@ class EpicNeuralToCosmosViz {
     
     createNeuralConnections(phase, positions, count) {
         const connections = [];
-        const connectionCount = count * 2; // Multiple connections per neuron
+    const connectionCount = Math.floor(count * 2 * this._connectionFactor()); // Multiple connections per neuron
+        // Reuse a single material for all neuron connections to reduce draw state churn
+        const sharedMat = new THREE.LineBasicMaterial({
+            color: 0x00aaff,
+            transparent: true,
+            opacity: 0.3,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false,
+            toneMapped: false
+        });
         
         for (let i = 0; i < connectionCount; i++) {
             const startIdx = Math.floor(Math.random() * count) * 3;
@@ -258,14 +281,7 @@ class EpicNeuralToCosmosViz {
             const points = curve.getPoints(20);
             const geometry = new THREE.BufferGeometry().setFromPoints(points);
             
-            const material = new THREE.LineBasicMaterial({
-                color: 0x00aaff,
-                transparent: true,
-                opacity: 0.3,
-                blending: THREE.AdditiveBlending
-            });
-            
-            const line = new THREE.Line(geometry, material);
+            const line = new THREE.Line(geometry, sharedMat);
             connections.push(line);
         }
         
@@ -276,8 +292,8 @@ class EpicNeuralToCosmosViz {
         const phase = this.phases.brain;
         
         // Brain-like network with clusters
-        const clusterCount = 8;
-        const neuronsPerCluster = 30;
+        const clusterCount = this._scaledCountInt(8, 4);
+        const neuronsPerCluster = this._scaledCountInt(30, 12);
         const totalNeurons = clusterCount * neuronsPerCluster;
         
         const geometry = new THREE.BufferGeometry();
@@ -331,7 +347,9 @@ class EpicNeuralToCosmosViz {
             }
         }
         
-        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    // We animate Y-offset gently each frame
+    geometry.attributes.position.setUsage(THREE.DynamicDrawUsage);
         geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
         geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
         
@@ -355,6 +373,22 @@ class EpicNeuralToCosmosViz {
     createBrainConnections(phase, positions, totalCount, clusterCount, neuronsPerCluster) {
         const connections = [];
         
+        // Create shared materials to avoid creating hundreds of material instances
+        const materialIntra = new THREE.LineBasicMaterial({
+            color: 0x4a90e2,
+            transparent: true,
+            opacity: 0.2,
+            depthWrite: false,
+            toneMapped: false
+        });
+        const materialInter = new THREE.LineBasicMaterial({
+            color: 0xff6b9d,
+            transparent: true,
+            opacity: 0.4,
+            depthWrite: false,
+            toneMapped: false
+        });
+
         // Intra-cluster connections (dense)
         for (let cluster = 0; cluster < clusterCount; cluster++) {
             const clusterStart = cluster * neuronsPerCluster;
@@ -379,18 +413,12 @@ class EpicNeuralToCosmosViz {
                 );
                 
                 const geometry = new THREE.BufferGeometry().setFromPoints([start, end]);
-                const material = new THREE.LineBasicMaterial({
-                    color: 0x4a90e2,
-                    transparent: true,
-                    opacity: 0.2
-                });
-                
-                connections.push(new THREE.Line(geometry, material));
+                connections.push(new THREE.Line(geometry, materialIntra));
             }
         }
         
         // Inter-cluster connections (sparse but important)
-        for (let i = 0; i < clusterCount * 5; i++) {
+        for (let i = 0; i < Math.floor(clusterCount * 5 * this._connectionFactor()); i++) {
             const cluster1 = Math.floor(Math.random() * clusterCount);
             const cluster2 = Math.floor(Math.random() * clusterCount);
             
@@ -423,13 +451,7 @@ class EpicNeuralToCosmosViz {
             const points = curve.getPoints(25);
             const geometry = new THREE.BufferGeometry().setFromPoints(points);
             
-            const material = new THREE.LineBasicMaterial({
-                color: 0xff6b9d,
-                transparent: true,
-                opacity: 0.4
-            });
-            
-            connections.push(new THREE.Line(geometry, material));
+            connections.push(new THREE.Line(geometry, materialInter));
         }
         
         phase.connections = connections;
@@ -439,7 +461,7 @@ class EpicNeuralToCosmosViz {
         const phase = this.phases.network;
         
         // Global data network with servers, data flows
-        const nodeCount = 200;
+        const nodeCount = this._scaledCountInt(200, 60);
         const geometry = new THREE.BufferGeometry();
         const positions = new Float32Array(nodeCount * 3);
         const colors = new Float32Array(nodeCount * 3);
@@ -499,7 +521,7 @@ class EpicNeuralToCosmosViz {
             sizes[i] = 1 + Math.random() * 2;
         }
         
-        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
         geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
         geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
         
@@ -522,7 +544,15 @@ class EpicNeuralToCosmosViz {
     
     createNetworkConnections(phase, positions, nodeCount) {
         const connections = [];
-        const connectionCount = nodeCount * 1.5;
+    const connectionCount = Math.floor(nodeCount * 1.5 * this._connectionFactor());
+        // Shared material, avoid per-line materials
+        const sharedMat = new THREE.LineBasicMaterial({
+            color: 0x00ff88,
+            transparent: true,
+            opacity: 0.25,
+            depthWrite: false,
+            toneMapped: false
+        });
         
         for (let i = 0; i < connectionCount; i++) {
             const node1 = Math.floor(Math.random() * nodeCount);
@@ -548,13 +578,7 @@ class EpicNeuralToCosmosViz {
             if (distance > 50) continue;
             
             const geometry = new THREE.BufferGeometry().setFromPoints([start, end]);
-            const material = new THREE.LineBasicMaterial({
-                color: 0x00ff88,
-                transparent: true,
-                opacity: 0.3
-            });
-            
-            const line = new THREE.Line(geometry, material);
+            const line = new THREE.Line(geometry, sharedMat);
             line.userData = { 
                 dataFlow: Math.random(), 
                 flowSpeed: 0.5 + Math.random() * 2,
@@ -571,7 +595,7 @@ class EpicNeuralToCosmosViz {
         const phase = this.phases.cosmos;
         
         // Cosmic structure - galaxies, nebulae, cosmic web
-        const cosmicNodeCount = 800;
+        const cosmicNodeCount = this._scaledCountInt(800, 200);
         const geometry = new THREE.BufferGeometry();
         const positions = new Float32Array(cosmicNodeCount * 3);
         const colors = new Float32Array(cosmicNodeCount * 3);
@@ -625,7 +649,7 @@ class EpicNeuralToCosmosViz {
             sizes[i] = 0.5 + Math.random() * 3;
         }
         
-        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
         geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
         geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
         
@@ -648,7 +672,14 @@ class EpicNeuralToCosmosViz {
     
     createCosmicConnections(phase, positions, nodeCount) {
         const connections = [];
-        const connectionCount = nodeCount * 0.8;
+    const connectionCount = Math.floor(nodeCount * 0.8 * this._connectionFactor(0.6));
+        const sharedMat = new THREE.LineBasicMaterial({
+            color: 0x6600ff,
+            transparent: true,
+            opacity: 0.15,
+            depthWrite: false,
+            toneMapped: false
+        });
         
         for (let i = 0; i < connectionCount; i++) {
             const node1 = Math.floor(Math.random() * nodeCount);
@@ -674,13 +705,7 @@ class EpicNeuralToCosmosViz {
             if (distance > 120) continue;
             
             const geometry = new THREE.BufferGeometry().setFromPoints([start, end]);
-            const material = new THREE.LineBasicMaterial({
-                color: 0x6600ff,
-                transparent: true,
-                opacity: 0.15
-            });
-            
-            const line = new THREE.Line(geometry, material);
+            const line = new THREE.Line(geometry, sharedMat);
             line.userData = { 
                 cosmicFlow: Math.random(),
                 energy: Math.random() * 2 
@@ -866,12 +891,32 @@ class EpicNeuralToCosmosViz {
             this.startAutoTransition();
         }
     }
+
+    // Helpers to scale scene size for mobile/reduced-motion
+    _scaledCount(desktopCount, mobileCount) {
+        if (this.reduceMotion) return Math.floor(mobileCount * 0.75);
+        return this.isMobile ? mobileCount : desktopCount;
+    }
+    _scaledCountInt(desktopCount, mobileCount) {
+        return Math.floor(this._scaledCount(desktopCount, mobileCount));
+    }
+    _connectionFactor(base = 1.0) {
+        let factor = base;
+        if (this.isMobile) factor *= 0.6;
+        if (this.reduceMotion) factor *= 0.7;
+        return factor;
+    }
     
     startAnimation() {
         const animate = () => {
             this.animationId = requestAnimationFrame(animate);
             
-            const time = this.clock.getElapsedTime();
+            const delta = this.clock.getDelta();
+            const time = this.clock.elapsedTime;
+            // Track frame time for adaptive quality
+            const frameMs = delta * 1000;
+            this.frameTimeSum += frameMs;
+            this.frameSamples += 1;
             this.frameCount++;
             
             // Update controls
@@ -891,6 +936,27 @@ class EpicNeuralToCosmosViz {
                 this.cosmicLights[1].position.y = Math.sin(time * 0.4) * 25;
             }
             
+            // Adaptive pixel ratio: if frames are slow, drop pixel ratio once or twice
+            if (this.frameCount % 60 === 0 && !this.dynamicQuality.pixelRatioAdjusted) {
+                const avgMs = this.frameTimeSum / Math.max(this.frameSamples, 1);
+                // Reset accumulators
+                this.frameTimeSum = 0;
+                this.frameSamples = 0;
+                if (avgMs > 28 && this.renderer.getPixelRatio() > 1.0) {
+                    this.renderer.setPixelRatio(1.0);
+                    this.handleResize();
+                    this.dynamicQuality.pixelRatioAdjusted = true;
+                    this.dynamicQuality.step = 2;
+                    console.info('[EpicViz] Dropping pixel ratio to 1.0 for performance');
+                } else if (avgMs > 20 && this.renderer.getPixelRatio() > 1.25) {
+                    this.renderer.setPixelRatio(1.25);
+                    this.handleResize();
+                    this.dynamicQuality.pixelRatioAdjusted = true;
+                    this.dynamicQuality.step = 1;
+                    console.info('[EpicViz] Dropping pixel ratio to 1.25 for performance');
+                }
+            }
+
             // Render
             this.renderer.render(this.scene, this.camera);
         };
@@ -969,19 +1035,13 @@ class EpicNeuralToCosmosViz {
     }
     
     animateNetworkPhase(phase, time) {
-        // Data packet flows and network traffic
+        // Data packet flows and network traffic (lightweight)
         phase.particleSystem.rotation.x = Math.sin(time * 0.1) * 0.1;
         phase.particleSystem.rotation.y += 0.002;
-        
-        // Simulate network latency variations
-        const colors = phase.particleSystem.geometry.attributes.color.array;
-        for (let i = 0; i < colors.length; i += 3) {
-            const activity = Math.sin(time * 3 + i * 0.1) * 0.3 + 0.7;
-            colors[i] *= activity;     // Red component (data activity)
-            colors[i + 1] *= activity; // Green component
+        // Global shimmer via material opacity to avoid per-vertex color churn
+        if (phase.particleSystem.material) {
+            phase.particleSystem.material.opacity = 0.75 + 0.15 * Math.sin(time * 1.5);
         }
-        
-        phase.particleSystem.geometry.attributes.color.needsUpdate = true;
     }
     
     animateCosmosPhase(phase, time) {
@@ -992,32 +1052,27 @@ class EpicNeuralToCosmosViz {
         // Galactic rotation
         phase.particleSystem.rotation.z += 0.0005;
         
-        // Stellar evolution (twinkling)
-        const colors = phase.particleSystem.geometry.attributes.color.array;
-        for (let i = 0; i < colors.length; i += 3) {
-            const twinkle = Math.sin(time * 5 + i * 0.05) * 0.2 + 0.8;
-            colors[i + 2] *= twinkle; // Blue component (starlight)
+        // Lightweight twinkle via overall opacity modulation
+        if (phase.particleSystem.material) {
+            phase.particleSystem.material.opacity = 0.75 + 0.1 * Math.sin(time * 2.0);
         }
-        
-        phase.particleSystem.geometry.attributes.color.needsUpdate = true;
     }
     
     animateConnections(phase, time) {
         if (!phase.connections) return;
+        // Throttle heavy connection animations: skip for large phases
+        if (this.currentPhase === 'network' || this.currentPhase === 'cosmos') return;
+        if (this.frameCount % 3 !== 0) return;
         
-        phase.connections.forEach((connection, index) => {
-            // Pulse opacity for data/energy flow
+        for (let index = 0; index < phase.connections.length; index++) {
+            const connection = phase.connections[index];
+            // Pulse opacity softly for smaller sets (neuron/brain)
             const pulseSpeed = connection.userData?.flowSpeed || 1;
-            const pulse = Math.sin(time * pulseSpeed + index * 0.1) * 0.3 + 0.7;
-            
-            connection.material.opacity = connection.material.opacity * 0.95 + pulse * 0.05;
-            
-            // Color shifting for energy flow
-            if (this.currentPhase === 'cosmos') {
-                const hue = (time * 0.1 + index * 0.02) % 1;
-                connection.material.color.setHSL(hue * 0.3 + 0.6, 0.8, 0.5);
+            const pulse = Math.sin(time * pulseSpeed + index * 0.1) * 0.15 + 0.85;
+            if (connection.material && typeof connection.material.opacity === 'number') {
+                connection.material.opacity = pulse;
             }
-        });
+        }
     }
     
     handleResize() {

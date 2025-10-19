@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown Test - Mobile Responsiveness Fix</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f8fafc;
+        }
+        
+        .test-container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .test-title {
+            color: #0f172a;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .test-note {
+            background: #e0f2fe;
+            border: 1px solid #0ea5e9;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 20px;
+            color: #0c4a6e;
+            font-size: 0.9rem;
+        }
+        
+        /* Include the mobile dropdown styles from main CSS */
+        .mobile-dropdown { 
+            position: relative;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .mobile-dropdown-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            width: 100%;
+            padding: 16px 24px;
+            border: none;
+            background: transparent;
+            color: #0f172a;
+            font-weight: 500;
+            font-size: 1rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            -webkit-tap-highlight-color: rgba(14, 165, 233, 0.3);
+            touch-action: manipulation;
+            -webkit-user-select: none;
+            user-select: none;
+            position: relative;
+            z-index: 10;
+            min-height: 48px;
+            outline: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border-radius: 8px;
+        }
+
+        .mobile-dropdown-toggle:hover,
+        .mobile-dropdown-toggle:focus,
+        .mobile-dropdown-toggle:active {
+            background: rgba(14, 165, 233, 0.08);
+            color: #0ea5e9;
+        }
+
+        .mobile-dropdown-toggle:active {
+            background: rgba(14, 165, 233, 0.15);
+            transform: scale(0.98);
+        }
+
+        .admin-badge {
+            background: linear-gradient(90deg, #0ea5e9, #8b5cf6);
+            color: #fff;
+            border-radius: 6px;
+            padding: 2px 6px;
+            font-size: .70rem;
+            font-weight: 700;
+            letter-spacing: .5px;
+            text-transform: uppercase;
+            box-shadow: 0 0 0 1px rgba(255,255,255,0.15), 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .mobile-dropdown.open .mobile-dropdown-toggle svg {
+            transform: rotate(180deg);
+        }
+
+        .mobile-dropdown-menu { 
+            display: none;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            background: rgba(248, 250, 252, 0.8);
+            border-top: 1px solid rgba(15, 23, 42, 0.08);
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+            animation: slideDown 0.2s ease-out;
+        }
+
+        .mobile-dropdown.open .mobile-dropdown-menu { 
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .mobile-dropdown-menu li {
+            border-bottom: 1px solid rgba(15, 23, 42, 0.05);
+        }
+
+        .mobile-dropdown-menu li:last-child {
+            border-bottom: none;
+        }
+
+        .mobile-dropdown-menu .nav-link {
+            display: block;
+            padding: 14px 24px 14px 48px;
+            font-size: 0.95rem;
+            color: #475569;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .mobile-dropdown-menu .nav-link::before {
+            content: '→';
+            position: absolute;
+            left: 28px;
+            color: #0ea5e9;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .mobile-dropdown-menu .nav-link:hover,
+        .mobile-dropdown-menu .nav-link:focus {
+            background: rgba(14, 165, 233, 0.1);
+            color: #0ea5e9;
+            padding-left: 52px;
+        }
+
+        .mobile-dropdown-menu .nav-link:hover::before,
+        .mobile-dropdown-menu .nav-link:focus::before {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h2 class="test-title">Mobile Admin Dropdown Test</h2>
+        
+        <div class="test-note">
+            <strong>Test Instructions:</strong><br>
+            • Tap the dropdown button to open/close<br>
+            • Check hover effects on items<br>
+            • Verify colors are readable<br>
+            • Test on mobile device
+        </div>
+        
+        <div class="mobile-dropdown">
+            <button class="mobile-dropdown-toggle" onclick="toggleTestDropdown()" aria-expanded="false" aria-haspopup="true">
+                Admin Tools
+                <span class="admin-badge">Admin</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="6,9 12,15 18,9"></polyline>
+                </svg>
+            </button>
+            <ul class="mobile-dropdown-menu" aria-hidden="true" aria-label="Admin Tools">
+                <li><a href="#" class="nav-link" onclick="alert('Grafana clicked!')">Grafana</a></li>
+                <li><a href="#" class="nav-link" onclick="alert('Prometheus clicked!')">Prometheus</a></li>
+                <li><a href="#" class="nav-link" onclick="alert('Open WebUI clicked!')">Open WebUI</a></li>
+                <li><a href="#" class="nav-link" onclick="alert('Ollama clicked!')">Ollama</a></li>
+                <li><a href="#" class="nav-link" onclick="alert('GeoServer clicked!')">GeoServer</a></li>
+                <li><a href="#" class="nav-link" onclick="alert('Jellyfin clicked!')">Jellyfin</a></li>
+                <li><a href="#" class="nav-link" onclick="alert('Nextcloud clicked!')">Nextcloud</a></li>
+                <li><a href="#" class="nav-link" onclick="alert('JupyterHub clicked!')">JupyterHub</a></li>
+                <li><a href="#" class="nav-link" onclick="alert('MLflow clicked!')">MLflow</a></li>
+                <li><a href="#" class="nav-link" onclick="alert('ML API clicked!')">ML API</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function toggleTestDropdown() {
+            const dropdown = document.querySelector('.mobile-dropdown');
+            const toggle = document.querySelector('.mobile-dropdown-toggle');
+            const menu = document.querySelector('.mobile-dropdown-menu');
+            
+            if (dropdown && toggle && menu) {
+                const isOpen = dropdown.classList.contains('open');
+                
+                if (isOpen) {
+                    dropdown.classList.remove('open');
+                    toggle.setAttribute('aria-expanded', 'false');
+                    menu.setAttribute('aria-hidden', 'true');
+                } else {
+                    dropdown.classList.add('open');
+                    toggle.setAttribute('aria-expanded', 'true');
+                    menu.setAttribute('aria-hidden', 'false');
+                }
+            }
+        }
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.querySelector('.mobile-dropdown');
+            if (dropdown && !dropdown.contains(event.target)) {
+                const toggle = document.querySelector('.mobile-dropdown-toggle');
+                const menu = document.querySelector('.mobile-dropdown-menu');
+                dropdown.classList.remove('open');
+                toggle.setAttribute('aria-expanded', 'false');
+                menu.setAttribute('aria-hidden', 'true');
+            }
+        });
+    </script>
+</body>
+</html>

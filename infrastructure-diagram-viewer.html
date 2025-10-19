@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simon DataLab Infrastructure - Mermaid Diagram</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #0f1419 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.02);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 50px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        
+        h1 {
+            background: linear-gradient(135deg, #00d4ff 0%, #0099ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 3em;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #b0b0b0;
+            margin-bottom: 40px;
+            font-size: 1.2em;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+        
+        .header-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 212, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-item:hover {
+            background: rgba(0, 212, 255, 0.1);
+            border-color: rgba(0, 212, 255, 0.4);
+            transform: translateY(-5px);
+        }
+        
+        .stat-number {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #00d4ff;
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            color: #b0b0b0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            background: rgba(0, 20, 40, 0.4);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 12px;
+            padding: 30px;
+            overflow-x: auto;
+            margin: 30px 0;
+        }
+        
+        .info-panel {
+            margin-top: 30px;
+            padding: 25px;
+            background: rgba(0, 212, 255, 0.05);
+            border-left: 4px solid #00d4ff;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 212, 255, 0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .info-panel:hover {
+            background: rgba(0, 212, 255, 0.1);
+            border-color: rgba(0, 212, 255, 0.3);
+        }
+        
+        .info-panel h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #00d4ff;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+        
+        .info-panel ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .info-panel li {
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .info-panel li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #00d4ff;
+            font-weight: bold;
+        }
+        
+        .info-panel strong {
+            color: #00d4ff;
+        }
+        
+        .legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95em;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .legend-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .legend-color {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            border: 2px solid;
+            flex-shrink: 0;
+        }
+        
+        .external { background: #e1f5fe; border-color: #01579b !important; }
+        .infrastructure { background: #f3e5f5; border-color: #4a148c !important; }
+        .container-legend { background: #e8f5e8; border-color: #1b5e20 !important; }
+        .database { background: #fff3e0; border-color: #e65100 !important; }
+        .monitoring { background: #fce4ec; border-color: #880e4f !important; }
+        .ai { background: #f1f8e9; border-color: #33691e !important; }
+        .future { background: #f5f5f5; border-color: #616161 !important; }
+        
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .tech-badge {
+            padding: 10px 15px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 6px;
+            text-align: center;
+            font-size: 0.85em;
+            color: #b0b0b0;
+            transition: all 0.3s ease;
+        }
+        
+        .tech-badge:hover {
+            background: rgba(0, 212, 255, 0.2);
+            border-color: rgba(0, 212, 255, 0.6);
+            color: #00d4ff;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            .mermaid {
+                padding: 15px;
+                overflow-x: auto;
+            }
+            .legend {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏗️ Simon DataLab Infrastructure</h1>
+        <p class="subtitle">Enterprise Data Architecture - Real-time Analytics at Scale</p>
+        
+        <div class="header-stats">
+            <div class="stat-item">
+                <div class="stat-number">500M+</div>
+                <div class="stat-label">Daily Records Processed</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">99.9%</div>
+                <div class="stat-label">System Uptime</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">85%</div>
+                <div class="stat-label">Analysis Acceleration</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">10+</div>
+                <div class="stat-label">Production Systems</div>
+            </div>
+        </div>
+        <div class="mermaid">
+graph TB
+    %% External Layer
+    subgraph "🌐 External Access"
+        Internet[Internet Users]
+        CloudFlare[☁️ Cloudflare DNS<br/>DNS-only mode<br/>API Management]
+        LetsEncrypt[🔒 Let's Encrypt<br/>Auto SSL Renewal<br/>Multi-domain SAN]
+    end
+
+    %% Public Infrastructure
+    subgraph "🏢 Hetzner Infrastructure"
+        ProxmoxHost[🖥️ Proxmox VE Host<br/>136.243.155.166:2222<br/>6.8.12-14-pve]
+        
+        subgraph "🔒 SSL Termination & Reverse Proxy"
+            NginxProxy[⚡ Nginx Reverse Proxy<br/>SSL Termination<br/>Load Balancing]
+            SSLCerts[📜 SSL Certificates<br/>/etc/letsencrypt/live/ollama.simondatalab.de/<br/>8 Domains SAN]
+        end
+        
+        subgraph "🛡️ Network Security"
+            IPTables[🔥 IPTables NAT/Firewall<br/>Port Management<br/>Security Rules]
+            NetworkBridge[🌉 Network Bridges<br/>vmbr0: 136.243.155.166/26<br/>vmbr1: 10.0.0.0/24]
+        end
+    end
+
+    %% Internal Network Layer
+    subgraph "🏠 Internal Network (10.0.0.0/24)"
+        
+        %% Container 150 - Portfolio
+        subgraph "📦 Container 150 (10.0.0.150)"
+            Portfolio[🎨 Portfolio Website<br/>simondatalab.de<br/>Neural GeoServer Viz<br/>3D Animations]
+            PortfolioNginx[⚡ Nginx Web Server<br/>Portfolio Assets<br/>Geospatial Viz]
+        end
+
+        %% VM 9001 - Moodle & Analytics
+        subgraph "🖥️ VM 9001 (10.0.0.104) - Learning Platform"
+            
+            subgraph "🎓 Moodle LMS Stack"
+                Moodle[📚 Moodle LMS<br/>Bitnami 4.3.2<br/>Python Academy<br/>Port 8086]
+                MoodleDB[🗄️ MariaDB 11.1.2<br/>Learning Data<br/>User Management]
+                MoodleTheme[🎨 Epic Course Theme<br/>Interactive JS<br/>Custom CSS]
+            end
+
+            subgraph "🔬 ML & Analytics Platform"
+                JupyterHub[📊 JupyterHub<br/>Data Science Notebooks<br/>Port 8000]
+                MLflow[🤖 MLflow<br/>ML Experiment Tracking<br/>Model Registry<br/>Port 5000]
+                MLAPI[🚀 ML API<br/>Model Serving<br/>Prediction Endpoints<br/>Port 8001]
+                BitBucket[📂 BitBucket<br/>Code Repository<br/>Port 7990]
+            end
+
+            subgraph "📈 Monitoring Stack"
+                Grafana[📊 Grafana Dashboard<br/>Metrics Visualization<br/>Alerting]
+                PrometheusVM[📈 Prometheus<br/>Metrics Collection<br/>Time Series DB]
+                NodeExporter[📡 Node Exporter<br/>System Metrics]
+                PostgresExporter[📊 Postgres Exporter<br/>Database Metrics]
+                BlackboxExporter[🔍 Blackbox Exporter<br/>Endpoint Monitoring]
+                AlertManager[🚨 AlertManager<br/>Alert Routing<br/>Notifications]
+                CAdvisor[🐳 cAdvisor<br/>Container Metrics]
+            end
+        end
+
+        %% VM 159 - AI Services
+        subgraph "🖥️ VM 159 (10.0.0.110) - AI Platform"
+            Ollama[🧠 Ollama<br/>LLM Inference<br/>AI Chat Services]
+            MLflowAI[🤖 MLflow Instance<br/>AI Model Registry<br/>Experiment Tracking]
+            AINodeExporter[📡 Node Exporter<br/>AI System Metrics]
+            AICAdvisor[🐳 cAdvisor<br/>AI Container Metrics]
+        end
+
+        %% VM 106 - GeoNeural Analytics
+        subgraph "🖥️ VM 106 (10.0.0.106) - GeoNeural Lab"
+            
+            subgraph "🌍 Geospatial Platform"
+                PostGIS[🗺️ PostGIS Database<br/>Spatial Analytics<br/>Geographic Data<br/>Port 5432]
+                Redis[⚡ Redis Cache<br/>Session Storage<br/>Real-time Data<br/>Port 6379]
+                GeoAPI[🌐 GeoNeural API<br/>Spatial Analytics<br/>Port 8088]
+            end
+
+            subgraph "📊 Analytics Services"
+                MetricsProxy[📊 Metrics Proxy<br/>API Gateway<br/>CORS Handling<br/>Node.js]
+            end
+        end
+
+        %% VM 200 - Media & Storage
+        subgraph "🖥️ VM 200 (10.0.0.103) - Media Platform"
+            NextCloud[☁️ NextCloud<br/>File Storage<br/>Collaboration<br/>Port 8088]
+            Jellyfin[📺 Jellyfin Media<br/>Streaming Server<br/>Content Management<br/>Port 8096]
+        end
+
+        %% Global Monitoring
+        subgraph "📊 Global Monitoring (Proxmox)"
+            PrometheusHost[📈 Prometheus Master<br/>Central Metrics<br/>Port 9090]
+            PVEExporter[📊 Proxmox VE Exporter<br/>Hypervisor Metrics<br/>Port 9221]
+        end
+    end
+
+    %% Future/Work in Progress Layer
+    subgraph "🚧 Future/Work in Progress"
+        
+        subgraph "🗺️ Advanced GeoServer Integration"
+            GeoServer[🌍 GeoServer Enterprise<br/>WMS/WFS Services<br/>Map Publishing<br/>Spatial Data Processing]
+            GeoWebUI[🖥️ GeoServer Web UI<br/>Layer Management<br/>Style Configuration]
+        end
+
+        subgraph "📊 Enhanced Analytics Pipeline"
+            DataLake[🏞️ Data Lake<br/>Raw Data Storage<br/>Multi-format Support]
+            StreamProcessing[⚡ Stream Processing<br/>Real-time Analytics<br/>Event Processing]
+            DataWarehouse[🏢 Data Warehouse<br/>OLAP Analytics<br/>Historical Data]
+        end
+
+        subgraph "🤖 Advanced ML Operations"
+            MLPipeline[🔄 ML Pipeline<br/>Automated Training<br/>Model Deployment]
+            FeatureStore[🏪 Feature Store<br/>Feature Management<br/>ML Feature Serving]
+            ModelServing[🚀 Model Serving<br/>Scalable Inference<br/>A/B Testing]
+        end
+
+        subgraph "🔐 Enhanced Security & Governance"
+            VaultSecrets[🔒 HashiCorp Vault<br/>Secrets Management<br/>Certificate Rotation]
+            DataGovernance[📋 Data Governance<br/>Lineage Tracking<br/>Compliance Monitoring]
+            RBAC[👥 Role-Based Access<br/>User Management<br/>Permission Control]
+        end
+    end
+
+    %% Data Flow Connections
+    Internet --> CloudFlare
+    CloudFlare --> ProxmoxHost
+    LetsEncrypt --> SSLCerts
+    
+    ProxmoxHost --> NginxProxy
+    NginxProxy --> SSLCerts
+    ProxmoxHost --> IPTables
+    ProxmoxHost --> NetworkBridge
+    
+    NginxProxy --> Portfolio
+    NginxProxy --> Moodle
+    NginxProxy --> Grafana
+    NginxProxy --> Ollama
+    NginxProxy --> MLflow
+    NginxProxy --> NextCloud
+    NginxProxy --> Jellyfin
+    
+    Portfolio --> PortfolioNginx
+    
+    Moodle --> MoodleDB
+    Moodle --> MoodleTheme
+    Moodle --> JupyterHub
+    Moodle --> MLflow
+    Moodle --> MLAPI
+    
+    JupyterHub --> MLflow
+    MLAPI --> MLflow
+    
+    Grafana --> PrometheusVM
+    PrometheusVM --> NodeExporter
+    PrometheusVM --> PostgresExporter
+    PrometheusVM --> BlackboxExporter
+    PrometheusVM --> CAdvisor
+    PrometheusVM --> AlertManager
+    
+    Ollama --> MLflowAI
+    AINodeExporter --> PrometheusHost
+    AICAdvisor --> PrometheusHost
+    
+    PostGIS --> Redis
+    GeoAPI --> PostGIS
+    GeoAPI --> Redis
+    MetricsProxy --> GeoAPI
+    
+    PrometheusHost --> PVEExporter
+    PrometheusHost --> NodeExporter
+    PrometheusHost --> AINodeExporter
+    
+    %% Future Connections (Dotted)
+    GeoAPI -.-> GeoServer
+    PostGIS -.-> GeoServer
+    GeoServer -.-> GeoWebUI
+    
+    MLflow -.-> MLPipeline
+    MLflowAI -.-> MLPipeline
+    MLPipeline -.-> FeatureStore
+    MLPipeline -.-> ModelServing
+    
+    PostGIS -.-> DataLake
+    Redis -.-> StreamProcessing
+    StreamProcessing -.-> DataWarehouse
+    
+    ProxmoxHost -.-> VaultSecrets
+    Moodle -.-> RBAC
+    PostGIS -.-> DataGovernance
+
+    %% Styling
+    classDef external fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef infrastructure fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef container fill:#e8f5e8,stroke:#1b5e20,stroke-width:2px
+    classDef database fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef monitoring fill:#fce4ec,stroke:#880e4f,stroke-width:2px
+    classDef ai fill:#f1f8e9,stroke:#33691e,stroke-width:2px
+    classDef future fill:#f5f5f5,stroke:#616161,stroke-width:2px,stroke-dasharray: 5 5
+    
+    class Internet,CloudFlare,LetsEncrypt external
+    class ProxmoxHost,NginxProxy,IPTables,NetworkBridge,SSLCerts infrastructure
+    class Portfolio,Moodle,JupyterHub,NextCloud,Jellyfin container
+    class MoodleDB,PostGIS,Redis,DataLake,DataWarehouse database
+    class Grafana,PrometheusVM,PrometheusHost,NodeExporter,PostgresExporter,BlackboxExporter,AlertManager,CAdvisor,PVEExporter,AINodeExporter,AICAdvisor,MetricsProxy monitoring
+    class Ollama,MLflow,MLflowAI,MLAPI,MLPipeline,FeatureStore,ModelServing ai
+    class GeoServer,GeoWebUI,StreamProcessing,VaultSecrets,DataGovernance,RBAC future
+        </div>
+
+        <div class="info-panel">
+            <h3>📋 Color Legend</h3>
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color external"></div>
+                    <span>External Access</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color infrastructure"></div>
+                    <span>Infrastructure</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color container-legend"></div>
+                    <span>Containers/VMs</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color database"></div>
+                    <span>Databases</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color monitoring"></div>
+                    <span>Monitoring</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color ai"></div>
+                    <span>AI/ML Services</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color future"></div>
+                    <span>Future/WIP (Dotted)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-panel">
+            <h3>🔑 Core Architecture Components</h3>
+            <ul>
+                <li><strong>External Layer:</strong> Internet, Cloudflare DNS, Let's Encrypt SSL</li>
+                <li><strong>Infrastructure:</strong> Proxmox VE, Nginx Reverse Proxy, Network Security</li>
+                <li><strong>Learning Platform:</strong> Moodle, JupyterHub, MLflow, Grafana</li>
+                <li><strong>AI Platform:</strong> Ollama LLM, ML Model Registry</li>
+                <li><strong>GeoNeural Lab:</strong> PostGIS, Redis, Geospatial Analytics API</li>
+                <li><strong>Media Platform:</strong> Jellyfin, NextCloud</li>
+                <li><strong>Future Systems:</strong> GeoServer, Data Lake, Advanced ML Ops</li>
+            </ul>
+        </div>
+
+        <div class="info-panel">
+            <h3>⚡ Technology Stack</h3>
+            <div class="tech-stack">
+                <div class="tech-badge">PostgreSQL/PostGIS</div>
+                <div class="tech-badge">Python</div>
+                <div class="tech-badge">Apache Airflow</div>
+                <div class="tech-badge">MLflow</div>
+                <div class="tech-badge">Prometheus</div>
+                <div class="tech-badge">Grafana</div>
+                <div class="tech-badge">Docker</div>
+                <div class="tech-badge">Kubernetes</div>
+                <div class="tech-badge">Redis</div>
+                <div class="tech-badge">JupyterHub</div>
+                <div class="tech-badge">Nginx</div>
+                <div class="tech-badge">Moodle</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+        mermaid.contentLoaded();
+    </script>
+</body>
+</html>

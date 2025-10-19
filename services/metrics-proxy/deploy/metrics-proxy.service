@@ -1,0 +1,16 @@
+[Unit]
+Description=Metrics Proxy (Prometheus safe proxy)
+After=network.target
+
+[Service]
+Type=simple
+Environment=NODE_ENV=production
+WorkingDirectory=/opt/metrics-proxy
+ExecStart=/usr/bin/node server.js
+Restart=always
+RestartSec=3
+User=www-data
+Group=www-data
+
+[Install]
+WantedBy=multi-user.target

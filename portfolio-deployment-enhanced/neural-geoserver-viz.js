@@ -309,45 +309,102 @@ class NeuralGeoServerViz {
         const positions = new Float32Array(particleCount * 3);
         const colors = new Float32Array(particleCount * 3);
         const sizes = new Float32Array(particleCount);
+        const alphas = new Float32Array(particleCount);
         
         for (let i = 0; i < particleCount; i++) {
             const i3 = i * 3;
             
-            // Random positions around Earth
-            const radius = 20 + Math.random() * 30;
+            // Create stunning molecular/atomic structure with multiple layers
+            const layer = Math.floor(i / (particleCount / 5));
+            const radius = 18 + layer * 8; // Multiple concentric shells
             const theta = Math.random() * Math.PI * 2;
             const phi = Math.random() * Math.PI;
             
-            positions[i3] = radius * Math.sin(phi) * Math.cos(theta);
-            positions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
-            positions[i3 + 2] = radius * Math.cos(phi);
+            // Add some clustering for molecular effect
+            const clusterOffset = Math.sin(i * 0.1) * 2;
             
-            // Random colors (blue to purple gradient)
+            positions[i3] = (radius + clusterOffset) * Math.sin(phi) * Math.cos(theta);
+            positions[i3 + 1] = (radius + clusterOffset) * Math.sin(phi) * Math.sin(theta);
+            positions[i3 + 2] = (radius + clusterOffset) * Math.cos(phi);
+            
+            // Vibrant colors for molecular effect - cyan, blue, purple, magenta
             const color = new THREE.Color();
-            color.setHSL(0.6 + Math.random() * 0.2, 0.8, 0.6);
+            const hue = 0.5 + Math.random() * 0.3; // Cyan to purple range
+            const saturation = 0.8 + Math.random() * 0.2;
+            const lightness = 0.5 + Math.random() * 0.3;
+            color.setHSL(hue, saturation, lightness);
             colors[i3] = color.r;
             colors[i3 + 1] = color.g;
             colors[i3 + 2] = color.b;
             
-            sizes[i] = Math.random() * 2 + 1;
+            // Varied sizes for depth and molecular structure
+            sizes[i] = 0.3 + Math.random() * 1.5;
+            
+            // Varied opacity for atmospheric effect
+            alphas[i] = 0.6 + Math.random() * 0.4;
         }
         
         geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
         geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
         geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+        geometry.setAttribute('alpha', new THREE.BufferAttribute(alphas, 1));
         
-        const material = new THREE.PointsMaterial({
-            size: 0.1,
-            vertexColors: true,
+        // Create circular particle shader for perfect circles
+        const vertexShader = `
+            attribute float size;
+            attribute float alpha;
+            varying vec3 vColor;
+            varying float vAlpha;
+            
+            void main() {
+                vColor = color;
+                vAlpha = alpha;
+                vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+                gl_PointSize = size * (300.0 / -mvPosition.z);
+                gl_Position = projectionMatrix * mvPosition;
+            }
+        `;
+        
+        const fragmentShader = `
+            varying vec3 vColor;
+            varying float vAlpha;
+            
+            void main() {
+                // Create perfect circular particles
+                vec2 center = gl_PointCoord - vec2(0.5);
+                float dist = length(center);
+                
+                // Soft circular falloff with glow
+                float strength = 1.0 - smoothstep(0.0, 0.5, dist);
+                float glow = 1.0 - smoothstep(0.0, 0.7, dist);
+                
+                // Add outer glow for atmospheric effect
+                vec3 finalColor = vColor + vec3(0.2) * glow;
+                float finalAlpha = strength * vAlpha * 0.9;
+                
+                if (finalAlpha < 0.01) discard;
+                
+                gl_FragColor = vec4(finalColor, finalAlpha);
+            }
+        `;
+        
+        const material = new THREE.ShaderMaterial({
+            uniforms: {},
+            vertexShader: vertexShader,
+            fragmentShader: fragmentShader,
             transparent: true,
-            opacity: 0.8,
-            blending: THREE.AdditiveBlending
+            blending: THREE.AdditiveBlending,
+            depthWrite: false,
+            vertexColors: true
         });
         
         this.particleSystem = new THREE.Points(geometry, material);
         this.scene.add(this.particleSystem);
         
-        console.log('✅ Particle system created');
+        // Store original positions for animation
+        this.particleSystem.userData.originalPositions = positions.slice();
+        
+        console.log('✅ Stunning molecular particle system created with circular particles');
     }
     
     async loadGeoServerData() {
@@ -1127,10 +1184,29 @@ class NeuralGeoServerViz {
                 this.earthSphere.rotation.y += 0.001;
             }
             
-            // Rotate particle system
+            // Animate particle system with flowing molecular motion
             if (this.particleSystem) {
-                this.particleSystem.rotation.x += 0.0005;
-                this.particleSystem.rotation.y += 0.001;
+                this.particleSystem.rotation.x += 0.0003;
+                this.particleSystem.rotation.y += 0.0008;
+                
+                // Add breathing/pulsing effect to particles
+                const positions = this.particleSystem.geometry.attributes.position.array;
+                const originalPositions = this.particleSystem.userData.originalPositions;
+                
+                if (originalPositions) {
+                    const pulseSpeed = time * 0.5;
+                    const pulseAmount = Math.sin(pulseSpeed) * 0.3 + 1;
+                    
+                    for (let i = 0; i < positions.length; i += 3) {
+                        // Apply breathing effect
+                        const factor = pulseAmount + Math.sin(time + i * 0.01) * 0.15;
+                        positions[i] = originalPositions[i] * factor;
+                        positions[i + 1] = originalPositions[i + 1] * factor;
+                        positions[i + 2] = originalPositions[i + 2] * factor;
+                    }
+                    
+                    this.particleSystem.geometry.attributes.position.needsUpdate = true;
+                }
             }
             
             // Render scene

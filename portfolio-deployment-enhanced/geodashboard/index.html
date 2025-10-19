@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Geodashboard | Simon Data Lab</title>
+  <meta name="description" content="MapLibre-based geodashboard with GeoServer overlay and vector-ready architecture." />
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" rel="stylesheet" />
+  <link href="./styles.css" rel="stylesheet" />
+</head>
+<body>
+  <header class="gd-header">
+    <div class="gd-header__inner">
+      <div class="gd-brand">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2"/>
+          <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2"/>
+          <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        <span>Simon Data Lab — Geodashboard</span>
+      </div>
+      <nav class="gd-nav">
+        <a href="/" class="gd-link">Portfolio</a>
+        <a href="/geospatial-viz/" class="gd-link">Geospatial Viz</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="gd-main">
+    <div id="map" class="gd-map" aria-label="Geodashboard map"></div>
+
+    <aside class="gd-panel" aria-label="Layer controls" id="layerPanel">
+      <div class="gd-panel__header">
+        <h2 class="gd-panel__title">Layers</h2>
+        <button class="gd-panel__toggle" id="panelToggle" aria-controls="panelBody" aria-expanded="true" title="Toggle panel">▾</button>
+      </div>
+      <div class="gd-panel__body" id="panelBody">
+        <section class="gd-section">
+          <h3 class="gd-section__title">Base map</h3>
+          <div class="gd-control">
+            <label class="gd-label" for="basemapSelect">Style</label>
+            <select id="basemapSelect" class="gd-select">
+              <option value="osm_light">OSM Light</option>
+              <option value="carto_dark">Carto Dark Matter</option>
+            </select>
+          </div>
+        </section>
+
+        <section class="gd-section">
+          <h3 class="gd-section__title">GeoServer overlay</h3>
+          <div class="gd-control gd-control--row">
+            <label class="gd-switch">
+              <input type="checkbox" id="gsToggle" />
+              <span class="gd-switch__slider" aria-hidden="true"></span>
+            </label>
+            <label for="gsToggle" class="gd-label gd-label--inline">Show layer</label>
+          </div>
+          <div class="gd-control">
+            <label class="gd-label" for="gsOpacity">Opacity <span id="gsOpacityValue" class="gd-muted">100%</span></label>
+            <input id="gsOpacity" class="gd-range" type="range" min="0" max="100" value="100" />
+          </div>
+          <details class="gd-details">
+            <summary>Layer config</summary>
+            <div class="gd-kv">
+              <div class="gd-kv__row"><span>Service:</span><code id="cfgService">—</code></div>
+              <div class="gd-kv__row"><span>Layer:</span><code id="cfgLayer">—</code></div>
+              <div class="gd-kv__row"><span>CRS:</span><code id="cfgCrs">EPSG:3857</code></div>
+            </div>
+          </details>
+        </section>
+
+        <section class="gd-section">
+          <h3 class="gd-section__title">Inspector</h3>
+          <div class="gd-inspector" id="inspector">
+            <div class="gd-inspector__row"><span>Lon:</span><code id="inspLon">—</code></div>
+            <div class="gd-inspector__row"><span>Lat:</span><code id="inspLat">—</code></div>
+            <div class="gd-inspector__row"><span>Zoom:</span><code id="inspZoom">—</code></div>
+          </div>
+          <p class="gd-note">Click on the map to update coordinates. Feature properties are available for vector sources.</p>
+        </section>
+
+        <section class="gd-section">
+          <h3 class="gd-section__title">Metrics</h3>
+          <div class="gd-control">
+            <label class="gd-label" for="metricsEndpoint">Proxy endpoint</label>
+            <input id="metricsEndpoint" class="gd-text" type="text" placeholder="https://api.simondatalab.de" value="https://api.simondatalab.de" />
+          </div>
+          <div class="gd-control gd-control--row">
+            <button class="gd-panel__toggle" id="metricsRefresh" title="Refresh metrics">Refresh</button>
+            <span class="gd-muted" id="metricsStatus">Not connected</span>
+          </div>
+          <div class="gd-inspector" id="metricsSummary">
+            <div class="gd-inspector__row"><span>Targets up:</span><code id="metricsUp">—</code></div>
+            <div class="gd-inspector__row"><span>Targets down:</span><code id="metricsDown">—</code></div>
+          </div>
+          <p class="gd-note">This geodashboard reads from a small proxy that safely exposes selected Prometheus endpoints.</p>
+        </section>
+      </div>
+    </aside>
+  </main>
+
+  <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
+  <script src="./app.js"></script>
+  <script>
+    // Kick a one-time metrics refresh on load if a default endpoint is present
+    window.addEventListener('DOMContentLoaded', () => {
+      const input = document.getElementById('metricsEndpoint');
+      const btn = document.getElementById('metricsRefresh');
+      if (input && input.value && btn) {
+        setTimeout(() => btn.click(), 200);
+      }
+    });
+  </script>
+</body>
+</html>

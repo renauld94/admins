@@ -1,0 +1,43 @@
+version: "3.8"
+
+services:
+  umami:
+    image: ghcr.io/umami-software/umami:postgresql-latest
+    container_name: umami
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://umami:${POSTGRES_PASSWORD}@db:5432/umami
+      DATABASE_TYPE: postgresql
+      APP_SECRET: ${APP_SECRET}
+      TRACKER_SCRIPT_NAME: umami.js
+      DISABLE_TELEMETRY: "true"
+      # Uncomment to enable auto-setup on first run
+      # UMAMI_ADMIN_USER: ${UMAMI_ADMIN_USER}
+      # UMAMI_ADMIN_PASSWORD: ${UMAMI_ADMIN_PASSWORD}
+    ports:
+      - "127.0.0.1:3005:3000"
+    networks:
+      - umami-net
+
+  db:
+    image: postgres:15-alpine
+    container_name: umami-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: umami
+      POSTGRES_USER: umami
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - umami-db-data:/var/lib/postgresql/data
+    networks:
+      - umami-net
+
+networks:
+  umami-net:
+    driver: bridge
+
+volumes:
+  umami-db-data:
+    driver: local

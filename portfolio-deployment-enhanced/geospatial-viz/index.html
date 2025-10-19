@@ -6,6 +6,10 @@
     <title>Global Infrastructure Network | Simon Data Lab</title>
     <meta name="description" content="Interactive geospatial visualization of global data infrastructure, healthcare networks, and research collaborations across multiple continents.">
     
+    <!-- Umami Analytics (self-hosted) -->
+    <!-- TODO: Replace data-website-id with the Website ID from Umami UI -->
+    <script async defer data-website-id="UMAMI-WEBSITE-ID" src="https://analytics.simondatalab.de/umami.js"></script>
+    
     <!-- Open Graph -->
     <meta property="og:title" content="Global Infrastructure Network - Simon Data Lab">
     <meta property="og:description" content="Interactive geospatial visualization of global data infrastructure and healthcare networks">
@@ -44,6 +48,7 @@
             right: 0;
             z-index: 1000;
             background: rgba(15, 23, 42, 0.95);
+            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(14, 165, 233, 0.2);
             padding: 1rem 2rem;
@@ -76,6 +81,7 @@
             color: #f8fafc;
             text-decoration: none;
             font-weight: 500;
+            line-height: 1.6; /* better tap target rhythm */
             transition: color 0.3s ease;
         }
         
@@ -100,12 +106,33 @@
             width: 100%;
             height: 100%;
         }
+
+        /* Mobile quick menu button */
+        .mobile-menu-toggle {
+            display: none;
+            position: fixed;
+            right: 16px;
+            bottom: 16px;
+            z-index: 1100;
+        }
+        .mobile-menu-toggle button {
+            background: linear-gradient(135deg, #0ea5e9, #2563eb);
+            color: #fff;
+            border: none;
+            border-radius: 999px;
+            padding: 0.75rem 1rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            box-shadow: 0 10px 20px rgba(2, 132, 199, 0.35);
+            cursor: pointer;
+        }
         
         .control-panel {
             position: absolute;
             top: 100px;
             right: 20px;
             background: rgba(15, 23, 42, 0.9);
+            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(14, 165, 233, 0.3);
             border-radius: 12px;
@@ -127,6 +154,8 @@
             color: #0ea5e9;
             margin: 0;
             font-size: 1.1rem;
+            line-height: 1.25;
+            letter-spacing: -0.01em;
         }
         
         .panel-toggle {
@@ -176,6 +205,8 @@
             margin: 0;
             font-size: 0.95rem;
             font-weight: 600;
+            line-height: 1.3;
+            letter-spacing: -0.005em;
         }
         
         .section-icon {
@@ -193,6 +224,7 @@
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.3s ease, padding 0.3s ease;
+            line-height: 1.55; /* improved readability */
         }
         
         .section-content.active {
@@ -229,6 +261,7 @@
             border-radius: 3px;
             outline: none;
             -webkit-appearance: none;
+            appearance: none;
         }
         
         .control-group input[type="range"]::-webkit-slider-thumb {
@@ -316,6 +349,7 @@
             bottom: 20px;
             left: 20px;
             background: rgba(15, 23, 42, 0.9);
+            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(14, 165, 233, 0.3);
             border-radius: 12px;
@@ -349,6 +383,7 @@
             top: 100px;
             left: 20px;
             background: rgba(15, 23, 42, 0.9);
+            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(14, 165, 233, 0.3);
             border-radius: 12px;
@@ -513,6 +548,7 @@
             top: 100px;
             left: 20px;
             background: rgba(15, 23, 42, 0.9);
+            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(14, 165, 233, 0.3);
             border-radius: 12px;
@@ -537,6 +573,90 @@
         .stat-value {
             color: #0ea5e9;
             font-weight: 600;
+        }
+
+        /* Services Status Panel */
+        .services-panel {
+            position: absolute;
+            top: 280px;
+            left: 20px;
+            background: rgba(15, 23, 42, 0.9);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            min-width: 260px;
+            max-width: 340px;
+            z-index: 1000;
+        }
+
+        .services-panel h3 {
+            color: #0ea5e9;
+            margin: 0 0 0.75rem 0;
+            font-size: 1rem;
+        }
+
+        .service-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.4rem;
+            max-height: 240px;
+            overflow-y: auto;
+        }
+
+        .service-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(14, 165, 233, 0.2);
+            border-radius: 8px;
+            padding: 0.55rem 0.7rem; /* slightly larger touch area */
+        }
+
+        .service-name {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #e2e8f0;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #64748b;
+            box-shadow: 0 0 0 2px rgba(148, 163, 184, 0.2);
+        }
+
+        .status-up { background: #10b981; box-shadow: 0 0 0 2px rgba(16,185,129,0.2); }
+        .status-down { background: #ef4444; box-shadow: 0 0 0 2px rgba(239,68,68,0.2); }
+        .status-unknown { background: #f59e0b; box-shadow: 0 0 0 2px rgba(245,158,11,0.2); }
+
+        .service-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .service-actions a {
+            color: #93c5fd;
+            text-decoration: none;
+            font-size: 0.8rem;
+        }
+
+        .refresh-btn {
+            margin-top: 0.6rem;
+            width: 100%;
+            padding: 0.4rem 0.6rem;
+            background: rgba(14, 165, 233, 0.1);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            border-radius: 6px;
+            color: #0ea5e9;
+            font-size: 0.85rem;
+            cursor: pointer;
         }
         
         .back-button {
@@ -583,6 +703,7 @@
             .nav-links a {
                 font-size: 0.9rem;
                 padding: 0.25rem 0.5rem;
+                line-height: 1.7; /* increase tap target on mobile */
             }
             
             .back-button {
@@ -617,6 +738,7 @@
                 padding: 1rem;
                 z-index: 1000;
                 background: rgba(15, 23, 42, 0.95);
+                -webkit-backdrop-filter: blur(15px);
                 backdrop-filter: blur(15px);
             }
             
@@ -624,14 +746,43 @@
                 bottom: 200px;
                 max-height: 40vh;
                 overflow-y: auto;
+                display: none; /* hidden by default on mobile; use toggle */
+                transform: translateY(12px);
+                opacity: 0;
+                transition: transform 200ms ease, opacity 200ms ease;
             }
             
-            .stats-panel {
+            .services-panel {
                 bottom: 0;
                 height: 180px;
                 display: grid;
                 grid-template-columns: 1fr 1fr;
                 gap: 1rem;
+            }
+
+            .services-panel {
+                position: fixed;
+                left: 0;
+                right: 0;
+                top: auto;
+                bottom: 180px; /* above stats panel */
+                margin: 0;
+                width: 100%;
+                overflow: auto;
+                display: none; /* hidden by default on mobile; use toggle */
+                transform: translateY(12px);
+                opacity: 0;
+                transition: transform 200ms ease, opacity 200ms ease;
+                border-left: none;
+
+            .mobile-menu-toggle { display: block; }
+                border-right: none;
+                background: rgba(15, 23, 42, 0.95);
+                -webkit-backdrop-filter: blur(15px);
+                backdrop-filter: blur(15px);
+                padding: 0.9rem 1rem;
+                max-height: 30vh;
+                overflow: auto;
             }
             
             .legend {
@@ -783,6 +934,26 @@
         .legend-color--research { background: #8b5cf6; }
         .legend-color--infra { background: #10b981; }
         .legend-color--cloud { background: #f59e0b; }
+
+        /* Professional marker for user location (no emoji) */
+        .user-marker-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #0ea5e9;
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.2);
+        }
+
+        /* Respect reduced motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -835,7 +1006,7 @@
             
             <div class="panel-content" id="controlPanelContent">
                 <div class="control-section">
-                    <div class="section-header" onclick="toggleSection('networkSection')">
+                    <div class="section-header" role="button" tabindex="0" aria-controls="networkSection" aria-expanded="false" onclick="toggleSection('networkSection')" onkeydown="sectionHeaderKeydown(event, 'networkSection')">
                         <h4>Network Configuration</h4>
                         <svg class="section-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="6,9 12,15 18,9"></polyline>
@@ -866,7 +1037,7 @@
                 </div>
                 
                 <div class="control-section">
-                    <div class="section-header" onclick="toggleSection('regionSection')">
+                    <div class="section-header" role="button" tabindex="0" aria-controls="regionSection" aria-expanded="false" onclick="toggleSection('regionSection')" onkeydown="sectionHeaderKeydown(event, 'regionSection')">
                         <h4>Geographic Focus</h4>
                         <svg class="section-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="6,9 12,15 18,9"></polyline>
@@ -893,7 +1064,7 @@
                 </div>
                 
                 <div class="control-section">
-                    <div class="section-header" onclick="toggleSection('weatherSection')">
+                    <div class="section-header" role="button" tabindex="0" aria-controls="weatherSection" aria-expanded="false" onclick="toggleSection('weatherSection')" onkeydown="sectionHeaderKeydown(event, 'weatherSection')">
                         <h4>Weather Layers</h4>
                         <svg class="section-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="6,9 12,15 18,9"></polyline>
@@ -903,8 +1074,8 @@
                         <div class="control-group">
                             <label for="weatherLayer">Weather Layer</label>
                             <select id="weatherLayer">
-                                <option value="none">No Weather</option>
-                                <option value="precipitation" selected>Precipitation Radar</option>
+                                <option value="none" selected>No Weather</option>
+                                <option value="precipitation">Precipitation Radar</option>
                                 <option value="temperature">Temperature</option>
                                 <option value="wind">Wind Patterns</option>
                             </select>
@@ -919,7 +1090,7 @@
                 </div>
                 
                 <div class="control-section">
-                    <div class="section-header" onclick="toggleSection('displaySection')">
+                    <div class="section-header" role="button" tabindex="0" aria-controls="displaySection" aria-expanded="false" onclick="toggleSection('displaySection')" onkeydown="sectionHeaderKeydown(event, 'displaySection')">
                         <h4>Display Options</h4>
                         <svg class="section-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="6,9 12,15 18,9"></polyline>
@@ -951,6 +1122,32 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Infrastructure & Services Section -->
+                <div class="control-section">
+                    <div class="section-header" role="button" tabindex="0" aria-controls="infraSection" aria-expanded="false" onclick="toggleSection('infraSection')" onkeydown="sectionHeaderKeydown(event, 'infraSection')">
+                        <h4>Infrastructure & Services</h4>
+                        <svg class="section-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6,9 12,15 18,9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="section-content" id="infraSection">
+                        <div class="control-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="showInfra" checked onchange="toggleInfrastructure(this.checked)">
+                                <span class="checkmark"></span>
+                                Show Proxmox/Cloud Infrastructure
+                            </label>
+                        </div>
+                        <div class="control-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="showServicePanel" checked onchange="toggleServicePanel(this.checked)">
+                                <span class="checkmark"></span>
+                                Show Services Status Panel
+                            </label>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -974,6 +1171,13 @@
                 <span class="stat-value" id="uptime">99.9%</span>
             </div>
         </div>
+
+    <!-- Services Status Panel -->
+    <div class="services-panel" id="servicesPanel" aria-live="polite">
+        <h3>Services Status</h3>
+        <div class="service-list" id="serviceList"></div>
+        <button class="refresh-btn" onclick="window.networkMap?.checkAllServices()">Refresh Status</button>
+    </div>
         
         <!-- Legend -->
         <div class="legend">
@@ -995,6 +1199,11 @@
                 <span>Cloud Infrastructure</span>
             </div>
         </div>
+
+        <!-- Mobile Quick Menu Button -->
+        <div class="mobile-menu-toggle" id="mobileMenuToggle">
+            <button type="button" aria-expanded="false" aria-controls="controlPanel servicesPanel" onclick="toggleMobileMenu()">Menu</button>
+        </div>
     </div>
 
     <script>
@@ -1015,6 +1224,20 @@
                 this.weatherUpdateInterval = null; // Weather layer update interval
                 this.aiAssistant = null; // AI assistant integration
                 this.voiceRecognition = null; // Voice command system
+                this.infraLayer = L.layerGroup(); // Infrastructure overlay
+                this.services = [
+                    { id: 'grafana', label: 'Grafana', url: 'https://grafana.simondatalab.de/' },
+                    { id: 'prometheus', label: 'Prometheus', url: 'https://prometheus.simondatalab.de/' },
+                    { id: 'openwebui', label: 'Open WebUI', url: 'https://openwebui.simondatalab.de/' },
+                    { id: 'ollama', label: 'Ollama', url: 'https://ollama.simondatalab.de/' },
+                    { id: 'jellyfin', label: 'Jellyfin', url: 'https://136.243.155.166:8096/' },
+                    { id: 'nextcloud', label: 'Nextcloud', url: 'https://136.243.155.166:9020/apps/dashboard/' },
+                    { id: 'jupyterhub', label: 'JupyterHub', url: 'https://jupyterhub.simondatalab.de/' },
+                    { id: 'mlflow', label: 'MLflow', url: 'https://mlflow.simondatalab.de/' },
+                    { id: 'mlapi', label: 'ML API', url: 'https://mlapi.simondatalab.de/' },
+                    { id: 'proxmox', label: 'Proxmox', url: 'https://136.243.155.166:8006/' }
+                ];
+                this.serviceStatus = {}; // id -> 'up'|'down'|'unknown'
                 
                 // Make map accessible globally for smart menu functions
                 window.networkMap = this;
@@ -1030,6 +1253,8 @@
                 this.setupMobileOptimizations();
                 this.initializeAI();
                 this.setupVoiceCommands();
+                this.renderInfrastructure();
+                this.checkAllServices();
                 this.hideLoading();
             }
             
@@ -1059,7 +1284,20 @@
                 
                 locationButton.onAdd = function(map) {
                     const div = L.DomUtil.create('div', 'location-button');
-                    div.innerHTML = '<button onclick="window.networkMap.getUserLocation()" title="Get My Location">📍</button>';
+                    div.innerHTML = '<button type="button" aria-label="Locate me" onclick="window.networkMap.getUserLocation()" title="Locate me">\
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">\
+                            <path d="M21 10.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 1 1.9-3.8z"></path>\
+                            <path d="M12 2v4"></path>\
+                            <path d="M12 18v4"></path>\
+                            <path d="M4.93 4.93l2.83 2.83"></path>\
+                            <path d="M16.24 16.24l2.83 2.83"></path>\
+                            <path d="M2 12h4"></path>\
+                            <path d="M18 12h4"></path>\
+                            <path d="M4.93 19.07l2.83-2.83"></path>\
+                            <path d="M16.24 7.76l2.83-2.83"></path>\
+                            <circle cx="12" cy="12" r="2"></circle>\
+                        </svg>\
+                    </button>';
                     div.style.cssText = `
                         background: white;
                         border-radius: 4px;
@@ -1086,7 +1324,7 @@
                             const userMarker = L.marker([lat, lng], {
                                 icon: L.divIcon({
                                     className: 'user-location-marker',
-                                    html: '<div class="user-marker">📍</div>',
+                                    html: '<div class="user-marker-dot"></div>',
                                     iconSize: [30, 30],
                                     iconAnchor: [15, 15]
                                 })
@@ -1101,7 +1339,7 @@
                                 </div>
                             `);
                             
-                            console.log(`📍 User location detected: ${lat.toFixed(4)}, ${lng.toFixed(4)}`);
+                            console.log(`User location detected: ${lat.toFixed(4)}, ${lng.toFixed(4)}`);
                         },
                         (error) => {
                             console.log('Location access denied, using default view');
@@ -1323,9 +1561,14 @@
                         this.updateWeatherLayer(weatherLayer.value);
                     });
                     
-                    // Initialize with precipitation radar
-                    this.updateWeatherLayer('precipitation');
+                    // Do not auto-initialize weather layers; wait for user selection
                 }
+
+                // Initialize infrastructure and services panel state
+                const showInfra = document.getElementById('showInfra');
+                if (showInfra) this.toggleInfrastructure(showInfra.checked);
+                const showServicePanel = document.getElementById('showServicePanel');
+                if (showServicePanel) this.toggleServicePanel(showServicePanel.checked);
             }
             
             filterNetwork() {
@@ -1348,7 +1591,7 @@
                 }
                 
                 if (layerType === 'none') {
-                    console.log('🌤️ Weather layer removed');
+                    console.log('Weather layer removed');
                     return;
                 }
                 
@@ -1370,7 +1613,7 @@
                 // Use Open-Meteo API for real precipitation data (no API key required)
                 this.fetchVietnamPrecipitationData();
                 
-                console.log('🌧️ Fetching real precipitation data from Open-Meteo API');
+                console.log('Fetching precipitation data from Open-Meteo API');
             }
             
             async fetchVietnamPrecipitationData() {
@@ -1422,17 +1665,17 @@
                                 
                                 precipitationOverlay.addLayer(circle);
                                 
-                                console.log(`🌧️ ${coord.name}: ${precipitation.toFixed(1)}mm/h (${intensity})`);
+                                console.log(`${coord.name}: ${precipitation.toFixed(1)}mm/h (${intensity})`);
                             }
                         } catch (error) {
-                            console.log(`⚠️ Could not fetch data for ${coord.name}:`, error);
+                            console.log(`Could not fetch data for ${coord.name}:`, error);
                         }
                     }
                     
                     this.currentWeatherLayer = precipitationOverlay;
                     this.map.addLayer(precipitationOverlay);
                     
-                    console.log('🌧️ Real precipitation radar layer added from Open-Meteo');
+                    console.log('Precipitation radar layer added from Open-Meteo');
                     
                     // Update every 10 minutes
                     this.weatherUpdateInterval = setInterval(() => {
@@ -1440,7 +1683,7 @@
                     }, 600000); // 10 minutes
                     
                 } catch (error) {
-                    console.log('⚠️ Error fetching precipitation data:', error);
+                    console.log('Error fetching precipitation data:', error);
                     // Fallback to simulated data
                     this.addSimulatedPrecipitation();
                 }
@@ -1483,7 +1726,7 @@
                 this.currentWeatherLayer = precipitationOverlay;
                 this.map.addLayer(precipitationOverlay);
                 
-                console.log('🌧️ Simulated precipitation radar layer added (fallback)');
+                console.log('Simulated precipitation radar layer added (fallback)');
             }
             
             addTemperatureLayer() {
@@ -1497,7 +1740,7 @@
                 this.currentWeatherLayer = tempLayer;
                 this.map.addLayer(tempLayer);
                 
-                console.log('🌡️ Temperature layer added');
+                console.log('Temperature layer added');
             }
             
             addWindLayer() {
@@ -1511,7 +1754,7 @@
                 this.currentWeatherLayer = windLayer;
                 this.map.addLayer(windLayer);
                 
-                console.log('💨 Wind layer added');
+                console.log('Wind layer added');
             }
             
             setWeatherOpacity(opacity) {
@@ -1598,6 +1841,10 @@
             
             startAutoRotate() {
                 if (this.autoRotateInterval) return;
+                if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    console.log('Auto-rotate disabled due to reduced motion preference');
+                    return;
+                }
                 
                 let angle = 0;
                 this.autoRotateInterval = setInterval(() => {
@@ -1619,6 +1866,116 @@
                     this.autoRotateInterval = null;
                 }
             }
+
+            // Infrastructure overlay
+            renderInfrastructure() {
+                try {
+                    this.infraLayer.clearLayers();
+                    // Approximate Hetzner Falkenstein DC coordinates
+                    const dc = { lat: 50.476, lng: 12.371, name: 'Hetzner DC (Falkenstein, FSN1)' };
+                    const marker = L.circleMarker([dc.lat, dc.lng], {
+                        radius: 10,
+                        fillColor: '#10b981',
+                        color: '#ffffff',
+                        weight: 2,
+                        opacity: 1,
+                        fillOpacity: 0.85
+                    });
+                    const servicesHtml = this.services.map(s => `
+                        <li style="margin: 0.25rem 0;">
+                            <a href="${s.url}" target="_blank" rel="noopener noreferrer" style="color:#93c5fd; text-decoration:none;">${s.label}</a>
+                        </li>`).join('');
+                    marker.bindPopup(`
+                        <div style="font-family: Inter, sans-serif; min-width:220px;">
+                            <h4 style="color:#0ea5e9; margin:0 0 0.5rem 0;">Proxmox & Cloud Services</h4>
+                            <p style="margin:0.25rem 0 0.5rem 0; color:#cbd5e1;">${dc.name}</p>
+                            <ul style="padding-left:1rem; margin:0;">${servicesHtml}</ul>
+                        </div>
+                    `);
+                    this.infraLayer.addLayer(marker);
+                } catch (e) {
+                    console.log('Error rendering infrastructure overlay:', e);
+                }
+            }
+
+            toggleInfrastructure(show) {
+                if (!this.map) return;
+                if (show) {
+                    if (!this.map.hasLayer(this.infraLayer)) this.infraLayer.addTo(this.map);
+                } else {
+                    if (this.map.hasLayer(this.infraLayer)) this.map.removeLayer(this.infraLayer);
+                }
+            }
+
+            // Services status checks (favicon fetch; avoids console image errors)
+            checkAllServices() {
+                const list = document.getElementById('serviceList');
+                if (!list) return;
+                list.innerHTML = '';
+                this.services.forEach(svc => {
+                    this.serviceStatus[svc.id] = 'unknown';
+                    const row = document.createElement('div');
+                    row.className = 'service-item';
+                    row.id = `svc-${svc.id}`;
+                    row.innerHTML = `
+                        <div class="service-name">
+                            <span class="status-dot status-unknown" id="svc-dot-${svc.id}"></span>
+                            <span>${svc.label}</span>
+                        </div>
+                        <div class="service-actions">
+                            <a href="${svc.url}" target="_blank" rel="noopener noreferrer">Open</a>
+                        </div>
+                    `;
+                    list.appendChild(row);
+                    this.checkService(svc);
+                });
+            }
+
+            checkService(service) {
+                const DEBUG = false; // set true to see detailed logs
+                const timeoutMs = 7000;
+                const controller = new AbortController();
+                const timer = setTimeout(() => controller.abort(), timeoutMs);
+
+                const url = service.url.replace(/\/$/, '') + '/favicon.ico?cb=' + Date.now();
+                fetch(url, { mode: 'no-cors', cache: 'no-store', signal: controller.signal })
+                    .then(() => {
+                        clearTimeout(timer);
+                        this.updateServiceStatus(service.id, 'up');
+                    })
+                    .catch(() => {
+                        // Try apple-touch-icon as secondary probe
+                        const controller2 = new AbortController();
+                        const timer2 = setTimeout(() => controller2.abort(), 5000);
+                        const url2 = service.url.replace(/\/$/, '') + '/apple-touch-icon.png?cb=' + Date.now();
+                        fetch(url2, { mode: 'no-cors', cache: 'no-store', signal: controller2.signal })
+                            .then(() => {
+                                clearTimeout(timer2);
+                                this.updateServiceStatus(service.id, 'up');
+                            })
+                            .catch((e) => {
+                                clearTimeout(timer2);
+                                this.updateServiceStatus(service.id, 'unknown');
+                                if (DEBUG) console.log('Service check failed for', service.id, e && e.message);
+                            });
+                    });
+            }
+
+            updateServiceStatus(id, status) {
+                this.serviceStatus[id] = status;
+                const dot = document.getElementById(`svc-dot-${id}`);
+                if (!dot) return;
+                dot.classList.remove('status-up', 'status-down', 'status-unknown');
+                if (status === 'up') dot.classList.add('status-up');
+                else if (status === 'down') dot.classList.add('status-down');
+                else dot.classList.add('status-unknown');
+            }
+
+            toggleServicePanel(show) {
+                const panel = document.getElementById('servicesPanel');
+                if (!panel) return;
+                panel.style.display = show ? 'block' : 'none';
+            }
             
             // AI Integration Methods
             initializeAI() {
@@ -1631,7 +1988,7 @@
                 // Add AI chat button to map
                 this.addAIChatButton();
                 
-                console.log('🤖 AI Assistant initialized with Ollama');
+                if (window.DEBUG_AIHUD) console.log('AI Assistant initialized with Ollama');
             }
             
             addAIChatButton() {
@@ -1640,8 +1997,8 @@
                 aiButton.onAdd = function(map) {
                     const div = L.DomUtil.create('div', 'ai-chat-button');
                     div.innerHTML = `
-                        <button onclick="window.networkMap.toggleAIChat()" title="AI Map Assistant (Voice Enabled)">
-                            🤖 AI Assistant
+                        <button type="button" onclick="window.networkMap.toggleAIChat()" title="AI Map Assistant">
+                            AI Assistant
                         </button>
                     `;
                     div.style.cssText = `
@@ -1686,7 +2043,7 @@
                 
                 panel.innerHTML = `
                     <div style="padding: 15px; border-bottom: 1px solid rgba(14, 165, 233, 0.2); display: flex; justify-content: space-between; align-items: center;">
-                        <h3 style="margin: 0; color: #0ea5e9;">🤖 AI Map Assistant</h3>
+                        <h3 style="margin: 0; color: #0ea5e9;">AI Map Assistant</h3>
                         <button onclick="this.parentElement.parentElement.remove()" style="background: none; border: none; color: #fff; font-size: 20px; cursor: pointer;">×</button>
                     </div>
                     <div id="ai-chat-messages" style="flex: 1; overflow-y: auto; padding: 15px; font-size: 14px;"></div>
@@ -1696,7 +2053,7 @@
                             <button onclick="window.networkMap.sendAIMessage()" style="padding: 10px 20px; background: #0ea5e9; border: none; border-radius: 6px; color: #fff; cursor: pointer;">Send</button>
                         </div>
                         <button id="voice-btn" onclick="window.networkMap.startVoiceCommand()" style="width: 100%; padding: 10px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; border-radius: 6px; color: #fff; cursor: pointer;">
-                            🎤 Voice Command
+                            Voice Command
                         </button>
                     </div>
                 `;
@@ -1704,7 +2061,7 @@
                 document.body.appendChild(panel);
                 
                 // Welcome message
-                this.addAIMessage('Hello! I\'m your AI Map Assistant. I can help you explore locations, check weather, and navigate the map. Try saying "Show me Ho Chi Minh City" or "What\'s the weather like?"', 'ai');
+                this.addAIMessage('Hello! I\'m your AI Map Assistant. I can help you explore locations, check weather, and navigate the map. Try: "Show me Ho Chi Minh City" or "What\'s the weather like?"', 'ai');
             }
             
             addAIMessage(message, sender) {
@@ -1719,7 +2076,7 @@
                     border-radius: 8px;
                     color: #f8fafc;
                 `;
-                messageDiv.textContent = `${sender === 'user' ? '👤' : '🤖'} ${message}`;
+                messageDiv.textContent = `${sender === 'user' ? '[You]' : '[AI]'} ${message}`;
                 messagesDiv.appendChild(messageDiv);
                 messagesDiv.scrollTop = messagesDiv.scrollHeight;
             }
@@ -1743,20 +2100,20 @@
                 if (lowerCommand.includes('show') || lowerCommand.includes('go to') || lowerCommand.includes('find')) {
                     if (lowerCommand.includes('ho chi minh') || lowerCommand.includes('saigon')) {
                         this.map.setView([10.8231, 106.6297], 12);
-                        this.addAIMessage('Flying to Ho Chi Minh City! 🚁', 'ai');
+                        this.addAIMessage('Centering on Ho Chi Minh City.', 'ai');
                     } else if (lowerCommand.includes('hanoi')) {
                         this.map.setView([21.0285, 105.8542], 12);
-                        this.addAIMessage('Flying to Hanoi! 🚁', 'ai');
+                        this.addAIMessage('Centering on Hanoi.', 'ai');
                     } else if (lowerCommand.includes('da nang')) {
                         this.map.setView([16.0544, 108.2022], 12);
-                        this.addAIMessage('Flying to Da Nang! 🚁', 'ai');
+                        this.addAIMessage('Centering on Da Nang.', 'ai');
                     }
                 }
                 
                 // Weather commands
                 else if (lowerCommand.includes('weather') || lowerCommand.includes('rain') || lowerCommand.includes('precipitation')) {
                     this.updateWeatherLayer('precipitation');
-                    this.addAIMessage('Showing precipitation radar data from Open-Meteo. The map displays real-time weather information for Vietnam! 🌧️', 'ai');
+                    this.addAIMessage('Showing precipitation radar data from Open-Meteo. The map displays real-time weather information for Vietnam.', 'ai');
                 }
                 
                 // Network commands
@@ -1812,7 +2169,7 @@
                     
                     this.voiceRecognition.onresult = (event) => {
                         const command = event.results[0][0].transcript;
-                        console.log('🎤 Voice command:', command);
+                        console.log('Voice command:', command);
                         
                         const input = document.getElementById('ai-chat-input');
                         if (input) {
@@ -1823,9 +2180,9 @@
                         }
                     };
                     
-                    console.log('🎤 Voice commands enabled');
+                    if (window.DEBUG_AIHUD) console.log('Voice commands enabled');
                 } else {
-                    console.log('⚠️ Voice recognition not supported in this browser');
+                    console.log('Voice recognition not supported in this browser');
                 }
             }
             
@@ -1837,7 +2194,7 @@
                 
                 const voiceBtn = document.getElementById('voice-btn');
                 if (voiceBtn) {
-                    voiceBtn.textContent = '🎤 Listening...';
+                    voiceBtn.textContent = 'Listening...';
                     voiceBtn.style.background = 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)';
                 }
                 
@@ -1845,7 +2202,7 @@
                 
                 this.voiceRecognition.onend = () => {
                     if (voiceBtn) {
-                        voiceBtn.textContent = '🎤 Voice Command';
+                        voiceBtn.textContent = 'Voice Command';
                         voiceBtn.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
                     }
                 };
@@ -1881,6 +2238,16 @@
             
             section.classList.toggle('active');
             header.classList.toggle('active');
+            const expanded = section.classList.contains('active');
+            header.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+        }
+
+        function sectionHeaderKeydown(event, sectionId) {
+            // Activate on Enter or Space
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                toggleSection(sectionId);
+            }
         }
         
         function updateZoom(value) {
@@ -1915,6 +2282,45 @@
                 window.networkMap.toggleAutoRotate(enable);
             }
         }
+
+        function toggleInfrastructure(show) {
+            if (window.networkMap) {
+                window.networkMap.toggleInfrastructure(show);
+            }
+        }
+
+        function toggleServicePanel(show) {
+            if (window.networkMap) {
+                window.networkMap.toggleServicePanel(show);
+            }
+        }
+
+        // Mobile quick menu toggle
+        function applyMobileMenuVisibility(show) {
+            const control = document.getElementById('controlPanel');
+            const services = document.getElementById('servicesPanel');
+            const btn = document.querySelector('#mobileMenuToggle button');
+            control.style.display = show ? 'block' : 'none';
+            services.style.display = show ? 'block' : 'none';
+            // allow transition after display applied
+            requestAnimationFrame(() => {
+                control.style.transform = show ? 'translateY(0)' : 'translateY(12px)';
+                services.style.transform = show ? 'translateY(0)' : 'translateY(12px)';
+                control.style.opacity = show ? '1' : '0';
+                services.style.opacity = show ? '1' : '0';
+            });
+            btn.setAttribute('aria-expanded', show ? 'true' : 'false');
+        }
+
+        function toggleMobileMenu() {
+            const isMobile = window.innerWidth <= 768;
+            if (!isMobile) return;
+            const control = document.getElementById('controlPanel');
+            const visible = control.style.display !== 'none';
+            const nextState = !visible;
+            applyMobileMenuVisibility(nextState);
+            try { localStorage.setItem('geodash_menu_open', nextState ? '1' : '0'); } catch (_) {}
+        }
         
         function openRadarSource(source) {
             const radarUrls = {
@@ -1944,6 +2350,23 @@
         // Initialize the network when page loads
         document.addEventListener('DOMContentLoaded', () => {
             new GlobalInfrastructureNetwork();
+            // Restore mobile menu state
+            const isMobile = window.innerWidth <= 768;
+            if (isMobile) {
+                let open = false;
+                try { open = localStorage.getItem('geodash_menu_open') === '1'; } catch (_) {}
+                applyMobileMenuVisibility(!!open);
+            }
+            // Close panels on rotate/resize to avoid overlap issues
+            window.addEventListener('resize', () => {
+                const mobile = window.innerWidth <= 768;
+                if (!mobile) {
+                    applyMobileMenuVisibility(true); // show on desktop
+                } else {
+                    applyMobileMenuVisibility(false); // reset on mobile resize
+                    try { localStorage.setItem('geodash_menu_open', '0'); } catch (_) {}
+                }
+            });
         });
     </script>
 </body>

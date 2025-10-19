@@ -12,7 +12,64 @@
     <meta property="og:title" content="Simon Renauld - Lead Analytics & Data Engineering Expert" />
     <meta property="og:description" content="Lead Analytics & Data Engineering Expert delivering enterprise analytics platforms, ML systems, and robust data governance" />
     <meta property="og:url" content="https://www.simondatalab.de" />
+    <meta property="og:site_name" content="Simon Data Lab" />
+    <meta property="og:image" content="https://www.simondatalab.de/assets/og-image.png" />
+    <meta property="og:image:alt" content="Simon Renauld - Lead Analytics & Data Engineering Expert" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@simondatalab" />
+    <meta name="twitter:creator" content="@simondatalab" />
+    <meta name="twitter:title" content="Simon Renauld - Lead Analytics & Data Engineering Expert" />
+    <meta name="twitter:description" content="Transforming complex, multi-source data into strategic intelligence with enterprise ML systems and data platforms." />
+    <meta name="twitter:image" content="https://www.simondatalab.de/assets/og-image.png" />
     <link rel="canonical" href="https://www.simondatalab.de/" />
+    
+    <!-- Security: request HTTPS and upgrade insecure requests where supported -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload">
+
+    <!-- Umami Analytics (self-hosted) - load only if reachable over HTTPS to avoid mixed-content/cert issues -->
+    <script>
+        (function() {
+            var analyticsUrl = 'https://analytics.simondatalab.de/umami.js';
+            var timeout = 2500; // ms
+            // Try a short fetch to check reachability and valid TLS before injecting the external script
+            try {
+                var controller = new AbortController();
+                var signal = controller.signal;
+                var timer = setTimeout(function(){ controller.abort(); }, timeout);
+                fetch(analyticsUrl, { method: 'HEAD', mode: 'no-cors', signal: signal })
+                    .then(function() {
+                        clearTimeout(timer);
+                        var s = document.createElement('script');
+                        s.async = true;
+                        s.defer = true;
+                        s.setAttribute('data-website-id', 'UMAMI-WEBSITE-ID');
+                        s.src = analyticsUrl;
+                        document.head.appendChild(s);
+                    })
+                    .catch(function(err){
+                        // Analytics host unreachable or blocked — skip loading to avoid mixed-content / cert errors
+                        console.warn('Umami analytics not loaded:', err && err.name ? err.name : err);
+                    });
+            } catch (e) {
+                console.warn('Umami analytics loader error', e);
+            }
+        })();
+    </script>
+
+        <!-- Force HTTPS in browsers if someone enters http://simondatalab.de -->
+        <script>
+            (function() {
+                try {
+                    var host = window.location.hostname;
+                    var isLocal = host === 'localhost' || host === '127.0.0.1' || host.endsWith('.local');
+                    if (!isLocal && window.location.protocol === 'http:' && /(^|\.)simondatalab\.de$/.test(host)) {
+                        window.location.replace('https://' + host + window.location.pathname + window.location.search + window.location.hash);
+                    }
+                } catch (e) { /* noop */ }
+            })();
+        </script>
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -23,7 +80,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="styles.css?v=20251003.1">
+    <link rel="stylesheet" href="styles.css?v=20251018.2">
         <link rel="stylesheet" href="globe-fab.css?v=20251003.1">
         <link rel="stylesheet" href="neural-geoserver-styles.css?v=NEURAL20250113">
 
@@ -42,6 +99,24 @@
         <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
         <script src="three-loader.js"></script>
         <script src="epic-neural-loading-enhanced.js"></script>
+                <!-- JSON-LD structured data -->
+                <script type="application/ld+json">
+                {
+                    "@context": "https://schema.org",
+                    "@type": "Person",
+                    "name": "Simon Renauld",
+                    "url": "https://www.simondatalab.de/",
+                    "sameAs": [
+                        "https://www.linkedin.com/in/simonrenauld/"
+                    ],
+                    "jobTitle": "Lead Analytics & Data Engineering Expert",
+                    "worksFor": {
+                        "@type": "Organization",
+                        "name": "Simon Data Lab",
+                        "url": "https://www.simondatalab.de/"
+                    }
+                }
+                </script>
 </head>
 
 <body>
@@ -49,7 +124,7 @@
     <div class="scroll-progress" aria-hidden="true"></div>
 
     <!-- Floating Globe Infrastructure Button -->
-    <button class="globe-fab" onclick="window.open('geospatial-viz/index.html', '_blank', 'width=1400,height=900')" aria-label="Open Global Infrastructure Visualization">
+    <button class="globe-fab" aria-label="Open Global Infrastructure Visualization">
         <div class="network-pulse"></div>
         <svg class="globe-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="12" cy="12" r="10" stroke="white" stroke-width="1.5" fill="none"/>
@@ -86,7 +161,7 @@
                 
                 <!-- Admin Dropdown -->
                 <li class="nav-dropdown">
-                    <button class="dropdown-toggle" onclick="toggleDropdown()" aria-expanded="false" aria-haspopup="true">
+                    <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">
                         Admin Tools
                         <span class="admin-badge">Admin</span>
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -114,6 +189,8 @@
                 <span></span>
             </button>
 
+            <div class="mobile-nav-backdrop" id="mobile-nav-backdrop" aria-hidden="true"></div>
+
             <div class="mobile-nav" id="mobile-navigation" aria-hidden="true">
                 <ul class="mobile-nav-menu">
                     <li><a href="#about" class="nav-link">About</a></li>
@@ -125,14 +202,14 @@
                     
                     <!-- Mobile Admin Dropdown -->
                     <li class="mobile-dropdown">
-                        <button class="mobile-dropdown-toggle" aria-expanded="false">
+                        <button class="mobile-dropdown-toggle" aria-expanded="false" aria-haspopup="true">
                             Admin Tools
                             <span class="admin-badge">Admin</span>
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <polyline points="6,9 12,15 18,9"></polyline>
                             </svg>
                         </button>
-                        <ul class="mobile-dropdown-menu" aria-hidden="true">
+                        <ul class="mobile-dropdown-menu" aria-hidden="true" aria-label="Admin Tools">
                             <li><a href="https://grafana.simondatalab.de/" class="nav-link" target="_blank" rel="noopener noreferrer">Grafana</a></li>
                             <li><a href="https://prometheus.simondatalab.de/" class="nav-link" target="_blank" rel="noopener noreferrer">Prometheus</a></li>
                             <li><a href="https://openwebui.simondatalab.de/" class="nav-link" target="_blank" rel="noopener noreferrer">Open WebUI</a></li>
@@ -154,13 +231,13 @@
         <div class="hero-container">
             <div class="hero-content">
                 <div class="hero-badge">
-                    <span class="badge-text">Enterprise Data Strategy & AI Engineering</span>
+                    <span class="badge-text">Enterprise Data & AI</span>
                 </div>
                 <h1 id="hero-heading" class="hero-title">
-                    <span class="hero-line">From Neural Networks</span>
-                    <span class="hero-line">To Global Data Networks</span>
+                    <span class="hero-line gradient-flow">Data Intelligence</span>
+                    <span class="hero-line gradient-flow">at Enterprise Scale</span>
                 </h1>
-                <p class="hero-subtitle">Transforming complex data across industries into strategic business intelligence through enterprise-grade machine learning systems, analytics platforms, and comprehensive data governance frameworks that bridge scientific rigor with scalable engineering.</p>
+                <p class="hero-subtitle">Turning 500M+ daily records into decisions with production ML systems and enterprise data platforms.</p>
                 <div class="hero-actions">
                     <a href="#architecture" class="btn-primary">View Architecture</a>
                     <a href="assets/resume/simon-renauld-resume.pdf" class="btn-secondary" download rel="noopener noreferrer">Download Resume</a>
@@ -174,12 +251,12 @@
             </div>
             
             <div class="hero-visual">
-                <div id="hero-visualization" class="hero-viz neural-geoserver-viz" data-r3f="">
+                <div id="hero-visualization" class="hero-viz hero-viz-wide neural-geoserver-viz" data-r3f="">
                     <div class="r3f-loading neural-geoserver-loading epic-neural-loading">
                         <div class="r3f-loading-inner neural-geoserver-loading-content">
                             <div class="loading-spinner"></div>
-                            <div class="loading-text">Initializing Data Intelligence Platform...</div>
-                            <div class="r3f-loading-subtitle">From neural networks to global data networks</div>
+                            <div class="loading-text">Initializing Molecular Data Intelligence Platform...</div>
+                            <div class="r3f-loading-subtitle">Quantum particles dancing through data dimensions</div>
                         </div>
                     </div>
                 </div>
@@ -191,64 +268,76 @@
         <section id="about" class="about-section">
             <div class="section-container">
                 <div class="section-header">
-                    <span class="section-label">Who I Am</span>
-                    <h2>About Simon Renauld</h2>
-                    <p class="section-subtitle">Senior Data Scientist & Innovation Strategist specializing in analytics platforms and enterprise data governance</p>
-                    <p class="about-intro">I architect enterprise data ecosystems that transform complex, multi-source data into strategic business intelligence. With a research-driven background and years of production machine learning experience, I bridge the gap between analytical rigor and enterprise-scale engineering, delivering measurable business outcomes through comprehensive data governance and advanced analytics platforms.</p>
+                    <span class="section-label">Approach</span>
+                    <h2>Research Rigor Meets Production Scale</h2>
+                    <p class="section-subtitle">From research labs to platforms processing 500M+ records/day</p>
                 </div>
                 
                 <div class="about-content">
                     <div class="about-story">
-                        <div class="story-block">
-                            <h3>Strategic Impact</h3>
-                            <p>Deliver measurable business outcomes through data-driven decision making and operational excellence.</p>
+                        <div class="story-block impact-card">
+                            <div class="impact-number">85%</div>
+                            <h3>Analysis Acceleration</h3>
+                            <p>Research workflows: 3 weeks → 3 days</p>
                         </div>
-                        <div class="story-block">
-                            <h3>Technical Clarity</h3>
-                            <p>Transform complex datasets into intuitive insights that drive organizational understanding and action.</p>
+                        <div class="story-block impact-card">
+                            <div class="impact-number">99.9%</div>
+                            <h3>Production Uptime</h3>
+                            <p>Mission-critical systems at scale</p>
                         </div>
-                        <div class="story-block">
-                            <h3>Engineering Excellence</h3>
-                            <p>Build production-grade systems with robust architecture, comprehensive governance, and scalable performance.</p>
+                        <div class="story-block impact-card">
+                            <div class="impact-number">500M+</div>
+                            <h3>Daily Records</h3>
+                            <p>Real-time processing & analytics</p>
                         </div>
-                            <p>
-                                I am motivated by projects where the stakes are significant. Healthcare data affects patient outcomes, research breakthroughs, and organizational decisions. This drives my commitment to reliability, clarity, and measurable impact in every solution I deliver.
-                            </p>
-                            <p>
-                                My research background provides a unique advantage in understanding complex systems and designing robust solutions. Whether architecting data pipelines or building machine learning models, I bring both analytical precision and practical engineering expertise to enterprise challenges.
-                            </p>
+                            <div class="methodology-grid">
+                            <div class="method-item">
+                                <div class="method-icon" aria-hidden="true">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                                        <circle cx="12" cy="12" r="9" stroke="#0ea5e9" stroke-width="2"/>
+                                        <path d="M12 3v18M3 12h18" stroke="#8b5cf6" stroke-width="2"/>
+                                    </svg>
+                                </div>
+                                <h4>Scientific Foundation</h4>
+                                <p>First‑principles thinking applied in production</p>
+                            </div>
+                            <div class="method-item">
+                                <div class="method-icon" aria-hidden="true">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                                        <path d="M13 2l-2 6h6l-6 14 2-8H7l6-12z" stroke="#8b5cf6" stroke-width="2" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <h4>High‑Stakes Domains</h4>
+                                <p>Healthcare and clinical research with real patient impact</p>
+                            </div>
+                            <div class="method-item">
+                                <div class="method-icon" aria-hidden="true">
+                                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                                        <path d="M12 2l7 4v6c0 5-3.5 9-7 10-3.5-1-7-5-7-10V6l7-4z" stroke="#06b6d4" stroke-width="2"/>
+                                        <path d="M9.5 12.5l1.8 1.8 3.2-3.6" stroke="#06b6d4" stroke-width="2" stroke-linecap="round"/>
+                                    </svg>
+                                </div>
+                                <h4>Compliance‑First</h4>
+                                <p>HIPAA/GDPR by design—zero violations</p>
+                            </div>
+                        </div>
                         </div>
 
-                        <div class="principles-grid">
-                            <div class="principle-card">
-                                <div class="principle-icon">
-                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-                                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="#0ea5e9" stroke-width="2"/>
-                                    </svg>
-                                </div>
-                                <h4>Impact First</h4>
-                                <p>Every solution must deliver measurable business value—not just technical elegance.</p>
+                        <div class="dna-strand">
+                            <div class="dna-pair">
+                                <div class="base">Research Rigor</div>
+                                <div class="connector"></div>
+                                <div class="base">Production Scale</div>
                             </div>
-                            <div class="principle-card">
-                                <div class="principle-icon">
-                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-                                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#8b5cf6" stroke-width="2"/>
-                                        <path d="M2 17L12 22L22 17" stroke="#8b5cf6" stroke-width="2"/>
-                                        <path d="M2 12L12 17L22 12" stroke="#8b5cf6" stroke-width="2"/>
-                                    </svg>
-                                </div>
-                                <h4>Built to Last</h4>
-                                <p>Production systems need solid engineering, not prototypes in disguise.</p>
+                            <div class="dna-pair">
+                                <div class="base">ML Innovation</div>
+                                <div class="connector"></div>
+                                <div class="base">Enterprise Stability</div>
                             </div>
-                            <div class="principle-card">
-                                <div class="principle-icon">
-                                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-                                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" stroke="#06b6d4" stroke-width="2"/>
-                                        <path d="M12 22V12M12 12L3 7M12 12L21 7" stroke="#06b6d4" stroke-width="2"/>
-                                    </svg>
-                                </div>
-                                <h4>Clarity Wins</h4>
-                                <p>Complex data becomes powerful when presented with absolute clarity.</p>
+                            <div class="dna-pair">
+                                <div class="base">Data Governance</div>
+                                <div class="connector"></div>
+                                <div class="base">Business Impact</div>
                             </div>
                         </div>
                     </div>
@@ -298,9 +387,9 @@
         <section id="experience" class="experience-section">
             <div class="section-container">
                 <div class="section-header">
-                    <span class="section-label">Career Path</span>
-                    <h2>Data Innovation Leadership</h2>
-                    <p class="section-subtitle">Transforming organizations through strategic data architecture and analytics excellence</p>
+                    <span class="section-label">Journey</span>
+                    <h2>Research → Production → Impact</h2>
+                    <p class="section-subtitle">15 years from research to enterprise platforms</p>
                 </div>
 
                 <div class="experience-timeline">
@@ -308,22 +397,20 @@
                         <div class="timeline-marker"></div>
                         <div class="timeline-content">
                             <div class="timeline-period">2020 — Present</div>
-                            <h3>Data Science Lead</h3>
+                            <h3>Lead Analytics & Data Engineering Expert</h3>
                             <div class="timeline-company">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
                                     <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
                                 </svg>
-                                Independent Consulting & Contract
+                                Independent Consulting & Strategic Advisory
                             </div>
-                            <p class="timeline-description">
-                                Leading enterprise data transformation initiatives for healthcare organizations, research institutions, and clinical research organizations. I design and implement comprehensive data strategies that integrate machine learning, geospatial analytics, and clinical intelligence platforms. Recent achievements include architecting a HIPAA-compliant real-time analytics platform processing 500M+ daily healthcare records and developing a multi-site clinical data integration system that accelerated research workflows by 85% while maintaining regulatory compliance.
-                            </p>
+                            <p class="timeline-description">Healthcare and clinical platforms: 500M+ daily records, 99.9% uptime, 85% faster analysis, zero compliance violations.</p>
                             <div class="timeline-achievements">
+                                <span class="achievement">Enterprise Data Platforms</span>
                                 <span class="achievement">Production MLOps</span>
-                                <span class="achievement">Clinical Data Platforms</span>
-                                <span class="achievement">Regulatory Compliance</span>
-                                <span class="achievement">Team Enablement</span>
+                                <span class="achievement">HIPAA/GDPR Compliance</span>
+                                <span class="achievement">Clinical Intelligence Systems</span>
                             </div>
                         </div>
                     </div>
@@ -332,20 +419,19 @@
                         <div class="timeline-marker"></div>
                         <div class="timeline-content">
                             <div class="timeline-period">2015 — 2020</div>
-                            <h3>Data Scientist & Research Engineer</h3>
+                            <h3>Senior Data Scientist & Analytics Engineer</h3>
                             <div class="timeline-company">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                                     <path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                                 </svg>
-                                Healthcare & Academic Institutions
+                                Healthcare Organizations & Research Institutions
                             </div>
-                            <p class="timeline-description">
-                                Bridged micro-level analysis with macro-level systems through statistical modeling and data processing frameworks across research and clinical domains. Specialized in large-scale data engineering and reproducible pipelines, developing expertise in scaling insights from individual datasets into robust, automated systems for real-world applications.
-                            </p>
+                            <p class="timeline-description">Production analytics, automated healthcare ETL, geospatial systems for published research, and reproducible ML workflows.</p>
                             <div class="timeline-achievements">
-                                <span class="achievement">Statistical Modeling</span>
-                                <span class="achievement">Geospatial Analytics</span>
-                                <span class="achievement">Research Pipelines</span>
+                                <span class="achievement">Healthcare Analytics</span>
+                                <span class="achievement">Geospatial Intelligence</span>
+                                <span class="achievement">ETL Automation</span>
+                                <span class="achievement">Research-to-Production Pipelines</span>
                             </div>
                         </div>
                     </div>
@@ -354,21 +440,20 @@
                         <div class="timeline-marker"></div>
                         <div class="timeline-content">
                             <div class="timeline-period">2010 — 2015</div>
-                            <h3>Research Engineer</h3>
+                            <h3>Research Scientist & Data Engineer</h3>
                             <div class="timeline-company">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                                     <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
                                     <path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m5.08 5.08l4.24 4.24M1 12h6m6 0h6M4.22 19.78l4.24-4.24m5.08-5.08l4.24-4.24" stroke="currentColor" stroke-width="2"/>
                                 </svg>
-                                Academic Research Labs
+                                Leading Academic Research Institutions
                             </div>
-                            <p class="timeline-description">
-                                Conducted applied research and developed signal processing pipelines, building a strong foundation in scientific methodology and first‑principles thinking. This continues to inform a systematic approach to enterprise data challenges and complex system design.
-                            </p>
+                            <p class="timeline-description">Academic research foundation: signal processing, statistical frameworks, first‑principles engineering.</p>
                             <div class="timeline-achievements">
-                                <span class="achievement">Signal Processing</span>
-                                <span class="achievement">Experimental Design</span>
-                                <span class="achievement">Academic Publications</span>
+                                <span class="achievement">Computational Research</span>
+                                <span class="achievement">Statistical Analysis</span>
+                                <span class="achievement">Automated Pipelines</span>
+                                <span class="achievement">Peer-Reviewed Publications</span>
                             </div>
                         </div>
                     </div>
@@ -380,11 +465,12 @@
             <div class="section-container">
                 <div class="section-header">
                     <span class="section-label">Case Studies</span>
-                    <h2>Enterprise Data Solutions</h2>
-                    <p class="section-subtitle">Production systems delivering measurable business value across organizations</p>
+                    <h2>Production Impact</h2>
+                    <p class="section-subtitle">Real systems · Real metrics · Real outcomes</p>
                 </div>
 
                 <div class="projects-grid">
+                    <!-- Featured Project -->
                     <article class="project-card featured">
                         <div class="project-badge">Featured Project</div>
                         <div class="project-header">
@@ -397,45 +483,33 @@
                             <h3>Clinical Data Integration Platform</h3>
                         </div>
 
-                        <div class="case-study">
-                            <div class="case-section">
-                                <h4>Strategic Challenge</h4>
-                                <p>
-                                    A leading clinical research organization faced critical data fragmentation across 15+ disparate systems, resulting in 2-3 week analysis cycles and significant compliance risks. The organization required a unified data platform capable of processing heterogeneous clinical data while maintaining HIPAA compliance and enabling real-time research insights.
-                                </p>
+                        <div class="case-study compact">
+                            <div class="challenge-block">
+                                <span class="block-label">Challenge</span>
+                                <p>Multi‑site data chaos. Weeks per analysis. HIPAA audit risk.</p>
                             </div>
-
-                            <div class="case-section">
-                                <h4>Strategic Solution</h4>
-                                <p>
-                                    Designed and implemented an automated ETL pipeline using Apache Airflow for orchestration, PostgreSQL for the data warehouse, and custom Python validation frameworks for real-time quality assurance. The solution incorporated complete data lineage tracking, automated anonymization protocols, and Docker-based deployment architecture for reproducibility across environments.
-                                </p>
-                            </div>
-
-                            <div class="case-section">
-                                <h4>Measurable Outcomes</h4>
-                                <ul class="impact-list">
-                                    <li><strong>85% processing acceleration</strong> — Reduced analysis cycle time from 2-3 weeks to 2-3 days</li>
-                                    <li><strong>100M+ records consolidated</strong> — Unified data from 15 disparate sources</li>
-                                    <li><strong>Zero compliance violations</strong> — Maintained 100% HIPAA compliance with automated validation</li>
-                                    <li><strong>Production-grade reliability</strong> — 99.9% uptime since deployment in 2023</li>
-                                </ul>
-                            </div>
-
-                            <div class="case-section">
-                                <h4>Technology Stack</h4>
+                            <div class="solution-block">
+                                <span class="block-label">Solution</span>
+                                <p>Airflow orchestration, PostgreSQL warehouse, automated validation, de‑identification, RBAC.</p>
                                 <div class="tech-stack">
                                     <span class="tech-tag">Python</span>
-                                    <span class="tech-tag">PostgreSQL</span>
                                     <span class="tech-tag">Apache Airflow</span>
+                                    <span class="tech-tag">PostgreSQL</span>
                                     <span class="tech-tag">Docker</span>
-                                    <span class="tech-tag">Pandas</span>
-                                    <span class="tech-tag">SQLAlchemy</span>
+                                </div>
+                            </div>
+                            <div class="outcomes-block">
+                                <span class="block-label">Impact</span>
+                                <div class="metrics-row">
+                                    <div class="metric"><strong>85%</strong> faster analysis</div>
+                                    <div class="metric"><strong>99.9%</strong> uptime</div>
+                                    <div class="metric"><strong>0</strong> violations</div>
                                 </div>
                             </div>
                         </div>
                     </article>
 
+                    <!-- Project 2 -->
                     <article class="project-card">
                         <div class="project-header">
                             <div class="project-category">
@@ -449,34 +523,32 @@
                         </div>
 
                         <div class="case-study compact">
-                            <p class="project-summary">
-                                Enterprise client required 40+ hours weekly for manual reporting across 8 fragmented systems. Developed a modular ETL framework with Airflow orchestration, dbt transformations, and automated quality assurance protocols—eliminating 95% of manual effort while achieving 99.9% production uptime.
-                            </p>
-
-                            <div class="project-metrics">
-                                <div class="metric">
-                                    <span class="metric-value">95%</span>
-                                    <span class="metric-label">Manual Work Eliminated</span>
-                                </div>
-                                <div class="metric">
-                                    <span class="metric-value">8</span>
-                                    <span class="metric-label">Data Sources Automated</span>
-                                </div>
-                                <div class="metric">
-                                    <span class="metric-value">99.9%</span>
-                                    <span class="metric-label">Production Uptime</span>
+                            <div class="challenge-block">
+                                <span class="block-label">Challenge</span>
+                                <p>8 siloed systems and 40+ hours/week of manual reporting.</p>
+                            </div>
+                            <div class="solution-block">
+                                <span class="block-label">Solution</span>
+                                <p>Airflow + dbt with Great Expectations, unified warehouse, anomaly alerts, self‑service BI.</p>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">Apache Airflow</span>
+                                    <span class="tech-tag">dbt Core</span>
+                                    <span class="tech-tag">Great Expectations</span>
+                                    <span class="tech-tag">PostgreSQL</span>
+                                    <span class="tech-tag">Docker</span>
                                 </div>
                             </div>
-
-                            <div class="tech-stack">
-                                <span class="tech-tag">Airflow</span>
-                                <span class="tech-tag">dbt</span>
-                                <span class="tech-tag">Python</span>
-                                <span class="tech-tag">PostgreSQL</span>
+                            <div class="outcomes-block">
+                                <div class="metrics-row">
+                                    <div class="metric"><strong>10x</strong> faster reporting</div>
+                                    <div class="metric"><strong>0</strong> manual steps</div>
+                                    <div class="metric"><strong>24/7</strong> monitoring</div>
+                                </div>
                             </div>
                         </div>
                     </article>
 
+                    <!-- Project 3 -->
                     <article class="project-card">
                         <div class="project-header">
                             <div class="project-category">
@@ -491,30 +563,27 @@
                         </div>
 
                         <div class="case-study compact">
-                            <p class="project-summary">
-                                Public health researchers required spatial clustering analysis across 500+ locations but lacked appropriate analytical tools. Developed a PostGIS-powered platform with GeoPandas analytics, D3.js visualizations, and interactive mapping capabilities—enabling insights 5x faster than manual workflows and supporting 3 published research papers.
-                            </p>
-
-                            <div class="project-metrics">
-                                <div class="metric">
-                                    <span class="metric-value">500+</span>
-                                    <span class="metric-label">Locations Analyzed</span>
-                                </div>
-                                <div class="metric">
-                                    <span class="metric-value">5x</span>
-                                    <span class="metric-label">Faster Analysis</span>
-                                </div>
-                                <div class="metric">
-                                    <span class="metric-value">3</span>
-                                    <span class="metric-label">Research Papers</span>
+                            <div class="challenge-block">
+                                <span class="block-label">Challenge</span>
+                                <p>Spatial clustering across 500+ locations with slow manual workflows.</p>
+                            </div>
+                            <div class="solution-block">
+                                <span class="block-label">Solution</span>
+                                <p>PostGIS + GeoPandas analytics with interactive D3 maps and automated clustering.</p>
+                                <div class="tech-stack">
+                                    <span class="tech-tag">PostGIS</span>
+                                    <span class="tech-tag">GeoPandas</span>
+                                    <span class="tech-tag">D3.js</span>
+                                    <span class="tech-tag">Python</span>
+                                    <span class="tech-tag">Leaflet</span>
                                 </div>
                             </div>
-
-                            <div class="tech-stack">
-                                <span class="tech-tag">PostGIS</span>
-                                <span class="tech-tag">GeoPandas</span>
-                                <span class="tech-tag">D3.js</span>
-                                <span class="tech-tag">Python</span>
+                            <div class="outcomes-block">
+                                <div class="metrics-row">
+                                    <div class="metric"><strong>90%</strong> faster analysis</div>
+                                    <div class="metric"><strong>1</strong> unified workflow</div>
+                                    <div class="metric"><strong>Interactive</strong> insights</div>
+                                </div>
                             </div>
                         </div>
                     </article>
@@ -525,9 +594,9 @@
         <section id="expertise" class="expertise-section">
             <div class="section-container">
                 <div class="section-header">
-                    <span class="section-label">Technical Capabilities</span>
-                    <h2>Comprehensive Data Science Capabilities</h2>
-                    <p class="section-subtitle">End-to-end data solutions from strategic architecture to production deployment</p>
+                    <span class="section-label">Core Capabilities</span>
+                    <h2>Full-Stack Data & ML Engineering</h2>
+                    <p class="section-subtitle">Enterprise solutions across data architecture, ML operations, governance, and analytics—from strategy to production</p>
                 </div>
 
                 <div class="expertise-grid">
@@ -538,21 +607,22 @@
                                 <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" stroke="currentColor" stroke-width="2"/>
                             </svg>
                         </div>
-                        <h3>Machine Learning Operations & Production Systems</h3>
-                        <p>
-                            Enterprise-grade ML platforms featuring comprehensive monitoring, automated feature engineering, and robust model governance frameworks. I architect systems that detect data drift, track model performance metrics, and enable scalable, reproducible machine learning workflows.
-                        </p>
+                        <h3>Machine Learning Operations & Production AI</h3>
+                        <p>End‑to‑end ML lifecycle: training, registry, deployment, monitoring. Detect drift, track performance, automate retraining.</p>
                         <ul class="capability-list">
-                            <li>Model training & evaluation frameworks</li>
-                            <li>A/B testing and experiment tracking</li>
-                            <li>ML monitoring & alerting systems</li>
-                            <li>Feature engineering pipelines</li>
+                            <li>Automated training, CI/CD & rollout</li>
+                            <li>Model registry & experiment tracking</li>
+                            <li>Feature stores & online features</li>
+                            <li>Monitoring, drift detection, A/B tests</li>
                         </ul>
                         <div class="tech-highlights">
                             <span>scikit-learn</span>
+                            <span>TensorFlow</span>
+                            <span>PyTorch</span>
                             <span>MLflow</span>
                             <span>Kubeflow</span>
                             <span>DVC</span>
+                            <span>Feast</span>
                         </div>
                     </div>
 
@@ -564,21 +634,21 @@
                                 <path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2"/>
                             </svg>
                         </div>
-                        <h3>Enterprise Data Engineering</h3>
-                        <p>
-                            Scalable data pipelines with comprehensive quality assurance, lineage tracking, and automated validation protocols. Every system I architect prioritizes reliability, observability, and maintainability for enterprise-scale operations.
-                        </p>
+                        <h3>Enterprise Data Engineering & Platform Architecture</h3>
+                        <p>Batch and streaming platforms that unify systems into a reliable, observable foundation with strong QA and lineage.</p>
                         <ul class="capability-list">
-                            <li>ETL/ELT pipeline architecture</li>
-                            <li>Data warehouse design & optimization</li>
-                            <li>Stream processing & real-time analytics</li>
-                            <li>Data quality & validation frameworks</li>
+                            <li>Batch & real‑time ETL/ELT</li>
+                            <li>Warehouses & lakes with schema evolution</li>
+                            <li>Streaming/event architectures</li>
+                            <li>Automated validation & lineage</li>
                         </ul>
                         <div class="tech-highlights">
-                            <span>Airflow</span>
-                            <span>Spark</span>
-                            <span>dbt</span>
-                            <span>Kafka</span>
+                            <span>Apache Airflow</span>
+                            <span>Apache Spark</span>
+                            <span>dbt Core</span>
+                            <span>Apache Kafka</span>
+                            <span>Great Expectations</span>
+                            <span>Terraform</span>
                         </div>
                     </div>
 
@@ -590,20 +660,21 @@
                                 <path d="M9.5 12.5l1.8 1.8 3.2-3.6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                             </svg>
                         </div>
-                        <h3>Data Governance & Regulatory Compliance</h3>
-                        <p>
-                            HIPAA and GDPR-compliant systems with complete audit trails, data lineage, and access controls. I understand that in regulated industries, governance is not optional—it is fundamental to operational success and regulatory compliance.
-                        </p>
+                        <h3>Data Governance, Security & Regulatory Compliance</h3>
+                        <p>Compliance‑first: privacy, access control, and auditability built into data flows—meeting HIPAA/GDPR requirements.</p>
                         <ul class="capability-list">
-                            <li>Data lineage & catalog implementation</li>
-                            <li>Compliance automation & validation</li>
-                            <li>Access control & audit logging</li>
-                            <li>Data anonymization & privacy</li>
+                            <li>HIPAA/GDPR controls & automation</li>
+                            <li>Lineage, cataloging, metadata</li>
+                            <li>RBAC/ABAC & secrets management</li>
+                            <li>Encryption, audit logging, reporting</li>
                         </ul>
                         <div class="tech-highlights">
                             <span>Great Expectations</span>
                             <span>OpenMetadata</span>
-                            <span>Vault</span>
+                            <span>Atlan</span>
+                            <span>HashiCorp Vault</span>
+                            <span>AWS KMS</span>
+                            <span>OAuth 2.0</span>
                         </div>
                     </div>
 
@@ -617,43 +688,52 @@
                                 <rect x="3" y="14" width="7" height="7" stroke="currentColor" stroke-width="2"/>
                             </svg>
                         </div>
-                        <h3>Advanced Analytics & Data Visualization</h3>
-                        <p>
-                            Strategic dashboards and reports that drive executive decision-making. I focus on data storytelling—transforming complex insights into accessible, actionable intelligence for both technical and business stakeholders.
-                        </p>
+                        <h3>Analytics, Visualization & Business Intelligence</h3>
+                        <p>Clear, fast dashboards and analytical apps—from executive views to interactive geospatial analytics.</p>
                         <ul class="capability-list">
-                            <li>Interactive dashboard development</li>
-                            <li>Statistical analysis & reporting</li>
-                            <li>Geospatial visualization</li>
-                            <li>Executive-level data storytelling</li>
+                            <li>Dashboards & reporting automation</li>
+                            <li>Geospatial mapping & analysis</li>
+                            <li>Data storytelling & self‑service BI</li>
+                            <li>Operational monitoring & SLOs</li>
                         </ul>
                         <div class="tech-highlights">
                             <span>D3.js</span>
                             <span>Plotly</span>
                             <span>Grafana</span>
                             <span>Tableau</span>
+                            <span>Looker</span>
+                            <span>Streamlit</span>
+                            <span>Mapbox</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="tech-foundation">
-                    <h3>Core Technologies</h3>
+                    <h3>Technology Stack & Expertise</h3>
                     <div class="tech-categories">
                         <div class="tech-category">
-                            <h4>Languages</h4>
-                            <p>Python, SQL, R, JavaScript, Bash</p>
+                            <h4>Programming Languages</h4>
+                            <p>Python (Expert), SQL (Expert), R, JavaScript, Bash, Scala</p>
                         </div>
                         <div class="tech-category">
-                            <h4>Infrastructure</h4>
-                            <p>Docker, Kubernetes, AWS, Azure, CI/CD</p>
+                            <h4>Cloud & Infrastructure</h4>
+                            <p>AWS, Azure, and GCP; containerization with Docker & Kubernetes; infrastructure‑as‑code with Terraform & Ansible; CI/CD pipelines using GitLab and GitHub Actions.</p>
                         </div>
                         <div class="tech-category">
-                            <h4>Databases</h4>
-                            <p>PostgreSQL, MySQL, MongoDB, Redis, PostGIS</p>
+                            <h4>Data Platforms</h4>
+                            <p>Relational & NoSQL: PostgreSQL, MySQL, MongoDB; caching & search: Redis, Elasticsearch; spatial analytics with PostGIS; cloud warehouses: Snowflake and BigQuery.</p>
                         </div>
                         <div class="tech-category">
-                            <h4>Frameworks</h4>
-                            <p>FastAPI, Flask, Pandas, NumPy, SciPy</p>
+                            <h4>ML & Analytics Frameworks</h4>
+                            <p>Core data stack: Pandas, NumPy, SciPy; machine learning: scikit‑learn, XGBoost, LightGBM; deep learning: TensorFlow, PyTorch; distributed ML with Spark MLlib.</p>
+                        </div>
+                        <div class="tech-category">
+                            <h4>Data Engineering Tools</h4>
+                            <p>Orchestration & processing: Apache Airflow, Spark, Kafka, Flink; transformation & quality: dbt, Great Expectations; experiment tracking & versioning: MLflow, DVC.</p>
+                        </div>
+                        <div class="tech-category">
+                            <h4>Visualization & BI</h4>
+                            <p>Interactive apps: D3.js, Plotly, Streamlit, Dash; enterprise BI: Grafana, Tableau, Looker; mapping & geospatial: Mapbox, Leaflet.</p>
                         </div>
                     </div>
                 </div>
@@ -663,20 +743,16 @@
         <section id="contact" class="contact-section">
             <div class="section-container">
                 <div class="section-header">
-                    <span class="section-label">Get In Touch</span>
-                    <h2>Strategic Data Partnership</h2>
-                    <p class="section-subtitle">
-                        Partnering with enterprises, healthcare organizations, and research teams to turn data challenges into durable competitive advantages
-                    </p>
+                    <span class="section-label">Let's Connect</span>
+                    <h2>Turn Data Complexity into Competitive Advantage</h2>
+                    <p class="section-subtitle">Strategic consulting, technical leadership, and end‑to‑end platform delivery</p>
                 </div>
 
                 <div class="contact-content">
                     <div class="contact-info">
                         <div class="contact-intro">
-                            <h3>Strategic Data Consulting</h3>
-                            <p>
-                                I partner with healthcare organizations, research institutions, and enterprise clients to architect comprehensive data strategies that drive measurable business outcomes. My approach combines deep technical expertise with strategic business acumen to deliver production-ready solutions that scale with organizational growth and regulatory requirements.
-                            </p>
+                            <h3>Enterprise Data Strategy & Implementation</h3>
+                            <p>I help teams design and deliver platforms with measurable outcomes: scale analytics, modernize legacy, implement MLOps, and ensure HIPAA/GDPR—practical architecture and production‑grade delivery.</p>
                         </div>
 
                         <div class="engagement-options">
@@ -686,8 +762,8 @@
                                         <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" stroke="currentColor" stroke-width="2"/>
                                     </svg>
                                 </div>
-                                <h4>Strategic Consulting</h4>
-                                <p>Data strategy development, ML roadmaps, technical architecture design, and organizational enablement</p>
+                                <h4>Strategic Consulting & Architecture</h4>
+                                <p>Strategy roadmaps, ML platform design, architecture reviews, platform selection, and stack optimization aligned to business goals.</p>
                             </div>
 
                             <div class="engagement-card">
@@ -698,8 +774,8 @@
                                         <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="2"/>
                                     </svg>
                                 </div>
-                                <h4>Technical Leadership</h4>
-                                <p>Fractional CTO/Head of Data roles, technical advisory services, and interim leadership positions</p>
+                                <h4>Technical Leadership & Advisory</h4>
+                                <p>Fractional CTO/Head of Data, technical due diligence, interim leadership, team mentoring, and ongoing advisory support.</p>
                             </div>
 
                             <div class="engagement-card">
@@ -709,8 +785,8 @@
                                         <path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2"/>
                                     </svg>
                                 </div>
-                                <h4>Project Delivery</h4>
-                                <p>End-to-end implementation of data platforms, ML systems, and analytics solutions</p>
+                                <h4>End‑to‑End Implementation</h4>
+                                <p>From requirements to production: data engineering, MLOps, governance frameworks, and analytics solutions.</p>
                             </div>
                         </div>
 
@@ -802,224 +878,152 @@
     <section id="architecture" class="architecture-section">
         <div class="section-container">
             <div class="section-header">
-                <span class="section-label">System Blueprint</span>
-                <h2>End-to-End Data Architecture</h2>
-                <p class="section-subtitle">From secure ingestion to governed analytics and production ML—built for reliability, clarity, and scale</p>
+                <span class="section-label">Technical Blueprint</span>
+                <h2>Enterprise Data Architecture</h2>
+                <p class="section-subtitle">End-to-end platform design from secure data ingestion through governed analytics and production ML deployment</p>
             </div>
             <div class="architecture-grid">
                 <div class="arch-card">
-                    <h3>Ingestion & Integration</h3>
-                    <p>Automated pipelines unify operational, product, and research data across 15+ systems with validation and lineage.</p>
+                    <h3>Data Ingestion & Integration</h3>
+                    <p>Unified data pipelines consolidating operational, product, and research data from 15+ disparate sources. Automated validation, deduplication, and lineage tracking ensure data quality and auditability from source to consumption.</p>
                     <ul>
-                        <li>Airflow orchestration, dbt transforms</li>
-                        <li>Batch + streaming (Kafka) patterns</li>
-                        <li>Quality gates (Great Expectations)</li>
+                        <li>Airflow orchestration with dbt transformations</li>
+                        <li>Batch & real-time streaming (Kafka, Flink)</li>
+                        <li>Automated quality gates (Great Expectations)</li>
+                        <li>Schema evolution & versioning</li>
                     </ul>
                 </div>
                 <div class="arch-card">
                     <h3>Storage & Governance</h3>
-                    <p>GDPR/HIPAA-ready data lake/warehouse with access controls, audit logs, and privacy by design.</p>
+                    <p>GDPR/HIPAA-ready data lake and warehouse architectures featuring role-based access controls, complete audit trails, encryption at rest/transit, and privacy-by-design principles ensuring regulatory compliance.</p>
                     <ul>
-                        <li>PostgreSQL/PostGIS, object storage</li>
-                        <li>Catalog + lineage (OpenMetadata)</li>
-                        <li>Secrets management (Vault)</li>
+                        <li>PostgreSQL/PostGIS, object storage (S3, MinIO)</li>
+                        <li>Data cataloging & lineage (OpenMetadata, Atlan)</li>
+                        <li>Secrets & key management (Vault, KMS)</li>
+                        <li>Automated compliance validation & reporting</li>
                     </ul>
                 </div>
                 <div class="arch-card">
-                    <h3>Analytics & ML</h3>
-                    <p>Reproducible model lifecycle with monitoring, drift detection, and secure deployment.</p>
+                    <h3>Analytics & Machine Learning</h3>
+                    <p>Reproducible ML lifecycle with experiment tracking, model registry, automated deployment, and continuous monitoring. Feature stores, A/B testing, and drift detection ensure models deliver sustained business value.</p>
                     <ul>
-                        <li>MLflow tracking & model registry</li>
-                        <li>Feature pipelines, A/B testing</li>
-                        <li>APIs and dashboards for impact</li>
+                        <li>MLflow tracking & centralized model registry</li>
+                        <li>Feature engineering pipelines & feature stores</li>
+                        <li>Automated retraining & A/B experimentation</li>
+                        <li>Production APIs with versioning & rollback</li>
                     </ul>
                 </div>
                 <div class="arch-card">
-                    <h3>Visualization & Ops</h3>
-                    <p>Executive dashboards and geospatial intelligence with 99.9% uptime and clear SLOs.</p>
+                    <h3>Visualization & Operations</h3>
+                    <p>Executive dashboards and geospatial intelligence platforms with 99.9%+ uptime. Comprehensive observability, alerting, and SLO tracking ensure platform reliability and enable proactive issue resolution.</p>
                     <ul>
-                        <li>D3.js, Grafana, geospatial viz</li>
-                        <li>Observability and alerting</li>
-                        <li>Containerized, CI/CD-enabled</li>
+                        <li>Interactive dashboards (D3.js, Plotly, Grafana)</li>
+                        <li>Geospatial visualization & mapping</li>
+                        <li>Infrastructure monitoring & log aggregation</li>
+                        <li>Containerized deployment with CI/CD</li>
                     </ul>
+                </div>
+                <!-- Infrastructure Preview Card -->
+                <div class="arch-card infra-preview" aria-hidden="false">
+                    <h3>Enterprise Data Platform — Preview</h3>
+                    <p class="muted">Quick preview of the platform architecture. Tap the image to open the full interactive diagram.</p>
+                    <div class="infra-thumb">
+                        <button class="infra-thumb-btn" aria-label="Open full architecture preview" data-action="open-infra">
+                            <img src="assets/infra-thumb.svg" alt="Infrastructure thumbnail" loading="lazy"/>
+                            <span class="infra-thumb-cta">View Live Architecture</span>
+                        </button>
+                    </div>
+                    <p class="mt-05">Preview: lightbox will load the interactive diagram on demand to preserve mobile performance.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="site-footer">
+    <footer class="site-footer" role="contentinfo">
         <div class="footer-container">
             <div class="footer-grid">
-                <div class="footer-brand">
+                <div class="footer-brand" aria-hidden="false">
                     <div class="footer-logo">
-                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
                             <path d="M16 2L28 8V24L16 30L4 24V8L16 2Z" fill="#0ea5e9"/>
                             <path d="M16 8L20 10V18L16 20L12 18V10L16 8Z" fill="white"/>
                         </svg>
-                        <span>Simon Renauld</span>
+                        <span class="sr-only">Simon Renauld</span>
+                        <div class="brand-text">
+                            <div class="brand-name">Simon Renauld</div>
+                            <div class="brand-role">Enterprise analytics & data engineering</div>
+                        </div>
                     </div>
-                    <p class="footer-tagline">
-                        Empowering organizations with strategic data intelligence through enterprise-grade machine learning systems, analytics platforms, and comprehensive data governance frameworks.
-                    </p>
+                    <p class="footer-tagline">Production ML, governance, and platforms that drive measurable impact.</p>
                 </div>
 
-                <div class="footer-links">
-                    <h4>Navigation</h4>
-                    <ul>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#experience">Experience</a></li>
-                        <li><a href="#projects">Projects</a></li>
-                        <li><a href="#expertise">Expertise</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </div>
+                <nav class="footer-nav" aria-label="Footer navigation">
+                    <div class="footer-col">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#experience">Experience</a></li>
+                            <li><a href="#projects">Projects</a></li>
+                            <li><a href="#expertise">Expertise</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div>
 
-                <div class="footer-links">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="assets/resume/simon-renauld-resume.pdf" download rel="noopener noreferrer">Download Resume</a></li>
-                        <li><a href="https://moodle.simondatalab.de/my/courses.php" target="_blank" rel="noopener noreferrer">Training Courses</a></li>
-                        <li><a href="epic-neural-cosmos-demo.html" rel="noopener noreferrer">3D Visualization Demo</a></li>
-                    </ul>
-                </div>
+                    <div class="footer-col">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="assets/resume/simon-renauld-resume.pdf" download rel="noopener noreferrer">Download Resume</a></li>
+                            <li><a href="https://moodle.simondatalab.de/my/courses.php" target="_blank" rel="noopener noreferrer">Training Courses</a></li>
+                            <li><a href="epic-neural-cosmos-demo.html" rel="noopener noreferrer">3D Visualization Demo</a></li>
+                        </ul>
+                    </div>
 
-                <div class="footer-connect">
-                    <h4>Connect</h4>
-                    <p><a href="mailto:simon@simondatalab.de">simon@simondatalab.de</a></p>
-                    <p class="footer-availability">
-                        <span class="status-dot available"></span>
-                        Available for select projects
-                    </p>
-                </div>
+                    <div class="footer-col footer-contact">
+                        <h4>Connect</h4>
+                        <p><a href="mailto:simon@simondatalab.de">simon@simondatalab.de</a></p>
+                        <p class="footer-availability"><span class="status-dot available" aria-hidden="true"></span>Available for select projects</p>
+                    </div>
+                </nav>
             </div>
 
             <div class="footer-bottom">
-                <p>&copy; 2025 Simon Renauld. All rights reserved.</p>
-                <p>Built with precision, deployed with care.</p>
+                <div class="legal">
+                    <small>&copy; 2025 Simon Renauld. All rights reserved.</small>
+                </div>
+                <div class="built">
+                    <small>Built with precision, deployed with care.</small>
+                </div>
+                <div class="footer-cta">
+                    <a class="btn-ghost" href="/infrastucture.html" target="_blank" rel="noopener noreferrer">View Live Architecture</a>
+                </div>
             </div>
         </div>
     </footer>
 
+    <!-- Lightbox modal for infrastructure preview (lazy-load iframe) -->
+    <div id="infra-lightbox" class="infra-lightbox" aria-hidden="true">
+        <div class="infra-lightbox-backdrop" data-close></div>
+        <div class="infra-lightbox-panel" role="dialog" aria-modal="true" aria-label="Infrastructure preview dialog">
+            <button class="infra-lightbox-close" data-close aria-label="Close preview">✕</button>
+            <div class="infra-lightbox-content">
+                <!-- iframe will be injected here on demand -->
+                <div id="infra-iframe-container" class="infra-iframe-container" data-loaded="false"></div>
+            </div>
+        </div>
+    </div>
+
 
     
-    <!-- Desktop Admin Dropdown JavaScript -->
-    <script>
-        function toggleDropdown() {
-            const dropdown = document.getElementById('desktop-admin-menu');
-            const toggle = document.querySelector('.dropdown-toggle');
-            
-            if (dropdown && toggle) {
-                const isOpen = dropdown.classList.contains('open');
-                
-                if (isOpen) {
-                    dropdown.classList.remove('open');
-                    toggle.setAttribute('aria-expanded', 'false');
-                    dropdown.setAttribute('aria-hidden', 'true');
-                } else {
-                    dropdown.classList.add('open');
-                    toggle.setAttribute('aria-expanded', 'true');
-                    dropdown.setAttribute('aria-hidden', 'false');
-                }
-            }
-        }
-        
-        function toggleMobileDropdown() {
-            console.log('🔧 Mobile dropdown toggle clicked');
-            
-            const mobileDropdown = document.querySelector('.mobile-dropdown');
-            const mobileMenu = document.querySelector('.mobile-dropdown-menu');
-            const toggle = document.querySelector('.mobile-dropdown-toggle');
-            
-            console.log('📱 Elements found:', {
-                mobileDropdown: !!mobileDropdown,
-                mobileMenu: !!mobileMenu,
-                toggle: !!toggle
-            });
-            
-            if (mobileDropdown && mobileMenu && toggle) {
-                const isOpen = mobileDropdown.classList.contains('open');
-                console.log('📱 Current state - isOpen:', isOpen);
-                
-                if (isOpen) {
-                    mobileDropdown.classList.remove('open');
-                    toggle.setAttribute('aria-expanded', 'false');
-                    mobileMenu.setAttribute('aria-hidden', 'true');
-                    console.log('📱 Dropdown closed');
-                } else {
-                    mobileDropdown.classList.add('open');
-                    toggle.setAttribute('aria-expanded', 'true');
-                    mobileMenu.setAttribute('aria-hidden', 'false');
-                    console.log('📱 Dropdown opened');
-                }
-            } else {
-                console.error('❌ Mobile dropdown elements not found');
-            }
-        }
-        
-        // Alternative event listener for mobile dropdown (fallback)
-        document.addEventListener('DOMContentLoaded', function() {
-            const mobileDropdownToggle = document.querySelector('.mobile-dropdown-toggle');
-            if (mobileDropdownToggle) {
-                // Add event listeners for both click and touch
-                mobileDropdownToggle.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    console.log('📱 Event listener: Mobile dropdown clicked');
-                    toggleMobileDropdown();
-                });
-                
-                mobileDropdownToggle.addEventListener('touchstart', function(e) {
-                    console.log('📱 Touch start on mobile dropdown');
-                });
-                
-                mobileDropdownToggle.addEventListener('touchend', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    console.log('📱 Event listener: Mobile dropdown touched');
-                    toggleMobileDropdown();
-                });
-                
-                console.log('✅ Mobile dropdown event listeners added');
-            } else {
-                console.warn('⚠️ Mobile dropdown toggle not found');
-            }
-        });
-        
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', function(event) {
-            const desktopDropdown = document.querySelector('.nav-dropdown');
-            const mobileDropdown = document.querySelector('.mobile-dropdown');
-            
-            if (desktopDropdown && !desktopDropdown.contains(event.target)) {
-                const dropdown = document.getElementById('desktop-admin-menu');
-                const toggle = document.querySelector('.dropdown-toggle');
-                if (dropdown && dropdown.classList.contains('open')) {
-                    dropdown.classList.remove('open');
-                    toggle.setAttribute('aria-expanded', 'false');
-                    dropdown.setAttribute('aria-hidden', 'true');
-                }
-            }
-            
-            if (mobileDropdown && !mobileDropdown.contains(event.target)) {
-                const mobileMenu = document.querySelector('.mobile-dropdown-menu');
-                const toggle = document.querySelector('.mobile-dropdown-toggle');
-                if (mobileMenu && mobileDropdown.classList.contains('open')) {
-                    mobileDropdown.classList.remove('open');
-                    toggle.setAttribute('aria-expanded', 'false');
-                    mobileMenu.setAttribute('aria-hidden', 'true');
-                }
-            }
-        });
-    </script>
+    <!-- Inline fallback for dropdowns removed; app.js owns all nav wiring to avoid duplicate bindings -->
     
-    <script src="app.js?v=20251003.5"></script>
+    <script src="app.js?v=20251018.2"></script>
     
-    <!-- 🌌 NEURAL GEOSERVER VISUALIZATION: GPU-Accelerated Three.js Neural-Spatial System -->
+    <!-- NEURAL GEOSERVER VISUALIZATION: GPU-Accelerated Three.js Neural-Spatial System -->
     <script>
-        console.log('🌌 [NEURAL GEOSERVER] Loading GPU-Accelerated Neural-Spatial Visualization');
+        console.log('[NEURAL GEOSERVER] Loading GPU-Accelerated Neural-Spatial Visualization');
         console.log('   Device: Desktop | Pure Three.js implementation with GeoServer integration');
-        console.log('   🎬 Features: Real-time GeoServer layers as neural clusters, synaptic connections, Earth backdrop, Proxmox satellites');
-        console.log('   ✨ Performance: GPU acceleration, LOD, frustum culling, 10K+ particles, interactive metadata');
+        console.log('   Features: Real-time GeoServer layers as neural clusters, synaptic connections, Earth backdrop, Proxmox satellites');
+        console.log('   Performance: GPU acceleration, LOD, frustum culling, 10K+ particles, interactive metadata');
         
         // Simple global event bus for hero & showcase integration
         window.__HERO_EVENT_BUS__ = window.__HERO_EVENT_BUS__ || {
@@ -1032,25 +1036,25 @@
         
         // Listen for THREE.js ready event
         window.addEventListener('threeJsReady', () => {
-            console.log('🎯 [NEURAL GEOSERVER] Received THREE.js ready event');
+            console.log('[NEURAL GEOSERVER] Received THREE.js ready event');
             setTimeout(() => {
                 if (typeof THREE !== 'undefined') {
-                    console.log('✅ [NEURAL GEOSERVER] THREE.js confirmed available, starting neural visualization...');
+                    console.log('[NEURAL GEOSERVER] THREE.js confirmed available, starting neural visualization...');
                     loadNeuralVisualization();
                 } else {
-                    console.error('❌ [NEURAL GEOSERVER] THREE.js not available despite ready event');
+                    console.error('[NEURAL GEOSERVER] THREE.js not available despite ready event');
                 }
             }, 200);
         });
         
         function loadNeuralVisualization() {
-            console.log('🚀 Loading Epic Neural Visualization...');
+            console.log('Loading Epic Neural Visualization...');
             
             // Try to load the Epic Neural to Cosmos visualization first
             const epicScript = document.createElement('script');
             epicScript.src = './epic-neural-cosmos-viz.js';
             epicScript.onload = () => {
-                console.log('✅ Epic Neural Cosmos Viz loaded');
+                console.log('Epic Neural Cosmos Viz loaded');
                 
                 // Initialize epic visualization
                 if (window.EpicNeuralToCosmosViz) {
@@ -1061,7 +1065,7 @@
                             particleCount: 2500,
                             enableInteraction: true
                         });
-                        
+
                         window.epicNeuralViz = epicViz;
                         
                         // Emit success event
@@ -1072,33 +1076,33 @@
                             stats: epicViz.getStats()
                         });
                         
-                        console.log('🎉 Epic Neural to Cosmos Visualization initialized successfully');
+                        console.log('Epic Neural to Cosmos Visualization initialized successfully');
                         return; // Success, don't load fallbacks
                         
                     } catch (error) {
-                        console.warn('⚠️ Epic visualization failed to initialize:', error);
+                        console.warn('Epic visualization failed to initialize:', error);
                         loadSimpleVisualization();
                     }
                 } else {
-                    console.warn('⚠️ Epic visualization class not found');
+                    console.warn('Epic visualization class not found');
                     loadSimpleVisualization();
                 }
             };
             epicScript.onerror = (err) => {
-                console.warn('⚠️ Failed to load epic neural visualization:', err);
+                console.warn('Failed to load epic neural visualization:', err);
                 loadSimpleVisualization();
             };
             document.head.appendChild(epicScript);
         }
         
         function loadSimpleVisualization() {
-            console.log('🔄 Loading Simple Neural Viz as fallback...');
+            console.log('Loading Simple Neural Viz as fallback...');
             
             // Load simple neural viz as fallback
             const simpleScript = document.createElement('script');
             simpleScript.src = './simple-neural-viz.js';
             simpleScript.onload = () => {
-                console.log('✅ Simple Neural Viz loaded');
+                console.log('Simple Neural Viz loaded');
                 
                 // Initialize simple visualization
                 if (window.SimpleNeuralViz) {
@@ -1116,21 +1120,21 @@
                         stats: simpleViz.getStats()
                     });
                     
-                    console.log('✅ Simple Neural Visualization initialized successfully');
+                    console.log('Simple Neural Visualization initialized successfully');
                 }
                 
                 // Now try to load the advanced GeoServer visualization as enhancement
                 loadAdvancedVisualization();
             };
             simpleScript.onerror = (err) => {
-                console.error('❌ Failed to load simple neural visualization:', err);
+                console.error('Failed to load simple neural visualization:', err);
                 showFallbackVisualization();
             };
             document.head.appendChild(simpleScript);
         }
         
         function loadAdvancedVisualization() {
-            console.log('🔄 Loading advanced GeoServer visualization...');
+            console.log('Loading advanced GeoServer visualization...');
             
             const perfScript = document.createElement('script');
             perfScript.src = './neural-geoserver-performance.js?v=PERF20250113';
@@ -1138,7 +1142,7 @@
                 const script = document.createElement('script');
                 script.src = './neural-geoserver-viz.js?v=NEURAL20250113';
                 script.onload = () => {
-                    console.log('✅ Advanced GeoServer visualization loaded');
+                    console.log('Advanced GeoServer visualization loaded');
                     
                     // Replace simple viz with advanced one if it loads successfully
                     try {
@@ -1148,7 +1152,7 @@
                             const viz = new window.NeuralGeoServerViz('hero-visualization', {
                                 geoserverUrl: 'https://www.simondatalab.de/geospatial-viz',
                                 proxmoxUrl: 'https://136.243.155.166:8006',
-                                particleCount: 8000,
+                                particleCount: 15000,
                                 enableGPUAcceleration: true,
                                 enableLOD: true,
                                 enableFrustumCulling: true,
@@ -1163,19 +1167,19 @@
                                 stats: viz.getStats()
                             });
                             
-                            console.log('🎉 Advanced Neural GeoServer visualization active');
+                            console.log('Advanced Neural GeoServer visualization active');
                         }
                     } catch (error) {
-                        console.warn('⚠️ Advanced visualization failed, keeping simple version:', error);
+                        console.warn('Advanced visualization failed, keeping simple version:', error);
                     }
                 };
                 script.onerror = () => {
-                    console.warn('⚠️ Advanced visualization failed to load, simple version remains active');
+                    console.warn('Advanced visualization failed to load, simple version remains active');
                 };
                 document.head.appendChild(script);
             };
             perfScript.onerror = () => {
-                console.warn('⚠️ Performance optimizer unavailable, simple visualization remains active');
+                console.warn('Performance optimizer unavailable, simple visualization remains active');
             };
             document.head.appendChild(perfScript);
         }
@@ -1186,7 +1190,7 @@
                 mount.innerHTML = `
                     <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #0ea5e9; text-align: center; padding: 2rem;">
                         <div>
-                            <div style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">🌌 Neural GeoServer</div>
+                            <div style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">Neural GeoServer</div>
                             <div style="font-size: 1rem; opacity: 0.8;">Real-time Geospatial Intelligence</div>
                             <div style="font-size: 0.8rem; opacity: 0.6; margin-top: 1rem;">Initialization in progress...</div>
                         </div>
@@ -1194,6 +1198,71 @@
                 `;
             }
         }
+    </script>
+
+    <!-- Metrics Count-Up on Scroll -->
+    <script>
+        // Animate numbers in .metrics-row when they enter the viewport
+        document.addEventListener('DOMContentLoaded', function() {
+            function easeOutQuad(t) { return t * (2 - t); }
+
+            function parseNumericParts(text) {
+                // Returns {prefix, number, decimals, suffix} or null if not numeric-friendly
+                // Skip non-animatable patterns like ranges (e.g., 8→1)
+                if (/[\u2190-\u21FF]/.test(text)) return null; // any arrow
+                const match = text.trim().match(/^(\D*?)(-?\d+(?:\.\d+)?)(.*)$/);
+                if (!match) return null;
+                const [, prefix, numStr, suffix] = match;
+                const decimals = (numStr.split('.')[1] || '').length;
+                return { prefix, number: parseFloat(numStr), decimals, suffix };
+            }
+
+            function animateValue(el, target, decimals, duration) {
+                const start = 0;
+                const startTime = performance.now();
+                function tick(now) {
+                    const t = Math.min(1, (now - startTime) / duration);
+                    const eased = easeOutQuad(t);
+                    const val = start + (target - start) * eased;
+                    el.textContent = val.toFixed(decimals);
+                    if (t < 1) requestAnimationFrame(tick);
+                }
+                requestAnimationFrame(tick);
+            }
+
+            function animateStrong(el) {
+                const raw = el.textContent.trim();
+                const parts = parseNumericParts(raw);
+                if (!parts) return; // leave as-is
+                const { prefix, number, decimals, suffix } = parts;
+
+                // Create a span to hold the animated number while preserving prefix/suffix
+                const span = document.createElement('span');
+                span.setAttribute('aria-hidden', 'true');
+                el.textContent = '';
+                if (prefix) el.append(prefix);
+                el.append(span);
+                if (suffix) el.append(suffix);
+
+                animateValue(span, number, decimals, 1200);
+            }
+
+            const rows = document.querySelectorAll('.metrics-row');
+            if (!rows.length) return;
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const row = entry.target;
+                        if (row.dataset.animated === 'true') return;
+                        row.dataset.animated = 'true';
+                        row.querySelectorAll('.metric strong').forEach(animateStrong);
+                        io.unobserve(row);
+                    }
+                });
+            }, { threshold: 0.4 });
+
+            rows.forEach((r) => io.observe(r));
+        });
     </script>
 
 </body>

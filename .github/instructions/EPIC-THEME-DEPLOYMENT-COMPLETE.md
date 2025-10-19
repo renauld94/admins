@@ -162,7 +162,7 @@ curl -k -I https://moodle.simondatalab.de/
 ### VM 9001 SSH
 - **Host**: 10.0.0.104 (from Proxmox)
 - **User**: simonadmin
-- **Password**: SimonAdmin2025!
+- **Password**: `REDACTED` (store in a secrets manager, not in git)
 
 ### Proxmox Access
 - **Host**: 136.243.155.166:2222

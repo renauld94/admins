@@ -8,10 +8,37 @@
     position: relative;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at center, rgba(14, 165, 233, 0.05) 0%, rgba(0, 0, 0, 0.8) 100%);
+    background: radial-gradient(circle at center, rgba(14, 165, 233, 0.08) 0%, rgba(139, 92, 246, 0.05) 50%, rgba(0, 0, 0, 0.9) 100%);
     overflow: hidden;
-    border-radius: 12px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border-radius: 16px;
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.4),
+        inset 0 0 100px rgba(14, 165, 233, 0.1),
+        inset 0 0 50px rgba(139, 92, 246, 0.05);
+}
+
+/* Wide variant for hero section */
+.hero-viz-wide {
+    min-height: 650px;
+    width: 120%;
+    margin-left: -10%;
+    position: relative;
+}
+
+@media (max-width: 1400px) {
+    .hero-viz-wide {
+        width: 110%;
+        margin-left: -5%;
+        min-height: 600px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .hero-viz-wide {
+        width: 100%;
+        margin-left: 0;
+        min-height: 500px;
+    }
 }
 
 /* Loading States */
@@ -31,7 +58,12 @@
 
 /* Epic Neural Loading Animation */
 .epic-neural-loading {
-    background: radial-gradient(circle at center, rgba(14, 165, 233, 0.1) 0%, rgba(0, 0, 0, 0.95) 100%);
+    background: radial-gradient(
+        circle at center, 
+        rgba(14, 165, 233, 0.15) 0%, 
+        rgba(139, 92, 246, 0.1) 40%,
+        rgba(0, 0, 0, 0.97) 100%
+    );
     position: relative;
 }
 
@@ -43,21 +75,26 @@
     right: 0;
     bottom: 0;
     background: 
-        radial-gradient(circle at 20% 20%, rgba(14, 165, 233, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 40% 60%, rgba(6, 182, 212, 0.05) 0%, transparent 50%);
-    animation: neuralPulse 4s ease-in-out infinite;
+        radial-gradient(circle at 15% 15%, rgba(14, 165, 233, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(139, 92, 246, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 30% 70%, rgba(236, 72, 153, 0.08) 0%, transparent 35%);
+    animation: molecularPulse 6s ease-in-out infinite;
     z-index: 1;
 }
 
-@keyframes neuralPulse {
+@keyframes molecularPulse {
     0%, 100% { 
-        opacity: 0.3;
-        transform: scale(1);
+        opacity: 0.4;
+        transform: scale(1) rotate(0deg);
     }
-    50% { 
-        opacity: 0.6;
-        transform: scale(1.05);
+    33% { 
+        opacity: 0.7;
+        transform: scale(1.08) rotate(120deg);
+    }
+    66% { 
+        opacity: 0.5;
+        transform: scale(1.05) rotate(240deg);
     }
 }
 
@@ -99,43 +136,47 @@
 
 /* Enhanced spinner for epic loading */
 .epic-neural-loading .loading-spinner {
-    width: 60px;
-    height: 60px;
-    border: 4px solid rgba(14, 165, 233, 0.2);
-    border-top: 4px solid #0ea5e9;
-    border-right: 4px solid #8b5cf6;
+    width: 80px;
+    height: 80px;
+    border: 5px solid rgba(14, 165, 233, 0.15);
+    border-top: 5px solid #0ea5e9;
+    border-right: 5px solid #8b5cf6;
+    border-bottom: 5px solid #ec4899;
     border-radius: 50%;
-    animation: epicSpin 2s ease-in-out infinite;
-    margin: 0 auto 1rem;
+    animation: epicSpin 2.5s ease-in-out infinite;
+    margin: 0 auto 1.5rem;
     position: relative;
     z-index: 2;
     box-shadow: 
-        0 0 20px rgba(14, 165, 233, 0.3),
-        inset 0 0 20px rgba(139, 92, 246, 0.1);
+        0 0 30px rgba(14, 165, 233, 0.4),
+        0 0 60px rgba(139, 92, 246, 0.2),
+        inset 0 0 30px rgba(236, 72, 153, 0.1);
 }
 
 .epic-neural-loading .loading-spinner::before {
     content: '';
     position: absolute;
-    top: -8px;
-    left: -8px;
-    right: -8px;
-    bottom: -8px;
-    border: 2px solid rgba(6, 182, 212, 0.3);
+    top: -12px;
+    left: -12px;
+    right: -12px;
+    bottom: -12px;
+    border: 3px solid rgba(6, 182, 212, 0.3);
+    border-top: 3px solid transparent;
     border-radius: 50%;
-    animation: epicSpin 3s linear infinite reverse;
+    animation: epicSpin 3.5s linear infinite reverse;
 }
 
 .epic-neural-loading .loading-spinner::after {
     content: '';
     position: absolute;
-    top: -16px;
-    left: -16px;
-    right: -16px;
-    bottom: -16px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    border: 2px solid rgba(255, 255, 255, 0.08);
+    border-top: 2px solid rgba(236, 72, 153, 0.3);
     border-radius: 50%;
-    animation: epicSpin 4s linear infinite;
+    animation: epicSpin 5s linear infinite;
 }
 
 @keyframes epicSpin {
@@ -143,9 +184,13 @@
         transform: rotate(0deg) scale(1);
         opacity: 1;
     }
-    50% { 
-        transform: rotate(180deg) scale(1.1);
-        opacity: 0.8;
+    33% { 
+        transform: rotate(120deg) scale(1.05);
+        opacity: 0.9;
+    }
+    66% { 
+        transform: rotate(240deg) scale(1.1);
+        opacity: 0.85;
     }
     100% { 
         transform: rotate(360deg) scale(1);

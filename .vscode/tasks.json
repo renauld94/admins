@@ -1,0 +1,28 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Generate LinkedIn Carousel PDF",
+			"type": "shell",
+			"command": "bash -lc 'cd /home/simon/Learning-Management-System-Academy/deploy/prometheus && python3 create_linkedin_carousel.py'",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Databricks: Healthcheck",
+			"type": "shell",
+			"command": "bash -lc \"read -p \\\"Paste PAT (input hidden): \\\" -s DBT && echo && export DATABRICKS_URL=\\\\\\\"https://dbc-b975c647-8055.cloud.databricks.com\\\\\\\" ORG_ID=\\\\\\\"3730679146688067\\\\\\\" DATABRICKS_TOKEN=\\\\\\\"$DBT\\\\\\\" && /home/simon/Learning-Management-System-Academy/scripts/databricks_healthcheck.sh\"",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Deploy portfolio updates",
+			"type": "shell",
+			"command": "bash -lc \"/home/simon/Learning-Management-System-Academy/scripts/deploy_improved_portfolio.sh\"",
+			"isBackground": false,
+			"group": "build"
+		}
+	]
+}

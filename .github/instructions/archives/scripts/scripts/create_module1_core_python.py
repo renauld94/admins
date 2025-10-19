@@ -5,8 +5,8 @@ from urllib3.poolmanager import PoolManager
 import ssl
 
 # === CONFIGURATION ===
-MOODLE_URL = "https://moddle-datalabsimon.duckdns.org/webservice/rest/server.php"
-MOODLE_TOKEN = "308bcd71c87eee1198c3c3a7f708f42e"
+MOODLE_URL = os.getenv("MOODLE_URL", "https://moddle-datalabsimon.duckdns.org/webservice/rest/server.php")
+MOODLE_TOKEN = os.getenv("MOODLE_TOKEN", "")
 MODULE_NAME = "Module 1 - Core Python"
 COURSE_CATEGORY_ID = 1  # Change if needed
 
@@ -26,6 +26,9 @@ class HostNameIgnoringAdapter(HTTPAdapter):
 
 session = requests.Session()
 session.mount('https://', HostNameIgnoringAdapter())
+
+if not MOODLE_TOKEN:
+    raise RuntimeError("MOODLE_TOKEN environment variable is required; do not hardcode tokens.")
 
 def get_files_from_dirs(dirs):
     files = []

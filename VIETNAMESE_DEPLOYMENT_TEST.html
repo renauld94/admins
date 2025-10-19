@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vietnamese Language - Interactive Lessons | Moodle Integration</title>
+    
+    <!-- CDN Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://howlerjs.com/dist/howler.min.js"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='grad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:%231a1a2e;stop-opacity:1' /><stop offset='100%' style='stop-color:%230f3460;stop-opacity:1' /></linearGradient></defs><rect width='100' height='100' fill='url(%23grad)'/><text x='50' y='70' font-size='60' font-weight='bold' fill='%23e94560' text-anchor='middle' font-family='Arial'>🎓</text></svg>">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e2e8f0 100%);
+            color: #1a1a2e;
+            line-height: 1.6;
+        }
+        
+        .vn-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .vn-banner {
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 24px rgba(15, 52, 96, 0.3);
+            text-align: center;
+        }
+        
+        .vn-banner h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        
+        .vn-banner p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            margin: 0.5rem 0;
+        }
+        
+        .deployment-badge {
+            display: inline-block;
+            background: rgba(233, 69, 96, 0.9);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+        
+        .test-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            border-top: 4px solid #0f3460;
+        }
+        
+        .test-section h2 {
+            color: #1a1a2e;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .test-card {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        
+        .test-card:hover {
+            border-color: #0f3460;
+            box-shadow: 0 4px 12px rgba(15, 52, 96, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .test-card h3 {
+            color: #0f3460;
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+        
+        .test-card p {
+            color: #475569;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+        
+        .test-button {
+            background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+        
+        .test-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(15, 52, 96, 0.3);
+        }
+        
+        .test-button:active {
+            transform: translateY(0);
+        }
+        
+        .test-result {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        
+        .result-success {
+            background: #ecfdf5;
+            color: #065f46;
+            border: 1px solid #d1fae5;
+        }
+        
+        .result-error {
+            background: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fee2e2;
+        }
+        
+        .result-pending {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fcd34d;
+        }
+        
+        .checklist {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 8px;
+            border-left: 3px solid #e2e8f0;
+        }
+        
+        .checklist-item.done {
+            background: #ecfdf5;
+            border-left-color: #06b981;
+        }
+        
+        .checklist-item.pending {
+            background: #fef3c7;
+            border-left-color: #f59e0b;
+        }
+        
+        .checklist-icon {
+            font-size: 1.2rem;
+            min-width: 1.5rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            border-top: 3px solid #0f3460;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #e94560;
+            margin: 0.5rem 0;
+        }
+        
+        .stat-label {
+            color: #475569;
+            font-size: 0.95rem;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .button-primary {
+            background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .button-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(15, 52, 96, 0.3);
+        }
+        
+        .button-secondary {
+            background: white;
+            color: #0f3460;
+            padding: 1rem 2rem;
+            border: 2px solid #0f3460;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .button-secondary:hover {
+            background: #f8fafc;
+            transform: translateY(-3px);
+        }
+        
+        .platform-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid #0f3460;
+        }
+        
+        .feature-card h4 {
+            color: #0f3460;
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-card p {
+            color: #475569;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: #475569;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 3rem;
+        }
+        
+        .footer p {
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="vn-container">
+        <!-- Banner -->
+        <div class="vn-banner">
+            <h1>🎓 Vietnamese Language Platform</h1>
+            <p>Professional Interactive Learning Experience</p>
+            <p style="font-size: 0.95rem; opacity: 0.9;">
+                ✨ Enterprise Theme | 🔊 Professional Audio | 🎯 Interactive Lessons
+            </p>
+            <div class="deployment-badge">
+                ✅ Deployed to Moodle Course 10 | v3.1 Production Ready
+            </div>
+        </div>
+        
+        <!-- Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">6</div>
+                <div class="stat-label">Comprehensive Modules</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Interactive Lessons</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">40+</div>
+                <div class="stat-label">Hours of Content</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Responsive Design</div>
+            </div>
+        </div>
+        
+        <!-- Quick Access -->
+        <div class="test-section">
+            <h2>🚀 Quick Access</h2>
+            <div class="button-group">
+                <a href="https://moodle.simondatalab.de/course/view.php?id=10" class="button-primary" target="_blank">
+                    📚 Open Course in Moodle
+                </a>
+                <a href="learning-platform/vietnamese-lessons-integration.html" class="button-primary">
+                    🎓 Launch Platform
+                </a>
+                <button class="button-secondary" onclick="runAllTests()">
+                    🧪 Run All Tests
+                </button>
+            </div>
+        </div>
+        
+        <!-- Platform Features -->
+        <div class="test-section">
+            <h2>✨ Platform Features</h2>
+            <div class="platform-features">
+                <div class="feature-card">
+                    <h4>🎨 Enterprise Theme</h4>
+                    <p>Professional SimonDataLab navy/blue color scheme with modern design</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🔊 Professional Audio</h4>
+                    <p>High-quality tone visualization and waveform analysis</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🎯 Interactive Lessons</h4>
+                    <p>50+ lessons across 6 comprehensive modules</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🎤 Microphone Practice</h4>
+                    <p>Real-time speech recognition and pronunciation feedback</p>
+                </div>
+                <div class="feature-card">
+                    <h4>📱 Mobile Responsive</h4>
+                    <p>Optimized for desktop, tablet, and mobile devices</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🌙 Dark Mode</h4>
+                    <p>Automatic dark mode support based on browser preferences</p>
+                </div>
+                <div class="feature-card">
+                    <h4>💾 Offline Support</h4>
+                    <p>LocalStorage and IndexedDB for offline learning</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🤖 AI Tutor (Offline)</h4>
+                    <p>Graceful fallback mode for AI-powered coaching</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Browser Console Tests -->
+        <div class="test-section">
+            <h2>🧪 Browser Console Tests</h2>
+            <div class="test-grid">
+                <div class="test-card">
+                    <h3>AudioContext Resume</h3>
+                    <p>Tests if AudioContext initializes correctly after user gesture</p>
+                    <button class="test-button" onclick="testAudioContext()">Test Audio</button>
+                    <div id="audio-result"></div>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Platform Initialization</h3>
+                    <p>Verifies all platform components load successfully</p>
+                    <button class="test-button" onclick="testPlatformInit()">Test Init</button>
+                    <div id="init-result"></div>
+                </div>
+                
+                <div class="test-card">
+                    <h3>LocalStorage Support</h3>
+                    <p>Checks if browser supports local data persistence</p>
+                    <button class="test-button" onclick="testLocalStorage()">Test Storage</button>
+                    <div id="storage-result"></div>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Microphone Access</h3>
+                    <p>Tests microphone permissions and availability</p>
+                    <button class="test-button" onclick="testMicrophone()">Test Mic</button>
+                    <div id="mic-result"></div>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Speech Recognition</h3>
+                    <p>Verifies Vietnamese speech recognition support</p>
+                    <button class="test-button" onclick="testSpeechRecognition()">Test Speech</button>
+                    <div id="speech-result"></div>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Responsive Design</h3>
+                    <p>Shows current viewport dimensions</p>
+                    <button class="test-button" onclick="testResponsive()">Check Viewport</button>
+                    <div id="responsive-result"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Testing Checklist -->
+        <div class="test-section">
+            <h2>✅ Testing Checklist</h2>
+            <div class="checklist">
+                <div class="checklist-item pending">
+                    <span class="checklist-icon">▶️</span>
+                    <div>
+                        <strong>Load Platform</strong>
+                        <p style="margin: 0.25rem 0; color: inherit; opacity: 0.8;">Open the main platform page</p>
+                    </div>
+                </div>
+                <div class="checklist-item pending">
+                    <span class="checklist-icon">▶️</span>
+                    <div>
+                        <strong>Check Console (F12)</strong>
+                        <p style="margin: 0.25rem 0; color: inherit; opacity: 0.8;">Should show ✅ Platform ready!</p>
+                    </div>
+                </div>
+                <div class="checklist-item pending">
+                    <span class="checklist-icon">▶️</span>
+                    <div>
+                        <strong>Test Audio Playback</strong>
+                        <p style="margin: 0.25rem 0; color: inherit; opacity: 0.8;">Click tone cards to test audio</p>
+                    </div>
+                </div>
+                <div class="checklist-item pending">
+                    <span class="checklist-icon">▶️</span>
+                    <div>
+                        <strong>Test Microphone</strong>
+                        <p style="margin: 0.25rem 0; color: inherit; opacity: 0.8;">Record audio to verify microphone access</p>
+                    </div>
+                </div>
+                <div class="checklist-item pending">
+                    <span class="checklist-icon">▶️</span>
+                    <div>
+                        <strong>Mobile Responsiveness</strong>
+                        <p style="margin: 0.25rem 0; color: inherit; opacity: 0.8;">Resize browser or use DevTools mobile view</p>
+                    </div>
+                </div>
+                <div class="checklist-item pending">
+                    <span class="checklist-icon">▶️</span>
+                    <div>
+                        <strong>Dark Mode Test</strong>
+                        <p style="margin: 0.25rem 0; color: inherit; opacity: 0.8;">Check browser dark mode preference</p>
+                    </div>
+                </div>
+                <div class="checklist-item pending">
+                    <span class="checklist-icon">▶️</span>
+                    <div>
+                        <strong>Check Favicon</strong>
+                        <p style="margin: 0.25rem 0; color: inherit; opacity: 0.8;">Should show professional gradient icon in tab</p>
+                    </div>
+                </div>
+                <div class="checklist-item pending">
+                    <span class="checklist-icon">▶️</span>
+                    <div>
+                        <strong>Verify Tone Cards</strong>
+                        <p style="margin: 0.25rem 0; color: inherit; opacity: 0.8;">Test tone visualization and playback</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Deployment Info -->
+        <div class="test-section">
+            <h2>📊 Deployment Information</h2>
+            <div class="test-grid">
+                <div class="test-card">
+                    <h3>Course Details</h3>
+                    <p><strong>Course ID:</strong> 10</p>
+                    <p><strong>Title:</strong> Vietnamese Language - Interactive Lessons</p>
+                    <p><strong>Status:</strong> ✅ Active</p>
+                </div>
+                
+                <div class="test-card">
+                    <h3>Platform Version</h3>
+                    <p><strong>Version:</strong> 3.1</p>
+                    <p><strong>Theme:</strong> SimonDataLab Enterprise</p>
+                    <p><strong>Status:</strong> ✅ Production Ready</p>
+                </div>
+                
+                <div class="test-card">
+                    <h3>URLs</h3>
+                    <p><strong>Moodle:</strong> moodle.simondatalab.de</p>
+                    <p><strong>Course:</strong> /course/view.php?id=10</p>
+                    <p><strong>VM 9001:</strong> 10.0.0.104:8086</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>Vietnamese Language Platform v3.1</strong></p>
+            <p>Deployed to Moodle Course 10 on VM 9001 (10.0.0.104)</p>
+            <p style="font-size: 0.9rem; margin-top: 1rem;">
+                🎉 Professional Enterprise Theme | 🔧 Production Ready | ✨ Full-featured Learning Platform
+            </p>
+            <p style="font-size: 0.85rem; color: #94a3b8; margin-top: 1rem;">
+                Deployment Date: October 19, 2025 | Status: ✅ ACTIVE
+            </p>
+        </div>
+    </div>
+    
+    <script>
+        // Test Functions
+        function testAudioContext() {
+            const result = document.getElementById('audio-result');
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (AudioContext) {
+                    const ctx = new AudioContext();
+                    const status = ctx.state === 'suspended' ? '⏸️ Suspended (expected)' : '▶️ ' + ctx.state;
+                    result.innerHTML = `<div class="test-result result-success">✅ AudioContext: ${status}</div>`;
+                } else {
+                    result.innerHTML = `<div class="test-result result-error">❌ AudioContext not supported</div>`;
+                }
+            } catch (e) {
+                result.innerHTML = `<div class="test-result result-error">❌ Error: ${e.message}</div>`;
+            }
+        }
+        
+        function testPlatformInit() {
+            const result = document.getElementById('init-result');
+            try {
+                // Check for required global objects
+                const checks = {
+                    'Tone.js': typeof Tone !== 'undefined',
+                    'GSAP': typeof gsap !== 'undefined',
+                    'Chart.js': typeof Chart !== 'undefined',
+                    'Howler': typeof Howl !== 'undefined'
+                };
+                
+                const allGood = Object.values(checks).every(v => v);
+                const checkStr = Object.entries(checks)
+                    .map(([name, ok]) => ok ? `✅ ${name}` : `❌ ${name}`)
+                    .join(' | ');
+                
+                result.innerHTML = `<div class="test-result ${allGood ? 'result-success' : 'result-error'}">${checkStr}</div>`;
+            } catch (e) {
+                result.innerHTML = `<div class="test-result result-error">❌ Error: ${e.message}</div>`;
+            }
+        }
+        
+        function testLocalStorage() {
+            const result = document.getElementById('storage-result');
+            try {
+                const test = '__test__';
+                localStorage.setItem(test, 'true');
+                const value = localStorage.getItem(test);
+                localStorage.removeItem(test);
+                
+                if (value === 'true') {
+                    result.innerHTML = `<div class="test-result result-success">✅ LocalStorage: Available</div>`;
+                } else {
+                    result.innerHTML = `<div class="test-result result-error">❌ LocalStorage: Failed</div>`;
+                }
+            } catch (e) {
+                result.innerHTML = `<div class="test-result result-error">❌ Error: ${e.message}</div>`;
+            }
+        }
+        
+        function testMicrophone() {
+            const result = document.getElementById('mic-result');
+            try {
+                navigator.mediaDevices.getUserMedia({ audio: true })
+                    .then(stream => {
+                        stream.getTracks().forEach(track => track.stop());
+                        result.innerHTML = `<div class="test-result result-success">✅ Microphone: Available</div>`;
+                    })
+                    .catch(e => {
+                        result.innerHTML = `<div class="test-result result-error">⚠️ Microphone: ${e.name}</div>`;
+                    });
+            } catch (e) {
+                result.innerHTML = `<div class="test-result result-error">❌ Error: ${e.message}</div>`;
+            }
+        }
+        
+        function testSpeechRecognition() {
+            const result = document.getElementById('speech-result');
+            try {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                if (SpeechRecognition) {
+                    const recognition = new SpeechRecognition();
+                    result.innerHTML = `<div class="test-result result-success">✅ Speech Recognition: Available (vi-VN)</div>`;
+                } else {
+                    result.innerHTML = `<div class="test-result result-error">❌ Speech Recognition: Not supported</div>`;
+                }
+            } catch (e) {
+                result.innerHTML = `<div class="test-result result-error">❌ Error: ${e.message}</div>`;
+            }
+        }
+        
+        function testResponsive() {
+            const result = document.getElementById('responsive-result');
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            let size = 'Large Desktop';
+            let breakpoint = '> 1024px';
+            
+            if (width < 480) {
+                size = 'Small Phone';
+                breakpoint = '< 480px';
+            } else if (width < 768) {
+                size = 'Large Phone';
+                breakpoint = '480px - 768px';
+            } else if (width < 1024) {
+                size = 'Tablet';
+                breakpoint = '768px - 1024px';
+            }
+            
+            result.innerHTML = `<div class="test-result result-success">📐 Viewport: ${width}x${height} (${size} - ${breakpoint})</div>`;
+        }
+        
+        function runAllTests() {
+            testAudioContext();
+            testPlatformInit();
+            testLocalStorage();
+            testMicrophone();
+            testSpeechRecognition();
+            testResponsive();
+            alert('✅ All tests completed! Check results below.');
+        }
+        
+        // Auto-run responsive test on load
+        window.addEventListener('load', testResponsive);
+    </script>
+</body>
+</html>

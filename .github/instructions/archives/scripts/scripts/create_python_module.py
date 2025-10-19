@@ -1,10 +1,14 @@
+import os
 import requests
 import sys
 import json
 import time
 
-MOODLE_URL = "http://localhost:8081/webservice/rest/server.php"
-TOKEN = "7f6d1feaad8ef803c7814fd19e883c61"  # coursecreator token
+MOODLE_URL = os.getenv("MOODLE_URL", "http://localhost:8081/webservice/rest/server.php")
+TOKEN = os.getenv("MOODLE_TOKEN", "")  # supply via env var; do not hardcode
+
+if not TOKEN:
+    raise RuntimeError("MOODLE_TOKEN environment variable is required; do not hardcode tokens.")
 
 def wait_for_moodle(timeout=60):
     """Wait for Moodle to be fully operational"""
@@ -38,7 +42,7 @@ def check_web_service():
     }
     
     try:
-        response = requests.get(MOODLE_URL, params=params)
+        response = requests.get(MOODLE_URL, params=params, timeout=30)
         print("\nDEBUG: Testing web service configuration...")
         print(f"URL: {MOODLE_URL}")
         print(f"Token: {TOKEN[:5]}...{TOKEN[-5:]}")
@@ -91,7 +95,7 @@ def check_capabilities():
     }
     
     try:
-        response = requests.get(MOODLE_URL, params=params)
+        response = requests.get(MOODLE_URL, params=params, timeout=30)
         if response.status_code == 200:
             data = response.json()
             # Check if we're authorized
@@ -147,7 +151,7 @@ This foundational module covers core Python programming concepts essential for d
     }
 
     try:
-        response = requests.post(MOODLE_URL, params=course_params)
+        response = requests.post(MOODLE_URL, params=course_params, timeout=30)
         print(f"Status Code: {response.status_code}")
         print(f"Response Text: {response.text}")
         
@@ -181,14 +185,18 @@ This foundational module covers core Python programming concepts essential for d
             
     except requests.exceptions.HTTPError as e:
         print(f"HTTP Error: {e}")
-        print("Response content:", response.text)
+        if hasattr(e, 'response') and e.response is not None:
+            try:
+                print("Response content:", e.response.text)
+            except Exception:
+                pass
         sys.exit(1)
     except requests.exceptions.RequestException as e:
         print(f"Request failed: {e}")
         sys.exit(1)
     except (ValueError, KeyError) as e:
         print(f"Response parsing error: {e}")
-        print("Raw response:", response.text)
+        # Raw response may not be accessible here safely; skip printing
         sys.exit(1)
 
 if __name__ == "__main__":

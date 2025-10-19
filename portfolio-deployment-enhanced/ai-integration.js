@@ -12,8 +12,8 @@
 
 export class AIIntegrationManager {
   constructor() {
-    this.ollamaEndpoint = 'https://openwebui.simondatalab.de/api';
-    this.grafanaEndpoint = 'http://grafana.simondatalab.de/api';
+  this.ollamaEndpoint = 'https://openwebui.simondatalab.de/api';
+  this.grafanaEndpoint = 'https://grafana.simondatalab.de/api';
     this.metricsCache = new Map();
     this.narrativeCache = [];
     this.isStreaming = false;

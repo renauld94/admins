@@ -40,11 +40,31 @@ function initializeNavigation() {
     // Mobile menu toggle
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const mobileNav = document.querySelector('.mobile-nav');
+    const backdrop = document.querySelector('.mobile-nav-backdrop');
 
     if (mobileMenuBtn && mobileNav) {
-        mobileMenuBtn.addEventListener('click', () => {
-            toggleMobileMenu();
+        // Prevent double-fire across touch/click
+        let lastToggleTs = 0;
+        const guard = (fn) => (e) => {
+            const now = performance.now();
+            if (now - lastToggleTs < 250) {
+                e.preventDefault();
+                e.stopPropagation();
+                return;
+            }
+            lastToggleTs = now;
+            fn(e);
+        };
+        mobileMenuBtn.addEventListener('click', (e) => {
+            guard((ev)=>{ ev.preventDefault(); ev.stopPropagation(); toggleMobileMenu(); })(e);
         });
+        
+        // Add touch event for better mobile support
+        mobileMenuBtn.addEventListener('touchend', (e) => {
+            if (e.cancelable) e.preventDefault();
+            e.stopPropagation();
+            guard(()=> toggleMobileMenu())(e);
+        }, { passive: false });
 
         // Close mobile menu when clicking on a link
         document.querySelectorAll('.mobile-nav-menu .nav-link').forEach(link => {
@@ -52,12 +72,25 @@ function initializeNavigation() {
                 closeMobileMenu();
             });
         });
+        
+        // Close mobile menu when clicking backdrop
+        if (backdrop) {
+            backdrop.addEventListener('click', () => {
+                closeMobileMenu();
+            });
+        }
     }
 
     // Close mobile menu when clicking outside
     document.addEventListener('click', (e) => {
-        if (!mobileMenuBtn?.contains(e.target) && !mobileNav?.contains(e.target)) {
-            closeMobileMenu();
+        const backdrop = document.querySelector('.mobile-nav-backdrop');
+        if (!mobileMenuBtn?.contains(e.target) && 
+            !mobileNav?.contains(e.target) && 
+            !backdrop?.contains(e.target)) {
+            // Only close if the menu is open
+            if (mobileNav?.classList.contains('active')) {
+                closeMobileMenu();
+            }
         }
     });
 
@@ -143,6 +176,17 @@ function initializeNavigation() {
     if (mobileDropdown) {
         const toggle = mobileDropdown.querySelector('.mobile-dropdown-toggle');
         const menu = mobileDropdown.querySelector('.mobile-dropdown-menu');
+        let lastToggleTs = 0;
+        const guard = (fn) => (e) => {
+            const now = performance.now();
+            if (now - lastToggleTs < 250) {
+                e.preventDefault?.();
+                e.stopPropagation?.();
+                return;
+            }
+            lastToggleTs = now;
+            fn(e);
+        };
         
         const close = () => {
             mobileDropdown.classList.remove('open');
@@ -168,13 +212,13 @@ function initializeNavigation() {
         
         // Add both click and touchend for better mobile support
         if (toggle) {
-            toggle.addEventListener('click', toggleDropdown);
+            toggle.addEventListener('click', guard(toggleDropdown));
             toggle.addEventListener('touchend', (ev) => {
                 // Prevent double-firing on mobile
                 if (ev.cancelable) {
                     ev.preventDefault();
                 }
-                toggleDropdown(ev);
+                guard(toggleDropdown)(ev);
             }, { passive: false });
         }
         
@@ -191,6 +235,9 @@ function initializeNavigation() {
         document.addEventListener('keydown', (ev) => {
             if (ev.key === 'Escape') close();
         });
+
+        // Mark initialization complete to avoid duplicate bindings from inline scripts
+        try { window.__PORTFOLIO_APP_JS_MOBILE_DROPDOWN__ = true; } catch (e) {}
     }
 }
 
@@ -236,19 +283,33 @@ function applyNavigationColorFix() {
 function toggleMobileMenu() {
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const mobileNav = document.querySelector('.mobile-nav');
+    const backdrop = document.querySelector('.mobile-nav-backdrop');
 
     if (mobileMenuBtn && mobileNav) {
+        const isOpen = mobileNav.classList.contains('active');
+        
         mobileMenuBtn.classList.toggle('active');
         mobileNav.classList.toggle('active');
-        const isOpen = mobileNav.classList.contains('active');
-        mobileMenuBtn.setAttribute('aria-expanded', String(isOpen));
-        mobileNav.setAttribute('aria-hidden', String(!isOpen));
+        if (backdrop) {
+            backdrop.classList.toggle('active');
+        }
+        
+        const nowOpen = !isOpen;
+        mobileMenuBtn.setAttribute('aria-expanded', String(nowOpen));
+        mobileNav.setAttribute('aria-hidden', String(!nowOpen));
+        if (backdrop) {
+            backdrop.setAttribute('aria-hidden', String(!nowOpen));
+        }
 
         // Prevent body scroll when menu is open
-        if (isOpen) {
+        if (nowOpen) {
             document.body.style.overflow = 'hidden';
+            document.body.style.position = 'fixed';
+            document.body.style.width = '100%';
         } else {
             document.body.style.overflow = '';
+            document.body.style.position = '';
+            document.body.style.width = '';
         }
     }
 }
@@ -256,13 +317,24 @@ function toggleMobileMenu() {
 function closeMobileMenu() {
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const mobileNav = document.querySelector('.mobile-nav');
+    const backdrop = document.querySelector('.mobile-nav-backdrop');
 
     if (mobileMenuBtn && mobileNav) {
         mobileMenuBtn.classList.remove('active');
         mobileNav.classList.remove('active');
+        if (backdrop) {
+            backdrop.classList.remove('active');
+        }
+        
         mobileMenuBtn.setAttribute('aria-expanded', 'false');
         mobileNav.setAttribute('aria-hidden', 'true');
+        if (backdrop) {
+            backdrop.setAttribute('aria-hidden', 'true');
+        }
+        
         document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.width = '';
     }
 }
 
@@ -292,7 +364,7 @@ function initializeGeospatialLaunch() {
         }
 
         if (window.location.protocol === 'file:') {
-            return 'http://127.0.0.1:5500/geospatial-viz/index.html';
+            return 'http://127.0.0.1:5500/geospatial-viz/index.html'; // dev-only
         }
 
         try {

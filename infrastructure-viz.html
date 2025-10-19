@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simon DataLab Infrastructure</title>
+    <script async src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .wrapper {
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #00d4ff 0%, #0099ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            color: #b0b0b0;
+            margin-bottom: 30px;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .stat {
+            background: rgba(0, 212, 255, 0.05);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .stat:hover {
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateY(-5px);
+        }
+        
+        .stat-value {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #00d4ff;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.8em;
+            color: #b0b0b0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .diagram-container {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 40px 0;
+            overflow-x: auto;
+        }
+        
+        .mermaid {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .mermaid svg {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        
+        .info-card {
+            background: rgba(0, 212, 255, 0.05);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s;
+        }
+        
+        .info-card:hover {
+            background: rgba(0, 212, 255, 0.1);
+            border-color: rgba(0, 212, 255, 0.4);
+        }
+        
+        .info-card h3 {
+            color: #00d4ff;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .info-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .info-card li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+            color: #b0b0b0;
+            font-size: 0.95em;
+        }
+        
+        .info-card li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #00d4ff;
+        }
+        
+        .tech-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .badge {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            color: #00d4ff;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            transition: all 0.3s;
+        }
+        
+        .badge:hover {
+            background: rgba(0, 212, 255, 0.2);
+            border-color: rgba(0, 212, 255, 0.6);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(0, 212, 255, 0.2);
+            color: #b0b0b0;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <h1>🏗️ Simon DataLab Infrastructure</h1>
+            <p class="subtitle">Enterprise Data Architecture - Real-time Analytics at Scale</p>
+            
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value">500M+</div>
+                    <div class="stat-label">Daily Records</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">99.9%</div>
+                    <div class="stat-label">Uptime</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">85%</div>
+                    <div class="stat-label">Acceleration</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value">10+</div>
+                    <div class="stat-label">Systems</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="diagram-container">
+            <div class="mermaid">
+graph TB
+    %% External Layer
+    subgraph External["🌐 External Access"]
+        Internet[Internet Users]
+        CloudFlare["☁️ Cloudflare DNS<br/>DNS-only mode"]
+        LetsEncrypt["🔒 Let's Encrypt<br/>Auto SSL"]
+    end
+
+    %% Infrastructure
+    subgraph Infra["🏢 Hetzner Infrastructure"]
+        ProxmoxHost["🖥️ Proxmox VE<br/>136.243.155.166"]
+        subgraph Security["🛡️ Security"]
+            NginxProxy["⚡ Nginx<br/>Reverse Proxy"]
+            IPTables["🔥 IPTables<br/>Firewall"]
+        end
+    end
+
+    %% Internal Network
+    subgraph Internal["🏠 Internal Network (10.0.0.0/24)"]
+        subgraph Container150["📦 Container 150"]
+            Portfolio["🎨 Portfolio<br/>simondatalab.de"]
+        end
+
+        subgraph VM9001["🖥️ VM 9001 - Learning"]
+            subgraph Moodle["🎓 Moodle LMS"]
+                MoodleApp["📚 Moodle<br/>Port 8086"]
+                MoodleDB["🗄️ MariaDB"]
+            end
+            subgraph ML["🔬 ML Platform"]
+                JupyterHub["📊 JupyterHub<br/>Port 8000"]
+                MLflow["🤖 MLflow<br/>Port 5000"]
+                MLAPI["🚀 ML API<br/>Port 8001"]
+            end
+            subgraph Monitoring["📈 Monitoring"]
+                Grafana["📊 Grafana"]
+                Prometheus["📈 Prometheus"]
+            end
+        end
+
+        subgraph VM159["🖥️ VM 159 - AI"]
+            Ollama["🧠 Ollama LLM"]
+            MLflowAI["🤖 MLflow AI"]
+        end
+
+        subgraph VM106["🖥️ VM 106 - GeoNeural"]
+            PostGIS["🗺️ PostGIS<br/>Port 5432"]
+            Redis["⚡ Redis<br/>Port 6379"]
+            GeoAPI["🌐 Geo API<br/>Port 8088"]
+        end
+
+        subgraph VM200["🖥️ VM 200 - Media"]
+            Jellyfin["📺 Jellyfin<br/>Port 8096"]
+            NextCloud["☁️ NextCloud<br/>Port 8088"]
+        end
+    end
+
+    %% Future
+    subgraph Future["🚧 Future/WIP"]
+        GeoServer["🌍 GeoServer<br/>WMS/WFS"]
+        DataLake["🏞️ Data Lake"]
+        DataWarehouse["🏢 Data Warehouse"]
+        MLPipeline["🔄 ML Pipeline"]
+    end
+
+    %% Connections
+    Internet --> CloudFlare
+    CloudFlare --> ProxmoxHost
+    ProxmoxHost --> NginxProxy
+    NginxProxy --> Portfolio
+    NginxProxy --> MoodleApp
+    NginxProxy --> Grafana
+    NginxProxy --> Ollama
+    NginxProxy --> MLflow
+    
+    MoodleApp --> MoodleDB
+    MoodleApp --> JupyterHub
+    JupyterHub --> MLflow
+    MLAPI --> MLflow
+    
+    Grafana --> Prometheus
+    
+    Ollama --> MLflowAI
+    
+    PostGIS --> Redis
+    GeoAPI --> PostGIS
+    GeoAPI --> Redis
+    
+    MLflow -.-> MLPipeline
+    PostGIS -.-> GeoServer
+    PostGIS -.-> DataLake
+    DataLake -.-> DataWarehouse
+            </div>
+        </div>
+
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>🔑 Core Components</h3>
+                <ul>
+                    <li>External: Cloudflare DNS, Let's Encrypt SSL</li>
+                    <li>Infrastructure: Proxmox VE, Nginx, Security</li>
+                    <li>Learning: Moodle, JupyterHub, MLflow</li>
+                    <li>AI: Ollama LLM, ML Registry</li>
+                    <li>Geo: PostGIS, Redis, API</li>
+                    <li>Media: Jellyfin, NextCloud</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3>⚡ Technology Stack</h3>
+                <div class="tech-badges">
+                    <span class="badge">PostgreSQL</span>
+                    <span class="badge">PostGIS</span>
+                    <span class="badge">Python</span>
+                    <span class="badge">Airflow</span>
+                    <span class="badge">MLflow</span>
+                    <span class="badge">Prometheus</span>
+                    <span class="badge">Grafana</span>
+                    <span class="badge">Docker</span>
+                    <span class="badge">Redis</span>
+                    <span class="badge">Nginx</span>
+                    <span class="badge">Moodle</span>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3>📊 System Metrics</h3>
+                <ul>
+                    <li>Daily Records: 500M+</li>
+                    <li>System Uptime: 99.9%</li>
+                    <li>Analysis Speed: 85% faster</li>
+                    <li>VMs/Containers: 10+</li>
+                    <li>Domains: 8+ SSL certs</li>
+                    <li>Monitoring: 24/7 Active</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>🏗️ Enterprise Data Architecture | Real-time Analytics Platform | AI/ML Operations</p>
+            <p style="margin-top: 10px; font-size: 0.85em;">© 2025 Simon DataLab • Built with Precision • Deployed with Care</p>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'dark',
+            securityLevel: 'loose',
+            flowchart: { useMaxWidth: true }
+        });
+        mermaid.contentLoaded();
+    </script>
+</body>
+</html>

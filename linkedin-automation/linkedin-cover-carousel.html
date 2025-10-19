@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Cover Carousel Generator - Simon Renauld</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0f172a;
+            color: white;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            background: linear-gradient(45deg, #0ea5e9, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .info {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .info p {
+            margin: 0.5rem 0;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .slides-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .slide-container {
+            position: relative;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .slide {
+            width: 1128px;
+            height: 191px;
+            position: relative;
+            overflow: hidden;
+            transform: scale(0.5);
+            transform-origin: top left;
+        }
+
+        .slide-title {
+            text-align: center;
+            padding: 0.5rem;
+            background: rgba(15, 23, 42, 0.9);
+            font-size: 0.9rem;
+            color: #0ea5e9;
+            font-weight: 600;
+        }
+
+        /* Slide 1: Hero Introduction */
+        #slide1 {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 60px;
+        }
+
+        #slide1 .content {
+            flex: 1;
+            z-index: 2;
+        }
+
+        #slide1 h2 {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 12px;
+            background: linear-gradient(90deg, #0ea5e9, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        #slide1 p {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+
+        #slide1 .visual {
+            position: absolute;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 400px;
+            height: 150px;
+            opacity: 0.3;
+        }
+
+        /* Slide 2: Expertise Areas */
+        #slide2 {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            padding: 30px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        #slide2 h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #0ea5e9;
+        }
+
+        #slide2 .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        #slide2 .expertise-item {
+            background: rgba(14, 165, 233, 0.1);
+            border: 2px solid rgba(14, 165, 233, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        #slide2 .expertise-item h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #8b5cf6;
+            margin-bottom: 4px;
+        }
+
+        #slide2 .expertise-item p {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Slide 3: Impact Metrics */
+        #slide3 {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            padding: 30px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        #slide3 h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            text-align: center;
+            color: #0ea5e9;
+        }
+
+        #slide3 .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        #slide3 .metric {
+            text-align: center;
+            background: rgba(139, 92, 246, 0.1);
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        #slide3 .metric-value {
+            font-size: 36px;
+            font-weight: 800;
+            color: #8b5cf6;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+
+        #slide3 .metric-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 600;
+        }
+
+        /* Slide 4: Tech Stack */
+        #slide4 {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            padding: 30px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        #slide4 h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #0ea5e9;
+        }
+
+        #slide4 .tech-categories {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        #slide4 .tech-category {
+            background: rgba(6, 182, 212, 0.1);
+            border: 2px solid rgba(6, 182, 212, 0.3);
+            border-radius: 8px;
+            padding: 12px;
+        }
+
+        #slide4 .tech-category h3 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #06b6d4;
+            margin-bottom: 8px;
+        }
+
+        #slide4 .tech-category p {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.4;
+        }
+
+        /* Slide 5: Call to Action */
+        #slide5 {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 60px;
+            position: relative;
+        }
+
+        #slide5 .content {
+            z-index: 2;
+        }
+
+        #slide5 h2 {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            background: linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        #slide5 p {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        #slide5 .contact {
+            font-size: 16px;
+            color: #0ea5e9;
+            font-weight: 600;
+        }
+
+        /* Decorative elements */
+        .grid-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(14, 165, 233, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(14, 165, 233, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0.3;
+        }
+
+        .dots-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle, rgba(139, 92, 246, 0.2) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.4;
+        }
+
+        .controls {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #0ea5e9, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 0 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .download-info {
+            margin-top: 1rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>LinkedIn Premium Cover Carousel</h1>
+        
+        <div class="info">
+            <p><strong>Image Specifications:</strong></p>
+            <p>Size: 1128px x 191px | Format: PNG | Optimized for LinkedIn Premium Cover</p>
+            <p>5 Professional Slides Showcasing Data Engineering Excellence</p>
+        </div>
+
+        <div class="slides-grid">
+            <!-- Slide 1: Hero Introduction -->
+            <div class="slide-container">
+                <div class="slide-title">Slide 1: Hero Introduction</div>
+                <canvas id="canvas1" class="slide"></canvas>
+            </div>
+
+            <!-- Slide 2: Expertise Areas -->
+            <div class="slide-container">
+                <div class="slide-title">Slide 2: Core Expertise</div>
+                <canvas id="canvas2" class="slide"></canvas>
+            </div>
+
+            <!-- Slide 3: Impact Metrics -->
+            <div class="slide-container">
+                <div class="slide-title">Slide 3: Proven Impact</div>
+                <canvas id="canvas3" class="slide"></canvas>
+            </div>
+
+            <!-- Slide 4: Tech Stack -->
+            <div class="slide-container">
+                <div class="slide-title">Slide 4: Technology Stack</div>
+                <canvas id="canvas4" class="slide"></canvas>
+            </div>
+
+            <!-- Slide 5: Call to Action -->
+            <div class="slide-container">
+                <div class="slide-title">Slide 5: Let's Connect</div>
+                <canvas id="canvas5" class="slide"></canvas>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="downloadAllSlides()">Download All 5 Slides</button>
+            <div class="download-info">
+                Images will be downloaded as PNG files ready for LinkedIn upload
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        // Wait for page load
+        window.addEventListener('load', function() {
+            renderAllSlides();
+        });
+
+        function renderAllSlides() {
+            renderSlide1();
+            renderSlide2();
+            renderSlide3();
+            renderSlide4();
+            renderSlide5();
+        }
+
+        function renderSlide1() {
+            const canvas = document.getElementById('canvas1');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 1128;
+            canvas.height = 191;
+
+            // Background gradient
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, '#0f172a');
+            gradient.addColorStop(0.5, '#1e293b');
+            gradient.addColorStop(1, '#334155');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Grid pattern
+            ctx.strokeStyle = 'rgba(14, 165, 233, 0.05)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < canvas.width; i += 30) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, canvas.height);
+                ctx.stroke();
+            }
+            for (let i = 0; i < canvas.height; i += 30) {
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(canvas.width, i);
+                ctx.stroke();
+            }
+
+            // Decorative circles
+            for (let i = 0; i < 30; i++) {
+                const x = 700 + Math.random() * 400;
+                const y = Math.random() * canvas.height;
+                const radius = 2 + Math.random() * 8;
+                ctx.beginPath();
+                ctx.arc(x, y, radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(14, 165, 233, ${0.1 + Math.random() * 0.2})`;
+                ctx.fill();
+            }
+
+            // Title - gradient text
+            ctx.font = 'bold 48px Inter, sans-serif';
+            const textGradient = ctx.createLinearGradient(60, 0, 600, 0);
+            textGradient.addColorStop(0, '#0ea5e9');
+            textGradient.addColorStop(1, '#8b5cf6');
+            ctx.fillStyle = textGradient;
+            ctx.fillText('Simon Renauld', 60, 80);
+
+            // Subtitle
+            ctx.font = '500 20px Inter, sans-serif';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.fillText('Lead Analytics & Data Engineering Expert', 60, 115);
+        }
+
+        function renderSlide2() {
+            const canvas = document.getElementById('canvas2');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 1128;
+            canvas.height = 191;
+
+            // Background
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, '#1e293b');
+            gradient.addColorStop(1, '#334155');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Title
+            ctx.font = 'bold 36px Inter, sans-serif';
+            ctx.fillStyle = '#0ea5e9';
+            ctx.fillText('Core Expertise', 60, 50);
+
+            // Expertise boxes
+            const expertise = [
+                { title: 'MLOps', desc: 'Production ML Systems' },
+                { title: 'Data Engineering', desc: 'Enterprise Platforms' },
+                { title: 'Governance', desc: 'HIPAA/GDPR Compliance' },
+                { title: 'Analytics', desc: 'Strategic Intelligence' }
+            ];
+
+            const boxWidth = 230;
+            const boxHeight = 80;
+            const startX = 60;
+            const startY = 70;
+            const gap = 25;
+
+            expertise.forEach((item, index) => {
+                const x = startX + (boxWidth + gap) * index;
+                const y = startY;
+
+                // Box background
+                ctx.fillStyle = 'rgba(14, 165, 233, 0.1)';
+                ctx.fillRect(x, y, boxWidth, boxHeight);
+
+                // Box border
+                ctx.strokeStyle = 'rgba(14, 165, 233, 0.3)';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(x, y, boxWidth, boxHeight);
+
+                // Title
+                ctx.font = 'bold 16px Inter, sans-serif';
+                ctx.fillStyle = '#8b5cf6';
+                ctx.textAlign = 'center';
+                ctx.fillText(item.title, x + boxWidth / 2, y + 35);
+
+                // Description
+                ctx.font = '11px Inter, sans-serif';
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+                ctx.fillText(item.desc, x + boxWidth / 2, y + 55);
+            });
+
+            ctx.textAlign = 'left';
+        }
+
+        function renderSlide3() {
+            const canvas = document.getElementById('canvas3');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 1128;
+            canvas.height = 191;
+
+            // Background
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, '#0f172a');
+            gradient.addColorStop(1, '#1e293b');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Dots pattern
+            ctx.fillStyle = 'rgba(139, 92, 246, 0.1)';
+            for (let x = 0; x < canvas.width; x += 20) {
+                for (let y = 0; y < canvas.height; y += 20) {
+                    ctx.beginPath();
+                    ctx.arc(x, y, 1, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            // Title
+            ctx.font = 'bold 36px Inter, sans-serif';
+            ctx.fillStyle = '#0ea5e9';
+            ctx.textAlign = 'center';
+            ctx.fillText('Proven Impact', canvas.width / 2, 45);
+
+            // Metrics
+            const metrics = [
+                { value: '500M+', label: 'Daily Records' },
+                { value: '85%', label: 'Faster Insights' },
+                { value: '99.9%', label: 'Uptime SLA' },
+                { value: '100%', label: 'Compliance' }
+            ];
+
+            const boxWidth = 220;
+            const boxHeight = 90;
+            const startX = 90;
+            const startY = 65;
+            const gap = 30;
+
+            metrics.forEach((metric, index) => {
+                const x = startX + (boxWidth + gap) * index;
+                const y = startY;
+
+                // Box background
+                ctx.fillStyle = 'rgba(139, 92, 246, 0.1)';
+                ctx.fillRect(x, y, boxWidth, boxHeight);
+
+                // Box border
+                ctx.strokeStyle = 'rgba(139, 92, 246, 0.3)';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(x, y, boxWidth, boxHeight);
+
+                // Value
+                ctx.font = 'bold 36px Inter, sans-serif';
+                ctx.fillStyle = '#8b5cf6';
+                ctx.textAlign = 'center';
+                ctx.fillText(metric.value, x + boxWidth / 2, y + 45);
+
+                // Label
+                ctx.font = '600 12px Inter, sans-serif';
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                ctx.fillText(metric.label, x + boxWidth / 2, y + 68);
+            });
+
+            ctx.textAlign = 'left';
+        }
+
+        function renderSlide4() {
+            const canvas = document.getElementById('canvas4');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 1128;
+            canvas.height = 191;
+
+            // Background
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, '#1e293b');
+            gradient.addColorStop(1, '#0f172a');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Title
+            ctx.font = 'bold 36px Inter, sans-serif';
+            ctx.fillStyle = '#0ea5e9';
+            ctx.fillText('Technology Stack', 60, 50);
+
+            // Tech categories
+            const categories = [
+                { title: 'Data Platforms', tech: 'Airflow, Spark, Kafka, dbt' },
+                { title: 'ML & AI', tech: 'MLflow, TensorFlow, PyTorch' },
+                { title: 'Cloud & Infra', tech: 'AWS, Azure, Kubernetes, Terraform' }
+            ];
+
+            const boxWidth = 320;
+            const boxHeight = 80;
+            const startX = 60;
+            const startY = 70;
+            const gap = 30;
+
+            categories.forEach((cat, index) => {
+                const x = startX + (boxWidth + gap) * index;
+                const y = startY;
+
+                // Box background
+                ctx.fillStyle = 'rgba(6, 182, 212, 0.1)';
+                ctx.fillRect(x, y, boxWidth, boxHeight);
+
+                // Box border
+                ctx.strokeStyle = 'rgba(6, 182, 212, 0.3)';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(x, y, boxWidth, boxHeight);
+
+                // Title
+                ctx.font = 'bold 14px Inter, sans-serif';
+                ctx.fillStyle = '#06b6d4';
+                ctx.fillText(cat.title, x + 15, y + 28);
+
+                // Tech list
+                ctx.font = '11px Inter, sans-serif';
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+                const words = cat.tech.split(' ');
+                let line = '';
+                let lineY = y + 48;
+                words.forEach(word => {
+                    const testLine = line + word;
+                    const metrics = ctx.measureText(testLine);
+                    if (metrics.width > boxWidth - 30) {
+                        ctx.fillText(line, x + 15, lineY);
+                        line = word;
+                        lineY += 14;
+                    } else {
+                        line = testLine;
+                    }
+                });
+                ctx.fillText(line, x + 15, lineY);
+            });
+        }
+
+        function renderSlide5() {
+            const canvas = document.getElementById('canvas5');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 1128;
+            canvas.height = 191;
+
+            // Background
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, '#0f172a');
+            gradient.addColorStop(0.5, '#1e293b');
+            gradient.addColorStop(1, '#334155');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Decorative elements
+            for (let i = 0; i < 50; i++) {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                const radius = 1 + Math.random() * 4;
+                ctx.beginPath();
+                ctx.arc(x, y, radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(139, 92, 246, ${0.1 + Math.random() * 0.3})`;
+                ctx.fill();
+            }
+
+            // Main text - gradient
+            ctx.font = 'bold 42px Inter, sans-serif';
+            const textGradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+            textGradient.addColorStop(0, '#0ea5e9');
+            textGradient.addColorStop(0.5, '#8b5cf6');
+            textGradient.addColorStop(1, '#ec4899');
+            ctx.fillStyle = textGradient;
+            ctx.textAlign = 'center';
+            ctx.fillText('Transform Data Into Strategic Advantage', canvas.width / 2, 75);
+
+            // Subtitle
+            ctx.font = '500 18px Inter, sans-serif';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.fillText('Available for strategic consulting and technical leadership', canvas.width / 2, 110);
+
+            // Email
+            ctx.font = '600 16px Inter, sans-serif';
+            ctx.fillStyle = '#0ea5e9';
+            ctx.fillText('simon@simondatalab.de', canvas.width / 2, 140);
+
+            ctx.textAlign = 'left';
+        }
+
+        function downloadAllSlides() {
+            for (let i = 1; i <= 5; i++) {
+                downloadSlide(i);
+            }
+        }
+
+        function downloadSlide(slideNumber) {
+            const canvas = document.getElementById(`canvas${slideNumber}`);
+            const link = document.createElement('a');
+            link.download = `simon-renauld-linkedin-cover-slide-${slideNumber}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+    </script>
+</body>
+</html>

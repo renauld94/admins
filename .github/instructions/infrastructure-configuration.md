@@ -163,7 +163,7 @@ systemctl start nginx
 
 **Content:**
 ```ini
-dns_cloudflare_api_token = __T2DKmktZTZzQebbus4RgSa0Fz4bgQZGlexK_Rq
+dns_cloudflare_api_token = ${CLOUDFLARE_API_TOKEN}
 ```
 
 **Permissions:** `600` (root only)
@@ -595,8 +595,8 @@ qm shutdown 9001
 
 ### Cloudflare Setup
 
-**Zone ID:** `8721a7620b0d4b0d29e926fda5525d23`  
-**API Token:** `__T2DKmktZTZzQebbus4RgSa0Fz4bgQZGlexK_Rq`  
+**Zone ID:** `REDACTED`  
+**API Token:** `REDACTED`  
 **Management:** Cloudflare Dashboard or API
 
 ### DNS Records (All DNS-Only Mode)
@@ -619,8 +619,8 @@ qm shutdown 9001
 
 ```bash
 # Update single record
-curl -X PUT "https://api.cloudflare.com/client/v4/zones/8721a7620b0d4b0d29e926fda5525d23/dns_records/{record_id}" \
-  -H "Authorization: Bearer __T2DKmktZTZzQebbus4RgSa0Fz4bgQZGlexK_Rq" \
+curl -X PUT "https://api.cloudflare.com/client/v4/zones/${CLOUDFLARE_ZONE_ID}/dns_records/{record_id}" \
+    -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
   -H "Content-Type: application/json" \
   --data '{
     "type": "A",
