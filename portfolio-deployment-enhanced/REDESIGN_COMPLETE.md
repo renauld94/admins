@@ -26,7 +26,7 @@
 BEFORE: "Architecting Data Intelligence That Drives Business Impact" 
         + 60-word paragraph
 
-AFTER:  "Data Intelligence at Enterprise Scale"
+AFTER:  "Enterprise Neuro AI & Collaborative Data Platforms"
         + 15-word metric-focused subtitle
         + Gradient flow animation
 ```

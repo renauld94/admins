@@ -1,0 +1,16 @@
+[Unit]
+Description=Neuro AI Agent %i
+After=network.target
+
+[Service]
+Type=simple
+User=%i
+WorkingDirectory=/home/simon/Learning-Management-System-Academy
+# Use an EnvironmentFile for secrets if needed; by default agents read workspace/agents/.token
+Environment=NEURO_AGENT_TOKEN_FILE=/home/simon/Learning-Management-System-Academy/workspace/agents/.token
+ExecStart=/usr/bin/env bash -lc 'export NEURO_AGENT_TOKEN=$(cat "$NEURO_AGENT_TOKEN_FILE" 2>/dev/null || echo "") && exec python3 /home/simon/Learning-Management-System-Academy/scripts/agents/%i_server.py'
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

@@ -139,7 +139,7 @@ version: '3.8'
 services:
   # OpenWebUI Enterprise
   openwebui:
-    image: ghcr.io/open-webui/open-webui:main
+    image: ghcr.io/open-webui/open-webui:v0.6.34
     container_name: openwebui-enterprise
     ports:
       - "3000:8080"

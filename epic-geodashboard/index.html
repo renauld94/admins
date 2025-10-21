@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Epic Geospatial Dashboard</title>
+  <meta name="description" content="Interactive geospatial analytics dashboard powered by Leaflet, D3.js, and Plotly. Mobile and desktop optimized.">
+  <link rel="stylesheet" href="style.css">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <!-- Plotly JS -->
+  <!-- Use an explicit Plotly v2.x release to avoid outdated 'latest' warning -->
+  <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+  <!-- D3.js -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <!-- Inline SVG favicon to avoid 404 for /favicon.ico -->
+  <link rel="icon" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23181c24"/><text x="50" y="56" font-size="48" text-anchor="middle" fill="%231a73e8" font-family="Arial">SD</text></svg>'>
+</head>
+<body>
+  <header>
+    <h1>Epic Geospatial Dashboard</h1>
+    <nav>
+      <button id="menu-toggle" aria-label="Open menu">☰</button>
+      <ul id="main-menu">
+        <li><a href="#map">Map</a></li>
+        <li><a href="#analytics">Analytics</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <div class="layout">
+      <aside id="control-sidebar" aria-hidden="false">
+        <div class="sidebar-header">
+          <h3>Network Controls</h3>
+          <button id="close-sidebar" aria-label="Close controls">✕</button>
+        </div>
+        <div class="control-group">
+          <h4>Network Configuration</h4>
+          <label><input type="checkbox" id="toggle-connections" checked> Show Network Connections</label>
+          <label><input type="checkbox" id="toggle-labels" checked> Show Node Labels</label>
+          <label>Auto Rotate View <input type="checkbox" id="toggle-rotate"></label>
+        </div>
+        <div class="control-group">
+          <h4>Geographic Focus</h4>
+          <label for="region-focus" class="visually-hidden">Region focus</label>
+          <select id="region-focus" aria-label="Region focus">
+            <option value="vietnam">Vietnam</option>
+            <option value="europe">Europe</option>
+            <option value="global">Global</option>
+          </select>
+          <label>Zoom Level <input type="range" id="zoom-level" min="2" max="12" value="5"></label>
+        </div>
+        <div class="control-group">
+          <h4>Weather Layers</h4>
+          <label><input type="checkbox" id="toggle-weather"> Weather Layer</label>
+          <label>Opacity <input type="range" id="weather-opacity" min="0" max="100" value="70"></label>
+        </div>
+        <div class="control-group">
+          <h4>Display Options</h4>
+          <label><input type="checkbox" id="show-infra" checked> Show Proxmox/Cloud Infrastructure</label>
+          <label><input type="checkbox" id="show-services" checked> Show Services Status Panel</label>
+        </div>
+        <div class="control-group">
+          <h4>Legend</h4>
+          <ul class="legend">
+            <li><span class="legend-swatch healthcare"></span> Healthcare Networks</li>
+            <li><span class="legend-swatch research"></span> Research Institutions</li>
+            <li><span class="legend-swatch datacenter"></span> Data Centers</li>
+            <li><span class="legend-swatch cloud"></span> Cloud Infrastructure</li>
+          </ul>
+        </div>
+      </aside>
+
+      <section id="map" class="main-column">
+        <div class="kpi-row">
+          <div class="kpi card"><div class="kpi-value" id="kpi-records">500M+</div><div class="kpi-label">Daily Records</div></div>
+          <div class="kpi card"><div class="kpi-value" id="kpi-speed">85%</div><div class="kpi-label">Analysis Acceleration</div></div>
+          <div class="kpi card"><div class="kpi-value" id="kpi-uptime">99.9%</div><div class="kpi-label">System Reliability</div></div>
+          <div class="kpi card"><div class="kpi-value" id="kpi-compliance">100%</div><div class="kpi-label">Compliance Readiness</div></div>
+        </div>
+        <h2>Live Geospatial Map</h2>
+        <div id="mapid"></div>
+        <div id="layer-controls"></div>
+      </section>
+    </div>
+    <section id="analytics">
+      <h2>Network & Data Analytics</h2>
+      <div id="plotly-chart"></div>
+      <div id="d3-analytics"></div>
+    </section>
+    <section id="services">
+      <h2>Infrastructure & Services</h2>
+      <ul>
+        <li><a href="https://136.243.155.166:8006/" target="_blank" rel="noopener">Proxmox</a></li>
+        <li><a href="https://grafana.simondatalab.de/" target="_blank" rel="noopener">Grafana</a></li>
+        <li><a href="https://prometheus.simondatalab.de/" target="_blank" rel="noopener">Prometheus</a></li>
+        <li><a href="https://jupyterhub.simondatalab.de/" target="_blank" rel="noopener">JupyterHub</a></li>
+        <li><a href="https://mlflow.simondatalab.de/" target="_blank" rel="noopener">MLflow</a></li>
+      </ul>
+    </section>
+    <section id="about">
+      <h2>About This Dashboard</h2>
+      <p>Built with Leaflet, D3.js, and Plotly. Connects to live geoserver data from Proxmox VM 106. Mobile and desktop optimized for data experts and decision makers.</p>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2025 Simon Data Lab. All rights reserved.</p>
+  </footer>
+  <script src="main.js"></script>
+</body>
+</html>

@@ -17,6 +17,18 @@
             background: #f0f0f0;
             display: flex;
             align-items: center;
+            .logo-tagline {
+                color: #ffffff;
+                opacity: 0.95;
+            }
+            .subtitle {
+                color: #ffffff;
+                opacity: 0.95;
+            }
+            .logo-tagline {
+                color: #ffffff;
+                opacity: 0.95;
+            }
             justify-content: center;
             min-height: 100vh;
             padding: 2rem;
@@ -73,12 +85,13 @@
         }
 
         .card-back .tagline {
-            font-size: 14px;
-            color: #64748b;
-            font-weight: 500;
+            font-size: 15px;
+            color: #ffffff; /* changed to white for higher contrast */
+            font-weight: 600;
             text-align: center;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.02em;
             max-width: 80%;
+            line-height: 1.25;
         }
 
         /* Decorative gradient overlay */
@@ -121,16 +134,16 @@
             color: #FFFFFF;
         }
         .brand-line { 
-            font-size: 24px; 
+            font-size: 26px; 
             font-weight: 800; 
             letter-spacing: -0.02em; 
-            line-height: 1.1; 
+            line-height: 1.05; 
         }
         .brand-data { color: #FFFFFF; }
         .brand-lab { color: #17BECF; margin-left: 6px; }
         .logo-tagline { 
-            font-size: 11px; 
-            color: #17BECF; 
+            font-size: 12px; 
+            color: #13c2d6; 
             font-weight: 700; 
             letter-spacing: 0.08em; 
             text-transform: uppercase; 
@@ -139,9 +152,9 @@
 
         /* Main content */
         .name {
-            font-size: 48px;
+            font-size: 54px;
             font-weight: 800;
-            background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+            background: linear-gradient(135deg, #ffffff 0%, #dfe8f5 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -150,17 +163,17 @@
         }
 
         .title {
-            font-size: 20px;
-            color: #17BECF;
-            font-weight: 600;
+            font-size: 22px;
+            color: #13c2d6;
+            font-weight: 700;
             margin-bottom: 8px;
         }
 
         .subtitle {
-            font-size: 16px;
-            color: #64748b;
-            font-weight: 500;
-            margin-bottom: 40px;
+            font-size: 18px;
+            color: #9fb0bf;
+            font-weight: 600;
+            margin-bottom: 36px;
         }
 
         /* Contact info */
@@ -173,8 +186,8 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            font-size: 16px;
-            color: #d9e3ee;
+            font-size: 18px; /* larger for readability */
+            color: #eef6fb;
         }
 
         .contact-icon {
@@ -193,8 +206,8 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 26px;
-            height: 26px;
+            width: 30px;
+            height: 30px;
             border-radius: 9999px;
             border: 1px solid rgba(255,255,255,0.2);
             box-shadow: 0 2px 6px rgba(0,0,0,0.25);
@@ -212,25 +225,65 @@
             bottom: 60px;
             right: 60px;
             text-align: center;
+            transform: translateZ(0);
+            width: 260px; /* allow room for decorative globe */
+            height: 260px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qr-globe {
+            position: absolute;
+            /* center behind the QR and add slight offset for depth */
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) translate(-6px, 4px);
+            width: 260px;
+            height: 260px;
+            /* increase so globe is visible but still subtle */
+            opacity: 0.32;
+            pointer-events: none;
+            z-index: 2;
+            filter: none;
+        }
+
+        /* soft halo behind QR to make the white box pop */
+        .qr-halo {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 50% 40%, rgba(255,255,255,0.08) 0%, rgba(23,190,207,0.02) 30%, transparent 50%);
+            filter: blur(10px);
+            pointer-events: none;
+            z-index: 1; /* kept low, globe will be above */
         }
 
         .qr-code {
-            width: 120px;
-            height: 120px;
+            width: 140px;
+            height: 140px;
             background: #ffffff;
             border-radius: 12px;
-            padding: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            border: 2px solid rgba(23, 190, 207, 0.25);
+            padding: 12px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+            border: 2px solid rgba(23, 190, 207, 0.32);
             object-fit: contain;
             display: block;
+            position: relative;
+            z-index: 3; /* above halo and globe */
         }
 
         .qr-label {
-            margin-top: 8px;
-            font-size: 11px;
-            color: #64748b;
-            font-weight: 500;
+            margin-top: 10px;
+            font-size: 13px; /* updated label size */
+            color: #7b8b96;
+            font-weight: 600;
+            position: relative;
+            z-index: 4;
         }
 
         /* Accent line */
@@ -368,14 +421,14 @@
                     </svg>
                     <div class="logo-text">
                         <div class="brand-line"><span class="brand-data">Neuro</span> <span class="brand-lab">DataLab</span></div>
-                        <div class="logo-tagline">Data Intelligence at Enterprise Scale</div>
+                            <div class="logo-tagline">Enterprise ML Systems • Data Platforms • Governance</div>
                     </div>
                 </div>
 
                 <div>
                     <div class="name">Simon Renauld</div>
                     <div class="title">CTO - Data Engineering & Analytics</div>
-                    <div class="subtitle">Enterprise ML Systems • Data Platforms • Governance</div>
+                        <div class="subtitle">Enterprise ML Systems • Data Platforms • Governance</div>
 
                     <div class="contact-info">
                         <div class="contact-item">
@@ -424,12 +477,38 @@
                 </div>
 
                 <div class="qr-section">
+                    <!-- wireframe globe (lat/long grid) behind QR -->
+                    <svg class="qr-globe" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <defs>
+                            <radialGradient id="rg" cx="40%" cy="35%" r="70%">
+                                <stop offset="0%" stop-color="#17BECF" stop-opacity="0.95"/>
+                                <stop offset="60%" stop-color="#0b2b3a" stop-opacity="0.3"/>
+                                <stop offset="100%" stop-color="#071022" stop-opacity="0"/>
+                            </radialGradient>
+                            <linearGradient id="lg" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#12AFC0" stop-opacity="0.9"/>
+                                <stop offset="100%" stop-color="#17BECF" stop-opacity="0.9"/>
+                            </linearGradient>
+                        </defs>
+                        <!-- filled soft globe -->
+                        <circle cx="100" cy="100" r="82" fill="url(#rg)" />
+                        <!-- faint network lines -->
+                        <g fill="none" stroke="url(#lg)" stroke-width="1.4" opacity="0.6" stroke-linecap="round">
+                            <path d="M60 70 C80 90, 120 110, 140 130" />
+                            <path d="M60 130 C80 110, 120 90, 140 70" />
+                            <path d="M40 100 C70 90, 130 90, 160 100" />
+                            <path d="M50 55 C90 70, 110 130, 150 145" />
+                            <circle cx="84" cy="84" r="2.2" fill="#12AFC0" opacity="0.9"/>
+                            <circle cx="116" cy="84" r="2.2" fill="#17BECF" opacity="0.9"/>
+                            <circle cx="100" cy="120" r="2.2" fill="#17BECF" opacity="0.9"/>
+                        </g>
+                    </svg>
                     <img src="qr-code-print-300dpi.png" 
                          alt="Simon Renauld Portfolio QR Code" 
                          class="qr-code"
-                         width="120" 
-                         height="120">
-                    <div class="qr-label">Scan for portfolio</div>
+                         width="140" 
+                         height="140">
+                    <div class="qr-label">NeuroInfra Access</div>
                 </div>
             </div>
             <div class="accent-line"></div>

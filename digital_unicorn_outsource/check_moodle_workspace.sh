@@ -3,15 +3,30 @@
 # Check Moodle Workspace CLI Tool
 # Usage: ./check_moodle_workspace.sh <username> <password> <course_id>
 
-MOODLE_URL="http://136.243.155.166:8086"
-USERNAME="$1"
-PASSWORD="$2"
-COURSE_ID="${3:-2}"  # Default to course id=2
+
+# Use environment variables for secrets, allow override by CLI
+MOODLE_URL="${MOODLE_URL:-http://136.243.155.166:8086}"
+USERNAME="${USERNAME:-$1}"
+PASSWORD="${PASSWORD:-$2}"
+COURSE_ID="${COURSE_ID:-${3:-2}}"  # Default to course id=2
+
+# Dry-run flag
+DRY_RUN=0
+if [[ "$4" == "--dry-run" ]]; then
+    DRY_RUN=1
+fi
+
 
 if [ -z "$USERNAME" ] || [ -z "$PASSWORD" ]; then
-    echo "Usage: $0 <username> <password> [course_id]"
-    echo "Example: $0 myuser mypass 2"
+    echo "Usage: $0 <username> <password> [course_id] [--dry-run]"
+    echo "Example: $0 myuser mypass 2 --dry-run"
     exit 1
+fi
+
+if [ "$DRY_RUN" -eq 1 ]; then
+    echo "[DRY RUN] Would log in to Moodle at $MOODLE_URL as $USERNAME, course $COURSE_ID."
+    echo "[DRY RUN] Would check course access and list available courses."
+    exit 0
 fi
 
 echo "🔐 Logging into Moodle..."

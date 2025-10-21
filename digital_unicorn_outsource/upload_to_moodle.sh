@@ -3,15 +3,30 @@
 # Moodle CLI Upload Script for AI Detector Tool
 # Usage: ./upload_to_moodle.sh [username] [password]
 
-MOODLE_URL="http://136.243.155.166:8086"
-COURSE_ID="6"
-USERNAME="$1"
-PASSWORD="$2"
+
+# Use environment variables for secrets, allow override by CLI
+MOODLE_URL="${MOODLE_URL:-http://136.243.155.166:8086}"
+COURSE_ID="${COURSE_ID:-6}"
+USERNAME="${USERNAME:-$1}"
+PASSWORD="${PASSWORD:-$2}"
+
+# Dry-run flag
+DRY_RUN=0
+if [[ "$3" == "--dry-run" ]]; then
+    DRY_RUN=1
+fi
+
 
 if [ -z "$USERNAME" ] || [ -z "$PASSWORD" ]; then
-    echo "Usage: $0 <username> <password>"
+    echo "Usage: $0 <username> <password> [--dry-run]"
     echo "Please provide your Moodle username and password"
     exit 1
+fi
+
+if [ "$DRY_RUN" -eq 1 ]; then
+    echo "[DRY RUN] Would log in to Moodle at $MOODLE_URL as $USERNAME, course $COURSE_ID."
+    echo "[DRY RUN] Would upload ai_detector_export.zip and moodle_export_page.html."
+    exit 0
 fi
 
 echo "🔐 Logging into Moodle..."

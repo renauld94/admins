@@ -1,0 +1,16 @@
+[Unit]
+Description=SSH tunnel to GeoServer on Proxmox VM (epic-geodashboard)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=simon
+# Use ssh native client; ensure key-based auth is configured for simonadmin@136.243.155.166
+# This forwards local 127.0.0.1:9002 -> remote 127.0.0.1:8080
+ExecStart=/usr/bin/ssh -o ExitOnForwardFailure=yes -o ServerAliveInterval=60 -o ServerAliveCountMax=3 -N -L 127.0.0.1:9002:127.0.0.1:8080 simonadmin@136.243.155.166
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

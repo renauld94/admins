@@ -83,20 +83,10 @@ Successfully created a professional, interactive infrastructure visualization fo
 Primary Background: #0a0e1a (Very Dark Blue)
 Secondary Background: #1a1d2e (Dark Blue)
 Accent Color: #00d4ff (Cyan)
-Secondary Accent: #0099ff (Blue)
-Text Primary: #e0e0e0 (Light Gray)
-Text Secondary: #b0c4de (Slate Blue)
 Text Tertiary: #9db4d3 (Muted Blue)
-```
 
 ### CSS Animations
-- `pulse-glow`: 4s infinite pulsing effect
-- `spin`: 2s linear spinner rotation
-- `fade-in-down`: Header fade-in with downward movement
-- `fade-in-up`: Elements fade-in with upward movement
-- Hover transforms and transitions throughout
 
-### JavaScript Features
 - Three.js scene initialization
 - Particle generation (200 particles)
 - OrbitControls-ready structure
@@ -116,10 +106,38 @@ Text Tertiary: #9db4d3 (Muted Blue)
 | infrastructure.html | 10KB | Basic version | Quick reference |
 
 ---
-
 ## Recommendations
+<a href="http://127.0.0.1:5501/infrastructure-beautiful.html" target="_blank" rel="noopener">
+   <img src="assets/infra-thumb.svg" alt="Infrastructure thumbnail" loading="lazy" class="infra-thumb">
+</a>
 
 ### Use the Main File:
+.infra-thumb {
+   width: 220px;
+   height: 140px;
+   border-radius: 18px;
+   background: linear-gradient(135deg, #0a0e1a 60%, #1a1d2e 100%);
+   box-shadow: 0 4px 24px rgba(0, 212, 255, 0.18), 0 1.5px 8px rgba(10, 14, 26, 0.12);
+   backdrop-filter: blur(8px);
+   border: 2px solid #00d4ff;
+   transition: box-shadow 0.4s cubic-bezier(.4,0,.2,1), transform 0.4s cubic-bezier(.4,0,.2,1);
+   cursor: pointer;
+   display: block;
+   margin: 0 auto;
+}
+.infra-thumb:hover {
+   box-shadow: 0 8px 32px rgba(0, 212, 255, 0.32), 0 3px 16px rgba(10, 14, 26, 0.18);
+   transform: scale(1.04);
+   border-color: #0099ff;
+}
+@media (max-width: 768px) {
+   .infra-thumb {
+      width: 140px;
+      height: 90px;
+      border-radius: 12px;
+   }
+}
+</style>
 ✅ **`infrastructure-beautiful.html`** - Production ready with all features
 
 ### Optional Alternatives:

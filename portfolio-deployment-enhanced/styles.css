@@ -225,10 +225,10 @@ body {
   display: block; 
   width: 28px;
   height: 4px; 
-  background: #0ea5e9; 
+  background: #ffffff; /* use white for strong contrast on mobile */
   border-radius: 3px; 
-  transition: all 0.3s ease;
-  box-shadow: 0 1px 4px rgba(14,165,233,0.18);
+  transition: all 0.18s ease;
+  box-shadow: 0 1px 6px rgba(2,6,23,0.25);
 }
 
 /* Hamburger animation when active */
@@ -472,6 +472,33 @@ body {
   .nav-container {
     grid-template-columns: auto 1fr auto;
   }
+}
+
+/* Mobile nav usability fixes: ensure panel fits viewport, proper stacking, and touch targets */
+@media (max-width: 992px) {
+  .main-navigation { position: fixed; left: 0; right: 0; top: 0; }
+  /* ensure nav sits above other content */
+  .main-navigation, .nav-container { z-index: 2200; }
+
+  /* make mobile nav full height below the nav bar and avoid large padding-top that hides content */
+  .mobile-nav {
+    top: 0; /* align to viewport top and use padding to offset inner content */
+    padding-top: 64px; /* reserve space for the sticky nav */
+    height: calc(100vh - 0px);
+    max-height: 100vh;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* ensure menu items are large enough and have clear tap targets */
+  .mobile-nav-menu .nav-link { padding: 16px 20px; font-size: 1rem; }
+
+  /* Backdrop should always cover the viewport when active */
+  .mobile-nav-backdrop { display: block; }
+  .mobile-nav-backdrop { opacity: 0; pointer-events: none; }
+  .mobile-nav-backdrop.active { opacity: 1; pointer-events: auto; }
+
+  /* Make the hamburger visually distinct from page content */
+  .mobile-menu-btn { box-shadow: 0 6px 18px rgba(2,6,23,0.12); }
 }
 
 /* Buttons */
@@ -884,10 +911,25 @@ body {
 }
 
 /* Infrastructure preview card */
-.infra-preview .infra-embed { position: relative; margin-top: 0.8rem; border-radius: 12px; overflow: hidden; border: 1px solid rgba(15,23,42,0.06); }
+.infra-preview {
+  display: grid;
+  place-items: center;
+  margin-top: 1rem;
+}
+.infra-preview .infra-embed {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(15,23,42,0.06);
+  width: 100%;
+  max-width: 1200px;
+}
 .infra-preview .infra-embed iframe { width: 100%; height: 220px; border: 0; display: block; }
-.infra-preview .infra-embed .infra-overlay { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: flex-end; padding: 12px; text-decoration: none; background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(2,6,23,0.4) 100%); color: #fff; font-weight: 700; font-size: 0.9rem; }
-.infra-preview .infra-embed .infra-overlay:hover { color: var(--primary); }
+.infra-preview .infra-embed .infra-overlay {
+  position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: flex-end; padding: 12px;
+  text-decoration: none; background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(2,6,23,0.4) 100%);
+  color: #fff; font-weight: 700; font-size: 0.9rem;
+}
 .infra-preview p.muted { color: var(--muted); margin-top: 0.25rem; }
 
 @media (min-width: 980px) {
@@ -895,8 +937,16 @@ body {
 }
 
 /* Thumbnail + Lightbox for infra preview */
-.infra-thumb { margin-top: 0.6rem; }
-.infra-preview-actions { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-top: 0.7rem; }
+.infra-thumb {
+  background: linear-gradient(135deg, #0a0e1a 60%, #1a1d2e 100%);
+  box-shadow: 0 4px 24px rgba(0, 212, 255, 0.18), 0 1.5px 8px rgba(10, 14, 26, 0.12);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  border: 2px solid #00d4ff; transition: box-shadow 0.4s cubic-bezier(.4,0,.2,1), transform 0.4s cubic-bezier(.4,0,.2,1);
+  cursor: pointer; display: block; margin: 0 auto 1.2rem auto;
+}
+.infra-thumb:hover { box-shadow: 0 8px 32px rgba(0, 212, 255, 0.32), 0 3px 16px rgba(10, 14, 26, 0.18); transform: scale(1.04); border-color: #0099ff; }
+@media (max-width: 768px) { .infra-thumb { width: 140px; height: 90px; border-radius: 12px; } }
+.infra-preview-actions { display: flex; justify-content: center; gap: 1rem; margin-bottom: 1rem; }
 
 .infra-thumb-btn { display: block; width: 100%; border: 0; padding: 0; background: transparent; cursor: pointer; position: relative; border-radius: 12px; overflow: hidden; }
 .infra-thumb-btn img { max-width: 100%; border-radius: 12px; }
@@ -910,7 +960,6 @@ body {
 .infra-lightbox-content { flex: 1; display: grid; place-items: center; }
 .infra-iframe-container iframe { width: 100%; height: 100%; border: 0; display: block; }
 
-/* Mobile specific styles for infra lightbox and preview */
 @media (max-width: 600px) {
   .infra-lightbox-panel { width: 100vw; height: 100vh; min-width: 0; min-height: 0; border-radius: 0; }
   .infra-lightbox-content { padding: 0; }
@@ -920,6 +969,12 @@ body {
   .infra-lightbox-close { top: 8px; right: 8px; padding: 6px 10px; font-size: 1.1em; }
   .infra-iframe-container iframe { min-height: 60vh; }
 }
+
+.infra-thumb-btn:focus-visible, .infra-thumb-btn:focus { box-shadow: 0 0 0 4px rgba(14,165,233,0.18), 0 8px 24px rgba(2,6,23,0.25); transform: translateY(-2px); }
+.infra-thumb-btn:hover .infra-thumb-cta, .infra-thumb-btn:focus .infra-thumb-cta { background: linear-gradient(90deg, rgba(14,165,233,0.95), rgba(139,92,246,0.95)); transform: translateY(-2px); }
+
+@keyframes infraPulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.01); opacity: 0.98; } 100% { transform: scale(1); opacity: 1; } }
+.infra-thumb-btn:hover, .infra-thumb-btn:focus { animation: infraPulse 900ms ease-in-out 1 both; }
 
 /* Utilities */
 .muted { color: var(--muted); }
@@ -1111,7 +1166,7 @@ body {
   .timeline-company { color:rgba(226,232,240,0.75); }
   .timeline-description { color:rgba(226,232,240,0.88); }
   .site-footer { background:#0b1220; }
-  .mobile-menu-btn span { background:#f1f5f9; box-shadow:0 0 3px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.3); }
+  .mobile-menu-btn span { background:#ffffff; box-shadow:0 0 4px rgba(2,6,23,0.45), 0 0 0 1px rgba(255,255,255,0.06); }
   .mobile-nav { background:#0f172a; }
   .mobile-nav-menu .nav-link { color:#e2e8f0; }
   .mobile-nav-menu li { border-bottom:1px solid rgba(255,255,255,0.1); }

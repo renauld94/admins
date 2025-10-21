@@ -1,0 +1,18 @@
+[Unit]
+Description=Ollama LLM Runtime (example)
+After=network.target
+
+[Service]
+Type=simple
+User=simon
+WorkingDirectory=/home/simon
+ExecStart=/usr/bin/ollama serve --host 127.0.0.1 --port 11434
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
+
+# Notes:
+# - Adjust ExecStart to the correct ollama binary and flags on your host.
+# - This file is a template example. Do NOT enable until verified.

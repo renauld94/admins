@@ -1,0 +1,43 @@
+{
+  "agentNetwork": "Neuro AI Ecosystem",
+  "ollama": {
+    "apiBase": "https://ollama.simondatalab.de",
+    "models": [
+      "deepseek-coder:6.7b",
+      "deepseek-coder:33b",
+      "mistral:latest"
+    ],
+    "preferLocal": true
+  },
+  "models": {
+    "tidy": "deepseek-coder:33b",
+    "verify": "mixtral:8x7b"
+  },
+  "default_model": "tidy",
+  "commands": {
+    "workspace_tidy": {
+      "description": "Organize and merge workspace documents safely",
+      "model": "tidy"
+    },
+    "model_verifier": {
+      "description": "Audit and optimize Ollama/DeepSeek models",
+      "model": "verify"
+    }
+  },
+  "ollama_host": "http://localhost:11434",
+  "communication": {
+    "channels": ["unix_socket", "http_loopback", "files"],
+    "socketPath": "/run/neuro-agents.sock",
+    "httpPort": 5005,
+    "contextPath": "./workspace/agents/context"
+  },
+  "vscodeIntegration": {
+    "enableInline": true,
+    "aiTriggerPrefixes": ["# ai:", "// ai:"]
+  },
+  "security": {
+    "localOnly": true,
+    "requireTls": false,
+    "allowedHosts": ["127.0.0.1", "localhost"]
+  }
+}

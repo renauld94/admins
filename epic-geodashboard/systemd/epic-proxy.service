@@ -1,0 +1,14 @@
+[Unit]
+Description=Epic GeoDashboard proxy (forwards to GeoServer tunnel)
+After=network.target
+
+[Service]
+Type=simple
+User=simon
+WorkingDirectory=/home/simon/Learning-Management-System-Academy/epic-geodashboard
+ExecStart=/home/simon/Learning-Management-System-Academy/epic-geodashboard/.venv/bin/python /home/simon/Learning-Management-System-Academy/epic-geodashboard/proxy.py --host 127.0.0.1 --port 8003
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

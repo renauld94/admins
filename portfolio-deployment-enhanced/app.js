@@ -1,9 +1,9 @@
-// SIMON RENAULD PORTFOLIO - PROFESSIONAL JAVASCRIPT 2025
+// NEURO DATALAB PORTFOLIO - PROFESSIONAL JAVASCRIPT 2025
 // Mobile-first, performance-optimized portfolio functionality
 
 // INITIALIZATION
 document.addEventListener('DOMContentLoaded', function () {
-    console.log('Simon Renauld Portfolio - Initialized');
+    console.log('Neuro DataLab Portfolio - Initialized');
 
     // Initialize core functionality
     applyNavigationColorFix();
@@ -13,7 +13,65 @@ document.addEventListener('DOMContentLoaded', function () {
     initializePortfolioVisualizations();
     initializeContactForm();
     initializeGeospatialLaunch();
+    initializeInfraPreview();
 });
+
+// INFRASTRUCTURE PREVIEW: open mermaid-based viewer in a new tab
+function initializeInfraPreview() {
+    // Look for an explicit infra opener first, then fall back to other known affordances.
+    let btn = document.querySelector('[data-action="open-infra"]');
+    const fallbackSelectors = ['.infra-thumb-btn', '.infra-thumb-cta', '.globe-fab'];
+
+    if (!btn) {
+        for (const sel of fallbackSelectors) {
+            const el = document.querySelector(sel);
+            if (el) {
+                btn = el;
+                break;
+            }
+        }
+    }
+
+    if (!btn) return;
+
+    // Ensure we have a canonical secure target to avoid any mixed-content issues
+    const target = 'https://www.simondatalab.de/geospatial-viz/index.html';
+    const features = 'noopener=yes,noreferrer=yes,width=1200,height=900';
+
+    const openViewer = (ev) => {
+        ev?.preventDefault?.();
+        const win = window.open(target, '_blank', features);
+        if (win) {
+            try { win.opener = null; } catch (e) { /* ignore cross-origin */ }
+            try { win.focus(); } catch (e) { /* noop */ }
+        } else {
+            window.location.href = target;
+        }
+    };
+
+    // If the element is the floating globe (which has its own geospatial binding),
+    // prefer to only add a discoverability attribute rather than duplicate handlers.
+    const isGlobeFab = btn.classList && btn.classList.contains('globe-fab');
+
+    try {
+        if (!btn.hasAttribute('tabindex')) btn.setAttribute('tabindex', '0');
+        if (!btn.getAttribute('role')) btn.setAttribute('role', 'button');
+        if (!btn.getAttribute('aria-label')) btn.setAttribute('aria-label', 'Open infrastructure diagram in new tab');
+        // Make it findable by tests/selectors that look for [data-action="open-infra"]
+        if (!btn.hasAttribute('data-action')) btn.setAttribute('data-action', 'open-infra');
+    } catch (e) { /* ignore attribute errors */ }
+
+    if (!isGlobeFab) {
+        // For non-globe elements, attach our handler directly
+        btn.addEventListener('click', openViewer);
+        btn.addEventListener('keydown', (ev) => {
+            if (ev.key === 'Enter' || ev.key === ' ') {
+                ev.preventDefault();
+                openViewer(ev);
+            }
+        });
+    }
+}
 
 // NAVIGATION SYSTEM
 function initializeNavigation() {
@@ -43,133 +101,154 @@ function initializeNavigation() {
     const backdrop = document.querySelector('.mobile-nav-backdrop');
 
     if (mobileMenuBtn && mobileNav) {
-        // Prevent double-fire across touch/click
-        let lastToggleTs = 0;
-        const guard = (fn) => (e) => {
+        function animate() {
+            requestAnimationFrame(animate);
+            const t = clock.getElapsedTime();
+
+            // Adaptive perf guard: measure recent frame durations and skip heavy updates
+            // when the rendering pipeline is overloaded. This reduces jank on slower GPUs.
+            if (typeof animate._frameCount === 'undefined') {
+                animate._frameCount = 0;
+                animate._perfSamples = [];
+                animate._frameSkip = 1;
+                animate._lastTime = performance.now();
+            }
+            animate._frameCount++;
             const now = performance.now();
-            if (now - lastToggleTs < 250) {
-                e.preventDefault();
-                e.stopPropagation();
-                return;
-            }
-            lastToggleTs = now;
-            fn(e);
-        };
-        mobileMenuBtn.addEventListener('click', (e) => {
-            guard((ev)=>{ ev.preventDefault(); ev.stopPropagation(); toggleMobileMenu(); })(e);
-        });
-        
-        // Add touch event for better mobile support
-        mobileMenuBtn.addEventListener('touchend', (e) => {
-            if (e.cancelable) e.preventDefault();
-            e.stopPropagation();
-            guard(()=> toggleMobileMenu())(e);
-        }, { passive: false });
+            const frameDur = now - (animate._lastTime || now);
+            animate._lastTime = now;
 
-        // Close mobile menu when clicking on a link
-        document.querySelectorAll('.mobile-nav-menu .nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                closeMobileMenu();
-            });
-        });
-        
-        // Close mobile menu when clicking backdrop
-        if (backdrop) {
-            backdrop.addEventListener('click', () => {
-                closeMobileMenu();
-            });
-        }
-    }
+            // keep a rolling window of the last N frame durations (ms)
+            animate._perfSamples.push(frameDur);
+            if (animate._perfSamples.length > 30) animate._perfSamples.shift();
+            const avg = animate._perfSamples.reduce((a,b) => a+b, 0) / animate._perfSamples.length;
 
-    // Close mobile menu when clicking outside
-    document.addEventListener('click', (e) => {
-        const backdrop = document.querySelector('.mobile-nav-backdrop');
-        if (!mobileMenuBtn?.contains(e.target) && 
-            !mobileNav?.contains(e.target) && 
-            !backdrop?.contains(e.target)) {
-            // Only close if the menu is open
-            if (mobileNav?.classList.contains('active')) {
-                closeMobileMenu();
-            }
-        }
-    });
-
-    // Close mobile menu on escape key
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            closeMobileMenu();
-        }
-    });
-
-    // Desktop Admin Tools dropdown
-    const dropdown = document.querySelector('.nav-dropdown');
-    if (dropdown) {
-        const toggle = dropdown.querySelector('.dropdown-toggle');
-        const menu = dropdown.querySelector('.dropdown-menu');
-        const firstMenuItem = () => menu?.querySelector('a, button, [tabindex]:not([tabindex="-1"])');
-        const setOpenState = (isOpen) => {
-            dropdown.classList.toggle('open', isOpen);
-            toggle?.setAttribute('aria-expanded', String(isOpen));
-            menu?.setAttribute('aria-hidden', String(!isOpen));
-        };
-        const closeAll = (focusToggle = false) => {
-            setOpenState(false);
-            if (focusToggle) {
-                toggle?.focus();
-            }
-        };
-        const open = () => {
-            if (!dropdown.classList.contains('open')) {
-                setOpenState(true);
-                requestAnimationFrame(() => {
-                    firstMenuItem()?.focus();
-                });
-            }
-        };
-        const handleToggle = (ev) => {
-            ev.preventDefault();
-            ev.stopPropagation();
-            if (dropdown.classList.contains('open')) {
-                closeAll();
+            // Adjust frame-skip based on average frame duration
+            if (avg > 80) {
+                animate._frameSkip = Math.min(6, animate._frameSkip + 1);
+            } else if (avg > 45) {
+                animate._frameSkip = Math.min(4, animate._frameSkip + 1);
+            } else if (avg > 28) {
+                animate._frameSkip = Math.min(2, animate._frameSkip + 1);
             } else {
-                open();
+                animate._frameSkip = Math.max(1, animate._frameSkip - 1);
             }
-        };
 
-        toggle?.addEventListener('click', handleToggle);
-        toggle?.addEventListener('keydown', (ev) => {
-            if (ev.key === 'Enter' || ev.key === ' ') {
-                handleToggle(ev);
-            } else if (ev.key === 'ArrowDown') {
-                ev.preventDefault();
-                open();
-            } else if (ev.key === 'Escape') {
-                closeAll(true);
+            // Lighter per-frame updates that keep the scene responsive
+            brainGroup.rotation.y += (targetRot.y - brainGroup.rotation.y) * 0.05;
+            brainGroup.rotation.x += (targetRot.x - brainGroup.rotation.x) * 0.05;
+            surge += (surgeTarget - surge) * 0.08;
+            const baseExposure = 1.0 + 0.05 * Math.sin(t * 0.2);
+            renderer.toneMappingExposure += ((baseExposure + 0.15 * surge) - renderer.toneMappingExposure) * 0.02;
+
+            // Do heavy visual updates only on allowed frames when skipping
+            if (animate._frameCount % animate._frameSkip === 0) {
+                // Intro sequence updates
+                if (!intro.done) {
+                    const k = Math.min((performance.now() - intro.start) / intro.duration, 1);
+                    const ease = 1 - Math.pow(1 - k, 3);
+                    camera.position.z = 2.3 + (3.4 - 2.3) * ease;
+                    camera.fov = 60 - 2 * ease;
+                    camera.updateProjectionMatrix();
+                    const fadeK = Math.max(0, (k - 0.25) / 0.75);
+                    setGroupOpacity(worldGroup, fadeK);
+                    setGroupOpacity(peopleGroup, fadeK);
+                    if (k >= 1) intro.done = true;
+                }
+
+                if (!reduceMotion) {
+                    // pulsate opacities
+                    const pulse = 0.5 + 0.5 * Math.sin(t * 1.5);
+                    const surgeBoost = 0.4 * surge;
+                    leftPoints.material.opacity = 0.65 + pulse * 0.25 + surgeBoost * 0.2;
+                    rightPoints.material.opacity = 0.65 + (1 - pulse) * 0.25 + surgeBoost * 0.2;
+                    if (leftPoints.material.size !== undefined) leftPoints.material.size = 0.025 * (1 + 0.6 * surge);
+                    if (rightPoints.material.size !== undefined) rightPoints.material.size = 0.025 * (1 + 0.6 * surge);
+
+                    // shimmer the callosum
+                    for (let i = 0; i < corpus.children.length; i++) {
+                        const ln = corpus.children[i];
+                        const o = 0.15 + 0.15 * Math.sin(t * 2 + i * 0.3);
+                        ln.material.opacity = o;
+                    }
+
+                    // rotate globe and advance city pulses (less frequently)
+                    worldGroup.rotation.y = t * 0.07;
+                    for (let i = 0; i < cityPulseObjects.length; i++) {
+                        const obj = cityPulseObjects[i];
+                        obj.t = (obj.t + obj.speed * 0.016 * animate._frameSkip) % 1;
+                        const base = obj.curve.getPointAt(obj.t);
+                        // micro jitter without allocations
+                        obj.pulse.position.x = base.x + (Math.random() - 0.5) * 0.005;
+                        obj.pulse.position.y = base.y + (Math.random() - 0.5) * 0.005;
+                        obj.pulse.position.z = base.z + (Math.random() - 0.5) * 0.005;
+                        obj.pulse.material.opacity = (0.6 + 0.4 * Math.sin((obj.t) * Math.PI)) * (1 + 0.5 * surge);
+                        if (obj.t > 0.98) bursts.push({ ttl: 0.6, t: 0, pos: new THREE.Vector3(0, 0.15, 0) });
+                    }
+
+                    peopleGroup.rotation.y = Math.sin(t * 0.2) * 0.05;
+
+                    const wave = Math.sin(t * 1.8) * 0.5 + 0.5;
+                    for (let i = 0; i < corpus.children.length; i++) {
+                        const ln = corpus.children[i];
+                        ln.material.opacity = 0.1 + 0.2 * Math.sin(t * 2.0 + i * 0.25) * wave;
+                    }
+
+                    for (let i = bursts.length - 1; i >= 0; i--) {
+                        const b = bursts[i];
+                        b.t += 0.016 * animate._frameSkip;
+                        const k = Math.min(b.t / b.ttl, 1);
+                        const e = 1 - Math.pow(1 - k, 2);
+                        const boost = 0.65 + 0.35 * (1 - e);
+                        leftPoints.material.opacity = boost;
+                        rightPoints.material.opacity = boost;
+                        if (k >= 1) bursts.splice(i, 1);
+                    }
+                }
             }
-        });
 
-        menu?.addEventListener('keydown', (ev) => {
-            if (ev.key === 'Escape') {
-                closeAll(true);
+            // Final render (always render to keep UI responsive)
+            if (composer) {
+                composer.render();
+            } else {
+                renderer.render(scene, camera);
             }
-        });
+        }
 
-        menu?.addEventListener('click', () => closeAll());
-
-        document.addEventListener('click', (ev) => {
-            if (!dropdown.contains(ev.target)) closeAll();
-        });
-
-        dropdown.addEventListener('focusout', (ev) => {
-            if (!dropdown.contains(ev.relatedTarget)) {
-                closeAll();
-            }
-        });
-
-        document.addEventListener('keydown', (ev) => {
-            if (ev.key === 'Escape') closeAll(true);
-        });
     }
+
+        // Attach handlers to the mobile menu button and backdrop so the hamburger works
+        try {
+            mobileMenuBtn.addEventListener('click', (ev) => {
+                ev.preventDefault();
+                toggleMobileMenu();
+            });
+
+            // Support touchend to make it snappier on mobile
+            mobileMenuBtn.addEventListener('touchend', (ev) => {
+                if (ev.cancelable) ev.preventDefault();
+                toggleMobileMenu();
+            }, { passive: false });
+
+            if (backdrop) {
+                backdrop.addEventListener('click', (ev) => {
+                    ev.preventDefault();
+                    closeMobileMenu();
+                });
+                backdrop.addEventListener('touchend', (ev) => {
+                    if (ev.cancelable) ev.preventDefault();
+                    closeMobileMenu();
+                }, { passive: false });
+            }
+
+            // Close on Escape globally
+            document.addEventListener('keydown', (ev) => {
+                if (ev.key === 'Escape') closeMobileMenu();
+            });
+        } catch (e) {
+            // defensive: if adding listeners fails, still allow markup to be usable
+            console.warn('Mobile menu event binding failed', e);
+        }
 
     // Mobile Admin Tools dropdown with enhanced touch support
     const mobileDropdown = document.querySelector('.mobile-dropdown');
@@ -239,6 +318,17 @@ function initializeNavigation() {
         // Mark initialization complete to avoid duplicate bindings from inline scripts
         try { window.__PORTFOLIO_APP_JS_MOBILE_DROPDOWN__ = true; } catch (e) {}
     }
+
+    // Close mobile menu when any link inside it is clicked (improves UX on small screens)
+    try {
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav a');
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', (ev) => {
+                // Allow external links to open in new tab but still close the menu
+                setTimeout(() => closeMobileMenu(), 50);
+            });
+        });
+    } catch (e) { /* ignore */ }
 }
 
 // Adaptive navigation contrast: ensures readable link color against current nav background.
@@ -296,9 +386,56 @@ function toggleMobileMenu() {
         
         const nowOpen = !isOpen;
         mobileMenuBtn.setAttribute('aria-expanded', String(nowOpen));
-        mobileNav.setAttribute('aria-hidden', String(!nowOpen));
-        if (backdrop) {
-            backdrop.setAttribute('aria-hidden', String(!nowOpen));
+
+        // If we are closing the menu, ensure no descendant retains focus while aria-hidden is set.
+        // Move focus to the toggle button (or document.body) first to avoid the "aria-hidden on focused element" issue.
+        if (!nowOpen) {
+            try {
+                // If some element inside the menu currently has focus, move it safely.
+                const active = document.activeElement;
+                if (mobileNav.contains(active)) {
+                    // Prefer focusing the toggle; if unavailable, blur the active element
+                    if (mobileMenuBtn && typeof mobileMenuBtn.focus === 'function') {
+                        mobileMenuBtn.focus({ preventScroll: true });
+                    } else if (active && typeof active.blur === 'function') {
+                        active.blur();
+                    }
+                }
+            } catch (e) {
+                // ignore focus manipulation errors
+            }
+        }
+
+        // set aria-hidden and inert (where supported) to remove the mobile nav from assistive tree
+        try {
+            mobileNav.setAttribute('aria-hidden', String(!nowOpen));
+            if ('inert' in HTMLElement.prototype) {
+                mobileNav.inert = !nowOpen;
+            } else {
+                // Fallback: manage focusable elements via tabindex for older browsers when closing
+                if (!nowOpen) {
+                    Array.from(mobileNav.querySelectorAll('a, button, input, [tabindex]')).forEach(el => {
+                        if (!el.hasAttribute('data-old-tabindex')) {
+                            el.setAttribute('data-old-tabindex', el.getAttribute('tabindex') || '');
+                            el.setAttribute('tabindex', '-1');
+                        }
+                    });
+                } else {
+                    Array.from(mobileNav.querySelectorAll('[data-old-tabindex]')).forEach(el => {
+                        const old = el.getAttribute('data-old-tabindex');
+                        if (old === '') el.removeAttribute('tabindex'); else el.setAttribute('tabindex', old);
+                        el.removeAttribute('data-old-tabindex');
+                    });
+                }
+            }
+            if (backdrop) {
+                backdrop.setAttribute('aria-hidden', String(!nowOpen));
+                if ('inert' in HTMLElement.prototype) backdrop.inert = !nowOpen;
+            }
+        } catch (e) {
+            // Be defensive: if anything fails, still set minimal attributes
+            mobileNav.setAttribute('aria-hidden', String(!nowOpen));
+            if (backdrop) backdrop.setAttribute('aria-hidden', String(!nowOpen));
         }
 
         // Prevent body scroll when menu is open
@@ -325,13 +462,34 @@ function closeMobileMenu() {
         if (backdrop) {
             backdrop.classList.remove('active');
         }
-        
+
+        // Ensure focus is not inside the mobile nav before hiding it (accessibility requirement)
+        try {
+            const active = document.activeElement;
+            if (mobileNav.contains(active)) {
+                if (mobileMenuBtn && typeof mobileMenuBtn.focus === 'function') {
+                    mobileMenuBtn.focus({ preventScroll: true });
+                } else if (active && typeof active.blur === 'function') {
+                    active.blur();
+                }
+            }
+        } catch (e) { /* noop */ }
+
         mobileMenuBtn.setAttribute('aria-expanded', 'false');
-        mobileNav.setAttribute('aria-hidden', 'true');
-        if (backdrop) {
-            backdrop.setAttribute('aria-hidden', 'true');
+        try {
+            mobileNav.setAttribute('aria-hidden', 'true');
+            if ('inert' in HTMLElement.prototype) {
+                mobileNav.inert = true;
+            }
+            if (backdrop) {
+                backdrop.setAttribute('aria-hidden', 'true');
+                if ('inert' in HTMLElement.prototype) backdrop.inert = true;
+            }
+        } catch (e) {
+            mobileNav.setAttribute('aria-hidden', 'true');
+            if (backdrop) backdrop.setAttribute('aria-hidden', 'true');
         }
-        
+
         document.body.style.overflow = '';
         document.body.style.position = '';
         document.body.style.width = '';
@@ -364,7 +522,11 @@ function initializeGeospatialLaunch() {
         }
 
         if (window.location.protocol === 'file:') {
-            return 'http://127.0.0.1:5500/geospatial-viz/index.html'; // dev-only
+            // When the page is opened from the filesystem (file:), avoid returning a local
+            // HTTP developer URL which could trigger mixed-content or insecure popups.
+            // Prefer the production HTTPS URL so the user is taken to the secure hosted demo.
+            // This is a safe, low-risk change: the host is the public portfolio domain.
+            return 'https://www.simondatalab.de/geospatial-viz/index.html';
         }
 
         try {
@@ -695,7 +857,7 @@ async function initializeHeroVisualization() {
                     varying vec2 vUv;
                     void main() {
                         vUv = uv;
-                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
                     }
                 `,
                 fragmentShader: `
@@ -1065,102 +1227,104 @@ async function initializeHeroVisualization() {
             requestAnimationFrame(animate);
             const t = clock.getElapsedTime();
 
-            // Ease towards pointer rotation
+            // Adaptive perf guard: measure recent frame durations and skip heavy updates
+            if (typeof animate._frameCount === 'undefined') {
+                animate._frameCount = 0;
+                animate._perfSamples = [];
+                animate._frameSkip = 1;
+                animate._lastTime = performance.now();
+            }
+            animate._frameCount++;
+            const now = performance.now();
+            const frameDur = now - (animate._lastTime || now);
+            animate._lastTime = now;
+            animate._perfSamples.push(frameDur);
+            if (animate._perfSamples.length > 30) animate._perfSamples.shift();
+            const avg = animate._perfSamples.reduce((a,b) => a+b, 0) / animate._perfSamples.length;
+            if (avg > 80) {
+                animate._frameSkip = Math.min(6, animate._frameSkip + 1);
+            } else if (avg > 45) {
+                animate._frameSkip = Math.min(4, animate._frameSkip + 1);
+            } else if (avg > 28) {
+                animate._frameSkip = Math.min(2, animate._frameSkip + 1);
+            } else {
+                animate._frameSkip = Math.max(1, animate._frameSkip - 1);
+            }
+
+            // Lighter per-frame updates that keep the scene responsive
             brainGroup.rotation.y += (targetRot.y - brainGroup.rotation.y) * 0.05;
             brainGroup.rotation.x += (targetRot.x - brainGroup.rotation.x) * 0.05;
-
-            // Ease surge
             surge += (surgeTarget - surge) * 0.08;
-            // Slight auto-exposure curve with surge accent
             const baseExposure = 1.0 + 0.05 * Math.sin(t * 0.2);
             renderer.toneMappingExposure += ((baseExposure + 0.15 * surge) - renderer.toneMappingExposure) * 0.02;
 
-            // Intro sequence: camera dolly + group fades + subtle FOV change
-            if (!intro.done) {
-                const now = performance.now();
-                const k = Math.min((now - intro.start) / intro.duration, 1);
-                const ease = 1 - Math.pow(1 - k, 3); // easeOutCubic
-                // camera z from 2.3 → 3.4
-                camera.position.z = 2.3 + (3.4 - 2.3) * ease;
-                // slight perspective change 60 → 58
-                camera.fov = 60 - 2 * ease;
-                camera.updateProjectionMatrix();
-                // fade world and people in after first quarter
-                const fadeK = Math.max(0, (k - 0.25) / 0.75);
-                setGroupOpacity(worldGroup, fadeK);
-                setGroupOpacity(peopleGroup, fadeK);
-                if (k >= 1) intro.done = true;
-            }
-
-            if (!reduceMotion) {
-                // pulsate opacities to simulate firing
-                const pulse = 0.5 + 0.5 * Math.sin(t * 1.5);
-                const surgeBoost = 0.4 * surge;
-                leftPoints.material.opacity = 0.65 + pulse * 0.25 + surgeBoost * 0.2;
-                rightPoints.material.opacity = 0.65 + (1 - pulse) * 0.25 + surgeBoost * 0.2;
-                // Slightly grow point size under surge
-                if (leftPoints.material.size !== undefined) {
-                    leftPoints.material.size = 0.025 * (1 + 0.6 * surge);
-                }
-                if (rightPoints.material.size !== undefined) {
-                    rightPoints.material.size = 0.025 * (1 + 0.6 * surge);
+            // Do heavy visual updates only on allowed frames when skipping
+            if (animate._frameCount % animate._frameSkip === 0) {
+                // Intro sequence updates
+                if (!intro.done) {
+                    const k = Math.min((performance.now() - intro.start) / intro.duration, 1);
+                    const ease = 1 - Math.pow(1 - k, 3);
+                    camera.position.z = 2.3 + (3.4 - 2.3) * ease;
+                    camera.fov = 60 - 2 * ease;
+                    camera.updateProjectionMatrix();
+                    const fadeK = Math.max(0, (k - 0.25) / 0.75);
+                    setGroupOpacity(worldGroup, fadeK);
+                    setGroupOpacity(peopleGroup, fadeK);
+                    if (k >= 1) intro.done = true;
                 }
 
-                // shimmer the callosum
-                corpus.children.forEach((ln, i) => {
-                    const o = 0.15 + 0.15 * Math.sin(t * 2 + i * 0.3);
-                    ln.material.opacity = o;
-                });
+                if (!reduceMotion) {
+                    // pulsate opacities
+                    const pulse = 0.5 + 0.5 * Math.sin(t * 1.5);
+                    const surgeBoost = 0.4 * surge;
+                    leftPoints.material.opacity = 0.65 + pulse * 0.25 + surgeBoost * 0.2;
+                    rightPoints.material.opacity = 0.65 + (1 - pulse) * 0.25 + surgeBoost * 0.2;
+                    if (leftPoints.material.size !== undefined) leftPoints.material.size = 0.025 * (1 + 0.6 * surge);
+                    if (rightPoints.material.size !== undefined) rightPoints.material.size = 0.025 * (1 + 0.6 * surge);
 
-                // rotate globe slowly
-                worldGroup.rotation.y = t * 0.07;
-
-                // advance city pulses along arcs
-                cityPulseObjects.forEach((obj, i) => {
-                    obj.t = (obj.t + obj.speed * 0.016) % 1; // ~60fps dt
-                    const base = obj.curve.getPointAt(obj.t);
-                    // micro jitter for signal noise
-                    const n = 0.005;
-                    const pos = base.clone().add(new THREE.Vector3(
-                        (Math.random() - 0.5) * n,
-                        (Math.random() - 0.5) * n,
-                        (Math.random() - 0.5) * n
-                    ));
-                    obj.pulse.position.copy(pos);
-                    obj.pulse.material.opacity = (0.6 + 0.4 * Math.sin((obj.t) * Math.PI)) * (1 + 0.5 * surge);
-
-                    // Trigger burst on arrival
-                    if (obj.t > 0.98) {
-                        bursts.push({
-                            ttl: 0.6,
-                            t: 0,
-                            pos: new THREE.Vector3(0, 0.15, 0)
-                        });
+                    // shimmer the callosum
+                    for (let i = 0; i < corpus.children.length; i++) {
+                        const ln = corpus.children[i];
+                        const o = 0.15 + 0.15 * Math.sin(t * 2 + i * 0.3);
+                        ln.material.opacity = o;
                     }
-                });
 
-                // gentle breathing of people ring
-                peopleGroup.rotation.y = Math.sin(t * 0.2) * 0.05;
+                    // rotate globe and advance city pulses (less frequently)
+                    worldGroup.rotation.y = t * 0.07;
+                    for (let i = 0; i < cityPulseObjects.length; i++) {
+                        const obj = cityPulseObjects[i];
+                        obj.t = (obj.t + obj.speed * 0.016 * animate._frameSkip) % 1;
+                        const base = obj.curve.getPointAt(obj.t);
+                        // micro jitter without allocations
+                        obj.pulse.position.x = base.x + (Math.random() - 0.5) * 0.005;
+                        obj.pulse.position.y = base.y + (Math.random() - 0.5) * 0.005;
+                        obj.pulse.position.z = base.z + (Math.random() - 0.5) * 0.005;
+                        obj.pulse.material.opacity = (0.6 + 0.4 * Math.sin((obj.t) * Math.PI)) * (1 + 0.5 * surge);
+                        if (obj.t > 0.98) bursts.push({ ttl: 0.6, t: 0, pos: new THREE.Vector3(0, 0.15, 0) });
+                    }
 
-                // traveling wave across corpus (phase offset)
-                const wave = Math.sin(t * 1.8) * 0.5 + 0.5;
-                corpus.children.forEach((ln, i) => {
-                    ln.material.opacity = 0.1 + 0.2 * Math.sin(t * 2.0 + i * 0.25) * wave;
-                });
+                    peopleGroup.rotation.y = Math.sin(t * 0.2) * 0.05;
 
-                // Render bursts: temporarily brighten brain points
-                for (let i = bursts.length - 1; i >= 0; i--) {
-                    const b = bursts[i];
-                    b.t += 0.016;
-                    const k = Math.min(b.t / b.ttl, 1);
-                    const e = 1 - Math.pow(1 - k, 2);
-                    const boost = 0.65 + 0.35 * (1 - e);
-                    leftPoints.material.opacity = boost;
-                    rightPoints.material.opacity = boost;
-                    if (k >= 1) bursts.splice(i, 1);
+                    const wave = Math.sin(t * 1.8) * 0.5 + 0.5;
+                    for (let i = 0; i < corpus.children.length; i++) {
+                        const ln = corpus.children[i];
+                        ln.material.opacity = 0.1 + 0.2 * Math.sin(t * 2.0 + i * 0.25) * wave;
+                    }
+
+                    for (let i = bursts.length - 1; i >= 0; i--) {
+                        const b = bursts[i];
+                        b.t += 0.016 * animate._frameSkip;
+                        const k = Math.min(b.t / b.ttl, 1);
+                        const e = 1 - Math.pow(1 - k, 2);
+                        const boost = 0.65 + 0.35 * (1 - e);
+                        leftPoints.material.opacity = boost;
+                        rightPoints.material.opacity = boost;
+                        if (k >= 1) bursts.splice(i, 1);
+                    }
                 }
             }
 
+            // Final render (always render to keep UI responsive)
             if (composer) {
                 composer.render();
             } else {
