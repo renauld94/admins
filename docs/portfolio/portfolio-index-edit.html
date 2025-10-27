@@ -79,9 +79,8 @@
         </script>
 
         <script defer src="https://d3js.org/d3.v7.min.js"></script>
-        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-        <script src="three-loader.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script defer src="three-loader.js"></script>
 </head>
 
 <body>
@@ -124,27 +123,7 @@
                 <li><a href="#contact" class="nav-link">Contact</a></li>
                 <li><a href="assets/resume/simon-renauld-resume.pdf" class="btn-resume" download>Resume</a></li>
                 
-                <!-- Admin Dropdown -->
-                <li class="nav-dropdown">
-                    <button class="dropdown-toggle" onclick="toggleDropdown()" aria-expanded="false" aria-haspopup="true">
-                        Admin Tools
-                        <span class="admin-badge">Admin</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="6,9 12,15 18,9"></polyline>
-                        </svg>
-                    </button>
-                    <ul id="desktop-admin-menu" class="dropdown-menu" aria-label="Admin Tools" aria-hidden="true">
-                        <li><a href="https://grafana.simondatalab.de/" class="dropdown-item">Grafana</a></li>
-                        <li><a href="https://openwebui.simondatalab.de/" class="dropdown-item">Open WebUI</a></li>
-                        <li><a href="https://ollama.simondatalab.de/" class="dropdown-item">Ollama</a></li>
-                        <li><a href="https://www.simondatalab.de/geospatial-viz/index.html" class="dropdown-item">GeoServer</a></li>
-                        <li><a href="https://136.243.155.166:8096/" class="dropdown-item">Jellyfin</a></li>
-                        <li><a href="https://136.243.155.166:9020/apps/dashboard/" class="dropdown-item">Nextcloud</a></li>
-                        <li><a href="https://jupyterhub.simondatalab.de/" class="dropdown-item">JupyterHub</a></li>
-                        <li><a href="https://mlflow.simondatalab.de/" class="dropdown-item">MLflow</a></li>
-                        <li><a href="https://mlapi.simondatalab.de/" class="dropdown-item">ML API</a></li>
-                    </ul>
-                </li>
+                <!-- Desktop Admin Dropdown removed (not used) -->
             </ul>
 
             <button class="mobile-menu-btn" aria-label="Toggle mobile menu" aria-controls="mobile-navigation" aria-expanded="false">
@@ -176,8 +155,8 @@
                             <li><a href="https://openwebui.simondatalab.de/" class="nav-link">Open WebUI</a></li>
                             <li><a href="https://ollama.simondatalab.de/" class="nav-link">Ollama</a></li>
                             <li><a href="https://www.simondatalab.de/geospatial-viz/index.html" class="nav-link">GeoServer</a></li>
-                            <li><a href="https://136.243.155.166:8096/" class="nav-link">Jellyfin</a></li>
-                            <li><a href="https://136.243.155.166:9020/apps/dashboard/" class="nav-link">Nextcloud</a></li>
+                            <li><a href="https://jellyfin.simondatalab.de/" class="nav-link" target="_blank" rel="noopener noreferrer">Jellyfin</a></li>
+                            <li><a href="https://nextcloud.simondatalab.de/" class="nav-link" target="_blank" rel="noopener noreferrer">Nextcloud</a></li>
                             <li><a href="https://jupyterhub.simondatalab.de/" class="nav-link">JupyterHub</a></li>
                             <li><a href="https://mlflow.simondatalab.de/" class="nav-link">MLflow</a></li>
                             <li><a href="https://mlapi.simondatalab.de/" class="nav-link">ML API</a></li>
@@ -967,8 +946,14 @@
                 });
                 
                 console.log('✅ Mobile dropdown event listeners added');
-            } else {
-                console.warn('⚠️ Mobile dropdown toggle not found');
+                } else {
+                // Don't spam the console in production when the mobile toggle isn't present.
+                // Keep a less-visible debug message instead so local development still shows it.
+                if (window.location && window.location.hostname === 'localhost') {
+                    console.warn('⚠️ Mobile dropdown toggle not found');
+                } else {
+                    console.debug('Mobile dropdown toggle not found (non-fatal)');
+                }
             }
         });
         
@@ -1001,34 +986,94 @@
     
     <script src="app.js?v=20251003.5"></script>
     
-    <!-- 🌌 NEURAL GEOSERVER VISUALIZATION: GPU-Accelerated Three.js Neural-Spatial System -->
+    <!-- 🌌 NEURAL GEOSERVER VISUALIZATION: GPU-Accelerated Three.js Neural-Spatial System (lazy-loaded) -->
     <script>
-        console.log('🌌 [NEURAL GEOSERVER] Loading GPU-Accelerated Neural-Spatial Visualization');
-        console.log('   Device: Desktop | Pure Three.js implementation with GeoServer integration');
-        console.log('   🎬 Features: Real-time GeoServer layers as neural clusters, synaptic connections, Earth backdrop, Proxmox satellites');
-        console.log('   ✨ Performance: GPU acceleration, LOD, frustum culling, 10K+ particles, interactive metadata');
-        
+        // Minimal startup logs (reduced verbosity in production)
+        if (window.location && window.location.hostname === 'localhost') {
+            console.log('🌌 [NEURAL GEOSERVER] Visualization module available (lazy load enabled)');
+        }
+
         // Simple global event bus for hero & showcase integration
         window.__HERO_EVENT_BUS__ = window.__HERO_EVENT_BUS__ || {
             listeners: {},
             on(e,f){this.listeners[e]=(this.listeners[e]||[]).concat(f);},
-            emit(e,p){(this.listeners[e]||[]).forEach(f=>{try{f(p);}catch(err){console.warn('event handler error',err)}});}
+            emit(e,p){(this.listeners[e]||[]).forEach(f=>{try{f(p);}catch(err){console.warn('event handler error',err)}});}        
         };
-        
 
-        
-        // Listen for THREE.js ready event
+        // Lazy-load orchestration flags
+        window.__HERO_SHOULD_LOAD_VIZ__ = false; // set to true by intersection / interaction
+        window.__THREE_READY_FIRED__ = false; // set when threeJsReady event fires
+
+        // When Three.js signals it's ready, only initialize the heavy viz if the hero has been seen
         window.addEventListener('threeJsReady', () => {
-            console.log('🎯 [NEURAL GEOSERVER] Received THREE.js ready event');
+            window.__THREE_READY_FIRED__ = true;
+            // Small deferral to allow layout to stabilise
             setTimeout(() => {
-                if (typeof THREE !== 'undefined') {
-                    console.log('✅ [NEURAL GEOSERVER] THREE.js confirmed available, starting neural visualization...');
-                    loadNeuralVisualization();
+                if (window.__HERO_SHOULD_LOAD_VIZ__) {
+                    if (typeof loadNeuralVisualization === 'function') {
+                        loadNeuralVisualization();
+                    } else {
+                        // If the loader function isn't present for some reason, attempt a safe call
+                        try { loadNeuralVisualization(); } catch (err) { console.warn('Neural viz loader not available', err); }
+                    }
                 } else {
-                    console.error('❌ [NEURAL GEOSERVER] THREE.js not available despite ready event');
+                    // Not yet visible; wait for intersection observer or fallback timeout
+                    if (window.location && window.location.hostname === 'localhost') {
+                        console.debug('[NEURAL GEOSERVER] threeJsReady fired but hero not visible yet — waiting to lazy-load');
+                    }
                 }
-            }, 200);
+            }, 150);
         });
+
+        // IntersectionObserver: load viz when hero enters viewport
+        (function setupHeroLazyLoader() {
+            const mount = document.getElementById('hero-visualization');
+            if (!mount) return;
+
+            const onLoadNow = () => {
+                window.__HERO_SHOULD_LOAD_VIZ__ = true;
+                // If Three.js is already ready, start immediately
+                if (window.__THREE_READY_FIRED__) {
+                    try { loadNeuralVisualization(); } catch (err) { console.warn('Error while triggering neural viz load', err); }
+                }
+            };
+
+            // Try to observe when the hero enters the viewport (20% visibility)
+            try {
+                const observer = new IntersectionObserver((entries, obs) => {
+                    for (const e of entries) {
+                        if (e.isIntersecting) {
+                            onLoadNow();
+                            obs.disconnect();
+                            return;
+                        }
+                    }
+                }, { root: null, rootMargin: '0px', threshold: 0.2 });
+
+                observer.observe(mount);
+            } catch (err) {
+                // IntersectionObserver unsupported: fallback to immediate load after short delay
+                console.warn('IntersectionObserver not available, deferring to timeout fallback');
+                setTimeout(onLoadNow, 1200);
+            }
+
+            // Also load on first user interaction (fastest perceived responsiveness)
+            const onFirstInteraction = (e) => {
+                onLoadNow();
+                window.removeEventListener('pointerdown', onFirstInteraction, { capture: true });
+                window.removeEventListener('touchstart', onFirstInteraction, { capture: true });
+            };
+            window.addEventListener('pointerdown', onFirstInteraction, { capture: true });
+            window.addEventListener('touchstart', onFirstInteraction, { capture: true });
+
+            // Final safety: ensure viz loads within a reasonable time even if hero never becomes visible
+            setTimeout(() => {
+                if (!window.__HERO_SHOULD_LOAD_VIZ__) {
+                    if (window.location && window.location.hostname === 'localhost') console.debug('[NEURAL GEOSERVER] Fallback timeout reached, loading hero viz');
+                    onLoadNow();
+                }
+            }, 5000);
+        })();
         
         function loadNeuralVisualization() {
             console.log('🚀 Loading Epic Neural Visualization...');
@@ -1134,7 +1179,9 @@
                             
                             const viz = new window.NeuralGeoServerViz('hero-visualization', {
                                 geoserverUrl: 'https://www.simondatalab.de/geospatial-viz',
-                                proxmoxUrl: 'https://136.243.155.166:8006',
+                                // Avoid direct IP which may trigger certificate warnings in browsers.
+                                // Use proxmox domain if available, otherwise leave empty to prevent mixed-content warnings.
+                                proxmoxUrl: '',
                                 particleCount: 8000,
                                 enableGPUAcceleration: true,
                                 enableLOD: true,

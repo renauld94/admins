@@ -65,10 +65,10 @@
         </script>
 
         <script defer src="https://d3js.org/d3.v7.min.js"></script>
-        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-        <script src="three-loader.js"></script>
-        <script src="epic-neural-loading-enhanced.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="three-loader.js"></script>
+    <!-- epic-neural-loading-enhanced.js is loaded non-blockingly from app.js when needed -->
                 <!-- JSON-LD structured data -->
                 <script type="application/ld+json">
                 {
@@ -124,28 +124,7 @@
                 <li><a href="#contact" class="nav-link">Contact</a></li>
                 <li><a href="assets/resume/simon-renauld-resume.pdf" class="btn-resume" download rel="noopener noreferrer">Download Resume</a></li>
                 
-                <!-- Admin Dropdown -->
-                <li class="nav-dropdown">
-                    <button class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">
-                        Admin Tools
-                        <span class="admin-badge">Admin</span>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="6,9 12,15 18,9"></polyline>
-                        </svg>
-                    </button>
-                    <ul id="desktop-admin-menu" class="dropdown-menu" aria-label="Admin Tools" aria-hidden="true">
-                        <li><a href="https://grafana.simondatalab.de/" class="dropdown-item" target="_blank" rel="noopener noreferrer">Grafana</a></li>
-                        <li><a href="https://prometheus.simondatalab.de/" class="dropdown-item" target="_blank" rel="noopener noreferrer">Prometheus</a></li>
-                        <li><a href="https://openwebui.simondatalab.de/" class="dropdown-item" target="_blank" rel="noopener noreferrer">Open WebUI</a></li>
-                        <li><a href="https://ollama.simondatalab.de/" class="dropdown-item" target="_blank" rel="noopener noreferrer">Ollama</a></li>
-                        <li><a href="https://www.simondatalab.de/geospatial-viz/index.html" class="dropdown-item" target="_blank" rel="noopener noreferrer">GeoServer</a></li>
-                        <li><a href="https://136.243.155.166:8096/" class="dropdown-item" target="_blank" rel="noopener noreferrer">Jellyfin</a></li>
-                        <li><a href="https://136.243.155.166:9020/apps/dashboard/" class="dropdown-item" target="_blank" rel="noopener noreferrer">Nextcloud</a></li>
-                        <li><a href="https://jupyterhub.simondatalab.de/" class="dropdown-item" target="_blank" rel="noopener noreferrer">JupyterHub</a></li>
-                        <li><a href="https://mlflow.simondatalab.de/" class="dropdown-item" target="_blank" rel="noopener noreferrer">MLflow</a></li>
-                        <li><a href="https://mlapi.simondatalab.de/" class="dropdown-item" target="_blank" rel="noopener noreferrer">ML API</a></li>
-                    </ul>
-                </li>
+                <!-- Desktop Admin Dropdown removed (not used) -->
             </ul>
 
             <button class="mobile-menu-btn" aria-label="Toggle mobile menu" aria-controls="mobile-navigation" aria-expanded="false">
@@ -180,8 +159,8 @@
                             <li><a href="https://openwebui.simondatalab.de/" class="nav-link" target="_blank" rel="noopener noreferrer">Open WebUI</a></li>
                             <li><a href="https://ollama.simondatalab.de/" class="nav-link" target="_blank" rel="noopener noreferrer">Ollama</a></li>
                             <li><a href="https://www.simondatalab.de/geospatial-viz/index.html" class="nav-link" target="_blank" rel="noopener noreferrer">GeoServer</a></li>
-                            <li><a href="https://136.243.155.166:8096/" class="nav-link" target="_blank" rel="noopener noreferrer">Jellyfin</a></li>
-                            <li><a href="https://136.243.155.166:9020/apps/dashboard/" class="nav-link" target="_blank" rel="noopener noreferrer">Nextcloud</a></li>
+                            <li><a href="https://jellyfin.simondatalab.de/" class="nav-link" target="_blank" rel="noopener noreferrer">Jellyfin</a></li>
+                            <li><a href="https://nextcloud.simondatalab.de/" class="nav-link" target="_blank" rel="noopener noreferrer">Nextcloud</a></li>
                             <li><a href="https://jupyterhub.simondatalab.de/" class="nav-link" target="_blank" rel="noopener noreferrer">JupyterHub</a></li>
                             <li><a href="https://mlflow.simondatalab.de/" class="nav-link" target="_blank" rel="noopener noreferrer">MLflow</a></li>
                             <li><a href="https://mlapi.simondatalab.de/" class="nav-link" target="_blank" rel="noopener noreferrer">ML API</a></li>
@@ -1240,7 +1219,9 @@
                             
                             const viz = new window.NeuralGeoServerViz('hero-visualization', {
                                 geoserverUrl: 'https://www.simondatalab.de/geospatial-viz',
-                                proxmoxUrl: 'https://136.243.155.166:8006',
+                                // Avoid direct IP which may trigger certificate warnings in browsers.
+                                // Use proxmox domain if available, otherwise leave empty to prevent mixed-content warnings.
+                                proxmoxUrl: '',
                                 particleCount: 15000,
                                 enableGPUAcceleration: true,
                                 enableLOD: true,
