@@ -55,7 +55,58 @@ class EpicNeuralToCosmosViz {
         ));
         this.reduceMotion = (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) || false;
         
-        this.init();
+        // Allow callers to opt into deferred initialization so heavy work
+        // can be spread across idle frames instead of blocking the initial
+        // requestIdleCallback or constructor call.
+        if (!this.options.deferInit) {
+            this.init();
+        } else {
+            // lightweight constructor only; full init must be invoked via runDeferredInit()
+            console.info('[EpicViz] Deferred initialization enabled; call runDeferredInit() to finish setup');
+        }
+    }
+
+    // Run initialization in multiple idle/timed steps to avoid long blocking handlers.
+    async runDeferredInit() {
+        try {
+            // 1) Setup renderer & scene quickly
+            await this.setupThreeJS();
+
+            // 2) Create phases in separate idle callbacks to spread CPU work
+            const runStep = (fn) => new Promise((resolve) => {
+                const runner = () => {
+                    try {
+                        Promise.resolve(fn()).then(resolve).catch((e) => { console.warn('[EpicViz] deferred step error', e); resolve(); });
+                    } catch (e) { console.warn('[EpicViz] deferred step exception', e); resolve(); }
+                };
+                if (typeof requestIdleCallback === 'function') {
+                    // schedule with a small timeout so it still runs if idle doesn't fire soon
+                    requestIdleCallback(runner, { timeout: 200 });
+                } else {
+                    setTimeout(runner, 120);
+                }
+            });
+
+            // Create phases one at a time
+            await runStep(() => this.createNeuronPhase());
+            await runStep(() => this.createBrainPhase());
+            await runStep(() => this.createNetworkPhase());
+            await runStep(() => this.createCosmosPhase());
+
+            // Setup remaining items and start animation
+            this.setupPostProcessing();
+            this.setupInteractions();
+            this.startAnimation();
+
+            if (this.options.autoTransition) {
+                this.startAutoTransition();
+            }
+
+            console.log('✅ Epic visualization deferred initialization completed');
+        } catch (error) {
+            console.error('❌ Deferred initialization failed:', error);
+            this.showFallback();
+        }
     }
     
     async init() {
@@ -908,9 +959,35 @@ class EpicNeuralToCosmosViz {
     }
     
     startAnimation() {
-        const animate = () => {
-            this.animationId = requestAnimationFrame(animate);
-            
+        // Target FPS to avoid overloaded frames on slower devices
+        this._targetFPS = 45; // aim for 45fps by default
+        this._frameInterval = 1000 / this._targetFPS;
+        this._lastFrameTime = performance.now();
+
+        const loop = (now) => {
+            // If tab is hidden, skip rendering and schedule a lightweight wake check
+            if (document.hidden) {
+                // Schedule a reduced wake check to avoid busy looping while hidden
+                setTimeout(() => {
+                    const schedule = window.optimizedRAF || requestAnimationFrame;
+                    schedule(loop);
+                }, 1000);
+                return;
+            }
+            // Use frame-skipping to respect target FPS
+            const elapsed = now - this._lastFrameTime;
+            if (elapsed < this._frameInterval) {
+                // Schedule next frame using optimizedRAF if available to reduce spam
+                const schedule = window.optimizedRAF || requestAnimationFrame;
+                schedule(loop);
+                return;
+            }
+
+            this._lastFrameTime = now - (elapsed % this._frameInterval);
+
+            // requestAnimationFrame handle id only for cancellation
+            this.animationId = null;
+
             const delta = this.clock.getDelta();
             const time = this.clock.elapsedTime;
             // Track frame time for adaptive quality
@@ -918,82 +995,160 @@ class EpicNeuralToCosmosViz {
             this.frameTimeSum += frameMs;
             this.frameSamples += 1;
             this.frameCount++;
-            
-            // Update controls
+
+            // Update controls (damped updates are cheap)
             if (this.controls && this.controls.update) {
                 this.controls.update();
             }
-            
-            // Animate current phase
-            this.animateCurrentPhase(time);
-            
-            // Animate cosmic lights
+
+            // Only run heavy per-vertex animations every N frames on slower devices
+            const heavyPhaseSkip = (this.renderer && this.renderer.getPixelRatio && this.renderer.getPixelRatio() > 1.25) ? 3 : 1;
+
+            if (this.frameCount % heavyPhaseSkip === 0) {
+                this.animateCurrentPhase(time);
+            } else {
+                // Still update lightweight transforms
+                if (this.currentPhase === 'network' || this.currentPhase === 'cosmos') {
+                    const phase = this.phases[this.currentPhase];
+                    if (phase && phase.particleSystem) {
+                        // small rotational updates even on skipped frames
+                        phase.particleSystem.rotation.y += 0.0005;
+                    }
+                }
+            }
+
+            // Animate cosmic lights (cheap)
             if (this.cosmicLights) {
                 this.cosmicLights[0].position.x = Math.sin(time * 0.5) * 50;
                 this.cosmicLights[0].position.z = Math.cos(time * 0.3) * 30;
-                
+
                 this.cosmicLights[1].position.x = Math.cos(time * 0.7) * -40;
                 this.cosmicLights[1].position.y = Math.sin(time * 0.4) * 25;
             }
-            
+
             // Adaptive pixel ratio: if frames are slow, drop pixel ratio once or twice
             if (this.frameCount % 60 === 0 && !this.dynamicQuality.pixelRatioAdjusted) {
                 const avgMs = this.frameTimeSum / Math.max(this.frameSamples, 1);
                 // Reset accumulators
                 this.frameTimeSum = 0;
                 this.frameSamples = 0;
-                if (avgMs > 28 && this.renderer.getPixelRatio() > 1.0) {
-                    this.renderer.setPixelRatio(1.0);
-                    this.handleResize();
-                    this.dynamicQuality.pixelRatioAdjusted = true;
-                    this.dynamicQuality.step = 2;
-                    console.info('[EpicViz] Dropping pixel ratio to 1.0 for performance');
-                } else if (avgMs > 20 && this.renderer.getPixelRatio() > 1.25) {
-                    this.renderer.setPixelRatio(1.25);
-                    this.handleResize();
-                    this.dynamicQuality.pixelRatioAdjusted = true;
-                    this.dynamicQuality.step = 1;
-                    console.info('[EpicViz] Dropping pixel ratio to 1.25 for performance');
+                try {
+                    const currentPR = this.renderer.getPixelRatio();
+                    if (avgMs > 28 && currentPR > 1.0) {
+                        this.renderer.setPixelRatio(1.0);
+                        this.handleResize();
+                        this.dynamicQuality.pixelRatioAdjusted = true;
+                        this.dynamicQuality.step = 2;
+                        console.info('[EpicViz] Dropping pixel ratio to 1.0 for performance');
+                    } else if (avgMs > 20 && currentPR > 1.25) {
+                        this.renderer.setPixelRatio(1.25);
+                        this.handleResize();
+                        this.dynamicQuality.pixelRatioAdjusted = true;
+                        this.dynamicQuality.step = 1;
+                        console.info('[EpicViz] Dropping pixel ratio to 1.25 for performance');
+                    }
+                } catch (e) {
+                    // Some renderers may throw; ignore
                 }
             }
 
+            // Animate connections less frequently and skip for heavy phases
+            if (this.frameCount % 2 === 0) {
+                const phase = this.phases[this.currentPhase];
+                if (phase) this.animateConnections(phase, time);
+            }
+
             // Render
-            this.renderer.render(this.scene, this.camera);
+            try {
+                this.renderer.render(this.scene, this.camera);
+            } catch (e) {
+                // Catch and log render errors but avoid breaking loop
+                console.error('[EpicViz] Render error:', e);
+            }
+
+            // Schedule next frame using optimizedRAF if available
+            const schedule = window.optimizedRAF || requestAnimationFrame;
+            this.animationId = schedule(loop);
         };
-        
-        animate();
-        console.log('✅ Animation started');
+
+        // Start loop with optimizedRAF when available to reduce frame storms
+        const starter = window.optimizedRAF || requestAnimationFrame;
+        this.animationId = starter(loop);
+        console.log('✅ Animation started (throttled)');
+        // Pause animation when the hero container is not visible in viewport
+        try {
+            const container = this.container || document.getElementById('hero-visualization');
+            if (container && 'IntersectionObserver' in window) {
+                this._visibilityObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(en => {
+                        if (en.isIntersecting) {
+                            // resume if not already running
+                            if (!this.animationId) {
+                                const schedule = window.optimizedRAF || requestAnimationFrame;
+                                this.animationId = schedule(loop);
+                                console.info('[EpicViz] Resumed animation (in viewport)');
+                            }
+                        } else {
+                            // pause by cancelling RAF if present
+                            if (this.animationId) {
+                                try { cancelAnimationFrame(this.animationId); } catch (e) {}
+                                this.animationId = null;
+                                console.info('[EpicViz] Paused animation (out of viewport)');
+                            }
+                        }
+                    });
+                }, { threshold: 0.05 });
+                this._visibilityObserver.observe(container);
+            }
+        } catch (e) {
+            // ignore observer failures
+        }
     }
     
     animateCurrentPhase(time) {
         const phase = this.phases[this.currentPhase];
         if (!phase) return;
-        
-        // Animate particles based on phase type
+        // Animate particles based on phase type. To avoid long frames on large buffers
+        // we update particle attributes in small chunks across frames. This keeps
+        // per-frame work bounded while preserving overall motion.
         if (phase.particleSystem) {
             const positions = phase.particleSystem.geometry.attributes.position.array;
-            const originalPositions = phase.particleSystem.userData.originalPositions;
-            
-            // Store original positions if not already stored
-            if (!originalPositions) {
+            // Ensure original positions snapshot exists (used as stable base)
+            if (!phase.particleSystem.userData.originalPositions) {
                 phase.particleSystem.userData.originalPositions = new Float32Array(positions);
+                phase.particleSystem.userData.updateIndex = 0;
             }
-            
-            // Phase-specific animations
+
+            // Determine chunk size (bounded) based on buffer length and device
+            const total = positions.length; // number of floats
+            // target to update a bounded number of floats per frame to avoid long frames
+            // on slow devices reduce the chunk significantly
+            const baseChunk = this.isMobile || this.reduceMotion ? 1024 : 3072;
+            const chunkSize = Math.min(total, Math.max(512, Math.floor(baseChunk)));
+
+            // Compute chunk bounds (wrap around)
+            let start = phase.particleSystem.userData.updateIndex || 0;
+            let end = Math.min(total, start + chunkSize);
+
+            // Run phase-specific per-vertex updates for this chunk only
             switch (this.currentPhase) {
                 case 'neuron':
-                    this.animateNeuronPhase(phase, time);
+                    this.animateNeuronPhase(phase, time, start, end);
                     break;
                 case 'brain':
-                    this.animateBrainPhase(phase, time);
+                    this.animateBrainPhase(phase, time, start, end);
                     break;
                 case 'network':
+                    // network and cosmos are mostly transform-based; update cheaply
                     this.animateNetworkPhase(phase, time);
                     break;
                 case 'cosmos':
                     this.animateCosmosPhase(phase, time);
                     break;
             }
+
+            // Advance update index for next frame
+            phase.particleSystem.userData.updateIndex = (end >= total) ? 0 : end;
         }
         
         // Animate connections
@@ -1001,36 +1156,52 @@ class EpicNeuralToCosmosViz {
     }
     
     animateNeuronPhase(phase, time) {
-        // Organic pulsing and electrical activity
-        const positions = phase.particleSystem.geometry.attributes.position.array;
-        
-        for (let i = 0; i < positions.length; i += 3) {
-            const pulse = Math.sin(time * 3 + i * 0.1) * 0.5;
-            positions[i] += pulse * 0.1;
-            positions[i + 1] += Math.cos(time * 2 + i * 0.05) * 0.1;
-            positions[i + 2] += Math.sin(time * 4 + i * 0.15) * 0.05;
+        // Organic pulsing and electrical activity - chunked updates and based on
+        // original positions to avoid accumulation and reduce heavy math per frame.
+        const attr = phase.particleSystem.geometry.attributes.position;
+        const positions = attr.array;
+        const orig = phase.particleSystem.userData.originalPositions || positions;
+
+        // If start/end provided, only process that slice
+        const start = arguments[2] || 0;
+        const end = arguments[3] || positions.length;
+
+        for (let i = start; i < end; i += 3) {
+            // Use original as base and apply lightweight offset
+            const baseX = orig[i];
+            const baseY = orig[i + 1];
+            const baseZ = orig[i + 2];
+
+            const idx = i / 3;
+            const pulse = Math.sin(time * 3 + idx * 0.1) * 0.5;
+            positions[i] = baseX + pulse * 0.1;
+            positions[i + 1] = baseY + Math.cos(time * 2 + idx * 0.05) * 0.1;
+            positions[i + 2] = baseZ + Math.sin(time * 4 + idx * 0.15) * 0.05;
         }
-        
-        phase.particleSystem.geometry.attributes.position.needsUpdate = true;
-        
-        // Electrical impulse effects
-        phase.particleSystem.material.opacity = 0.8 + Math.sin(time * 5) * 0.2;
+
+        attr.needsUpdate = true;
+        // Electrical impulse effects (cheap scalar update)
+        if (phase.particleSystem.material) phase.particleSystem.material.opacity = 0.8 + Math.sin(time * 5) * 0.2;
     }
     
     animateBrainPhase(phase, time) {
-        // Brain wave patterns and neural oscillations
-        const positions = phase.particleSystem.geometry.attributes.position.array;
-        
-        for (let i = 0; i < positions.length; i += 3) {
-            const wavePhase = time * 2 + i * 0.01;
+        // Brain wave patterns - chunked updates using original positions
+        const attr = phase.particleSystem.geometry.attributes.position;
+        const positions = attr.array;
+        const orig = phase.particleSystem.userData.originalPositions || positions;
+
+        const start = arguments[2] || 0;
+        const end = arguments[3] || positions.length;
+
+        for (let i = start; i < end; i += 3) {
+            const idx = i / 3;
+            const wavePhase = time * 2 + idx * 0.01;
             const brainWave = Math.sin(wavePhase) * Math.cos(wavePhase * 0.5) * 0.3;
-            
-            positions[i + 1] += brainWave;
+            positions[i + 1] = orig[i + 1] + brainWave;
         }
-        
-        phase.particleSystem.geometry.attributes.position.needsUpdate = true;
-        
-        // Alpha wave synchronization
+
+        attr.needsUpdate = true;
+        // Alpha wave synchronization (cheap)
         phase.particleSystem.rotation.y += 0.001;
     }
     
@@ -1062,17 +1233,29 @@ class EpicNeuralToCosmosViz {
         if (!phase.connections) return;
         // Throttle heavy connection animations: skip for large phases
         if (this.currentPhase === 'network' || this.currentPhase === 'cosmos') return;
-        if (this.frameCount % 3 !== 0) return;
-        
-        for (let index = 0; index < phase.connections.length; index++) {
+
+        // Process a bounded slice of connections per frame to avoid long loops
+        const total = phase.connections.length;
+        if (total === 0) return;
+
+        // adapt max per frame to total connections, but keep it low on heavy scenes
+        const adaptiveMax = Math.max(24, Math.floor(total * 0.02)); // ~2% of total, min 24
+        const maxPerFrame = Math.min(200, adaptiveMax);
+        if (!phase._connIndex) phase._connIndex = 0;
+
+        const start = phase._connIndex;
+        const end = Math.min(total, start + maxPerFrame);
+
+        for (let index = start; index < end; index++) {
             const connection = phase.connections[index];
-            // Pulse opacity softly for smaller sets (neuron/brain)
             const pulseSpeed = connection.userData?.flowSpeed || 1;
             const pulse = Math.sin(time * pulseSpeed + index * 0.1) * 0.15 + 0.85;
             if (connection.material && typeof connection.material.opacity === 'number') {
                 connection.material.opacity = pulse;
             }
         }
+
+        phase._connIndex = (end >= total) ? 0 : end;
     }
     
     handleResize() {

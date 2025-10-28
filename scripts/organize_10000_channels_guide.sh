@@ -157,3 +157,4 @@ echo ""
 echo "🎉 You're well on your way to having an amazing 10,000+ channel Jellyfin setup!"
 echo "Focus on quality over quantity - 200 great channels are better than 10,000 broken ones!"
 
+

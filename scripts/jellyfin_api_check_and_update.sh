@@ -325,3 +325,4 @@ echo "3. Set up user preferences"
 echo ""
 echo "📺 Your Jellyfin Live TV setup is now optimized!"
 
+

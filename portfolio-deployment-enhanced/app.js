@@ -1,456 +1,179 @@
 // NEURO DATALAB PORTFOLIO - PROFESSIONAL JAVASCRIPT 2025
-// Mobile-first, performance-optimized portfolio functionality
 
-// INITIALIZATION
-document.addEventListener('DOMContentLoaded', function () {
-    console.log('Neuro DataLab Portfolio - Initialized');
-
-    // Initialize core functionality
-    applyNavigationColorFix();
-    initializeNavigation();
-    initializeScrollProgress();
-    initializeAnimations();
-    initializePortfolioVisualizations();
-    initializeContactForm();
-    initializeGeospatialLaunch();
-    initializeInfraPreview();
-});
-
-// INFRASTRUCTURE PREVIEW: open mermaid-based viewer in a new tab
-function initializeInfraPreview() {
-    // Look for an explicit infra opener first, then fall back to other known affordances.
-    let btn = document.querySelector('[data-action="open-infra"]');
-    const fallbackSelectors = ['.infra-thumb-btn', '.infra-thumb-cta', '.globe-fab'];
-
-    if (!btn) {
-        for (const sel of fallbackSelectors) {
-            const el = document.querySelector(sel);
-            if (el) {
-                btn = el;
-                break;
-            }
-        }
+// ANIMATIONS
+function initializeAnimations() {
+    // Check if GSAP is available
+    if (typeof gsap === 'undefined') {
+        console.warn('GSAP not loaded - animations disabled');
+        return;
     }
+    // Defer loading of ScrollTrigger to reduce initial main-thread work.
+    // We will attempt to dynamically import the plugin during idle time or on first interaction.
+    const ensureScrollTrigger = (() => {
+        let loaded = false;
+        let pending = [];
+        const runPending = () => {
+            if (!loaded) return;
+            pending.forEach(fn => { try { fn(); } catch (e) { console.warn('ScrollTrigger pending callback failed', e); } });
+            pending = [];
+        };
 
-    if (!btn) return;
+        const onLoad = () => {
+            loaded = true;
+            if (typeof ScrollTrigger !== 'undefined') {
+                try { gsap.registerPlugin(ScrollTrigger); } catch (e) { console.warn('Failed to register ScrollTrigger', e); }
+            }
+            runPending();
+        };
 
-    // Ensure we have a canonical secure target to avoid any mixed-content issues
-    const target = 'https://www.simondatalab.de/geospatial-viz/index.html';
-    const features = 'noopener=yes,noreferrer=yes,width=1200,height=900';
+        const loadScript = () => {
+            if (loaded) return;
+            // If ScrollTrigger is already present (unlikely after removing static include), just call onLoad
+            if (typeof ScrollTrigger !== 'undefined') {
+                onLoad();
+                return;
+            }
 
-    const openViewer = (ev) => {
-        ev?.preventDefault?.();
-        const win = window.open(target, '_blank', features);
-        if (win) {
-            try { win.opener = null; } catch (e) { /* ignore cross-origin */ }
-            try { win.focus(); } catch (e) { /* noop */ }
-        } else {
-            window.location.href = target;
-        }
-    };
+            // Dynamically import the ScrollTrigger UMD from CDN by creating a script element.
+            const s = document.createElement('script');
+            s.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js';
+            s.async = true;
+            s.onload = () => onLoad();
+            s.onerror = () => {
+                console.warn('Failed to load ScrollTrigger from CDN');
+                onLoad();
+            };
+            document.head.appendChild(s);
+        };
 
-    // If the element is the floating globe (which has its own geospatial binding),
-    // prefer to only add a discoverability attribute rather than duplicate handlers.
-    const isGlobeFab = btn.classList && btn.classList.contains('globe-fab');
+        const scheduleLoad = () => {
+            if (loaded) return;
+            if ('requestIdleCallback' in window) {
+                requestIdleCallback(() => loadScript(), { timeout: 2000 });
+            } else {
+                // Fallback: wait a short timeout then load
+                setTimeout(() => loadScript(), 1200);
+            }
+        };
 
-    try {
-        if (!btn.hasAttribute('tabindex')) btn.setAttribute('tabindex', '0');
-        if (!btn.getAttribute('role')) btn.setAttribute('role', 'button');
-        if (!btn.getAttribute('aria-label')) btn.setAttribute('aria-label', 'Open infrastructure diagram in new tab');
-        // Make it findable by tests/selectors that look for [data-action="open-infra"]
-        if (!btn.hasAttribute('data-action')) btn.setAttribute('data-action', 'open-infra');
-    } catch (e) { /* ignore attribute errors */ }
+        // Start scheduling load on first meaningful interaction or idle.
+        const onFirstInteraction = () => {
+            scheduleLoad();
+            window.removeEventListener('pointerdown', onFirstInteraction);
+            window.removeEventListener('touchstart', onFirstInteraction);
+            window.removeEventListener('keydown', onFirstInteraction);
+        };
 
-    if (!isGlobeFab) {
-        // For non-globe elements, attach our handler directly
-        btn.addEventListener('click', openViewer);
-        btn.addEventListener('keydown', (ev) => {
-            if (ev.key === 'Enter' || ev.key === ' ') {
-                ev.preventDefault();
-                openViewer(ev);
+        window.addEventListener('pointerdown', onFirstInteraction, { passive: true, capture: true });
+        window.addEventListener('touchstart', onFirstInteraction, { passive: true, capture: true });
+        window.addEventListener('keydown', onFirstInteraction, { passive: true, capture: true });
+
+        // Also schedule a conservative idle load so that the plugin becomes available eventually
+        scheduleLoad();
+
+        return {
+            whenReady: (cb) => {
+                if (loaded) return cb();
+                pending.push(cb);
+            }
+        };
+    })();
+
+    // Animate elements on scroll if ScrollTrigger is available
+    ensureScrollTrigger.whenReady(() => {
+        // Fade in sections
+        gsap.utils.toArray('.section-header').forEach(header => {
+            gsap.fromTo(header,
+                {
+                    y: 50,
+                    opacity: 0
+                },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.8,
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: header,
+                        start: 'top 80%',
+                        end: 'bottom 20%',
+                        toggleActions: 'play none none reverse'
+                    }
+                }
+            );
+        });
+
+        // Animate cards
+        gsap.utils.toArray('.project-card, .expertise-card, .value-item').forEach((card, index) => {
+            gsap.fromTo(card,
+                {
+                    y: 30,
+                    opacity: 0
+                },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.6,
+                    delay: index * 0.1,
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 85%',
+                        toggleActions: 'play none none reverse'
+                    }
+                }
+            );
+        });
+
+        // Timeline items
+        gsap.utils.toArray('.timeline-item').forEach((item, index) => {
+            gsap.fromTo(item,
+                {
+                    x: -30,
+                    opacity: 0
+                },
+                {
+                    x: 0,
+                    opacity: 1,
+                    duration: 0.8,
+                    delay: index * 0.2,
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: item,
+                        start: 'top 80%',
+                        toggleActions: 'play none none reverse'
+                    }
+                }
+            );
+        });
+    });
+
+    // Button hover animations
+    document.querySelectorAll('.btn-primary, .btn-secondary').forEach(btn => {
+        btn.addEventListener('mouseenter', () => {
+            if (typeof gsap !== 'undefined') {
+                gsap.to(btn, {
+                    duration: 0.2,
+                    scale: 1.05,
+                    ease: 'power2.out'
+                });
             }
         });
-    }
-}
 
-// NAVIGATION SYSTEM
-function initializeNavigation() {
-    // Smooth scrolling for navigation links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                const navHeight = 70;
-                const targetPosition = target.offsetTop - navHeight;
-
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
+        btn.addEventListener('mouseleave', () => {
+            if (typeof gsap !== 'undefined') {
+                gsap.to(btn, {
+                    duration: 0.2,
+                    scale: 1,
+                    ease: 'power2.out'
                 });
-
-                // Close mobile menu if open
-                closeMobileMenu();
             }
         });
     });
 
-    // Mobile menu toggle
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const mobileNav = document.querySelector('.mobile-nav');
-    const backdrop = document.querySelector('.mobile-nav-backdrop');
-
-    if (mobileMenuBtn && mobileNav) {
-        function animate() {
-            requestAnimationFrame(animate);
-            const t = clock.getElapsedTime();
-
-            // Adaptive perf guard: measure recent frame durations and skip heavy updates
-            // when the rendering pipeline is overloaded. This reduces jank on slower GPUs.
-            if (typeof animate._frameCount === 'undefined') {
-                animate._frameCount = 0;
-                animate._perfSamples = [];
-                animate._frameSkip = 1;
-                animate._lastTime = performance.now();
-            }
-            animate._frameCount++;
-            const now = performance.now();
-            const frameDur = now - (animate._lastTime || now);
-            animate._lastTime = now;
-
-            // keep a rolling window of the last N frame durations (ms)
-            animate._perfSamples.push(frameDur);
-            if (animate._perfSamples.length > 30) animate._perfSamples.shift();
-            const avg = animate._perfSamples.reduce((a,b) => a+b, 0) / animate._perfSamples.length;
-
-            // Adjust frame-skip based on average frame duration
-            if (avg > 80) {
-                animate._frameSkip = Math.min(6, animate._frameSkip + 1);
-            } else if (avg > 45) {
-                animate._frameSkip = Math.min(4, animate._frameSkip + 1);
-            } else if (avg > 28) {
-                animate._frameSkip = Math.min(2, animate._frameSkip + 1);
-            } else {
-                animate._frameSkip = Math.max(1, animate._frameSkip - 1);
-            }
-
-            // Lighter per-frame updates that keep the scene responsive
-            brainGroup.rotation.y += (targetRot.y - brainGroup.rotation.y) * 0.05;
-            brainGroup.rotation.x += (targetRot.x - brainGroup.rotation.x) * 0.05;
-            surge += (surgeTarget - surge) * 0.08;
-            const baseExposure = 1.0 + 0.05 * Math.sin(t * 0.2);
-            renderer.toneMappingExposure += ((baseExposure + 0.15 * surge) - renderer.toneMappingExposure) * 0.02;
-
-            // Do heavy visual updates only on allowed frames when skipping
-            if (animate._frameCount % animate._frameSkip === 0) {
-                // Intro sequence updates
-                if (!intro.done) {
-                    const k = Math.min((performance.now() - intro.start) / intro.duration, 1);
-                    const ease = 1 - Math.pow(1 - k, 3);
-                    camera.position.z = 2.3 + (3.4 - 2.3) * ease;
-                    camera.fov = 60 - 2 * ease;
-                    camera.updateProjectionMatrix();
-                    const fadeK = Math.max(0, (k - 0.25) / 0.75);
-                    setGroupOpacity(worldGroup, fadeK);
-                    setGroupOpacity(peopleGroup, fadeK);
-                    if (k >= 1) intro.done = true;
-                }
-
-                if (!reduceMotion) {
-                    // pulsate opacities
-                    const pulse = 0.5 + 0.5 * Math.sin(t * 1.5);
-                    const surgeBoost = 0.4 * surge;
-                    leftPoints.material.opacity = 0.65 + pulse * 0.25 + surgeBoost * 0.2;
-                    rightPoints.material.opacity = 0.65 + (1 - pulse) * 0.25 + surgeBoost * 0.2;
-                    if (leftPoints.material.size !== undefined) leftPoints.material.size = 0.025 * (1 + 0.6 * surge);
-                    if (rightPoints.material.size !== undefined) rightPoints.material.size = 0.025 * (1 + 0.6 * surge);
-
-                    // shimmer the callosum
-                    for (let i = 0; i < corpus.children.length; i++) {
-                        const ln = corpus.children[i];
-                        const o = 0.15 + 0.15 * Math.sin(t * 2 + i * 0.3);
-                        ln.material.opacity = o;
-                    }
-
-                    // rotate globe and advance city pulses (less frequently)
-                    worldGroup.rotation.y = t * 0.07;
-                    for (let i = 0; i < cityPulseObjects.length; i++) {
-                        const obj = cityPulseObjects[i];
-                        obj.t = (obj.t + obj.speed * 0.016 * animate._frameSkip) % 1;
-                        const base = obj.curve.getPointAt(obj.t);
-                        // micro jitter without allocations
-                        obj.pulse.position.x = base.x + (Math.random() - 0.5) * 0.005;
-                        obj.pulse.position.y = base.y + (Math.random() - 0.5) * 0.005;
-                        obj.pulse.position.z = base.z + (Math.random() - 0.5) * 0.005;
-                        obj.pulse.material.opacity = (0.6 + 0.4 * Math.sin((obj.t) * Math.PI)) * (1 + 0.5 * surge);
-                        if (obj.t > 0.98) bursts.push({ ttl: 0.6, t: 0, pos: new THREE.Vector3(0, 0.15, 0) });
-                    }
-
-                    peopleGroup.rotation.y = Math.sin(t * 0.2) * 0.05;
-
-                    const wave = Math.sin(t * 1.8) * 0.5 + 0.5;
-                    for (let i = 0; i < corpus.children.length; i++) {
-                        const ln = corpus.children[i];
-                        ln.material.opacity = 0.1 + 0.2 * Math.sin(t * 2.0 + i * 0.25) * wave;
-                    }
-
-                    for (let i = bursts.length - 1; i >= 0; i--) {
-                        const b = bursts[i];
-                        b.t += 0.016 * animate._frameSkip;
-                        const k = Math.min(b.t / b.ttl, 1);
-                        const e = 1 - Math.pow(1 - k, 2);
-                        const boost = 0.65 + 0.35 * (1 - e);
-                        leftPoints.material.opacity = boost;
-                        rightPoints.material.opacity = boost;
-                        if (k >= 1) bursts.splice(i, 1);
-                    }
-                }
-            }
-
-            // Final render (always render to keep UI responsive)
-            if (composer) {
-                composer.render();
-            } else {
-                renderer.render(scene, camera);
-            }
-        }
-
-    }
-
-        // Attach handlers to the mobile menu button and backdrop so the hamburger works
-        try {
-            mobileMenuBtn.addEventListener('click', (ev) => {
-                ev.preventDefault();
-                toggleMobileMenu();
-            });
-
-            // Support touchend to make it snappier on mobile
-            mobileMenuBtn.addEventListener('touchend', (ev) => {
-                if (ev.cancelable) ev.preventDefault();
-                toggleMobileMenu();
-            }, { passive: false });
-
-            if (backdrop) {
-                backdrop.addEventListener('click', (ev) => {
-                    ev.preventDefault();
-                    closeMobileMenu();
-                });
-                backdrop.addEventListener('touchend', (ev) => {
-                    if (ev.cancelable) ev.preventDefault();
-                    closeMobileMenu();
-                }, { passive: false });
-            }
-
-            // Close on Escape globally
-            document.addEventListener('keydown', (ev) => {
-                if (ev.key === 'Escape') closeMobileMenu();
-            });
-        } catch (e) {
-            // defensive: if adding listeners fails, still allow markup to be usable
-            console.warn('Mobile menu event binding failed', e);
-        }
-
-    // Mobile Admin Tools dropdown with enhanced touch support
-    const mobileDropdown = document.querySelector('.mobile-dropdown');
-    if (mobileDropdown) {
-        const toggle = mobileDropdown.querySelector('.mobile-dropdown-toggle');
-        const menu = mobileDropdown.querySelector('.mobile-dropdown-menu');
-        let lastToggleTs = 0;
-        const guard = (fn) => (e) => {
-            const now = performance.now();
-            if (now - lastToggleTs < 250) {
-                e.preventDefault?.();
-                e.stopPropagation?.();
-                return;
-            }
-            lastToggleTs = now;
-            fn(e);
-        };
-        
-        const close = () => {
-            mobileDropdown.classList.remove('open');
-            toggle?.setAttribute('aria-expanded', 'false');
-            menu?.setAttribute('aria-hidden', 'true');
-        };
-        
-        const open = () => {
-            mobileDropdown.classList.add('open');
-            toggle?.setAttribute('aria-expanded', 'true');
-            menu?.setAttribute('aria-hidden', 'false');
-        };
-        
-        const toggleDropdown = (ev) => {
-            ev.preventDefault();
-            ev.stopPropagation();
-            if (mobileDropdown.classList.contains('open')) {
-                close();
-            } else {
-                open();
-            }
-        };
-        
-        // Add both click and touchend for better mobile support
-        if (toggle) {
-            toggle.addEventListener('click', guard(toggleDropdown));
-            toggle.addEventListener('touchend', (ev) => {
-                // Prevent double-firing on mobile
-                if (ev.cancelable) {
-                    ev.preventDefault();
-                }
-                guard(toggleDropdown)(ev);
-            }, { passive: false });
-        }
-        
-        // Close dropdown when clicking outside
-        document.addEventListener('click', (ev) => {
-            if (!mobileDropdown.contains(ev.target)) close();
-        });
-        
-        document.addEventListener('touchend', (ev) => {
-            if (!mobileDropdown.contains(ev.target)) close();
-        });
-        
-        // Close on Escape key
-        document.addEventListener('keydown', (ev) => {
-            if (ev.key === 'Escape') close();
-        });
-
-        // Mark initialization complete to avoid duplicate bindings from inline scripts
-        try { window.__PORTFOLIO_APP_JS_MOBILE_DROPDOWN__ = true; } catch (e) {}
-    }
-
-    // Close mobile menu when any link inside it is clicked (improves UX on small screens)
-    try {
-        const mobileNavLinks = document.querySelectorAll('.mobile-nav a');
-        mobileNavLinks.forEach(link => {
-            link.addEventListener('click', (ev) => {
-                // Allow external links to open in new tab but still close the menu
-                setTimeout(() => closeMobileMenu(), 50);
-            });
-        });
-    } catch (e) { /* ignore */ }
+    // Number counters for hero stats
+    initializeStatCounters();
 }
-
-// Adaptive navigation contrast: ensures readable link color against current nav background.
-function applyNavigationColorFix() {
-    const styleId = 'nav-color-fix';
-    if (document.getElementById(styleId)) return;
-
-    const nav = document.querySelector('.main-navigation');
-    // Helper to compute relative luminance
-    function luminance(rgb) {
-        const toLin = c => {
-            c /= 255; return c <= 0.03928 ? c/12.92 : Math.pow((c+0.055)/1.055, 2.4);
-        };
-        const [r,g,b] = rgb; return 0.2126*toLin(r)+0.7152*toLin(g)+0.0722*toLin(b);
-    }
-    function parseColor(c) {
-        if (!c) return [11,18,32];
-        const m = c.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/i); if (m) return [parseInt(m[1],10),parseInt(m[2],10),parseInt(m[3],10)];
-        return [11,18,32];
-    }
-    let desiredBase = '#ffffff';
-    if (nav) {
-        const bg = window.getComputedStyle(nav).backgroundColor;
-        const lum = luminance(parseColor(bg));
-        // If background is light (> ~0.6), switch to dark text; else keep white
-        desiredBase = lum > 0.6 ? '#0f172a' : '#ffffff';
-    }
-
-    const style = document.createElement('style');
-    style.id = styleId;
-    style.textContent = `
-      .main-navigation .nav-link { color: ${desiredBase} !important; text-decoration:none; position:relative; outline:none; }
-      .main-navigation .nav-link:focus-visible { outline: 2px solid #0ea5e9; outline-offset:2px; border-radius:4px; }
-      .main-navigation .nav-link:hover, .main-navigation .nav-link:focus { color: #0ea5e9 !important; }
-      .main-navigation .dropdown-menu a, .main-navigation .dropdown-item { color: #0f172a !important; }
-      .main-navigation .dropdown-menu a:hover, .main-navigation .dropdown-item:hover { background: #0ea5e9; color:#fff !important; }
-      @media (prefers-color-scheme: light) { .main-navigation .nav-link { color: #0f172a !important; } }
-    `;
-    document.head.appendChild(style);
-}
-
-function toggleMobileMenu() {
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const mobileNav = document.querySelector('.mobile-nav');
-    const backdrop = document.querySelector('.mobile-nav-backdrop');
-
-    if (mobileMenuBtn && mobileNav) {
-        const isOpen = mobileNav.classList.contains('active');
-        
-        mobileMenuBtn.classList.toggle('active');
-        mobileNav.classList.toggle('active');
-        if (backdrop) {
-            backdrop.classList.toggle('active');
-        }
-        
-        const nowOpen = !isOpen;
-        mobileMenuBtn.setAttribute('aria-expanded', String(nowOpen));
-
-        // If we are closing the menu, ensure no descendant retains focus while aria-hidden is set.
-        // Move focus to the toggle button (or document.body) first to avoid the "aria-hidden on focused element" issue.
-        if (!nowOpen) {
-            try {
-                // If some element inside the menu currently has focus, move it safely.
-                const active = document.activeElement;
-                if (mobileNav.contains(active)) {
-                    // Prefer focusing the toggle; if unavailable, blur the active element
-                    if (mobileMenuBtn && typeof mobileMenuBtn.focus === 'function') {
-                        mobileMenuBtn.focus({ preventScroll: true });
-                    } else if (active && typeof active.blur === 'function') {
-                        active.blur();
-                    }
-                }
-            } catch (e) {
-                // ignore focus manipulation errors
-            }
-        }
-
-        // set aria-hidden and inert (where supported) to remove the mobile nav from assistive tree
-        try {
-            mobileNav.setAttribute('aria-hidden', String(!nowOpen));
-            if ('inert' in HTMLElement.prototype) {
-                mobileNav.inert = !nowOpen;
-            } else {
-                // Fallback: manage focusable elements via tabindex for older browsers when closing
-                if (!nowOpen) {
-                    Array.from(mobileNav.querySelectorAll('a, button, input, [tabindex]')).forEach(el => {
-                        if (!el.hasAttribute('data-old-tabindex')) {
-                            el.setAttribute('data-old-tabindex', el.getAttribute('tabindex') || '');
-                            el.setAttribute('tabindex', '-1');
-                        }
-                    });
-                } else {
-                    Array.from(mobileNav.querySelectorAll('[data-old-tabindex]')).forEach(el => {
-                        const old = el.getAttribute('data-old-tabindex');
-                        if (old === '') el.removeAttribute('tabindex'); else el.setAttribute('tabindex', old);
-                        el.removeAttribute('data-old-tabindex');
-                    });
-                }
-            }
-            if (backdrop) {
-                backdrop.setAttribute('aria-hidden', String(!nowOpen));
-                if ('inert' in HTMLElement.prototype) backdrop.inert = !nowOpen;
-            }
-        } catch (e) {
-            // Be defensive: if anything fails, still set minimal attributes
-            mobileNav.setAttribute('aria-hidden', String(!nowOpen));
-            if (backdrop) backdrop.setAttribute('aria-hidden', String(!nowOpen));
-        }
-
-        // Prevent body scroll when menu is open
-        if (nowOpen) {
-            document.body.style.overflow = 'hidden';
-            document.body.style.position = 'fixed';
-            document.body.style.width = '100%';
-        } else {
-            document.body.style.overflow = '';
-            document.body.style.position = '';
-            document.body.style.width = '';
-        }
-    }
-}
-
 function closeMobileMenu() {
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const mobileNav = document.querySelector('.mobile-nav');
@@ -490,9 +213,45 @@ function closeMobileMenu() {
             if (backdrop) backdrop.setAttribute('aria-hidden', 'true');
         }
 
-        document.body.style.overflow = '';
-        document.body.style.position = '';
-        document.body.style.width = '';
+        try {
+            document.body.classList.remove('no-scroll');
+        } catch (e) {
+            document.body.style.overflow = '';
+            document.body.style.position = '';
+            document.body.style.width = '';
+        }
+    }
+}
+
+// Toggle the mobile navigation panel (open/close) with accessibility attributes
+function toggleMobileMenu() {
+    try {
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileNav = document.querySelector('.mobile-nav') || document.querySelector('#mobile-navigation');
+        const backdrop = document.querySelector('.mobile-nav-backdrop') || document.getElementById('mobile-nav-backdrop');
+
+        if (!mobileMenuBtn || !mobileNav) return;
+
+        const isOpen = mobileNav.classList.contains('active') || mobileMenuBtn.classList.contains('active');
+        const nextState = !isOpen;
+
+        if (nextState) {
+            mobileMenuBtn.classList.add('active');
+            mobileNav.classList.add('active');
+            if (backdrop) backdrop.classList.add('active');
+            mobileMenuBtn.setAttribute('aria-expanded', 'true');
+            mobileNav.setAttribute('aria-hidden', 'false');
+            try { document.body.classList.add('no-scroll'); } catch(e) { document.body.style.overflow = 'hidden'; }
+
+            // Move focus into the mobile nav for keyboard users
+            const firstLink = mobileNav.querySelector('.nav-link, button, [tabindex]');
+            if (firstLink && typeof firstLink.focus === 'function') firstLink.focus({ preventScroll: true });
+        } else {
+            // Use existing closeMobileMenu helper to ensure consistent cleanup
+            closeMobileMenu();
+        }
+    } catch (e) {
+        console.warn('toggleMobileMenu failed', e);
     }
 }
 
@@ -584,14 +343,80 @@ function initializeAnimations() {
         console.warn('GSAP not loaded - animations disabled');
         return;
     }
+    // Defer loading of ScrollTrigger to reduce initial main-thread work.
+    // We will attempt to dynamically import the plugin during idle time or on first interaction.
+    const ensureScrollTrigger = (() => {
+        let loaded = false;
+        let pending = [];
+        const runPending = () => {
+            if (!loaded) return;
+            pending.forEach(fn => { try { fn(); } catch (e) { console.warn('ScrollTrigger pending callback failed', e); } });
+            pending = [];
+        };
 
-    // Register ScrollTrigger if available
-    if (typeof ScrollTrigger !== 'undefined') {
-        gsap.registerPlugin(ScrollTrigger);
-    }
+        const onLoad = () => {
+            loaded = true;
+            if (typeof ScrollTrigger !== 'undefined') {
+                try { gsap.registerPlugin(ScrollTrigger); } catch (e) { console.warn('Failed to register ScrollTrigger', e); }
+            }
+            runPending();
+        };
+
+        const loadScript = () => {
+            if (loaded) return;
+            // If ScrollTrigger is already present (unlikely after removing static include), just call onLoad
+            if (typeof ScrollTrigger !== 'undefined') {
+                onLoad();
+                return;
+            }
+
+            // Dynamically import the ScrollTrigger UMD from CDN by creating a script element.
+            const s = document.createElement('script');
+            s.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js';
+            s.async = true;
+            s.onload = () => onLoad();
+            s.onerror = () => {
+                console.warn('Failed to load ScrollTrigger from CDN');
+                onLoad();
+            };
+            document.head.appendChild(s);
+        };
+
+        const scheduleLoad = () => {
+            if (loaded) return;
+            if ('requestIdleCallback' in window) {
+                requestIdleCallback(() => loadScript(), { timeout: 2000 });
+            } else {
+                // Fallback: wait a short timeout then load
+                setTimeout(() => loadScript(), 1200);
+            }
+        };
+
+        // Start scheduling load on first meaningful interaction or idle.
+        const onFirstInteraction = () => {
+            scheduleLoad();
+            window.removeEventListener('pointerdown', onFirstInteraction);
+            window.removeEventListener('touchstart', onFirstInteraction);
+            window.removeEventListener('keydown', onFirstInteraction);
+        };
+
+        window.addEventListener('pointerdown', onFirstInteraction, { passive: true, capture: true });
+        window.addEventListener('touchstart', onFirstInteraction, { passive: true, capture: true });
+        window.addEventListener('keydown', onFirstInteraction, { passive: true, capture: true });
+
+        // Also schedule a conservative idle load so that the plugin becomes available eventually
+        scheduleLoad();
+
+        return {
+            whenReady: (cb) => {
+                if (loaded) return cb();
+                pending.push(cb);
+            }
+        };
+    })();
 
     // Animate elements on scroll if ScrollTrigger is available
-    if (typeof ScrollTrigger !== 'undefined') {
+    ensureScrollTrigger.whenReady(() => {
         // Fade in sections
         gsap.utils.toArray('.section-header').forEach(header => {
             gsap.fromTo(header,
@@ -657,7 +482,7 @@ function initializeAnimations() {
                 }
             );
         });
-    }
+    });
 
     // Button hover animations
     document.querySelectorAll('.btn-primary, .btn-secondary').forEach(btn => {
@@ -1433,8 +1258,152 @@ function updateScrollProgress() {
 // Initialize performance optimizations
 optimizePerformance();
 
-// Export functions for global access
-window.portfolioFunctions = {
-    toggleMobileMenu,
-    closeMobileMenu
-};
+// Export functions for global access (safe assignment)
+// Avoid referencing bare identifiers directly (they may not be hoisted in some bundle orderings).
+// Use typeof checks and safe wrappers so this module can be concatenated in any order.
+window.portfolioFunctions = window.portfolioFunctions || {};
+
+// Provide a safe delegating function for toggleMobileMenu
+if (typeof window.portfolioFunctions.toggleMobileMenu === 'undefined') {
+    window.portfolioFunctions.toggleMobileMenu = function (...args) {
+        try {
+            if (typeof toggleMobileMenu === 'function') return toggleMobileMenu.apply(null, args);
+        } catch (e) { /* ignore */ }
+        try {
+            if (window.portfolioFunctions && typeof window.portfolioFunctions.toggleMobileMenu === 'function') {
+                return window.portfolioFunctions.toggleMobileMenu.apply(null, args);
+            }
+        } catch (e) { /* ignore */ }
+        // no-op
+    };
+}
+
+// Provide a safe delegating function for closeMobileMenu
+if (typeof window.portfolioFunctions.closeMobileMenu === 'undefined') {
+    window.portfolioFunctions.closeMobileMenu = function (...args) {
+        try {
+            if (typeof closeMobileMenu === 'function') return closeMobileMenu.apply(null, args);
+        } catch (e) { /* ignore */ }
+        try {
+            if (window.portfolioFunctions && typeof window.portfolioFunctions.closeMobileMenu === 'function') {
+                return window.portfolioFunctions.closeMobileMenu.apply(null, args);
+            }
+        } catch (e) { /* ignore */ }
+        // no-op
+    };
+}
+
+// Backwards-compatible globals: some pages or inline handlers may call toggleMobileMenu
+// directly. Provide safe global wrappers that delegate to the namespaced functions
+// if available, preventing ReferenceError in environments where code order differs.
+try {
+    if (typeof window !== 'undefined') {
+        if (typeof window.toggleMobileMenu === 'undefined') {
+            window.toggleMobileMenu = function (...args) {
+                try {
+                    if (window.portfolioFunctions && typeof window.portfolioFunctions.toggleMobileMenu === 'function') {
+                        return window.portfolioFunctions.toggleMobileMenu.apply(null, args);
+                    }
+                } catch (e) { /* swallow */ }
+                // no-op fallback
+            };
+        }
+        if (typeof window.closeMobileMenu === 'undefined') {
+            window.closeMobileMenu = function (...args) {
+                try {
+                    if (window.portfolioFunctions && typeof window.portfolioFunctions.closeMobileMenu === 'function') {
+                        return window.portfolioFunctions.closeMobileMenu.apply(null, args);
+                    }
+                } catch (e) { /* swallow */ }
+                // no-op fallback
+            };
+        }
+    }
+} catch (e) { /* ignore in constrained environments */ }
+
+// Non-blocking loader for heavy epic neural loading animation
+function deferEpicNeuralLoader() {
+    try {
+        const loadingContainer = document.querySelector('.epic-neural-loading');
+        if (!loadingContainer) return; // nothing to do
+
+        const loadScript = () => {
+            if (document.querySelector('script[data-epic-neural-loaded]')) return;
+            const s = document.createElement('script');
+            s.src = 'epic-neural-loading-enhanced.js';
+            s.async = true;
+            s.setAttribute('data-epic-neural-loaded', '1');
+            s.onload = () => { /* no-op; script manages its own lifecycle */ };
+            s.onerror = () => { console.warn('Failed to load epic-neural-loading-enhanced.js'); };
+            document.head.appendChild(s);
+        };
+
+        const schedule = () => {
+            if ('requestIdleCallback' in window) requestIdleCallback(loadScript, { timeout: 3000 });
+            else setTimeout(loadScript, 2000);
+        };
+
+        // Prime on first user interaction to ensure the animation is available when needed
+        const onFirstInteraction = () => {
+            schedule();
+            window.removeEventListener('pointerdown', onFirstInteraction);
+            window.removeEventListener('touchstart', onFirstInteraction);
+            window.removeEventListener('keydown', onFirstInteraction);
+        };
+
+        window.addEventListener('pointerdown', onFirstInteraction, { passive: true, capture: true });
+        window.addEventListener('touchstart', onFirstInteraction, { passive: true, capture: true });
+        window.addEventListener('keydown', onFirstInteraction, { passive: true, capture: true });
+
+        // Also schedule a conservative idle load so it doesn't remain blocked forever
+        schedule();
+    } catch (e) {
+        console.warn('deferEpicNeuralLoader failed', e);
+    }
+}
+
+// Kick off deferred loader
+deferEpicNeuralLoader();
+
+// Attach mobile nav listeners (safe, idempotent)
+try {
+    document.addEventListener('DOMContentLoaded', () => {
+        try {
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const backdrop = document.querySelector('.mobile-nav-backdrop') || document.getElementById('mobile-nav-backdrop');
+            const mobileNav = document.querySelector('.mobile-nav') || document.querySelector('#mobile-navigation');
+            const mobileNavClose = document.querySelector('.mobile-nav-close');
+
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    toggleMobileMenu();
+                }, { passive: false });
+                // touchend helps on some mobile browsers where click is delayed
+                mobileMenuBtn.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                    toggleMobileMenu();
+                }, { passive: false });
+            }
+
+            if (backdrop) {
+                backdrop.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    closeMobileMenu();
+                });
+            }
+
+            if (mobileNavClose) {
+                mobileNavClose.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    closeMobileMenu();
+                });
+            }
+
+            // Close on ESC
+            document.addEventListener('keydown', (ev) => {
+                if (ev.key === 'Escape') closeMobileMenu();
+            });
+        } catch (err) { /* noop */ }
+    });
+} catch (e) { /* noop */ }

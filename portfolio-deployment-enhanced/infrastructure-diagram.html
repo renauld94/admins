@@ -1204,6 +1204,53 @@
             .info-card {
                 padding: 24px;
             }
+            /* Reduce heavy shadows and padding on small screens for clarity and performance */
+            .diagram-container {
+                padding: 18px;
+                margin: 30px 0;
+                box-shadow: none;
+                -webkit-backdrop-filter: none;
+                backdrop-filter: none;
+            }
+            .hero-visualization {
+                height: 260px;
+                margin-bottom: 28px;
+                border-radius: 12px;
+            }
+            .cytoscape-container {
+                height: 48vh;
+                border-radius: 12px;
+            }
+            .info-grid { gap: 16px; }
+            .zoom-controls {
+                right: 12px;
+                bottom: 12px;
+                left: auto;
+                top: auto;
+                position: fixed;
+                flex-direction: row;
+                padding: 8px;
+            }
+            .zoom-btn { width: 40px; height: 40px; }
+            .action-buttons, .open-prod-btn {
+                position: static;
+                right: auto;
+                top: auto;
+                margin: 12px 0 0 0;
+                display: flex;
+                gap: 8px;
+            }
+            .diagram-zoom-wrapper { transform-origin: top left; }
+            .mermaid svg { width: 100%; height: auto; }
+            /* Reduce visual noise */
+            .stat, .info-card { box-shadow: none; }
+        }
+
+        /* Medium breakpoint tweaks for large phones / small tablets */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .cytoscape-container { height: 58vh; }
+            .hero-visualization { height: 360px; }
+            .diagram-container { padding: 28px; }
         }
     </style>
 </head>
@@ -1861,9 +1908,38 @@
     </div>
 
     <script>
-        // Advanced Neural Network Visualization
+        // Advanced Neural Network Visualization (guarded)
         const canvas = document.getElementById('viz-canvas');
-        if (canvas && typeof THREE !== 'undefined') {
+        const shouldRunHeavyViz = (function() {
+            try {
+                // Avoid running heavy WebGL on small screens or low-power devices
+                if (window.matchMedia && window.matchMedia('(max-width: 700px)').matches) return false;
+                if (navigator && navigator.deviceMemory && navigator.deviceMemory < 1) return false;
+                return true;
+            } catch (e) { return true; }
+        })();
+
+        if (!shouldRunHeavyViz) {
+            // Replace canvas with a lightweight placeholder image/SVG for mobile
+            const wrapper = document.getElementById('hero-visualization');
+            if (wrapper) {
+                const placeholder = document.createElement('div');
+                placeholder.style.width = '100%';
+                placeholder.style.height = '100%';
+                placeholder.style.display = 'flex';
+                placeholder.style.alignItems = 'center';
+                placeholder.style.justifyContent = 'center';
+                placeholder.style.background = 'linear-gradient(135deg, rgba(0,0,0,0.3), rgba(8,12,24,0.6))';
+                placeholder.innerHTML = '<svg width="220" height="120" viewBox="0 0 220 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#00d4ff" stop-opacity="0.85"/><stop offset="1" stop-color="#0099ff" stop-opacity="0.6"/></linearGradient></defs><rect width="220" height="120" rx="12" fill="#071223"/><g fill="none" stroke="url(#g)" stroke-width="2"><path d="M20 90 C60 30,160 30,200 90" stroke-linecap="round"/></g><text x="50%" y="60%" fill="#cfeeff" font-family="sans-serif" font-size="12" dominant-baseline="middle" text-anchor="middle">Interactive visualization (desktop recommended)</text></svg>';
+                const canvasEl = document.getElementById('viz-canvas');
+                if (canvasEl && canvasEl.parentNode) {
+                    canvasEl.parentNode.replaceChild(placeholder, canvasEl);
+                }
+                // remove overlay to avoid obstruction
+                const overlay = document.getElementById('viz-overlay');
+                if (overlay) overlay.style.display = 'none';
+            }
+        } else if (canvas && typeof THREE !== 'undefined') {
             const width = canvas.parentElement.clientWidth;
             const height = canvas.parentElement.clientHeight;
             

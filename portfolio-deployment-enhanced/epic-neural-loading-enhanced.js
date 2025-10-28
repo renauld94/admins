@@ -14,11 +14,13 @@ class EnhancedEpicNeuralLoading {
         this.neuralLayers = [];
         this.globalNodes = [];
         this.dataStreams = [];
+        this.connections = [];
         this.time = 0;
         this.phase = 0;
         this.phaseProgress = 0;
         this.mouseX = 0;
         this.mouseY = 0;
+    this._frameCounter = 0;
         
         this.init();
     }
@@ -355,22 +357,40 @@ class EnhancedEpicNeuralLoading {
     
     createConnections() {
         this.connections = [];
-        
-        // Create connections between particles
-        for (let i = 0; i < this.particles.length; i++) {
-            for (let j = i + 1; j < this.particles.length; j++) {
-                const p1 = this.particles[i];
-                const p2 = this.particles[j];
+
+        // When particle counts are larger, sample a subset to avoid O(n^2) blowup.
+        const particles = this.particles;
+        const pCount = particles.length;
+        let indices = [];
+
+        if (pCount > 140) {
+            // sample up to 120 particles randomly for connection checks
+            const sampleSize = 120;
+            const chosen = new Set();
+            while (chosen.size < sampleSize) chosen.add(Math.floor(Math.random() * pCount));
+            indices = Array.from(chosen);
+        } else {
+            // small counts: use all
+            indices = Array.from({ length: pCount }, (_, i) => i);
+        }
+
+        // Create connections between sampled particles (reduces CPU)
+        for (let a = 0; a < indices.length; a++) {
+            for (let b = a + 1; b < indices.length; b++) {
+                const i = indices[a];
+                const j = indices[b];
+                const p1 = particles[i];
+                const p2 = particles[j];
                 const dx = p1.x - p2.x;
                 const dy = p1.y - p2.y;
                 const distance = Math.sqrt(dx * dx + dy * dy);
-                
+
                 let maxDistance = 60;
                 if (this.phase === 0) maxDistance = 40;
                 else if (this.phase === 1) maxDistance = 80;
                 else if (this.phase === 2) maxDistance = 100;
                 else if (this.phase === 3) maxDistance = 120;
-                
+
                 if (distance < maxDistance) {
                     this.connections.push({
                         x1: p1.x, y1: p1.y,
@@ -482,6 +502,11 @@ class EnhancedEpicNeuralLoading {
     }
     
     renderConnections() {
+        // Defensive: connections may not be populated yet when render runs.
+        // Avoid runtime TypeErrors in production if createConnections() hasn't run.
+        if (!this.connections || typeof this.connections.forEach !== 'function' || this.connections.length === 0) return;
+
+        // Bound per-frame work: iterate all connections but skip early when empty.
         this.connections.forEach(conn => {
             this.ctx.beginPath();
             this.ctx.moveTo(conn.x1, conn.y1);
@@ -663,14 +688,27 @@ class EnhancedEpicNeuralLoading {
     }
     
     animate() {
+        if (document.hidden) {
+            // throttle when tab is hidden
+            this._frameCounter = 0;
+            this.animationId = requestAnimationFrame(() => this.animate());
+            return;
+        }
+
+        this._frameCounter++;
         this.time += 16;
         this.updateNeuralLayers();
         this.updateParticles();
         this.updateGlobalNodes();
         this.updateDataStreams();
-        this.createConnections();
+
+        // Recompute expensive connections less frequently
+        if (this._frameCounter % 8 === 0) {
+            this.createConnections();
+        }
+
         this.render();
-        
+
         this.animationId = requestAnimationFrame(() => this.animate());
     }
     
@@ -684,22 +722,35 @@ class EnhancedEpicNeuralLoading {
     }
 }
 
-// Initialize the enhanced epic neural loading animation
-document.addEventListener('DOMContentLoaded', () => {
-    const loadingContainer = document.querySelector('.epic-neural-loading');
-    if (loadingContainer) {
-        // Hide the text content
-        const textContent = loadingContainer.querySelector('.r3f-loading-inner');
-        if (textContent) {
-            textContent.style.display = 'none';
+// Initialize the enhanced epic neural loading animation when the document is ready.
+// This handles both cases: when the script is loaded before DOMContentLoaded
+// and when it is appended afterwards (deferred loader).
+(() => {
+    function initEpic() {
+        try {
+            const loadingContainer = document.querySelector('.epic-neural-loading');
+            if (!loadingContainer) return;
+
+            // Hide the text content
+            const textContent = loadingContainer.querySelector('.r3f-loading-inner');
+            if (textContent) textContent.style.display = 'none';
+
+            // Create the enhanced epic animation
+            const epicAnimation = new EnhancedEpicNeuralLoading(loadingContainer);
+
+            // Clean up when the loading is complete
+            setTimeout(() => {
+                try { epicAnimation.destroy(); } catch (e) { /* ignore */ }
+            }, 20000); // Run for 20 seconds
+        } catch (e) {
+            console.warn('Epic neural loader init failed', e);
         }
-        
-        // Create the enhanced epic animation
-        const epicAnimation = new EnhancedEpicNeuralLoading(loadingContainer);
-        
-        // Clean up when the loading is complete
-        setTimeout(() => {
-            epicAnimation.destroy();
-        }, 20000); // Run for 20 seconds
     }
-});
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initEpic);
+    } else {
+        // Document already ready (script appended after load)
+        initEpic();
+    }
+})();

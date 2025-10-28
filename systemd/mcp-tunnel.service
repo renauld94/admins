@@ -1,0 +1,14 @@
+[Unit]
+Description=MCP SSH tunnel (ProxyJump) to VM159
+After=network.target
+
+[Service]
+Type=simple
+# Edit the IdentityFile path below to the private key you created for the tunnel.
+ExecStart=/usr/bin/ssh -N -o ProxyJump=root@136.243.155.166:2222 -i /home/simon/.ssh/id_ed25519_mcp -L 11434:127.0.0.1:11434 simonadmin@10.0.0.110
+Restart=always
+RestartSec=5
+User=simon
+
+[Install]
+WantedBy=multi-user.target

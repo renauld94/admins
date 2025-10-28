@@ -311,3 +311,4 @@ echo "4. Set up EPG for better channel information"
 echo ""
 echo "📺 Your channels are now organized and ready for use!"
 
+

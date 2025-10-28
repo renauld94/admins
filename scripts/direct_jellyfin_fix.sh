@@ -491,3 +491,4 @@ echo "5. Test channel playback"
 echo ""
 echo "📺 Manual setup will solve your channel organization issue!"
 
+

@@ -1,0 +1,21 @@
+[Unit]
+Description=Full MCP shim (full-server.js)
+After=network.target
+
+[Service]
+Type=simple
+User=mcp
+Group=mcp
+WorkingDirectory=/opt/mcp/full
+# Use PORT env var to allow overriding if another process (docker-proxy) holds 3001
+Environment=PORT=3002
+ExecStart=/usr/bin/node /opt/mcp/full/full-server.js
+Restart=always
+RestartSec=5
+Environment=NODE_ENV=production
+LimitNOFILE=65536
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

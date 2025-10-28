@@ -1,0 +1,13 @@
+[Unit]
+Description=CF service-token proxy
+After=network.target
+
+[Service]
+Environment=CF_CLIENT_ID=c6667693cd662647ddf857a6b52a6dfe.access
+Environment=CF_CLIENT_SECRET=81c2a90303243ba046f140245e2a91ccd3c56242e3989e27d0c15281f54f71cc
+Environment=UPSTREAM=https://openwebui.simondatalab.de/staging-mcp
+ExecStart=/usr/bin/python3 /home/simon/Learning-Management-System-Academy/deploy/cf_service_token_proxy.py --host 127.0.0.1 --port 8000
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

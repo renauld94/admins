@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Digital Unicorn — Private Timeline</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .timeline { max-width: 900px; margin: auto; }
+    .event { padding: 8px; border-bottom: 1px solid #eee; }
+    .ts { color: #666; font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <h1>Digital Unicorn — Private Timeline (local)</h1>
+  <p>This is a private, offline timeline generated from conversation artifacts. Do not publish.</p>
+  <div id="timeline" class="timeline"></div>
+  <script>
+  // Load events from du_events.json (must be in the same directory or adjust path as needed)
+  fetch('du_events.json')
+    .then(r => r.json())
+    .then(events => {
+      const container = document.getElementById('timeline');
+      if (!Array.isArray(events) || !events.length) {
+        container.innerHTML = '<p><em>No events found in du_events.json.</em></p>';
+        return;
+      }
+      events.forEach(e => {
+        const el = document.createElement('div');
+        el.className = 'event';
+        const ts = e.timestamp || e.time || e.date || '';
+        const from = e.from ? `<strong>${e.from}:</strong> ` : '';
+        el.innerHTML = `<div class="ts">${ts}</div><div>${from}${(e.message||e.text||'').replace(/\n/g,'<br>')}</div>`;
+        container.appendChild(el);
+      });
+    })
+    .catch(() => {
+      document.getElementById('timeline').innerHTML = '<p><em>Could not load du_events.json.</em></p>';
+    });
+  </script>
+</body>
+</html>

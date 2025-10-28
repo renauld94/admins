@@ -449,3 +449,4 @@ echo "• VLC setup script: $WORKING_DIR/setup_vlc_iptv.sh"
 echo "• Final summary: $WORKING_DIR/final_bypass_summary.md"
 echo ""
 echo "🎯 The Jellyfin Live TV API is completely broken, but you have working solutions!"
+

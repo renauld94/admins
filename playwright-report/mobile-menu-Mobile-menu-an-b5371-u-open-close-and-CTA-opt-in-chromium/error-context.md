@@ -1,0 +1,409 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - button "Open Global Infrastructure Visualization" [ref=e3] [cursor=pointer]:
+    - img [ref=e4]
+  - navigation "Main navigation" [ref=e14]: → → → → → → → → →
+  - generic [ref=e16]:
+    - generic [ref=e17]:
+      - generic [ref=e19]: Enterprise Data Strategy & Clinical Analytics
+      - heading "From Neural Networks To Global Data Networks" [level=1] [ref=e20]:
+        - generic [ref=e21]: From Neural Networks
+        - generic [ref=e22]: To Global Data Networks
+      - paragraph [ref=e23]: Transforming complex healthcare and research data into strategic business intelligence through enterprise-grade machine learning systems, clinical analytics platforms, and comprehensive data governance frameworks that bridge neuroscience insights with scalable data solutions.
+      - generic [ref=e24]:
+        - link "View Architecture" [ref=e25] [cursor=pointer]:
+          - /url: "#architecture"
+        - link "Download Resume" [ref=e26] [cursor=pointer]:
+          - /url: assets/resume/simon-renauld-resume.pdf
+      - list "Key impact metrics" [ref=e27]:
+        - listitem [ref=e28]:
+          - strong [ref=e29]: 500M+
+          - generic [ref=e30]: Healthcare Records Processed
+        - listitem [ref=e31]:
+          - strong [ref=e32]: 85%
+          - generic [ref=e33]: Research Cycle Acceleration
+        - listitem [ref=e34]:
+          - strong [ref=e35]: 99.9%
+          - generic [ref=e36]: System Reliability
+        - listitem [ref=e37]:
+          - strong [ref=e38]: 100%
+          - generic [ref=e39]: HIPAA Compliance
+    - generic [ref=e42]:
+      - generic [ref=e43]: 🌌 Neural GeoServer
+      - generic [ref=e44]: A lightweight preview is shown to keep your device responsive. Tap to load the full visualization (may use more CPU and data).
+      - button "Load visualization" [ref=e45] [cursor=pointer]
+      - generic [ref=e46]: You can close it if it impacts performance.
+  - main [ref=e47]:
+    - generic [ref=e49]:
+      - generic [ref=e50]:
+        - generic [ref=e51]: Who I Am
+        - heading "About Simon Renauld" [level=2] [ref=e52]
+        - paragraph [ref=e53]: Senior Data Scientist & Innovation Strategist specializing in healthcare analytics and enterprise data governance
+        - paragraph [ref=e54]: I architect enterprise data ecosystems that transform complex healthcare and research data into strategic business intelligence. With a neuroscience PhD and over a decade of production machine learning experience, I bridge the gap between scientific rigor and enterprise-scale data solutions, delivering measurable business outcomes through comprehensive data governance and advanced analytics platforms.
+      - generic [ref=e55]:
+        - generic [ref=e56]:
+          - generic [ref=e57]:
+            - heading "Strategic Impact" [level=3] [ref=e58]
+            - paragraph [ref=e59]: Deliver measurable business outcomes through data-driven decision making and operational excellence.
+          - generic [ref=e60]:
+            - heading "Technical Clarity" [level=3] [ref=e61]
+            - paragraph [ref=e62]: Transform complex datasets into intuitive insights that drive organizational understanding and action.
+          - generic [ref=e63]:
+            - heading "Engineering Excellence" [level=3] [ref=e64]
+            - paragraph [ref=e65]: Build production-grade systems with robust architecture, comprehensive governance, and scalable performance.
+          - paragraph [ref=e66]: I am motivated by projects where the stakes are significant. Healthcare data affects patient outcomes, research breakthroughs, and organizational decisions. This drives my commitment to reliability, clarity, and measurable impact in every solution I deliver.
+          - paragraph [ref=e67]: My neuroscience background provides a unique advantage in understanding complex systems and designing robust solutions. Whether architecting data pipelines or building machine learning models, I bring both scientific precision and practical engineering expertise to enterprise challenges.
+        - generic [ref=e68]:
+          - generic [ref=e69]:
+            - img [ref=e71]
+            - heading "Impact First" [level=4] [ref=e73]
+            - paragraph [ref=e74]: Every solution must deliver measurable business value—not just technical elegance.
+          - generic [ref=e75]:
+            - img [ref=e77]
+            - heading "Built to Last" [level=4] [ref=e81]
+            - paragraph [ref=e82]: Production systems need solid engineering, not prototypes in disguise.
+          - generic [ref=e83]:
+            - img [ref=e85]
+            - heading "Clarity Wins" [level=4] [ref=e88]
+            - paragraph [ref=e89]: Complex data becomes powerful when presented with absolute clarity.
+      - complementary [ref=e90]:
+        - generic [ref=e91]:
+          - generic [ref=e93]: SR
+          - generic [ref=e94]:
+            - heading "Simon Renauld" [level=3] [ref=e95]
+            - paragraph [ref=e96]: Lead Analytics & Data Engineering Expert
+            - paragraph [ref=e97]:
+              - img [ref=e98]
+              - text: Ho Chi Minh City, Vietnam
+        - generic [ref=e101]:
+          - generic [ref=e102]: Background Neuroscience PhD + 10 years data science
+          - generic [ref=e103]: Specialization Healthcare & Clinical Analytics
+          - generic [ref=e104]: Focus MLOps, Data Engineering, Governance
+        - link "Download Full Resume" [ref=e105] [cursor=pointer]:
+          - /url: assets/resume/simon-renauld-resume.pdf
+          - text: Download Full Resume
+          - img [ref=e106]
+    - generic [ref=e109]:
+      - generic [ref=e110]:
+        - generic [ref=e111]: Career Path
+        - heading "Data Innovation Leadership" [level=2] [ref=e112]
+        - paragraph [ref=e113]: Transforming healthcare organizations through strategic data architecture and clinical analytics excellence
+      - generic [ref=e114]:
+        - generic [ref=e117]:
+          - generic [ref=e118]: 2020 — Present
+          - heading "Data Science Lead" [level=3] [ref=e119]
+          - generic [ref=e120]:
+            - img [ref=e121]
+            - text: Independent Consulting & Contract
+          - paragraph [ref=e124]: Leading enterprise data transformation initiatives for healthcare organizations, research institutions, and clinical research organizations. I design and implement comprehensive data strategies that integrate machine learning, geospatial analytics, and clinical intelligence platforms. Recent achievements include architecting a HIPAA-compliant real-time analytics platform processing 500M+ daily healthcare records and developing a multi-site clinical data integration system that accelerated research workflows by 85% while maintaining regulatory compliance.
+          - generic [ref=e125]:
+            - generic [ref=e126]: Production MLOps
+            - generic [ref=e127]: Clinical Data Platforms
+            - generic [ref=e128]: Regulatory Compliance
+            - generic [ref=e129]: Team Enablement
+        - generic [ref=e132]:
+          - generic [ref=e133]: 2015 — 2020
+          - heading "Data Scientist & Research Engineer" [level=3] [ref=e134]
+          - generic [ref=e135]:
+            - img [ref=e136]
+            - text: Healthcare & Academic Institutions
+          - paragraph [ref=e138]: Bridging micro-level analysis with macro-level systems through statistical modeling and data processing frameworks for neuroscience and clinical studies. Specialized in large-scale data engineering and reproducible research pipelines, developing expertise in scaling insights from individual datasets into robust, automated systems for healthcare applications.
+          - generic [ref=e139]:
+            - generic [ref=e140]: Statistical Modeling
+            - generic [ref=e141]: Geospatial Analytics
+            - generic [ref=e142]: Research Pipelines
+        - generic [ref=e145]:
+          - generic [ref=e146]: 2010 — 2015
+          - heading "Neuroscience Researcher" [level=3] [ref=e147]
+          - generic [ref=e148]:
+            - img [ref=e149]
+            - text: Academic Research Labs
+          - paragraph [ref=e152]: Conducted cognitive neuroscience research using EEG and fMRI technologies, developing signal processing pipelines to extract meaningful insights from complex neural data. This foundation in scientific methodology and first-principles thinking continues to inform my systematic approach to enterprise data challenges and complex system design.
+          - generic [ref=e153]:
+            - generic [ref=e154]: Signal Processing
+            - generic [ref=e155]: Experimental Design
+            - generic [ref=e156]: Academic Publications
+    - generic [ref=e158]:
+      - generic [ref=e159]:
+        - generic [ref=e160]: Case Studies
+        - heading "Enterprise Data Solutions" [level=2] [ref=e161]
+        - paragraph [ref=e162]: Production systems delivering measurable business value across healthcare and research organizations
+      - generic [ref=e163]:
+        - article [ref=e164]:
+          - generic [ref=e165]: Featured Project
+          - generic [ref=e166]:
+            - generic [ref=e167]:
+              - img [ref=e168]
+              - text: Healthcare Analytics
+            - heading "Clinical Data Integration Platform" [level=3] [ref=e170]
+          - generic [ref=e171]:
+            - generic [ref=e172]:
+              - heading "Strategic Challenge" [level=4] [ref=e173]
+              - paragraph [ref=e174]: A leading clinical research organization faced critical data fragmentation across 15+ disparate systems, resulting in 2-3 week analysis cycles and significant compliance risks. The organization required a unified data platform capable of processing heterogeneous clinical data while maintaining HIPAA compliance and enabling real-time research insights.
+            - generic [ref=e175]:
+              - heading "Strategic Solution" [level=4] [ref=e176]
+              - paragraph [ref=e177]: Designed and implemented an automated ETL pipeline using Apache Airflow for orchestration, PostgreSQL for the data warehouse, and custom Python validation frameworks for real-time quality assurance. The solution incorporated complete data lineage tracking, automated anonymization protocols, and Docker-based deployment architecture for reproducibility across environments.
+            - generic [ref=e178]:
+              - heading "Measurable Outcomes" [level=4] [ref=e179]
+              - list [ref=e180]:
+                - listitem [ref=e181]:
+                  - strong [ref=e182]: 85% processing acceleration
+                  - text: — Reduced analysis cycle time from 2-3 weeks to 2-3 days
+                - listitem [ref=e183]:
+                  - strong [ref=e184]: 100M+ records consolidated
+                  - text: — Unified data from 15 disparate sources
+                - listitem [ref=e185]:
+                  - strong [ref=e186]: Zero compliance violations
+                  - text: — Maintained 100% HIPAA compliance with automated validation
+                - listitem [ref=e187]:
+                  - strong [ref=e188]: Production-grade reliability
+                  - text: — 99.9% uptime since deployment in 2023
+            - generic [ref=e189]:
+              - heading "Technology Stack" [level=4] [ref=e190]
+              - generic [ref=e191]:
+                - generic [ref=e192]: Python
+                - generic [ref=e193]: PostgreSQL
+                - generic [ref=e194]: Apache Airflow
+                - generic [ref=e195]: Docker
+                - generic [ref=e196]: Pandas
+                - generic [ref=e197]: SQLAlchemy
+        - article [ref=e198]:
+          - generic [ref=e199]:
+            - generic [ref=e200]:
+              - img [ref=e201]
+              - text: Data Engineering
+            - heading "Enterprise ETL Automation" [level=3] [ref=e204]
+          - generic [ref=e205]:
+            - paragraph [ref=e206]: Enterprise client required 40+ hours weekly for manual reporting across 8 fragmented systems. Developed a modular ETL framework with Airflow orchestration, dbt transformations, and automated quality assurance protocols—eliminating 95% of manual effort while achieving 99.9% production uptime.
+            - generic [ref=e207]:
+              - generic [ref=e208]:
+                - generic [ref=e209]: 95%
+                - generic [ref=e210]: Manual Work Eliminated
+              - generic [ref=e211]:
+                - generic [ref=e212]: "8"
+                - generic [ref=e213]: Data Sources Automated
+              - generic [ref=e214]:
+                - generic [ref=e215]: 99.9%
+                - generic [ref=e216]: Production Uptime
+            - generic [ref=e217]:
+              - generic [ref=e218]: Airflow
+              - generic [ref=e219]: dbt
+              - generic [ref=e220]: Python
+              - generic [ref=e221]: PostgreSQL
+        - article [ref=e222]:
+          - generic [ref=e223]:
+            - generic [ref=e224]:
+              - img [ref=e225]
+              - text: Geospatial Analytics
+            - heading "Public Health Spatial Analysis" [level=3] [ref=e229]
+          - generic [ref=e230]:
+            - paragraph [ref=e231]: Public health researchers required spatial clustering analysis across 500+ locations but lacked appropriate analytical tools. Developed a PostGIS-powered platform with GeoPandas analytics, D3.js visualizations, and interactive mapping capabilities—enabling insights 5x faster than manual workflows and supporting 3 published research papers.
+            - generic [ref=e232]:
+              - generic [ref=e233]:
+                - generic [ref=e234]: 500+
+                - generic [ref=e235]: Locations Analyzed
+              - generic [ref=e236]:
+                - generic [ref=e237]: 5x
+                - generic [ref=e238]: Faster Analysis
+              - generic [ref=e239]:
+                - generic [ref=e240]: "3"
+                - generic [ref=e241]: Research Papers
+            - generic [ref=e242]:
+              - generic [ref=e243]: PostGIS
+              - generic [ref=e244]: GeoPandas
+              - generic [ref=e245]: D3.js
+              - generic [ref=e246]: Python
+    - generic [ref=e248]:
+      - generic [ref=e249]:
+        - generic [ref=e250]: Technical Capabilities
+        - heading "Comprehensive Data Science Capabilities" [level=2] [ref=e251]
+        - paragraph [ref=e252]: End-to-end data solutions from strategic architecture to production deployment
+      - generic [ref=e253]:
+        - generic [ref=e254]:
+          - generic [ref=e255]: "01"
+          - img [ref=e257]
+          - heading "Machine Learning Operations & Production Systems" [level=3] [ref=e259]
+          - paragraph [ref=e260]: Enterprise-grade ML platforms featuring comprehensive monitoring, automated feature engineering, and robust model governance frameworks. I architect systems that detect data drift, track model performance metrics, and enable scalable, reproducible machine learning workflows.
+          - list [ref=e261]:
+            - listitem [ref=e262]: → Model training & evaluation frameworks
+            - listitem [ref=e263]: → A/B testing and experiment tracking
+            - listitem [ref=e264]: → ML monitoring & alerting systems
+            - listitem [ref=e265]: → Feature engineering pipelines
+          - generic [ref=e266]:
+            - generic [ref=e267]: scikit-learn
+            - generic [ref=e268]: MLflow
+            - generic [ref=e269]: Kubeflow
+            - generic [ref=e270]: DVC
+        - generic [ref=e271]:
+          - generic [ref=e272]: "02"
+          - img [ref=e274]
+          - heading "Enterprise Data Engineering" [level=3] [ref=e277]
+          - paragraph [ref=e278]: Scalable data pipelines with comprehensive quality assurance, lineage tracking, and automated validation protocols. Every system I architect prioritizes reliability, observability, and maintainability for enterprise-scale operations.
+          - list [ref=e279]:
+            - listitem [ref=e280]: → ETL/ELT pipeline architecture
+            - listitem [ref=e281]: → Data warehouse design & optimization
+            - listitem [ref=e282]: → Stream processing & real-time analytics
+            - listitem [ref=e283]: → Data quality & validation frameworks
+          - generic [ref=e284]:
+            - generic [ref=e285]: Airflow
+            - generic [ref=e286]: Spark
+            - generic [ref=e287]: dbt
+            - generic [ref=e288]: Kafka
+        - generic [ref=e289]:
+          - generic [ref=e290]: "03"
+          - img [ref=e292]
+          - heading "Data Governance & Regulatory Compliance" [level=3] [ref=e295]
+          - paragraph [ref=e296]: HIPAA and GDPR-compliant systems with complete audit trails, data lineage, and access controls. I understand that in regulated industries, governance is not optional—it is fundamental to operational success and regulatory compliance.
+          - list [ref=e297]:
+            - listitem [ref=e298]: → Data lineage & catalog implementation
+            - listitem [ref=e299]: → Compliance automation & validation
+            - listitem [ref=e300]: → Access control & audit logging
+            - listitem [ref=e301]: → Data anonymization & privacy
+          - generic [ref=e302]:
+            - generic [ref=e303]: Great Expectations
+            - generic [ref=e304]: OpenMetadata
+            - generic [ref=e305]: Vault
+        - generic [ref=e306]:
+          - generic [ref=e307]: "04"
+          - img [ref=e309]
+          - heading "Advanced Analytics & Data Visualization" [level=3] [ref=e314]
+          - paragraph [ref=e315]: Strategic dashboards and reports that drive executive decision-making. I focus on data storytelling—transforming complex insights into accessible, actionable intelligence for both technical and business stakeholders.
+          - list [ref=e316]:
+            - listitem [ref=e317]: → Interactive dashboard development
+            - listitem [ref=e318]: → Statistical analysis & reporting
+            - listitem [ref=e319]: → Geospatial visualization
+            - listitem [ref=e320]: → Executive-level data storytelling
+          - generic [ref=e321]:
+            - generic [ref=e322]: D3.js
+            - generic [ref=e323]: Plotly
+            - generic [ref=e324]: Grafana
+            - generic [ref=e325]: Tableau
+      - generic [ref=e326]:
+        - heading "Core Technologies" [level=3] [ref=e327]
+        - generic [ref=e328]:
+          - generic [ref=e329]:
+            - heading "Languages" [level=4] [ref=e330]
+            - paragraph [ref=e331]: Python, SQL, R, JavaScript, Bash
+          - generic [ref=e332]:
+            - heading "Infrastructure" [level=4] [ref=e333]
+            - paragraph [ref=e334]: Docker, Kubernetes, AWS, Azure, CI/CD
+          - generic [ref=e335]:
+            - heading "Databases" [level=4] [ref=e336]
+            - paragraph [ref=e337]: PostgreSQL, MySQL, MongoDB, Redis, PostGIS
+          - generic [ref=e338]:
+            - heading "Frameworks" [level=4] [ref=e339]
+            - paragraph [ref=e340]: FastAPI, Flask, Pandas, NumPy, SciPy
+    - generic [ref=e342]:
+      - generic [ref=e343]:
+        - generic [ref=e344]: Get In Touch
+        - heading "Strategic Data Partnership" [level=2] [ref=e345]
+        - paragraph [ref=e346]: Partnering with healthcare organizations and research institutions to transform data challenges into competitive advantages
+      - generic [ref=e347]:
+        - generic [ref=e348]:
+          - generic [ref=e349]:
+            - heading "Strategic Data Consulting" [level=3] [ref=e350]
+            - paragraph [ref=e351]: I partner with healthcare organizations, research institutions, and enterprise clients to architect comprehensive data strategies that drive measurable business outcomes. My approach combines deep technical expertise with strategic business acumen to deliver production-ready solutions that scale with organizational growth and regulatory requirements.
+          - generic [ref=e352]:
+            - generic [ref=e353]:
+              - img [ref=e355]
+              - heading "Strategic Consulting" [level=4] [ref=e357]
+              - paragraph [ref=e358]: Data strategy development, ML roadmaps, technical architecture design, and organizational enablement
+            - generic [ref=e359]:
+              - img [ref=e361]
+              - heading "Technical Leadership" [level=4] [ref=e365]
+              - paragraph [ref=e366]: Fractional CTO/Head of Data roles, technical advisory services, and interim leadership positions
+            - generic [ref=e367]:
+              - img [ref=e369]
+              - heading "Project Delivery" [level=4] [ref=e372]
+              - paragraph [ref=e373]: End-to-end implementation of data platforms, ML systems, and analytics solutions
+          - generic [ref=e374]:
+            - generic [ref=e375]:
+              - img [ref=e377]
+              - generic [ref=e380]:
+                - heading "Email" [level=4] [ref=e381]
+                - link "sn.renauld@gmail.com" [ref=e382] [cursor=pointer]:
+                  - /url: mailto:sn.renauld@gmail.com
+            - generic [ref=e383]:
+              - img [ref=e385]
+              - generic [ref=e388]:
+                - heading "Availability" [level=4] [ref=e389]
+                - paragraph [ref=e390]: Currently accepting select projects
+            - generic [ref=e392]:
+              - img [ref=e394]
+              - generic [ref=e397]:
+                - heading "Location" [level=4] [ref=e398]
+                - paragraph [ref=e399]: Remote (EU Timezone)
+        - form "Contact form" [ref=e400]:
+          - generic [ref=e401]:
+            - generic [ref=e402]: Your Name
+            - textbox "Your Name" [ref=e403]:
+              - /placeholder: John Doe
+          - generic [ref=e404]:
+            - generic [ref=e405]: Email Address
+            - textbox "Email Address" [ref=e406]:
+              - /placeholder: john@company.com
+          - generic [ref=e407]:
+            - generic [ref=e408]: Company / Organization
+            - textbox "Company / Organization" [ref=e409]:
+              - /placeholder: Acme Inc.
+          - generic [ref=e410]:
+            - generic [ref=e411]: How Can I Help?
+            - textbox "How Can I Help?" [ref=e412]:
+              - /placeholder: Tell me about your data challenge...
+          - button "Send Message" [ref=e413]:
+            - generic [ref=e414]: Send Message
+            - img [ref=e415]
+          - paragraph [ref=e417]: I typically respond within 24 hours. All conversations are confidential.
+          - status [ref=e418]
+  - contentinfo [ref=e419]:
+    - generic [ref=e420]:
+      - generic [ref=e421]:
+        - generic [ref=e422]:
+          - generic [ref=e423]:
+            - img [ref=e424]
+            - generic [ref=e427]: Simon Renauld
+          - paragraph [ref=e428]: Empowering healthcare organizations with strategic data intelligence through enterprise-grade machine learning systems, clinical analytics platforms, and comprehensive data governance frameworks.
+        - generic [ref=e429]:
+          - heading "Navigation" [level=4] [ref=e430]
+          - list [ref=e431]:
+            - listitem [ref=e432]:
+              - link "About" [ref=e433] [cursor=pointer]:
+                - /url: "#about"
+            - listitem [ref=e434]:
+              - link "Experience" [ref=e435] [cursor=pointer]:
+                - /url: "#experience"
+            - listitem [ref=e436]:
+              - link "Projects" [ref=e437] [cursor=pointer]:
+                - /url: "#projects"
+            - listitem [ref=e438]:
+              - link "Expertise" [ref=e439] [cursor=pointer]:
+                - /url: "#expertise"
+            - listitem [ref=e440]:
+              - link "Contact" [ref=e441] [cursor=pointer]:
+                - /url: "#contact"
+        - generic [ref=e442]:
+          - heading "Resources" [level=4] [ref=e443]
+          - list [ref=e444]:
+            - listitem [ref=e445]:
+              - link "Download Resume" [ref=e446] [cursor=pointer]:
+                - /url: assets/resume/simon-renauld-resume.pdf
+            - listitem [ref=e447]:
+              - link "Training Courses" [ref=e448] [cursor=pointer]:
+                - /url: https://moodle.simondatalab.de/my/courses.php
+            - listitem [ref=e449]:
+              - link "3D Visualization Demo" [ref=e450] [cursor=pointer]:
+                - /url: /cosmic-journey.html
+        - generic [ref=e451]:
+          - heading "Connect" [level=4] [ref=e452]
+          - paragraph [ref=e453]:
+            - link "sn.renauld@gmail.com" [ref=e454] [cursor=pointer]:
+              - /url: mailto:sn.renauld@gmail.com
+          - paragraph [ref=e455]: Available for select projects
+      - generic [ref=e457]:
+        - paragraph [ref=e458]: © 2025 Simon Renauld. All rights reserved.
+        - paragraph [ref=e459]: Built with precision, deployed with care.
+```

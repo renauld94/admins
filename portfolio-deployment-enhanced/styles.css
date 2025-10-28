@@ -196,24 +196,25 @@ body {
 
 .mobile-menu-btn {
   display: none;
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   border: 0;
-  background: transparent;
+  background: linear-gradient(180deg, rgba(14,165,233,0.12), rgba(139,92,246,0.06));
   cursor: pointer;
   position: relative;
   z-index: 2001;
-  transition: transform 0.3s ease;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
   padding: 8px;
-  flex-direction: column;
-  justify-content: center;
+  display: inline-flex;
   align-items: center;
-  gap: 7px;
+  justify-content: center;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.08);
 }
 
 @media (max-width: 992px) {
   .mobile-menu-btn {
-    display: flex;
+    display: inline-flex;
   }
   
   .desktop-nav {
@@ -225,11 +226,20 @@ body {
   display: block; 
   width: 28px;
   height: 4px; 
-  background: #ffffff; /* use white for strong contrast on mobile */
+  /* Use brand color for better contrast on light backgrounds; dark-mode rule below keeps white */
+  background: var(--primary-dark);
   border-radius: 3px; 
   transition: all 0.18s ease;
   box-shadow: 0 1px 6px rgba(2,6,23,0.25);
 }
+
+/* Make the hamburger lines slightly thinner and add spacing for visual rhythm */
+.mobile-menu-btn svg { display: block; width: 22px; height: 22px; color: var(--primary-dark); }
+.mobile-menu-btn:focus { box-shadow: 0 8px 24px rgba(14,165,233,0.16); transform: translateY(-1px); outline: none; }
+.mobile-menu-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(14,165,233,0.14); }
+
+/* When active, give stronger accent and subtle backdrop */
+.mobile-menu-btn.active { background: linear-gradient(180deg, rgba(14,165,233,0.16), rgba(139,92,246,0.08)); box-shadow: 0 14px 36px rgba(14,165,233,0.12); }
 
 /* Hamburger animation when active */
 .mobile-menu-btn.active span:nth-child(1) { transform: rotate(45deg) translate(7px, 7px); }
@@ -253,6 +263,45 @@ body {
   padding-top: 80px;
   visibility: hidden;
 }
+
+/* New wrapper that mirrors .mobile-nav behavior for backward compatibility */
+#mobile-navigation.mobile-navigation {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(340px, 90vw);
+  height: 100vh;
+  background: #f8fafc;
+  box-shadow: -4px 0 24px rgba(14,165,233,0.12);
+  z-index: 2000;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding-top: 80px;
+  visibility: hidden;
+}
+
+#mobile-navigation.mobile-navigation.active {
+  transform: translateX(0);
+  visibility: visible;
+}
+
+/* Close button inside mobile nav */
+.mobile-nav-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: 0;
+  font-size: 1.8rem;
+  line-height: 1;
+  padding: 6px 10px;
+  cursor: pointer;
+  color: var(--primary-dark);
+  z-index: 2100;
+}
+
+.mobile-nav-close:focus { outline: 2px solid rgba(14,165,233,0.18); border-radius: 8px; }
 
 .mobile-nav.active { 
   transform: translateX(0);
@@ -582,6 +631,25 @@ body {
   margin-top: 8px;
   opacity: 0.6;
 }
+
+/* Visualization load CTA for mobile fallback */
+.viz-fallback { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.75rem; padding:1rem; }
+.viz-load-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  background: var(--primary);
+  color: #fff;
+  border: 0;
+  border-radius: 10px;
+  font-weight: 700;
+  box-shadow: 0 8px 20px rgba(14,165,233,0.18);
+  cursor: pointer;
+}
+.viz-load-cta:active { transform: translateY(1px); }
+.viz-cta-note { font-size:0.9rem; color: rgba(15,23,42,0.7); }
 .scroll-indicator { display: grid; place-items: center; margin-top: 1rem; }
 .scroll-arrow { width: 22px; height: 22px; border-bottom: 2px solid rgba(255,255,255,0.4); border-right: 2px solid rgba(255,255,255,0.4); transform: rotate(45deg); animation: downPulse 1.8s infinite; }
 @keyframes downPulse { 0% { opacity: 0; transform: translateY(-6px) rotate(45deg); } 40% { opacity: 1; } 100% { opacity: 0; transform: translateY(6px) rotate(45deg); } }
@@ -1293,6 +1361,62 @@ body {
   .mobile-nav {
     width: 90vw;
   }
+}
+
+/* Small/mobile usability tweaks */
+/* Prevent body scrolling while mobile nav is open; JS should toggle `body.no-scroll` */
+body.no-scroll {
+  overflow: hidden;
+  height: 100vh;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Make hamburger easier to tap on small screens and remove tap-highlight */
+.mobile-menu-btn {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+@media (max-width: 480px) {
+  /* Reduce heavy hero visualization height on very small screens to improve perceived performance */
+  .hero-visual .hero-viz,
+  #hero-visualization {
+    height: clamp(220px, 40vh, 320px);
+  }
+
+  /* Increase tappable area for hamburger and ensure nav occupies full width */
+  .mobile-menu-btn {
+    width: 52px;
+    height: 52px;
+    padding: 10px;
+    border-radius: 12px;
+  }
+
+  .mobile-nav, #mobile-navigation.mobile-navigation {
+    width: 100vw;
+    max-width: 100%;
+    right: 0;
+    left: 0;
+  }
+}
+
+/* Ensure mobile button is explicitly hidden on wide screens (fixes cases where multiple
+   duplicated CSS rules or specificity cause it to appear on desktop). */
+@media (min-width: 993px) {
+  .mobile-menu-btn { display: none !important; visibility: visible; }
+}
+
+/* Force mobile navigation link color/contrast on small screens to avoid white-on-white
+   or low-contrast cases introduced by other rules. */
+@media (max-width: 992px) {
+  .mobile-nav .nav-link,
+  #mobile-navigation .nav-link,
+  .mobile-dropdown-toggle {
+    color: #0f172a !important;
+  }
+  /* Ensure backdrop covers viewport and links are visible above it */
+  .mobile-nav { background: #f8fafc !important; }
+  .mobile-nav-backdrop { background: rgba(0,0,0,0.6) !important; }
 }
 
 /* Fix project card text colors */

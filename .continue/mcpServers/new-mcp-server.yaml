@@ -1,0 +1,104 @@
+name: New MCP server
+version: 0.0.1
+schema: v1
+mcpServers:
+  # Replace the example below with the correct entry for the MCP server you want
+  # to launch/connect to. The original placeholder (<your-mcp-server>) will cause
+  # an immediate failure because it is not an executable or a package name.
+
+  # Example A: stdio MCP server started with npx (local JS/Node MCP server)
+  # - ensure the package is installed or available to npx and replace
+  #   "example-mcp-server" with the real package name.
+  - name: Local stdio MCP server (example)
+    type: stdio
+    command: npx
+    args:
+      - -y
+      - example-mcp-server
+    env: {}
+
+  # Example B: stdio MCP server using a direct executable (preferred when
+  # you have a known command or script path)
+  # - replace `/usr/bin/node` and `server.js` with your executable path and
+  #   arguments if needed.
+  - name: Local node MCP server (example)
+    type: stdio
+    command: /usr/bin/node
+    args:
+      - /path/to/server.js
+      - --some-flag
+    env: {}
+
+  # Example C: SSE MCP server (connect to an HTTP SSE endpoint)
+  # - for SSE the client will connect to the provided URL instead of spawning
+  #   a process. Use this when the MCP server is already running and exposes
+  #   an SSE endpoint.
+  - name: Remote SSE MCP server (example)
+    type: sse
+    url: http://127.0.0.1:8080/mcp/sse
+    env: {}
+
+  # ---- Quick checklist ----
+  # - Remove the placeholder text (angle brackets) and replace with a real
+  #   package name, executable path, or URL.
+  # - Test the command manually in a terminal first (run the full command and
+  #   confirm the MCP server process stays running and does not exit).
+  # - If using `npx`, ensure Node/npm is installed and the package name is
+  #   correct. Example: `npx @your-org/your-mcp-server`.
+  # - For `sse` type, ensure the target URL is reachable and returns a server
+  #   sent events stream.
+
+  # ---- SSH + proxy-jump examples (VM 159 / ubuntuai-1000110) ----
+  # These examples show two approaches to make a remote MCP server available
+  # to the MCP manager running locally:
+  # 1) Spawn an `ssh` process that executes a remote MCP server command via
+  #    the proxy jump. This requires non-interactive SSH (key or agent).
+  # 2) Create an SSH tunnel that forwards the remote localhost port to local
+  #    machine and then use an `sse` or http entry that points to the
+  #    forwarded localhost port.
+
+  # Example 1: stdio MCP launched remotely over ssh (wrapper)
+  # - Replace `/usr/bin/node` and `/path/to/server.js` with the actual remote
+  #   executable that starts the MCP server on VM159. The manager will spawn
+  #   `ssh` locally which will run the remote process over the jump host.
+  - name: Remote MCP via SSH (spawn remote process)
+    type: stdio
+    command: ssh
+    args:
+      - -J
+      - root@136.243.155.166:2222
+      - simonadmin@10.0.0.110
+      - --
+      - /usr/bin/node
+      - /path/to/mcp/server.js
+      - --port
+      - "11434"
+    # Notes: this requires you to have SSH keys set up so ssh does not prompt
+    # for a password. If ssh prompts the MCP manager will fail with "Connection
+    # closed".
+
+  # Example 2: create an SSH tunnel and use SSE/http locally
+  # - Run this locally (on the machine hosting the MCP manager) to forward
+  #   the remote localhost:11434 to your local machine. After running the
+  #   tunnel command, set an `sse` entry pointing to http://127.0.0.1:11434
+  #   or the appropriate HTTP API path.
+  # Local command to run (interactive / on your machine):
+  # ssh -f -N -J root@136.243.155.166:2222 -L 11434:127.0.0.1:11434 simonadmin@10.0.0.110
+
+  # SSE entry that will work after the tunnel is created
+  - name: Remote MCP via SSH tunnel (SSE)
+    type: sse
+    # The tunnel you created forwards the remote service to local port 11434.
+    # The MCP manager will connect to the SSE stream exposed by the remote
+    # server. We set the URL to the SSE path below. If your server uses a
+    # different SSE endpoint, replace `/mcp/sse` with the correct path.
+    url: http://127.0.0.1:11434/mcp/sse
+
+  # Troubleshooting tips for SSH approach
+  # - If you see a password prompt when using any of the above, configure
+  #   SSH key-based auth or an SSH agent. Example to create a key and copy it:
+  #     ssh-keygen -t ed25519 -C "mcp-agent"
+  #     ssh-copy-id -J root@136.243.155.166:2222 simonadmin@10.0.0.110
+  # - To inspect the remote service without the manager, run:
+  #     ssh -J root@136.243.155.166:2222 simonadmin@10.0.0.110 "curl -s http://localhost:11434/api/tags | head -20"
+

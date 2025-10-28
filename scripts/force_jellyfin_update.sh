@@ -360,3 +360,4 @@ echo "4. Set up EPG guide provider"
 echo ""
 echo "📺 Manual setup is recommended due to API limitations!"
 
+

@@ -387,3 +387,4 @@ echo "4. Set up EPG for better channel information"
 echo ""
 echo "📺 Your 10,000+ channels are now smartly organized!"
 
+

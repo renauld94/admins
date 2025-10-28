@@ -1123,37 +1123,74 @@
             epicScript.src = './epic-neural-cosmos-viz.js';
             epicScript.onload = () => {
                 console.log('Epic Neural Cosmos Viz loaded');
-                
-                // Initialize epic visualization
-                if (window.EpicNeuralToCosmosViz) {
-                    try {
-                        const epicViz = new window.EpicNeuralToCosmosViz('hero-visualization', {
-                            autoTransition: true,
-                            transitionDuration: 20000, // 20 seconds per phase for portfolio
-                            particleCount: 2500,
-                            enableInteraction: true
-                        });
 
-                        window.epicNeuralViz = epicViz;
-                        
-                        // Emit success event
-                        window.__HERO_EVENT_BUS__?.emit('hero:mounted', {
-                            ts: Date.now(),
-                            variant: 'epic-neural-cosmos-viz',
-                            mobile: false,
-                            stats: epicViz.getStats()
-                        });
-                        
-                        console.log('Epic Neural to Cosmos Visualization initialized successfully');
-                        return; // Success, don't load fallbacks
-                        
-                    } catch (error) {
-                        console.warn('Epic visualization failed to initialize:', error);
+                // Defer heavy initialization to idle time so we don't block the page load handler.
+                const init = () => {
+                    try {
+                        // Initialize epic visualization
+                        if (window.EpicNeuralToCosmosViz) {
+                            try {
+                                // Create the instance with deferred initialization so heavy setup
+                                // (phase creation) can be spread across idle frames instead of blocking
+                                const epicViz = new window.EpicNeuralToCosmosViz('hero-visualization', {
+                                    autoTransition: true,
+                                    transitionDuration: 20000, // 20 seconds per phase for portfolio
+                                    particleCount: 2500,
+                                    enableInteraction: true,
+                                    deferInit: true
+                                });
+
+                                window.epicNeuralViz = epicViz;
+
+                                // Emit initial mounted event (stats may be minimal until deferred init completes)
+                                window.__HERO_EVENT_BUS__?.emit('hero:mounted', {
+                                    ts: Date.now(),
+                                    variant: 'epic-neural-cosmos-viz-deferred',
+                                    mobile: false,
+                                    stats: epicViz.getStats()
+                                });
+
+                                // Schedule the heavy initialization to run after this idle handler finishes.
+                                // We schedule via setTimeout to avoid doing the heavy work inside the same
+                                // requestIdleCallback callback that triggered this init — runDeferredInit
+                                // itself will spread its work across further idle callbacks.
+                                setTimeout(() => {
+                                    try {
+                                        if (window.epicNeuralViz && typeof window.epicNeuralViz.runDeferredInit === 'function') {
+                                            if (typeof requestIdleCallback === 'function') {
+                                                requestIdleCallback(() => window.epicNeuralViz.runDeferredInit(), { timeout: 2000 });
+                                            } else {
+                                                // fallback if requestIdleCallback is not available
+                                                setTimeout(() => window.epicNeuralViz.runDeferredInit(), 120);
+                                            }
+                                        }
+                                    } catch (e) {
+                                        console.warn('Scheduling deferred epic init failed', e);
+                                    }
+                                }, 50);
+
+                                console.log('Epic Neural to Cosmos Visualization instantiated (deferred init scheduled)');
+                                return; // Success, don't load fallbacks
+
+                            } catch (error) {
+                                console.warn('Epic visualization failed to initialize:', error);
+                                loadSimpleVisualization();
+                            }
+                        } else {
+                            console.warn('Epic visualization class not found');
+                            loadSimpleVisualization();
+                        }
+                    } catch (e) {
+                        console.warn('Deferred epic init failed', e);
                         loadSimpleVisualization();
                     }
+                };
+
+                if (typeof requestIdleCallback === 'function') {
+                    requestIdleCallback(init, { timeout: 2000 });
                 } else {
-                    console.warn('Epic visualization class not found');
-                    loadSimpleVisualization();
+                    // Fallback, small delay to yield to load handler
+                    setTimeout(init, 120);
                 }
             };
             epicScript.onerror = (err) => {

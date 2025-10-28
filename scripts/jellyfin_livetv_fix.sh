@@ -345,3 +345,4 @@ echo "4. Configure EPG settings"
 echo ""
 echo "📺 Your Jellyfin Live TV setup is now properly organized!"
 
+
