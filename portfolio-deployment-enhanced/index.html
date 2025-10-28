@@ -185,6 +185,8 @@
                 <div class="hero-actions">
                     <a href="https://www.simondatalab.de/infrastructure-diagram.html?full=1" target="_blank" rel="noopener noreferrer" class="btn-primary">View Architecture</a>
                     <a href="assets/resume/simon-renauld-resume.pdf" class="btn-secondary" download rel="noopener noreferrer">Download Resume</a>
+                    <!-- Mobile / opt-in CTA to load advanced visualization on demand -->
+                    <button id="load-advanced-viz-cta" class="viz-load-cta" aria-pressed="false" title="Load advanced visualization">Load advanced visualization</button>
                 </div>
                 <ul class="impact-metrics" aria-label="Key impact metrics">
                     <li><strong>500M+</strong><span>Data Records Processed</span></li>
@@ -1116,6 +1118,12 @@
         });
         
         function loadNeuralVisualization() {
+            // Avoid loading heavy visualizations on small/mobile viewports.
+            if (window.__IS_MOBILE_PORTFOLIO__) {
+                console.log('[NEURAL GEOSERVER] Mobile viewport detected — loading simple fallback visualization instead of heavy assets.');
+                try { loadSimpleVisualization(); } catch (e) { console.warn('Simple visualization fallback failed', e); }
+                return;
+            }
             console.log('Loading Epic Neural Visualization...');
             
             // Try to load the Epic Neural to Cosmos visualization first

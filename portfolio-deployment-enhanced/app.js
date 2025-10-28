@@ -1,6 +1,21 @@
 // NEURO DATALAB PORTFOLIO - PROFESSIONAL JAVASCRIPT 2025
 
 // ANIMATIONS
+// Device detection helper (used to gate heavy visualizations on small viewports)
+(function(){
+    try {
+        const isMobile = !!(window.matchMedia && window.matchMedia('(max-width:720px)').matches);
+        window.__IS_MOBILE_PORTFOLIO__ = isMobile;
+        // Expose a small convenience performance object
+        window.heroPerformance = window.heroPerformance || {};
+        if (typeof window.heroPerformance.shouldLoadR3F === 'undefined') {
+            // default to true on non-mobile, false on mobile to avoid heavy loads
+            window.heroPerformance.shouldLoadR3F = !isMobile;
+            window.heroPerformance.deviceTier = isMobile ? 'mobile' : 'desktop';
+        }
+    } catch (e) { /* noop */ }
+})();
+
 function initializeAnimations() {
     // Check if GSAP is available
     if (typeof gsap === 'undefined') {
@@ -220,6 +235,30 @@ function closeMobileMenu() {
             document.body.style.position = '';
             document.body.style.width = '';
         }
+        // remove focus trap listener if present (legacy) and deactivate library trap if created
+        try {
+            if (window.__mobileNavFocusTrapHandler) {
+                document.removeEventListener('keydown', window.__mobileNavFocusTrapHandler, true);
+                window.__mobileNavFocusTrapHandler = null;
+            }
+            if (window.__mobileFocusTrap) {
+                try { window.__mobileFocusTrap.deactivate({ returnFocus: true }); } catch (e) { /* noop */ }
+                window.__mobileFocusTrap = null;
+            }
+
+            if (mobileNav) {
+                mobileNav.removeAttribute('role');
+                mobileNav.removeAttribute('aria-modal');
+            }
+            // restore main content accessibility
+            try {
+                const main = document.querySelector('main');
+                if (main) {
+                    main.removeAttribute('aria-hidden');
+                    if ('inert' in HTMLElement.prototype) main.inert = false;
+                }
+            } catch (e) { /* noop */ }
+        } catch (e) { /* noop */ }
     }
 }
 
@@ -241,11 +280,70 @@ function toggleMobileMenu() {
             if (backdrop) backdrop.classList.add('active');
             mobileMenuBtn.setAttribute('aria-expanded', 'true');
             mobileNav.setAttribute('aria-hidden', 'false');
+            // mark the mobile nav as a dialog for assistive tech and trap focus
+            try {
+                mobileNav.setAttribute('role', 'dialog');
+                mobileNav.setAttribute('aria-modal', 'true');
+            } catch (e) { /* noop */ }
             try { document.body.classList.add('no-scroll'); } catch(e) { document.body.style.overflow = 'hidden'; }
+
+            // hide main content from assistive tech while mobile nav is open
+            try {
+                const main = document.querySelector('main');
+                if (main) {
+                    main.setAttribute('aria-hidden', 'true');
+                    if ('inert' in HTMLElement.prototype) main.inert = true;
+                }
+            } catch (e) { /* noop */ }
 
             // Move focus into the mobile nav for keyboard users
             const firstLink = mobileNav.querySelector('.nav-link, button, [tabindex]');
             if (firstLink && typeof firstLink.focus === 'function') firstLink.focus({ preventScroll: true });
+            // Attempt to use the small focus-trap library if available; otherwise the
+            // lightweight keyboard guard remains in place (added earlier).
+            try {
+                const ensureFocusTrapLib = () => {
+                    return new Promise((resolve) => {
+                        if (typeof window.createFocusTrap === 'function') return resolve(window.createFocusTrap);
+                        if (document.querySelector('script[data-focus-trap-loaded]')) {
+                            // Script present but API not yet available — poll briefly
+                            const start = Date.now();
+                            const poll = setInterval(() => {
+                                if (typeof window.createFocusTrap === 'function' || Date.now() - start > 3000) {
+                                    clearInterval(poll);
+                                    return resolve(window.createFocusTrap);
+                                }
+                            }, 80);
+                            return;
+                        }
+
+                        const s = document.createElement('script');
+                        s.src = 'https://unpkg.com/focus-trap@6.11.4/dist/focus-trap.umd.js';
+                        s.async = true;
+                        s.setAttribute('data-focus-trap-loaded', '1');
+                        s.onload = () => { resolve(window.createFocusTrap); };
+                        s.onerror = () => { resolve(null); };
+                        document.head.appendChild(s);
+                    });
+                };
+
+                ensureFocusTrapLib().then((createFocusTrap) => {
+                    try {
+                        if (createFocusTrap && !window.__mobileFocusTrap) {
+                            const trap = createFocusTrap(mobileNav, {
+                                initialFocus: mobileNav.querySelector('.nav-link, button, [tabindex]') || mobileMenuBtn,
+                                escapeDeactivates: true,
+                                clickOutsideDeactivates: true,
+                                returnFocusOnDeactivate: true
+                            });
+                            window.__mobileFocusTrap = trap;
+                            try { trap.activate(); } catch (e) { /* noop */ }
+                        } else if (window.__mobileFocusTrap) {
+                            try { window.__mobileFocusTrap.activate(); } catch (e) { /* noop */ }
+                        }
+                    } catch (e) { /* noop */ }
+                }).catch(() => { /* noop */ });
+            } catch (e) { /* noop */ }
         } else {
             // Use existing closeMobileMenu helper to ensure consistent cleanup
             closeMobileMenu();
@@ -1327,6 +1425,14 @@ function deferEpicNeuralLoader() {
         const loadingContainer = document.querySelector('.epic-neural-loading');
         if (!loadingContainer) return; // nothing to do
 
+        // Do not auto-load the heavy epic neural loader on mobile devices to preserve
+        // first-contentful-paint and avoid battery/network impact. Developers can
+        // still trigger loading manually or via an explicit CTA on mobile.
+        if (window.__IS_MOBILE_PORTFOLIO__) {
+            console.log('[deferEpicNeuralLoader] Mobile detected - skipping automatic epic loader.');
+            return;
+        }
+
         const loadScript = () => {
             if (document.querySelector('script[data-epic-neural-loaded]')) return;
             const s = document.createElement('script');
@@ -1364,6 +1470,75 @@ function deferEpicNeuralLoader() {
 
 // Kick off deferred loader
 deferEpicNeuralLoader();
+
+// On-demand loader for advanced visualization (exposed globally)
+window.loadAdvancedVisualization = function loadAdvancedVisualization() {
+    try {
+        // If the heavy epic loader is already present, call the visualizer entry
+        if (document.querySelector('script[data-epic-neural-loaded]')) {
+            console.log('[loadAdvancedVisualization] Epic loader already present — attempting to initialize visualization');
+            if (typeof window.loadNeuralVisualization === 'function') {
+                window.loadNeuralVisualization();
+            }
+            return Promise.resolve();
+        }
+
+        // Analytics hook: emit event when user explicitly requests the advanced viz
+        try {
+            window.dispatchEvent(new CustomEvent('advancedViz:requested', { detail: { ts: Date.now() } }));
+            console.log('[Analytics] advancedViz requested');
+        } catch (e) { /* noop */ }
+
+        return new Promise((resolve, reject) => {
+            const s = document.createElement('script');
+            s.src = 'epic-neural-loading-enhanced.js';
+            s.async = true;
+            s.setAttribute('data-epic-neural-loaded', '1');
+            s.onload = () => {
+                console.log('[loadAdvancedVisualization] Epic loader script loaded');
+                try {
+                    if (typeof window.loadNeuralVisualization === 'function') {
+                        window.loadNeuralVisualization();
+                        try {
+                            window.dispatchEvent(new CustomEvent('advancedViz:loaded', { detail: { ts: Date.now() } }));
+                            console.log('[Analytics] advancedViz loaded');
+                        } catch (e) { /* noop */ }
+                    }
+                } catch (e) { console.warn('Error while initializing loaded visualization', e); }
+                resolve();
+            };
+            s.onerror = (err) => {
+                console.warn('[loadAdvancedVisualization] Failed to load epic loader', err);
+                reject(err);
+            };
+            document.head.appendChild(s);
+        });
+    } catch (e) {
+        console.warn('loadAdvancedVisualization failed', e);
+        return Promise.reject(e);
+    }
+};
+
+// Wire the hero CTA (if present) to the on-demand loader
+document.addEventListener('DOMContentLoaded', () => {
+    try {
+        const cta = document.getElementById('load-advanced-viz-cta');
+        if (!cta) return;
+        cta.addEventListener('click', (e) => {
+            e.preventDefault();
+            cta.setAttribute('aria-pressed', 'true');
+            cta.textContent = 'Loading visualization...';
+            // Provide visual feedback and attempt to load
+            window.loadAdvancedVisualization().then(() => {
+                cta.textContent = 'Visualization loaded';
+            }).catch(() => {
+                cta.textContent = 'Load failed — try again';
+                setTimeout(() => { cta.textContent = 'Load advanced visualization'; cta.setAttribute('aria-pressed','false'); }, 2500);
+            });
+        }, { passive: false });
+    } catch (e) { /* noop */ }
+});
+
 
 // Attach mobile nav listeners (safe, idempotent)
 try {
