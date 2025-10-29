@@ -100,7 +100,46 @@ Agent Workflow
    - Monitor agent logs and status as needed.
 
 
-Optional Improvements
+Agent Setup & Testing
+---------------------
+
+1. Example agent config (YAML):
+
+  ```yaml
+  name: ExampleAgent
+  version: 0.0.1
+  type: python
+  entry: example_agent.py
+  connect_url: http://127.0.0.1:11434/mcp/sse
+  ```
+
+2. Example agent script (Python):
+
+  ```python
+  import requests
+  import sseclient
+
+  SSE_URL = "http://127.0.0.1:11434/mcp/sse"
+
+  def main():
+     print(f"Connecting to {SSE_URL}...")
+     response = requests.get(SSE_URL, stream=True)
+     client = sseclient.SSEClient(response)
+     for event in client.events():
+        print(f"Received event: {event.data}")
+
+  if __name__ == "__main__":
+     main()
+  ```
+
+3. To run and test the agent:
+
+  ```bash
+  pip install requests sseclient
+  python .continue/agents/example_agent.py
+  ```
+
+  You should see received events printed from the MCP SSE endpoint.
 ---------------------
 
 - Add log rotation for debug logs (move to `~/.local/state/` and rotate daily or by size).
