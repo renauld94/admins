@@ -21,38 +21,35 @@ class EpicNeuralToCosmosViz {
         this.renderer = null;
         this.controls = null;
         this.clock = new THREE.Clock();
+        // Phase containers (ensure defined before deferred init calls)
+        this.phases = {
+            neuron: {},
+            brain: {},
+            network: {},
+            cosmos: {}
+        };
+        // Animation/runtime bookkeeping
+        this.frameTimeSum = 0;
+        this.frameSamples = 0;
+        this.frameCount = 0;
+        this.dynamicQuality = { pixelRatioAdjusted: false, step: 0 };
+        this.animationId = null;
+        this.container = null;
+        // Camera zoom base used for subtle breathing/zoom animations
+        this.cameraBaseZ = null;
+        // Per-phase camera zoom config: amplitude (fraction) and speed (Hz-ish)
+        this.cameraZoomConfig = {
+            neuron: { amp: 0.02, speed: 2.5 },
+            brain: { amp: 0.03, speed: 1.8 },
+            network: { amp: 0.04, speed: 1.0 },
+            cosmos: { amp: 0.08, speed: 0.25 }
+        };
         
         // Animation state
         this.currentPhase = 'neuron'; // neuron -> brain -> network -> cosmos
         this.transitionProgress = 0;
         this.isTransitioning = false;
-        this.animationId = null;
-        
-        // Phase systems
-        this.phases = {
-            neuron: { particles: [], connections: [], scale: 1 },
-            brain: { particles: [], connections: [], scale: 10 },
-            network: { particles: [], connections: [], scale: 100 },
-            cosmos: { particles: [], connections: [], scale: 1000 }
-        };
-        
-        // Visual elements
-        this.particleSystem = null;
-        this.connectionSystem = null;
-        this.backgroundSphere = null;
-        this.dataFlows = [];
-        
-        // Performance
-        this.frameCount = 0;
-        this.frameTimeSum = 0;
-        this.frameSamples = 0;
-        this.dynamicQuality = { pixelRatioAdjusted: false, step: 0 };
-
-        // Device capabilities
-        this.isMobile = (typeof window !== 'undefined' && (
-            (window.matchMedia && window.matchMedia('(max-width: 768px)').matches) ||
-            /Mobi|Android/i.test(navigator.userAgent || '')
-        ));
+        this.isMobile = /Mobi|Android/i.test(navigator.userAgent || '');
         this.reduceMotion = (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) || false;
         
         // Allow callers to opt into deferred initialization so heavy work
@@ -73,25 +70,23 @@ class EpicNeuralToCosmosViz {
             await this.setupThreeJS();
 
             // 2) Create phases in separate idle callbacks to spread CPU work
-            const runStep = (fn) => new Promise((resolve) => {
-                const runner = () => {
+            // Schedule heavy phase creation across separate event-loop ticks to avoid
+            // long requestIdleCallback handlers reported in the console. We use
+            // small setTimeout delays so each phase runs in its own task and doesn't
+            // block a single idle callback for hundreds of milliseconds.
+            const schedulePhase = (fn, delayMs) => new Promise((resolve) => {
+                setTimeout(() => {
                     try {
                         Promise.resolve(fn()).then(resolve).catch((e) => { console.warn('[EpicViz] deferred step error', e); resolve(); });
                     } catch (e) { console.warn('[EpicViz] deferred step exception', e); resolve(); }
-                };
-                if (typeof requestIdleCallback === 'function') {
-                    // schedule with a small timeout so it still runs if idle doesn't fire soon
-                    requestIdleCallback(runner, { timeout: 200 });
-                } else {
-                    setTimeout(runner, 120);
-                }
+                }, delayMs);
             });
 
-            // Create phases one at a time
-            await runStep(() => this.createNeuronPhase());
-            await runStep(() => this.createBrainPhase());
-            await runStep(() => this.createNetworkPhase());
-            await runStep(() => this.createCosmosPhase());
+            // Create phases one at a time, spaced by 120ms to spread CPU work.
+            await schedulePhase(() => this.createNeuronPhase(), 0);
+            await schedulePhase(() => this.createBrainPhase(), 120);
+            await schedulePhase(() => this.createNetworkPhase(), 240);
+            await schedulePhase(() => this.createCosmosPhase(), 360);
 
             // Setup remaining items and start animation
             this.setupPostProcessing();
@@ -136,6 +131,8 @@ class EpicNeuralToCosmosViz {
         if (!container) {
             throw new Error(`Container with id "${this.containerId}" not found`);
         }
+        // store container for visibility checks and resize handling
+        this.container = container;
         
         // Scene
         this.scene = new THREE.Scene();
@@ -150,6 +147,8 @@ class EpicNeuralToCosmosViz {
             2000
         );
         this.camera.position.set(0, 0, 50);
+        // initialize cameraBaseZ for breathing effect
+        this.cameraBaseZ = this.camera.position.z;
         
         // Renderer with advanced features
         this.renderer = new THREE.WebGLRenderer({ 
@@ -832,10 +831,17 @@ class EpicNeuralToCosmosViz {
                 x: targetPos.x,
                 y: targetPos.y,
                 z: targetPos.z,
-                ease: "power2.inOut"
+                ease: "power2.inOut",
+                onComplete: () => {
+                    // set the stable base Z for breathing after the transition finishes
+                    try { this.cameraBaseZ = targetPos.z; } catch (e) { /* noop */ }
+                }
             });
+            // also set base immediately so breathing uses intended target during transition
+            try { this.cameraBaseZ = targetPos.z; } catch (e) { /* noop */ }
         } else {
             this.camera.position.set(targetPos.x, targetPos.y, targetPos.z);
+            try { this.cameraBaseZ = targetPos.z; } catch (e) { /* noop */ }
         }
     }
     
@@ -1156,53 +1162,64 @@ class EpicNeuralToCosmosViz {
     }
     
     animateNeuronPhase(phase, time) {
-        // Organic pulsing and electrical activity - chunked updates and based on
-        // original positions to avoid accumulation and reduce heavy math per frame.
-        const attr = phase.particleSystem.geometry.attributes.position;
+        // Optimized per-vertex updates: cache locals and reduce repeated lookups
+        const ps = phase.particleSystem;
+        const attr = ps.geometry.attributes.position;
         const positions = attr.array;
-        const orig = phase.particleSystem.userData.originalPositions || positions;
+        const orig = ps.userData.originalPositions || positions;
 
-        // If start/end provided, only process that slice
+        // If start/end provided, only process that slice (expressed in floats)
         const start = arguments[2] || 0;
         const end = arguments[3] || positions.length;
 
+        // Cache frequently used math into locals to avoid property lookups
+        const t1 = time * 3;
+        const t2 = time * 2;
+        const t4 = time * 4;
+
+        // Use a simple for loop with local variables for speed
         for (let i = start; i < end; i += 3) {
-            // Use original as base and apply lightweight offset
+            const idx = (i / 3) | 0;
             const baseX = orig[i];
             const baseY = orig[i + 1];
             const baseZ = orig[i + 2];
 
-            const idx = i / 3;
-            const pulse = Math.sin(time * 3 + idx * 0.1) * 0.5;
+            // Reduced trig calls: reuse sin/cos inputs and multiply factors inline
+            const pulse = Math.sin(t1 + idx * 0.1) * 0.5;
             positions[i] = baseX + pulse * 0.1;
-            positions[i + 1] = baseY + Math.cos(time * 2 + idx * 0.05) * 0.1;
-            positions[i + 2] = baseZ + Math.sin(time * 4 + idx * 0.15) * 0.05;
+            positions[i + 1] = baseY + Math.cos(t2 + idx * 0.05) * 0.1;
+            positions[i + 2] = baseZ + Math.sin(t4 + idx * 0.15) * 0.05;
         }
 
         attr.needsUpdate = true;
         // Electrical impulse effects (cheap scalar update)
-        if (phase.particleSystem.material) phase.particleSystem.material.opacity = 0.8 + Math.sin(time * 5) * 0.2;
+        if (ps.material) ps.material.opacity = 0.8 + Math.sin(time * 5) * 0.2;
     }
     
     animateBrainPhase(phase, time) {
-        // Brain wave patterns - chunked updates using original positions
-        const attr = phase.particleSystem.geometry.attributes.position;
+        // Optimized brain wave updates: cache locals and reduce math per-vertex
+        const ps = phase.particleSystem;
+        const attr = ps.geometry.attributes.position;
         const positions = attr.array;
-        const orig = phase.particleSystem.userData.originalPositions || positions;
+        const orig = ps.userData.originalPositions || positions;
 
         const start = arguments[2] || 0;
         const end = arguments[3] || positions.length;
 
+        const baseSpeed = time * 2;
+
         for (let i = start; i < end; i += 3) {
-            const idx = i / 3;
-            const wavePhase = time * 2 + idx * 0.01;
-            const brainWave = Math.sin(wavePhase) * Math.cos(wavePhase * 0.5) * 0.3;
-            positions[i + 1] = orig[i + 1] + brainWave;
+            const idx = (i / 3) | 0;
+            const wavePhase = baseSpeed + idx * 0.01;
+            // Combined trig reduced to two calls
+            const s = Math.sin(wavePhase);
+            const c = Math.cos(wavePhase * 0.5);
+            positions[i + 1] = orig[i + 1] + s * c * 0.3;
         }
 
         attr.needsUpdate = true;
         // Alpha wave synchronization (cheap)
-        phase.particleSystem.rotation.y += 0.001;
+        ps.rotation.y += 0.001;
     }
     
     animateNetworkPhase(phase, time) {

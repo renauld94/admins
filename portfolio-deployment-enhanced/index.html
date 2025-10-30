@@ -84,6 +84,20 @@
                 </script>
 </head>
 
+        <!-- Accessibility helpers: ensure readable text on dark backgrounds without changing brand tokens -->
+        <style>
+            /* Use on sections with dark backgrounds to ensure text is readable */
+            .on-dark, .on-dark a, .on-dark .btn, .on-dark .btn * {
+                color: var(--white) !important;
+            }
+
+            /* Utility for components that need explicit white-on-dark treatment */
+            .text-on-dark { color: var(--white) !important; }
+
+            /* Convenient background helper when needed */
+            .bg-dark { background-color: var(--dark) !important; color: var(--white) !important; }
+        </style>
+
 <body>
     <a href="#main" class="skip-link">Skip to main content</a>
     <div class="scroll-progress" aria-hidden="true"></div>
@@ -169,6 +183,8 @@
                 </ul>
             </div>
         </div>
+        <!-- Developer build badge: shows live build info when visiting with ?dev or when devmode is enabled -->
+        <div id="dev-build-info" aria-hidden="true" class="dev-build-badge" title="Developer build info (use ?dev in URL to show)">build info unavailable</div>
     </nav>
 
     <section id="hero" class="hero-section">
@@ -178,13 +194,13 @@
                     <span class="badge-text">Enterprise Data & AI</span>
                 </div>
                 <h1 id="hero-heading" class="hero-title">
-                    <span class="hero-line gradient-flow">Data Intelligence</span>
-                    <span class="hero-line gradient-flow">at Enterprise Scale</span>
+                    <span class="hero-line gradient-flow">Enterprise AI & Data Platforms</span>
+                    <span class="hero-line">From research to production — measurable impact</span>
                 </h1>
-                <p class="hero-subtitle">Turning 500M+ daily records into decisions with production ML systems and enterprise data platforms.</p>
+                <p class="hero-subtitle">Turning 500M+ daily records into reliable operational decisions with production ML systems and governed data platforms.</p>
                 <div class="hero-actions">
-                    <a href="https://www.simondatalab.de/infrastructure-diagram.html?full=1" target="_blank" rel="noopener noreferrer" class="btn-primary">View Architecture</a>
-                    <a href="assets/resume/simon-renauld-resume.pdf" class="btn-secondary" download rel="noopener noreferrer">Download Resume</a>
+                    <a href="https://www.simondatalab.de/infrastructure-diagram.html?full=1" target="_blank" rel="noopener noreferrer" class="btn btn--primary">View Architecture</a>
+                    <a href="assets/resume/simon-renauld-resume.pdf" class="btn btn--secondary" download rel="noopener noreferrer">Download Resume</a>
                     <!-- Mobile / opt-in CTA to load advanced visualization on demand -->
                     <button id="load-advanced-viz-cta" class="viz-load-cta" aria-pressed="false" title="Load advanced visualization">Load advanced visualization</button>
                 </div>
@@ -756,7 +772,7 @@
                             <textarea id="message" name="message" rows="6" placeholder="Tell me about your data challenge..." required></textarea>
                         </div>
 
-                        <button type="submit" class="btn-primary full-width">
+                        <button type="submit" class="btn btn--primary full-width">
                             <span>Send Message</span>
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                                 <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -1087,6 +1103,8 @@
     <!-- Inline fallback for dropdowns removed; app.js owns all nav wiring to avoid duplicate bindings -->
     
     <script src="app.js?v=20251018.2"></script>
+    <script defer src="build-info.js"></script>
+    <script src="globe-3d.js"></script>
     
     <!-- NEURAL GEOSERVER VISUALIZATION: GPU-Accelerated Three.js Neural-Spatial System -->
     <script>
@@ -1378,6 +1396,173 @@
 
             rows.forEach((r) => io.observe(r));
         });
+    </script>
+
+    <!-- Canvas Globe: lightweight animated globe inside hero loading area -->
+    <script>
+        (function(){
+            const containerSelector = '#hero-visualization';
+            const loadingCanvasSelector = '#hero-visualization .r3f-loading canvas';
+
+            function createOrGetCanvas(container) {
+                let canvas = container.querySelector('canvas');
+                if (!canvas) {
+                    canvas = document.createElement('canvas');
+                    canvas.style.position = 'absolute';
+                    canvas.style.top = '0';
+                    canvas.style.left = '0';
+                    canvas.style.width = '100%';
+                    canvas.style.height = '100%';
+                    canvas.style.pointerEvents = 'auto';
+                    canvas.style.zIndex = '1';
+                    container.appendChild(canvas);
+                } else {
+                    // ensure it's interactive for the globe
+                    canvas.style.pointerEvents = 'auto';
+                }
+                return canvas;
+            }
+
+            function initGlobe() {
+                const container = document.querySelector(containerSelector);
+                if (!container) return;
+
+                const canvas = createOrGetCanvas(container);
+                const ctx = canvas.getContext('2d');
+                let DPR = Math.max(1, Math.min(window.devicePixelRatio || 1, 2));
+
+                function resize() {
+                    const rect = container.getBoundingClientRect();
+                    canvas.width = Math.max(200, Math.floor(rect.width * DPR));
+                    canvas.height = Math.max(200, Math.floor(rect.height * DPR));
+                    canvas.style.width = rect.width + 'px';
+                    canvas.style.height = rect.height + 'px';
+                }
+
+                // Use the same earth texture used elsewhere (CDN)
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.src = 'https://unpkg.com/three-globe@2.31.0/example/img/earth-blue-marble.jpg';
+
+                // animation state
+                let running = true;
+                let rotation = 0; // 0..1 (loops)
+                let last = performance.now();
+                let zoomPhase = 0; // 0..1 for zoom in/out
+                let zoomDir = 1;
+                let manualZoom = 1; // multiplier from wheel/pinch
+
+                function draw() {
+                    if (!running) return;
+                    const now = performance.now();
+                    const dt = (now - last) / 1000; last = now;
+                    rotation = (rotation + dt * 0.02) % 1; // slow rotation
+
+                    // gentle auto zoom in/out using a slow sine
+                    zoomPhase += dt * 0.05 * zoomDir;
+                    if (zoomPhase > Math.PI * 2) zoomPhase -= Math.PI * 2;
+                    const autoZoom = 1 + 0.06 * Math.sin(zoomPhase);
+                    const zoom = Math.max(0.85, Math.min(1.15, autoZoom * manualZoom));
+
+                    const w = canvas.width, h = canvas.height;
+                    ctx.clearRect(0,0,w,h);
+
+                    if (!img.complete) {
+                        // fallback: draw neutral background and text
+                        ctx.fillStyle = '#071029';
+                        ctx.fillRect(0,0,w,h);
+                        ctx.fillStyle = '#0ea5e9';
+                        ctx.font = (24*DPR)+'px sans-serif';
+                        ctx.textAlign = 'center';
+                        ctx.fillText('Loading globe...', w/2, h/2);
+                        requestAnimationFrame(draw);
+                        return;
+                    }
+
+                    // Draw the equirectangular image as a horizontally wrapping panorama
+                    const imgW = img.width, imgH = img.height;
+                    // compute source X offset based on rotation
+                    const sx = Math.floor((rotation % 1) * imgW);
+                    // destination size aligned to zoom
+                    const destW = Math.floor(w * zoom);
+                    const destH = Math.floor((imgH / imgW) * destW);
+                    const dx = Math.floor((w - destW) / 2);
+                    const dy = Math.floor((h - destH) / 2);
+
+                    // Because the equirectangular is a full wrap, draw two segments to simulate wrap
+                    const rightPartW = Math.min(imgW - sx, Math.floor(imgW * 1));
+                    ctx.drawImage(img, sx, 0, rightPartW, imgH, dx, dy, Math.floor(destW * (rightPartW / imgW)), destH);
+                    if (rightPartW < imgW) {
+                        const leftPartW = imgW - rightPartW;
+                        ctx.drawImage(img, 0, 0, leftPartW, imgH, dx + Math.floor(destW * (rightPartW / imgW)), dy, Math.floor(destW * (leftPartW / imgW)), destH);
+                    }
+
+                    // overlay subtle vignette and glow
+                    const g = ctx.createLinearGradient(0,0,0,h);
+                    g.addColorStop(0, 'rgba(0,0,0,0.0)');
+                    g.addColorStop(0.8, 'rgba(0,0,0,0.25)');
+                    ctx.fillStyle = g;
+                    ctx.fillRect(0,0,w,h);
+
+                    // Draw a subtle label and animated ring to suggest activity
+                    ctx.save();
+                    ctx.translate(w - 110*DPR, 30*DPR);
+                    ctx.fillStyle = 'rgba(14,165,233,0.9)';
+                    ctx.beginPath();
+                    ctx.arc(0,0,10*DPR,0,Math.PI*2);
+                    ctx.fill();
+                    ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+                    ctx.lineWidth = 2*DPR;
+                    ctx.beginPath();
+                    ctx.arc(0,0,18*DPR,rotation*Math.PI*2, rotation*Math.PI*2 + Math.PI*0.9);
+                    ctx.stroke();
+                    ctx.restore();
+
+                    requestAnimationFrame(draw);
+                }
+
+                // interactions: wheel to zoom (temporary), pointer to pause
+                canvas.addEventListener('wheel', (ev) => {
+                    ev.preventDefault();
+                    const delta = ev.deltaY > 0 ? 0.95 : 1.05;
+                    manualZoom = Math.max(0.7, Math.min(1.4, manualZoom * delta));
+                    // slowly return manualZoom to 1
+                    setTimeout(() => { manualZoom = 1; }, 1000);
+                }, { passive: false });
+
+                canvas.addEventListener('mouseenter', () => { running = true; });
+                canvas.addEventListener('mouseleave', () => { running = true; });
+
+                // resize handling
+                let ro;
+                try {
+                    ro = new ResizeObserver(resize);
+                    ro.observe(container);
+                } catch (e) {
+                    window.addEventListener('resize', resize);
+                }
+
+                // start loop once image is ready and size computed
+                img.onload = () => {
+                    DPR = Math.max(1, Math.min(window.devicePixelRatio || 1, 2));
+                    resize();
+                    last = performance.now();
+                    requestAnimationFrame(draw);
+                };
+
+                // if image already cached
+                if (img.complete && img.naturalWidth) {
+                    img.onload();
+                }
+            }
+
+            // initialize shortly after DOM ready so hero container exists
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initGlobe);
+            } else {
+                setTimeout(initGlobe, 60);
+            }
+        })();
     </script>
 
 </body>
