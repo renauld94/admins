@@ -353,30 +353,6 @@ function toggleMobileMenu() {
     }
 }
 
-function toggleMobileDropdown() {
-    try {
-        const dropdown = document.querySelector('.mobile-dropdown');
-        const dropdownToggle = document.querySelector('.mobile-dropdown-toggle');
-        const dropdownMenu = document.querySelector('.mobile-dropdown-menu');
-        
-        if (!dropdown || !dropdownToggle || !dropdownMenu) return;
-        
-        const isOpen = dropdown.classList.contains('active');
-        
-        if (isOpen) {
-            dropdown.classList.remove('active');
-            dropdownToggle.setAttribute('aria-expanded', 'false');
-            dropdownMenu.setAttribute('aria-hidden', 'true');
-        } else {
-            dropdown.classList.add('active');
-            dropdownToggle.setAttribute('aria-expanded', 'true');
-            dropdownMenu.setAttribute('aria-hidden', 'false');
-        }
-    } catch (e) {
-        console.warn('toggleMobileDropdown failed', e);
-    }
-}
-
 function initializeGeospatialLaunch() {
     const fab = document.querySelector('.globe-fab');
     if (!fab) return;
@@ -679,136 +655,13 @@ function initializeStatCounters() {
     if (container) observer.observe(container);
 }
 
-// MOBILE DEVICE CONFIGURATION
-// Optimized settings for different device types
-const mobileDeviceConfig = {
-    mobile: {
-        maxParticles: 2500,      // 25% of desktop
-        pixelRatio: 1.0,
-        targetFPS: 30,
-        particleSize: 1.0,
-        lodThreshold: 50,
-        enableBloom: false,
-        geometryDetail: 'low',
-        enableShadows: false,
-        textureQuality: 0.5,
-        animationThrottle: 33
-    },
-    tablet: {
-        maxParticles: 5000,      // 50% of desktop
-        pixelRatio: 1.25,
-        targetFPS: 45,
-        particleSize: 1.2,
-        lodThreshold: 75,
-        enableBloom: true,
-        geometryDetail: 'medium',
-        enableShadows: false,
-        textureQuality: 0.75,
-        animationThrottle: 22
-    },
-    desktop: {
-        maxParticles: 10000,
-        pixelRatio: Math.min(window.devicePixelRatio, 2),
-        targetFPS: 60,
-        particleSize: 1.5,
-        lodThreshold: 100,
-        enableBloom: true,
-        geometryDetail: 'high',
-        enableShadows: true,
-        textureQuality: 1.0,
-        animationThrottle: 16
-    }
-};
-
-function getDeviceConfig() {
-    const width = window.innerWidth;
-    const isTablet = width >= 768 && width < 1024;
-    const isMobile = width < 768;
-    
-    if (isMobile) {
-        console.log('[Mobile] Using mobile device config - optimized for battery/performance');
-        return mobileDeviceConfig.mobile;
-    }
-    if (isTablet) {
-        console.log('[Tablet] Using tablet device config - balanced performance');
-        return mobileDeviceConfig.tablet;
-    }
-    console.log('[Desktop] Using desktop device config - max quality');
-    return mobileDeviceConfig.desktop;
-}
-
-// Battery-aware rendering
-function initializeBatteryOptimization() {
-    if ('getBattery' in navigator) {
-        navigator.getBattery().then(battery => {
-            const updateBatteryStatus = () => {
-                if (battery.level < 0.2 && !battery.charging) {
-                    console.log('[Battery] Low battery mode activated - reducing animation quality');
-                    window.heroPerformance.pixelRatio = 0.5;
-                    window.heroPerformance.targetFPS = 15;
-                } else if (battery.level < 0.5 && !battery.charging) {
-                    console.log('[Battery] Medium battery mode - moderate optimization');
-                    window.heroPerformance.pixelRatio = 1.0;
-                    window.heroPerformance.targetFPS = 30;
-                } else {
-                    console.log('[Battery] Normal mode - full performance');
-                    const config = getDeviceConfig();
-                    window.heroPerformance.pixelRatio = config.pixelRatio;
-                    window.heroPerformance.targetFPS = config.targetFPS;
-                }
-            };
-            
-            battery.addEventListener('levelchange', updateBatteryStatus);
-            battery.addEventListener('chargingchange', updateBatteryStatus);
-            updateBatteryStatus();
-        }).catch(() => {
-            console.log('[Battery] Battery API not available, using standard config');
-        });
-    }
-}
-
-// Network-aware resource loading
-function initializeNetworkOptimization() {
-    if ('connection' in navigator) {
-        const connection = navigator.connection;
-        
-        if (connection.saveData) {
-            console.log('[Network] Data saver mode detected - minimal visualization');
-            window.heroPerformance.enableAnimations = false;
-            window.heroPerformance.maxParticles = 500;
-            window.heroPerformance.enableTextures = false;
-        } else if (connection.effectiveType === '3g' || connection.effectiveType === '2g') {
-            console.log('[Network] Slow connection detected - reduced quality');
-            const config = getDeviceConfig();
-            window.heroPerformance.maxParticles = config.maxParticles * 0.5;
-            window.heroPerformance.enableBloom = false;
-            window.heroPerformance.textureQuality = 0.25;
-        } else if (connection.effectiveType === '4g' || connection.effectiveType === '5g') {
-            console.log('[Network] Fast connection - using tablet/desktop config');
-            const config = getDeviceConfig();
-            window.heroPerformance.maxParticles = config.maxParticles;
-            window.heroPerformance.enableBloom = config.enableBloom;
-            window.heroPerformance.textureQuality = config.textureQuality;
-        }
-    }
-}
-
 // PORTFOLIO VISUALIZATIONS
 function initializePortfolioVisualizations() {
-    // Initialize mobile/battery/network optimizations
-    const deviceConfig = getDeviceConfig();
-    initializeBatteryOptimization();
-    initializeNetworkOptimization();
-    
-    // Merge device config into heroPerformance
-    window.heroPerformance = window.heroPerformance || {};
-    Object.assign(window.heroPerformance, deviceConfig);
-    
     // AI-Enhanced R3F Hero is now the primary visualization
     // Vanilla Three.js fallback disabled to prevent duplicate instances
     // The R3F hero loads via r3f-hero.ai-epic.v20251004.js
     const heroPerf = window.heroPerformance;
-    if (heroPerf && heroPerf.shouldLoadR3F === false) {
+    if (heroPerf && heroPerf.shouldLoadR3F ===false) {
         console.log('[Portfolio] R3F hero skipped for current device tier', {
             tier: heroPerf.deviceTier,
             reason: heroPerf.fallbackReason || 'performance-tier'
@@ -817,12 +670,6 @@ function initializePortfolioVisualizations() {
     }
 
     console.log('[Portfolio] R3F AI-Enhanced Hero active - vanilla fallback disabled');
-    console.log('[Portfolio] Device optimization applied:', {
-        pixelRatio: heroPerf.pixelRatio,
-        maxParticles: heroPerf.maxParticles,
-        targetFPS: heroPerf.targetFPS,
-        enableBloom: heroPerf.enableBloom
-    });
     // initializeHeroVisualization(); // DISABLED - R3F handles this now
 }
 
@@ -1463,86 +1310,6 @@ function initializeContactForm() {
     });
 }
 
-// MOBILE PERFORMANCE OPTIMIZATION
-function optimizeMobilePerformance() {
-    if (!window.__IS_MOBILE_PORTFOLIO__) return;
-
-    // Reduce animation frame rate on mobile (30fps target instead of 60fps)
-    const originalRAF = window.requestAnimationFrame;
-    let lastFrameTime = 0;
-    const MOBILE_FRAME_INTERVAL = 33; // ~30fps
-    
-    window.requestAnimationFrame = function(callback) {
-        return originalRAF(function(timestamp) {
-            if (timestamp - lastFrameTime >= MOBILE_FRAME_INTERVAL) {
-                lastFrameTime = timestamp;
-                callback(timestamp);
-            } else {
-                window.requestAnimationFrame(callback);
-            }
-        });
-    };
-
-    // Throttle scroll events on mobile (100ms)
-    const scrollThrottle = debounce(() => {
-        updateScrollProgress();
-    }, 100);
-    
-    window.removeEventListener('scroll', handleScroll);
-    window.addEventListener('scroll', scrollThrottle, { passive: true });
-
-    // Disable requestIdleCallback on mobile (use setTimeout instead)
-    if ('requestIdleCallback' in window) {
-        const originalRIC = window.requestIdleCallback;
-        window.requestIdleCallback = function(callback, options) {
-            const timeout = (options && options.timeout) || 5000;
-            return setTimeout(() => {
-                callback({ 
-                    didTimeout: true,
-                    timeRemaining: () => 0 
-                });
-            }, timeout);
-        };
-    }
-
-    // Disable heavy hover effects on touch devices
-    const style = document.createElement('style');
-    style.textContent = `
-        @media (hover: none) and (pointer: coarse) {
-            .btn-primary:hover,
-            .btn-secondary:hover,
-            .project-card:hover,
-            .expertise-card:hover {
-                transform: none !important;
-            }
-            
-            /* Touch targets minimum 44x44px */
-            button, a, .clickable {
-                min-width: 44px !important;
-                min-height: 44px !important;
-                padding: max(12px, env(safe-area-inset-bottom)) !important;
-            }
-            
-            /* Reduce motion on mobile */
-            * {
-                animation-duration: 0.5s !important;
-                transition-duration: 0.3s !important;
-            }
-        }
-    `;
-    document.head.appendChild(style);
-
-    // Disable parallax scrolling on mobile (too intensive)
-    window.addEventListener('scroll', (e) => {
-        const scrolledElements = document.querySelectorAll('[data-parallax]');
-        scrolledElements.forEach(el => {
-            el.style.transform = 'none';
-        });
-    }, { passive: true });
-
-    console.log('[Mobile Optimization] Performance adaptations applied');
-}
-
 // UTILITY FUNCTIONS
 function debounce(func, wait) {
     let timeout;
@@ -1589,11 +1356,6 @@ function updateScrollProgress() {
 // Initialize performance optimizations
 optimizePerformance();
 
-// Apply mobile-specific optimizations if on mobile device
-if (window.__IS_MOBILE_PORTFOLIO__) {
-    optimizeMobilePerformance();
-}
-
 // Export functions for global access (safe assignment)
 // Avoid referencing bare identifiers directly (they may not be hoisted in some bundle orderings).
 // Use typeof checks and safe wrappers so this module can be concatenated in any order.
@@ -1629,21 +1391,6 @@ if (typeof window.portfolioFunctions.closeMobileMenu === 'undefined') {
     };
 }
 
-// Provide a safe delegating function for toggleMobileDropdown
-if (typeof window.portfolioFunctions.toggleMobileDropdown === 'undefined') {
-    window.portfolioFunctions.toggleMobileDropdown = function (...args) {
-        try {
-            // Call the actual toggleMobileDropdown function defined above
-            if (typeof toggleMobileDropdown === 'function') {
-                return toggleMobileDropdown.apply(null, args);
-            }
-        } catch (e) { 
-            console.warn('portfolioFunctions.toggleMobileDropdown delegation failed:', e);
-        }
-        // no-op fallback
-    };
-}
-
 // Backwards-compatible globals: some pages or inline handlers may call toggleMobileMenu
 // directly. Provide safe global wrappers that delegate to the namespaced functions
 // if available, preventing ReferenceError in environments where code order differs.
@@ -1669,35 +1416,14 @@ try {
                 // no-op fallback
             };
         }
-        if (typeof window.toggleMobileDropdown === 'undefined') {
-            window.toggleMobileDropdown = function (...args) {
-                try {
-                    // Try the actual function first
-                    if (typeof toggleMobileDropdown === 'function') {
-                        return toggleMobileDropdown.apply(null, args);
-                    }
-                } catch (e) { /* swallow */ }
-                try {
-                    // Fallback to portfolioFunctions
-                    if (window.portfolioFunctions && typeof window.portfolioFunctions.toggleMobileDropdown === 'function') {
-                        return window.portfolioFunctions.toggleMobileDropdown.apply(null, args);
-                    }
-                } catch (e) { /* swallow */ }
-                // no-op fallback
-            };
-        }
     }
 } catch (e) { /* ignore in constrained environments */ }
 
-// Non-blocking loader for EPIC hero neural visualization
-// ENABLED - Loads epic cinematic neural viz in #hero-visualization div
+// Non-blocking loader for heavy epic neural loading animation
 function deferEpicNeuralLoader() {
     try {
-        const heroContainer = document.getElementById('hero-visualization');
-        if (!heroContainer) {
-            console.log('[deferEpicNeuralLoader] No hero-visualization container found - skipping');
-            return;
-        }
+        const loadingContainer = document.querySelector('.epic-neural-loading');
+        if (!loadingContainer) return; // nothing to do
 
         // Do not auto-load the heavy epic neural loader on mobile devices to preserve
         // first-contentful-paint and avoid battery/network impact. Developers can
@@ -1713,7 +1439,7 @@ function deferEpicNeuralLoader() {
             s.src = 'epic-neural-loading-enhanced.js';
             s.async = true;
             s.setAttribute('data-epic-neural-loaded', '1');
-            s.onload = () => { console.log('[deferEpicNeuralLoader] Epic neural script loaded'); };
+            s.onload = () => { /* no-op; script manages its own lifecycle */ };
             s.onerror = () => { console.warn('Failed to load epic-neural-loading-enhanced.js'); };
             document.head.appendChild(s);
         };
@@ -1742,7 +1468,7 @@ function deferEpicNeuralLoader() {
     }
 }
 
-// Kick off deferred loader for EPIC HERO visualization
+// Kick off deferred loader
 deferEpicNeuralLoader();
 
 // On-demand loader for advanced visualization (exposed globally)
@@ -1814,60 +1540,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// TOUCH OPTIMIZATION FOR MOBILE
-function initializeTouchOptimization() {
-    // Prevent double-tap zoom on buttons
-    let lastTouchTime = 0;
-    document.addEventListener('touchstart', (e) => {
-        const now = Date.now();
-        if (now - lastTouchTime < 300 && e.touches.length === 1) {
-            if (e.target.closest('.btn, .mobile-menu-btn, .mobile-dropdown-toggle, a')) {
-                e.preventDefault();
-            }
-        }
-        lastTouchTime = now;
-    }, { passive: false });
-
-    // Optimize touch move performance with throttling
-    let lastMoveTime = 0;
-    const moveThrottle = navigator.connection && navigator.connection.effectiveType === '2g' ? 32 : 16;
-    
-    document.addEventListener('touchmove', (e) => {
-        const now = performance.now();
-        if (now - lastMoveTime < moveThrottle) {
-            return;
-        }
-        lastMoveTime = now;
-    }, { passive: true });
-
-    // Enable hardware acceleration on mobile
-    const style = document.createElement('style');
-    style.textContent = `
-        @media (max-width: 768px) {
-            * {
-                -webkit-transform: translate3d(0, 0, 0);
-                transform: translate3d(0, 0, 0);
-                -webkit-font-smoothing: antialiased;
-                -webkit-touch-callout: none;
-            }
-            button, a, .btn, [role="button"] {
-                -webkit-user-select: none;
-                user-select: none;
-                -webkit-tap-highlight-color: transparent;
-                min-height: 44px;
-                min-width: 44px;
-            }
-            input, textarea {
-                -webkit-user-select: text;
-                user-select: text;
-            }
-        }
-    `;
-    document.head.appendChild(style);
-    
-    console.log('[Touch] Touch optimization enabled for mobile');
-}
-
 // Attach mobile nav listeners (safe, idempotent)
 try {
     document.addEventListener('DOMContentLoaded', () => {
@@ -1907,9 +1579,6 @@ try {
             document.addEventListener('keydown', (ev) => {
                 if (ev.key === 'Escape') closeMobileMenu();
             });
-            
-            // Initialize touch optimization
-            initializeTouchOptimization();
         } catch (err) { /* noop */ }
     });
 } catch (e) { /* noop */ }

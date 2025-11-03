@@ -1,0 +1,17 @@
+[Unit]
+Description=Ollama Code Assistant Agent
+After=network.target
+
+[Service]
+Type=simple
+User=simon
+WorkingDirectory=/home/simon/Learning-Management-System-Academy/.continue/agents/agents_continue
+Environment="PATH=/usr/bin:/usr/local/bin"
+ExecStart=/usr/bin/python3 ollama_code_assistant.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target agents.target
