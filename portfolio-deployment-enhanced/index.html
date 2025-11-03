@@ -238,14 +238,9 @@
         </div>
     </nav>
 
-    <!-- Hero visualization mount: this container is required by the neural visualizations (Three.js)
-         It intentionally starts empty; heavy visualizations are loaded on demand to avoid
-         blocking initial page rendering. The button below allows manual loading for debugging. -->
+    <!-- Hero visualization mount: Epic Neural Cosmos visualization renders here automatically -->
     <section id="hero-section" class="hero-section">
-        <div id="hero-visualization" role="img" aria-label="Neural hero visualization" tabindex="0"></div>
-        <div class="hero-load-control">
-            <button class="hero-load-btn" onclick="(function(){ if(typeof loadNeuralVisualization==='function'){ loadNeuralVisualization(); } else { window.addEventListener('threeJsReady', function(){ if(typeof loadNeuralVisualization==='function') loadNeuralVisualization(); }, {once:true}); } })();">Load Hero Visualization</button>
-        </div>
+        <div id="hero-visualization" role="img" aria-label="Epic neural cosmos visualization" tabindex="0"></div>
     </section>
 
     <main id="main">
@@ -1162,23 +1157,6 @@
                     btn.setAttribute('aria-expanded','false');
                     dropdown && dropdown.classList.remove('open');
                 }
-            }
-        });
-
-        // Bind hero-load button to explicitly enable visualization and run it
-        document.addEventListener('DOMContentLoaded', ()=>{
-            const heroBtn = document.querySelector('.hero-load-btn');
-            if(heroBtn){
-                heroBtn.addEventListener('click', ()=>{
-                    // Allow the previously blocked auto-load and trigger visualization
-                    window.__ALLOW_NEURAL_AUTOLOAD__ = true;
-                    if(typeof loadNeuralVisualization === 'function'){
-                        try{ loadNeuralVisualization(); } catch(e){ console.warn('loadNeuralVisualization error', e); }
-                    } else {
-                        // If loader isn't ready yet, wait for threeJsReady event
-                        window.addEventListener('threeJsReady', function(){ if(typeof loadNeuralVisualization === 'function') loadNeuralVisualization(); }, {once:true});
-                    }
-                });
             }
         });
     </script>
