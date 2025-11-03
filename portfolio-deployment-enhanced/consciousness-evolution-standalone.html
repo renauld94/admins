@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consciousness Evolution - Legendary Cinematic Experience</title>
+    <meta name="description" content="60 seconds of pure visual storytelling - witness consciousness evolving from a single neuron to global planetary intelligence">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #000510;
+            color: #ffffff;
+            overflow: hidden;
+        }
+        
+        #canvas-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+        
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 5, 16, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 50px;
+            padding: 15px 30px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.3s ease;
+        }
+        
+        .controls.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #00f0ff 0%, #a855f7 100%);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 240, 255, 0.4);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .time-display {
+            color: #00f0ff;
+            font-weight: 500;
+            font-size: 14px;
+            font-variant-numeric: tabular-nums;
+            min-width: 120px;
+            text-align: center;
+        }
+        
+        .legend {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(0, 5, 16, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            z-index: 1000;
+            max-width: 300px;
+            transition: opacity 0.3s ease;
+        }
+        
+        .legend.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .legend h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #00f0ff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            margin-right: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 2000;
+        }
+        
+        .loading h1 {
+            font-size: 48px;
+            background: linear-gradient(135deg, #00f0ff 0%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(0, 240, 255, 0.1);
+            border-top-color: #00f0ff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .keyboard-hint {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            background: rgba(0, 5, 16, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 12px;
+            color: #00f0ff;
+            z-index: 1000;
+            transition: opacity 0.3s ease;
+        }
+        
+        .keyboard-hint.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .keyboard-hint kbd {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin: 0 4px;
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container"></div>
+    
+    <div class="loading" id="loading">
+        <h1>CONSCIOUSNESS EVOLUTION</h1>
+        <div class="spinner"></div>
+    </div>
+    
+    <div class="keyboard-hint" id="keyboard-hint">
+        <kbd>Space</kbd> Play/Pause &nbsp;|&nbsp; <kbd>R</kbd> Restart &nbsp;|&nbsp; <kbd>H</kbd> Hide UI
+    </div>
+    
+    <div class="controls" id="controls">
+        <button class="btn" id="playPauseBtn">⏸ Pause</button>
+        <button class="btn" id="restartBtn">⟳ Restart</button>
+        <div class="time-display" id="timeDisplay">00:00 / 01:00</div>
+    </div>
+    
+    <div class="legend" id="legend">
+        <h3>Journey</h3>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #00f0ff;"></div>
+            <span>Act I: Genesis (0-12s)</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #a855f7;"></div>
+            <span>Act II: Network Awakening (12-28s)</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #00ff41;"></div>
+            <span>Act III: Planetary Consciousness (28-42s)</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #ff6b35;"></div>
+            <span>Act IV: Ultimate Pulse (42-52s)</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #ffd700;"></div>
+            <span>Act V: Eternal Presence (52-60s)</span>
+        </div>
+    </div>
+    
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+    
+    <script type="module">
+        import * as THREE from 'three';
+        import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+        import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+        import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+
+        // ═══════════════════════════════════════════════════════════════
+        // INITIALIZATION
+        // ═══════════════════════════════════════════════════════════════
+        
+        const container = document.getElementById('canvas-container');
+        const loading = document.getElementById('loading');
+        const controls = document.getElementById('controls');
+        const legend = document.getElementById('legend');
+        const keyboardHint = document.getElementById('keyboard-hint');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const restartBtn = document.getElementById('restartBtn');
+        const timeDisplay = document.getElementById('timeDisplay');
+        
+        let isPlaying = false;
+        let uiVisible = true;
+        let time = 0;
+        
+        // Scene setup
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x000510);
+        scene.fog = new THREE.FogExp2(0x000510, 0.00025);
+
+        const camera = new THREE.PerspectiveCamera(
+            45,
+            window.innerWidth / window.innerHeight,
+            0.1,
+            10000
+        );
+        camera.position.set(0, 0, 5);
+
+        const renderer = new THREE.WebGLRenderer({ 
+            antialias: true,
+            alpha: true,
+            powerPreference: 'high-performance'
+        });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.2;
+        container.appendChild(renderer.domElement);
+
+        // Post-processing
+        const composer = new EffectComposer(renderer);
+        const renderPass = new RenderPass(scene, camera);
+        composer.addPass(renderPass);
+
+        const bloomPass = new UnrealBloomPass(
+            new THREE.Vector2(window.innerWidth, window.innerHeight),
+            2.5,
+            0.8,
+            0.7
+        );
+        composer.addPass(bloomPass);
+
+        // ═══════════════════════════════════════════════════════════════
+        // CITY DATA
+        // ═══════════════════════════════════════════════════════════════
+        
+        const cities = {
+            hcmc: { lat: 10.8231, lon: 106.6297, color: 0x00f0ff, name: 'Ho Chi Minh City' },
+            singapore: { lat: 1.3521, lon: 103.8198, color: 0x00f0ff, name: 'Singapore' },
+            bangkok: { lat: 13.7563, lon: 100.5018, color: 0xa855f7, name: 'Bangkok' },
+            jakarta: { lat: -6.2088, lon: 106.8456, color: 0xff6b35, name: 'Jakarta' },
+            kualaLumpur: { lat: 3.1390, lon: 101.6869, color: 0xffd700, name: 'Kuala Lumpur' },
+            berlin: { lat: 52.5200, lon: 13.4050, color: 0xa855f7, name: 'Berlin' },
+            sanFrancisco: { lat: 37.7749, lon: -122.4194, color: 0xff6b35, name: 'San Francisco' },
+            seoul: { lat: 37.5665, lon: 126.9780, color: 0x00ff41, name: 'Seoul' },
+            tokyo: { lat: 35.6762, lon: 139.6503, color: 0x00ff41, name: 'Tokyo' },
+            sydney: { lat: -33.8688, lon: 151.2093, color: 0x87ceeb, name: 'Sydney' },
+            mumbai: { lat: 19.0760, lon: 72.8777, color: 0xffd700, name: 'Mumbai' },
+            nyc: { lat: 40.7128, lon: -74.0060, color: 0xff6b35, name: 'New York' }
+        };
+
+        const latLonTo3D = (lat, lon, radius = 100) => {
+            const phi = (90 - lat) * (Math.PI / 180);
+            const theta = (lon + 180) * (Math.PI / 180);
+            return new THREE.Vector3(
+                -radius * Math.sin(phi) * Math.cos(theta),
+                radius * Math.cos(phi),
+                radius * Math.sin(phi) * Math.sin(theta)
+            );
+        };
+
+        // ═══════════════════════════════════════════════════════════════
+        // NEURONS
+        // ═══════════════════════════════════════════════════════════════
+        
+        const neurons = new THREE.Group();
+        const neuronGeometry = new THREE.SphereGeometry(0.3, 16, 16);
+        const neuronMaterial = new THREE.MeshBasicMaterial({ color: 0x00f0ff });
+        
+        const createNeuron = (position) => {
+            const neuron = new THREE.Mesh(neuronGeometry, neuronMaterial.clone());
+            neuron.position.copy(position);
+            const light = new THREE.PointLight(0x00f0ff, 2, 10);
+            light.position.copy(position);
+            neurons.add(neuron);
+            neurons.add(light);
+            return neuron;
+        };
+
+        createNeuron(new THREE.Vector3(0, 0, 0));
+        scene.add(neurons);
+
+        const connections = new THREE.Group();
+        scene.add(connections);
+
+        // ═══════════════════════════════════════════════════════════════
+        // EARTH
+        // ═══════════════════════════════════════════════════════════════
+        
+        const earthGeometry = new THREE.SphereGeometry(100, 64, 64);
+        const earthMaterial = new THREE.MeshPhongMaterial({
+            color: 0x0a2540,
+            emissive: 0x001a33,
+            emissiveIntensity: 0.3,
+            shininess: 15,
+            transparent: true,
+            opacity: 0
+        });
+        const earth = new THREE.Mesh(earthGeometry, earthMaterial);
+        earth.rotation.y = Math.PI;
+        scene.add(earth);
+
+        const atmosphereGeometry = new THREE.SphereGeometry(102, 64, 64);
+        const atmosphereMaterial = new THREE.ShaderMaterial({
+            transparent: true,
+            opacity: 0,
+            side: THREE.BackSide,
+            vertexShader: `
+                varying vec3 vNormal;
+                void main() {
+                    vNormal = normalize(normalMatrix * normal);
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                }
+            `,
+            fragmentShader: `
+                varying vec3 vNormal;
+                void main() {
+                    float intensity = pow(0.7 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 2.0);
+                    gl_FragColor = vec4(0.0, 0.94, 1.0, 1.0) * intensity;
+                }
+            `
+        });
+        const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
+        scene.add(atmosphere);
+
+        // ═══════════════════════════════════════════════════════════════
+        // CITY NODES
+        // ═══════════════════════════════════════════════════════════════
+        
+        const cityNodes = new THREE.Group();
+        const cityMeshes = {};
+        
+        Object.entries(cities).forEach(([key, city]) => {
+            const pos = latLonTo3D(city.lat, city.lon, 100);
+            const nodeGeometry = new THREE.SphereGeometry(1.5, 32, 32);
+            const nodeMaterial = new THREE.MeshBasicMaterial({
+                color: city.color,
+                transparent: true,
+                opacity: 0
+            });
+            const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
+            node.position.copy(pos);
+            
+            const light = new THREE.PointLight(city.color, 0, 50);
+            light.position.copy(pos);
+            
+            cityNodes.add(node);
+            cityNodes.add(light);
+            cityMeshes[key] = { mesh: node, light, position: pos };
+        });
+        scene.add(cityNodes);
+
+        const networkLines = new THREE.Group();
+        scene.add(networkLines);
+
+        const createConnection = (city1Key, city2Key, color = 0x00f0ff) => {
+            const pos1 = cityMeshes[city1Key].position;
+            const pos2 = cityMeshes[city2Key].position;
+            
+            const curve = new THREE.QuadraticBezierCurve3(
+                pos1,
+                pos1.clone().add(pos2).multiplyScalar(0.5).normalize().multiplyScalar(120),
+                pos2
+            );
+            
+            const points = curve.getPoints(50);
+            const geometry = new THREE.BufferGeometry().setFromPoints(points);
+            const material = new THREE.LineBasicMaterial({
+                color: color,
+                transparent: true,
+                opacity: 0,
+                linewidth: 2
+            });
+            const line = new THREE.Line(geometry, material);
+            networkLines.add(line);
+            return { line, curve };
+        };
+
+        // ═══════════════════════════════════════════════════════════════
+        // PARTICLES
+        // ═══════════════════════════════════════════════════════════════
+        
+        const particleCount = 10000;
+        const particlesGeometry = new THREE.BufferGeometry();
+        const positions = new Float32Array(particleCount * 3);
+        const colors = new Float32Array(particleCount * 3);
+        const sizes = new Float32Array(particleCount);
+        
+        for (let i = 0; i < particleCount; i++) {
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.random() * Math.PI;
+            const radius = 200 + Math.random() * 400;
+            
+            positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+            positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+            positions[i * 3 + 2] = radius * Math.cos(phi);
+            
+            colors[i * 3] = Math.random();
+            colors[i * 3 + 1] = Math.random();
+            colors[i * 3 + 2] = Math.random();
+            
+            sizes[i] = Math.random() * 2;
+        }
+        
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+        particlesGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+        
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 1.5,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.6,
+            sizeAttenuation: true
+        });
+        
+        const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particles);
+
+        // ═══════════════════════════════════════════════════════════════
+        // SATELLITES
+        // ═══════════════════════════════════════════════════════════════
+        
+        const satellites = new THREE.Group();
+        const satelliteMeshes = [];
+        
+        for (let i = 0; i < 12; i++) {
+            const satGeometry = new THREE.OctahedronGeometry(2, 0);
+            const satMaterial = new THREE.MeshPhongMaterial({
+                color: [0xffd700, 0x00f0ff, 0xa855f7][i % 3],
+                emissive: [0xffd700, 0x00f0ff, 0xa855f7][i % 3],
+                emissiveIntensity: 0.5,
+                transparent: true,
+                opacity: 0
+            });
+            const satellite = new THREE.Mesh(satGeometry, satMaterial);
+            satellite.userData.angle = (i / 12) * Math.PI * 2;
+            satellite.userData.altitude = 130 + (i % 3) * 20;
+            satellite.userData.speed = 0.0002 + (i % 3) * 0.0001;
+            satellites.add(satellite);
+            satelliteMeshes.push(satellite);
+        }
+        scene.add(satellites);
+
+        // ═══════════════════════════════════════════════════════════════
+        // BRAIN
+        // ═══════════════════════════════════════════════════════════════
+        
+        const brainGroup = new THREE.Group();
+        const brainGeometry = new THREE.SphereGeometry(105, 32, 32);
+        const brainMaterial = new THREE.MeshBasicMaterial({
+            color: 0x00f0ff,
+            wireframe: true,
+            transparent: true,
+            opacity: 0
+        });
+        const brain = new THREE.Mesh(brainGeometry, brainMaterial);
+        brainGroup.add(brain);
+        scene.add(brainGroup);
+
+        // ═══════════════════════════════════════════════════════════════
+        // LIGHTING
+        // ═══════════════════════════════════════════════════════════════
+        
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+        scene.add(ambientLight);
+
+        const sunLight = new THREE.DirectionalLight(0xffffff, 1);
+        sunLight.position.set(500, 200, 500);
+        scene.add(sunLight);
+
+        // ═══════════════════════════════════════════════════════════════
+        // UTILITIES
+        // ═══════════════════════════════════════════════════════════════
+        
+        const easeInOutCubic = (t) => {
+            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        };
+
+        const lerp = (a, b, t) => a + (b - a) * t;
+
+        const formatTime = (seconds) => {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        };
+
+        // ═══════════════════════════════════════════════════════════════
+        // ANIMATION LOOP
+        // ═══════════════════════════════════════════════════════════════
+        
+        const animate = () => {
+            requestAnimationFrame(animate);
+            
+            if (isPlaying) {
+                time += 1/60;
+                timeDisplay.textContent = `${formatTime(time)} / 01:00`;
+            }
+            
+            const t = time;
+
+            // ACT 1: GENESIS (0-12s)
+            if (t >= 0 && t <= 3 && isPlaying) {
+                const progress = t / 3;
+                const neuronCount = Math.floor(easeInOutCubic(progress) * 100);
+                
+                while (neurons.children.length < neuronCount * 2) {
+                    const pos = new THREE.Vector3(
+                        (Math.random() - 0.5) * 40,
+                        (Math.random() - 0.5) * 40,
+                        (Math.random() - 0.5) * 40
+                    );
+                    createNeuron(pos);
+                }
+                
+                neurons.children.forEach((child, i) => {
+                    if (child.isMesh) {
+                        child.material.emissiveIntensity = 0.5 + Math.sin(t * 10 + i) * 0.5;
+                    }
+                });
+            }
+
+            if (t >= 3 && t <= 6) {
+                const progress = (t - 3) / 3;
+                camera.position.z = lerp(5, 80, easeInOutCubic(progress));
+                camera.fov = lerp(90, 60, progress);
+                camera.updateProjectionMatrix();
+            }
+
+            if (t >= 6 && t <= 9) {
+                const progress = (t - 6) / 3;
+                neurons.children.forEach((child) => {
+                    if (child.isMesh) {
+                        child.position.lerp(new THREE.Vector3(0, 0, 0), 0.02);
+                        child.material.opacity = 1 - progress * 0.5;
+                    }
+                });
+            }
+
+            if (t >= 9 && t <= 12) {
+                const progress = (t - 9) / 3;
+                earth.material.opacity = easeInOutCubic(progress);
+                atmosphere.material.opacity = easeInOutCubic(progress) * 0.6;
+                
+                cityMeshes.hcmc.mesh.material.opacity = easeInOutCubic(progress);
+                cityMeshes.hcmc.light.intensity = easeInOutCubic(progress) * 10;
+                
+                camera.position.set(0, 50, 200);
+                camera.lookAt(cityMeshes.hcmc.position);
+            }
+
+            // ACT 2: NETWORK AWAKENING (12-28s)
+            if (t >= 12 && t <= 14) {
+                const progress = (t - 12) / 2;
+                cityMeshes.singapore.mesh.material.opacity = easeInOutCubic(progress);
+                cityMeshes.singapore.light.intensity = easeInOutCubic(progress) * 10;
+                
+                if (!networkLines.children.length) {
+                    createConnection('hcmc', 'singapore', 0x00f0ff);
+                }
+                if (networkLines.children[0]) {
+                    networkLines.children[0].material.opacity = easeInOutCubic(progress);
+                }
+            }
+
+            if (t >= 14 && t <= 18) {
+                const progress = (t - 14) / 4;
+                ['bangkok', 'jakarta', 'kualaLumpur'].forEach((city, i) => {
+                    const cityProgress = Math.max(0, Math.min(1, (progress - i * 0.25) * 4));
+                    cityMeshes[city].mesh.material.opacity = easeInOutCubic(cityProgress);
+                    cityMeshes[city].light.intensity = easeInOutCubic(cityProgress) * 10;
+                });
+                
+                camera.position.set(0, 100, 350);
+            }
+
+            if (t >= 22 && t <= 28) {
+                const progress = (t - 22) / 6;
+                ['berlin', 'sanFrancisco', 'seoul'].forEach((city, i) => {
+                    const cityProgress = Math.max(0, Math.min(1, (progress - i * 0.2) * 5));
+                    cityMeshes[city].mesh.material.opacity = easeInOutCubic(cityProgress);
+                    cityMeshes[city].light.intensity = easeInOutCubic(cityProgress) * 10;
+                });
+            }
+
+            // ACT 3: PLANETARY CONSCIOUSNESS (28-42s)
+            if (t >= 28 && t <= 32) {
+                const progress = (t - 28) / 4;
+                camera.position.set(
+                    0,
+                    lerp(100, 200, easeInOutCubic(progress)),
+                    lerp(350, 500, easeInOutCubic(progress))
+                );
+                camera.fov = lerp(45, 40, progress);
+                camera.updateProjectionMatrix();
+            }
+
+            if (t >= 32 && t <= 36) {
+                earth.rotation.y += 0.001;
+                
+                Object.values(cityMeshes).forEach((city) => {
+                    const pulse = Math.sin(t * 2) * 0.5 + 0.5;
+                    city.light.intensity = 5 + pulse * 5;
+                });
+            }
+
+            if (t >= 36 && t <= 39) {
+                const progress = (t - 36) / 3;
+                satelliteMeshes.forEach((sat) => {
+                    sat.material.opacity = easeInOutCubic(progress);
+                });
+            }
+
+            if (t >= 39 && t <= 42) {
+                const progress = (t - 39) / 3;
+                brain.material.opacity = easeInOutCubic(progress) * 0.3;
+                const breathe = Math.sin(t * 2) * 0.02 + 1;
+                brainGroup.scale.set(breathe, breathe, breathe);
+            }
+
+            // ACT 4: THE ULTIMATE PULSE (42-52s)
+            if (t >= 45 && t <= 48) {
+                const pulseIntensity = Math.sin((t - 45) * Math.PI * 2) * 0.5 + 0.5;
+                
+                cityMeshes.hcmc.light.intensity = 50 * pulseIntensity;
+                bloomPass.strength = 2.5 + pulseIntensity * 2;
+                
+                Object.values(cityMeshes).forEach((city) => {
+                    city.light.intensity = 10 + pulseIntensity * 20;
+                    city.mesh.scale.set(1 + pulseIntensity * 0.5, 1 + pulseIntensity * 0.5, 1 + pulseIntensity * 0.5);
+                });
+            }
+
+            if (t >= 48 && t <= 50) {
+                const heartbeat = Math.sin(t * Math.PI) * 0.3 + 0.7;
+                earth.scale.set(heartbeat, heartbeat, heartbeat);
+                brainGroup.scale.set(heartbeat, heartbeat, heartbeat);
+            }
+
+            // ACT 5: ETERNAL PRESENCE (52-60s)
+            if (t >= 52) {
+                camera.position.set(0, 180, 420);
+                camera.lookAt(0, 0, 0);
+                
+                earth.rotation.y += 0.0005;
+                
+                const breathe = Math.sin(t) * 0.02 + 1;
+                brainGroup.scale.set(breathe, breathe, breathe);
+                
+                Object.values(cityMeshes).forEach((city, i) => {
+                    const pulse = Math.sin(t * 0.5 + i) * 0.5 + 0.5;
+                    city.light.intensity = 5 + pulse * 3;
+                });
+                
+                if (t >= 60) {
+                    time = 0;
+                }
+            }
+
+            // Continuous effects
+            if (t >= 36) {
+                satelliteMeshes.forEach((sat) => {
+                    const angle = sat.userData.angle + t * sat.userData.speed;
+                    const altitude = sat.userData.altitude;
+                    sat.position.set(
+                        Math.cos(angle) * altitude,
+                        Math.sin(t * 0.3 + sat.userData.angle) * 20,
+                        Math.sin(angle) * altitude
+                    );
+                    sat.rotation.x += 0.01;
+                    sat.rotation.y += 0.02;
+                });
+            }
+
+            particles.rotation.y += 0.0002;
+            particles.rotation.x += 0.0001;
+
+            composer.render();
+        };
+
+        // ═══════════════════════════════════════════════════════════════
+        // CONTROLS
+        // ═══════════════════════════════════════════════════════════════
+        
+        const togglePlay = () => {
+            isPlaying = !isPlaying;
+            playPauseBtn.innerHTML = isPlaying ? '⏸ Pause' : '▶ Play';
+        };
+
+        const restart = () => {
+            time = 0;
+            timeDisplay.textContent = '00:00 / 01:00';
+        };
+
+        const toggleUI = () => {
+            uiVisible = !uiVisible;
+            controls.classList.toggle('hidden', !uiVisible);
+            legend.classList.toggle('hidden', !uiVisible);
+            keyboardHint.classList.toggle('hidden', !uiVisible);
+        };
+
+        playPauseBtn.addEventListener('click', togglePlay);
+        restartBtn.addEventListener('click', restart);
+
+        window.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                togglePlay();
+            }
+            if (e.key === 'r' || e.key === 'R') {
+                e.preventDefault();
+                restart();
+            }
+            if (e.key === 'h' || e.key === 'H') {
+                e.preventDefault();
+                toggleUI();
+            }
+        });
+
+        // ═══════════════════════════════════════════════════════════════
+        // RESPONSIVE
+        // ═══════════════════════════════════════════════════════════════
+        
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            composer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // ═══════════════════════════════════════════════════════════════
+        // START
+        // ═══════════════════════════════════════════════════════════════
+        
+        setTimeout(() => {
+            loading.style.opacity = '0';
+            setTimeout(() => {
+                loading.style.display = 'none';
+                isPlaying = true;
+                playPauseBtn.innerHTML = '⏸ Pause';
+                animate();
+            }, 500);
+        }, 2000);
+    </script>
+</body>
+</html>

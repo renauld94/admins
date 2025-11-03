@@ -353,6 +353,30 @@ function toggleMobileMenu() {
     }
 }
 
+function toggleMobileDropdown() {
+    try {
+        const dropdown = document.querySelector('.mobile-dropdown');
+        const dropdownToggle = document.querySelector('.mobile-dropdown-toggle');
+        const dropdownMenu = document.querySelector('.mobile-dropdown-menu');
+        
+        if (!dropdown || !dropdownToggle || !dropdownMenu) return;
+        
+        const isOpen = dropdown.classList.contains('active');
+        
+        if (isOpen) {
+            dropdown.classList.remove('active');
+            dropdownToggle.setAttribute('aria-expanded', 'false');
+            dropdownMenu.setAttribute('aria-hidden', 'true');
+        } else {
+            dropdown.classList.add('active');
+            dropdownToggle.setAttribute('aria-expanded', 'true');
+            dropdownMenu.setAttribute('aria-hidden', 'false');
+        }
+    } catch (e) {
+        console.warn('toggleMobileDropdown failed', e);
+    }
+}
+
 function initializeGeospatialLaunch() {
     const fab = document.querySelector('.globe-fab');
     if (!fab) return;
@@ -1391,6 +1415,21 @@ if (typeof window.portfolioFunctions.closeMobileMenu === 'undefined') {
     };
 }
 
+// Provide a safe delegating function for toggleMobileDropdown
+if (typeof window.portfolioFunctions.toggleMobileDropdown === 'undefined') {
+    window.portfolioFunctions.toggleMobileDropdown = function (...args) {
+        try {
+            if (typeof toggleMobileDropdown === 'function') return toggleMobileDropdown.apply(null, args);
+        } catch (e) { /* ignore */ }
+        try {
+            if (window.portfolioFunctions && typeof window.portfolioFunctions.toggleMobileDropdown === 'function') {
+                return window.portfolioFunctions.toggleMobileDropdown.apply(null, args);
+            }
+        } catch (e) { /* ignore */ }
+        // no-op
+    };
+}
+
 // Backwards-compatible globals: some pages or inline handlers may call toggleMobileMenu
 // directly. Provide safe global wrappers that delegate to the namespaced functions
 // if available, preventing ReferenceError in environments where code order differs.
@@ -1411,6 +1450,16 @@ try {
                 try {
                     if (window.portfolioFunctions && typeof window.portfolioFunctions.closeMobileMenu === 'function') {
                         return window.portfolioFunctions.closeMobileMenu.apply(null, args);
+                    }
+                } catch (e) { /* swallow */ }
+                // no-op fallback
+            };
+        }
+        if (typeof window.toggleMobileDropdown === 'undefined') {
+            window.toggleMobileDropdown = function (...args) {
+                try {
+                    if (window.portfolioFunctions && typeof window.portfolioFunctions.toggleMobileDropdown === 'function') {
+                        return window.portfolioFunctions.toggleMobileDropdown.apply(null, args);
                     }
                 } catch (e) { /* swallow */ }
                 // no-op fallback
