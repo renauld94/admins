@@ -1419,14 +1419,14 @@ if (typeof window.portfolioFunctions.closeMobileMenu === 'undefined') {
 if (typeof window.portfolioFunctions.toggleMobileDropdown === 'undefined') {
     window.portfolioFunctions.toggleMobileDropdown = function (...args) {
         try {
-            if (typeof toggleMobileDropdown === 'function') return toggleMobileDropdown.apply(null, args);
-        } catch (e) { /* ignore */ }
-        try {
-            if (window.portfolioFunctions && typeof window.portfolioFunctions.toggleMobileDropdown === 'function') {
-                return window.portfolioFunctions.toggleMobileDropdown.apply(null, args);
+            // Call the actual toggleMobileDropdown function defined above
+            if (typeof toggleMobileDropdown === 'function') {
+                return toggleMobileDropdown.apply(null, args);
             }
-        } catch (e) { /* ignore */ }
-        // no-op
+        } catch (e) { 
+            console.warn('portfolioFunctions.toggleMobileDropdown delegation failed:', e);
+        }
+        // no-op fallback
     };
 }
 
@@ -1458,6 +1458,13 @@ try {
         if (typeof window.toggleMobileDropdown === 'undefined') {
             window.toggleMobileDropdown = function (...args) {
                 try {
+                    // Try the actual function first
+                    if (typeof toggleMobileDropdown === 'function') {
+                        return toggleMobileDropdown.apply(null, args);
+                    }
+                } catch (e) { /* swallow */ }
+                try {
+                    // Fallback to portfolioFunctions
                     if (window.portfolioFunctions && typeof window.portfolioFunctions.toggleMobileDropdown === 'function') {
                         return window.portfolioFunctions.toggleMobileDropdown.apply(null, args);
                     }
