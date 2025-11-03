@@ -1,0 +1,14 @@
+[Unit]
+Description=Maintain SSH tunnel for MCP using autossh (user service)
+After=network-online.target
+
+[Service]
+Type=simple
+EnvironmentFile=%h/.config/systemd/user/mcp-tunnel.env
+ExecStart=/usr/bin/env autossh -M 0 -N -o ExitOnForwardFailure=yes -o ServerAliveInterval=30 -o ServerAliveCountMax=3 \
+  -o ProxyJump=${PROXY_JUMP} -i ${IDENTITY} -L 127.0.0.1:${LOCAL_PORT}:127.0.0.1:${REMOTE_PORT} ${REMOTE_USER}@${REMOTE_HOST}
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target

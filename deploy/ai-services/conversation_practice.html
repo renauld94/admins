@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 AI Conversation Partner - Vietnamese Practice</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .scenario-selector {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .scenario-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 3px solid transparent;
+        }
+        
+        .scenario-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .scenario-card.selected {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        
+        .scenario-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .level-selector {
+            margin-top: 20px;
+        }
+        
+        .level-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .level-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: white;
+            border: 2px solid #ddd;
+        }
+        
+        .level-btn.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        
+        .start-btn {
+            width: 100%;
+            padding: 20px;
+            margin-top: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .start-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .chat-container {
+            display: none;
+            padding: 30px;
+            min-height: 500px;
+        }
+        
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: #f8f9fa;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            max-width: 80%;
+            animation: slideIn 0.3s;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .message.ai {
+            background: #667eea;
+            color: white;
+            margin-right: auto;
+        }
+        
+        .message.student {
+            background: #f5576c;
+            color: white;
+            margin-left: auto;
+        }
+        
+        .message.feedback {
+            background: #ffd93d;
+            color: #333;
+            max-width: 100%;
+            font-size: 0.9em;
+        }
+        
+        .feedback-scores {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .score-item {
+            padding: 10px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .input-area {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .input-area textarea {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1em;
+            resize: none;
+            font-family: inherit;
+        }
+        
+        .send-btn {
+            padding: 15px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+        
+        .send-btn:hover {
+            background: #5568d3;
+            transform: scale(1.05);
+        }
+        
+        .mic-btn {
+            padding: 15px 30px;
+            background: #f5576c;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.5em;
+            transition: all 0.3s;
+        }
+        
+        .mic-btn:hover {
+            background: #e04858;
+        }
+        
+        .mic-btn.recording {
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .end-btn {
+            margin-top: 20px;
+            padding: 15px;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #667eea;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 AI Conversation Partner</h1>
+            <p>Practice Vietnamese with your AI language tutor!</p>
+        </div>
+        
+        <div class="scenario-selector" id="scenarioSelector">
+            <h2>Choose Your Scenario</h2>
+            <div class="scenario-grid" id="scenarioGrid">
+                <!-- Scenarios loaded here -->
+            </div>
+            
+            <div class="level-selector">
+                <h3>Your Level</h3>
+                <div class="level-buttons">
+                    <button class="level-btn" data-level="beginner">🌱 Beginner</button>
+                    <button class="level-btn" data-level="intermediate">🌿 Intermediate</button>
+                    <button class="level-btn" data-level="advanced">🌳 Advanced</button>
+                </div>
+            </div>
+            
+            <button class="start-btn" id="startBtn" disabled>Start Conversation</button>
+        </div>
+        
+        <div class="chat-container" id="chatContainer">
+            <div class="chat-messages" id="chatMessages"></div>
+            <div class="input-area">
+                <textarea id="messageInput" rows="2" placeholder="Type your Vietnamese here..."></textarea>
+                <button class="mic-btn" id="micBtn">🎤</button>
+                <button class="send-btn" id="sendBtn">Send</button>
+            </div>
+            <button class="end-btn" id="endBtn">End Conversation</button>
+        </div>
+    </div>
+    
+    <script>
+        let ws = null;
+        let selectedScenario = null;
+        let selectedLevel = null;
+        let isRecording = false;
+        let mediaRecorder = null;
+        
+        const SCENARIOS = {
+            'coffee_shop': {name: '☕ Coffee Shop', icon: '☕'},
+            'greetings': {name: '👋 Greetings', icon: '👋'},
+            'business_meeting': {name: '💼 Business', icon: '💼'},
+            'shopping': {name: '🛍️ Shopping', icon: '🛍️'},
+            'restaurant': {name: '🍜 Restaurant', icon: '🍜'}
+        };
+        
+        // Load scenarios
+        function loadScenarios() {
+            const grid = document.getElementById('scenarioGrid');
+            Object.entries(SCENARIOS).forEach(([id, data]) => {
+                const card = document.createElement('div');
+                card.className = 'scenario-card';
+                card.dataset.scenario = id;
+                card.innerHTML = `
+                    <h3>${data.icon} ${data.name}</h3>
+                `;
+                card.onclick = () => selectScenario(id);
+                grid.appendChild(card);
+            });
+        }
+        
+        function selectScenario(scenario) {
+            selectedScenario = scenario;
+            document.querySelectorAll('.scenario-card').forEach(card => {
+                card.classList.toggle('selected', card.dataset.scenario === scenario);
+            });
+            updateStartButton();
+        }
+        
+        document.querySelectorAll('.level-btn').forEach(btn => {
+            btn.onclick = () => {
+                selectedLevel = btn.dataset.level;
+                document.querySelectorAll('.level-btn').forEach(b => {
+                    b.classList.remove('selected');
+                });
+                btn.classList.add('selected');
+                updateStartButton();
+            };
+        });
+        
+        function updateStartButton() {
+            document.getElementById('startBtn').disabled = !(selectedScenario && selectedLevel);
+        }
+        
+        document.getElementById('startBtn').onclick = startConversation;
+        
+        function startConversation() {
+            // Connect to WebSocket
+            const wsUrl = 'wss://moodle.simondatalab.de/ai/conversation';
+            ws = new WebSocket(wsUrl);
+            
+            ws.onopen = () => {
+                console.log('Connected to AI');
+                ws.send(JSON.stringify({
+                    type: 'start_scenario',
+                    scenario: selectedScenario,
+                    level: selectedLevel
+                }));
+                
+                document.getElementById('scenarioSelector').style.display = 'none';
+                document.getElementById('chatContainer').style.display = 'block';
+            };
+            
+            ws.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                handleMessage(data);
+            };
+            
+            ws.onerror = (error) => {
+                console.error('WebSocket error:', error);
+                addMessage('system', '❌ Connection error. Please try again.');
+            };
+        }
+        
+        function handleMessage(data) {
+            if (data.type === 'ai_message') {
+                addMessage('ai', data.text);
+            } else if (data.type === 'ai_response') {
+                addMessage('ai', data.vietnamese_text);
+                if (data.feedback) {
+                    showFeedback(data.feedback);
+                }
+            }
+        }
+        
+        function addMessage(sender, text) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `message ${sender}`;
+            msgDiv.textContent = text;
+            messagesDiv.appendChild(msgDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+        
+        function showFeedback(feedback) {
+            const messagesDiv = document.getElementById('chatMessages');
+            const feedbackDiv = document.createElement('div');
+            feedbackDiv.className = 'message feedback';
+            feedbackDiv.innerHTML = `
+                <strong>📊 AI Feedback:</strong><br>
+                <div class="feedback-scores">
+                    <div class="score-item">
+                        Grammar: ${feedback.grammar_score || 0}%
+                    </div>
+                    <div class="score-item">
+                        Tone: ${feedback.tone_accuracy || 0}%
+                    </div>
+                </div>
+                <p><strong>✅ Good:</strong> ${feedback.encouragement}</p>
+                <p><strong>💡 Tip:</strong> ${feedback.improvement_tip}</p>
+                ${feedback.cultural_note ? `<p><strong>🏮 Culture:</strong> ${feedback.cultural_note}</p>` : ''}
+            `;
+            messagesDiv.appendChild(feedbackDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+        
+        document.getElementById('sendBtn').onclick = sendMessage;
+        document.getElementById('messageInput').onkeypress = (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        };
+        
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const text = input.value.trim();
+            if (!text || !ws) return;
+            
+            addMessage('student', text);
+            
+            ws.send(JSON.stringify({
+                type: 'student_message',
+                text: text
+            }));
+            
+            input.value = '';
+        }
+        
+        document.getElementById('micBtn').onclick = toggleRecording;
+        
+        async function toggleRecording() {
+            if (!isRecording) {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                const audioChunks = [];
+                
+                mediaRecorder.ondataavailable = (e) => audioChunks.push(e.data);
+                mediaRecorder.onstop = async () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                    // TODO: Send to ASR service for transcription
+                    // Then send transcription to AI
+                };
+                
+                mediaRecorder.start();
+                isRecording = true;
+                document.getElementById('micBtn').classList.add('recording');
+            } else {
+                mediaRecorder.stop();
+                isRecording = false;
+                document.getElementById('micBtn').classList.remove('recording');
+            }
+        }
+        
+        document.getElementById('endBtn').onclick = () => {
+            if (ws) {
+                ws.send(JSON.stringify({type: 'end_conversation'}));
+                ws.close();
+            }
+            location.reload();
+        };
+        
+        // Initialize
+        loadScenarios();
+    </script>
+</body>
+</html>

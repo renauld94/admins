@@ -1,0 +1,45 @@
+name: QA + Lighthouse
+
+on:
+  push:
+    branches: [ main, deploy/** ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  qa:
+    name: Run QA harness and Lighthouse
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install minimal deps
+        run: |
+          npm install --no-audit --no-fund puppeteer@latest lighthouse@latest jq
+
+      - name: Run QA harness (Puppeteer)
+        run: |
+          mkdir -p portfolio-deployment-enhanced/qa/output
+          node portfolio-deployment-enhanced/qa/test.js
+
+      - name: Run Lighthouse (mobile emulation)
+        run: |
+          npx -y lighthouse https://www.simondatalab.de/ --output=json --output-path=portfolio-deployment-enhanced/qa/output/lighthouse.json --quiet --chrome-flags='--headless --no-sandbox' --only-categories=performance,accessibility,best-practices,seo || true
+
+      - name: Check for READY marker in QA console output
+        run: |
+          set -e
+          jq -e '.interesting[]?.text | select(test("\\[NEURAL SEQUENCE\\].*READY";"i"))' portfolio-deployment-enhanced/qa/output/console-desktop.json >/dev/null || (echo "READY marker not found in desktop console output" && exit 1)
+          jq -e '.interesting[]?.text | select(test("\\[NEURAL SEQUENCE\\].*READY";"i"))' portfolio-deployment-enhanced/qa/output/console-mobile.json >/dev/null || (echo "READY marker not found in mobile console output" && exit 1)
+
+      - name: Upload QA artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: qa-artifacts
+          path: portfolio-deployment-enhanced/qa/output

@@ -1,0 +1,36 @@
+Prompts for Ollama / OpenWebUI — Week 1 generation
+
+1) Generate 10 variations of a 2-line greeting dialogue (VN + EN) suitable for beginner learners.
+Prompt:
+"Generate 10 short dialogue pairs. Each pair should include: 1) a Vietnamese line with polite/formal and informal variants; 2) an English translation on the next line. Keep each dialogue under 3 lines. Mark lines with 'VN:' and 'EN:'."
+
+2) Create 20 beginner-level fill-in-the-blank sentences using Week 1 vocabulary.
+Prompt:
+"Produce 20 short Vietnamese sentences with one blank each (____) for students to fill in with core Week1 words (Chào, tên, đến từ, ở, ...). Provide an answer key after the list."
+
+3) Produce 50 flashcards in CSV format (front: English, back: Vietnamese), grouped by topic.
+Prompt:
+"Return CSV format with headers Front,Back. Create 50 high-value vocabulary items for beginner learners relevant to introductions and daily survival language."
+
+4) Generate a 30-second spoken self-introduction script in Vietnamese plus an English transliteration and simple phonetic hints.
+Prompt:
+"Write a 30-second self-introduction in Vietnamese with an English translation and simple pronunciation hints (one short phrase per line). Keep vocabulary limited to Week 1 words."
+
+How to call (examples)
+
+# Ollama (if API available at https://ollama.simondatalab.de)
+# Edit MODEL variable to the model you want to use.
+MODEL=llama2
+ENDPOINT=https://ollama.simondatalab.de/api/generate
+curl -sS -X POST "$ENDPOINT" -H "Content-Type: application/json" \
+  -d '{"model":"'$MODEL'","prompt":"<paste prompt here>","max_tokens":800}'
+
+# OpenWebUI (assuming a text generation endpoint)
+ENDPOINT=https://openwebui.simondatalab.de/api/generate
+curl -sS -X POST "$ENDPOINT" -H "Content-Type: application/json" \
+  -d '{"prompt":"<paste prompt here>","length":600}'
+
+Notes
+- Replace endpoints and model names as appropriate for your setup.
+- For local Ollama CLI use: ollama generate -m <model> "<prompt>" > output.txt
+- The `week1_generate.sh` script automates these calls locally. Edit variables at the top before running.

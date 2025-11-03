@@ -1,0 +1,42 @@
+.neural-hero-overlay{ position:absolute; left:0; right:0; top:0; bottom:0; pointer-events:none; font-family: Inter, system-ui, Arial, sans-serif; color:#cfefff; }
+.neural-hero-overlay .city-overlay{ position:absolute; left:18px; bottom:18px; background:linear-gradient(90deg, rgba(0,0,0,0.45), rgba(0,0,0,0.12)); padding:12px 16px; border-radius:8px; pointer-events:auto; max-width:320px; }
+.neural-hero-overlay .overlay-label{ position:absolute; color:#bfefff; background:transparent; padding:4px 8px; border-radius:6px; font-size:13px; backdrop-filter: blur(4px); }
+.neural-stats-ticker{ position:absolute; left:50%; transform:translateX(-50%); bottom:8px; display:flex; gap:12px; pointer-events:none; }
+.neural-stats-ticker .stat{ background:rgba(0,0,0,0.36); padding:6px 10px; border-radius:999px; font-size:12px; color:#e6fbff; }
+.enter-network-cta{ position:absolute; right:20px; bottom:20px; pointer-events:auto; background:linear-gradient(90deg,#00d4ff,#7c5cff); border:none; color:#001119; padding:12px 18px; border-radius:26px; font-weight:700; cursor:pointer; box-shadow:0 8px 30px rgba(0,0,0,0.45); }
+.overlay-label, .city-overlay, .neural-stats-ticker, .enter-network-cta{ transition:opacity 0.35s ease, transform 0.35s ease; }
+/* responsive and accessibility */
+@media (max-width:720px){
+  .neural-stats-ticker{ bottom:6px; gap:8px; }
+  .enter-network-cta{ right:10px; bottom:10px; padding:10px 12px; font-size:13px; }
+}
+
+/* respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .enter-network-cta{ transition:none; }
+}
+
+/* Mobile performance: tone down heavy overlay effects and animations */
+@media (max-width: 900px) {
+  .enter-network-cta {
+    bottom: 12px;
+    right: 12px;
+    padding: 8px 10px;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none; /* cheaper */
+    box-shadow: none;
+    transform-origin: center;
+    transition: transform 160ms linear, opacity 160ms linear;
+  }
+
+  .neural-hero-overlay .overlay-label,
+  .neural-hero-overlay .city-overlay,
+  .neural-stats-ticker { 
+    backface-visibility: hidden;
+    will-change: opacity, transform;
+    transition-duration: 160ms;
+  }
+
+  /* reduce text-size motion and heavy glows */
+  .neural-hero-overlay .overlay-label { text-shadow: none; }
+}

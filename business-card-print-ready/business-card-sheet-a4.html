@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Business Card – A4 Sheet (8-up, Bleed + Marks)</title>
+  <style>
+    /* A4 sheet with 8 cards (2 × 4), each with 0.125in bleed and crop marks */
+    :root {
+      --trim-w: 3.5in;     /* 89 mm */
+      --trim-h: 2in;       /* 51 mm */
+      --bleed: 0.125in;    /* 3 mm */
+      --doc-w: calc(var(--trim-w) + var(--bleed) * 2);
+      --doc-h: calc(var(--trim-h) + var(--bleed) * 2);
+      --gut: 12mm;         /* gutter between cards */
+      --m: 12mm;           /* outer margins */
+      --bg-a: #0A192F; --bg-b: #0D223C; --accent-a:#12AFC0; --accent-b:#17BECF;
+    }
+
+    @page { size: A4; margin: 0; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+
+    .page { position: relative; width: 210mm; height: 297mm; page-break-after: always; }
+    .grid { position: absolute; left: var(--m); top: var(--m); right: var(--m); bottom: var(--m); display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(4, 1fr); gap: var(--gut); }
+
+    .cell { position: relative; width: var(--doc-w); height: var(--doc-h); margin: auto; }
+    .artwork { position: absolute; inset: 0; background: linear-gradient(135deg, var(--bg-a) 0%, var(--bg-b) 100%); overflow: hidden; }
+    .artwork.back { background: #0a0e1a; }
+    .trim { position: absolute; left: var(--bleed); top: var(--bleed); width: var(--trim-w); height: var(--trim-h); }
+  .content { position: absolute; inset: 0.3in; color: #fff; display: flex; flex-direction: column; justify-content: space-between; }
+  /* QR positioning and physical sizing (front only) */
+  .qr { position: absolute; right: 0.3in; bottom: 0.3in; text-align: center; display: inline-flex; align-items: center; justify-content: center; }
+  .qr-code { width: 0.5in; height: 0.5in; background: #fff; border-radius: 12px; padding: 0.07in; box-shadow: 0 6px 16px rgba(0,0,0,0.35); border: 2px solid rgba(23, 190, 207, 0.32); object-fit: contain; display: block; }
+  .qr-label { margin-top: 4pt; font-size: 7pt; color: #7b8b96; font-weight: 600; }
+    .name { font-weight: 800; font-size: 18pt; }
+    .title { color: #13c2d6; font-weight: 700; font-size: 10pt; }
+    .sub { color: #9fb0bf; font-size: 9pt; }
+    .contact { font-size: 9pt; color: #eef6fb; line-height: 1.35; margin-top: 6pt; }
+    .accent { position: absolute; left: var(--bleed); bottom: var(--bleed); width: var(--trim-w); height: 3pt; background: linear-gradient(90deg, var(--accent-a) 0%, var(--accent-b) 100%); }
+
+    /* Crop marks per card */
+    .crop { position: absolute; inset: 0; pointer-events: none; }
+    .crop div { position: absolute; background: #000; }
+    :root { --crop-l: 14pt; --crop-t: 0.25pt; }
+    .cm-tl-h { left: calc(var(--bleed) - var(--crop-l)); top: var(--bleed); width: var(--crop-l); height: var(--crop-t); }
+    .cm-tl-v { left: var(--bleed); top: calc(var(--bleed) - var(--crop-l)); width: var(--crop-t); height: var(--crop-l); }
+    .cm-tr-h { right: calc(var(--bleed) - var(--crop-l)); top: var(--bleed); width: var(--crop-l); height: var(--crop-t); }
+    .cm-tr-v { right: var(--bleed); top: calc(var(--bleed) - var(--crop-l)); width: var(--crop-t); height: var(--crop-l); }
+    .cm-bl-h { left: calc(var(--bleed) - var(--crop-l)); bottom: var(--bleed); width: var(--crop-l); height: var(--crop-t); }
+    .cm-bl-v { left: var(--bleed); bottom: calc(var(--bleed) - var(--crop-l)); width: var(--crop-t); height: var(--crop-l); }
+    .cm-br-h { right: calc(var(--bleed) - var(--crop-l)); bottom: var(--bleed); width: var(--crop-l); height: var(--crop-t); }
+    .cm-br-v { right: var(--bleed); bottom: calc(var(--bleed) - var(--crop-l)); width: var(--crop-t); height: var(--crop-l); }
+
+    @media screen { body { background: #f4f6f8; padding: 16px; } .page { box-shadow: 0 10px 30px rgba(0,0,0,0.12); margin: 0 auto 16px; } }
+  </style>
+</head>
+<body>
+
+  <!-- PAGE 1: FRONT (8-up) -->
+  <section class="page">
+    <div class="grid">
+      <!-- 8 cells -->
+      <!-- Repeat the same content; kept simple and robust for print shops -->
+      <!-- We intentionally avoid external fonts for maximum compatibility -->
+      
+      <!-- Generate 8 cells -->
+      <template id="card-template">
+        <div class="cell">
+          <div class="artwork"></div>
+          <div class="trim">
+            <div class="content">
+              <div>
+                <div class="name">Simon Renauld</div>
+                <div class="title">CTO - Data Engineering &amp; Analytics</div>
+                <div class="sub">Enterprise ML Systems • Data Platforms • Governance</div>
+                <div class="contact">
+                  📧 contact@simondatalab.de<br/>
+                  🌐 www.simondatalab.de<br/>
+                  📍 Ho Chi Minh City, Vietnam<br/>
+                  📱 +84 92 318 00 61 • 📞 +1 418 476 9790
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="accent"></div>
+          <!-- QR (locked to 0.50in) -->
+          <div class="qr">
+            <div>
+              <img src="qr-code-print-300dpi.png" alt="Portfolio QR Code" class="qr-code">
+              <div class="qr-label">Scan for portfolio</div>
+            </div>
+          </div>
+          <div class="crop" aria-hidden="true">
+            <div class="cm-tl-h"></div><div class="cm-tl-v"></div>
+            <div class="cm-tr-h"></div><div class="cm-tr-v"></div>
+            <div class="cm-bl-h"></div><div class="cm-bl-v"></div>
+            <div class="cm-br-h"></div><div class="cm-br-v"></div>
+          </div>
+        </div>
+      </template>
+    </div>
+  </section>
+
+  <!-- PAGE 2: BACK (8-up) -->
+  <section class="page">
+    <div class="grid">
+      <template id="card-template-back">
+        <div class="cell">
+          <div class="artwork back"></div>
+          <div class="trim">
+            <div class="content" style="align-items:center; justify-content:center; gap:10pt; text-align:center;">
+              <div style="font-size: 14pt; font-weight: 800; background: linear-gradient(135deg, var(--accent-a), var(--accent-b)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Neuro DataLab</div>
+              <div style="color:#ffffff; font-weight:600; font-size:10pt; max-width:80%;">Transforming Complex Data into Actionable Intelligence</div>
+            </div>
+          </div>
+          <div class="accent"></div>
+          <div class="crop" aria-hidden="true">
+            <div class="cm-tl-h"></div><div class="cm-tl-v"></div>
+            <div class="cm-tr-h"></div><div class="cm-tr-v"></div>
+            <div class="cm-bl-h"></div><div class="cm-bl-v"></div>
+            <div class="cm-br-h"></div><div class="cm-br-v"></div>
+          </div>
+        </div>
+      </template>
+    </div>
+  </section>
+
+  <script>
+    // Populate grids with 8 cards each, using templates for minimal duplication
+    const fillGrid = (grid, templateId) => {
+      const template = document.getElementById(templateId);
+      for (let i = 0; i < 8; i++) {
+        grid.appendChild(template.content.cloneNode(true));
+      }
+    };
+    const [frontGrid, backGrid] = document.querySelectorAll('.grid');
+    fillGrid(frontGrid, 'card-template');
+    fillGrid(backGrid, 'card-template-back');
+  </script>
+</body>
+</html>

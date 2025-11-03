@@ -1,0 +1,19 @@
+[Unit]
+Description=Vietnamese ASR FastAPI Service
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+WorkingDirectory=/opt/asr_service
+ExecStart=/usr/bin/env uvicorn fastapi_app:app --host 0.0.0.0 --port 8000
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+
+# Installation notes:
+# 1. Copy this file to /etc/systemd/system/asr.service
+# 2. Place the ASR application in /opt/asr_service and ensure files are owned by www-data.
+# 3. Run: systemctl daemon-reload && systemctl enable --now asr.service

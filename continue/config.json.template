@@ -1,0 +1,42 @@
+{
+  "$schema": "https://raw.githubusercontent.com/continuedev/continue/main/config-schema.json",
+  "models": {
+    "chat": {
+      "title": "DeepSeek Coder 6.7B (Ollama)",
+      "provider": "ollama",
+      "model": "deepseek-coder:6.7b",
+      "temperature": 0.2
+    },
+    "edit": {
+      "title": "DeepSeek Coder 6.7B (Edit)",
+      "provider": "ollama",
+      "model": "deepseek-coder:6.7b",
+      "temperature": 0.15
+    },
+    "autocomplete": {
+      "title": "Llama3.1:8B (Autocomplete)",
+      "provider": "ollama",
+      "model": "llama3.1:8b",
+      "contextLength": 2048,
+      "maxTokens": 64
+    }
+  },
+  "mcpServers": {
+    "proxmox": {
+      "command": "/home/simonadmin/mcp-servers/ProxmoxMCP/.venv/bin/python",
+      "args": ["-m", "proxmox_mcp.server"],
+      "cwd": "/home/simonadmin/mcp-servers/ProxmoxMCP",
+      "env": {
+        "PYTHONPATH": "/home/simonadmin/mcp-servers/ProxmoxMCP/src",
+        "PROXMOX_MCP_CONFIG": "/home/simonadmin/mcp-servers/ProxmoxMCP/proxmox-config/config.json"
+      }
+    }
+  },
+  "rules": [
+    {
+      "name": "Infra actions need confirmation",
+      "match": ["reboot", "shutdown", "destroy", "delete"],
+      "instruction": "Before executing destructive infrastructure actions, propose a plan and wait for explicit user confirmation."
+    }
+  ]
+}

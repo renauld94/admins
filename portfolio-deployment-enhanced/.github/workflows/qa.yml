@@ -1,0 +1,39 @@
+name: QA - Headless Visualization Smoke Test
+
+on:
+  push:
+    branches: [ main, deploy/** ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  puppeteer-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install QA dependencies
+        working-directory: ./portfolio-deployment-enhanced/qa
+        run: npm ci
+
+      - name: Run headless QA
+        working-directory: ./portfolio-deployment-enhanced/qa
+        env:
+          NAV_TIMEOUT: 60000
+          WAIT_UNTIL: load
+        run: |
+          node test.js https://www.simondatalab.de/
+
+      - name: Upload QA artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qa-output
+          path: portfolio-deployment-enhanced/qa/output/**

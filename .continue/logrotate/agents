@@ -1,0 +1,13 @@
+# Rotate agent logs kept in ~/.local/state/agents
+# Install by copying this into /etc/logrotate.d/agents (requires sudo).
+
+/home/simon/.local/state/agents/*.log {
+    daily
+    rotate 30
+    compress
+    delaycompress
+    missingok
+    notifempty
+    copytruncate
+    create 0640 simon adm
+}

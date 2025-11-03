@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  asr:
+    build: .
+    # Host port changed to 18000 to avoid conflicts with processes already listening on 8000
+    ports:
+      - "18000:8000"
+    environment:
+      - ASR_API_KEY=${ASR_API_KEY}
+    restart: unless-stopped
+    volumes:
+      - ./models:/app/models  # optional: mount model cache or custom models

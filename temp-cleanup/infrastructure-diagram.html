@@ -1,0 +1,2377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataLab Infrastructure</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script async src="https://cdn.jsdelivr.net/npm/three@r128/build/three.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #050810 0%, #0a0e1a 25%, #1a1d2e 50%, #0f1419 75%, #050810 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 40px 20px;
+            position: relative;
+            overflow-x: hidden;
+            background-attachment: fixed;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 20% 50%, rgba(0, 212, 255, 0.03) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 80%, rgba(0, 212, 255, 0.02) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .wrapper {
+            max-width: 2000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        
+        .header-glow {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            border-radius: 50%;
+            animation: pulse-glow 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.1; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.15; }
+        }
+        
+        h1 {
+            font-size: 3.8em;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #00d4ff 0%, #0099ff 40%, #00b4ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            letter-spacing: -1px;
+            animation: fade-in-down 0.8s ease-out;
+            line-height: 1.2;
+        }
+        
+        @keyframes fade-in-down {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .subtitle {
+            font-size: 1.15em;
+            color: #9db4d3;
+            margin-bottom: 40px;
+            letter-spacing: 0.6px;
+            font-weight: 300;
+            animation: fade-in-up 0.8s ease-out 0.1s both;
+            line-height: 1.6;
+        }
+        
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 18px;
+            margin-bottom: 50px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fade-in-up 0.8s ease-out 0.2s both;
+        }
+        
+        .stat {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.12) 0%, rgba(0, 153, 255, 0.06) 100%);
+            border: 1.5px solid rgba(0, 212, 255, 0.3);
+            padding: 24px;
+            border-radius: 16px;
+            text-align: center;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 8px 24px rgba(0, 212, 255, 0.1),
+                inset 0 1px 1px rgba(255, 255, 255, 0.08);
+        }
+        
+        .stat::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.12), transparent);
+            transition: left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .stat:hover {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.18) 0%, rgba(0, 153, 255, 0.1) 100%);
+            border-color: rgba(0, 212, 255, 0.6);
+            transform: translateY(-12px);
+            box-shadow: 
+                0 16px 40px rgba(0, 212, 255, 0.25),
+                inset 0 1px 1px rgba(255, 255, 255, 0.12);
+        }
+        
+        .stat:hover::before {
+            left: 100%;
+        }
+        
+        .stat-value {
+            font-size: 2em;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4ff 0%, #0099ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            font-size: 0.8em;
+            color: #9db4d3;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            font-weight: 600;
+        }
+        
+        .hero-visualization {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            margin-bottom: 60px;
+            border-radius: 20px;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(5, 8, 15, 0.95) 0%, rgba(10, 14, 26, 0.85) 50%, rgba(8, 12, 24, 0.9) 100%);
+            border: 2px solid rgba(0, 212, 255, 0.25);
+            box-shadow: 
+                inset 0 0 100px rgba(0, 212, 255, 0.08),
+                0 0 60px rgba(0, 212, 255, 0.15),
+                0 20px 60px rgba(0, 0, 0, 0.4),
+                0 0 120px rgba(0, 212, 255, 0.05);
+            animation: fade-in-up 1s ease-out 0.3s both;
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+            position: relative;
+        }
+        
+        .hero-visualization::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 153, 255, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 2;
+        }
+        
+        .hero-visualization::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.5), transparent);
+            z-index: 3;
+        }
+        
+        .hero-viz-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        .hero-viz-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            text-align: center;
+            background: linear-gradient(to bottom, transparent, rgba(10, 14, 26, 0.3));
+        }
+        
+        .viz-loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .loading-spinner {
+            width: 70px;
+            height: 70px;
+            position: relative;
+            margin-bottom: 10px;
+        }
+        
+        .loading-spinner::before,
+        .loading-spinner::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 3px solid rgba(0, 212, 255, 0.2);
+            border-radius: 50%;
+            animation: spin 3s linear infinite;
+        }
+        
+        .loading-spinner::after {
+            border-color: transparent transparent #00d4ff transparent;
+            animation: spin 1.5s linear infinite reverse;
+            box-shadow: inset 0 0 10px rgba(0, 212, 255, 0.3);
+        }
+        
+        .loading-neurons {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            justify-content: center;
+        }
+        
+        .neuron-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00d4ff 0%, #0099ff 100%);
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.6);
+            animation: neuron-pulse 1.5s ease-in-out infinite;
+        }
+        
+        .neuron-dot:nth-child(1) { animation-delay: 0s; }
+        .neuron-dot:nth-child(2) { animation-delay: 0.3s; }
+        .neuron-dot:nth-child(3) { animation-delay: 0.6s; }
+        .neuron-dot:nth-child(4) { animation-delay: 0.9s; }
+        .neuron-dot:nth-child(5) { animation-delay: 1.2s; }
+        
+        @keyframes neuron-pulse {
+            0%, 100% {
+                transform: scale(0.8);
+                opacity: 0.5;
+                box-shadow: 0 0 5px rgba(0, 212, 255, 0.3);
+            }
+            50% {
+                transform: scale(1.3);
+                opacity: 1;
+                box-shadow: 0 0 20px rgba(0, 212, 255, 0.8);
+            }
+        }
+        
+        .loading-text {
+            font-size: 1.2em;
+            color: #00d4ff;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+        
+        .loading-subtitle {
+            font-size: 0.95em;
+            color: #9db4d3;
+            font-style: italic;
+            letter-spacing: 0.5px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { opacity: 0.6; transform: translateY(0px); }
+            50% { opacity: 1; transform: translateY(-5px); }
+        }
+        
+        .neural-connections {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 4px;
+        }
+        
+        .connection-line {
+            width: 2px;
+            height: 30px;
+            background: linear-gradient(180deg, #0099ff 0%, transparent 100%);
+            animation: data-flow 1.5s ease-in-out infinite;
+        }
+        
+        .connection-line:nth-child(1) { animation-delay: 0s; }
+        .connection-line:nth-child(2) { animation-delay: 0.3s; }
+        .connection-line:nth-child(3) { animation-delay: 0.6s; }
+        
+        @keyframes data-flow {
+            0% { opacity: 0; transform: scaleY(0); }
+            50% { opacity: 1; }
+            100% { opacity: 0; transform: scaleY(1); }
+        }
+        
+        .diagram-container {
+            background: 
+                linear-gradient(135deg, rgba(0, 212, 255, 0.02) 0%, transparent 50%),
+                linear-gradient(225deg, rgba(0, 153, 255, 0.03) 0%, transparent 50%),
+                linear-gradient(135deg, rgba(5, 8, 15, 0.98) 0%, rgba(10, 14, 26, 0.95) 100%);
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            border-radius: 24px;
+            padding: 50px;
+            margin: 70px 0;
+            overflow: auto;
+            box-shadow: 
+                inset 0 0 0 1px rgba(0, 212, 255, 0.15),
+                inset 0 0 120px rgba(0, 212, 255, 0.05),
+                0 0 80px rgba(0, 212, 255, 0.12),
+                0 25px 70px rgba(0, 0, 0, 0.5),
+                0 10px 40px rgba(0, 212, 255, 0.08);
+            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(16px);
+            animation: fade-in-up 1s ease-out 0.4s both;
+            position: relative;
+        }
+        
+        .diagram-container::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(135deg, #00d4ff, #0099ff, #00d4ff);
+            border-radius: 24px;
+            z-index: -1;
+            opacity: 0.4;
+        }
+        
+        .diagram-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 150px;
+            background: radial-gradient(ellipse at top, rgba(0, 212, 255, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .diagram-title {
+            text-align: center;
+            color: #00d4ff;
+            margin-bottom: 40px;
+            font-size: 1.5em;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+            padding-bottom: 20px;
+        }
+        
+        .diagram-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.6);
+        }
+        
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            background: radial-gradient(ellipse at center, rgba(0, 212, 255, 0.03) 0%, transparent 60%);
+            border-radius: 16px;
+        }
+        
+        .mermaid svg {
+            max-width: 100%;
+            height: auto;
+            filter: 
+                drop-shadow(0 0 25px rgba(0, 212, 255, 0.15))
+                drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
+            transition: transform 0.3s ease;
+        }
+        
+        .mermaid svg:hover {
+            transform: scale(1.01);
+        }
+
+        /* Cytoscape container */
+        .cytoscape-container {
+            width: 100%;
+            height: 720px;
+            border-radius: 14px;
+            background: linear-gradient(180deg, rgba(5,8,15,0.9), rgba(8,12,24,0.9));
+            border: 1px solid rgba(0,212,255,0.06);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.5), inset 0 0 40px rgba(0,212,255,0.02);
+            margin: 8px 0 18px 0;
+        }
+
+        .cy-interactive-note {
+            text-align: right;
+            color: #9db4d3;
+            font-size: 0.9em;
+            margin-top: 6px;
+            margin-bottom: 14px;
+        }
+
+        /* Cytoscape tooltip */
+        .cy-tooltip {
+            position: fixed;
+            pointer-events: none;
+            background: rgba(5,8,15,0.95);
+            color: #e0e0e0;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(0,212,255,0.12);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6), 0 0 20px rgba(0,212,255,0.03) inset;
+            font-size: 0.95em;
+            max-width: 320px;
+            z-index: 2000;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 28px;
+            margin-top: 50px;
+            animation: fade-in-up 1s ease-out 0.5s both;
+        }
+        
+        .info-card {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.12) 0%, rgba(0, 153, 255, 0.06) 100%);
+            border: 1.5px solid rgba(0, 212, 255, 0.28);
+            border-radius: 18px;
+            padding: 36px;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 8px 32px rgba(0, 212, 255, 0.12),
+                inset 0 1px 1px rgba(255, 255, 255, 0.1);
+        }
+        
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.08), transparent);
+            transition: left 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .info-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.4), transparent);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .info-card:hover {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.18) 0%, rgba(0, 153, 255, 0.1) 100%);
+            border-color: rgba(0, 212, 255, 0.5);
+            transform: translateY(-18px);
+            box-shadow: 
+                0 25px 50px rgba(0, 212, 255, 0.25),
+                inset 0 1px 1px rgba(255, 255, 255, 0.15);
+        }
+        
+        .info-card:hover::before {
+            left: 100%;
+        }
+        
+        .info-card:hover::after {
+            opacity: 1;
+        }
+        
+        .info-card h3 {
+            color: #00d4ff;
+            margin-bottom: 18px;
+            font-size: 1.3em;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+        
+        .info-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .info-card li {
+            margin-bottom: 12px;
+            padding-left: 22px;
+            position: relative;
+            color: #b0c4de;
+            font-size: 0.95em;
+            line-height: 1.7;
+        }
+        
+        .info-card li:before {
+            content: "▸";
+            position: absolute;
+            left: 0;
+            color: #00d4ff;
+            font-weight: bold;
+        }
+        
+        .tech-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 18px;
+        }
+        
+        .badge {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(0, 153, 255, 0.08) 100%);
+            border: 1px solid rgba(0, 212, 255, 0.4);
+            color: #b0c4de;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 0.85em;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px);
+            box-shadow: 
+                0 4px 12px rgba(0, 212, 255, 0.08),
+                inset 0 1px 1px rgba(255, 255, 255, 0.06);
+        }
+        
+        .badge:hover {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.25) 0%, rgba(0, 153, 255, 0.15) 100%);
+            border-color: rgba(0, 212, 255, 0.7);
+            color: #00d4ff;
+            box-shadow: 
+                0 8px 24px rgba(0, 212, 255, 0.2),
+                inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            transform: translateY(-4px) scale(1.05);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 100px;
+            padding: 50px 30px;
+            border-top: 2px solid rgba(0, 212, 255, 0.3);
+            color: #9db4d3;
+            font-size: 0.9em;
+            letter-spacing: 0.3px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.05) 0%, transparent 100%);
+            border-radius: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-title {
+            font-size: 1.2em;
+            color: #00d4ff;
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .footer-section {
+            text-align: left;
+        }
+        
+        .footer-section h4 {
+            color: #00d4ff;
+            font-size: 1em;
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section li {
+            margin-bottom: 8px;
+            color: #b0c4de;
+            font-size: 0.9em;
+            padding-left: 18px;
+            position: relative;
+        }
+        
+        .footer-section li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #0099ff;
+            font-weight: bold;
+        }
+        
+        .footer-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.3), transparent);
+            margin: 30px 0;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 212, 255, 0.15);
+            color: #6a7a9a;
+            font-size: 0.85em;
+        }
+        
+        .footer-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 153, 255, 0.05) 100%);
+            border: 1px solid rgba(0, 212, 255, 0.25);
+            padding: 6px 12px;
+            border-radius: 20px;
+            margin: 5px;
+            font-size: 0.85em;
+            color: #00d4ff;
+        }
+        
+        .capabilities-section {
+            margin: 60px 0;
+        }
+        
+        .capabilities-title {
+            text-align: center;
+            font-size: 2em;
+            color: #00d4ff;
+            margin-bottom: 40px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        
+        .capabilities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .capability-card {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 153, 255, 0.05) 100%);
+            border: 1.5px solid rgba(0, 212, 255, 0.25);
+            border-radius: 16px;
+            padding: 28px;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .capability-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        
+        .capability-card:hover {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(0, 153, 255, 0.08) 100%);
+            border-color: rgba(0, 212, 255, 0.5);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.2);
+        }
+        
+        .capability-card:hover::before {
+            opacity: 1;
+        }
+        
+        .capability-icon {
+            font-size: 0.7em;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            margin-bottom: 18px;
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(0, 153, 255, 0.08) 100%);
+            border: 2px solid rgba(0, 212, 255, 0.4);
+            border-radius: 8px;
+            color: #00d4ff;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.2),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .capability-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s;
+        }
+        
+        .capability-card:hover .capability-icon {
+            transform: translateY(-3px);
+            border-color: #00d4ff;
+            box-shadow: 0 6px 25px rgba(0, 212, 255, 0.35),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+        
+        .capability-card:hover .capability-icon::before {
+            left: 100%;
+        }
+        
+        /* Color-specific capability cards */
+        .card-cyan {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.12) 0%, rgba(0, 212, 255, 0.04) 100%);
+            border-color: rgba(0, 212, 255, 0.3);
+        }
+        
+        .card-cyan:hover {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.18) 0%, rgba(0, 212, 255, 0.08) 100%);
+            border-color: rgba(0, 212, 255, 0.6);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.25);
+        }
+        
+        .card-cyan .capability-icon {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2) 0%, rgba(0, 212, 255, 0.1) 100%);
+            border-color: rgba(0, 212, 255, 0.5);
+            color: #00d4ff;
+        }
+        
+        .card-blue {
+            background: linear-gradient(135deg, rgba(0, 153, 255, 0.12) 0%, rgba(0, 102, 204, 0.04) 100%);
+            border-color: rgba(0, 153, 255, 0.3);
+        }
+        
+        .card-blue:hover {
+            background: linear-gradient(135deg, rgba(0, 153, 255, 0.18) 0%, rgba(0, 102, 204, 0.08) 100%);
+            border-color: rgba(0, 153, 255, 0.6);
+            box-shadow: 0 15px 40px rgba(0, 153, 255, 0.25);
+        }
+        
+        .card-blue .capability-icon {
+            background: linear-gradient(135deg, rgba(0, 153, 255, 0.2) 0%, rgba(0, 102, 204, 0.1) 100%);
+            border-color: rgba(0, 153, 255, 0.5);
+            color: #0099ff;
+        }
+        
+        .card-purple {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.12) 0%, rgba(75, 0, 130, 0.04) 100%);
+            border-color: rgba(138, 43, 226, 0.3);
+        }
+        
+        .card-purple:hover {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.18) 0%, rgba(75, 0, 130, 0.08) 100%);
+            border-color: rgba(138, 43, 226, 0.6);
+            box-shadow: 0 15px 40px rgba(138, 43, 226, 0.25);
+        }
+        
+        .card-purple .capability-icon {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.2) 0%, rgba(75, 0, 130, 0.1) 100%);
+            border-color: rgba(138, 43, 226, 0.5);
+            color: #a855f7;
+        }
+        
+        .card-green {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(5, 150, 105, 0.04) 100%);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+        
+        .card-green:hover {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.18) 0%, rgba(5, 150, 105, 0.08) 100%);
+            border-color: rgba(16, 185, 129, 0.6);
+            box-shadow: 0 15px 40px rgba(16, 185, 129, 0.25);
+        }
+        
+        .card-green .capability-icon {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.1) 100%);
+            border-color: rgba(16, 185, 129, 0.5);
+            color: #10b981;
+        }
+        
+        .card-orange {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.12) 0%, rgba(234, 88, 12, 0.04) 100%);
+            border-color: rgba(249, 115, 22, 0.3);
+        }
+        
+        .card-orange:hover {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.18) 0%, rgba(234, 88, 12, 0.08) 100%);
+            border-color: rgba(249, 115, 22, 0.6);
+            box-shadow: 0 15px 40px rgba(249, 115, 22, 0.25);
+        }
+        
+        .card-orange .capability-icon {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.2) 0%, rgba(234, 88, 12, 0.1) 100%);
+            border-color: rgba(249, 115, 22, 0.5);
+            color: #f97316;
+        }
+        
+        .card-pink {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.12) 0%, rgba(219, 39, 119, 0.04) 100%);
+            border-color: rgba(236, 72, 153, 0.3);
+        }
+        
+        .card-pink:hover {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.18) 0%, rgba(219, 39, 119, 0.08) 100%);
+            border-color: rgba(236, 72, 153, 0.6);
+            box-shadow: 0 15px 40px rgba(236, 72, 153, 0.25);
+        }
+        
+        .card-pink .capability-icon {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.2) 0%, rgba(219, 39, 119, 0.1) 100%);
+            border-color: rgba(236, 72, 153, 0.5);
+            color: #ec4899;
+        }
+        
+        .capability-card h3 {
+            color: #00d4ff;
+            font-size: 1.15em;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+        
+        .capability-card p {
+            color: #b0c4de;
+            font-size: 0.9em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .capability-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        
+        .capability-tag {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            color: #9db4d3;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 600;
+        }
+
+        /* Capability Legend Styles */
+        .capability-legend-wrapper {
+            margin: 0 auto 60px auto;
+            max-width: 900px;
+            background: linear-gradient(135deg, rgba(5,8,15,0.92) 0%, rgba(10,14,26,0.88) 100%);
+            border: 2px solid rgba(0,212,255,0.18);
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(0,212,255,0.08), 0 2px 8px rgba(0,0,0,0.12);
+            padding: 32px 36px 24px 36px;
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+        .capability-legend-title {
+            color: #00d4ff;
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 18px;
+            letter-spacing: 0.5px;
+            text-align: left;
+        }
+        .capability-legend-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+        @media (min-width: 700px) {
+            .capability-legend-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            font-size: 1em;
+            color: #b0c4de;
+            padding: 7px 0;
+        }
+        .legend-swatch {
+            width: 32px;
+            height: 18px;
+            border-radius: 6px;
+            border: 2px solid rgba(0,212,255,0.18);
+            display: inline-block;
+            margin-right: 2px;
+        }
+        .legend-label {
+            font-weight: 700;
+            color: #e0e0e0;
+            min-width: 120px;
+        }
+        .legend-desc {
+            font-size: 0.97em;
+            color: #9db4d3;
+        }
+        /* swatch color mapping to match Cytoscape node border colors */
+        .legend-swatch.card-cyan { background: linear-gradient(90deg,#02232b,#003843); border-color: #00d4ff; }
+        .legend-swatch.card-blue { background: linear-gradient(90deg,#021328,#00304a); border-color: #0099ff; }
+        .legend-swatch.card-purple { background: linear-gradient(90deg,#1a081f,#2a0033); border-color: #a855f7; }
+        .legend-swatch.card-green { background: linear-gradient(90deg,#06221a,#003827); border-color: #10b981; }
+        .legend-swatch.card-orange { background: linear-gradient(90deg,#2a1000,#3a1a00); border-color: #ff7b00; }
+        .legend-swatch.card-pink { background: linear-gradient(90deg,#23101a,#3b0a2a); border-color: #ff43b3; }
+        
+        .performance-metrics {
+            margin: 60px 0;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.08) 0%, rgba(0, 153, 255, 0.04) 100%);
+            border: 2px solid rgba(0, 212, 255, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+        
+        .metrics-title {
+            font-size: 1.8em;
+            color: #00d4ff;
+            margin-bottom: 30px;
+            font-weight: 700;
+            text-align: center;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+        
+        .metric-box {
+            background: rgba(5, 8, 15, 0.6);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .metric-box:hover {
+            background: rgba(5, 8, 15, 0.8);
+            border-color: rgba(0, 212, 255, 0.6);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
+        }
+        
+        .metric-label {
+            color: #9db4d3;
+            font-size: 0.85em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .metric-value {
+            color: #00d4ff;
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .metric-unit {
+            color: #6a7a9a;
+            font-size: 0.8em;
+        }
+        
+        .footer-credit {
+            margin-top: 20px;
+            font-size: 0.8em;
+        }
+        
+        /* Zoom Controls */
+        .zoom-controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+            background: linear-gradient(135deg, rgba(5, 8, 15, 0.95) 0%, rgba(10, 14, 26, 0.9) 100%);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 12px;
+            padding: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5),
+                        0 0 20px rgba(0, 212, 255, 0.15);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+        
+        .zoom-btn {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(0, 153, 255, 0.08) 100%);
+            border: 1.5px solid rgba(0, 212, 255, 0.4);
+            border-radius: 8px;
+            color: #00d4ff;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        
+        .zoom-btn:hover {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.25) 0%, rgba(0, 153, 255, 0.15) 100%);
+            border-color: rgba(0, 212, 255, 0.7);
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+        }
+        
+        .zoom-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .zoom-reset-btn {
+            font-size: 1em;
+        }
+        
+        .zoom-level {
+            text-align: center;
+            color: #9db4d3;
+            font-size: 0.85em;
+            font-weight: 600;
+            padding: 5px 0;
+            letter-spacing: 0.5px;
+        }
+        
+        .diagram-zoom-wrapper {
+            transition: transform 0.3s ease;
+            transform-origin: center center;
+        }
+
+        /* Action buttons (Prod + Export) */
+        .action-buttons {
+            position: fixed;
+            top: 100px;
+            right: 28px;
+            z-index: 1600;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .action-btn {
+            min-width: 54px;
+            height: 42px;
+            padding: 6px 10px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-weight: 800;
+            letter-spacing: 0.6px;
+            color: #021018;
+            box-shadow: 0 8px 26px rgba(0,0,0,0.35);
+            transition: transform 160ms ease, box-shadow 160ms ease;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        .action-btn:hover { transform: translateY(-3px); }
+        .prod-btn { background: linear-gradient(135deg,#00d4ff,#0099ff); }
+        .export-btn { background: linear-gradient(135deg,#e6eef7,#c6e8ff); color: #023249; }
+
+        /* Floating Open in Prod button */
+        .open-prod-btn {
+            position: fixed;
+            top: 110px;
+            right: 30px;
+            z-index: 1500;
+            background: linear-gradient(135deg,#00d4ff,#0099ff);
+            color: #021018;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(0,212,255,0.12);
+            border: none;
+            cursor: pointer;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        .open-prod-btn:hover { transform: translateY(-3px); }
+        
+    @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+            
+            .subtitle {
+                font-size: 0.95em;
+            }
+            
+            .hero-visualization {
+                height: 320px;
+            }
+            
+            .diagram-container {
+                padding: 25px;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .info-card {
+                padding: 24px;
+            }
+        }
+
+        /* Full-screen "minimal" mode when ?full=1 is present */
+        body.full-mode {
+            padding: 0;
+            background: #05060a;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        body.full-mode .wrapper { max-width: none; padding: 10px 12px; }
+        body.full-mode .header,
+        body.full-mode .footer,
+        body.full-mode .info-grid,
+        body.full-mode .capabilities-section,
+        body.full-mode .footer-content { display: none !important; }
+
+        /* Expand the diagram fully in full-mode */
+        body.full-mode .diagram-container {
+            margin: 0;
+            padding: 18px;
+            border-radius: 0;
+            height: 100vh;
+            max-height: 100vh;
+            overflow: hidden;
+        }
+
+        body.full-mode .cytoscape-container {
+            height: calc(100vh - 120px);
+            border-radius: 0;
+            margin: 0;
+        }
+
+        /* Keep controls visible and compact */
+        body.full-mode .zoom-controls { right: 18px; bottom: 18px; padding: 8px; }
+        body.full-mode .action-buttons { top: 18px; right: 18px; }
+
+        /* Focus and accessibility improvements */
+        .action-btn:focus, .zoom-btn:focus, .badge:focus { outline: 3px solid rgba(0,212,255,0.14); outline-offset: 2px; }
+
+        /* Shortcuts toast */
+        .shortcuts-toast {
+            position: fixed;
+            right: 20px;
+            bottom: 90px;
+            z-index: 3000;
+            background: linear-gradient(135deg, rgba(5,8,15,0.96), rgba(10,14,26,0.96));
+            border: 1px solid rgba(0,212,255,0.14);
+            padding: 14px 16px;
+            border-radius: 12px;
+            color: #dfefff;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.6), 0 0 18px rgba(0,212,255,0.06) inset;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            min-width: 260px;
+            max-width: 420px;
+            font-size: 0.95em;
+        }
+        .shortcuts-toast .actions { margin-left: auto; display:flex; gap:8px; }
+        .shortcuts-toast button { background: rgba(0,212,255,0.06); border: 1px solid rgba(0,212,255,0.12); color: #bfeaff; padding:6px 8px; border-radius:8px; cursor:pointer; }
+        .shortcuts-toast .kbd { background: rgba(255,255,255,0.04); padding:4px 6px; border-radius:6px; font-weight:700; color:#e6f7ff; margin-left:6px; }
+
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Shortcuts toast (one-time) -->
+        <div id="shortcutsToast" class="shortcuts-toast" role="dialog" aria-live="polite" aria-label="Keyboard shortcuts" style="display:none">
+            <div class="toast-body">
+                Shortcuts: <span class="kbd">F</span> Full • <span class="kbd">Ctrl+</span><span class="kbd">+</span> Zoom In • <span class="kbd">Ctrl+</span><span class="kbd">-</span> Zoom Out • <span class="kbd">Ctrl+0</span> Reset
+            </div>
+            <div class="actions">
+                <button id="dismissShortcuts" aria-label="Dismiss shortcuts">Got it</button>
+                <button id="showShortcutsAgain" aria-label="Show shortcuts again" title="Show again" style="display:none">Show</button>
+            </div>
+        </div>
+        <div class="header">
+            <div class="header-glow"></div>
+            <h1>Enterprise Data Platform</h1>
+            <p class="subtitle">Advanced Analytics, AI/ML, and Data Governance - Real-time Processing Architecture</p>
+            
+            <!-- stats removed per user request -->
+
+                <!-- Capability Legend -->
+                <div class="capability-legend-wrapper">
+                    <div class="capability-legend-title">Legend: Platform Capabilities</div>
+                    <div class="capability-legend-grid">
+                        <div class="legend-item"><span class="legend-swatch card-cyan"></span><span class="legend-label">Real-Time Streaming</span><span class="legend-desc">Kafka-based, sub-second event ingestion</span></div>
+                        <div class="legend-item"><span class="legend-swatch card-blue"></span><span class="legend-label">Advanced Analytics</span><span class="legend-desc">Dashboards, BI, and monitoring (Tableau, Looker, Grafana)</span></div>
+                        <div class="legend-item"><span class="legend-swatch card-purple"></span><span class="legend-label">ML/AI (Data Science)</span><span class="legend-desc">JupyterHub, MLflow, DVC, Kubeflow, Ollama: Notebooks, experiment tracking, pipelines, LLMs</span></div>
+                        <div class="legend-item"><span class="legend-swatch card-green"></span><span class="legend-label">Data Governance</span><span class="legend-desc">Quality, lineage, catalog, compliance (Atlas, Collibra, OpenMetadata)</span></div>
+                        <div class="legend-item"><span class="legend-swatch card-orange"></span><span class="legend-label">Global Scale</span><span class="legend-desc">Cloudflare CDN, multi-region, low-latency</span></div>
+                        <div class="legend-item"><span class="legend-swatch card-pink"></span><span class="legend-label">Enterprise Security</span><span class="legend-desc">Encryption, RBAC, audit, compliance automation</span></div>
+                    </div>
+                </div>
+        </div>
+
+        <div class="hero-visualization" id="hero-visualization">
+            <canvas id="viz-canvas" class="hero-viz-canvas"></canvas>
+            <div class="hero-viz-overlay" id="viz-overlay">
+                <div class="viz-loading">
+                    <div class="loading-spinner"></div>
+                    <div class="loading-neurons">
+                        <div class="neuron-dot"></div>
+                        <div class="neuron-dot"></div>
+                        <div class="neuron-dot"></div>
+                        <div class="neuron-dot"></div>
+                        <div class="neuron-dot"></div>
+                    </div>
+                    <!-- loading texts removed per user request -->
+                    <div class="neural-connections">
+                        <div class="connection-line"></div>
+                        <div class="connection-line"></div>
+                        <div class="connection-line"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="diagram-container">
+            <div class="diagram-title">Enterprise Data Platform Architecture</div>
+            <div class="diagram-zoom-wrapper" id="diagramZoomWrapper">
+            <div id="cy" class="cytoscape-container"></div>
+            <div class="action-buttons">
+                <button id="openProdBtn" class="action-btn prod-btn" title="Open infrastructure in production" aria-label="Open infrastructure in production">Prod ↗</button>
+                <button id="exportBtn" class="action-btn export-btn" title="Export diagram as PNG" aria-label="Export diagram as PNG">Export PNG</button>
+                <button id="fullModeBtn" class="action-btn export-btn" title="Toggle full-screen diagram view" aria-label="Toggle full-screen diagram view">Full</button>
+                <a href="https://www.simondatalab.de/infrastructure-diagram.html?full=1" target="_blank" rel="noopener noreferrer" class="btn-ghost action-btn" title="Open full infrastructure diagram" aria-label="Open full infrastructure diagram">Open full</a>
+            </div>
+            <!-- Cytoscape and layout libs -->
+            <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+            <script src="https://unpkg.com/dagre@0.8.5/dist/dagre.min.js"></script>
+            <script src="https://unpkg.com/cytoscape-dagre/cytoscape-dagre.js"></script>
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                        // If URL contains full=1 or full=true, enable compact full-mode before initialization
+                        try {
+                            const params = new URLSearchParams(window.location.search);
+                            const fullMode = params.get('full') === '1' || params.get('full') === 'true';
+                            if (fullMode) {
+                                document.body.classList.add('full-mode');
+                            }
+                        } catch (e) {
+                            // ignore URL parsing errors in unusual environments
+                        }
+
+                        // Ensure extension is registered
+                        if (typeof cytoscape !== 'undefined' && typeof cytoscapeDagre !== 'undefined') {
+                            cytoscape.use(cytoscapeDagre);
+                        }
+
+                    const elements = [
+                        // Layers (parents)
+                        { data: { id: 'Internet_layer', label: 'EXTERNAL LAYER' } },
+                        { data: { id: 'Edge_layer', label: 'EDGE & INGESTION' } },
+                        { data: { id: 'DataEng_layer', label: 'DATA ENGINEERING' } },
+                        { data: { id: 'Storage_layer', label: 'STORAGE LAYER' } },
+                        { data: { id: 'Analytics_layer', label: 'ANALYTICS & BI' } },
+                        { data: { id: 'DataSci_layer', label: 'DATA SCIENCE' } },
+                        { data: { id: 'Gov_layer', label: 'GOVERNANCE & QUALITY' } },
+                        { data: { id: 'Core_layer', label: 'CORE SERVICES' } },
+                        { data: { id: 'Future_layer', label: 'FUTURE ROADMAP' } },
+
+                        // External
+                        { data: { id: 'I', label: 'Internet\nApplications', parent: 'Internet_layer' } },
+                        { data: { id: 'CF', label: 'Cloudflare\nGlobal CDN', parent: 'Internet_layer' } },
+                        { data: { id: 'LE', label: 'SSL/TLS\nCertificate', parent: 'Internet_layer' } },
+
+                        // Edge
+                        { data: { id: 'NX', label: 'Nginx\nLoad Balancer', parent: 'Edge_layer' } },
+                        { data: { id: 'FW', label: 'Security\nFirewall', parent: 'Edge_layer' } },
+                        { data: { id: 'API_GW', label: 'API Gateway\nRate Limiter', parent: 'Edge_layer' } },
+
+                        // Data Engineering
+                        { data: { id: 'ETL', label: 'Apache Airflow\nOrchestration', parent: 'DataEng_layer' } },
+                        { data: { id: 'Kafka', label: 'Apache Kafka\nEvent Stream', parent: 'DataEng_layer' } },
+                        { data: { id: 'Spark', label: 'Apache Spark\nProcessing', parent: 'DataEng_layer' } },
+                        { data: { id: 'DBT', label: 'dbt Core\nTransformation', parent: 'DataEng_layer' } },
+                        { data: { id: 'Impala', label: 'Apache Impala\nQuery Engine', parent: 'DataEng_layer' } },
+
+                        // Storage
+                        { data: { id: 'DataLake', label: 'S3 / HDFS\nData Lake', parent: 'Storage_layer' } },
+                        { data: { id: 'DW', label: 'Snowflake\nData Warehouse', parent: 'Storage_layer' } },
+                        { data: { id: 'PG_OLTP', label: 'PostgreSQL\nTransactional', parent: 'Storage_layer' } },
+                        { data: { id: 'Redis', label: 'Redis\nCache', parent: 'Storage_layer' } },
+                        { data: { id: 'PostGIS', label: 'PostGIS\nGeospatial', parent: 'Storage_layer' } },
+
+                        // Analytics
+                        { data: { id: 'Tableau', label: 'Tableau\nDashboards', parent: 'Analytics_layer' } },
+                        { data: { id: 'Looker', label: 'Looker Studio\nReporting', parent: 'Analytics_layer' } },
+                        { data: { id: 'Grafana', label: 'Grafana\nMonitoring', parent: 'Analytics_layer' } },
+                        { data: { id: 'Superset', label: 'Apache Superset\nExploration', parent: 'Analytics_layer' } },
+
+                        // Data Science
+                        { data: { id: 'Jupyter', label: 'JupyterHub\nNotebooks', parent: 'DataSci_layer' } },
+                        { data: { id: 'MLflow', label: 'MLflow\nExperiments', parent: 'DataSci_layer' } },
+                        { data: { id: 'DVC', label: 'DVC\nVersioning', parent: 'DataSci_layer' } },
+                        { data: { id: 'Ollama', label: 'Ollama\nLLM', parent: 'DataSci_layer' } },
+                        { data: { id: 'Kubeflow', label: 'Kubeflow\nML Pipelines', parent: 'DataSci_layer' } },
+
+                        // Governance
+                        { data: { id: 'Great', label: 'Great Expectations\nQuality', parent: 'Gov_layer' } },
+                        { data: { id: 'Apache_Atlas', label: 'Apache Atlas\nMetadata', parent: 'Gov_layer' } },
+                        { data: { id: 'Collibra', label: 'Collibra\nLineage', parent: 'Gov_layer' } },
+                        { data: { id: 'OpenMetadata', label: 'OpenMetadata\nCatalog', parent: 'Gov_layer' } },
+                        { data: { id: 'DQ', label: 'Data Profiler\nValidation', parent: 'Gov_layer' } },
+
+                        // Core
+                        { data: { id: 'CT150', label: 'Portfolio\nContainer', parent: 'Core_layer' } },
+                        { data: { id: 'Moodle', label: 'Moodle\nLMS', parent: 'Core_layer' } },
+                        { data: { id: 'JellyFin', label: 'JellyFin\nMedia', parent: 'Core_layer' } },
+                        { data: { id: 'NextCloud', label: 'NextCloud\nStorage', parent: 'Core_layer' } },
+
+                        // Future
+                        { data: { id: 'DeltaLake', label: 'Delta Lake\nMedallion', parent: 'Future_layer' } },
+                        { data: { id: 'OpenSearch', label: 'OpenSearch\nLogs', parent: 'Future_layer' } },
+                        { data: { id: 'Trino', label: 'Trino\nFederation', parent: 'Future_layer' } },
+
+                        // Edges (simplified ids)
+                        { data: { id: 'e1', source: 'I', target: 'CF' } },
+                        { data: { id: 'e2', source: 'CF', target: 'NX' } },
+                        { data: { id: 'e3', source: 'LE', target: 'NX' } },
+                        { data: { id: 'e4', source: 'NX', target: 'FW' } },
+                        { data: { id: 'e5', source: 'FW', target: 'API_GW' } },
+                        { data: { id: 'e6', source: 'API_GW', target: 'ETL' } },
+                        { data: { id: 'e7', source: 'API_GW', target: 'CT150' } },
+                        { data: { id: 'e8', source: 'API_GW', target: 'Tableau' } },
+                        { data: { id: 'e9', source: 'ETL', target: 'Kafka' } },
+                        { data: { id: 'e10', source: 'Kafka', target: 'Spark' } },
+                        { data: { id: 'e11', source: 'Spark', target: 'DBT' } },
+                        { data: { id: 'e12', source: 'DBT', target: 'Impala' } },
+                        { data: { id: 'e13', source: 'ETL', target: 'DataLake' } },
+                        { data: { id: 'e14', source: 'Spark', target: 'DataLake' } },
+                        { data: { id: 'e15', source: 'Impala', target: 'DW' } },
+                        { data: { id: 'e16', source: 'DBT', target: 'DW' } },
+                        { data: { id: 'e17', source: 'DataLake', target: 'Redis' } },
+                        { data: { id: 'e18', source: 'DW', target: 'Redis' } },
+                        { data: { id: 'e19', source: 'PG_OLTP', target: 'DataLake' } },
+                        { data: { id: 'e20', source: 'PostGIS', target: 'DataLake' } },
+                        { data: { id: 'e21', source: 'DW', target: 'Tableau' } },
+                        { data: { id: 'e22', source: 'DW', target: 'Looker' } },
+                        { data: { id: 'e23', source: 'DataLake', target: 'Looker' } },
+                        { data: { id: 'e24', source: 'Redis', target: 'Grafana' } },
+                        { data: { id: 'e25', source: 'PG_OLTP', target: 'Superset' } },
+                        { data: { id: 'e26', source: 'DataLake', target: 'Jupyter' } },
+                        { data: { id: 'e27', source: 'DW', target: 'Jupyter' } },
+                        { data: { id: 'e28', source: 'Jupyter', target: 'MLflow' } },
+                        { data: { id: 'e29', source: 'Jupyter', target: 'DVC' } },
+                        { data: { id: 'e30', source: 'MLflow', target: 'Kubeflow' } },
+                        { data: { id: 'e31', source: 'Ollama', target: 'Kubeflow' } },
+                        { data: { id: 'e32', source: 'MLflow', target: 'OpenMetadata' } },
+                        { data: { id: 'e33', source: 'DataLake', target: 'Great' } },
+                        { data: { id: 'e34', source: 'DW', target: 'Great' } },
+                        { data: { id: 'e35', source: 'Great', target: 'Apache_Atlas' } },
+                        { data: { id: 'e36', source: 'Great', target: 'Collibra' } },
+                        { data: { id: 'e37', source: 'Apache_Atlas', target: 'OpenMetadata' } },
+                        { data: { id: 'e38', source: 'OpenMetadata', target: 'DQ' } },
+                        { data: { id: 'e39', source: 'FW', target: 'CT150' } },
+                        { data: { id: 'e40', source: 'FW', target: 'Moodle' } },
+                        { data: { id: 'e41', source: 'FW', target: 'JellyFin' } },
+                        { data: { id: 'e42', source: 'FW', target: 'NextCloud' } },
+                        { data: { id: 'e43', source: 'DataLake', target: 'DeltaLake' } },
+                        { data: { id: 'e44', source: 'DW', target: 'DeltaLake' } },
+                        { data: { id: 'e45', source: 'Impala', target: 'Trino' } },
+                        { data: { id: 'e46', source: 'Spark', target: 'OpenSearch' } }
+                    ];
+
+                    // create tooltip element
+                    const tip = document.createElement('div');
+                    tip.className = 'cy-tooltip';
+                    tip.style.display = 'none';
+                    document.body.appendChild(tip);
+
+                    const cy = cytoscape({
+                        container: document.getElementById('cy'),
+                        elements: elements,
+                        style: [
+                            // default node
+                            { selector: 'node', style: {
+                                'label': 'data(label)',
+                                'text-wrap': 'wrap',
+                                'text-valign': 'center',
+                                'text-halign': 'center',
+                                'background-color': '#0f1620',
+                                'color': '#e0e0e0',
+                                'width': '220',
+                                'height': '70',
+                                'font-size': 15,
+                                'font-weight': 700,
+                                'border-width': 2,
+                                'border-color': '#0b6f90',
+                                'shape': 'round-rectangle'
+                            }},
+
+                            // parents (layers)
+                            { selector: '$node > node', style: {
+                                'background-color': 'transparent',
+                                'border-width': 2,
+                                'border-style': 'dashed',
+                                'border-color': 'rgba(0,212,255,0.12)',
+                                'label': 'data(label)',
+                                'text-valign': 'top',
+                                'text-halign': 'center',
+                                'padding': '22px',
+                                'font-size': 16,
+                                'font-weight': 800,
+                                'shape': 'round-rectangle'
+                            }},
+
+                            // External layer - cyan rounded
+                            { selector: 'node[parent = "Internet_layer"]', style: {
+                                'background-fill': 'linear-gradient',
+                                'background-gradient-stop-colors': '#072233 #002b3a',
+                                'background-color': '#001f2b',
+                                'border-color': '#00d4ff',
+                                'shape': 'round-rectangle'
+                            }},
+
+                            // Edge - pill
+                            { selector: 'node[parent = "Edge_layer"]', style: {
+                                'background-color': '#081826',
+                                'border-color': '#0099ff',
+                                'shape': 'ellipse'
+                            }},
+
+                            // Data Engineering - hexagon-like (polygon)
+                            { selector: 'node[parent = "DataEng_layer"]', style: {
+                                'background-color': '#071a2b',
+                                'border-color': '#00b4ff',
+                                'shape': 'round-rectangle'
+                            }},
+
+                            // Storage - box with subtle glow
+                            { selector: 'node[parent = "Storage_layer"]', style: {
+                                'background-color': '#081b28',
+                                'border-color': '#008fbf',
+                                'shape': 'round-rectangle'
+                            }},
+
+                            // Analytics - trapezoid feel via rectangle
+                            { selector: 'node[parent = "Analytics_layer"]', style: {
+                                'background-color': '#0b2135',
+                                'border-color': '#00a8ff',
+                                'shape': 'round-rectangle'
+                            }},
+
+                            // Data Science - purple highlight, circle
+                            { selector: 'node[parent = "DataSci_layer"]', style: {
+                                'background-color': '#1a0b28',
+                                'border-color': '#a855f7',
+                                'shape': 'ellipse'
+                            }},
+
+                            // Governance - green tint
+                            { selector: 'node[parent = "Gov_layer"]', style: {
+                                'background-color': '#081b18',
+                                'border-color': '#10b981',
+                                'shape': 'round-rectangle'
+                            }},
+
+                            // Core - dark small boxes
+                            { selector: 'node[parent = "Core_layer"]', style: {
+                                'background-color': '#07131a',
+                                'border-color': '#0099ff',
+                                'shape': 'round-rectangle'
+                            }},
+
+                            // Future - faint grey dashed
+                            { selector: 'node[parent = "Future_layer"]', style: {
+                                'background-color': '#0b1216',
+                                'border-color': '#666666',
+                                'shape': 'round-rectangle'
+                            }},
+
+                            // hovered
+                            { selector: 'node.hover', style: {
+                                'background-color': '#00d4ff',
+                                'color': '#001018',
+                                'transition-property': 'background-color',
+                                'transition-duration': '200ms'
+                            }},
+
+                            // edges
+                            { selector: 'edge', style: {
+                                'curve-style': 'bezier',
+                                'width': 2,
+                                'line-color': '#00d4ff',
+                                'target-arrow-color': '#00d4ff',
+                                'target-arrow-shape': 'triangle',
+                                'opacity': 0.95
+                            }},
+
+                            // faded
+                            { selector: '.faded', style: { 'opacity': 0.12 } }
+                        ],
+                        layout: { name: 'dagre', rankDir: 'LR', nodeSep: 70, rankSep: 100 }
+                    });
+
+                    // Fit and enable smooth interactions
+                    cy.ready(() => { try { cy.resize(); cy.fit(cy.elements(), 50); } catch(e) { try { cy.fit(50); } catch(e2){} } cy.minZoom(0.5); cy.maxZoom(2.5); });
+
+                    // Make nodes clickable to highlight neighbors
+                    cy.on('tap', 'node', (evt) => {
+                        const node = evt.target;
+                        cy.elements().removeClass('faded');
+                        cy.elements().addClass('faded');
+                        node.removeClass('faded');
+                        node.neighborhood().removeClass('faded');
+                        node.connectedEdges().removeClass('faded');
+                        node.connectedNodes().removeClass('faded');
+                    });
+
+                    // Tooltip descriptions (short)
+                    const desc = {
+                        'Jupyter': 'JupyterHub — collaborative notebooks, interactive exploration, kernels',
+                        'MLflow': 'MLflow — experiment tracking, model registry, reproducibility',
+                        'Kafka': 'Apache Kafka — high-throughput event streaming and ingestion',
+                        'Spark': 'Apache Spark — distributed processing and ETL jobs',
+                        'DataLake': 'S3 / HDFS — raw/bronze/silver/gold data lake storage',
+                        'DW': 'Snowflake — cloud data warehouse for analytics',
+                        'ETL': 'Airflow — orchestration, scheduling and DAGs'
+                    };
+
+                    // Show tooltip on mouseover
+                    cy.on('mouseover', 'node', (evt) => {
+                        const node = evt.target;
+                        const r = node.renderedBoundingBox();
+                        const nodeId = node.id();
+                        const text = desc[nodeId] || node.data('label');
+                        tip.textContent = text;
+                        tip.style.display = 'block';
+                        tip.style.left = (r.x2 + 18) + 'px';
+                        tip.style.top = (r.y1 - 8) + 'px';
+                        node.addClass('hover');
+                    });
+
+                    cy.on('mouseout', 'node', (evt) => {
+                        tip.style.display = 'none';
+                        evt.target.removeClass('hover');
+                    });
+
+                    // Clear highlight when background tapped
+                    cy.on('tap', (evt) => { if (evt.target === cy) { cy.elements().removeClass('faded'); } });
+
+                    // Add faded style
+                    cy.style().selector('.faded').style({ 'opacity': 0.15 }).update();
+
+                        // Open in Prod button behavior
+                        const openBtn = document.getElementById('openProdBtn');
+                        if (openBtn) {
+                            openBtn.addEventListener('click', () => {
+                                // open in a new tab
+                                window.open('https://www.simondatalab.de/infrastructure', '_blank', 'noopener');
+                            });
+                        }
+                        // Export PNG button
+                        const exportBtn = document.getElementById('exportBtn');
+                        if (exportBtn) {
+                            exportBtn.addEventListener('click', () => {
+                                try {
+                                    const png64 = cy.png({ scale: 2, full: true });
+                                    const a = document.createElement('a');
+                                    a.href = png64;
+                                    a.download = 'infrastructure-diagram.png';
+                                    document.body.appendChild(a);
+                                    a.click();
+                                        a.remove();
+                                    } catch (err) {
+                                        console.error('Export failed', err);
+                                        alert('Export failed: ' + (err && err.message ? err.message : 'unknown'));
+                                    }
+                                });
+                            }
+
+                            // Debounce helper
+                            function debounce(fn, wait) {
+                                let t = null;
+                                return function(...args) {
+                                    clearTimeout(t);
+                                    t = setTimeout(() => fn.apply(this, args), wait);
+                                };
+                            }
+
+                            // Full-mode toggle (no reload) and programmatic fit/resize
+                            const fullModeBtn = document.getElementById('fullModeBtn');
+                            const diagramContainerEl = document.querySelector('.diagram-container');
+
+                            function safeResizeAndFit(pad = 40) {
+                                try { cy.resize(); cy.fit(cy.elements(), pad); } catch (e) { try { cy.fit(pad); } catch (e2) { /* ignore */ } }
+                            }
+
+                            if (fullModeBtn) {
+                                fullModeBtn.addEventListener('click', () => {
+                                    const entering = document.body.classList.toggle('full-mode');
+                                    // update URL without reload
+                                    try {
+                                        const u = new URL(window.location.href);
+                                        if (entering) u.searchParams.set('full', '1'); else u.searchParams.delete('full');
+                                        history.replaceState({}, '', u.toString());
+                                    } catch (err) { /* ignore */ }
+
+                                    // allow CSS transitions to settle
+                                    setTimeout(() => safeResizeAndFit(40), 120);
+                                });
+                            }
+
+                            // ResizeObserver to keep Cytoscape responsive
+                            if (typeof ResizeObserver !== 'undefined' && diagramContainerEl) {
+                                const ro = new ResizeObserver(debounce(() => {
+                                    safeResizeAndFit(40);
+                                }, 120));
+                                ro.observe(diagramContainerEl);
+                                const wrapperEl = document.querySelector('.wrapper');
+                                if (wrapperEl) ro.observe(wrapperEl);
+                            }
+
+                            // Keyboard shortcuts: Ctrl/Cmd + = / - / 0 for zoom, F to toggle full-mode
+                            document.addEventListener('keydown', (e) => {
+                                // avoid interfering with inputs
+                                const tag = (document.activeElement && document.activeElement.tagName) || '';
+                                if (tag === 'INPUT' || tag === 'TEXTAREA' || document.activeElement && document.activeElement.isContentEditable) return;
+
+                                if (e.key === 'f' || e.key === 'F') {
+                                    if (fullModeBtn) fullModeBtn.click();
+                                    return;
+                                }
+
+                                const meta = e.ctrlKey || e.metaKey;
+                                if (!meta) return;
+
+                                if (e.key === '=' || e.key === '+') {
+                                    e.preventDefault();
+                                    if (currentZoom < maxZoom) { currentZoom = Math.min(currentZoom + zoomStep, maxZoom); updateZoom(); }
+                                } else if (e.key === '-') {
+                                    e.preventDefault();
+                                    if (currentZoom > minZoom) { currentZoom = Math.max(currentZoom - zoomStep, minZoom); updateZoom(); }
+                                } else if (e.key === '0') {
+                                    e.preventDefault();
+                                    currentZoom = 1; updateZoom();
+                                }
+                            });
+
+                            // Do a small delayed fit after everything settles
+                            setTimeout(() => safeResizeAndFit(40), 220);
+                    });
+            </script>
+            </div>
+            </div>
+        </div>
+        
+        <!-- Zoom Controls -->
+        <div class="zoom-controls">
+            <button class="zoom-btn" id="zoomIn" title="Zoom In" aria-label="Zoom in">+</button>
+            <div class="zoom-level" id="zoomLevel" role="status" aria-live="polite">100%</div>
+            <button class="zoom-btn" id="zoomOut" title="Zoom Out" aria-label="Zoom out">−</button>
+            <button class="zoom-btn zoom-reset-btn" id="zoomReset" title="Reset Zoom" aria-label="Reset zoom">↺</button>
+        </div>
+
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>Data Engineering Stack</h3>
+                <ul>
+                    <li>Apache Airflow for workflow orchestration</li>
+                    <li>Kafka for real-time event streaming</li>
+                    <li>Apache Spark for distributed processing</li>
+                    <li>dbt for data transformation logic</li>
+                    <li>Impala for SQL-on-Hadoop queries</li>
+                    <li>Delta Lake for ACID transactions</li>
+                </ul>
+                <div class="tech-badges">
+                    <span class="badge">Airflow</span>
+                    <span class="badge">Kafka</span>
+                    <span class="badge">Spark</span>
+                    <span class="badge">dbt</span>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3>Data Science & AI Layer</h3>
+                <ul>
+                    <li>JupyterHub for collaborative notebooks</li>
+                    <li>MLflow for experiment tracking</li>
+                    <li>DVC for dataset versioning</li>
+                    <li>Ollama for local LLM inference</li>
+                    <li>Kubeflow for ML pipeline orchestration</li>
+                    <li>Advanced feature engineering workflows</li>
+                </ul>
+                <div class="tech-badges">
+                    <span class="badge">JupyterHub</span>
+                    <span class="badge">MLflow</span>
+                    <span class="badge">DVC</span>
+                    <span class="badge">Kubeflow</span>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3>Data Governance & Quality</h3>
+                <ul>
+                    <li>Great Expectations for data quality validation</li>
+                    <li>Apache Atlas for metadata management</li>
+                    <li>Collibra for data lineage tracking</li>
+                    <li>OpenMetadata for unified cataloging</li>
+                    <li>Data profiler for anomaly detection</li>
+                    <li>GDPR & HIPAA compliance automation</li>
+                </ul>
+                <div class="tech-badges">
+                    <span class="badge">Great Expectations</span>
+                    <span class="badge">Apache Atlas</span>
+                    <span class="badge">OpenMetadata</span>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3>Analytics & BI Layer</h3>
+                <ul>
+                    <li>Tableau for interactive dashboards</li>
+                    <li>Looker for self-service analytics</li>
+                    <li>Grafana for system monitoring</li>
+                    <li>Apache Superset for open-source BI</li>
+                    <li>Real-time data visualization</li>
+                    <li>Ad-hoc query capabilities</li>
+                </ul>
+                <div class="tech-badges">
+                    <span class="badge">Tableau</span>
+                    <span class="badge">Looker</span>
+                    <span class="badge">Grafana</span>
+                    <span class="badge">Superset</span>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3>Storage & Database Tier</h3>
+                <ul>
+                    <li>S3/HDFS Data Lake for raw data</li>
+                    <li>Snowflake for cloud data warehouse</li>
+                    <li>PostgreSQL for transactional data</li>
+                    <li>PostGIS for geospatial queries</li>
+                    <li>Redis for caching & sessions</li>
+                    <li>Medallion architecture pattern</li>
+                </ul>
+                <div class="tech-badges">
+                    <span class="badge">Snowflake</span>
+                    <span class="badge">PostgreSQL</span>
+                    <span class="badge">PostGIS</span>
+                    <span class="badge">Redis</span>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <h3>System Metrics & Performance</h3>
+                <ul>
+                    <li>Daily Data Processing: 500M+ records</li>
+                    <li>System Uptime Target: 99.9%</li>
+                    <li>Query Performance: 85% faster</li>
+                    <li>Data Freshness: Sub-minute latency</li>
+                    <li>Concurrent Users: 10,000+</li>
+                    <li>Average Response Time: under 500ms</li>
+                </ul>
+                <div class="tech-badges">
+                    <span class="badge">Enterprise Grade</span>
+                    <span class="badge">High Performance</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Enterprise Data Platform - Data Engineering, Science, Governance - Advanced Analytics & AI Operations</p>
+        </div>
+    </div>
+
+    <!-- Capabilities Section -->
+    <div class="wrapper">
+        <div class="capabilities-section">
+            <div class="capabilities-title">Core Capabilities & Features</div>
+            <div class="capabilities-grid">
+                <div class="capability-card card-cyan">
+                    <div class="capability-icon">STREAM</div>
+                    <h3>Real-Time Streaming</h3>
+                    <p>Sub-second latency data ingestion through Apache Kafka with millions of events per second</p>
+                    <div class="capability-tags">
+                        <span class="capability-tag">Kafka</span>
+                        <span class="capability-tag">Real-time</span>
+                        <span class="capability-tag">Streaming</span>
+                    </div>
+                </div>
+                <div class="capability-card card-blue">
+                    <div class="capability-icon">ANALYTICS</div>
+                    <h3>Advanced Analytics</h3>
+                    <p>Interactive dashboards with Tableau, Looker, and Grafana for comprehensive insights</p>
+                    <div class="capability-tags">
+                        <span class="capability-tag">Tableau</span>
+                        <span class="capability-tag">BI</span>
+                        <span class="capability-tag">Analytics</span>
+                    </div>
+                </div>
+                <div class="capability-card card-purple">
+                    <div class="capability-icon">ML/AI</div>
+                    <h3>Machine Learning Ops</h3>
+                    <p>End-to-end ML lifecycle with MLflow, DVC, and Kubeflow for production deployments</p>
+                    <div class="capability-tags">
+                        <span class="capability-tag">MLflow</span>
+                        <span class="capability-tag">MLOps</span>
+                        <span class="capability-tag">ML</span>
+                    </div>
+                </div>
+                <div class="capability-card card-green">
+                    <div class="capability-icon">GOVERN</div>
+                    <h3>Data Governance</h3>
+                    <p>Automated compliance with Great Expectations, Atlas, and Collibra for data quality</p>
+                    <div class="capability-tags">
+                        <span class="capability-tag">Governance</span>
+                        <span class="capability-tag">Quality</span>
+                        <span class="capability-tag">Atlas</span>
+                    </div>
+                </div>
+                <div class="capability-card card-orange">
+                    <div class="capability-icon">GLOBAL</div>
+                    <h3>Global Scale</h3>
+                    <p>Multi-region deployment with Cloudflare CDN for low-latency worldwide access</p>
+                    <div class="capability-tags">
+                        <span class="capability-tag">Cloudflare</span>
+                        <span class="capability-tag">CDN</span>
+                        <span class="capability-tag">Global</span>
+                    </div>
+                </div>
+                <div class="capability-card card-pink">
+                    <div class="capability-icon">SECURE</div>
+                    <h3>Enterprise Security</h3>
+                    <p>End-to-end encryption, RBAC, audit logging, and compliance automation</p>
+                    <div class="capability-tags">
+                        <span class="capability-tag">Security</span>
+                        <span class="capability-tag">Encryption</span>
+                        <span class="capability-tag">Audit</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced Footer -->
+    <div class="wrapper">
+        <div class="footer">
+            <div class="footer-content">
+                <div class="footer-title">Platform Capabilities & Technology Stack</div>
+                
+                <div class="footer-grid">
+                    <div class="footer-section">
+                        <h4>Data Infrastructure</h4>
+                        <ul>
+                            <li>Apache Airflow (Orchestration)</li>
+                            <li>Apache Kafka (Streaming)</li>
+                            <li>Apache Spark (Processing)</li>
+                            <li>Delta Lake (ACID)</li>
+                            <li>Snowflake (Warehouse)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Data Science & AI</h4>
+                        <ul>
+                            <li>JupyterHub (Notebooks)</li>
+                            <li>MLflow (Tracking)</li>
+                            <li>DVC (Versioning)</li>
+                            <li>Kubeflow (Pipelines)</li>
+                            <li>Ollama (LLM)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Governance & Quality</h4>
+                        <ul>
+                            <li>Great Expectations (Quality)</li>
+                            <li>Apache Atlas (Metadata)</li>
+                            <li>Collibra (Lineage)</li>
+                            <li>OpenMetadata (Catalog)</li>
+                            <li>Compliance Automation</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="footer-section">
+                        <h4>Analytics & Visualization</h4>
+                        <ul>
+                            <li>Tableau (BI)</li>
+                            <li>Looker (Self-Service)</li>
+                            <li>Grafana (Monitoring)</li>
+                            <li>Apache Superset (OSS)</li>
+                            <li>D3.js (Interactive)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="footer-divider"></div>
+                
+                <div class="footer-bottom">
+                    <p>
+                        <span class="footer-badge">Production-Grade</span>
+                        <span class="footer-badge">HIPAA Compliant</span>
+                        <span class="footer-badge">GDPR Ready</span>
+                        <span class="footer-badge">99.9% SLA</span>
+                        <span class="footer-badge">Global Scale</span>
+                        <span class="footer-badge">Zero Trust</span>
+                    </p>
+                    <p class="footer-credit">
+                        Built with precision, deployed with care • Simon Renauld • Enterprise ML Systems • Data Platforms • Governance
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Advanced Neural Network Visualization
+        const canvas = document.getElementById('viz-canvas');
+        if (canvas && typeof THREE !== 'undefined') {
+            const width = canvas.parentElement.clientWidth;
+            const height = canvas.parentElement.clientHeight;
+            
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+            renderer.setSize(width, height);
+            renderer.setClearColor(0x000000, 0);
+            renderer.shadowMap.enabled = true;
+            
+            camera.position.z = 8;
+            
+            // Neural Network Layers
+            const layers = 5;
+            const neuronsPerLayer = 8;
+            const layerSpacing = 3;
+            const neurons = [];
+            const connections = [];
+            
+            // Create neurons (nodes)
+            const neuronGeometry = new THREE.IcosahedronGeometry(0.15, 4);
+            const neuronMaterial = new THREE.MeshPhongMaterial({
+                color: 0x00d4ff,
+                emissive: 0x0099ff,
+                shininess: 100,
+                wireframe: false
+            });
+            
+            const light = new THREE.PointLight(0x00d4ff, 1, 100);
+            light.position.set(5, 5, 5);
+            scene.add(light);
+            
+            const ambientLight = new THREE.AmbientLight(0x4a5a8a, 0.6);
+            scene.add(ambientLight);
+            
+            // Build neural network structure
+            for (let layer = 0; layer < layers; layer++) {
+                neurons[layer] = [];
+                const yOffset = (neuronsPerLayer - 1) * 0.5;
+                
+                for (let neuron = 0; neuron < neuronsPerLayer; neuron++) {
+                    const mesh = new THREE.Mesh(neuronGeometry, neuronMaterial.clone());
+                    const x = (layer - (layers - 1) / 2) * layerSpacing;
+                    const y = neuron - yOffset;
+                    const z = (Math.random() - 0.5) * 1;
+                    
+                    mesh.position.set(x, y, z);
+                    mesh.castShadow = true;
+                    mesh.receiveShadow = true;
+                    
+                    // Store original position and activation state
+                    mesh.userData = {
+                        originalPosition: new THREE.Vector3(x, y, z),
+                        layer: layer,
+                        index: neuron,
+                        activation: 0,
+                        targetActivation: 0,
+                        pulse: 0
+                    };
+                    
+                    scene.add(mesh);
+                    neurons[layer].push(mesh);
+                }
+            }
+            
+            // Create connections between layers
+            const connectionGeometry = new THREE.BufferGeometry();
+            const connectionPoints = [];
+            const connectionIndices = [];
+            
+            for (let layer = 0; layer < layers - 1; layer++) {
+                for (let n1 = 0; n1 < neuronsPerLayer; n1++) {
+                    for (let n2 = 0; n2 < neuronsPerLayer; n2++) {
+                        const p1 = neurons[layer][n1].position;
+                        const p2 = neurons[layer + 1][n2].position;
+                        
+                        const start = connectionPoints.length;
+                        connectionPoints.push(p1.x, p1.y, p1.z);
+                        connectionPoints.push(p2.x, p2.y, p2.z);
+                        connectionIndices.push(start, start + 1);
+                        
+                        connections.push({
+                            from: layer,
+                            to: layer + 1,
+                            n1: n1,
+                            n2: n2,
+                            strength: 0
+                        });
+                    }
+                }
+            }
+            
+            connectionGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(connectionPoints), 3));
+            connectionGeometry.setIndex(new THREE.BufferAttribute(new Uint32Array(connectionIndices), 1));
+            
+            const connectionMaterial = new THREE.LineBasicMaterial({
+                color: 0x0099ff,
+                transparent: true,
+                opacity: 0.15,
+                linewidth: 1
+            });
+            
+            const connectionLines = new THREE.LineSegments(connectionGeometry, connectionMaterial);
+            scene.add(connectionLines);
+            
+            // Animation state
+            let time = 0;
+            const pulseSpeed = 0.03;
+            
+            // Activate random neurons in sequence
+            function activateNeuron(layer, index) {
+                const neuron = neurons[layer][index];
+                neuron.userData.targetActivation = 1.0;
+                neuron.userData.pulse = 0;
+            }
+            
+            // Pulse propagation effect
+            function updatePulses() {
+                neurons.forEach(layer => {
+                    layer.forEach(neuron => {
+                        // Smooth activation decay
+                        neuron.userData.activation += (neuron.userData.targetActivation - neuron.userData.activation) * 0.1;
+                        neuron.userData.targetActivation *= 0.98;
+                        
+                        // Pulse animation
+                        neuron.userData.pulse += pulseSpeed;
+                        
+                        // Update neuron appearance
+                        const scale = 1 + neuron.userData.activation * 0.5;
+                        neuron.scale.set(scale, scale, scale);
+                        
+                        // Update color based on activation
+                        const hue = 0.6 + neuron.userData.activation * 0.1;
+                        const saturation = 0.8 + neuron.userData.activation * 0.2;
+                        neuron.material.emissive.setHSL(hue, saturation, 0.3 + neuron.userData.activation * 0.3);
+                        neuron.material.color.setHSL(hue, saturation, 0.5);
+                    });
+                });
+            }
+            
+            // Update connection strengths
+            function updateConnections() {
+                connections.forEach(conn => {
+                    const fromNeuron = neurons[conn.from][conn.n1];
+                    const toNeuron = neurons[conn.to][conn.n2];
+                    
+                    if (fromNeuron.userData.activation > 0.3) {
+                        conn.strength = Math.max(conn.strength - 0.05, 0);
+                        toNeuron.userData.targetActivation = Math.max(toNeuron.userData.targetActivation, fromNeuron.userData.activation * 0.8);
+                    } else {
+                        conn.strength *= 0.95;
+                    }
+                });
+                
+                // Update connection material opacity
+                connectionMaterial.opacity = 0.1 + Math.sin(time * 0.5) * 0.1;
+            }
+            
+            // Main animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                time += 1;
+                
+                // Rotate entire network
+                scene.rotation.y += 0.0003;
+                
+                // Update neural activity
+                updatePulses();
+                updateConnections();
+                
+                // Randomly activate neurons from input layer
+                if (time % 15 === 0) {
+                    const randomNeuron = Math.floor(Math.random() * neuronsPerLayer);
+                    activateNeuron(0, randomNeuron);
+                }
+                
+                // Cascade activation through layers
+                if (time % 25 === 0) {
+                    for (let layer = 0; layer < layers - 1; layer++) {
+                        neurons[layer].forEach((neuron, idx) => {
+                            if (neuron.userData.activation > 0.5) {
+                                const targetIdx = Math.floor(Math.random() * neuronsPerLayer);
+                                activateNeuron(layer + 1, targetIdx);
+                            }
+                        });
+                        // 'Open full' is now provided by a static anchor link in the markup; no dynamic handler needed here.
+                    }
+                }
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Handle resize
+            window.addEventListener('resize', () => {
+                const newWidth = canvas.parentElement.clientWidth;
+                const newHeight = canvas.parentElement.clientHeight;
+                camera.aspect = newWidth / newHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(newWidth, newHeight);
+            });
+            
+            // Hide loading overlay with neural theme message
+            setTimeout(() => {
+                const overlay = document.getElementById('viz-overlay');
+                if (overlay) {
+                    overlay.style.opacity = '0';
+                    overlay.style.pointerEvents = 'none';
+                    overlay.style.transition = 'opacity 0.8s ease-out';
+                }
+            }, 2500);
+        }
+        
+        // Mermaid initialization
+        if (typeof mermaid !== 'undefined') {
+            mermaid.initialize({ 
+                startOnLoad: true,
+                theme: 'dark',
+                securityLevel: 'loose',
+                flowchart: { 
+                    useMaxWidth: true,
+                    curve: 'linear',
+                    nodeSpacing: 50,
+                    rankSpacing: 100
+                }
+            });
+            mermaid.contentLoaded();
+        } else {
+            // Wait for mermaid to load if not available yet
+            document.addEventListener('DOMContentLoaded', () => {
+                if (typeof mermaid !== 'undefined') {
+                    mermaid.initialize({ 
+                        startOnLoad: true,
+                        theme: 'dark',
+                        securityLevel: 'loose',
+                        flowchart: { 
+                            useMaxWidth: true,
+                            curve: 'linear',
+                            nodeSpacing: 50,
+                            rankSpacing: 100
+                        }
+                    });
+                    mermaid.contentLoaded();
+                }
+            });
+        }
+        
+        // Zoom functionality
+        let currentZoom = 1;
+        const zoomStep = 0.15;
+        const minZoom = 0.5;
+        const maxZoom = 2.5;
+        
+    const diagramWrapper = document.getElementById('diagramZoomWrapper');
+    const zoomLevel = document.getElementById('zoomLevel');
+        const zoomInBtn = document.getElementById('zoomIn');
+        const zoomOutBtn = document.getElementById('zoomOut');
+        const zoomResetBtn = document.getElementById('zoomReset');
+        
+        function updateZoom() {
+            if (diagramWrapper) {
+                diagramWrapper.style.transform = `scale(${currentZoom})`;
+                zoomLevel.textContent = `${Math.round(currentZoom * 100)}%`;
+            }
+        }
+        
+        if (zoomInBtn) {
+            zoomInBtn.addEventListener('click', () => {
+                if (currentZoom < maxZoom) {
+                    currentZoom = Math.min(currentZoom + zoomStep, maxZoom);
+                    updateZoom();
+                }
+            });
+        }
+        
+        if (zoomOutBtn) {
+            zoomOutBtn.addEventListener('click', () => {
+                if (currentZoom > minZoom) {
+                    currentZoom = Math.max(currentZoom - zoomStep, minZoom);
+                    updateZoom();
+                }
+            });
+        }
+        
+        if (zoomResetBtn) {
+            zoomResetBtn.addEventListener('click', () => {
+                currentZoom = 1;
+                updateZoom();
+            });
+        }
+
+        // Ensure the initial zoom label is correct on load
+        updateZoom();
+        
+        // Mouse wheel zoom (optional)
+        if (diagramWrapper) {
+            const diagramContainer = document.querySelector('.diagram-container');
+            if (diagramContainer) {
+                diagramContainer.addEventListener('wheel', (e) => {
+                    if (e.ctrlKey) {
+                        e.preventDefault();
+                        const delta = e.deltaY > 0 ? -zoomStep : zoomStep;
+                        currentZoom = Math.max(minZoom, Math.min(maxZoom, currentZoom + delta));
+                        updateZoom();
+                    }
+                }, { passive: false });
+            }
+        }
+</script>
+
+    <script>
+        // Shortcuts toast behavior: show once per user (localStorage)
+        (function() {
+            try {
+                const key = 'diagram_shortcuts_seen_v1';
+                const toast = document.getElementById('shortcutsToast');
+                const dismiss = document.getElementById('dismissShortcuts');
+                const showAgain = document.getElementById('showShortcutsAgain');
+                if (!toast) return;
+
+                function showToast() {
+                    toast.style.display = 'flex';
+                    // auto-hide after 8s
+                    setTimeout(() => { try { toast.style.opacity = '0'; setTimeout(() => toast.style.display = 'none', 420); } catch(e){} }, 8000);
+                }
+
+                // only show if not seen
+                const seen = (window.localStorage && localStorage.getItem && localStorage.getItem(key));
+                if (!seen) {
+                    // small delay so it doesn't clash with initial animations
+                    setTimeout(() => showToast(), 900);
+                } else {
+                    // allow the 'show again' small button to be visible in the action area
+                    if (showAgain) showAgain.style.display = 'inline-block';
+                }
+
+                if (dismiss) {
+                    dismiss.addEventListener('click', () => {
+                        try { localStorage.setItem(key, '1'); } catch (e) {}
+                        try { toast.style.display = 'none'; } catch (e) {}
+                        if (showAgain) showAgain.style.display = 'inline-block';
+                    });
+                }
+
+                if (showAgain) {
+                    showAgain.addEventListener('click', () => {
+                        try { toast.style.display = 'flex'; } catch (e) {}
+                        // do not overwrite seen flag
+                    });
+                }
+            } catch (e) { console.warn('shortcuts toast init failed', e); }
+        })();
+    </script>
+</body>
+</html>

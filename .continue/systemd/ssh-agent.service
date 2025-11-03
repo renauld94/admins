@@ -1,0 +1,14 @@
+[Unit]
+Description=User SSH Agent for persistent key forwarding
+After=network.target
+
+[Service]
+Type=forking
+# Use the per-user runtime dir for socket path
+ExecStart=/usr/bin/ssh-agent -a %t/ssh-agent.sock
+ExecStop=/usr/bin/ssh-agent -k
+Environment=SSH_AUTH_SOCK=%t/ssh-agent.sock
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

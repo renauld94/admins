@@ -1,0 +1,38 @@
+name: Lighthouse Audit
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [ main, deploy/** ]
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install lighthouse
+        run: |
+          npm ci --silent
+          npm install -g lighthouse@11
+
+      - name: Run Lighthouse against deployed site root
+        env:
+          URL: https://www.simondatalab.de/
+        run: |
+          echo "Running Lighthouse for $URL"
+          lighthouse "$URL" --quiet --chrome-flags="--headless --no-sandbox" --output=json --output-path=portfolio-deployment-enhanced/qa/output/lighthouse.json || true
+
+      - name: Upload Lighthouse report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-report
+          path: portfolio-deployment-enhanced/qa/output/lighthouse.json

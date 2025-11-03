@@ -1,0 +1,19 @@
+# Modelfile examples for importing models/adapters into Ollama
+
+# 1) Import a single GGUF model file (place Modelfile in same directory as the .gguf file)
+FROM /path/to/file.gguf
+
+# 2) Import a directory containing Safetensors weights (point FROM at the directory)
+FROM /path/to/safetensors/directory
+
+# 3) Create a model from an Ollama-base model + an adapter (safetensors/gguf adapter)
+#    Use the same base model that the adapter was trained against.
+FROM <base-model-name>
+ADAPTER /path/to/adapter/file.safetensors
+
+# 4) Minimal Modelfile when the weights are in the current directory:
+FROM .
+
+# Notes:
+# - Put the Modelfile in the same directory as the weights (or reference the absolute path).
+# - Ollama will read the Modelfile and build the model with `ollama create <name>`.

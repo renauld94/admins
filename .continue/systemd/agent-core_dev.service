@@ -1,0 +1,16 @@
+[Unit]
+Description=Agent: core_dev (runs the Core Dev FastAPI agent)
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/simon/Learning-Management-System-Academy
+ExecStartPre=/usr/bin/env bash -c 'mkdir -p /home/simon/.local/state/agents'
+StandardOutput=append:/home/simon/.local/state/agents/core_dev.log
+StandardError=inherit
+ExecStart=/usr/bin/env python3 /home/simon/Learning-Management-System-Academy/.continue/agents/agents_continue/core_dev_server.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target

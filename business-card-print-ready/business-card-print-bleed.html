@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Business Card – Print Shop (Bleed + Crop Marks)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /*
+      Print-shop spec
+      - Finished size: 3.5in × 2in (89 × 51 mm)
+      - Bleed: 0.125in (3 mm) on all sides
+      - Document (trim + bleed): 3.75in × 2.25in
+      - Crop marks: hairline outside trim box
+    */
+    :root {
+      --trim-w: 3.5in;
+      --trim-h: 2in;
+      --bleed: 0.125in;
+      --doc-w: calc(var(--trim-w) + var(--bleed) * 2);
+      --doc-h: calc(var(--trim-h) + var(--bleed) * 2);
+      --safe-inset: 0.125in; /* visual guide only */
+      --accent-a: #12AFC0;
+      --accent-b: #17BECF;
+      --bg-a: #0A192F;
+      --bg-b: #0D223C;
+      --ink: #000; /* crop-mark color */
+    }
+
+    @page { size: var(--doc-w) var(--doc-h); margin: 0; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+    .sheet {
+      width: var(--doc-w);
+      height: var(--doc-h);
+      position: relative;
+      page-break-after: always;
+      background: #fff;
+    }
+
+    /* Artwork region fills to bleed so gradients go edge-to-edge after trimming */
+    .artwork {
+      position: absolute;
+      left: 0; top: 0; right: 0; bottom: 0; /* includes bleed */
+      background: linear-gradient(135deg, var(--bg-a) 0%, var(--bg-b) 100%);
+      overflow: hidden;
+    }
+
+    /* Content clipped to TRIM, inset by bleed */
+    .trim {
+      position: absolute;
+      left: var(--bleed);
+      top: var(--bleed);
+      width: var(--trim-w);
+      height: var(--trim-h);
+    }
+
+    /* Safe area (optional visual aid) */
+    .safe {
+      position: absolute;
+      left: calc(var(--bleed) + var(--safe-inset));
+      top: calc(var(--bleed) + var(--safe-inset));
+      width: calc(var(--trim-w) - var(--safe-inset) * 2);
+      height: calc(var(--trim-h) - var(--safe-inset) * 2);
+      pointer-events: none;
+      /* Uncomment line below to visualize safe area on screen */
+      /* outline: 0.25pt dashed rgba(255,255,255,0.25); */
+    }
+
+    /* Card design (front/back share styles) */
+    .card-content {
+      position: absolute;
+      inset: 0.3in; /* inner padding from trim edge */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: #fff;
+      font-family: 'Manrope', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+
+    .logo { display: flex; align-items: center; gap: 16px; }
+    .logo-icon { width: 64px; height: 64px; }
+    .brand-line { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; color: #fff; }
+    .brand-lab { color: var(--accent-b); margin-left: 6px; }
+    .logo-tagline { font-size: 12px; color: #13c2d6; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 6px; }
+
+    .name { font-size: 54px; font-weight: 800; background: linear-gradient(135deg, #ffffff 0%, #dfe8f5 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 12px; letter-spacing: -0.02em; }
+    .title { font-size: 22px; color: #13c2d6; font-weight: 700; margin-bottom: 8px; }
+    .subtitle { font-size: 18px; color: #9fb0bf; font-weight: 600; margin-bottom: 36px; }
+
+    .contact-info { display: grid; gap: 12px; color: #eef6fb; font-size: 18px; }
+    .contact-item { display: flex; align-items: center; gap: 12px; }
+    .contact-item a { color: inherit; text-decoration: none; }
+
+  .qr-section { position: absolute; right: 0.3in; bottom: 0.3in; text-align: center; display: inline-flex; align-items: center; justify-content: center; }
+  /* Lock QR to a physical size for print accuracy */
+  .qr-code { width: 0.5in; height: 0.5in; background: #fff; border-radius: 12px; padding: 0.07in; box-shadow: 0 6px 16px rgba(0,0,0,0.35); border: 2px solid rgba(23, 190, 207, 0.32); object-fit: contain; display: block; }
+    .qr-label { margin-top: 10px; font-size: 13px; color: #7b8b96; font-weight: 600; }
+
+    .accent-line { position: absolute; left: var(--bleed); bottom: var(--bleed); width: var(--trim-w); height: 6px; background: linear-gradient(90deg, var(--accent-a) 0%, var(--accent-b) 100%); }
+
+    /* Crop marks (hairlines) at trim corners, drawn in bleed area) */
+    .crop { position: absolute; inset: 0; pointer-events: none; }
+    .crop div { position: absolute; background: var(--ink); }
+    /* length and thickness */
+    :root { --crop-l: 14pt; --crop-t: 0.25pt; }
+
+    /* Top-left */
+    .cm-tl-h { left: calc(var(--bleed) - var(--crop-l)); top: var(--bleed); width: var(--crop-l); height: var(--crop-t); }
+    .cm-tl-v { left: var(--bleed); top: calc(var(--bleed) - var(--crop-l)); width: var(--crop-t); height: var(--crop-l); }
+    /* Top-right */
+    .cm-tr-h { right: calc(var(--bleed) - var(--crop-l)); top: var(--bleed); width: var(--crop-l); height: var(--crop-t); }
+    .cm-tr-v { right: var(--bleed); top: calc(var(--bleed) - var(--crop-l)); width: var(--crop-t); height: var(--crop-l); }
+    /* Bottom-left */
+    .cm-bl-h { left: calc(var(--bleed) - var(--crop-l)); bottom: var(--bleed); width: var(--crop-l); height: var(--crop-t); }
+    .cm-bl-v { left: var(--bleed); bottom: calc(var(--bleed) - var(--crop-l)); width: var(--crop-t); height: var(--crop-l); }
+    /* Bottom-right */
+    .cm-br-h { right: calc(var(--bleed) - var(--crop-l)); bottom: var(--bleed); width: var(--crop-l); height: var(--crop-t); }
+    .cm-br-v { right: var(--bleed); bottom: calc(var(--bleed) - var(--crop-l)); width: var(--crop-t); height: var(--crop-l); }
+
+    /* Back card variant */
+    .back-bg .artwork { background: #0a0e1a; }
+    .brand-name { font-size: 32px; font-weight: 800; background: linear-gradient(135deg, var(--accent-a) 0%, var(--accent-b) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.02em; }
+    .tagline { font-size: 15px; color: #ffffff; font-weight: 600; text-align: center; letter-spacing: 0.02em; max-width: 80%; line-height: 1.25; margin: 0 auto; }
+    .center { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; height: 100%; }
+
+    @media screen { body { background: #f4f6f8; padding: 24px; } .sheet { box-shadow: 0 10px 30px rgba(0,0,0,0.15); margin: 0 auto 24px; }
+      /* show safe area on screen */
+      .safe { outline: 0.5px dashed rgba(255,255,255,0.25); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- FRONT -->
+  <section class="sheet">
+    <div class="artwork"></div>
+    <div class="trim">
+      <div class="card-content">
+        <div class="logo">
+          <svg class="logo-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#12AFC0" stop-opacity="1" />
+                <stop offset="100%" stop-color="#17BECF" stop-opacity="1" />
+              </linearGradient>
+            </defs>
+            <path d="M32 4 L54 16 L54 40 L32 52 L10 40 L10 16 Z" stroke="url(#grad1)" stroke-width="3" fill="none"/>
+            <circle cx="32" cy="24" r="6" fill="#17BECF"/>
+            <circle cx="20" cy="32" r="4" fill="#12AFC0" opacity="0.8"/>
+            <circle cx="44" cy="32" r="4" fill="#17BECF" opacity="0.8"/>
+            <circle cx="32" cy="40" r="4" fill="#12AFC0" opacity="0.8"/>
+            <line x1="32" y1="24" x2="20" y2="32" stroke="#17BECF" stroke-width="2" opacity="0.6"/>
+            <line x1="32" y1="24" x2="44" y2="32" stroke="#12AFC0" stroke-width="2" opacity="0.6"/>
+            <line x1="20" y1="32" x2="32" y2="40" stroke="#17BECF" stroke-width="2" opacity="0.6"/>
+            <line x1="44" y1="32" x2="32" y2="40" stroke="#12AFC0" stroke-width="2" opacity="0.6"/>
+          </svg>
+          <div>
+            <div class="brand-line">Neuro <span class="brand-lab">DataLab</span></div>
+            <div class="logo-tagline">Enterprise ML Systems • Data Platforms • Governance</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="name">Simon Renauld</div>
+          <div class="title">CTO - Data Engineering &amp; Analytics</div>
+          <div class="subtitle">Enterprise ML Systems • Data Platforms • Governance</div>
+
+          <div class="contact-info">
+            <div class="contact-item">📧 <a href="mailto:contact@simondatalab.de">contact@simondatalab.de</a></div>
+            <div class="contact-item">🌐 <a href="https://www.simondatalab.de">www.simondatalab.de</a></div>
+            <div class="contact-item">📍 Ho Chi Minh City, Vietnam</div>
+            <div class="contact-item">📱 +84 92 318 00 61</div>
+            <div class="contact-item">📞 +1 418 476 9790</div>
+          </div>
+        </div>
+
+        <div class="qr-section">
+          <img src="qr-code-print-300dpi.png" alt="Portfolio QR Code" class="qr-code">
+          <div class="qr-label">NeuroInfra Access</div>
+        </div>
+      </div>
+    </div>
+    <!-- crop marks -->
+    <div class="crop" aria-hidden="true">
+      <div class="cm-tl-h"></div><div class="cm-tl-v"></div>
+      <div class="cm-tr-h"></div><div class="cm-tr-v"></div>
+      <div class="cm-bl-h"></div><div class="cm-bl-v"></div>
+      <div class="cm-br-h"></div><div class="cm-br-v"></div>
+    </div>
+    <div class="safe" aria-hidden="true"></div>
+    <div class="artwork"></div>
+  </section>
+
+  <!-- BACK -->
+  <section class="sheet back-bg">
+    <div class="artwork"></div>
+    <div class="trim">
+      <div class="card-content">
+        <div class="center">
+          <svg class="logo-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="grad-back" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#12AFC0" stop-opacity="1" />
+                <stop offset="100%" stop-color="#17BECF" stop-opacity="1" />
+              </linearGradient>
+            </defs>
+            <path d="M32 4 L54 16 L54 40 L32 52 L10 40 L10 16 Z" stroke="url(#grad-back)" stroke-width="3" fill="none"/>
+            <circle cx="32" cy="24" r="6" fill="#17BECF"/>
+            <circle cx="20" cy="32" r="4" fill="#12AFC0" opacity="0.8"/>
+            <circle cx="44" cy="32" r="4" fill="#17BECF" opacity="0.8"/>
+            <circle cx="32" cy="40" r="4" fill="#12AFC0" opacity="0.8"/>
+            <line x1="32" y1="24" x2="20" y2="32" stroke="#17BECF" stroke-width="2" opacity="0.6"/>
+            <line x1="32" y1="24" x2="44" y2="32" stroke="#12AFC0" stroke-width="2" opacity="0.6"/>
+            <line x1="20" y1="32" x2="32" y2="40" stroke="#17BECF" stroke-width="2" opacity="0.6"/>
+            <line x1="44" y1="32" x2="32" y2="40" stroke="#12AFC0" stroke-width="2" opacity="0.6"/>
+          </svg>
+          <div class="brand-name">Neuro DataLab</div>
+          <p class="tagline">Transforming Complex Data into Actionable Intelligence</p>
+        </div>
+      </div>
+    </div>
+    <!-- crop marks -->
+    <div class="crop" aria-hidden="true">
+      <div class="cm-tl-h"></div><div class="cm-tl-v"></div>
+      <div class="cm-tr-h"></div><div class="cm-tr-v"></div>
+      <div class="cm-bl-h"></div><div class="cm-bl-v"></div>
+      <div class="cm-br-h"></div><div class="cm-br-v"></div>
+    </div>
+    <div class="safe" aria-hidden="true"></div>
+    <div class="artwork"></div>
+  </section>
+
+</body>
+</html>

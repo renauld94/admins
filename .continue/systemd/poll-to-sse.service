@@ -1,0 +1,16 @@
+[Unit]
+Description=Poll-to-SSE proxy (user service)
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/simon/Learning-Management-System-Academy/.continue/agents
+Environment=PYTHONUNBUFFERED=1
+# Run the included proxy script directly on port 11434 (local dev)
+ExecStart=/usr/bin/env python3 /home/simon/Learning-Management-System-Academy/.continue/agents/poll_to_sse.py \
+	--host 127.0.0.1 --port 11434 --poll http://127.0.0.1:11434/api/tags
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target

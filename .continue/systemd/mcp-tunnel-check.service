@@ -1,0 +1,16 @@
+[Unit]
+Description=Maintain SSH tunnel for MCP (user service)
+After=network.target
+
+# User units must not set User=; run as the invoking user.
+[Service]
+Type=simple
+WorkingDirectory=/home/simon/Learning-Management-System-Academy
+Environment=PYTHONUNBUFFERED=1
+# The script reads REMOTE_USER, REMOTE_HOST, PROXY_JUMP, SSH_KEY from the environment.
+ExecStart=/usr/bin/env bash /home/simon/Learning-Management-System-Academy/scripts/mcp_tunnel_check.sh
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target
