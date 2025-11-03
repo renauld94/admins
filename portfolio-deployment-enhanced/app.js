@@ -1690,56 +1690,16 @@ try {
 } catch (e) { /* ignore in constrained environments */ }
 
 // Non-blocking loader for heavy epic neural loading animation
+// DISABLED BY DEFAULT - Only loads when user explicitly clicks "Load Hero Visualization"
 function deferEpicNeuralLoader() {
-    try {
-        const loadingContainer = document.querySelector('.epic-neural-loading');
-        if (!loadingContainer) return; // nothing to do
-
-        // Do not auto-load the heavy epic neural loader on mobile devices to preserve
-        // first-contentful-paint and avoid battery/network impact. Developers can
-        // still trigger loading manually or via an explicit CTA on mobile.
-        if (window.__IS_MOBILE_PORTFOLIO__) {
-            console.log('[deferEpicNeuralLoader] Mobile detected - skipping automatic epic loader.');
-            return;
-        }
-
-        const loadScript = () => {
-            if (document.querySelector('script[data-epic-neural-loaded]')) return;
-            const s = document.createElement('script');
-            s.src = 'epic-neural-loading-enhanced.js';
-            s.async = true;
-            s.setAttribute('data-epic-neural-loaded', '1');
-            s.onload = () => { /* no-op; script manages its own lifecycle */ };
-            s.onerror = () => { console.warn('Failed to load epic-neural-loading-enhanced.js'); };
-            document.head.appendChild(s);
-        };
-
-        const schedule = () => {
-            if ('requestIdleCallback' in window) requestIdleCallback(loadScript, { timeout: 3000 });
-            else setTimeout(loadScript, 2000);
-        };
-
-        // Prime on first user interaction to ensure the animation is available when needed
-        const onFirstInteraction = () => {
-            schedule();
-            window.removeEventListener('pointerdown', onFirstInteraction);
-            window.removeEventListener('touchstart', onFirstInteraction);
-            window.removeEventListener('keydown', onFirstInteraction);
-        };
-
-        window.addEventListener('pointerdown', onFirstInteraction, { passive: true, capture: true });
-        window.addEventListener('touchstart', onFirstInteraction, { passive: true, capture: true });
-        window.addEventListener('keydown', onFirstInteraction, { passive: true, capture: true });
-
-        // Also schedule a conservative idle load so it doesn't remain blocked forever
-        schedule();
-    } catch (e) {
-        console.warn('deferEpicNeuralLoader failed', e);
-    }
+    console.log('[deferEpicNeuralLoader] Auto-load disabled - use "Load Hero Visualization" button to enable');
+    // Heavy visualization disabled by default to improve performance
+    // Use the manual load button or call window.loadAdvancedVisualization() to enable
+    return;
 }
 
-// Kick off deferred loader
-deferEpicNeuralLoader();
+// DO NOT auto-start - disabled for performance
+// deferEpicNeuralLoader();
 
 // On-demand loader for advanced visualization (exposed globally)
 window.loadAdvancedVisualization = function loadAdvancedVisualization() {
