@@ -1094,7 +1094,56 @@
     <script src="app.js?v=20251018.2"></script>
     <script defer src="build-info.js"></script>
     <!-- Globe 3D JS removed -->
-    <script type="module" src="geospatial-viz/js/neural-hero.js"></script>
+
+    <!-- Lightweight handlers: dropdown + manual hero-load binding -->
+    <script>
+        // Simple dropdown toggle handler (used by inline onclick to keep backwards compatibility)
+        function toggleDropdown(){
+            try{
+                const btn = document.querySelector('.dropdown-toggle');
+                const menu = document.getElementById('desktop-admin-menu');
+                if(!btn || !menu) return;
+                const expanded = btn.getAttribute('aria-expanded') === 'true';
+                btn.setAttribute('aria-expanded', (!expanded).toString());
+                if(expanded){
+                    menu.setAttribute('aria-hidden','true');
+                    menu.classList.remove('open');
+                } else {
+                    menu.removeAttribute('aria-hidden');
+                    menu.classList.add('open');
+                }
+            }catch(e){console.warn('toggleDropdown error', e)}
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (ev)=>{
+            if(!ev.target.closest || ev.target.closest('.nav-dropdown')) return;
+            const menu = document.getElementById('desktop-admin-menu');
+            const btn = document.querySelector('.dropdown-toggle');
+            if(menu && btn){
+                menu.setAttribute('aria-hidden','true');
+                btn.setAttribute('aria-expanded','false');
+                menu.classList.remove('open');
+            }
+        });
+
+        // Bind hero-load button to explicitly enable visualization and run it
+        document.addEventListener('DOMContentLoaded', ()=>{
+            const heroBtn = document.querySelector('.hero-load-btn');
+            if(heroBtn){
+                heroBtn.addEventListener('click', ()=>{
+                    // Allow the previously blocked auto-load and trigger visualization
+                    window.__ALLOW_NEURAL_AUTOLOAD__ = true;
+                    if(typeof loadNeuralVisualization === 'function'){
+                        try{ loadNeuralVisualization(); } catch(e){ console.warn('loadNeuralVisualization error', e); }
+                    } else {
+                        // If loader isn't ready yet, wait for threeJsReady event
+                        window.addEventListener('threeJsReady', function(){ if(typeof loadNeuralVisualization === 'function') loadNeuralVisualization(); }, {once:true});
+                    }
+                });
+            }
+        });
+    </script>
     
     <!-- NEURAL GEOSERVER VISUALIZATION: GPU-Accelerated Three.js Neural-Spatial System -->
     <script>
@@ -1112,10 +1161,18 @@
         
 
         
-        // Listen for THREE.js ready event
+        // Control flag to prevent heavy visualizations from auto-loading.
+        // Default: disabled. Use the "Load Hero Visualization" button to enable.
+        window.__ALLOW_NEURAL_AUTOLOAD__ = false;
+
+        // Listen for THREE.js ready event but only start visualization when explicitly allowed.
         window.addEventListener('threeJsReady', () => {
             console.log('[NEURAL GEOSERVER] Received THREE.js ready event');
             setTimeout(() => {
+                if (!window.__ALLOW_NEURAL_AUTOLOAD__) {
+                    console.log('[NEURAL GEOSERVER] Auto-load disabled; skipping neural visualization.');
+                    return;
+                }
                 if (typeof THREE !== 'undefined') {
                     console.log('[NEURAL GEOSERVER] THREE.js confirmed available, starting neural visualization...');
                     loadNeuralVisualization();
