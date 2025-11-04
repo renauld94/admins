@@ -1,6 +1,11 @@
-## CONTINUE: poll->SSE proxy and autossh tunnel
+# Continue MCP Integration - Local Setup Guide
 
-This document describes the small local setup used to connect the MCP Server Manager and local agents to a remote MCP endpoint via an SSH tunnel and a poll->SSE proxy.
+This document describes the complete setup for integrating Continue with local Ollama models via the Model Context Protocol (MCP), including the MCP agent, SSH tunnel, and health monitoring.
+
+## Table of Contents
+- [Architecture Overview](#architecture-overview)
+- [MCP Agent Setup](#mcp-agent-setup) ⭐ NEW
+- [Legacy: poll->SSE proxy and autossh tunnel](#legacy-pollsse-proxy-and-autossh-tunnel)
 
 Summary
 - Proxy (gunicorn + Flask) serves SSE on 127.0.0.1:11434

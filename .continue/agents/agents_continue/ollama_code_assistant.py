@@ -352,7 +352,17 @@ async def mcp_call_tool(request: Request, _auth: bool = Depends(require_token)):
     MCP tool invocation endpoint (JSON-RPC 2.0).
     Called by MCP clients to execute tools.
     """
-    body = await request.json()
+    try:
+        body = await request.json()
+    except Exception as e:
+        # Malformed/empty JSON in request — return a JSON-RPC error response
+        # Avoid crashing the ASGI worker with an uncaught JSONDecodeError.
+        from fastapi.responses import JSONResponse
+        return JSONResponse(status_code=400, content={
+            "jsonrpc": "2.0",
+            "error": {"code": -32700, "message": "Parse error: invalid JSON body"},
+            "id": None,
+        })
     method = body.get("method")
     params = body.get("params", {})
     request_id = body.get("id", 1)

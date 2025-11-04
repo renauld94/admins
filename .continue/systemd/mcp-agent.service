@@ -1,0 +1,22 @@
+[Unit]
+Description=MCP Ollama Code Assistant (user service)
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/simon/Learning-Management-System-Academy
+ExecStart=/usr/bin/python3 /home/simon/Learning-Management-System-Academy/.continue/agents/agents_continue/ollama_code_assistant.py
+# Only restart on failure to avoid tight restart loops on controlled stops
+Restart=on-failure
+RestartSec=5
+# Ensure entire process group (uvicorn child workers) are killed on stop
+KillMode=control-group
+# Give the app some time to shut down gracefully
+TimeoutStopSec=15
+# Make sure any leftover python workers are cleaned up after stop
+ExecStopPost=/bin/sh -c '/usr/bin/pkill -f "ollama_code_assistant.py" || true'
+StandardOutput=append:/home/simon/.local/state/mcp-agent.log
+StandardError=append:/home/simon/.local/state/mcp-agent.err
+
+[Install]
+WantedBy=default.target
