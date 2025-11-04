@@ -1,0 +1,587 @@
+#!/usr/bin/env python3
+"""
+Infrastructure Showcase Generator
+Creates impressive demos/presentations of your infrastructure
+to win clients and demonstrate capabilities
+
+Features:
+- Live infrastructure dashboard
+- Interactive demos
+- Case study presentations
+- Metrics visualizations
+- Video walkthroughs
+
+Author: Simon Renauld
+Created: November 4, 2025
+"""
+
+import json
+from pathlib import Path
+from datetime import datetime
+
+BASE_DIR = Path(__file__).parent
+SHOWCASE_DIR = BASE_DIR / "outputs" / "showcase"
+SHOWCASE_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def generate_capabilities_demo_page():
+    """Generate HTML page showcasing your full infrastructure"""
+    
+    html = """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simon Renauld - Infrastructure Showcase | Data Engineering & MLOps Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 60px 0;
+            border-bottom: 2px solid #334155;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            color: #0ea5e9;
+            margin-bottom: 20px;
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            color: #8b5cf6;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            color: #cbd5e1;
+        }
+        
+        .cta-buttons {
+            margin-top: 30px;
+        }
+        
+        .cta-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 10px;
+            background: #0ea5e9;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        
+        .cta-btn:hover {
+            background: #0284c7;
+        }
+        
+        .cta-btn.secondary {
+            background: #8b5cf6;
+        }
+        
+        .cta-btn.secondary:hover {
+            background: #7c3aed;
+        }
+        
+        .infrastructure-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+        
+        .infra-card {
+            background: #1e293b;
+            border: 2px solid #334155;
+            border-radius: 12px;
+            padding: 30px;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        
+        .infra-card:hover {
+            transform: translateY(-5px);
+            border-color: #0ea5e9;
+        }
+        
+        .infra-card h3 {
+            color: #0ea5e9;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .infra-card .metric {
+            font-size: 2rem;
+            color: #8b5cf6;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        
+        .infra-card ul {
+            list-style: none;
+            margin: 15px 0;
+        }
+        
+        .infra-card li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .infra-card li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #06b6d4;
+            font-weight: bold;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .tech-badge {
+            background: #334155;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: #0ea5e9;
+        }
+        
+        .demo-section {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 40px;
+            margin: 40px 0;
+        }
+        
+        .demo-section h2 {
+            color: #0ea5e9;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .demo-card {
+            background: #0f172a;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid #0ea5e9;
+        }
+        
+        .demo-card h4 {
+            color: #8b5cf6;
+            margin-bottom: 10px;
+        }
+        
+        .demo-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: #0ea5e9;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .demo-link:hover {
+            text-decoration: underline;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 2px solid #334155;
+            margin-top: 60px;
+        }
+        
+        footer a {
+            color: #0ea5e9;
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Production-Grade Data Infrastructure</h1>
+            <p class="tagline">From Neural Networks To Global Data Networks</p>
+            <p class="subtitle">Enterprise Data Engineering • MLOps Platform • Healthcare Analytics</p>
+            
+            <div class="cta-buttons">
+                <a href="https://www.simondatalab.de" class="cta-btn">View Portfolio</a>
+                <a href="https://moodle.simondatalab.de" class="cta-btn secondary">Live Training Platform</a>
+                <a href="mailto:simon@simondatalab.de" class="cta-btn">Get In Touch</a>
+            </div>
+        </header>
+        
+        <div class="infrastructure-grid">
+            <!-- Healthcare Analytics Platform -->
+            <div class="infra-card">
+                <h3>🏥 Healthcare Analytics Platform</h3>
+                <div class="metric">500M+ Records</div>
+                <p>HIPAA-compliant real-time analytics processing clinical data at scale.</p>
+                <ul>
+                    <li>100% HIPAA compliance</li>
+                    <li>99.9% production uptime</li>
+                    <li>85% faster research cycles</li>
+                    <li>Zero security violations</li>
+                </ul>
+                <div class="tech-stack">
+                    <span class="tech-badge">Python</span>
+                    <span class="tech-badge">PostgreSQL</span>
+                    <span class="tech-badge">Airflow</span>
+                    <span class="tech-badge">Docker</span>
+                </div>
+            </div>
+            
+            <!-- AI Homelab -->
+            <div class="infra-card">
+                <h3>🤖 AI-Native Homelab</h3>
+                <div class="metric">VM 159 Agents</div>
+                <p>Private MLOps platform with ProxmoxMCP automation and AI agent orchestration.</p>
+                <ul>
+                    <li>Automated VM provisioning (&lt;2 min)</li>
+                    <li>GPU pass-through for ML workloads</li>
+                    <li>50% fewer manual interventions</li>
+                    <li>Cost-efficient experimentation</li>
+                </ul>
+                <div class="tech-stack">
+                    <span class="tech-badge">ProxmoxMCP</span>
+                    <span class="tech-badge">MLflow</span>
+                    <span class="tech-badge">Grafana</span>
+                    <span class="tech-badge">JupyterHub</span>
+                </div>
+            </div>
+            
+            <!-- Data Engineering Platform -->
+            <div class="infra-card">
+                <h3>⚙️ Enterprise ETL Platform</h3>
+                <div class="metric">95% Automation</div>
+                <p>Modular ETL framework eliminating 40+ hours/week of manual reporting.</p>
+                <ul>
+                    <li>8 data sources automated</li>
+                    <li>99.9% production uptime</li>
+                    <li>dbt transformations</li>
+                    <li>Automated QA & validation</li>
+                </ul>
+                <div class="tech-stack">
+                    <span class="tech-badge">Airflow</span>
+                    <span class="tech-badge">dbt</span>
+                    <span class="tech-badge">Python</span>
+                    <span class="tech-badge">PostgreSQL</span>
+                </div>
+            </div>
+            
+            <!-- Training Platform -->
+            <div class="infra-card">
+                <h3>🎓 Live Training Platform</h3>
+                <div class="metric">Moodle + AI</div>
+                <p>Production Moodle platform with automated grading and hands-on labs.</p>
+                <ul>
+                    <li>Data engineering courses</li>
+                    <li>Python Academy</li>
+                    <li>Automated assessment</li>
+                    <li>Real-world projects</li>
+                </ul>
+                <div class="tech-stack">
+                    <span class="tech-badge">Moodle</span>
+                    <span class="tech-badge">Docker</span>
+                    <span class="tech-badge">PostgreSQL</span>
+                    <span class="tech-badge">Nginx</span>
+                </div>
+            </div>
+            
+            <!-- Media Infrastructure -->
+            <div class="infra-card">
+                <h3>📺 Media & Streaming</h3>
+                <div class="metric">Jellyfin + OBS</div>
+                <p>Self-hosted media platform for training content and live streaming.</p>
+                <ul>
+                    <li>Automated content delivery</li>
+                    <li>Live course streaming</li>
+                    <li>Vietnamese audio integration</li>
+                    <li>Multi-format support</li>
+                </ul>
+                <div class="tech-stack">
+                    <span class="tech-badge">Jellyfin</span>
+                    <span class="tech-badge">OBS</span>
+                    <span class="tech-badge">FFmpeg</span>
+                    <span class="tech-badge">Nginx</span>
+                </div>
+            </div>
+            
+            <!-- Analytics Dashboard -->
+            <div class="infra-card">
+                <h3>📊 Analytics & Monitoring</h3>
+                <div class="metric">Real-time Insights</div>
+                <p>Comprehensive monitoring, alerting, and analytics across all systems.</p>
+                <ul>
+                    <li>Grafana dashboards</li>
+                    <li>Prometheus metrics</li>
+                    <li>Custom alerting</li>
+                    <li>Performance tracking</li>
+                </ul>
+                <div class="tech-stack">
+                    <span class="tech-badge">Grafana</span>
+                    <span class="tech-badge">Prometheus</span>
+                    <span class="tech-badge">CloudWatch</span>
+                    <span class="tech-badge">Metabase</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>Live Demos & Proof Points</h2>
+            <div class="demo-grid">
+                <div class="demo-card">
+                    <h4>Portfolio Website</h4>
+                    <p>Interactive case studies, technical depth, and proven outcomes.</p>
+                    <a href="https://www.simondatalab.de" class="demo-link">View Live →</a>
+                </div>
+                
+                <div class="demo-card">
+                    <h4>Training Platform</h4>
+                    <p>Production Moodle with data engineering courses and hands-on labs.</p>
+                    <a href="https://moodle.simondatalab.de" class="demo-link">Explore Courses →</a>
+                </div>
+                
+                <div class="demo-card">
+                    <h4>Company Page</h4>
+                    <p>Automated LinkedIn content showcasing infrastructure and thought leadership.</p>
+                    <a href="https://www.linkedin.com/company/105307318" class="demo-link">Follow Updates →</a>
+                </div>
+                
+                <div class="demo-card">
+                    <h4>Infrastructure Documentation</h4>
+                    <p>Complete architecture diagrams, deployment guides, and technical specs.</p>
+                    <a href="https://github.com/renauld94" class="demo-link">View GitHub →</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>What I Can Build for You</h2>
+            <div class="infrastructure-grid">
+                <div class="infra-card">
+                    <h3>Strategic Consulting</h3>
+                    <p>Data strategy development, ML roadmaps, technical architecture design, and organizational enablement.</p>
+                    <ul>
+                        <li>30-90 day roadmaps</li>
+                        <li>Fixed, transparent budgets</li>
+                        <li>On-prem or hybrid cloud</li>
+                    </ul>
+                </div>
+                
+                <div class="infra-card">
+                    <h3>Technical Leadership</h3>
+                    <p>Fractional CTO/Head of Data roles, technical advisory services, and interim leadership positions.</p>
+                    <ul>
+                        <li>Team scaling & hiring</li>
+                        <li>Technical mentorship</li>
+                        <li>Architecture reviews</li>
+                    </ul>
+                </div>
+                
+                <div class="infra-card">
+                    <h3>Project Delivery</h3>
+                    <p>End-to-end implementation of data platforms, ML systems, and analytics solutions.</p>
+                    <ul>
+                        <li>ETL/ELT pipelines</li>
+                        <li>MLOps platforms</li>
+                        <li>Analytics dashboards</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <h2 style="color: #0ea5e9; margin-bottom: 20px;">Ready to Build Something Together?</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 20px;">
+                Based in Ho Chi Minh City, Vietnam • Available for remote work globally
+            </p>
+            <p>
+                <a href="mailto:simon@simondatalab.de">simon@simondatalab.de</a> • 
+                <a href="https://www.linkedin.com/in/simonrenauld">LinkedIn</a> • 
+                <a href="https://www.simondatalab.de">Portfolio</a>
+            </p>
+            <p style="margin-top: 20px; color: #64748b;">
+                © 2025 Simon Renauld. All rights reserved.
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
+"""
+    
+    output_file = SHOWCASE_DIR / "infrastructure-showcase.html"
+    with open(output_file, 'w') as f:
+        f.write(html)
+    
+    print(f"✅ Generated infrastructure showcase: {output_file}")
+    print(f"📁 Open in browser: file://{output_file.absolute()}")
+    
+    return output_file
+
+
+def generate_pitch_deck_outline():
+    """Generate outline for client pitch deck"""
+    
+    deck = {
+        "title": "Data Engineering & MLOps Platform - Simon Renauld",
+        "slides": [
+            {
+                "number": 1,
+                "title": "Who Am I?",
+                "content": [
+                    "Senior Data Scientist & Innovation Strategist",
+                    "10+ years healthcare & enterprise data",
+                    "Based in Ho Chi Minh City, Vietnam",
+                    "Full-stack: Strategy → Implementation → Training"
+                ]
+            },
+            {
+                "number": 2,
+                "title": "Proven Outcomes",
+                "content": [
+                    "500M+ healthcare records processed",
+                    "85% research cycle acceleration",
+                    "99.9% production uptime",
+                    "100% HIPAA compliance",
+                    "$150K cost savings through automation"
+                ]
+            },
+            {
+                "number": 3,
+                "title": "Live Infrastructure (You Can See Today)",
+                "content": [
+                    "Portfolio: simondatalab.de",
+                    "Training Platform: moodle.simondatalab.de",
+                    "AI Homelab: ProxmoxMCP + VM 159 agents",
+                    "LinkedIn automation (this company page!)"
+                ]
+            },
+            {
+                "number": 4,
+                "title": "Your Challenge (Likely)",
+                "content": [
+                    "Slow data pipelines → weeks to insights",
+                    "Fragmented systems → data silos",
+                    "Compliance complexity → HIPAA/GDPR",
+                    "Manual processes → 40+ hours/week waste"
+                ]
+            },
+            {
+                "number": 5,
+                "title": "What I Build",
+                "content": [
+                    "ETL/ELT platforms (Airflow, dbt, Spark)",
+                    "MLOps infrastructure (on-prem or cloud)",
+                    "Analytics dashboards (Power BI, Grafana)",
+                    "Data governance (lineage, quality, compliance)"
+                ]
+            },
+            {
+                "number": 6,
+                "title": "How We Work Together",
+                "content": [
+                    "30-90 day fixed-scope projects",
+                    "Transparent pricing & milestones",
+                    "Weekly demos & progress reviews",
+                    "Knowledge transfer & training included"
+                ]
+            },
+            {
+                "number": 7,
+                "title": "Case Study: Healthcare Analytics Platform",
+                "content": [
+                    "Challenge: 15+ disparate systems, 2-3 week analysis cycles",
+                    "Solution: Automated ETL with Airflow + PostgreSQL",
+                    "Results: 85% faster (2-3 days), 100M+ records, 99.9% uptime",
+                    "Tech: Python, PostgreSQL, Apache Airflow, Docker"
+                ]
+            },
+            {
+                "number": 8,
+                "title": "Next Steps",
+                "content": [
+                    "15-minute discovery call",
+                    "Review your current data landscape",
+                    "Share relevant case studies",
+                    "Propose 30/60/90 day roadmap"
+                ]
+            }
+        ]
+    }
+    
+    output_file = SHOWCASE_DIR / "pitch-deck-outline.json"
+    with open(output_file, 'w') as f:
+        json.dump(deck, f, indent=2)
+    
+    print(f"✅ Generated pitch deck outline: {output_file}")
+    
+    # Also generate markdown version
+    md_file = SHOWCASE_DIR / "pitch-deck-outline.md"
+    with open(md_file, 'w') as f:
+        f.write(f"# {deck['title']}\n\n")
+        for slide in deck['slides']:
+            f.write(f"## Slide {slide['number']}: {slide['title']}\n\n")
+            for item in slide['content']:
+                f.write(f"- {item}\n")
+            f.write("\n")
+    
+    print(f"✅ Generated markdown version: {md_file}")
+    
+    return output_file
+
+
+if __name__ == "__main__":
+    print("🎨 Generating Infrastructure Showcase...\n")
+    
+    # Generate HTML showcase
+    html_file = generate_capabilities_demo_page()
+    
+    # Generate pitch deck outline
+    pitch_file = generate_pitch_deck_outline()
+    
+    print("\n" + "="*70)
+    print("✅ SHOWCASE GENERATION COMPLETE")
+    print("="*70)
+    print("\nFiles created:")
+    print(f"  1. {html_file}")
+    print(f"  2. {pitch_file}")
+    print(f"  3. {SHOWCASE_DIR / 'pitch-deck-outline.md'}")
+    print("\nNext steps:")
+    print("  1. Open infrastructure-showcase.html in browser")
+    print("  2. Use for client presentations & demos")
+    print("  3. Share link with prospects")

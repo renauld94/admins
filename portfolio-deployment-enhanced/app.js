@@ -661,7 +661,7 @@ function initializePortfolioVisualizations() {
     // Vanilla Three.js fallback disabled to prevent duplicate instances
     // The R3F hero loads via r3f-hero.ai-epic.v20251004.js
     const heroPerf = window.heroPerformance;
-    if (heroPerf && heroPerf.shouldLoadR3F ===false) {
+    if (heroPerf && heroPerf.shouldLoadR3F === false) {
         console.log('[Portfolio] R3F hero skipped for current device tier', {
             tier: heroPerf.deviceTier,
             reason: heroPerf.fallbackReason || 'performance-tier'

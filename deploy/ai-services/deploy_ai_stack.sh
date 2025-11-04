@@ -87,13 +87,18 @@ echo "📤 Uploading AI service code..."
 # We'll create these files next
 echo "  (Service files will be created in next step)"
 
+echo ""
+echo "📦 Installing Python packages..."
 # Install Python packages
 echo ""
 echo "📦 Installing Python packages..."
 $SSH_CMD "cd ~/vietnamese-ai && python3 -m venv venv && source venv/bin/activate && pip install --upgrade pip"
 $SSH_CMD "cd ~/vietnamese-ai && source venv/bin/activate && pip install fastapi uvicorn[standard] websockets python-multipart"
 $SSH_CMD "cd ~/vietnamese-ai && source venv/bin/activate && pip install ollama librosa dtaidistance numpy pandas scikit-learn"
-$SSH_CMD "cd ~/vietnamese-ai && source venv/bin/activate && pip install sqlalchemy asyncpg TTS pydub"
+# Use gTTS as a lightweight, Python-3.12-compatible TTS fallback instead of 'TTS' which may
+# have incompatible binary wheels for some Python versions. If you need higher-quality
+# TTS later, consider running Coqui TTS in Docker or using a GPU-enabled VM.
+$SSH_CMD "cd ~/vietnamese-ai && source venv/bin/activate && pip install sqlalchemy asyncpg gTTS pydub || echo 'Some optional packages failed to install, continuing...'"
 
 # Setup PostgreSQL database
 echo ""

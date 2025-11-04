@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vietnamese AI Learning Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-dark: #1a1a2e;
+            --secondary-dark: #16213e;
+            --primary-blue: #0066cc;
+            --accent-teal: #00bfa5;
+            --accent-orange: #ff6b35;
+            --accent-purple: #9b59b6;
+            --accent-pink: #e91e63;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --border-color: #2a2a3e;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .status-bar {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(0, 191, 165, 0.1);
+            border-radius: 20px;
+            border: 1px solid var(--accent-teal);
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent-teal);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 30px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-color), transparent);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .service-card.blue { --accent-color: #0066cc; }
+        .service-card.teal { --accent-color: #00bfa5; }
+        .service-card.orange { --accent-color: #ff6b35; }
+        .service-card.purple { --accent-color: #9b59b6; }
+        .service-card.pink { --accent-color: #e91e63; }
+        .service-card.green { --accent-color: #27ae60; }
+        .service-card.yellow { --accent-color: #f39c12; }
+        .service-card.red { --accent-color: #e74c3c; }
+
+        .service-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .service-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .service-description {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .service-features {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .service-features li {
+            padding: 8px 0;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .service-features li::before {
+            content: '✓';
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .service-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background: var(--accent-color);
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .service-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .service-status {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .status-live {
+            background: rgba(0, 191, 165, 0.2);
+            color: var(--accent-teal);
+            border: 1px solid var(--accent-teal);
+        }
+
+        .status-coming-soon {
+            background: rgba(255, 107, 53, 0.2);
+            color: var(--accent-orange);
+            border: 1px solid var(--accent-orange);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Vietnamese AI Learning Platform</h1>
+            <p class="subtitle">8 AI-Powered Tools to Master Vietnamese</p>
+            <div class="status-bar">
+                <div class="status-item">
+                    <div class="status-dot"></div>
+                    <span>3 Services Live</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-dot"></div>
+                    <span>Powered by Ollama AI</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-dot"></div>
+                    <span>Real-time Learning</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="services-grid">
+            <!-- Service 1: AI Conversation Partner -->
+            <div class="service-card blue" onclick="window.open('https://moodle.simondatalab.de/ai/conversation-practice.html', '_blank')">
+                <div class="service-status status-live">LIVE</div>
+                <div class="service-icon">🤖</div>
+                <h2 class="service-title">AI Conversation Partner</h2>
+                <p class="service-description">Practice real Vietnamese conversations with AI feedback</p>
+                <ul class="service-features">
+                    <li>Real-time conversations</li>
+                    <li>Audio responses (TTS)</li>
+                    <li>Speech recognition</li>
+                    <li>Multiple scenarios</li>
+                </ul>
+                <a href="https://moodle.simondatalab.de/ai/conversation-practice.html" class="service-button" onclick="event.stopPropagation()">
+                    Launch Tool
+                </a>
+            </div>
+
+            <!-- Service 2: Pronunciation Coach -->
+            <div class="service-card teal" onclick="window.open('https://moodle.simondatalab.de/pronunciation/', '_blank')">
+                <div class="service-status status-live">LIVE</div>
+                <div class="service-icon">🎤</div>
+                <h2 class="service-title">Pronunciation Coach</h2>
+                <p class="service-description">Master Vietnamese tones with AI analysis and visual graphs</p>
+                <ul class="service-features">
+                    <li>6 tone practice</li>
+                    <li>Pitch visualization</li>
+                    <li>Accuracy scoring</li>
+                    <li>Real-time feedback</li>
+                </ul>
+                <a href="https://moodle.simondatalab.de/pronunciation/" class="service-button" onclick="event.stopPropagation()">
+                    Launch Tool
+                </a>
+            </div>
+
+            <!-- Service 3: Grammar Helper -->
+            <div class="service-card purple" onclick="window.open('https://moodle.simondatalab.de/grammar/', '_blank')">
+                <div class="service-status status-live">LIVE</div>
+                <div class="service-icon">📚</div>
+                <h2 class="service-title">Grammar Helper</h2>
+                <p class="service-description">Vietnamese grammar rules and AI-powered corrections</p>
+                <ul class="service-features">
+                    <li>Grammar explanations</li>
+                    <li>Sentence analysis</li>
+                    <li>Common mistakes</li>
+                    <li>AI corrections</li>
+                </ul>
+                <a href="https://moodle.simondatalab.de/grammar/" class="service-button" onclick="event.stopPropagation()">
+                    Launch Tool
+                </a>
+            </div>
+
+            <!-- Service 4: Vocabulary Builder -->
+            <div class="service-card orange" onclick="window.open('https://moodle.simondatalab.de/vocabulary/', '_blank')">
+                <div class="service-status status-coming-soon">COMING SOON</div>
+                <div class="service-icon">💡</div>
+                <h2 class="service-title">Vocabulary Builder</h2>
+                <p class="service-description">Spaced repetition flashcards with audio</p>
+                <ul class="service-features">
+                    <li>Smart flashcards</li>
+                    <li>Audio pronunciation</li>
+                    <li>Progress tracking</li>
+                    <li>Themed sets</li>
+                </ul>
+                <a href="#" class="service-button" onclick="event.stopPropagation(); return false;">
+                    Coming Soon
+                </a>
+            </div>
+
+            <!-- Service 5: Cultural Context -->
+            <div class="service-card pink">
+                <div class="service-status status-coming-soon">COMING SOON</div>
+                <div class="service-icon">🌏</div>
+                <h2 class="service-title">Cultural Context</h2>
+                <p class="service-description">Learn Vietnamese customs and cultural nuances</p>
+                <ul class="service-features">
+                    <li>Cultural insights</li>
+                    <li>Etiquette guides</li>
+                    <li>Regional variations</li>
+                    <li>Context explanations</li>
+                </ul>
+                <a href="#" class="service-button">
+                    Coming Soon
+                </a>
+            </div>
+
+            <!-- Service 6: Reading Assistant -->
+            <div class="service-card green">
+                <div class="service-status status-coming-soon">COMING SOON</div>
+                <div class="service-icon">📖</div>
+                <h2 class="service-title">Reading Assistant</h2>
+                <p class="service-description">AI-powered text analysis and comprehension help</p>
+                <ul class="service-features">
+                    <li>Text analysis</li>
+                    <li>Difficulty detection</li>
+                    <li>Vocabulary extraction</li>
+                    <li>Comprehension questions</li>
+                </ul>
+                <a href="#" class="service-button">
+                    Coming Soon
+                </a>
+            </div>
+
+            <!-- Service 7: Writing Practice -->
+            <div class="service-card yellow">
+                <div class="service-status status-coming-soon">COMING SOON</div>
+                <div class="service-icon">✍️</div>
+                <h2 class="service-title">Writing Practice</h2>
+                <p class="service-description">Essay correction and writing improvement</p>
+                <ul class="service-features">
+                    <li>Grammar checking</li>
+                    <li>Style suggestions</li>
+                    <li>Tone mark validation</li>
+                    <li>AI feedback</li>
+                </ul>
+                <a href="#" class="service-button">
+                    Coming Soon
+                </a>
+            </div>
+
+            <!-- Service 8: Analytics Dashboard -->
+            <div class="service-card red">
+                <div class="service-status status-coming-soon">COMING SOON</div>
+                <div class="service-icon">📊</div>
+                <h2 class="service-title">Analytics Dashboard</h2>
+                <p class="service-description">Track your Vietnamese learning progress</p>
+                <ul class="service-features">
+                    <li>Progress tracking</li>
+                    <li>Performance graphs</li>
+                    <li>Strength analysis</li>
+                    <li>Study recommendations</li>
+                </ul>
+                <a href="#" class="service-button">
+                    Coming Soon
+                </a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Vietnamese AI Learning Platform | Powered by Ollama & FastAPI</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Version 1.0.0 | November 2025</p>
+        </footer>
+    </div>
+
+    <script>
+        // Check service status on load
+        async function checkServiceStatus() {
+            const services = [
+                { url: 'https://moodle.simondatalab.de/ai/health', card: 0 },
+                { url: 'https://moodle.simondatalab.de/pronunciation/health', card: 1 },
+                { url: 'https://moodle.simondatalab.de/grammar/health', card: 2 }
+            ];
+
+            for (const service of services) {
+                try {
+                    const response = await fetch(service.url);
+                    if (response.ok) {
+                        console.log(`Service ${service.card} is live`);
+                    }
+                } catch (error) {
+                    console.log(`Service ${service.card} check failed:`, error);
+                }
+            }
+        }
+
+        checkServiceStatus();
+    </script>
+</body>
+</html>

@@ -2,20 +2,25 @@
 """
 Ollama Code Assistant Agent - Uses DeepSeek Coder for code generation and help
 Connects to Ollama at VM 159 (10.0.0.110:11434)
+
+Now includes MCP (Model Context Protocol) support for Continue extension.
 """
-from fastapi import FastAPI, Depends, Header, HTTPException
+from fastapi import FastAPI, Depends, Header, HTTPException, Request
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 import uvicorn
 import os
 import requests
 import json
+import asyncio
+from datetime import datetime
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 CONTEXT_DIR = os.path.join(ROOT, 'workspace', 'agents', 'context', 'ollama-code-assistant')
 os.makedirs(CONTEXT_DIR, exist_ok=True)
 
 # Ollama configuration
-OLLAMA_BASE_URL = "http://10.0.0.110:11434"
+OLLAMA_BASE_URL = "http://localhost:11434"
 DEFAULT_MODEL = "deepseek-coder:6.7b"
 
 app = FastAPI(title="Ollama Code Assistant Agent")
@@ -252,8 +257,175 @@ Provide:
     return result
 
 
+# ===== MCP (Model Context Protocol) Support =====
+
+@app.get("/mcp/sse")
+async def mcp_sse_endpoint(request: Request):
+    """
+    MCP Server-Sent Events endpoint for Continue extension.
+    Provides tools for code generation, review, and explanation.
+    """
+    async def event_generator():
+        # Send initial connection event
+        yield f"event: connect\ndata: {json.dumps({'type': 'connect', 'timestamp': datetime.now().isoformat()})}\n\n"
+        
+        # Send tool list
+        tools = {
+            "jsonrpc": "2.0",
+            "method": "tools/list",
+            "result": {
+                "tools": [
+                    {
+                        "name": "generate_code",
+                        "description": "Generate code using AI models. Supports Python, JavaScript, Java, C++, etc.",
+                        "inputSchema": {
+                            "type": "object",
+                            "properties": {
+                                "prompt": {"type": "string", "description": "Description of code to generate"},
+                                "language": {"type": "string", "description": "Programming language (default: python)"},
+                                "model": {"type": "string", "description": "AI model to use (default: deepseek-coder:6.7b)"}
+                            },
+                            "required": ["prompt"]
+                        }
+                    },
+                    {
+                        "name": "review_code",
+                        "description": "Review code for quality, bugs, performance, and security issues",
+                        "inputSchema": {
+                            "type": "object",
+                            "properties": {
+                                "code": {"type": "string", "description": "Code to review"},
+                                "language": {"type": "string", "description": "Programming language"}
+                            },
+                            "required": ["code"]
+                        }
+                    },
+                    {
+                        "name": "explain_code",
+                        "description": "Explain what code does in plain English",
+                        "inputSchema": {
+                            "type": "object",
+                            "properties": {
+                                "code": {"type": "string", "description": "Code to explain"},
+                                "language": {"type": "string", "description": "Programming language"}
+                            },
+                            "required": ["code"]
+                        }
+                    },
+                    {
+                        "name": "list_models",
+                        "description": "List available Ollama models",
+                        "inputSchema": {
+                            "type": "object",
+                            "properties": {}
+                        }
+                    }
+                ]
+            }
+        }
+        
+        yield f"event: tools\ndata: {json.dumps(tools)}\n\n"
+        
+        # Keep connection alive
+        while True:
+            if await request.is_disconnected():
+                break
+            
+            # Send heartbeat every 30 seconds
+            yield f"event: ping\ndata: {json.dumps({'timestamp': datetime.now().isoformat()})}\n\n"
+            await asyncio.sleep(30)
+    
+    return StreamingResponse(
+        event_generator(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no"
+        }
+    )
+
+
+@app.post("/mcp/call")
+async def mcp_call_tool(request: Request, _auth: bool = Depends(require_token)):
+    """
+    MCP tool invocation endpoint (JSON-RPC 2.0).
+    Called by MCP clients to execute tools.
+    """
+    body = await request.json()
+    method = body.get("method")
+    params = body.get("params", {})
+    request_id = body.get("id", 1)
+    
+    result = None
+    error = None
+    
+    try:
+        if method == "tools/call":
+            tool_name = params.get("name")
+            tool_params = params.get("arguments", {})
+            
+            if tool_name == "generate_code":
+                req = CodeRequest(
+                    prompt=tool_params.get("prompt"),
+                    language=tool_params.get("language", "python"),
+                    model=tool_params.get("model", DEFAULT_MODEL)
+                )
+                result = generate_code(req, True)
+            
+            elif tool_name == "review_code":
+                req = CodeReviewRequest(
+                    code=tool_params.get("code"),
+                    language=tool_params.get("language", "python")
+                )
+                result = review_code(req, True)
+            
+            elif tool_name == "explain_code":
+                req = ExplainRequest(
+                    code=tool_params.get("code"),
+                    language=tool_params.get("language", "python")
+                )
+                result = explain_code(req, True)
+            
+            elif tool_name == "list_models":
+                result = list_models(True)
+            
+            else:
+                error = {"code": -32601, "message": f"Unknown tool: {tool_name}"}
+        
+        elif method == "tools/list":
+            result = {
+                "tools": [
+                    {"name": "generate_code", "description": "Generate code using AI"},
+                    {"name": "review_code", "description": "Review code quality"},
+                    {"name": "explain_code", "description": "Explain code functionality"},
+                    {"name": "list_models", "description": "List available models"}
+                ]
+            }
+        
+        else:
+            error = {"code": -32601, "message": f"Unknown method: {method}"}
+    
+    except Exception as e:
+        error = {"code": -32603, "message": f"Internal error: {str(e)}"}
+    
+    # JSON-RPC 2.0 response
+    response = {
+        "jsonrpc": "2.0",
+        "id": request_id
+    }
+    
+    if error:
+        response["error"] = error
+    else:
+        response["result"] = result
+    
+    return response
+
+
 if __name__ == "__main__":
-    print(f"Starting Ollama Code Assistant Agent on port 5110")
+    print(f"Starting Ollama Code Assistant Agent on port 5000")
     print(f"Connecting to Ollama at {OLLAMA_BASE_URL}")
     print(f"Default model: {DEFAULT_MODEL}")
-    uvicorn.run(app, host="127.0.0.1", port=5110)
+    print(f"MCP endpoints: /mcp/sse (SSE), /mcp/call (JSON-RPC)")
+    uvicorn.run(app, host="127.0.0.1", port=5000)

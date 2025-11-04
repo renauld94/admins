@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🇻🇳 Vietnamese Mastery Hub - Epic Learning Dashboard</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        :root {
+            --vn-red: #DA251D;
+            --vn-yellow: #FFCD00;
+            --primary-dark: #1a1a2e;
+            --primary-blue: #0066cc;
+            --accent-teal: #00bfa5;
+            --accent-purple: #7c3aed;
+            --accent-orange: #f97316;
+            --text-primary: #2d3748;
+            --text-secondary: #718096;
+            --border-light: #e2e8f0;
+            --bg-light: #f7fafc;
+            --success: #38a169;
+            --warning: #dd6b20;
+            --error: #e53e3e;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #2d3748 50%, #1a1a2e 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+        
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+        
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* Epic Header */
+        .epic-header {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, rgba(218, 37, 29, 0.9) 0%, rgba(255, 205, 0, 0.9) 100%);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(218, 37, 29, 0.4);
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .epic-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .epic-header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .epic-header p {
+            font-size: 1.25rem;
+            color: rgba(255,255,255,0.95);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,102,204,0.3);
+            border-color: var(--primary-blue);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+        }
+        
+        /* Module Cards */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .module-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 3px solid transparent;
+            position: relative;
+        }
+        
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, var(--vn-red), var(--vn-yellow));
+        }
+        
+        .module-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 60px rgba(0,102,204,0.3);
+            border-color: var(--primary-blue);
+        }
+        
+        .module-header {
+            padding: 2rem;
+            background: linear-gradient(135deg, #f0f7ff 0%, #e6f2ff 100%);
+            border-bottom: 2px solid var(--border-light);
+        }
+        
+        .module-number {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 0.5rem;
+        }
+        
+        .module-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .module-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        
+        .module-progress {
+            padding: 1.5rem 2rem;
+        }
+        
+        .progress-bar-container {
+            background: var(--bg-light);
+            border-radius: 10px;
+            height: 12px;
+            overflow: hidden;
+            margin: 1rem 0;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-teal), var(--primary-blue));
+            border-radius: 10px;
+            transition: width 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+        
+        .lessons-list {
+            padding: 0 2rem 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+        
+        .module-card.expanded .lessons-list {
+            max-height: 600px;
+        }
+        
+        .lesson-item {
+            padding: 1rem;
+            border-left: 3px solid var(--border-light);
+            margin: 0.75rem 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: var(--bg-light);
+            border-radius: 8px;
+            position: relative;
+        }
+        
+        .lesson-item:hover {
+            border-left-color: var(--primary-blue);
+            background: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transform: translateX(8px);
+        }
+        
+        .lesson-item.completed {
+            border-left-color: var(--success);
+            background: rgba(56, 161, 105, 0.05);
+        }
+        
+        .lesson-item.completed::after {
+            content: '✓';
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--success);
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+        
+        .lesson-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+        
+        .lesson-meta {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Recording Panel */
+        .recording-panel {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+            margin-bottom: 3rem;
+            border: 3px solid var(--vn-red);
+        }
+        
+        .recording-panel h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .recording-panel h2::before {
+            content: '🎙️';
+            font-size: 2.5rem;
+        }
+        
+        .recording-controls {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .record-btn {
+            padding: 1.5rem 3rem;
+            font-size: 1.125rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .record-btn.start {
+            background: linear-gradient(135deg, var(--vn-red), #ff4444);
+            color: white;
+        }
+        
+        .record-btn.start:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 30px rgba(218, 37, 29, 0.4);
+        }
+        
+        .record-btn.stop {
+            background: linear-gradient(135deg, #666, #444);
+            color: white;
+        }
+        
+        .record-btn.recording {
+            animation: recordPulse 1.5s infinite;
+        }
+        
+        @keyframes recordPulse {
+            0%, 100% { box-shadow: 0 8px 20px rgba(218, 37, 29, 0.4); }
+            50% { box-shadow: 0 8px 40px rgba(218, 37, 29, 0.8); }
+        }
+        
+        .recording-status {
+            flex: 1;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #f0f7ff, #e6f2ff);
+            border-radius: 15px;
+            border-left: 5px solid var(--primary-blue);
+        }
+        
+        .recording-timer {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--vn-red);
+            font-family: 'Courier New', monospace;
+        }
+        
+        .recording-status-text {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+        
+        .recordings-list {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .recording-item {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            border: 2px solid var(--border-light);
+            transition: all 0.3s ease;
+        }
+        
+        .recording-item:hover {
+            border-color: var(--primary-blue);
+            box-shadow: 0 6px 20px rgba(0,102,204,0.15);
+        }
+        
+        .recording-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--vn-red), var(--vn-yellow));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            flex-shrink: 0;
+        }
+        
+        .recording-info {
+            flex: 1;
+        }
+        
+        .recording-title {
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+        
+        .recording-meta {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        
+        .recording-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+        
+        .action-btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+        }
+        
+        .action-btn.play {
+            background: var(--primary-blue);
+            color: white;
+        }
+        
+        .action-btn.download {
+            background: var(--accent-teal);
+            color: white;
+        }
+        
+        .action-btn.delete {
+            background: var(--error);
+            color: white;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        }
+        
+        /* Visualization Section */
+        .viz-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+        }
+        
+        .viz-section h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        #progressPath {
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(135deg, #f0f7ff 0%, #fff8e1 100%);
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+        
+        #toneAnalysis {
+            width: 100%;
+            height: 400px;
+        }
+        
+        /* AI Integration Section */
+        .ai-integration {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .ai-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+        
+        .ai-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-purple);
+            box-shadow: 0 20px 60px rgba(124, 58, 237, 0.3);
+        }
+        
+        .ai-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        
+        .ai-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+        
+        .ai-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        
+        .ai-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--accent-purple), #a855f7);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.3);
+        }
+        
+        .ai-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.5);
+        }
+        
+        /* Module Actions */
+        .module-actions {
+            padding: 0 2rem 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .module-btn {
+            flex: 1;
+            min-width: 120px;
+            padding: 1rem;
+            border: 2px solid var(--border-light);
+            background: white;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .module-btn:hover {
+            border-color: var(--primary-blue);
+            background: var(--primary-blue);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        .module-btn.expand {
+            background: linear-gradient(135deg, var(--primary-blue), var(--accent-teal));
+            color: white;
+            border: none;
+        }
+        
+        @media (max-width: 768px) {
+            .epic-header h1 {
+                font-size: 2rem;
+            }
+            
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .recording-controls {
+                flex-direction: column;
+            }
+            
+            .recording-item {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <svg class="bg-animation" id="bgAnimation"></svg>
+    
+    <div class="container">
+        <!-- Epic Header -->
+        <div class="epic-header">
+            <h1>🇻🇳 Hành Trình Tiếng Việt</h1>
+            <p>Vietnamese Mastery Pathway - Your Epic Learning Journey</p>
+        </div>
+        
+        <!-- Stats Bar -->
+        <div class="stats-bar">
+            <div class="stat-card">
+                <div class="stat-number" id="totalLessons">78</div>
+                <div class="stat-label">Total Lessons</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="completedLessons">0</div>
+                <div class="stat-label">Completed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalRecordings">0</div>
+                <div class="stat-label">Recordings</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="practiceTime">0h</div>
+                <div class="stat-label">Practice Time</div>
+            </div>
+        </div>
+        
+        <!-- Recording Panel -->
+        <div class="recording-panel">
+            <h2>Module Audio Recording</h2>
+            <div class="recording-controls">
+                <button class="record-btn start" id="recordBtn">
+                    <span id="recordIcon">⏺</span>
+                    <span id="recordText">Start Recording</span>
+                </button>
+                <div class="recording-status">
+                    <div class="recording-timer" id="recordingTimer">00:00</div>
+                    <div class="recording-status-text" id="recordingStatus">Ready to record</div>
+                </div>
+            </div>
+            
+            <div class="recordings-list" id="recordingsList">
+                <!-- Recordings will be added here dynamically -->
+            </div>
+        </div>
+        
+        <!-- Progress Visualization -->
+        <div class="viz-section">
+            <h2>📊 Your Learning Journey - Interactive Progress Path</h2>
+            <svg id="progressPath"></svg>
+        </div>
+        
+        <!-- AI Integration Cards -->
+        <div class="ai-integration">
+            <div class="ai-card">
+                <div class="ai-icon">💬</div>
+                <div class="ai-title">AI Conversation</div>
+                <div class="ai-description">Practice real Vietnamese conversations with our beginner-friendly AI teacher</div>
+                <button class="ai-btn" onclick="window.open('https://moodle.simondatalab.de/ai/conversation-practice.html', '_blank')">Start Practicing</button>
+            </div>
+            
+            <div class="ai-card">
+                <div class="ai-icon">🎯</div>
+                <div class="ai-title">Pronunciation Coach</div>
+                <div class="ai-description">Master Vietnamese tones with AI-powered pitch analysis and feedback</div>
+                <button class="ai-btn" onclick="alert('Coming soon!')">Analyze Tones</button>
+            </div>
+            
+            <div class="ai-card">
+                <div class="ai-icon">📝</div>
+                <div class="ai-title">Grammar Helper</div>
+                <div class="ai-description">Get instant AI corrections and explanations for Vietnamese grammar</div>
+                <button class="ai-btn" onclick="alert('Coming soon!')">Check Grammar</button>
+            </div>
+            
+            <div class="ai-card">
+                <div class="ai-icon">📚</div>
+                <div class="ai-title">Vocabulary Builder</div>
+                <div class="ai-description">Learn vocabulary with spaced repetition and AI-generated audio</div>
+                <button class="ai-btn" onclick="alert('Coming soon!')">Build Vocabulary</button>
+            </div>
+        </div>
+        
+        <!-- Tone Analysis Chart -->
+        <div class="viz-section">
+            <h2>🎵 Tone Mastery Analysis</h2>
+            <canvas id="toneAnalysis"></canvas>
+        </div>
+        
+        <!-- Modules Grid -->
+        <div class="modules-grid" id="modulesGrid">
+            <!-- Modules will be loaded dynamically -->
+        </div>
+    </div>
+    
+    <script>
+        // Course Structure Data
+        const MODULES = [
+            {
+                number: 1,
+                title: "Khởi động chuyên nghiệp",
+                subtitle: "Professional Warm-up",
+                lessons: [
+                    "1.01 Vietnamese Alphabet",
+                    "1.02 Vietnamese Tones",
+                    "1.03 Consonant Pronunciation",
+                    "1.04 Vowel Combinations",
+                    "1.05 Syllable Structure",
+                    "1.06 Pronunciation Practice"
+                ],
+                progress: 0
+            },
+            {
+                number: 2,
+                title: "Giao tiếp hợp tác",
+                subtitle: "Collaborative Communication",
+                lessons: [
+                    "2.01 Greetings & Introductions",
+                    "2.02 Numbers, Days & Time",
+                    "2.03 Family & People",
+                    "2.04 Food & Dining",
+                    "2.05 Transportation & Directions",
+                    "2.06 Shopping & Money",
+                    "2.07 Weather & Seasons",
+                    "2.08 Emotions & Feelings"
+                ],
+                progress: 0
+            },
+            {
+                number: 3,
+                title: "Kể chuyện thương hiệu",
+                subtitle: "Brand Storytelling",
+                lessons: [
+                    "3.01 Personal Pronouns",
+                    "3.02 Basic Sentence Structure",
+                    "3.03 Questions & Answers",
+                    "3.04 Classifiers & Measure Words",
+                    "3.05 Verb Tenses & Time",
+                    "3.06 Negation & Comparison"
+                ],
+                progress: 0
+            },
+            {
+                number: 4,
+                title: "Chuyên ngành phân tích dữ liệu",
+                subtitle: "Data & Analytics Discourse",
+                lessons: [
+                    "4.01 Daily Conversations",
+                    "4.02 Vietnamese Culture",
+                    "4.03 Formal vs Informal Speech",
+                    "4.04 Business Vietnamese",
+                    "4.05 Travel & Tourism",
+                    "4.06 Emergency Situations"
+                ],
+                progress: 0
+            },
+            {
+                number: 5,
+                title: "Đàm phán và lãnh đạo",
+                subtitle: "Negotiation & Leadership",
+                lessons: [
+                    "5.01 Reading Comprehension",
+                    "5.02 Writing Skills",
+                    "5.03 Listening Practice",
+                    "5.04 Advanced Grammar",
+                    "5.05 Idiomatic Expressions",
+                    "5.06 Fluency Assessment"
+                ],
+                progress: 0
+            },
+            {
+                number: 6,
+                title: "Hội nhập doanh nghiệp toàn cầu",
+                subtitle: "Global Integration",
+                lessons: [
+                    "6.01 Professional Audio Content",
+                    "6.02 Business Presentations",
+                    "6.03 Cross-cultural Communication",
+                    "6.04 Final Assessment"
+                ],
+                progress: 0
+            }
+        ];
+        
+        // Recording State
+        let mediaRecorder = null;
+        let audioChunks = [];
+        let isRecording = false;
+        let recordingStartTime = null;
+        let timerInterval = null;
+        let recordings = JSON.parse(localStorage.getItem('vietnameseRecordings') || '[]');
+        let completedLessons = new Set(JSON.parse(localStorage.getItem('completedLessons') || '[]'));
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderModules();
+            renderRecordings();
+            updateStats();
+            createProgressPath();
+            createToneChart();
+            createBackgroundAnimation();
+        });
+        
+        // Render Modules
+        function renderModules() {
+            const grid = document.getElementById('modulesGrid');
+            
+            MODULES.forEach((module, index) => {
+                const card = document.createElement('div');
+                card.className = 'module-card';
+                card.id = `module-${module.number}`;
+                
+                const completedCount = module.lessons.filter(l => 
+                    completedLessons.has(`${module.number}-${l}`)
+                ).length;
+                const progress = (completedCount / module.lessons.length) * 100;
+                
+                card.innerHTML = `
+                    <div class="module-header">
+                        <div class="module-number">Module ${module.number} of 6</div>
+                        <div class="module-title">${module.title}</div>
+                        <div class="module-subtitle">${module.subtitle}</div>
+                    </div>
+                    <div class="module-progress">
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" style="width: ${progress}%"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span>${completedCount} / ${module.lessons.length} lessons</span>
+                            <span>${Math.round(progress)}%</span>
+                        </div>
+                    </div>
+                    <div class="lessons-list">
+                        ${module.lessons.map((lesson, i) => {
+                            const isCompleted = completedLessons.has(`${module.number}-${lesson}`);
+                            return `
+                                <div class="lesson-item ${isCompleted ? 'completed' : ''}" 
+                                     onclick="toggleLesson(${module.number}, '${lesson}')">
+                                    <div class="lesson-name">${lesson}</div>
+                                    <div class="lesson-meta">Click to mark as ${isCompleted ? 'incomplete' : 'complete'}</div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                    <div class="module-actions">
+                        <button class="module-btn" onclick="recordModule(${module.number})">🎙️ Record</button>
+                        <button class="module-btn" onclick="viewProgress(${module.number})">📊 Progress</button>
+                        <button class="module-btn expand" onclick="toggleModule(${module.number})">
+                            📖 View Lessons
+                        </button>
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+        
+        // Toggle Module Expansion
+        function toggleModule(moduleNum) {
+            const card = document.getElementById(`module-${moduleNum}`);
+            card.classList.toggle('expanded');
+        }
+        
+        // Toggle Lesson Completion
+        function toggleLesson(moduleNum, lessonName) {
+            const key = `${moduleNum}-${lessonName}`;
+            if (completedLessons.has(key)) {
+                completedLessons.delete(key);
+            } else {
+                completedLessons.add(key);
+            }
+            localStorage.setItem('completedLessons', JSON.stringify([...completedLessons]));
+            renderModules();
+            updateStats();
+            createProgressPath();
+        }
+        
+        // Recording Functions
+        document.getElementById('recordBtn').addEventListener('click', toggleRecording);
+        
+        async function toggleRecording() {
+            if (!isRecording) {
+                await startRecording();
+            } else {
+                stopRecording();
+            }
+        }
+        
+        async function startRecording() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                audioChunks = [];
+                
+                mediaRecorder.ondataavailable = (event) => {
+                    audioChunks.push(event.data);
+                };
+                
+                mediaRecorder.onstop = () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                    saveRecording(audioBlob);
+                };
+                
+                mediaRecorder.start();
+                isRecording = true;
+                recordingStartTime = Date.now();
+                
+                // Update UI
+                const btn = document.getElementById('recordBtn');
+                btn.classList.remove('start');
+                btn.classList.add('stop', 'recording');
+                document.getElementById('recordIcon').textContent = '⏹';
+                document.getElementById('recordText').textContent = 'Stop Recording';
+                document.getElementById('recordingStatus').textContent = 'Recording in progress...';
+                
+                // Start timer
+                timerInterval = setInterval(updateTimer, 1000);
+                
+            } catch (err) {
+                console.error('Error accessing microphone:', err);
+                alert('Could not access microphone. Please check permissions.');
+            }
+        }
+        
+        function stopRecording() {
+            if (mediaRecorder && isRecording) {
+                mediaRecorder.stop();
+                mediaRecorder.stream.getTracks().forEach(track => track.stop());
+                isRecording = false;
+                
+                // Update UI
+                const btn = document.getElementById('recordBtn');
+                btn.classList.remove('stop', 'recording');
+                btn.classList.add('start');
+                document.getElementById('recordIcon').textContent = '⏺';
+                document.getElementById('recordText').textContent = 'Start Recording';
+                document.getElementById('recordingTimer').textContent = '00:00';
+                document.getElementById('recordingStatus').textContent = 'Recording saved!';
+                
+                clearInterval(timerInterval);
+                
+                setTimeout(() => {
+                    document.getElementById('recordingStatus').textContent = 'Ready to record';
+                }, 2000);
+            }
+        }
+        
+        function updateTimer() {
+            if (recordingStartTime) {
+                const elapsed = Math.floor((Date.now() - recordingStartTime) / 1000);
+                const minutes = Math.floor(elapsed / 60).toString().padStart(2, '0');
+                const seconds = (elapsed % 60).toString().padStart(2, '0');
+                document.getElementById('recordingTimer').textContent = `${minutes}:${seconds}`;
+            }
+        }
+        
+        function saveRecording(audioBlob) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const recording = {
+                    id: Date.now(),
+                    timestamp: new Date().toISOString(),
+                    duration: Math.floor((Date.now() - recordingStartTime) / 1000),
+                    audioData: reader.result,
+                    module: 'General Practice'
+                };
+                
+                recordings.unshift(recording);
+                localStorage.setItem('vietnameseRecordings', JSON.stringify(recordings));
+                renderRecordings();
+                updateStats();
+            };
+            reader.readAsDataURL(audioBlob);
+        }
+        
+        function recordModule(moduleNum) {
+            const module = MODULES[moduleNum - 1];
+            alert(`Starting recording for:\n\nModule ${moduleNum}: ${module.title}\n${module.subtitle}\n\nClick OK to begin recording.`);
+            toggleRecording();
+        }
+        
+        function renderRecordings() {
+            const list = document.getElementById('recordingsList');
+            
+            if (recordings.length === 0) {
+                list.innerHTML = '<p style="text-align: center; color: #718096; padding: 2rem;">No recordings yet. Click "Start Recording" to begin!</p>';
+                return;
+            }
+            
+            list.innerHTML = recordings.map(rec => {
+                const date = new Date(rec.timestamp);
+                const duration = `${Math.floor(rec.duration / 60)}:${(rec.duration % 60).toString().padStart(2, '0')}`;
+                
+                return `
+                    <div class="recording-item">
+                        <div class="recording-icon">🎵</div>
+                        <div class="recording-info">
+                            <div class="recording-title">${rec.module}</div>
+                            <div class="recording-meta">
+                                ${date.toLocaleDateString()} ${date.toLocaleTimeString()} • ${duration}
+                            </div>
+                        </div>
+                        <div class="recording-actions">
+                            <button class="action-btn play" onclick="playRecording(${rec.id})">▶ Play</button>
+                            <button class="action-btn download" onclick="downloadRecording(${rec.id})">⬇ Download</button>
+                            <button class="action-btn delete" onclick="deleteRecording(${rec.id})">🗑 Delete</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function playRecording(id) {
+            const recording = recordings.find(r => r.id === id);
+            if (recording) {
+                const audio = new Audio(recording.audioData);
+                audio.play();
+            }
+        }
+        
+        function downloadRecording(id) {
+            const recording = recordings.find(r => r.id === id);
+            if (recording) {
+                const a = document.createElement('a');
+                a.href = recording.audioData;
+                a.download = `vietnamese-recording-${id}.webm`;
+                a.click();
+            }
+        }
+        
+        function deleteRecording(id) {
+            if (confirm('Delete this recording?')) {
+                recordings = recordings.filter(r => r.id !== id);
+                localStorage.setItem('vietnameseRecordings', JSON.stringify(recordings));
+                renderRecordings();
+                updateStats();
+            }
+        }
+        
+        function updateStats() {
+            document.getElementById('totalLessons').textContent = MODULES.reduce((sum, m) => sum + m.lessons.length, 0);
+            document.getElementById('completedLessons').textContent = completedLessons.size;
+            document.getElementById('totalRecordings').textContent = recordings.length;
+            
+            const totalSeconds = recordings.reduce((sum, r) => sum + r.duration, 0);
+            const hours = Math.floor(totalSeconds / 3600);
+            document.getElementById('practiceTime').textContent = `${hours}h`;
+        }
+        
+        function viewProgress(moduleNum) {
+            const module = MODULES[moduleNum - 1];
+            const completed = module.lessons.filter(l => completedLessons.has(`${moduleNum}-${l}`)).length;
+            const progress = Math.round((completed / module.lessons.length) * 100);
+            
+            alert(`Module ${moduleNum}: ${module.title}\n\n✓ Completed: ${completed}/${module.lessons.length}\n📊 Progress: ${progress}%\n\nKeep up the great work! 🎉`);
+        }
+        
+        // D3.js Progress Path Visualization
+        function createProgressPath() {
+            const svg = d3.select('#progressPath');
+            svg.selectAll('*').remove();
+            
+            const width = document.getElementById('progressPath').clientWidth;
+            const height = 500;
+            
+            svg.attr('width', width).attr('height', height);
+            
+            // Create path data
+            const pathData = MODULES.map((module, i) => {
+                const completedCount = module.lessons.filter(l => 
+                    completedLessons.has(`${module.number}-${l}`)
+                ).length;
+                const progress = completedCount / module.lessons.length;
+                
+                return {
+                    x: (i + 1) * (width / 7),
+                    y: height - (progress * (height - 100)) - 50,
+                    module: module.number,
+                    progress: progress,
+                    title: module.title,
+                    completed: completedCount,
+                    total: module.lessons.length
+                };
+            });
+            
+            // Draw connecting lines
+            const line = d3.line()
+                .x(d => d.x)
+                .y(d => d.y)
+                .curve(d3.curveCatmullRom);
+            
+            svg.append('path')
+                .datum(pathData)
+                .attr('fill', 'none')
+                .attr('stroke', 'url(#gradient)')
+                .attr('stroke-width', 6)
+                .attr('d', line);
+            
+            // Define gradient
+            const gradient = svg.append('defs')
+                .append('linearGradient')
+                .attr('id', 'gradient')
+                .attr('x1', '0%')
+                .attr('x2', '100%');
+            
+            gradient.append('stop')
+                .attr('offset', '0%')
+                .attr('stop-color', '#DA251D');
+            
+            gradient.append('stop')
+                .attr('offset', '100%')
+                .attr('stop-color', '#FFCD00');
+            
+            // Draw nodes
+            const nodes = svg.selectAll('.node')
+                .data(pathData)
+                .enter()
+                .append('g')
+                .attr('class', 'node')
+                .attr('transform', d => `translate(${d.x}, ${d.y})`);
+            
+            nodes.append('circle')
+                .attr('r', 25)
+                .attr('fill', d => d.progress === 1 ? '#38a169' : '#0066cc')
+                .attr('stroke', 'white')
+                .attr('stroke-width', 4)
+                .style('cursor', 'pointer')
+                .on('mouseover', function(event, d) {
+                    d3.select(this)
+                        .transition()
+                        .duration(200)
+                        .attr('r', 35);
+                })
+                .on('mouseout', function() {
+                    d3.select(this)
+                        .transition()
+                        .duration(200)
+                        .attr('r', 25);
+                });
+            
+            nodes.append('text')
+                .attr('text-anchor', 'middle')
+                .attr('dy', 5)
+                .attr('fill', 'white')
+                .attr('font-weight', 'bold')
+                .attr('font-size', '14px')
+                .text(d => d.module);
+            
+            nodes.append('text')
+                .attr('text-anchor', 'middle')
+                .attr('dy', 50)
+                .attr('fill', '#2d3748')
+                .attr('font-weight', 'bold')
+                .attr('font-size', '12px')
+                .text(d => `${Math.round(d.progress * 100)}%`);
+            
+            nodes.append('text')
+                .attr('text-anchor', 'middle')
+                .attr('dy', 70)
+                .attr('fill', '#718096')
+                .attr('font-size', '11px')
+                .text(d => `${d.completed}/${d.total}`);
+        }
+        
+        // Chart.js Tone Analysis
+        function createToneChart() {
+            const ctx = document.getElementById('toneAnalysis').getContext('2d');
+            
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Ngang (Level)', 'Huyền (Falling)', 'Sắc (Rising)', 'Hỏi (Dipping)', 'Ngã (Tumbling)', 'Nặng (Heavy)'],
+                    datasets: [{
+                        label: 'Your Mastery',
+                        data: [65, 59, 80, 45, 72, 55],
+                        backgroundColor: 'rgba(218, 37, 29, 0.2)',
+                        borderColor: 'rgba(218, 37, 29, 1)',
+                        borderWidth: 3,
+                        pointBackgroundColor: 'rgba(218, 37, 29, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(218, 37, 29, 1)'
+                    }, {
+                        label: 'Native Speaker',
+                        data: [95, 95, 95, 95, 95, 95],
+                        backgroundColor: 'rgba(255, 205, 0, 0.2)',
+                        borderColor: 'rgba(255, 205, 0, 1)',
+                        borderWidth: 2,
+                        pointBackgroundColor: 'rgba(255, 205, 0, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(255, 205, 0, 1)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                stepSize: 20
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Vietnamese Six-Tone Mastery Progress',
+                            font: {
+                                size: 18,
+                                weight: 'bold'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Background Animation
+        function createBackgroundAnimation() {
+            const svg = d3.select('#bgAnimation');
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            
+            svg.attr('width', width).attr('height', height);
+            
+            // Create floating particles
+            const particles = d3.range(50).map(() => ({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                r: Math.random() * 4 + 2,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5
+            }));
+            
+            svg.selectAll('circle')
+                .data(particles)
+                .enter()
+                .append('circle')
+                .attr('cx', d => d.x)
+                .attr('cy', d => d.y)
+                .attr('r', d => d.r)
+                .attr('fill', () => Math.random() > 0.5 ? '#DA251D' : '#FFCD00')
+                .attr('opacity', 0.3);
+            
+            function animate() {
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    
+                    if (p.x < 0 || p.x > width) p.vx *= -1;
+                    if (p.y < 0 || p.y > height) p.vy *= -1;
+                });
+                
+                svg.selectAll('circle')
+                    .data(particles)
+                    .attr('cx', d => d.x)
+                    .attr('cy', d => d.y);
+                
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+        }
+    </script>
+</body>
+</html>

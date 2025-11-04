@@ -5,16 +5,21 @@ Port: 8100
 Purpose: Real-time conversation practice with AI tutor
 """
 
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse, JSONResponse
+from fastapi.responses import StreamingResponse, JSONResponse, Response
 import ollama
 import json
 import uuid
 import asyncio
 from datetime import datetime
-from typing import Dict, List
+from typing import Dict, List, Optional
 import logging
+from gtts import gTTS
+import io
+import base64
+import tempfile
+import os
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -149,7 +154,7 @@ class ConversationSession:
         try:
             # Generate response
             response = self.ollama_client.chat(
-                model='qwen2.5:7b',
+                model='qwen2.5:7b-instruct',
                 messages=messages,
                 options={
                     'temperature': 0.7,
@@ -165,12 +170,24 @@ class ConversationSession:
                 "content": ai_response
             })
             
+            # Generate audio for AI response
+            audio_base64 = None
+            try:
+                tts = gTTS(text=ai_response, lang='vi', slow=False)
+                audio_buffer = io.BytesIO()
+                tts.write_to_fp(audio_buffer)
+                audio_buffer.seek(0)
+                audio_base64 = base64.b64encode(audio_buffer.read()).decode('utf-8')
+            except Exception as e:
+                logger.warning(f"TTS generation failed: {e}")
+            
             # Generate feedback
             feedback = await self.analyze_student_vietnamese(user_message)
             
             return {
                 'type': 'ai_response',
                 'vietnamese_text': ai_response,
+                'audio_base64': audio_base64,
                 'feedback': feedback,
                 'timestamp': datetime.now().isoformat()
             }
@@ -307,7 +324,7 @@ async def test_model(prompt: str = "Xin chào! Bạn khỏe không?"):
     try:
         client = ollama.Client()
         response = client.chat(
-            model='qwen2.5:7b',
+            model='qwen2.5:7b-instruct',
             messages=[{'role': 'user', 'content': prompt}]
         )
         return {
@@ -322,20 +339,72 @@ async def test_model(prompt: str = "Xin chào! Bạn khỏe không?"):
             'error': str(e)
         }
 
+@app.post("/api/text-to-speech")
+async def text_to_speech(text: str, lang: str = "vi"):
+    """Convert Vietnamese text to speech"""
+    try:
+        # Generate speech using gTTS
+        tts = gTTS(text=text, lang=lang, slow=False)
+        
+        # Save to bytes buffer
+        audio_buffer = io.BytesIO()
+        tts.write_to_fp(audio_buffer)
+        audio_buffer.seek(0)
+        
+        # Return audio file
+        return Response(
+            content=audio_buffer.read(),
+            media_type="audio/mpeg",
+            headers={
+                "Content-Disposition": "attachment; filename=speech.mp3"
+            }
+        )
+    except Exception as e:
+        logger.error(f"TTS error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/speech-to-text")
+async def speech_to_text(audio: UploadFile = File(...)):
+    """Convert speech to text using Web Speech API proxy"""
+    try:
+        # Save uploaded audio to temp file
+        audio_data = await audio.read()
+        
+        # For now, return a placeholder
+        # In production, integrate with speech recognition service
+        # like Whisper, Google Speech-to-Text, or Azure Speech
+        return {
+            'success': False,
+            'message': 'Speech-to-text will use browser Web Speech API',
+            'text': ''
+        }
+    except Exception as e:
+        logger.error(f"STT error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
 @app.get("/health")
 async def health_check():
     """Health check endpoint"""
     try:
         # Test Ollama connection
         client = ollama.Client()
-        models = client.list()
+        models_response = client.list()
+        
+        # Extract model names from response
+        model_names = []
+        if hasattr(models_response, 'models'):
+            model_names = [m.model for m in models_response.models]
         
         return {
             'status': 'healthy',
             'service': 'ai-conversation',
             'ollama_available': True,
-            'models_loaded': [m['name'] for m in models.get('models', [])],
-            'active_sessions': len(sessions)
+            'models_loaded': model_names,
+            'active_sessions': len(sessions),
+            'features': {
+                'text_to_speech': True,
+                'speech_to_text': 'browser_only'
+            }
         }
     except Exception as e:
         return {

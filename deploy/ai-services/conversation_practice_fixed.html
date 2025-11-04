@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Conversation Partner - Vietnamese Practice</title>
+    <title>AI Conversation Partner - Beginner Vietnamese</title>
     <style>
         :root {
             --primary-dark: #1a1a2e;
@@ -145,48 +145,16 @@
             opacity: 0.8;
         }
         
-        .level-selector {
-            margin-top: 2.5rem;
-        }
-        
-        .level-selector h3 {
-            font-size: 1.25rem;
+        .level-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: #e6f2ff;
+            color: var(--primary-blue);
+            border-radius: 12px;
+            font-size: 0.75rem;
             font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-        }
-        
-        .level-buttons {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-        }
-        
-        .level-btn {
-            padding: 1rem;
-            border: 2px solid var(--border-light);
-            border-radius: 6px;
-            font-size: 0.95rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            background: white;
-            color: var(--text-primary);
-        }
-        
-        .level-btn:hover {
-            border-color: var(--primary-blue);
-            background: var(--bg-light);
-        }
-        
-        .level-btn.selected {
-            background: var(--primary-blue);
-            color: white;
-            border-color: var(--primary-blue);
-        }
-        
-        .level-btn.selected::before {
-            content: '→ ';
+            text-transform: uppercase;
+            margin-top: 0.5rem;
         }
         
         .start-btn {
@@ -308,10 +276,11 @@
             color: var(--text-primary);
             margin-right: auto;
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            position: relative;
         }
         
         .message.ai::before {
-            content: 'AI';
+            content: 'AI Teacher';
             display: block;
             font-size: 0.75rem;
             font-weight: 600;
@@ -328,10 +297,6 @@
             right: 0.75rem;
             font-size: 1rem;
             opacity: 0.6;
-        }
-        
-        .message.ai {
-            position: relative;
         }
         
         .message.student {
@@ -351,68 +316,39 @@
             letter-spacing: 0.05em;
         }
         
-        .message.feedback {
+        .message.system {
             background: linear-gradient(135deg, #fff8e1 0%, #fff3cd 100%);
             border: 1px solid #ffd54f;
             color: var(--text-primary);
             max-width: 100%;
             font-size: 0.9rem;
+            text-align: center;
         }
         
-        .message.feedback h4 {
+        .message.tips {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border: 1px solid #81c784;
+            color: var(--text-primary);
+            max-width: 100%;
+            font-size: 0.9rem;
+        }
+        
+        .message.tips h4 {
             font-size: 0.875rem;
             font-weight: 600;
-            color: var(--warning);
+            color: var(--success);
             margin-bottom: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
         
-        .feedback-scores {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 0.75rem;
-            margin: 0.75rem 0;
-        }
-        
-        .score-item {
-            padding: 0.75rem;
-            background: white;
-            border-radius: 6px;
-            border: 1px solid #ffd54f;
-            text-align: center;
-        }
-        
-        .score-item strong {
-            display: block;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--warning);
-            margin-bottom: 0.25rem;
-        }
-        
-        .score-item span {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        
-        .feedback-detail {
-            margin-top: 0.75rem;
-            padding-top: 0.75rem;
-            border-top: 1px solid #ffd54f;
-        }
-        
-        .feedback-detail p {
+        .message.tips ul {
             margin: 0.5rem 0;
-            font-size: 0.875rem;
-            line-height: 1.6;
+            padding-left: 1.5rem;
         }
         
-        .feedback-detail strong {
-            color: var(--text-primary);
-            font-weight: 600;
+        .message.tips li {
+            margin: 0.25rem 0;
         }
         
         .input-area {
@@ -539,10 +475,6 @@
                 grid-template-columns: 1fr;
             }
             
-            .level-buttons {
-                grid-template-columns: 1fr;
-            }
-            
             .message {
                 max-width: 85%;
             }
@@ -553,25 +485,19 @@
     <div class="container">
         <div class="header">
             <h1>AI Conversation Partner</h1>
-            <p>Professional Vietnamese language practice with AI-powered feedback</p>
+            <p>Beginner-friendly Vietnamese practice for absolute beginners</p>
         </div>
         
         <div class="scenario-selector" id="scenarioSelector">
-            <h2>Select Conversation Scenario</h2>
+            <h2>Choose a Super Easy Scenario</h2>
             <div class="scenario-grid" id="scenarioGrid">
-                <!-- Scenarios loaded dynamically -->
-            </div>
-            
-            <div class="level-selector">
-                <h3>Proficiency Level</h3>
-                <div class="level-buttons">
-                    <button class="level-btn" data-level="beginner">Beginner</button>
-                    <button class="level-btn" data-level="intermediate">Intermediate</button>
-                    <button class="level-btn" data-level="advanced">Advanced</button>
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading scenarios...</p>
                 </div>
             </div>
             
-            <button class="start-btn" id="startBtn" disabled>Begin Conversation</button>
+            <button class="start-btn" id="startBtn" disabled>Start Practice</button>
         </div>
         
         <div class="chat-container" id="chatContainer">
@@ -583,47 +509,27 @@
             </div>
             <div class="chat-messages" id="chatMessages"></div>
             <div class="input-area">
-                <textarea id="messageInput" rows="2" placeholder="Type your message in Vietnamese..."></textarea>
-                <button class="mic-btn" id="micBtn" title="Voice input">●</button>
+                <textarea id="messageInput" rows="2" placeholder="Type your Vietnamese message here..."></textarea>
+                <button class="mic-btn" id="micBtn" title="Voice input (speak Vietnamese)">🎤</button>
                 <button class="send-btn" id="sendBtn">Send</button>
             </div>
-            <button class="end-btn" id="endBtn">End Conversation</button>
+            <button class="end-btn" id="endBtn">End Practice</button>
         </div>
     </div>
     
     <script>
         let ws = null;
         let selectedScenario = null;
-        let selectedLevel = null;
         let isRecording = false;
-        let mediaRecorder = null;
+        let SCENARIOS = {};
         
-        const SCENARIOS = {
-            'coffee_shop': {
-                name: 'Coffee Shop',
-                icon: '☕',
-                description: 'Practice ordering drinks and casual conversation'
-            },
-            'greetings': {
-                name: 'Greetings & Introductions',
-                icon: '�',
-                description: 'Learn basic Vietnamese greetings and self-introduction'
-            },
-            'business_meeting': {
-                name: 'Business Meeting',
-                icon: '💼',
-                description: 'Professional Vietnamese for workplace scenarios'
-            },
-            'shopping': {
-                name: 'Shopping at Market',
-                icon: '�',
-                description: 'Practice bargaining and making purchases'
-            },
-            'restaurant': {
-                name: 'Restaurant Ordering',
-                icon: '🍜',
-                description: 'Order Vietnamese dishes and interact with staff'
-            }
+        // Icon mapping for beginner scenarios
+        const SCENARIO_ICONS = {
+            'greetings': '👋',
+            'numbers': '🔢',
+            'coffee': '☕',
+            'food': '🍜',
+            'intro': '😊'
         };
         
         // Load scenarios from backend
@@ -633,66 +539,48 @@
                 const data = await response.json();
                 SCENARIOS = data.scenarios;
                 
+                console.log('Loaded scenarios:', SCENARIOS);
+                
                 const grid = document.getElementById('scenarioGrid');
+                grid.innerHTML = '';  // Clear loading message
                 
-                // Icon mapping for beginner scenarios
-                const icons = {
-                    'greetings': '👋',
-                    'numbers': '🔢',
-                    'coffee': '☕',
-                    'food': '🍜',
-                    'intro': '😊'
-                };
-                
-                Object.entries(SCENARIOS).forEach(([id, data]) => {
+                Object.entries(SCENARIOS).forEach(([id, scenario]) => {
                     const card = document.createElement('div');
                     card.className = 'scenario-card';
                     card.dataset.scenario = id;
                     
-                    const vocabPreview = data.vocabulary ? data.vocabulary.slice(0, 3).join(', ') : '';
-                    const tipsPreview = data.tips && data.tips.length > 0 ? data.tips[0] : '';
+                    const vocabPreview = scenario.vocabulary ? scenario.vocabulary.slice(0, 3).join(', ') : '';
+                    const firstTip = scenario.tips && scenario.tips.length > 0 ? scenario.tips[0] : '';
                     
                     card.innerHTML = `
-                        <span class="scenario-icon">${icons[id] || '📚'}</span>
-                        <h3>${data.name}</h3>
-                        <p style="font-size: 0.8rem; color: #718096; margin-bottom: 0.5rem;">Level: ${data.level}</p>
-                        <p style="font-size: 0.85rem;">${tipsPreview || vocabPreview}</p>
+                        <span class="scenario-icon">${SCENARIO_ICONS[id] || '📚'}</span>
+                        <h3>${scenario.name}</h3>
+                        <span class="level-badge">${scenario.level}</span>
+                        <p style="margin-top: 0.75rem; font-size: 0.85rem;">${firstTip || vocabPreview}</p>
                     `;
                     card.onclick = () => selectScenario(id);
                     grid.appendChild(card);
                 });
             } catch (error) {
                 console.error('Failed to load scenarios:', error);
-                document.getElementById('scenarioGrid').innerHTML = '<p style="color: red;">Failed to load scenarios. Please refresh the page.</p>';
+                document.getElementById('scenarioGrid').innerHTML = 
+                    '<p style="color: red; text-align: center;">Failed to load scenarios. Please refresh the page.</p>';
             }
         }
         
-        function selectScenario(scenario) {
-            selectedScenario = scenario;
+        function selectScenario(scenarioId) {
+            selectedScenario = scenarioId;
             document.querySelectorAll('.scenario-card').forEach(card => {
-                card.classList.toggle('selected', card.dataset.scenario === scenario);
+                card.classList.toggle('selected', card.dataset.scenario === scenarioId);
             });
-            updateStartButton();
-        }
-        
-        document.querySelectorAll('.level-btn').forEach(btn => {
-            btn.onclick = () => {
-                selectedLevel = btn.dataset.level;
-                document.querySelectorAll('.level-btn').forEach(b => {
-                    b.classList.remove('selected');
-                });
-                btn.classList.add('selected');
-                updateStartButton();
-            };
-        });
-        
-        function updateStartButton() {
-            document.getElementById('startBtn').disabled = !(selectedScenario && selectedLevel);
+            document.getElementById('startBtn').disabled = false;
         }
         
         document.getElementById('startBtn').onclick = startConversation;
         
         function startConversation() {
+            if (!selectedScenario) return;
+            
             const wsUrl = 'wss://moodle.simondatalab.de/ai/ws/conversation';
             ws = new WebSocket(wsUrl);
             
@@ -700,11 +588,12 @@
             document.getElementById('chatStatus').innerHTML = '<span>Connecting...</span>';
             
             ws.onopen = () => {
-                console.log('Connected to AI service');
+                console.log('✅ Connected to AI service');
                 document.getElementById('chatStatus').classList.add('connected');
                 document.getElementById('chatStatus').innerHTML = '<span>Connected</span>';
                 
-                // Send start action (backend expects "action" not "type")
+                // Send start action with scenario ID
+                console.log('Sending start action for scenario:', selectedScenario);
                 ws.send(JSON.stringify({
                     action: 'start',
                     scenario: selectedScenario
@@ -716,28 +605,28 @@
             
             ws.onmessage = (event) => {
                 const data = JSON.parse(event.data);
+                console.log('Received message:', data);
                 handleMessage(data);
             };
             
             ws.onerror = (error) => {
                 console.error('WebSocket error:', error);
-                addSystemMessage('Connection error. Please refresh and try again.');
+                addSystemMessage('❌ Connection error. Please refresh and try again.');
             };
             
             ws.onclose = () => {
+                console.log('WebSocket closed');
                 document.getElementById('chatStatus').classList.remove('connected');
                 document.getElementById('chatStatus').innerHTML = '<span>Disconnected</span>';
             };
         }
         
         function handleMessage(data) {
-            console.log('Received message:', data);
-            
             if (data.type === 'ai_message') {
                 const hasAudio = !!data.audio;
                 addMessage('ai', data.text, hasAudio);
                 
-                // Show tips if available
+                // Show tips if available (first message usually has tips)
                 if (data.tips && data.tips.length > 0) {
                     showTips(data.tips);
                 }
@@ -749,35 +638,21 @@
                     }, 500);
                 }
                 
-                // Play audio if available (backend uses "audio" not "audio_base64")
+                // Play audio if available
                 if (data.audio) {
                     playAudio(data.audio);
                 }
             } else if (data.type === 'session_ended') {
-                addSystemMessage(data.message);
+                addSystemMessage(data.message || 'Session ended');
             }
-        }
-        
-        function showTips(tips) {
-            const messagesDiv = document.getElementById('chatMessages');
-            const tipsDiv = document.createElement('div');
-            tipsDiv.className = 'message feedback';
-            tipsDiv.innerHTML = `
-                <h4>💡 Helpful Tips</h4>
-                <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
-                    ${tips.map(tip => `<li style="margin: 0.25rem 0;">${tip}</li>`).join('')}
-                </ul>
-            `;
-            messagesDiv.appendChild(tipsDiv);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
         
         function playAudio(base64Audio) {
             try {
                 const audio = new Audio('data:audio/mpeg;base64,' + base64Audio);
                 audio.play().catch(e => {
-                    console.warn('Audio playback failed:', e);
-                    // Browser might block autoplay, show a play button instead
+                    console.warn('Audio autoplay blocked:', e);
+                    // Browser might block autoplay - user can click message to play
                 });
             } catch (e) {
                 console.error('Error playing audio:', e);
@@ -799,47 +674,23 @@
         function addSystemMessage(text) {
             const messagesDiv = document.getElementById('chatMessages');
             const msgDiv = document.createElement('div');
-            msgDiv.className = 'message feedback';
-            msgDiv.innerHTML = `<h4>System</h4><p>${text}</p>`;
+            msgDiv.className = 'message system';
+            msgDiv.textContent = text;
             messagesDiv.appendChild(msgDiv);
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
         
-        function showFeedback(feedback) {
+        function showTips(tips) {
             const messagesDiv = document.getElementById('chatMessages');
-            const feedbackDiv = document.createElement('div');
-            feedbackDiv.className = 'message feedback';
-            
-            let scoresHTML = '';
-            if (feedback.grammar_score !== undefined || feedback.tone_accuracy !== undefined) {
-                scoresHTML = `
-                    <div class="feedback-scores">
-                        ${feedback.grammar_score !== undefined ? `
-                            <div class="score-item">
-                                <strong>${feedback.grammar_score}%</strong>
-                                <span>Grammar</span>
-                            </div>
-                        ` : ''}
-                        ${feedback.tone_accuracy !== undefined ? `
-                            <div class="score-item">
-                                <strong>${feedback.tone_accuracy}%</strong>
-                                <span>Tone Accuracy</span>
-                            </div>
-                        ` : ''}
-                    </div>
-                `;
-            }
-            
-            feedbackDiv.innerHTML = `
-                <h4>Performance Feedback</h4>
-                ${scoresHTML}
-                <div class="feedback-detail">
-                    ${feedback.encouragement ? `<p><strong>Strengths:</strong> ${feedback.encouragement}</p>` : ''}
-                    ${feedback.improvement_tip ? `<p><strong>Improvement:</strong> ${feedback.improvement_tip}</p>` : ''}
-                    ${feedback.cultural_note ? `<p><strong>Cultural Note:</strong> ${feedback.cultural_note}</p>` : ''}
-                </div>
+            const tipsDiv = document.createElement('div');
+            tipsDiv.className = 'message tips';
+            tipsDiv.innerHTML = `
+                <h4>💡 Helpful Tips</h4>
+                <ul>
+                    ${tips.map(tip => `<li>${tip}</li>`).join('')}
+                </ul>
             `;
-            messagesDiv.appendChild(feedbackDiv);
+            messagesDiv.appendChild(tipsDiv);
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
         
@@ -859,6 +710,7 @@
             addMessage('student', text);
             
             // Backend expects "action: message" with "message" field
+            console.log('Sending message:', text);
             ws.send(JSON.stringify({
                 action: 'message',
                 message: text
@@ -873,9 +725,9 @@
         async function toggleRecording() {
             if (!isRecording) {
                 try {
-                    // Use browser's Web Speech API
+                    // Use browser's Web Speech API for Vietnamese
                     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-                        addSystemMessage('Speech recognition not supported in this browser. Please use Chrome or Edge.');
+                        addSystemMessage('❌ Speech recognition not supported. Please use Chrome or Edge.');
                         return;
                     }
                     
@@ -889,17 +741,17 @@
                     recognition.onstart = () => {
                         isRecording = true;
                         document.getElementById('micBtn').classList.add('recording');
-                        addSystemMessage('Listening... Speak in Vietnamese');
+                        addSystemMessage('🎤 Listening... Speak in Vietnamese now!');
                     };
                     
                     recognition.onresult = (event) => {
                         const transcript = event.results[0][0].transcript;
                         document.getElementById('messageInput').value = transcript;
-                        addSystemMessage(`Recognized: ${transcript}`);
+                        addSystemMessage(`✓ Heard: "${transcript}"`);
                     };
                     
                     recognition.onerror = (event) => {
-                        addSystemMessage(`Speech recognition error: ${event.error}`);
+                        addSystemMessage(`❌ Speech error: ${event.error}`);
                         isRecording = false;
                         document.getElementById('micBtn').classList.remove('recording');
                     };
@@ -911,18 +763,18 @@
                     
                     recognition.start();
                 } catch (err) {
-                    addSystemMessage('Error accessing microphone. Please check permissions.');
+                    addSystemMessage('❌ Microphone access denied. Please check permissions.');
                     console.error(err);
                 }
             } else {
-                // Stop is handled automatically by the API
+                // Stop recording handled by API
                 isRecording = false;
                 document.getElementById('micBtn').classList.remove('recording');
             }
         }
         
         document.getElementById('endBtn').onclick = () => {
-            if (ws) {
+            if (ws && ws.readyState === WebSocket.OPEN) {
                 ws.send(JSON.stringify({action: 'end'}));
                 setTimeout(() => {
                     ws.close();
@@ -933,8 +785,11 @@
             }
         };
         
-        // Initialize
-        loadScenarios();
+        // Initialize - load scenarios on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('Page loaded, fetching scenarios...');
+            loadScenarios();
+        });
     </script>
 </body>
 </html>
