@@ -1,0 +1,39 @@
+[Unit]
+Description=Vietnamese Tutor AI Agent
+Documentation=https://github.com/renauld94/admins
+After=network.target ollama.service
+Wants=ollama.service
+
+[Service]
+Type=simple
+User=simon
+Group=simon
+WorkingDirectory=/home/simon/Learning-Management-System-Academy/.continue/agents/agents_continue
+Environment="PYTHONUNBUFFERED=1"
+Environment="OLLAMA_BASE_URL=http://127.0.0.1:11434"
+Environment="ASR_SERVICE_URL=http://localhost:8000"
+EnvironmentFile=-/home/simon/Learning-Management-System-Academy/workspace/agents/.env
+
+ExecStart=/usr/bin/python3 /home/simon/Learning-Management-System-Academy/.continue/agents/agents_continue/vietnamese_tutor_agent.py
+
+# Restart configuration
+Restart=on-failure
+RestartSec=10s
+StartLimitBurst=3
+StartLimitInterval=60s
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=vietnamese-tutor-agent
+
+# Security
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/simon/Learning-Management-System-Academy/workspace/agents/context/vietnamese-tutor
+
+[Install]
+WantedBy=multi-user.target
+WantedBy=agents.target
