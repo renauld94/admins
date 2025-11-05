@@ -15,9 +15,26 @@ Tests all major features:
 import requests
 import json
 import sys
+import os
 from typing import Dict, Any
 
 BASE_URL = "http://localhost:5001"
+
+# Read auth token from workspace
+TOKEN_FILE = os.path.join(os.path.dirname(__file__), '..', '..', 'workspace', 'agents', '.token')
+AUTH_TOKEN = None
+try:
+    with open(TOKEN_FILE, 'r') as f:
+        AUTH_TOKEN = f.read().strip()
+except:
+    pass
+
+def get_headers() -> dict:
+    """Get headers with authorization if token exists."""
+    headers = {"Content-Type": "application/json"}
+    if AUTH_TOKEN:
+        headers["Authorization"] = f"Bearer {AUTH_TOKEN}"
+    return headers
 
 
 def print_section(title: str):
@@ -72,7 +89,7 @@ def test_grammar_check() -> bool:
             response = requests.post(
                 f"{BASE_URL}/grammar/check",
                 json={"text": test["text"], "level": test["level"]},
-                timeout=180
+                headers=get_headers(), timeout=180
             )
             
             if response.status_code == 200:
@@ -111,7 +128,7 @@ def test_vocabulary_practice() -> bool:
                 "include_examples": True,
                 "include_tones": True
             },
-            timeout=180
+            headers=get_headers(), timeout=180
         )
         
         if response.status_code == 200:
@@ -150,7 +167,7 @@ def test_dialogue_generation() -> bool:
                 "level": "beginner",
                 "num_exchanges": 4
             },
-            timeout=180
+            headers=get_headers(), timeout=180
         )
         
         if response.status_code == 200:
@@ -189,7 +206,7 @@ def test_translation() -> bool:
                 "target_lang": "vi",
                 "include_explanation": True
             },
-            timeout=180
+            headers=get_headers(), timeout=180
         )
         
         if response.status_code == 200:
@@ -229,7 +246,7 @@ def test_quiz_generation() -> bool:
                 "num_questions": 5,
                 "question_types": ["multiple_choice", "fill_blank"]
             },
-            timeout=180
+            headers=get_headers(), timeout=180
         )
         
         if response.status_code == 200:
@@ -268,7 +285,7 @@ def test_flashcard_generation() -> bool:
                 "vocabulary_list": words,
                 "include_audio_prompts": True
             },
-            timeout=180
+            headers=get_headers(), timeout=180
         )
         
         if response.status_code == 200:
