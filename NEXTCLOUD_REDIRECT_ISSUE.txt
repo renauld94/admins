@@ -1,0 +1,195 @@
+================================================================================
+NEXTCLOUD REDIRECT ISSUE - November 6, 2025
+================================================================================
+
+PROBLEM IDENTIFIED:
+==================
+
+URL: https://nextcloud.simondatalab.de/
+Expected: Nextcloud application
+Actually serving: Portfolio website (Neuro DataLab)
+
+The subdomain is configured to show your portfolio instead of Nextcloud!
+
+================================================================================
+ROOT CAUSE
+================================================================================
+
+The DNS record for nextcloud.simondatalab.de is pointing to Cloudflare's proxy,
+but Cloudflare is routing ALL subdomains to the same backend (your portfolio).
+
+This is likely because:
+1. Cloudflare Page Rule redirecting all traffic to portfolio
+2. Wildcard DNS (*. simondatalab.de) pointing to portfolio server
+3. Nextcloud backend not properly configured in Cloudflare Tunnel
+
+================================================================================
+SOLUTION: Fix Cloudflare Configuration
+================================================================================
+
+Option 1: Via Cloudflare Dashboard (RECOMMENDED - 5 minutes)
+------------------------------------------------------------
+
+1. Log into Cloudflare: https://dash.cloudflare.com
+
+2. Select domain: simondatalab.de
+
+3. Go to: DNS → Records
+
+4. Find: nextcloud.simondatalab.de
+   Current: Likely CNAME or A record pointing to portfolio
+   
+5. Check what it points to:
+   - If CNAME to portfolio: DELETE it
+   - If A record to 136.243.155.166: CHECK proxy status
+   
+6. Create correct DNS record:
+   Type: A
+   Name: nextcloud
+   IPv4 address: 136.243.155.166
+   Proxy status: Proxied (orange cloud)
+   TTL: Auto
+   
+7. Go to: Rules → Page Rules
+
+8. Check for redirect rules:
+   - Look for rules affecting nextcloud.simondatalab.de
+   - Look for wildcard rules (*.simondatalab.de)
+   - DELETE any rule redirecting nextcloud to portfolio
+   
+9. Go to: SSL/TLS → Origin Server
+
+10. Ensure SSL mode: Flexible or Full (not Strict)
+
+11. Go to: Network → Cloudflare Tunnel (if using tunnels)
+
+12. Check tunnel configuration:
+    - Ensure nextcloud.simondatalab.de routes to correct service
+    - Should route to: http://10.0.0.103:9020 (VM200 internal)
+    - NOT to portfolio server
+
+
+Option 2: Via Cloudflare API (If you have API access)
+------------------------------------------------------
+
+# Get DNS records
+curl -X GET "https://api.cloudflare.com/client/v4/zones/ad2497aa687379d4d58de224f7aa7894/dns_records" \\
+  -H "Authorization: Bearer YOUR_API_TOKEN" \\
+  -H "Content-Type: application/json"
+
+# Find nextcloud record ID, then update it:
+curl -X PUT "https://api.cloudflare.com/client/v4/zones/ad2497aa687379d4d58de224f7aa7894/dns_records/RECORD_ID" \\
+  -H "Authorization: Bearer YOUR_API_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  --data '{
+    "type": "A",
+    "name": "nextcloud",
+    "content": "136.243.155.166",
+    "ttl": 1,
+    "proxied": true
+  }'
+
+# Check page rules:
+curl -X GET "https://api.cloudflare.com/client/v4/zones/ad2497aa687379d4d58de224f7aa7894/pagerules" \\
+  -H "Authorization: Bearer YOUR_API_TOKEN" \\
+  -H "Content-Type: application/json"
+
+
+Option 3: Temporary Direct Access
+----------------------------------
+
+While fixing Cloudflare, access Nextcloud directly via IP:
+
+If Nextcloud is on VM200 (same as Jellyfin):
+- You need to set up port forwarding or reverse proxy
+- Port 9020 is not currently accessible from outside
+
+Check if Nextcloud is running on VM200:
+ssh root@136.243.155.166 "pct exec 200 -- docker ps | grep nextcloud"
+
+================================================================================
+WHAT TO CHECK
+================================================================================
+
+1. Cloudflare Dashboard → DNS Records
+   - What does nextcloud.simondatalab.de point to?
+   
+2. Cloudflare Dashboard → Page Rules
+   - Are there any redirects for nextcloud subdomain?
+   - Are there wildcard rules (*.simondatalab.de)?
+   
+3. Cloudflare Dashboard → Cloudflare Tunnel
+   - Is nextcloud configured in a tunnel?
+   - What backend does it route to?
+   
+4. VM200 - Is Nextcloud Actually Running?
+   ssh root@136.243.155.166 "pct exec 200 -- docker ps -a | grep nextcloud"
+   ssh root@136.243.155.166 "pct exec 200 -- netstat -tlnp | grep 9020"
+
+================================================================================
+EXPECTED CONFIGURATION
+================================================================================
+
+For nextcloud.simondatalab.de to work correctly:
+
+DNS Record:
+-----------
+Type: A
+Name: nextcloud
+Content: 136.243.155.166
+Proxied: Yes (orange cloud)
+TTL: Auto
+
+Cloudflare Tunnel (if used):
+-----------------------------
+Public hostname: nextcloud.simondatalab.de
+Service: http://10.0.0.103:9020
+        OR
+        http://localhost:9020 (if tunnel on VM200)
+
+Backend (VM200):
+----------------
+Nextcloud container running
+Listening on: 0.0.0.0:9020 or 10.0.0.103:9020
+Accessible internally
+
+No Page Rules:
+--------------
+No redirects for nextcloud.simondatalab.de
+No wildcard rules affecting it
+
+================================================================================
+VERIFICATION STEPS (After Fix)
+================================================================================
+
+1. Clear browser cache (Ctrl+Shift+Del)
+
+2. Test DNS:
+   dig +short nextcloud.simondatalab.de
+
+3. Test HTTPS:
+   curl -sI https://nextcloud.simondatalab.de/ | head -10
+
+4. Check content:
+   curl -sL https://nextcloud.simondatalab.de/ | grep -i nextcloud
+
+5. Open in browser:
+   https://nextcloud.simondatalab.de/
+   
+   Should see: Nextcloud login page
+   Not: Portfolio website
+
+================================================================================
+IMMEDIATE ACTION
+================================================================================
+
+1. Log into Cloudflare Dashboard
+2. Go to DNS Records for simondatalab.de
+3. Check what nextcloud.simondatalab.de points to
+4. Share screenshot or configuration details
+5. We can then provide specific fix
+
+The issue is 100% in Cloudflare configuration - the subdomain is routing
+to the wrong backend (portfolio instead of Nextcloud).
+
+================================================================================
