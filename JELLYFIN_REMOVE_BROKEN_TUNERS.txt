@@ -1,0 +1,71 @@
+═══════════════════════════════════════════════════════════════════
+  JELLYFIN - REMOVE BROKEN TUNERS (HTTP 500 FIX)
+═══════════════════════════════════════════════════════════════════
+
+PROBLEM:
+--------
+These tuners reference files that DON'T EXIST:
+❌ UK Channels      → /config/data/playlists/clean/UK_channels.m3u
+❌ US Channels      → /config/data/playlists/clean/US_channels.m3u
+❌ French Channels  → /config/data/playlists/clean/FR_channels.m3u
+❌ German Channels  → /config/data/playlists/clean/DE_channels.m3u
+❌ Canadian Channels → /config/data/playlists/clean/CA_channels.m3u
+
+Result: HTTP 500 errors when Jellyfin tries to load them
+
+
+FIX: DELETE THE BROKEN TUNERS
+------------------------------
+
+1. Go to: https://jellyfin.simondatalab.de/web/index.html
+
+2. Navigate: Dashboard → Live TV → Tuner Devices
+
+3. You should see 6 tuners total:
+   ✅ KEEP: https://iptv-org.github.io/iptv/index.m3u (WORKING)
+   ❌ DELETE: UK Channels (broken)
+   ❌ DELETE: US Channels (broken)
+   ❌ DELETE: French Channels (broken)
+   ❌ DELETE: German Channels (broken)
+   ❌ DELETE: Canadian Channels (broken)
+
+4. Click the ⋮ (three dots) menu next to each broken tuner
+
+5. Select "Delete" for each one
+
+6. After deleting all 5 broken tuners, ONLY the working IPTV-Org 
+   tuner should remain
+
+
+VERIFICATION:
+-------------
+After deletion:
+1. Hard refresh browser: Ctrl+Shift+R
+2. Check Dashboard → Live TV
+3. HTTP 500 errors should be gone
+4. scrollTo JavaScript errors should be gone
+5. Channels should load and play
+
+
+ALTERNATIVE: ADD REGIONAL TUNERS (OPTIONAL)
+-------------------------------------------
+If you want regional channels, use these WORKING URLs instead:
+
+UK:     https://iptv-org.github.io/iptv/countries/uk.m3u
+US:     https://iptv-org.github.io/iptv/countries/us.m3u
+France: https://iptv-org.github.io/iptv/countries/fr.m3u
+Germany: https://iptv-org.github.io/iptv/countries/de.m3u
+Canada: https://iptv-org.github.io/iptv/countries/ca.m3u
+
+Add them the same way you added the main tuner (Dashboard → Live TV → 
+Add Tuner → M3U Tuner → paste URL)
+
+
+ROOT CAUSE:
+-----------
+The snap installation paths don't match Docker container paths:
+- Snap config: /var/snap/itrue-jellyfin/common/data/
+- Container path: /config/data/ (doesn't exist in snap)
+
+Your Jellyfin is running as a SNAP on the Proxmox host, not in a 
+Docker container, so those /config/ paths are invalid.

@@ -388,6 +388,7 @@
             
             .nav-links {
                 gap: 1rem;
+                font-size: 0.875rem;
             }
             
             .control-panel,
@@ -399,20 +400,66 @@
                 top: auto;
                 width: 100%;
                 max-width: none;
+                min-width: auto;
                 border-radius: 16px 16px 0 0;
-                max-height: 50vh;
+                max-height: 60vh;
                 overflow-y: auto;
+                padding: 1rem;
+            }
+            
+            .control-panel h3,
+            .ai-assistant h3 {
+                font-size: 1rem;
+                margin-bottom: 1rem;
+            }
+            
+            .control-group {
+                margin-bottom: 0.75rem;
+            }
+            
+            .control-group label {
+                font-size: 0.75rem;
+            }
+            
+            .control-group select {
+                font-size: 0.875rem;
+                padding: 0.5rem;
             }
             
             .stats-panel {
                 left: 10px;
                 bottom: 10px;
-                min-width: 250px;
+                min-width: auto;
+                max-width: calc(50% - 15px);
+                padding: 0.75rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+            
+            .stat-card {
+                padding: 0.5rem;
+            }
+            
+            .stat-label {
+                font-size: 0.625rem;
+            }
+            
+            .stat-value {
+                font-size: 1.2rem;
             }
             
             .legend {
                 right: 10px;
                 bottom: 10px;
+                max-width: calc(50% - 15px);
+                padding: 0.75rem;
+            }
+            
+            .legend-item {
+                font-size: 0.75rem;
             }
         }
 
@@ -467,18 +514,18 @@
         <div class="control-group">
             <label>View Mode</label>
             <select id="viewMode">
-                <option value="natural" selected>Natural Earth (Default)</option>
-                <option value="satellite">OpenStreetMap</option>
-                <option value="terrain">Terrain Map</option>
-                <option value="night">Dark Theme</option>
+                <option value="natural" selected>OpenStreetMap</option>
+                <option value="satellite">Satellite Imagery</option>
+                <option value="terrain">Dark Terrain</option>
+                <option value="night">Night Lights</option>
             </select>
         </div>
         
         <div class="control-group">
             <label>Location Focus</label>
             <select id="locationFocus">
+                <option value="vietnam" selected>Vietnam</option>
                 <option value="global">Global View</option>
-                <option value="vietnam">Vietnam</option>
                 <option value="europe">Europe</option>
                 <option value="usa">North America</option>
                 <option value="asia">Asia Pacific</option>
@@ -671,12 +718,12 @@
                     skyAtmosphere: new Cesium.SkyAtmosphere()
                 });
                 
-                // Set initial camera position (space view)
+                // Set initial camera position - Bird's eye view of Vietnam centered on Ho Chi Minh City
                 this.viewer.camera.setView({
-                    destination: Cesium.Cartesian3.fromDegrees(0, 20, 20000000),
+                    destination: Cesium.Cartesian3.fromDegrees(106.6297, 14.0, 2500000),
                     orientation: {
                         heading: 0,
-                        pitch: Cesium.Math.toRadians(-90),
+                        pitch: Cesium.Math.toRadians(-45),
                         roll: 0
                     }
                 });
@@ -874,15 +921,17 @@
                 continents.forEach(cont => {
                     // Convert coordinates to Cesium PolygonHierarchy positions with simple height
                     const positions = cont.coordinates.map(c => Cesium.Cartesian3.fromDegrees(c[0], c[1], 0));
-                    this.viewer.entities.add({
+                    const entity = this.viewer.entities.add({
                         name: cont.name,
                         polygon: {
                             hierarchy: new Cesium.PolygonHierarchy(positions),
-                            material: Cesium.Color.fromCssColorString('#2d6a4f').withAlpha(0.85),
+                            material: Cesium.Color.fromCssColorString('#2d6a4f').withAlpha(0.15),
                             outline: false,
                             height: 0
                         }
                     });
+                    // Hide continents by default - too distracting
+                    entity.show = false;
                 });
             }
             

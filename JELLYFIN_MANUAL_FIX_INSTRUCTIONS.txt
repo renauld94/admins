@@ -1,0 +1,167 @@
+================================================================================
+MANUAL FIX INSTRUCTIONS FOR JELLYFIN - VM 200
+================================================================================
+
+Since automated SSH is not working, here are the manual steps:
+
+OPTION 1: Direct SSH (if you have access)
+==========================================
+
+ssh -p 2222 Simonadmin@136.243.155.166
+
+Then run these commands:
+
+# 1. Check if Jellyfin is running
+systemctl status jellyfin
+# OR if in Docker:
+docker ps | grep jellyfin
+
+# 2. Backup and update DNS
+sudo cp /etc/resolv.conf /etc/resolv.conf.backup
+sudo bash -c 'cat > /etc/resolv.conf << EOF
+nameserver 1.1.1.1
+nameserver 1.0.0.1
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+options timeout:2 attempts:3 rotate
+EOF'
+
+# 3. Test DNS
+dig +short viamotionhsi.netplus.ch
+# Should return: 78.155.24.242
+
+# 4. Test HTTPS
+curl -I https://viamotionhsi.netplus.ch/live/eds/3sathd/browser-HLS8/3sathd.m3u8
+
+# 5. Restart Jellyfin
+sudo systemctl restart jellyfin
+# OR if Docker:
+docker restart jellyfin
+
+# 6. Verify
+systemctl status jellyfin
+
+
+OPTION 2: Via Proxmox Console
+==============================
+
+1. Log into Proxmox web UI: https://136.243.155.166:8006
+2. Select VM 200 (nextcloud-vm-10-0-0-103)
+3. Click "Console"
+4. Log in as Simonadmin
+5. Run the commands from Option 1 above
+
+
+OPTION 3: If Jellyfin is in a Container (not the VM)
+=====================================================
+
+Jellyfin might actually be in an LXC container ON the Proxmox host, not in VM 200.
+
+From your local machine, try:
+
+ssh root@136.243.155.166 -p 22  # Try default SSH port
+
+Then:
+
+# List containers
+pct list
+
+# If container 200 exists and is running:
+pct exec 200 -- bash -c 'cat > /etc/resolv.conf << EOF
+nameserver 1.1.1.1
+nameserver 1.0.0.1
+nameserver 8.8.8.8
+EOF'
+
+pct exec 200 -- dig +short viamotionhsi.netplus.ch
+pct exec 200 -- systemctl restart jellyfin
+pct exec 200 -- systemctl status jellyfin
+
+
+TROUBLESHOOTING SSH ACCESS
+===========================
+
+If SSH on port 2222 isn't working:
+
+1. Verify VM is actually listening on port 2222:
+   - From Proxmox: pct exec 200 -- netstat -tlnp | grep 2222
+   
+2. Check if port forwarding is configured:
+   - VM 200 might use a different port
+   - Check Proxmox firewall rules
+   
+3. Try alternative SSH ports:
+   ssh -p 22 Simonadmin@10.0.0.103    # Direct IP (if on same network)
+   ssh -p 22 Simonadmin@136.243.155.166  # Standard SSH port
+
+4. Use Proxmox console instead:
+   - Web UI → VM 200 → Console
+   - No SSH needed
+
+
+QUICK DNS FIX (ONE-LINER)
+==========================
+
+If you can get shell access somehow:
+
+sudo bash -c 'echo -e "nameserver 1.1.1.1\nnameserver 8.8.8.8" > /etc/resolv.conf' && sudo systemctl restart jellyfin
+
+
+VERIFICATION AFTER FIX
+======================
+
+1. DNS Test:
+   dig +short viamotionhsi.netplus.ch
+   Expected: 78.155.24.242 (or similar IP)
+
+2. Web Browser:
+   - Open: https://jellyfin.simondatalab.de
+   - Clear cache: Ctrl+Shift+R
+   - Navigate to Live TV
+   - Try playing a channel
+
+3. Check for errors:
+   sudo journalctl -u jellyfin -f
+   (Watch for "Failed to resolve" errors - should be gone)
+
+
+IDENTIFYING WHERE JELLYFIN ACTUALLY RUNS
+=========================================
+
+Jellyfin might be running:
+
+A) In VM 200 (nextcloud-vm):
+   - Access via: ssh -p 2222 Simonadmin@136.243.155.166
+   - Check: systemctl status jellyfin
+
+B) In LXC Container on Proxmox:
+   - Access via: ssh root@136.243.155.166
+   - Then: pct list
+   - Then: pct exec <ID> -- systemctl status jellyfin
+
+C) In Docker somewhere:
+   - Check: docker ps | grep jellyfin
+   - Fix: docker exec jellyfin bash -c 'commands...'
+
+To find it:
+- Check what's listening on port 8096 (Jellyfin's default port)
+- From Proxmox: pct list | grep -E "(jellyfin|media)"
+- curl http://localhost:8096 (from wherever you have shell access)
+
+
+NEXT STEPS
+==========
+
+1. Get shell access to wherever Jellyfin is actually running
+2. Update /etc/resolv.conf with the DNS servers above
+3. Restart Jellyfin service
+4. Test in browser
+
+If you can tell me:
+- How you normally access the Jellyfin server
+- What command works to check Jellyfin status
+- Where Jellyfin logs are located
+
+I can provide more specific instructions.
+
+================================================================================

@@ -1,0 +1,98 @@
+═══════════════════════════════════════════════════════════════════
+  JELLYFIN TUNER SETUP - MANUAL + API VERIFICATION
+═══════════════════════════════════════════════════════════════════
+
+SITUATION:
+----------
+✅ Jellyfin Docker container running on VM 200 (10.0.0.103:8096)
+✅ Nginx routing working (jellyfin.simondatalab.de → VM 200)
+✅ Health check passing
+
+REQUIRED API KEY:
+-----------------
+To use the automated tuner setup script, we need an API key.
+
+GET API KEY (Manual):
+1. Open: https://jellyfin.simondatalab.de
+2. Log in with your admin account
+3. Go to: Dashboard → Settings → API Keys
+4. Create a new API key or copy existing one
+5. Run the setup script with the key:
+
+   bash /home/simon/Learning-Management-System-Academy/setup-jellyfin-tuners.sh "YOUR_API_KEY_HERE"
+
+
+ALTERNATIVE - Web UI Setup:
+----------------------------
+If you prefer to set up tuners via the web interface:
+
+1. Go to: https://jellyfin.simondatalab.de
+2. Dashboard → Live TV → Add Tuner Host
+3. Select "M3U Tuner"
+4. Add these tuners:
+
+   ┌─────────────────────────────────────────────────────────────┐
+   │ Main IPTV                                                   │
+   │ https://iptv-org.github.io/iptv/index.m3u                 │
+   │ (23,335+ channels, all countries)                          │
+   ├─────────────────────────────────────────────────────────────┤
+   │ UK Channels Only                                            │
+   │ https://iptv-org.github.io/iptv/countries/uk.m3u          │
+   ├─────────────────────────────────────────────────────────────┤
+   │ US Channels Only                                            │
+   │ https://iptv-org.github.io/iptv/countries/us.m3u          │
+   ├─────────────────────────────────────────────────────────────┤
+   │ French Channels                                             │
+   │ https://iptv-org.github.io/iptv/countries/fr.m3u          │
+   ├─────────────────────────────────────────────────────────────┤
+   │ German Channels                                             │
+   │ https://iptv-org.github.io/iptv/countries/de.m3u          │
+   ├─────────────────────────────────────────────────────────────┤
+   │ Canadian Channels                                           │
+   │ https://iptv-org.github.io/iptv/countries/ca.m3u          │
+   └─────────────────────────────────────────────────────────────┘
+
+
+VERIFY TUNERS VIA API:
+---------------------
+After adding tuners (via UI or script), verify they work:
+
+   # Test basic health
+   curl http://10.0.0.103:8096/health
+   
+   # Get all tuners (requires API key)
+   curl "http://10.0.0.103:8096/api/LiveTv/TunerHosts?api_key=YOUR_KEY"
+   
+   # Get available channels
+   curl "http://10.0.0.103:8096/api/LiveTv/Channels?api_key=YOUR_KEY" | head -c 500
+
+
+TEST IPTV SOURCE:
+-----------------
+Verify the IPTV source is working:
+
+   # Check if main source is accessible
+   curl -I https://iptv-org.github.io/iptv/index.m3u
+   
+   # Download and count channels
+   curl -s https://iptv-org.github.io/iptv/index.m3u | wc -l
+   
+   # Test a random channel stream
+   curl -I "$(curl -s https://iptv-org.github.io/iptv/index.m3u | grep ^http | head -1)"
+
+
+TROUBLESHOOTING:
+----------------
+If tuners don't show channels:
+  • Check Jellyfin logs: docker logs jellyfin-simonadmin
+  • Verify IPTV source: curl https://iptv-org.github.io/iptv/index.m3u
+  • Clear browser cache: Ctrl+Shift+R
+  • Restart Jellyfin: docker restart jellyfin-simonadmin
+
+
+HISTORY CHECK:
+--------------
+To find API key from shell history on VM 200:
+
+   ssh -p 2222 root@136.243.155.166 \
+   "ssh simonadmin@10.0.0.103 'grep -i api ~/.bash_history | tail -20'"

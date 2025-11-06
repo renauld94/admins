@@ -1,0 +1,52 @@
+═══════════════════════════════════════════════════════════════════
+  JELLYFIN EPG (TV GUIDE) FIX - November 6, 2025
+═══════════════════════════════════════════════════════════════════
+
+ISSUE:
+------
+Current EPG URL returns 404:
+https://raw.githubusercontent.com/epgshare01/share01/master/epg_share01.xml
+
+
+ALTERNATIVE EPG SOURCES:
+------------------------
+
+Option 1: IPTV-Org EPG (Matches your channel source)
+https://iptv-org.github.io/epg/guides/all.xml
+
+Option 2: Regional EPG Files
+- https://iptv-org.github.io/epg/guides/us.xml (US channels)
+- https://iptv-org.github.io/epg/guides/uk.xml (UK channels)
+- https://iptv-org.github.io/epg/guides/fr.xml (French channels)
+- https://iptv-org.github.io/epg/guides/de.xml (German channels)
+- https://iptv-org.github.io/epg/guides/ca.xml (Canadian channels)
+
+Option 3: Other Providers
+- https://github.com/iptv-org/epg (Latest EPG repository)
+- http://epg.streamstv.me/epg/guide-usa.xml.gz
+- http://epg.streamstv.me/epg/guide-uk.xml.gz
+
+
+HOW TO UPDATE:
+--------------
+1. Go to: https://jellyfin.simondatalab.de
+2. Dashboard → Live TV → TV Guide Data Providers
+3. Remove the broken URL (epgshare01)
+4. Add new provider:
+   - Name: "IPTV-Org EPG"
+   - URL: https://iptv-org.github.io/epg/guides/all.xml
+5. Save
+6. Dashboard → Scheduled Tasks → "Refresh Guide" → Run now
+
+
+VERIFICATION:
+-------------
+Test EPG accessibility:
+curl -I https://iptv-org.github.io/epg/guides/all.xml
+
+
+NOTE:
+-----
+- Channels will still PLAY without EPG
+- EPG only provides program schedule information
+- Update is optional but recommended for better user experience
