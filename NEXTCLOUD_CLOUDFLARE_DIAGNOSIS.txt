@@ -1,0 +1,279 @@
+================================================================================
+NEXTCLOUD CLOUDFLARE DIAGNOSIS - November 6, 2025
+================================================================================
+
+API TOKEN STATUS: ✅ VALID
+========================================
+Token: IzeoThvTlP0jCgKwUjsuBNN6_BPdPHFv2EODqm4U
+Status: Active
+Expires: 2025-11-12 23:59:59
+
+ZONE INFORMATION:
+========================================
+Zone ID: 8721a7620b0d4b0d29e926fda5525d23
+Domain: simondatalab.de
+Status: Active
+Nameservers: ivan.ns.cloudflare.com, rosalie.ns.cloudflare.com
+Plan: Free Website
+
+DNS CONFIGURATION: ✅ CORRECT
+========================================
+
+nextcloud.simondatalab.de:
+- Type: A record
+- Content: 136.243.155.166
+- Proxied: YES (Orange cloud enabled)
+- TTL: Auto (1)
+- Record ID: f642e36539f54771e66e95b27270a208
+- Created: 2025-10-02
+- Modified: 2025-10-07
+
+✅ DNS is configured correctly!
+✅ Points to correct IP
+✅ Cloudflare proxy enabled
+✅ Should have SSL automatically
+
+ALL SUBDOMAINS (for reference):
+========================================
+apps.simondatalab.de        -> 136.243.155.166 (proxied)
+booklore.simondatalab.de    -> 136.243.155.166 (proxied)
+geoneuralviz.simondatalab.de -> 136.243.155.166 (proxied)
+geoserver.simondatalab.de   -> 136.243.155.166 (proxied)
+grafana.simondatalab.de     -> 136.243.155.166 (proxied)
+jellyfin.simondatalab.de    -> 136.243.155.166 (proxied)
+mlflow.simondatalab.de      -> 136.243.155.166 (proxied)
+moodle.simondatalab.de      -> 136.243.155.166 (proxied)
+nextcloud.simondatalab.de   -> 136.243.155.166 (proxied) ⚠️
+ollama.simondatalab.de      -> 136.243.155.166 (proxied)
+openwebui.simondatalab.de   -> 136.243.155.166 (proxied)
+prometheus.simondatalab.de  -> 136.243.155.166 (proxied)
+
+Cloudflare Tunnels:
+analytics.simondatalab.de   -> CNAME to cfargotunnel.com
+api.simondatalab.de         -> CNAME to cfargotunnel.com
+mcp.simondatalab.de         -> CNAME to cfargotunnel.com
+
+PAGE RULES:
+========================================
+❌ Could not access (token doesn't have pagerule permissions)
+Need to check manually in Cloudflare Dashboard
+
+THE PROBLEM:
+================================================================================
+
+DNS: ✅ Correct (nextcloud.simondatalab.de -> 136.243.155.166, proxied)
+Cloudflare: ✅ Receiving requests
+Backend: ❌ WRONG CONTENT SERVED (portfolio instead of Nextcloud)
+
+When accessing https://nextcloud.simondatalab.de/:
+- Returns: Portfolio HTML (Neuro DataLab)
+- Expected: Nextcloud application
+
+This means:
+1. Cloudflare receives the request correctly
+2. But something on YOUR SERVER (136.243.155.166) is serving the wrong content
+
+LIKELY CAUSES:
+================================================================================
+
+1. NGINX/Web Server Configuration Issue (MOST LIKELY)
+   --------------------------------------------------------
+   Your web server (nginx/apache) on 136.243.155.166 is probably configured
+   with a CATCH-ALL or DEFAULT server block that serves the portfolio for
+   ALL subdomains that don't have specific configuration.
+   
+   What's happening:
+   - Request comes to nextcloud.simondatalab.de
+   - Nginx doesn't find a specific server block for "nextcloud.simondatalab.de"
+   - Falls back to DEFAULT server block
+   - DEFAULT serves your portfolio
+   
+   Fix: Add specific nginx server block for nextcloud.simondatalab.de
+
+
+2. Port 9020 Not Accessible
+   --------------------------------------------------------
+   Nextcloud might be configured on port 9020, but:
+   - Nginx is not proxying nextcloud.simondatalab.de to port 9020
+   - All traffic goes to default port 80/443 (portfolio)
+   
+   Fix: Configure nginx to proxy nextcloud.simondatalab.de to :9020
+
+
+3. Nextcloud Service Not Running
+   --------------------------------------------------------
+   Nextcloud container/service might be stopped on VM200
+   
+   Check:
+   - Is Nextcloud Docker container running?
+   - Is it accessible on 10.0.0.103:9020?
+
+
+4. Missing Nginx Configuration
+   --------------------------------------------------------
+   No /etc/nginx/sites-enabled/nextcloud.conf file exists
+   
+   Need to create: nginx config that proxies nextcloud.simondatalab.de to backend
+
+================================================================================
+SOLUTION: Fix Nginx Configuration on 136.243.155.166
+================================================================================
+
+Step 1: Check Current Nginx Configuration
+------------------------------------------
+
+SSH to server:
+ssh root@136.243.155.166
+
+Check nginx configs:
+ls -la /etc/nginx/sites-enabled/
+cat /etc/nginx/sites-enabled/default
+
+Check what's listening:
+netstat -tlnp | grep :80
+netstat -tlnp | grep :443
+netstat -tlnp | grep :9020
+
+
+Step 2: Create Nextcloud Nginx Configuration
+---------------------------------------------
+
+Create file: /etc/nginx/sites-available/nextcloud
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name nextcloud.simondatalab.de;
+    
+    # Redirect HTTP to HTTPS (Cloudflare will handle SSL)
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name nextcloud.simondatalab.de;
+    
+    # Cloudflare provides SSL, so we don't need certs here
+    # Use self-signed or let Cloudflare handle it
+    
+    # Proxy to Nextcloud backend
+    location / {
+        proxy_pass http://10.0.0.103:9020;  # VM200 internal IP
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        
+        # WebSocket support
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        
+        # Timeouts
+        proxy_connect_timeout 600;
+        proxy_send_timeout 600;
+        proxy_read_timeout 600;
+        send_timeout 600;
+    }
+}
+
+Enable configuration:
+ln -s /etc/nginx/sites-available/nextcloud /etc/nginx/sites-enabled/
+nginx -t
+systemctl reload nginx
+
+
+Step 3: Verify Nextcloud Backend is Running
+--------------------------------------------
+
+Check if Nextcloud container is running on VM200:
+pct exec 200 -- docker ps | grep nextcloud
+
+If not running, start it:
+pct exec 200 -- docker start nextcloud
+
+Check if accessible internally:
+pct exec 200 -- curl -I http://localhost:9020
+
+
+Step 4: Test Configuration
+---------------------------
+
+From server:
+curl -H "Host: nextcloud.simondatalab.de" http://localhost
+
+From outside:
+curl -I https://nextcloud.simondatalab.de/
+
+Should return Nextcloud headers, not portfolio HTML
+
+
+Step 5: Alternative - Direct Port Configuration
+------------------------------------------------
+
+If you want nextcloud accessible directly on port 9020:
+
+1. Open port 9020 in firewall:
+   ufw allow 9020/tcp
+
+2. Access via: http://136.243.155.166:9020
+   (But this won't use the domain or SSL)
+
+================================================================================
+QUICK FIX COMMANDS (Run on 136.243.155.166)
+================================================================================
+
+# 1. Check what's serving on port 80
+netstat -tlnp | grep :80
+
+# 2. Check nginx default config
+cat /etc/nginx/sites-enabled/default | grep -A 5 "server_name"
+
+# 3. Create nextcloud nginx config
+cat > /etc/nginx/sites-available/nextcloud << 'EOF'
+server {
+    listen 80;
+    listen [::]:80;
+    server_name nextcloud.simondatalab.de;
+    
+    location / {
+        proxy_pass http://10.0.0.103:9020;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+    }
+}
+EOF
+
+# 4. Enable and reload
+ln -s /etc/nginx/sites-available/nextcloud /etc/nginx/sites-enabled/
+nginx -t && systemctl reload nginx
+
+# 5. Test
+curl -H "Host: nextcloud.simondatalab.de" http://localhost
+
+================================================================================
+SUMMARY
+================================================================================
+
+✅ Cloudflare API Token: Working
+✅ DNS Configuration: Correct (A record, proxied)
+✅ Cloudflare Proxy: Active
+⚠️ Backend Server: Serving wrong content (portfolio instead of Nextcloud)
+
+ROOT CAUSE: Nginx on 136.243.155.166 doesn't have specific configuration
+            for nextcloud.simondatalab.de, so it falls back to default
+            server block which serves the portfolio.
+
+SOLUTION: Add nginx server block to proxy nextcloud.simondatalab.de to
+          port 9020 on VM200 (10.0.0.103:9020)
+
+NEXT STEPS:
+1. SSH to 136.243.155.166
+2. Create nginx config for nextcloud
+3. Verify Nextcloud service is running on VM200 port 9020
+4. Test and reload nginx
+
+================================================================================
