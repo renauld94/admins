@@ -27,52 +27,86 @@
             z-index: 1;
         }
         
-        #loading-screen {
+        #loading {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: #000000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #00d4ff;
+            font-size: 24px;
             z-index: 1000;
-            transition: opacity 0.5s ease-out;
+            text-align: center;
+            font-weight: 200;
+            letter-spacing: 2px;
         }
         
-        #loading-screen.hidden {
-            opacity: 0;
-            pointer-events: none;
+        #info {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            color: #00d4ff;
+            font-size: 12px;
+            z-index: 999;
+            opacity: 0.6;
         }
         
-        .loading-dot {
-            width: 20px;
-            height: 20px;
+        .dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
             background: #00d4ff;
             border-radius: 50%;
-            box-shadow: 0 0 30px #00d4ff, 0 0 60px #00d4ff;
-            animation: pulse 2s ease-in-out infinite;
+            margin: 0 4px;
+            animation: pulse 1.5s infinite;
         }
         
         @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.6; }
-            50% { transform: scale(1.5); opacity: 1; }
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
         }
         
-        @media (max-width: 768px) {
-            body {
-                touch-action: none;
-            }
+        #info-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 10, 30, 0.8);
+            border: 1px solid #00d4ff;
+            border-radius: 8px;
+            padding: 15px 20px;
+            font-size: 11px;
+            color: #00d4ff;
+            z-index: 999;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .stat-line {
+            margin: 3px 0;
+        }
+        
+        .stat-label {
+            color: #8b5cf6;
+            min-width: 80px;
+            display: inline-block;
         }
     </style>
 </head>
 <body>
-    <div id="loading-screen">
-        <div class="loading-dot"></div>
+    <div id="loading">
+        <div style="margin-bottom: 20px;">
+            <span class="dot"></span>
+            <span class="dot" style="animation-delay: 0.2s"></span>
+            <span class="dot" style="animation-delay: 0.4s"></span>
+        </div>
+        <p>Rendering Neural to Cosmic...</p>
+        <p style="font-size: 12px; opacity: 0.6; margin-top: 10px;">VM 159 - Hero Visualization Engine</p>
     </div>
     <div id="canvas-container"></div>
-    
+    <div id="info-panel">
+        <div class="stat-line"><span class="stat-label">Server:</span>VM 159 (ubuntuai-1000110)</div>
+        <div class="stat-line"><span class="stat-label">Status:</span>Rendering</div>
+        <div class="stat-line"><span class="stat-label">FPS:</span><span id="fps">--</span></div>
+        <div class="stat-line"><span class="stat-label">Time:</span><span id="time">0s</span></div>
+    </div>
     <script type="importmap">
     {
         "imports": {
@@ -81,7 +115,6 @@
         }
     }
     </script>
-    
     <script type="module" src="./main.js"></script>
 </body>
 </html>

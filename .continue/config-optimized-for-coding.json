@@ -1,0 +1,253 @@
+{
+  "agentNetwork": "Coding-First AI Ecosystem",
+  "agentVersion": "3.0.0-optimized",
+  "lastUpdated": "2025-11-06T12:00:00Z",
+  "purpose": "Production-grade Continue setup optimized for professional coding",
+
+  "models": [
+    {
+      "title": "Code Generation (Primary)",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "apiBase": "http://localhost:11434",
+      "contextLength": 8192,
+      "completionOptions": {
+        "temperature": 0.1,
+        "topP": 0.85,
+        "topK": 20,
+        "numPredict": 2048
+      },
+      "description": "Primary model for code generation - very low temperature for consistency"
+    },
+    {
+      "title": "Code Analysis & Refactoring",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "apiBase": "http://localhost:11434",
+      "contextLength": 8192,
+      "completionOptions": {
+        "temperature": 0.3,
+        "topP": 0.9,
+        "topK": 30,
+        "numPredict": 2048
+      },
+      "description": "For code review, analysis, refactoring suggestions"
+    },
+    {
+      "title": "Chat & Problem Solving",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "apiBase": "http://localhost:11434",
+      "contextLength": 4096,
+      "completionOptions": {
+        "temperature": 0.5,
+        "topP": 0.9,
+        "topK": 40,
+        "numPredict": 1024
+      },
+      "description": "For interactive discussion and problem-solving"
+    }
+  ],
+
+  "tabAutocompleteModel": {
+    "title": "Inline Autocomplete",
+    "provider": "ollama",
+    "model": "llama3.2:3b",
+    "apiBase": "http://localhost:11434",
+    "contextLength": 3096,
+    "completionOptions": {
+      "temperature": 0.15,
+      "maxTokens": 80,
+      "stopTokens": ["\n\n", "```", "//", "def ", "class ", "async "],
+      "topP": 0.85,
+      "topK": 15
+    },
+    "description": "Fast, low-latency autocomplete - must be accurate"
+  },
+
+  "modelRoles": {
+    "default": "Code Generation (Primary)",
+    "chat": "Chat & Problem Solving",
+    "edit": "Code Generation (Primary)",
+    "autocomplete": "Inline Autocomplete",
+    "summarize": "Code Analysis & Refactoring",
+    "refactor": "Code Analysis & Refactoring",
+    "test": "Code Generation (Primary)",
+    "docstring": "Code Analysis & Refactoring"
+  },
+
+  "vscodeIntegration": {
+    "enableInline": true,
+    "enableAutocompletionPrefixes": true,
+    "inlineAutocompletionDelay": 150,
+    "autocompleteCompletionLines": 10,
+    "autocompleteCompletionChars": 100,
+    "aiTriggerPrefixes": ["# ai:", "// ai:", "<!-- ai:", "/* ai:", "-- ai:"],
+    "enableSmartPaste": true,
+    "enableContextMenu": true,
+    "enableCodeLensSettings": true,
+    "enableSlashCommands": true
+  },
+
+  "slashCommands": [
+    {
+      "name": "refactor",
+      "description": "Refactor selected code for readability and performance",
+      "prompt": "Refactor this code to improve readability, performance, and maintainability. Keep the same functionality."
+    },
+    {
+      "name": "test",
+      "description": "Generate unit tests for the selected code",
+      "prompt": "Generate comprehensive unit tests for this code using pytest/unittest. Include edge cases and error handling."
+    },
+    {
+      "name": "doc",
+      "description": "Generate documentation and docstrings",
+      "prompt": "Generate detailed docstrings and comments for this code. Use Google-style docstrings with type hints."
+    },
+    {
+      "name": "bug",
+      "description": "Analyze code for potential bugs",
+      "prompt": "Analyze this code for potential bugs, security issues, or edge cases. Suggest fixes."
+    },
+    {
+      "name": "optimize",
+      "description": "Optimize code for performance",
+      "prompt": "Optimize this code for performance. Keep the same functionality but make it faster. Explain changes."
+    },
+    {
+      "name": "explain",
+      "description": "Explain what the code does",
+      "prompt": "Explain what this code does in clear, simple terms. Break it down line by line."
+    }
+  ],
+
+  "communication": {
+    "channels": ["http_loopback"],
+    "httpPort": 11434,
+    "contextPath": "./workspace/agents/context",
+    "healthCheck": {
+      "enabled": true,
+      "interval": 30,
+      "timeout": 3
+    }
+  },
+
+  "security": {
+    "localOnly": true,
+    "requireTls": false,
+    "allowedHosts": ["127.0.0.1", "localhost"],
+    "maxConcurrentRequests": 5,
+    "rateLimitPerMinute": 120
+  },
+
+  "performance": {
+    "enableCaching": true,
+    "cacheDir": "./workspace/agents/.cache",
+    "cacheTTL": 3600,
+    "enableParallelRequests": true,
+    "maxParallelRequests": 3,
+    "requestTimeout": 30,
+    "responseStreaming": true
+  },
+
+  "features": {
+    "enableInlineEditing": true,
+    "enableMultilineEditing": true,
+    "enableCodeActions": true,
+    "enableHoverInfo": true,
+    "enableDefinitionLinking": true,
+    "enableImplementationLinking": true,
+    "enableTypeInfo": true,
+    "syntaxHighlighting": true
+  },
+
+  "codeLanguages": {
+    "python": {
+      "enabled": true,
+      "temperature": 0.1,
+      "useTypeHints": true,
+      "defaultFormatter": "black",
+      "linter": "pylint"
+    },
+    "javascript": {
+      "enabled": true,
+      "temperature": 0.15,
+      "useTypeScript": true,
+      "defaultFormatter": "prettier",
+      "linter": "eslint"
+    },
+    "typescript": {
+      "enabled": true,
+      "temperature": 0.15,
+      "defaultFormatter": "prettier",
+      "linter": "eslint"
+    },
+    "java": {
+      "enabled": true,
+      "temperature": 0.1,
+      "defaultFormatter": "google-java-format",
+      "linter": "checkstyle"
+    },
+    "csharp": {
+      "enabled": true,
+      "temperature": 0.1,
+      "defaultFormatter": "dotnet-format",
+      "linter": "stylecop"
+    },
+    "sql": {
+      "enabled": true,
+      "temperature": 0.05,
+      "defaultFormatter": "sqlformat"
+    },
+    "bash": {
+      "enabled": true,
+      "temperature": 0.15,
+      "defaultFormatter": "shfmt"
+    }
+  },
+
+  "excludedPaths": [
+    "node_modules",
+    "__pycache__",
+    ".git",
+    "dist",
+    "build",
+    ".venv",
+    "venv",
+    ".eggs",
+    "*.egg-info",
+    "target",
+    ".gradle"
+  ],
+
+  "contextRetrieval": {
+    "maxContextLength": 8192,
+    "maxFileCount": 20,
+    "maxLineCount": 2000,
+    "prioritizeOpenFiles": true,
+    "includeImports": true,
+    "includeRelatedFiles": true
+  },
+
+  "logging": {
+    "level": "INFO",
+    "format": "json",
+    "outputDir": "./workspace/agents/logs",
+    "maxFileSize": 10485760,
+    "maxBackups": 5,
+    "retention": 7
+  },
+
+  "systemIntegration": {
+    "gitIntegration": {
+      "enabled": true,
+      "autoCommitMessages": true,
+      "diffAnalysis": true
+    },
+    "lspIntegration": {
+      "enabled": true,
+      "languages": ["python", "javascript", "typescript", "java"]
+    }
+  }
+}
