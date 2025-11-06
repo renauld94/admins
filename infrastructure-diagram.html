@@ -2233,6 +2233,143 @@
             }, 2500);
         }
         
+        // Live Infrastructure Data Fetching
+        let liveDataInterval;
+        let isAuthenticated = false;
+        
+        async function fetchInfrastructureData() {
+            try {
+                const response = await fetch('/.continue/agents/reports/infrastructure_data.json');
+                if (response.ok) {
+                    const data = await response.json();
+                    updateDiagramWithLiveData(data);
+                    updateStatsDisplay(data);
+                    
+                    if (data.sensitive_data_detected && !isAuthenticated) {
+                        showAuthenticationWarning();
+                    }
+                } else if (response.status === 401 || response.status === 403) {
+                    showAuthenticationRequired();
+                }
+            } catch (error) {
+                console.debug('Live data not available yet:', error.message);
+            }
+        }
+        
+        function updateDiagramWithLiveData(data) {
+            // Update diagram title with timestamp
+            const titleEl = document.querySelector('.diagram-title');
+            if (titleEl && data.timestamp) {
+                const updateTime = new Date(data.timestamp).toLocaleTimeString();
+                titleEl.setAttribute('title', `Last updated: ${updateTime}`);
+            }
+            
+            // Add live status indicators (could expand diagram nodes dynamically)
+            console.info('Live infrastructure data loaded:', {
+                services: data.statistics.total_services,
+                vms: data.statistics.total_vms,
+                databases: data.statistics.total_databases
+            });
+        }
+        
+        function updateStatsDisplay(data) {
+            // Check if stats overlay exists, if not create it
+            let statsOverlay = document.getElementById('liveStatsOverlay');
+            if (!statsOverlay) {
+                statsOverlay = document.createElement('div');
+                statsOverlay.id = 'liveStatsOverlay';
+                statsOverlay.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: rgba(0, 212, 255, 0.12);
+                    backdrop-filter: blur(12px);
+                    border: 1px solid rgba(0, 212, 255, 0.3);
+                    border-radius: 12px;
+                    padding: 16px 20px;
+                    color: #e0e0e0;
+                    font-size: 0.9em;
+                    z-index: 1000;
+                    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+                    min-width: 200px;
+                `;
+                document.body.appendChild(statsOverlay);
+            }
+            
+            const updateTime = new Date(data.timestamp).toLocaleString();
+            statsOverlay.innerHTML = `
+                <div style="font-weight: 600; margin-bottom: 10px; color: #00d4ff;">LIVE INFRASTRUCTURE</div>
+                <div style="display: grid; gap: 6px; font-size: 0.85em;">
+                    <div>Services: <strong>${data.statistics.total_services}</strong></div>
+                    <div>VMs: <strong>${data.statistics.total_vms}</strong></div>
+                    <div>Databases: <strong>${data.statistics.total_databases}</strong></div>
+                    <div>Web Servers: <strong>${data.statistics.total_web_servers}</strong></div>
+                    <div>Monitoring: <strong>${data.statistics.total_monitoring}</strong></div>
+                    <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(0, 212, 255, 0.2); font-size: 0.75em; opacity: 0.7;">
+                        Updated: ${updateTime}
+                    </div>
+                </div>
+            `;
+        }
+        
+        function showAuthenticationWarning() {
+            let authWarning = document.getElementById('authWarning');
+            if (!authWarning) {
+                authWarning = document.createElement('div');
+                authWarning.id = 'authWarning';
+                authWarning.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: rgba(255, 59, 48, 0.15);
+                    backdrop-filter: blur(16px);
+                    border: 2px solid rgba(255, 59, 48, 0.5);
+                    border-radius: 16px;
+                    padding: 30px 40px;
+                    color: #ffffff;
+                    z-index: 2000;
+                    max-width: 500px;
+                    text-align: center;
+                    box-shadow: 0 12px 48px rgba(255, 59, 48, 0.3);
+                `;
+                authWarning.innerHTML = `
+                    <div style="font-size: 1.5em; font-weight: 700; margin-bottom: 16px; color: #ff3b30;">
+                        SENSITIVE DATA DETECTED
+                    </div>
+                    <div style="margin-bottom: 20px; line-height: 1.6;">
+                        This infrastructure contains sensitive information.<br>
+                        Enhanced authentication is required.
+                    </div>
+                    <button onclick="document.getElementById('authWarning').remove()" style="
+                        background: rgba(255, 59, 48, 0.8);
+                        border: none;
+                        padding: 12px 24px;
+                        border-radius: 8px;
+                        color: white;
+                        font-weight: 600;
+                        cursor: pointer;
+                    ">Acknowledged</button>
+                `;
+                document.body.appendChild(authWarning);
+            }
+        }
+        
+        function showAuthenticationRequired() {
+            alert('Authentication required. Please contact system administrator for access credentials.');
+        }
+        
+        // Start fetching live data every 30 seconds
+        fetchInfrastructureData(); // Initial fetch
+        liveDataInterval = setInterval(fetchInfrastructureData, 30000);
+        
+        // Clean up on page unload
+        window.addEventListener('beforeunload', () => {
+            if (liveDataInterval) {
+                clearInterval(liveDataInterval);
+            }
+        });
+        
         // Mermaid initialization
         if (typeof mermaid !== 'undefined') {
             mermaid.initialize({ 
