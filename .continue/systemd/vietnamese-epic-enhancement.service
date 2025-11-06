@@ -1,0 +1,25 @@
+[Unit]
+Description=Vietnamese Course Epic Enhancement Agent
+After=network.target ollama.service
+
+[Service]
+Type=simple
+User=simon
+WorkingDirectory=/home/simon/Learning-Management-System-Academy/course-improvements/vietnamese-course
+ExecStart=/usr/bin/python3 /home/simon/Learning-Management-System-Academy/course-improvements/vietnamese-course/epic_enhancement_agent.py
+Restart=on-failure
+RestartSec=10
+
+# Logging
+StandardOutput=append:/home/simon/Learning-Management-System-Academy/course-improvements/vietnamese-course/epic_enhancement.log
+StandardError=append:/home/simon/Learning-Management-System-Academy/course-improvements/vietnamese-course/epic_enhancement_error.log
+
+# Resource limits
+TimeoutStopSec=30
+KillMode=mixed
+
+# Environment
+Environment="PYTHONUNBUFFERED=1"
+
+[Install]
+WantedBy=multi-user.target

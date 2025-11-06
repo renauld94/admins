@@ -3,8 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Card - Print Ready</title>
+    <title>Simon Renauld - Business Card</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-dark: #0A1929;
+            --secondary-dark: #0D1B2A;
+            --accent-cyan: #17BECF;
+            --accent-blue: #12AFC0;
+            --text-primary: #FFFFFF;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -17,245 +28,514 @@
         }
 
         body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: white;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background: #0F172A;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
+        /* Front Card */
         .business-card {
             width: 3.5in;
             height: 2in;
-            background: linear-gradient(135deg, #0A192F 0%, #0D223C 100%);
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 100%);
             position: relative;
             page-break-after: always;
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
+            overflow: hidden;
+        }
+
+        /* Animated gradient overlay */
+        .business-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 70% 30%, 
+                rgba(23, 190, 207, 0.15) 0%, 
+                transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Neural grid pattern */
+        .business-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(90deg, rgba(23, 190, 207, 0.03) 1px, transparent 1px),
+                linear-gradient(rgba(23, 190, 207, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.4;
+            z-index: 1;
         }
 
         .card-content {
+            position: relative;
+            z-index: 2;
             padding: 0.3in;
             height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            color: white;
-            position: relative;
-            z-index: 2;
         }
 
-        .logo {
+        /* Brand Header */
+        .brand-header {
             display: flex;
             align-items: center;
-            gap: 0.1in;
-            margin-bottom: 0.2in;
+            gap: 0.12in;
         }
 
-        .logo-icon {
-            width: 0.4in;
-            height: 0.4in;
-            background: #17BECF;
-            border-radius: 50%;
+        .brand-icon {
+            width: 0.35in;
+            height: 0.35in;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brand-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .brand-text {
+            flex: 1;
         }
 
         .brand-name {
-            font-size: 14px;
-            font-weight: bold;
-            color: #17BECF;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 2px;
         }
 
-        .tagline {
-            font-size: 8px;
-            color: #17BECF;
+        .brand-tagline {
+            font-size: 6.5px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            letter-spacing: 0.05em;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+
+        /* Main Info */
+        .main-info {
+            margin-top: -0.05in;
         }
 
         .name {
-            font-size: 28px;
-            font-weight: bold;
-            color: white;
-            margin-bottom: 0.05in;
-            letter-spacing: -0.5px;
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.04in;
+            line-height: 1;
         }
 
-        .title {
-            font-size: 12px;
-            color: #17BECF;
-            font-weight: bold;
+        .role {
+            font-size: 11px;
+            color: var(--accent-cyan);
+            font-weight: 700;
             margin-bottom: 0.03in;
+            letter-spacing: -0.01em;
         }
 
-        .subtitle {
-            font-size: 10px;
-            color: #94a3b8;
-            margin-bottom: 0.2in;
-        }
-
-        .contact-info {
-            font-size: 10px;
+        .expertise {
+            font-size: 8.5px;
+            color: var(--text-secondary);
+            font-weight: 500;
             line-height: 1.3;
-            color: #d9e3ee;
         }
 
-        .contact-item {
-            margin-bottom: 0.05in;
+        /* Contact Grid */
+        .contact-grid {
+            display: grid;
+            gap: 0.04in;
+            margin-top: 0.08in;
         }
 
-        .qr-section {
+        .contact-row {
+            display: flex;
+            align-items: center;
+            gap: 0.06in;
+            font-size: 8.5px;
+            color: #CBD5E1;
+            font-weight: 500;
+        }
+
+        .contact-icon {
+            width: 0.11in;
+            height: 0.11in;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .contact-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: var(--accent-cyan);
+            stroke-width: 2.5;
+        }
+
+        /* QR Section */
+        .qr-container {
             position: absolute;
-            bottom: 0.2in;
-            right: 0.2in;
-            text-align: center;
+            right: 0.25in;
+            bottom: 0.25in;
+            z-index: 3;
+        }
+
+        .qr-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Glow effect behind QR */
+        .qr-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            background: radial-gradient(circle, 
+                rgba(23, 190, 207, 0.2) 0%, 
+                transparent 70%);
+            border-radius: 12px;
+            filter: blur(8px);
         }
 
         .qr-code {
-            width: 0.8in;
-            height: 0.8in;
-            background: white;
-            border: 2px solid #17BECF;
+            position: relative;
+            width: 0.5in;
+            height: 0.5in;
+            background: #FFFFFF;
+            border-radius: 6px;
+            padding: 0.03in;
+            box-shadow: 
+                0 4px 12px rgba(0, 0, 0, 0.4),
+                0 0 0 2px rgba(23, 190, 207, 0.4);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 8px;
-            color: #333;
+        }
+
+        .qr-code img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
         }
 
         .qr-label {
-            font-size: 7px;
-            color: #64748b;
-            margin-top: 0.03in;
+            text-align: center;
+            margin-top: 0.04in;
+            font-size: 6.5px;
+            color: var(--text-muted);
+            font-weight: 600;
+            letter-spacing: 0.03em;
         }
 
-        .accent-line {
+        /* Accent Line */
+        .accent-bar {
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 100%;
-            height: 0.05in;
-            background: linear-gradient(90deg, #12AFC0 0%, #17BECF 100%);
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, 
+                var(--accent-blue) 0%, 
+                var(--accent-cyan) 100%);
+            z-index: 10;
         }
 
-        /* Card Back */
+        /* Back Card */
         .card-back {
-            background: #0a0e1a;
+            background: linear-gradient(135deg, #0A0E1A 0%, #0D1421 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-back .card-content {
+            text-align: center;
+            justify-content: center;
+        }
+
+        .back-brand {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            text-align: center;
+            gap: 0.12in;
         }
 
-        .card-back .back-logo {
-            margin-bottom: 0.2in;
+        .back-brand .brand-icon {
+            width: 0.45in;
+            height: 0.45in;
         }
 
-        .card-back .logo-icon {
-            width: 0.5in;
-            height: 0.5in;
-            margin: 0 auto 0.1in;
+        .back-brand .brand-name {
+            font-size: 16px;
         }
 
-        .card-back .brand-name {
-            font-size: 18px;
-            color: #17BECF;
-            font-weight: bold;
-        }
-
-        .card-back .tagline {
-            font-size: 9px;
-            color: #64748b;
+        .back-tagline {
+            font-size: 10px;
+            color: #CBD5E1;
+            font-weight: 700;
+            letter-spacing: 0.05em;
             max-width: 80%;
-            margin: 0 auto;
+            line-height: 1.4;
+            margin-top: 0.08in;
         }
 
-        /* Hide non-print elements */
+        /* Metrics badges */
+        .metrics {
+            display: flex;
+            gap: 0.12in;
+            justify-content: center;
+            margin-top: 0.12in;
+        }
+
+        .metric {
+            font-size: 7.5px;
+            padding: 0.04in 0.1in;
+            background: rgba(23, 190, 207, 0.12);
+            border: 1px solid rgba(23, 190, 207, 0.35);
+            border-radius: 5px;
+            color: var(--accent-cyan);
+            font-weight: 800;
+            letter-spacing: 0.03em;
+        }
+
+        /* Print Instructions */
         .instructions {
             display: none;
         }
 
         @media screen {
             body {
-                background: #f0f0f0;
+                background: #0F172A;
                 padding: 1in;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1in;
             }
             
             .business-card {
-                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-                margin-bottom: 1in;
+                box-shadow: 
+                    0 20px 60px rgba(0, 0, 0, 0.5),
+                    0 0 0 1px rgba(23, 190, 207, 0.1);
+                border-radius: 12px;
             }
             
             .instructions {
                 display: block;
-                background: white;
-                padding: 20px;
-                border-radius: 8px;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                background: rgba(255, 255, 255, 0.05);
+                backdrop-filter: blur(10px);
+                padding: 24px;
+                border-radius: 12px;
+                border: 1px solid rgba(23, 190, 207, 0.2);
+                color: #E2E8F0;
                 max-width: 3.5in;
+            }
+
+            .instructions h3 {
+                color: var(--accent-cyan);
+                margin-bottom: 12px;
+                font-size: 16px;
+            }
+
+            .instructions p {
+                margin: 8px 0;
+                font-size: 13px;
+                line-height: 1.6;
+            }
+
+            .instructions ul {
+                list-style: none;
+                padding: 0;
+                margin: 12px 0;
+            }
+
+            .instructions li {
+                padding: 6px 0;
+                padding-left: 20px;
+                position: relative;
+                font-size: 13px;
+            }
+
+            .instructions li::before {
+                content: '→';
+                position: absolute;
+                left: 0;
+                color: var(--accent-cyan);
+            }
+
+            .instructions code {
+                background: rgba(23, 190, 207, 0.1);
+                padding: 2px 6px;
+                border-radius: 4px;
+                font-family: 'Monaco', 'Courier New', monospace;
+                font-size: 12px;
+                color: var(--accent-cyan);
+            }
+        }
+
+        @media print {
+            body {
+                padding: 0;
+            }
+            .business-card {
+                border-radius: 0;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Front of business card -->
+    <!-- Front Card -->
     <div class="business-card">
         <div class="card-content">
-            <div class="logo">
-                <div class="logo-icon"></div>
-                <div>
+            <div class="brand-header">
+                <div class="brand-icon">
+                    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="iconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#12AFC0"/>
+                                <stop offset="100%" stop-color="#17BECF"/>
+                            </linearGradient>
+                        </defs>
+                        <path d="M32 4 L54 16 L54 40 L32 52 L10 40 L10 16 Z" 
+                              stroke="url(#iconGrad)" stroke-width="3" fill="none"/>
+                        <circle cx="32" cy="24" r="5" fill="#17BECF"/>
+                        <circle cx="20" cy="32" r="3.5" fill="#12AFC0" opacity="0.8"/>
+                        <circle cx="44" cy="32" r="3.5" fill="#17BECF" opacity="0.8"/>
+                        <circle cx="32" cy="40" r="3.5" fill="#12AFC0" opacity="0.8"/>
+                        <line x1="32" y1="24" x2="20" y2="32" stroke="#17BECF" stroke-width="1.5" opacity="0.6"/>
+                        <line x1="32" y1="24" x2="44" y2="32" stroke="#12AFC0" stroke-width="1.5" opacity="0.6"/>
+                        <line x1="20" y1="32" x2="32" y2="40" stroke="#17BECF" stroke-width="1.5" opacity="0.6"/>
+                        <line x1="44" y1="32" x2="32" y2="40" stroke="#12AFC0" stroke-width="1.5" opacity="0.6"/>
+                    </svg>
+                </div>
+                <div class="brand-text">
                     <div class="brand-name">Neuro DataLab</div>
-                    <div class="tagline">Enterprise ML Systems • Data Platforms • Governance</div>
+                    <div class="brand-tagline">Enterprise ML Systems · Data Platforms · Governance</div>
                 </div>
             </div>
 
-            <div>
+            <div class="main-info">
                 <div class="name">Simon Renauld</div>
-                <div class="title">CTO - Data Engineering & Analytics</div>
-                <div class="subtitle">Enterprise ML Systems • Data Platforms • Governance</div>
+                <div class="role">Lead Analytics & Data Engineering Expert</div>
+                <div class="expertise">Production ML · HIPAA/GDPR Compliance · Clinical Intelligence Systems</div>
 
-                <div class="contact-info">
-                    <div class="contact-item">📧 contact@simondatalab.de</div>
-                    <div class="contact-item">🌐 www.simondatalab.de</div>
-                    <div class="contact-item">📍 Ho Chi Minh City, Vietnam</div>
-                    <div class="contact-item">📱 +84 92 318 00 61 (WhatsApp/Zalo)</div>
-                    <div class="contact-item">📞 +1 418 476 9790 (Canada)</div>
+                <div class="contact-grid">
+                    <div class="contact-row">
+                        <div class="contact-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <rect x="3" y="5" width="18" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M3 7l9 6 9-6" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <span>simon@simondatalab.de</span>
+                    </div>
+                    <div class="contact-row">
+                        <div class="contact-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <circle cx="12" cy="12" r="10" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <span>www.simondatalab.de</span>
+                    </div>
+                    <div class="contact-row">
+                        <div class="contact-icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M12 21s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 7.2c0 7.3-8 11.8-8 11.8z" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="12" cy="10" r="3" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <span>Ho Chi Minh City, Vietnam · +84 92 318 00 61</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="qr-section">
-                <div class="qr-code">QR CODE<br>PORTFOLIO</div>
-                <div class="qr-label">Scan for portfolio</div>
+            <div class="qr-container">
+                <div class="qr-wrapper">
+                    <div class="qr-code">
+                        <img src="qr-code-print-300dpi.png" alt="Portfolio QR Code">
+                    </div>
+                </div>
+                <div class="qr-label">SCAN FOR PORTFOLIO</div>
             </div>
         </div>
-        <div class="accent-line"></div>
+        <div class="accent-bar"></div>
     </div>
 
-    <!-- Back of business card -->
+    <!-- Back Card -->
     <div class="business-card card-back">
         <div class="card-content">
-            <div class="back-logo">
-                <div class="logo-icon"></div>
+            <div class="back-brand">
+                <div class="brand-icon">
+                    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="iconGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#12AFC0"/>
+                                <stop offset="100%" stop-color="#17BECF"/>
+                            </linearGradient>
+                        </defs>
+                        <path d="M32 4 L54 16 L54 40 L32 52 L10 40 L10 16 Z" 
+                              stroke="url(#iconGrad2)" stroke-width="3" fill="none"/>
+                        <circle cx="32" cy="24" r="5" fill="#17BECF"/>
+                        <circle cx="20" cy="32" r="3.5" fill="#12AFC0" opacity="0.8"/>
+                        <circle cx="44" cy="32" r="3.5" fill="#17BECF" opacity="0.8"/>
+                        <circle cx="32" cy="40" r="3.5" fill="#12AFC0" opacity="0.8"/>
+                        <line x1="32" y1="24" x2="20" y2="32" stroke="#17BECF" stroke-width="1.5" opacity="0.6"/>
+                        <line x1="32" y1="24" x2="44" y2="32" stroke="#12AFC0" stroke-width="1.5" opacity="0.6"/>
+                        <line x1="20" y1="32" x2="32" y2="40" stroke="#17BECF" stroke-width="1.5" opacity="0.6"/>
+                        <line x1="44" y1="32" x2="32" y2="40" stroke="#12AFC0" stroke-width="1.5" opacity="0.6"/>
+                    </svg>
+                </div>
                 <div class="brand-name">Neuro DataLab</div>
             </div>
-
-            <p class="tagline">
-                Transforming Complex Data into Actionable Intelligence
+            
+            <p class="back-tagline">
+                Research → Production → Impact
             </p>
+
+            <div class="metrics">
+                <div class="metric">HIPAA/GDPR READY</div>
+                <div class="metric">ENTERPRISE ML</div>
+                <div class="metric">REAL-TIME</div>
+            </div>
         </div>
-        <div class="accent-line"></div>
+        <div class="accent-bar"></div>
     </div>
 
-    <!-- Print instructions (only visible on screen) -->
+    <!-- Print Instructions -->
     <div class="instructions">
-        <h3>🖨️ FIXED - Print Instructions</h3>
-        <p><strong>This version fixes PDF display issues!</strong></p>
+        <h3>Print Instructions</h3>
+        <p><strong>For professional printing:</strong></p>
         <ul>
-            <li><strong>Print:</strong> Ctrl+P (Windows) or Cmd+P (Mac)</li>
-            <li><strong>Settings:</strong> "More settings" → Enable "Background graphics"</li>
-            <li><strong>Paper:</strong> Custom size 3.5" × 2" OR Letter paper (will auto-scale)</li>
-            <li><strong>Margins:</strong> None/Minimum</li>
-            <li><strong>Double-sided:</strong> Print front, flip paper, print back</li>
-            <li><strong>QR Code:</strong> Replace placeholder with actual QR sticker</li>
+            <li>Press <code>Ctrl+P</code> (Windows) or <code>Cmd+P</code> (Mac)</li>
+            <li>Enable "Background graphics" in print settings</li>
+            <li>Set paper size to 3.5" × 2" (89mm × 51mm)</li>
+            <li>Use cardstock (200-300gsm) for best results</li>
+            <li>Print double-sided (flip on long edge)</li>
         </ul>
-        <p><strong>💡 This simplified version works with any printer!</strong></p>
+        <p><strong>For print shops:</strong> Use the CMYK PDF versions for professional offset printing.</p>
     </div>
 </body>
 </html>

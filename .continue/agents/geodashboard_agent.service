@@ -1,0 +1,21 @@
+[Unit]
+Description=Geodashboard EPIC Agent
+After=network.target
+
+[Service]
+Type=simple
+User=simon
+Group=simon
+WorkingDirectory=/home/simon/Learning-Management-System-Academy/.continue/agents
+Environment=DURATION_HOURS=24
+Environment=INTERVAL_SECONDS=30
+ExecStart=/usr/bin/env python3 /home/simon/Learning-Management-System-Academy/.continue/agents/geodashboard_epic_agent.py
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+
+# Notes: copy this file to /etc/systemd/system/geodashboard_agent.service and then run:
+# sudo systemctl daemon-reload
+# sudo systemctl enable --now geodashboard_agent.service

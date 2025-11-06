@@ -1,57 +1,152 @@
 {
   "agentNetwork": "Neuro AI Ecosystem",
+  "agentVersion": "2.0.1",
+  "lastUpdated": "2025-11-06T11:15:00Z",
+  
   "models": [
     {
-      "title": "Gemma2 9B (Main)",
+      "title": "Llama 3.2 3B (Main)",
       "provider": "ollama",
-      "model": "gemma2:9b",
-      "apiBase": "http://localhost:11434"
+      "model": "llama3.2:3b",
+      "apiBase": "http://localhost:11434",
+      "contextLength": 8192,
+      "completionOptions": {
+        "temperature": 0.7,
+        "topP": 0.9,
+        "topK": 40,
+        "numPredict": 2048
+      }
     },
     {
-      "title": "Gemma2 9B (Chat)",
+      "title": "Llama 3.2 3B (Chat)",
       "provider": "ollama",
-      "model": "gemma2:9b",
-      "apiBase": "http://localhost:11434"
+      "model": "llama3.2:3b",
+      "apiBase": "http://localhost:11434",
+      "contextLength": 8192,
+      "completionOptions": {
+        "temperature": 0.8,
+        "topP": 0.95
+      }
+    },
+    {
+      "title": "Llama 3.2 3B (Code)",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "apiBase": "http://localhost:11434",
+      "contextLength": 4096,
+      "completionOptions": {
+        "temperature": 0.2,
+        "topP": 0.9
+      }
     }
   ],
+  
   "tabAutocompleteModel": {
-    "title": "Gemma2 9B (Autocomplete)",
+    "title": "Llama 3.2 3B (Autocomplete)",
     "provider": "ollama",
-    "model": "gemma2:9b",
-    "apiBase": "http://localhost:11434"
+    "model": "llama3.2:3b",
+    "apiBase": "http://localhost:11434",
+    "contextLength": 2048,
+    "completionOptions": {
+      "temperature": 0.3,
+      "maxTokens": 100,
+      "stopTokens": ["\n\n", "```"]
+    }
   },
 
   "modelRoles": {
-    "default": "Gemma2 9B (Main)",
-    "chat": "Gemma2 9B (Chat)",
-    "edit": "Gemma2 9B (Main)",
-    "autocomplete": "Gemma2 9B (Autocomplete)",
-    "summarize": "Gemma2 9B (Main)",
-    "apply": "Gemma2 9B (Main)"
+    "default": "Llama 3.2 3B (Main)",
+    "chat": "Llama 3.2 3B (Chat)",
+    "edit": "Llama 3.2 3B (Code)",
+    "autocomplete": "Llama 3.2 3B (Autocomplete)",
+    "summarize": "Llama 3.2 3B (Main)",
+    "apply": "Llama 3.2 3B (Code)"
   },
 
   "communication": {
     "channels": ["unix_socket", "http_loopback", "files"],
     "socketPath": "/run/neuro-agents.sock",
     "httpPort": 5005,
-    "contextPath": "./workspace/agents/context"
+    "contextPath": "./workspace/agents/context",
+    "healthCheck": {
+      "enabled": true,
+      "interval": 60,
+      "timeout": 5
+    }
   },
+  
   "vscodeIntegration": {
     "enableInline": true,
-    "aiTriggerPrefixes": ["# ai:", "// ai:"]
+    "aiTriggerPrefixes": ["# ai:", "// ai:", "<!-- ai:", "/* ai:"],
+    "enableSmartPaste": true,
+    "enableContextMenu": true
   },
+  
   "security": {
     "localOnly": true,
     "requireTls": false,
-    "allowedHosts": ["127.0.0.1", "localhost"]
+    "allowedHosts": ["127.0.0.1", "localhost"],
+    "maxConcurrentRequests": 10,
+    "rateLimitPerMinute": 60
+  },
+
+  "systemIntegration": {
+    "jellyfin": {
+      "enabled": true,
+      "apiBase": "http://136.243.155.166:8096",
+      "apiKey": "f870ddf763334cfba15fb45b091b10a8",
+      "features": {
+        "channelMonitoring": true,
+        "imageCache": true,
+        "logAnalysis": true
+      }
+    },
+    "monitoring": {
+      "enabled": true,
+      "exporterPort": 9100,
+      "metricsPath": "/metrics"
+    }
   },
 
   "experimental": {
     "mcpServers": {
       "ollama-code-assistant": {
         "type": "sse",
-        "url": "http://127.0.0.1:5000/mcp/sse"
+        "url": "http://127.0.0.1:5000/mcp/sse",
+        "retryAttempts": 3,
+        "retryDelay": 1000
+      },
+      "jellyfin-api": {
+        "type": "http",
+        "url": "http://136.243.155.166:8096",
+        "headers": {
+          "X-MediaBrowser-Token": "f870ddf763334cfba15fb45b091b10a8"
+        }
       }
+    },
+    "enableParallelRequests": true,
+    "enableCaching": true,
+    "cacheDir": "./workspace/agents/.cache"
+  },
+
+  "customCommands": [
+    {
+      "name": "jellyfin-health",
+      "description": "Check Jellyfin health and image cache status",
+      "prompt": "Run Jellyfin health diagnostics and analyze image caching issues",
+      "command": "bash scripts/diagnose-jellyfin-images.sh"
+    },
+    {
+      "name": "jellyfin-refresh",
+      "description": "Trigger Jellyfin library refresh",
+      "prompt": "Refresh Jellyfin library metadata and download missing channel images",
+      "command": "bash scripts/jellyfin-api-refresh.sh"
+    },
+    {
+      "name": "channel-monitor",
+      "description": "Test all Jellyfin channels",
+      "prompt": "Test all 311 Jellyfin channels for availability and performance",
+      "command": "python3 scripts/jellyfin-channel-monitor.py --dry-run"
     }
-  }
+  ]
 }

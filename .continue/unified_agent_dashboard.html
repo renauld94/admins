@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Monitoring Dashboard - Simon Data Lab</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Roboto', sans-serif;
+            background: #0a0e27;
+            color: #e4e8f0;
+            padding: 0;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1a1f3a 0%, #0f1320 100%);
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid rgba(78, 128, 253, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+        }
+        
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #e4e8f0;
+            font-size: 2em;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+        
+        .header-subtitle {
+            color: #8b92a8;
+            font-size: 0.95em;
+            margin-top: 8px;
+        }
+        
+        .live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(78, 128, 253, 0.1);
+            border: 1px solid rgba(78, 128, 253, 0.3);
+            border-radius: 20px;
+            font-size: 0.85em;
+            color: #4e80fd;
+        }
+        
+        .status-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+        
+        .stat-card {
+            background: rgba(30, 36, 60, 0.6);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            padding: 24px;
+            border-radius: 10px;
+            border: 1px solid rgba(78, 128, 253, 0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            border-color: rgba(78, 128, 253, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .stat-card .label {
+            font-size: 0.85em;
+            color: #8b92a8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+        
+        .stat-card .value {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #4e80fd;
+            line-height: 1;
+        }
+        
+        .stat-card.success .value {
+            color: #00d4aa;
+        }
+        
+        .stat-card.warning .value {
+            color: #ffa94d;
+        }
+        
+        .stat-card.danger .value {
+            color: #ff6b6b;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .card {
+            background: linear-gradient(135deg, #1a1f3a 0%, #0f1320 100%);
+            border-radius: 12px;
+            padding: 28px;
+            border: 1px solid rgba(78, 128, 253, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            border-color: rgba(78, 128, 253, 0.4);
+        }
+        
+        .card h2 {
+            color: #e4e8f0;
+            margin-bottom: 24px;
+            font-size: 1.25em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(78, 128, 253, 0.15);
+        }
+        
+        .card h2::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: linear-gradient(180deg, #4e80fd 0%, #00d4aa 100%);
+            border-radius: 2px;
+        }
+        
+        .agent-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .agent-item {
+            padding: 16px;
+            background: rgba(30, 36, 60, 0.4);
+            border-radius: 8px;
+            border-left: 3px solid #2d3548;
+            transition: all 0.3s ease;
+            -webkit-backdrop-filter: blur(5px);
+            backdrop-filter: blur(5px);
+        }
+        
+        .agent-item:hover {
+            background: rgba(30, 36, 60, 0.6);
+            border-left-color: #4e80fd;
+        }
+        
+        .agent-item.running {
+            border-left-color: #00d4aa;
+            background: rgba(0, 212, 170, 0.05);
+        }
+        
+        .agent-item.stopped {
+            border-left-color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.05);
+        }
+        
+        .agent-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .agent-name {
+            font-weight: 600;
+            font-size: 1em;
+            color: #e4e8f0;
+        }
+        
+        .agent-status {
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.75em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .status-running {
+            background: rgba(0, 212, 170, 0.15);
+            color: #00d4aa;
+            border: 1px solid rgba(0, 212, 170, 0.3);
+        }
+        
+        .status-stopped {
+            background: rgba(255, 107, 107, 0.15);
+            color: #ff6b6b;
+            border: 1px solid rgba(255, 107, 107, 0.3);
+        }
+        
+        .agent-metrics {
+            display: flex;
+            gap: 20px;
+            font-size: 0.85em;
+            color: #8b92a8;
+        }
+        
+        .agent-metric-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .agent-controls {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        
+        .btn {
+            padding: 6px 14px;
+            border: 1px solid rgba(78, 128, 253, 0.3);
+            background: rgba(78, 128, 253, 0.1);
+            border-radius: 4px;
+            font-size: 0.8em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            color: #4e80fd;
+        }
+        
+        .btn:hover {
+            background: rgba(78, 128, 253, 0.2);
+            border-color: rgba(78, 128, 253, 0.5);
+            transform: translateY(-1px);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn-start {
+            border-color: rgba(0, 212, 170, 0.3);
+            background: rgba(0, 212, 170, 0.1);
+            color: #00d4aa;
+        }
+        
+        .btn-start:hover {
+            background: rgba(0, 212, 170, 0.2);
+            border-color: rgba(0, 212, 170, 0.5);
+        }
+        
+        .btn-stop {
+            border-color: rgba(255, 107, 107, 0.3);
+            background: rgba(255, 107, 107, 0.1);
+            color: #ff6b6b;
+        }
+        
+        .btn-stop:hover {
+            background: rgba(255, 107, 107, 0.2);
+            border-color: rgba(255, 107, 107, 0.5);
+        }
+        
+        .btn-restart {
+            border-color: rgba(255, 164, 77, 0.3);
+            background: rgba(255, 164, 77, 0.1);
+            color: #ffa94d;
+        }
+        
+        .btn-restart:hover {
+            background: rgba(255, 164, 77, 0.2);
+            border-color: rgba(255, 164, 77, 0.5);
+        }
+        
+        .btn-logs {
+            border-color: rgba(78, 128, 253, 0.3);
+            background: rgba(78, 128, 253, 0.1);
+            color: #4e80fd;
+        }
+        
+        .btn-logs:hover {
+            background: rgba(78, 128, 253, 0.2);
+            border-color: rgba(78, 128, 253, 0.5);
+        }
+        
+        .system-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+        
+        .metric-card {
+            padding: 20px;
+            background: rgba(30, 36, 60, 0.4);
+            border-radius: 8px;
+            border: 1px solid rgba(78, 128, 253, 0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .metric-card:hover {
+            border-color: rgba(78, 128, 253, 0.3);
+        }
+        
+        .metric-label {
+            font-size: 0.8em;
+            color: #8b92a8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+        
+        .metric-value {
+            font-size: 2em;
+            font-weight: 700;
+            color: #4e80fd;
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background: rgba(78, 128, 253, 0.15);
+            border-radius: 3px;
+            margin-top: 12px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4e80fd 0%, #00d4aa 100%);
+            transition: width 0.5s ease;
+            border-radius: 3px;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(0.95); }
+        }
+        
+        .live-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #00d4aa;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 10px rgba(0, 212, 170, 0.5);
+        }
+        
+        .last-update {
+            text-align: center;
+            color: #8b92a8;
+            margin-top: 30px;
+            font-size: 0.85em;
+            padding: 16px;
+            background: rgba(30, 36, 60, 0.4);
+            border-radius: 8px;
+            border: 1px solid rgba(78, 128, 253, 0.15);
+        }
+        
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .control-panel {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .control-btn {
+            flex: 1;
+            min-width: 160px;
+            padding: 14px 24px;
+            font-size: 0.95em;
+            font-weight: 600;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(78, 128, 253, 0.15);
+            color: #8b92a8;
+            font-size: 0.85em;
+        }
+        
+        footer a {
+            color: #4e80fd;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        footer a:hover {
+            color: #00d4aa;
+        }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            background: rgba(78, 128, 253, 0.15);
+            border: 1px solid rgba(78, 128, 253, 0.3);
+            border-radius: 4px;
+            font-size: 0.75em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-left: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .status-overview {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .control-panel {
+                flex-direction: column;
+            }
+            
+            .control-btn {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-top">
+                <div>
+                    <h1>Agent Monitoring Dashboard</h1>
+                    <p class="header-subtitle">Real-time Infrastructure Agent Management | Simon Data Lab</p>
+                </div>
+                <div class="live-badge">
+                    <span class="live-indicator"></span>
+                    <span>LIVE</span>
+                </div>
+            </div>
+            <div class="status-overview">
+                <div class="stat-card success">
+                    <div class="label">Running Agents</div>
+                    <div class="value" id="running-count">0</div>
+                </div>
+                <div class="stat-card danger">
+                    <div class="label">Stopped Agents</div>
+                    <div class="value" id="stopped-count">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Total CPU Usage</div>
+                    <div class="value" id="total-cpu">0%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="label">Total Memory</div>
+                    <div class="value" id="total-memory">0 MB</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card full-width">
+            <h2>Master Controls</h2>
+            <div class="control-panel">
+                <button class="btn control-btn btn-start" onclick="startAllAgents()">Start All Agents</button>
+                <button class="btn control-btn btn-stop" onclick="stopAllAgents()">Stop All Agents</button>
+                <button class="btn control-btn btn-restart" onclick="restartAllAgents()">Restart All Agents</button>
+                <button class="btn control-btn btn-logs" onclick="viewAllLogs()">View Aggregated Logs</button>
+            </div>
+        </div>
+        
+        <div class="grid">
+            <div class="card">
+                <h2>Primary Agents</h2>
+                <div class="agent-list" id="primary-agents"></div>
+            </div>
+            
+            <div class="card">
+                <h2>Support Services</h2>
+                <div class="agent-list" id="support-services"></div>
+            </div>
+            
+            <div class="card">
+                <h2>System Resources</h2>
+                <div class="system-metrics" id="system-metrics"></div>
+            </div>
+        </div>
+        
+        <div class="last-update">
+            <span class="live-indicator"></span>
+            Last updated: <span id="last-update">Never</span> | Auto-refresh every 3 seconds
+        </div>
+        
+        <footer>
+            Built with precision | <a href="https://simondatalab.de" target="_blank" rel="noopener noreferrer">Simon Data Lab</a> | Enterprise ML Systems & Data Platforms
+        </footer>
+    </div>
+    
+    <script>
+        // Define all agents
+        const PRIMARY_AGENTS = {
+            'agent-core_dev': 'Core Development Agent',
+            'agent-data_science': 'Data Science Agent',
+            'agent-geo_intel': 'GeoIntelligence Agent',
+            'agent-legal_advisor': 'Legal Advisor Agent',
+            'agent-portfolio': 'Portfolio Management Agent',
+            'agent-systemops': 'System Operations Agent',
+            'agent-web_lms': 'Web/LMS Agent',
+            'vietnamese-epic-enhancement': 'Vietnamese Course Enhancement',
+            'vietnamese-tutor-agent': 'Vietnamese Tutor Agent',
+            'smart-agent': 'Smart Agent',
+            'poll-to-sse': 'SSE Polling Service',
+            'mcp-agent': 'MCP Agent',
+            'ollama-code-assistant': 'Ollama Code Assistant'
+        };
+        
+        const SUPPORT_SERVICES = {
+            'mcp-tunnel': 'MCP SSH Tunnel',
+            'ssh-agent': 'SSH Agent',
+            'health-check': 'Health Check Service'
+        };
+        
+        // Simulated agent data (in production, fetch from API)
+        function generateAgentData() {
+            const agents = {};
+            for (const [id, name] of Object.entries(PRIMARY_AGENTS)) {
+                agents[id] = {
+                    name,
+                    status: Math.random() > 0.3 ? 'running' : 'stopped',
+                    cpu: Math.random() * 30,
+                    memory: Math.floor(Math.random() * 500) + 50,
+                    uptime: Math.random() > 0.5 ? `${Math.floor(Math.random() * 48)}h ${Math.floor(Math.random() * 60)}m` : '-'
+                };
+            }
+            return agents;
+        }
+        
+        // Render agent item
+        function renderAgentItem(id, data) {
+            const statusClass = data.status === 'running' ? 'running' : 'stopped';
+            const statusBadge = data.status === 'running' 
+                ? '<span class="agent-status status-running">RUNNING</span>'
+                : '<span class="agent-status status-stopped">STOPPED</span>';
+            
+            return `
+                <div class="agent-item ${statusClass}">
+                    <div class="agent-header">
+                        <div class="agent-name">${data.name}</div>
+                        ${statusBadge}
+                    </div>
+                    <div class="agent-metrics">
+                        <div class="agent-metric-item">Uptime: ${data.uptime}</div>
+                        <div class="agent-metric-item">CPU: ${data.cpu.toFixed(1)}%</div>
+                        <div class="agent-metric-item">RAM: ${data.memory} MB</div>
+                    </div>
+                    <div class="agent-controls">
+                        <button class="btn btn-start" onclick="startAgent('${id}')">Start</button>
+                        <button class="btn btn-stop" onclick="stopAgent('${id}')">Stop</button>
+                        <button class="btn btn-restart" onclick="restartAgent('${id}')">Restart</button>
+                        <button class="btn btn-logs" onclick="viewLogs('${id}')">Logs</button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Render support service
+        function renderSupportService(id, name, status) {
+            const statusClass = status === 'running' ? 'running' : 'stopped';
+            const statusBadge = status === 'running' 
+                ? '<span class="agent-status status-running">RUNNING</span>'
+                : '<span class="agent-status status-stopped">STOPPED</span>';
+            
+            return `
+                <div class="agent-item ${statusClass}">
+                    <div class="agent-header">
+                        <div class="agent-name">${name}</div>
+                        ${statusBadge}
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Update dashboard
+        function updateDashboard() {
+            const agents = generateAgentData();
+            
+            // Count running/stopped
+            let runningCount = 0;
+            let stoppedCount = 0;
+            let totalCpu = 0;
+            let totalMemory = 0;
+            
+            for (const data of Object.values(agents)) {
+                if (data.status === 'running') {
+                    runningCount++;
+                    totalCpu += data.cpu;
+                    totalMemory += data.memory;
+                } else {
+                    stoppedCount++;
+                }
+            }
+            
+            // Update overview
+            document.getElementById('running-count').textContent = runningCount;
+            document.getElementById('stopped-count').textContent = stoppedCount;
+            document.getElementById('total-cpu').textContent = totalCpu.toFixed(1) + '%';
+            document.getElementById('total-memory').textContent = totalMemory + ' MB';
+            
+            // Render primary agents
+            const primaryContainer = document.getElementById('primary-agents');
+            primaryContainer.innerHTML = '';
+            for (const [id, data] of Object.entries(agents)) {
+                primaryContainer.innerHTML += renderAgentItem(id, data);
+            }
+            
+            // Render support services
+            const supportContainer = document.getElementById('support-services');
+            supportContainer.innerHTML = '';
+            for (const [id, name] of Object.entries(SUPPORT_SERVICES)) {
+                const status = Math.random() > 0.2 ? 'running' : 'stopped';
+                supportContainer.innerHTML += renderSupportService(id, name, status);
+            }
+            
+            // Update system metrics
+            const systemMetrics = document.getElementById('system-metrics');
+            systemMetrics.innerHTML = `
+                <div class="metric-card">
+                    <div class="metric-label">System CPU</div>
+                    <div class="metric-value">${(Math.random() * 40 + 10).toFixed(1)}%</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${Math.random() * 60 + 20}%"></div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">System Memory</div>
+                    <div class="metric-value">${(Math.random() * 40 + 30).toFixed(1)}%</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${Math.random() * 60 + 20}%"></div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Disk Usage</div>
+                    <div class="metric-value">${Math.floor(Math.random() * 30 + 50)}%</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${Math.random() * 60 + 20}%"></div>
+                    </div>
+                </div>
+            `;
+            
+            // Update timestamp
+            document.getElementById('last-update').textContent = new Date().toLocaleTimeString();
+        }
+        
+        // Control functions
+        function startAgent(id) {
+            console.log('Starting agent:', id);
+            alert(`Starting ${PRIMARY_AGENTS[id]}\n\nCommand: systemctl --user start ${id}.service\n\nNote: This is a demo interface. In production, this would execute the command via API.`);
+        }
+        
+        function stopAgent(id) {
+            console.log('Stopping agent:', id);
+            alert(`Stopping ${PRIMARY_AGENTS[id]}\n\nCommand: systemctl --user stop ${id}.service\n\nNote: This is a demo interface. In production, this would execute the command via API.`);
+        }
+        
+        function restartAgent(id) {
+            console.log('Restarting agent:', id);
+            alert(`Restarting ${PRIMARY_AGENTS[id]}\n\nCommand: systemctl --user restart ${id}.service\n\nNote: This is a demo interface. In production, this would execute the command via API.`);
+        }
+        
+        function viewLogs(id) {
+            console.log('Viewing logs for:', id);
+            alert(`Viewing logs for ${PRIMARY_AGENTS[id]}\n\nCommand: journalctl --user -u ${id}.service -f\n\nNote: This is a demo interface. In production, this would open a log viewer modal.`);
+        }
+        
+        function startAllAgents() {
+            alert('Starting all agents\n\nCommand: systemctl --user start agents.target\n\nNote: This is a demo interface. In production, this would execute the command via API.');
+        }
+        
+        function stopAllAgents() {
+            if (confirm('Are you sure you want to stop all agents?')) {
+                alert('Stopping all agents\n\nCommand: systemctl --user stop agents.target\n\nNote: This is a demo interface. In production, this would execute the command via API.');
+            }
+        }
+        
+        function restartAllAgents() {
+            if (confirm('Are you sure you want to restart all agents?')) {
+                alert('Restarting all agents\n\nCommand: systemctl --user restart agents.target\n\nNote: This is a demo interface. In production, this would execute the command via API.');
+            }
+        }
+        
+        function viewAllLogs() {
+            alert('Opening aggregated logs\n\nCommand: journalctl --user -u agents.target -f\n\nNote: This is a demo interface. In production, this would open a log viewer modal with live tail.');
+        }
+        
+        // Auto-update
+        setInterval(updateDashboard, 3000);
+        
+        // Initial load
+        updateDashboard();
+    </script>
+</body>
+</html>

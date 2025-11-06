@@ -1,0 +1,22 @@
+# Browser Console Fix for Jellyfin ScrollBehavior Error
+# ======================================================
+# 
+# If you see the error in browser console:
+# "TypeError: Failed to execute 'scrollTo' on 'Element'"
+#
+# TEMPORARY FIX - Paste this in browser console (F12):
+# ----------------------------------------------------
+
+(function(){const e=Element.prototype.scrollTo;Element.prototype.scrollTo=function(t){typeof t=="object"&&t!==null&&(t.behavior===null&&(t.behavior="smooth"),["smooth","auto","instant"].includes(t.behavior)||(t.behavior="smooth"));return e.call(this,t)};const o=window.scrollTo;window.scrollTo=function(t){typeof t=="object"&&t!==null&&(t.behavior===null&&(t.behavior="smooth"),["smooth","auto","instant"].includes(t.behavior)||(t.behavior="smooth"));return o.call(this,t)};console.log("✅ Jellyfin ScrollBehavior fix applied")})();
+
+# This needs to be run each time you open Jellyfin in browser
+# Or install it as a browser extension/userscript
+
+# PERMANENT FIX - Use Tampermonkey/Greasemonkey:
+# ----------------------------------------------
+# 1. Install Tampermonkey browser extension
+# 2. Create new script
+# 3. Set to run on: https://jellyfin.simondatalab.de/*
+# 4. Paste the fix-scroll-behavior.js content
+# 5. Save and enable
+

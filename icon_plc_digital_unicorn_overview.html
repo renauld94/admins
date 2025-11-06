@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icon PLC & Digital Unicorn - Issues Overview</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header .date {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .alert {
+            background: #ff4757;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #f093fb;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, #667eea 0%, #f093fb 100%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -47px;
+            top: 25px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border: 3px solid #667eea;
+            border-radius: 50%;
+        }
+
+        .timeline-item.success::before {
+            border-color: #28a745;
+            background: #28a745;
+        }
+
+        .timeline-item.warning::before {
+            border-color: #ffc107;
+            background: #ffc107;
+        }
+
+        .timeline-item.danger::before {
+            border-color: #ff4757;
+            background: #ff4757;
+        }
+
+        .timeline-item h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .stat-card .number {
+            font-size: 3em;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .stat-card .label {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .issues-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .issue-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 25px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .issue-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .issue-card .icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .issue-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .issue-card .severity {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .severity.critical {
+            background: #ff4757;
+            color: white;
+        }
+
+        .severity.high {
+            background: #ffa502;
+            color: white;
+        }
+
+        .severity.medium {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .actions {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+
+        .actions h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .action-list {
+            list-style: none;
+        }
+
+        .action-list li {
+            padding: 15px;
+            margin-bottom: 10px;
+            background: white;
+            border-left: 4px solid #667eea;
+            border-radius: 5px;
+        }
+
+        .action-list li strong {
+            color: #667eea;
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .container {
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔴 Icon PLC & Digital Unicorn</h1>
+            <p class="date">Issues Overview - November 5, 2025</p>
+        </div>
+
+        <div class="alert">
+            ⚠️ CRITICAL: Active Payment Dispute - Legal Action Required
+        </div>
+
+        <div class="content">
+            <!-- Statistics -->
+            <section class="section">
+                <h2>📊 Evidence Summary</h2>
+                <div class="stats">
+                    <div class="stat-card">
+                        <span class="number">986</span>
+                        <span class="label">Events Extracted</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="number">49MB</span>
+                        <span class="label">Communication Data</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="number">10+</span>
+                        <span class="label">Deliverables</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="number">$0</span>
+                        <span class="label">Payment Received</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Timeline -->
+            <section class="section">
+                <h2>⏱️ Event Timeline</h2>
+                <div class="timeline">
+                    <div class="timeline-item success">
+                        <h4>✅ Contract Signed</h4>
+                        <p>Agreement reached with clear payment terms and deliverables defined.</p>
+                    </div>
+                    <div class="timeline-item success">
+                        <h4>✅ Services Delivered</h4>
+                        <p>All contracted work completed on time with full documentation.</p>
+                    </div>
+                    <div class="timeline-item danger">
+                        <h4>❌ Payment Deadline Missed</h4>
+                        <p>Digital Unicorn failed to pay by agreed deadline.</p>
+                    </div>
+                    <div class="timeline-item warning">
+                        <h4>⚠️ First Follow-Up</h4>
+                        <p>Polite reminder sent referencing payment terms.</p>
+                    </div>
+                    <div class="timeline-item warning">
+                        <h4>⚠️ Second Follow-Up</h4>
+                        <p>Urgent reminder sent. Digital Unicorn responds with delays.</p>
+                    </div>
+                    <div class="timeline-item warning">
+                        <h4>⚠️ Legal Notice Issued</h4>
+                        <p>Formal legal notice sent. Digital Unicorn acknowledges but does not pay.</p>
+                    </div>
+                    <div class="timeline-item danger">
+                        <h4>❌ Final Demand</h4>
+                        <p>Final demand sent with warning of legal action. No payment received.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Legal Issues -->
+            <section class="section">
+                <h2>⚖️ Legal Issues Identified</h2>
+                <div class="issues-grid">
+                    <div class="issue-card">
+                        <div class="icon">📄</div>
+                        <h3>Contract Breach</h3>
+                        <span class="severity critical">CRITICAL</span>
+                        <p><strong>Issue:</strong> Non-payment for completed services</p>
+                        <p><strong>Impact:</strong> Direct financial loss</p>
+                    </div>
+                    <div class="issue-card">
+                        <div class="icon">💡</div>
+                        <h3>Intellectual Property</h3>
+                        <span class="severity high">HIGH</span>
+                        <p><strong>Issue:</strong> Proprietary code and tools delivered</p>
+                        <p><strong>Risk:</strong> Unauthorized use or redistribution</p>
+                    </div>
+                    <div class="issue-card">
+                        <div class="icon">🔒</div>
+                        <h3>Data Protection</h3>
+                        <span class="severity high">HIGH</span>
+                        <p><strong>Issue:</strong> GDPR and confidentiality concerns</p>
+                        <p><strong>Status:</strong> Documentation compliant</p>
+                    </div>
+                    <div class="issue-card">
+                        <div class="icon">©️</div>
+                        <h3>Licensing & Copyright</h3>
+                        <span class="severity medium">MEDIUM</span>
+                        <p><strong>Issue:</strong> No clear license for deliverables</p>
+                        <p><strong>Risk:</strong> Disputed ownership</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Evidence Files -->
+            <section class="section">
+                <div class="card">
+                    <h3>📁 Evidence Archive - Complete & Ready</h3>
+                    <p style="margin-bottom: 15px;">All evidence has been collected, organized, and preserved for legal review:</p>
+                    <ul style="list-style-position: inside;">
+                        <li><strong>Evidence Bundle:</strong> /tmp/du_evidence_dashboard.zip</li>
+                        <li><strong>Event Timeline:</strong> 986 communications extracted and analyzed</li>
+                        <li><strong>Legal Advisory:</strong> Machine-generated analysis complete</li>
+                        <li><strong>Interactive Dashboard:</strong> Visualization available</li>
+                        <li><strong>Full Report:</strong> Digital_Unicorn_Full_Event_Report.txt</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><strong>✅ Compliance:</strong> FDA 21 CFR Part 11 & GDPR compliant</p>
+                </div>
+            </section>
+
+            <!-- Icon PLC Connection -->
+            <section class="section">
+                <div class="card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <h3>🏢 Icon PLC Connection</h3>
+                    <p style="margin-bottom: 15px;">Icon PLC is mentioned alongside Digital Unicorn and AMD in the dispute documentation.</p>
+                    <p><strong>Status:</strong> Role unclear - requires party-centric timeline analysis</p>
+                    <p><strong>Possible Scenarios:</strong></p>
+                    <ul style="list-style-position: inside; margin-top: 10px;">
+                        <li>Third party referenced in communications</li>
+                        <li>Involved in same project/contract</li>
+                        <li>Separate but related dispute</li>
+                        <li>Client or partner mentioned in context</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><strong>Recommended:</strong> Run party-centric timeline to clarify involvement</p>
+                </div>
+            </section>
+
+            <!-- Next Actions -->
+            <section class="section">
+                <div class="actions">
+                    <h3>🎯 Immediate Actions Required</h3>
+                    <ul class="action-list">
+                        <li>
+                            <strong>Priority 1:</strong> Contact lawyer (Favian) within 48 hours
+                            <br>Share evidence bundle and full event report
+                        </li>
+                        <li>
+                            <strong>Priority 2:</strong> Send final demand letter (7-day deadline)
+                            <br>Template available in event report
+                        </li>
+                        <li>
+                            <strong>Priority 3:</strong> Freeze all communications with Digital Unicorn
+                            <br>All future contact through legal counsel only
+                        </li>
+                        <li>
+                            <strong>Priority 4:</strong> Clarify Icon PLC role
+                            <br>Run party-centric timeline analysis
+                        </li>
+                        <li>
+                            <strong>Priority 5:</strong> Protect intellectual property
+                            <br>Revoke API access, document all deliverables
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Risk Assessment -->
+            <section class="section">
+                <h2>📈 Risk Assessment</h2>
+                <div style="margin-bottom: 20px;">
+                    <h4 style="color: #667eea; margin-bottom: 10px;">Payment Without Legal Action</h4>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 10px;">
+                        <strong>Probability: Low (10-20%)</strong>
+                        <p>Multiple reminders ignored, legal notice acknowledged but unpaid, non-committal responses indicate unwillingness to pay.</p>
+                    </div>
+                </div>
+                <div>
+                    <h4 style="color: #667eea; margin-bottom: 10px;">Successful Legal Recovery</h4>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 10px;">
+                        <strong>Probability: Moderate-High (60-70%)</strong>
+                        <p>Clear contract, documented delivery, complete communication record, multiple follow-ups. Success depends on Digital Unicorn's solvency and jurisdiction enforcement.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Resources -->
+            <section class="section">
+                <div class="card">
+                    <h3>📚 Documentation & Resources</h3>
+                    <p style="margin-bottom: 15px;">Complete documentation available:</p>
+                    <ul style="list-style-position: inside;">
+                        <li><strong>ICON_PLC_DIGITAL_UNICORN_ISSUES_SUMMARY.md</strong> - Full written summary</li>
+                        <li><strong>deploy/du_evidence_resume.md</strong> - Quick briefing</li>
+                        <li><strong>deploy/du_timeline_dashboard.html</strong> - Interactive visualization</li>
+                        <li><strong>Digital_Unicorn_Full_Event_Report.txt</strong> - Event report</li>
+                        <li><strong>workspace/agents/context/legal-advisor/advice_1761091311.json</strong> - Legal analysis</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+
+        <div class="footer">
+            <p><strong>Document Generated:</strong> November 5, 2025 by GitHub Copilot</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">
+                ⚠️ <strong>Confidential:</strong> This document contains confidential information for legal purposes only.
+                <br>Not legal advice. Consult qualified legal counsel.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

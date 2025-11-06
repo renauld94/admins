@@ -1179,7 +1179,19 @@
         
         // Control flag - enable EPIC HERO visualization in #hero-visualization div
         // Set to false to prevent automatic loading (safe default for mobile/battery)
-        window.__ALLOW_NEURAL_AUTOLOAD__ = false;
+    window.__ALLOW_NEURAL_AUTOLOAD__ = true;
+        // URL override: add ?viz=on or ?viz=off to force behavior for debugging
+        try {
+            const q = new URLSearchParams(window.location.search);
+            const viz = (q.get('viz') || '').toLowerCase();
+            if (viz === 'on') {
+                console.log('[NEURAL GEOSERVER] URL override: forcing autoload ON');
+                window.__ALLOW_NEURAL_AUTOLOAD__ = true;
+            } else if (viz === 'off') {
+                console.log('[NEURAL GEOSERVER] URL override: forcing autoload OFF');
+                window.__ALLOW_NEURAL_AUTOLOAD__ = false;
+            }
+        } catch (e) { /* noop */ }
 
         // Listen for THREE.js ready event and start EPIC visualization in hero section
         window.addEventListener('threeJsReady', () => {
@@ -1198,7 +1210,10 @@
             }, 200);
         });
         
-        function loadNeuralVisualization() {
+    // Expose manual starter for console/manual triggers
+    window.startHeroViz = function startHeroViz() { loadNeuralVisualization(); };
+
+    function loadNeuralVisualization() {
             // Avoid loading heavy visualizations on small/mobile viewports.
             if (window.__IS_MOBILE_PORTFOLIO__) {
                 console.log('[NEURAL GEOSERVER] Mobile viewport detected — loading simple fallback visualization instead of heavy assets.');

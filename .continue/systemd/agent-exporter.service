@@ -1,0 +1,16 @@
+[Unit]
+Description=Agent Monitoring Prometheus Exporter
+Documentation=https://simondatalab.de
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /home/simon/Learning-Management-System-Academy/.continue/scripts/agent_exporter.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=agent-exporter
+
+[Install]
+WantedBy=multi-user.target

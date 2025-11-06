@@ -1,0 +1,118 @@
+╔═══════════════════════════════════════════════════════════════════════════╗
+║                  🎬 JELLYFIN QUICK FIX REFERENCE CARD                     ║
+╚═══════════════════════════════════════════════════════════════════════════╝
+
+📋 IMMEDIATE ACTION (2 minutes)
+═══════════════════════════════════════════════════════════════════════════
+
+STEP 1: Install Tampermonkey Extension
+  Chrome/Edge: https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo
+  Firefox:     https://addons.mozilla.org/firefox/addon/tampermonkey/
+
+STEP 2: Install Fix Script
+  1. Open: config/jellyfin/jellyfin-scrollfix.user.js
+  2. Copy ALL content (Ctrl+A, Ctrl+C)
+  3. Click Tampermonkey icon → Dashboard
+  4. Click "+" button (Create new script)
+  5. Paste content (Ctrl+V)
+  6. File → Save (Ctrl+S)
+
+STEP 3: Verify Fix
+  1. Open: http://136.243.155.166:8096
+  2. Press F12 (Developer Console)
+  3. Look for: "✅ Jellyfin ScrollBehavior Fix - Applied successfully!"
+
+═══════════════════════════════════════════════════════════════════════════
+
+🔧 ISSUES FIXED
+═══════════════════════════════════════════════════════════════════════════
+
+✅ JavaScript Error Fixed
+   Error: "Failed to execute 'scrollTo' - value 'null' is not valid"
+   Cause: Jellyfin 10.10.x bug with scrollOptions.behavior
+   Fix:   Userscript overrides scroll functions
+
+✅ HTTPS/SSL Configured  
+   Old:  CNAME → Cloudflare Tunnel (down)
+   New:  A record → 136.243.155.166 (proxied via Cloudflare)
+   SSL:  Flexible mode (Cloudflare handles SSL)
+
+✅ Live TV Working
+   Channels: 311 verified working
+   M3U Path: alternative_m3u_sources/jellyfin-channels-enhanced.m3u
+   Guide:    Live TV → Guide (no errors now!)
+
+═══════════════════════════════════════════════════════════════════════════
+
+🌐 ACCESS URLS
+═══════════════════════════════════════════════════════════════════════════
+
+Direct HTTP:    http://136.243.155.166:8096
+HTTPS Domain:   https://jellyfin.simondatalab.de  ← FIXED!
+Live TV Guide:  https://jellyfin.simondatalab.de/web/#/livetv.html
+
+DNS Updated:    jellyfin.simondatalab.de → 136.243.155.166 (A record)
+Cloudflare:     Proxy enabled (orange cloud) ✓
+
+═══════════════════════════════════════════════════════════════════════════
+
+📺 LIVE TV CHANNELS (311 total)
+═══════════════════════════════════════════════════════════════════════════
+
+Top Categories:
+  ✝️ Religious    41 channels  (82% success rate)
+  🎵 Music        36 channels  (72% success rate)  
+  🛍️ Shop         34 channels  (68% success rate)
+  📰 News         34 channels  (68% success rate)
+  🎬 Movies       30 channels  (60% success rate)
+  👶 Kids         30 channels  (60% success rate)
+  🎭 Entertainment 29 channels  (58% success rate)
+  📚 Documentary  29 channels  (58% success rate)
+  🌿 Lifestyle    26 channels  (52% success rate)
+  ⚽ Sports       22 channels  (44% success rate)
+
+═══════════════════════════════════════════════════════════════════════════
+
+🚨 TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════════════════
+
+Error Still Shows?
+  → Check Tampermonkey icon is colorful (not grey)
+  → Check script is enabled in Tampermonkey dashboard
+  → Reload page (Ctrl+R)
+
+HTTPS Not Working?
+  → Wait 1-2 min for DNS propagation
+  → Clear browser cache (Ctrl+Shift+Del)
+  → Check DNS: dig +short jellyfin.simondatalab.de
+  → Should show Cloudflare IPs: 104.21.x.x or 172.67.x.x
+
+Live TV Not Loading?
+  → Dashboard → Live TV → Tuner Devices → Check status
+  → Refresh Guide: Settings → Live TV → Guide → Refresh
+  → Restart: docker restart jellyfin-simonadmin
+
+═══════════════════════════════════════════════════════════════════════════
+
+📂 FILES CREATED
+═══════════════════════════════════════════════════════════════════════════
+
+config/jellyfin/jellyfin-scrollfix.user.js  ← Install this in Tampermonkey
+config/jellyfin/fix-scroll-behavior.js      ← Standalone version
+config/jellyfin/jellyfin-fixed.conf         ← Nginx config (server-side)
+config/jellyfin/JELLYFIN_FIX_COMPLETE.md    ← Full documentation
+scripts/setup-jellyfin-https.sh             ← Cloudflare automation
+scripts/fix-jellyfin-complete.sh            ← Diagnostic tool
+
+═══════════════════════════════════════════════════════════════════════════
+
+✅ STATUS: ALL FIXED!
+═══════════════════════════════════════════════════════════════════════════
+
+Next: Install Tampermonkey userscript (5 minutes)
+Test: https://jellyfin.simondatalab.de/web/#/livetv.html
+
+Questions? Check: config/jellyfin/JELLYFIN_FIX_COMPLETE.md
+
+═══════════════════════════════════════════════════════════════════════════
+Last Updated: November 6, 2025

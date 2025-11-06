@@ -1179,7 +1179,7 @@
         }
         .open-prod-btn:hover { transform: translateY(-3px); }
         
-        @media (max-width: 768px) {
+    @media (max-width: 768px) {
             h1 {
                 font-size: 2.5em;
             }
@@ -1205,10 +1205,82 @@
                 padding: 24px;
             }
         }
+
+        /* Full-screen "minimal" mode when ?full=1 is present */
+        body.full-mode {
+            padding: 0;
+            background: #05060a;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        body.full-mode .wrapper { max-width: none; padding: 10px 12px; }
+        body.full-mode .header,
+        body.full-mode .footer,
+        body.full-mode .info-grid,
+        body.full-mode .capabilities-section,
+        body.full-mode .footer-content { display: none !important; }
+
+        /* Expand the diagram fully in full-mode */
+        body.full-mode .diagram-container {
+            margin: 0;
+            padding: 18px;
+            border-radius: 0;
+            height: 100vh;
+            max-height: 100vh;
+            overflow: hidden;
+        }
+
+        body.full-mode .cytoscape-container {
+            height: calc(100vh - 120px);
+            border-radius: 0;
+            margin: 0;
+        }
+
+        /* Keep controls visible and compact */
+        body.full-mode .zoom-controls { right: 18px; bottom: 18px; padding: 8px; }
+        body.full-mode .action-buttons { top: 18px; right: 18px; }
+
+        /* Focus and accessibility improvements */
+        .action-btn:focus, .zoom-btn:focus, .badge:focus { outline: 3px solid rgba(0,212,255,0.14); outline-offset: 2px; }
+
+        /* Shortcuts toast */
+        .shortcuts-toast {
+            position: fixed;
+            right: 20px;
+            bottom: 90px;
+            z-index: 3000;
+            background: linear-gradient(135deg, rgba(5,8,15,0.96), rgba(10,14,26,0.96));
+            border: 1px solid rgba(0,212,255,0.14);
+            padding: 14px 16px;
+            border-radius: 12px;
+            color: #dfefff;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.6), 0 0 18px rgba(0,212,255,0.06) inset;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            min-width: 260px;
+            max-width: 420px;
+            font-size: 0.95em;
+        }
+        .shortcuts-toast .actions { margin-left: auto; display:flex; gap:8px; }
+        .shortcuts-toast button { background: rgba(0,212,255,0.06); border: 1px solid rgba(0,212,255,0.12); color: #bfeaff; padding:6px 8px; border-radius:8px; cursor:pointer; }
+        .shortcuts-toast .kbd { background: rgba(255,255,255,0.04); padding:4px 6px; border-radius:6px; font-weight:700; color:#e6f7ff; margin-left:6px; }
+
     </style>
 </head>
 <body>
     <div class="wrapper">
+        <!-- Shortcuts toast (one-time) -->
+        <div id="shortcutsToast" class="shortcuts-toast" role="dialog" aria-live="polite" aria-label="Keyboard shortcuts" style="display:none">
+            <div class="toast-body">
+                Shortcuts: <span class="kbd">F</span> Full • <span class="kbd">Ctrl+</span><span class="kbd">+</span> Zoom In • <span class="kbd">Ctrl+</span><span class="kbd">-</span> Zoom Out • <span class="kbd">Ctrl+0</span> Reset
+            </div>
+            <div class="actions">
+                <button id="dismissShortcuts" aria-label="Dismiss shortcuts">Got it</button>
+                <button id="showShortcutsAgain" aria-label="Show shortcuts again" title="Show again" style="display:none">Show</button>
+            </div>
+        </div>
         <div class="header">
             <div class="header-glow"></div>
             <h1>Enterprise Data Platform</h1>
@@ -1257,9 +1329,10 @@
             <div class="diagram-zoom-wrapper" id="diagramZoomWrapper">
             <div id="cy" class="cytoscape-container"></div>
             <div class="action-buttons">
-                <button id="openProdBtn" class="action-btn prod-btn" title="Open infrastructure in production">Prod ↗</button>
-                <button id="exportBtn" class="action-btn export-btn" title="Export diagram as PNG">Export PNG</button>
-                <a href="https://www.simondatalab.de/infrastructure-diagram.html?full=1" target="_blank" rel="noopener noreferrer" class="btn-ghost action-btn" title="Open full infrastructure diagram">Open full</a>
+                <button id="openProdBtn" class="action-btn prod-btn" title="Open infrastructure in production" aria-label="Open infrastructure in production">Prod ↗</button>
+                <button id="exportBtn" class="action-btn export-btn" title="Export diagram as PNG" aria-label="Export diagram as PNG">Export PNG</button>
+                <button id="fullModeBtn" class="action-btn export-btn" title="Toggle full-screen diagram view" aria-label="Toggle full-screen diagram view">Full</button>
+                <a href="https://www.simondatalab.de/infrastructure-diagram.html?full=1" target="_blank" rel="noopener noreferrer" class="btn-ghost action-btn" title="Open full infrastructure diagram" aria-label="Open full infrastructure diagram">Open full</a>
             </div>
             <!-- Cytoscape and layout libs -->
             <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
@@ -1267,10 +1340,21 @@
             <script src="https://unpkg.com/cytoscape-dagre/cytoscape-dagre.js"></script>
             <script>
                 document.addEventListener('DOMContentLoaded', () => {
-                    // Ensure extension is registered
-                    if (typeof cytoscape !== 'undefined' && typeof cytoscapeDagre !== 'undefined') {
-                        cytoscape.use(cytoscapeDagre);
-                    }
+                        // If URL contains full=1 or full=true, enable compact full-mode before initialization
+                        try {
+                            const params = new URLSearchParams(window.location.search);
+                            const fullMode = params.get('full') === '1' || params.get('full') === 'true';
+                            if (fullMode) {
+                                document.body.classList.add('full-mode');
+                            }
+                        } catch (e) {
+                            // ignore URL parsing errors in unusual environments
+                        }
+
+                        // Ensure extension is registered
+                        if (typeof cytoscape !== 'undefined' && typeof cytoscapeDagre !== 'undefined') {
+                            cytoscape.use(cytoscapeDagre);
+                        }
 
                     const elements = [
                         // Layers (parents)
@@ -1520,7 +1604,7 @@
                     });
 
                     // Fit and enable smooth interactions
-                    cy.ready(() => { cy.fit(50); cy.minZoom(0.5); cy.maxZoom(2.5); });
+                    cy.ready(() => { try { cy.resize(); cy.fit(cy.elements(), 50); } catch(e) { try { cy.fit(50); } catch(e2){} } cy.minZoom(0.5); cy.maxZoom(2.5); });
 
                     // Make nodes clickable to highlight neighbors
                     cy.on('tap', 'node', (evt) => {
@@ -1587,14 +1671,85 @@
                                     a.download = 'infrastructure-diagram.png';
                                     document.body.appendChild(a);
                                     a.click();
-                                    a.remove();
-                                } catch (err) {
-                                    console.error('Export failed', err);
-                                    alert('Export failed: ' + (err && err.message ? err.message : 'unknown'));
+                                        a.remove();
+                                    } catch (err) {
+                                        console.error('Export failed', err);
+                                        alert('Export failed: ' + (err && err.message ? err.message : 'unknown'));
+                                    }
+                                });
+                            }
+
+                            // Debounce helper
+                            function debounce(fn, wait) {
+                                let t = null;
+                                return function(...args) {
+                                    clearTimeout(t);
+                                    t = setTimeout(() => fn.apply(this, args), wait);
+                                };
+                            }
+
+                            // Full-mode toggle (no reload) and programmatic fit/resize
+                            const fullModeBtn = document.getElementById('fullModeBtn');
+                            const diagramContainerEl = document.querySelector('.diagram-container');
+
+                            function safeResizeAndFit(pad = 40) {
+                                try { cy.resize(); cy.fit(cy.elements(), pad); } catch (e) { try { cy.fit(pad); } catch (e2) { /* ignore */ } }
+                            }
+
+                            if (fullModeBtn) {
+                                fullModeBtn.addEventListener('click', () => {
+                                    const entering = document.body.classList.toggle('full-mode');
+                                    // update URL without reload
+                                    try {
+                                        const u = new URL(window.location.href);
+                                        if (entering) u.searchParams.set('full', '1'); else u.searchParams.delete('full');
+                                        history.replaceState({}, '', u.toString());
+                                    } catch (err) { /* ignore */ }
+
+                                    // allow CSS transitions to settle
+                                    setTimeout(() => safeResizeAndFit(40), 120);
+                                });
+                            }
+
+                            // ResizeObserver to keep Cytoscape responsive
+                            if (typeof ResizeObserver !== 'undefined' && diagramContainerEl) {
+                                const ro = new ResizeObserver(debounce(() => {
+                                    safeResizeAndFit(40);
+                                }, 120));
+                                ro.observe(diagramContainerEl);
+                                const wrapperEl = document.querySelector('.wrapper');
+                                if (wrapperEl) ro.observe(wrapperEl);
+                            }
+
+                            // Keyboard shortcuts: Ctrl/Cmd + = / - / 0 for zoom, F to toggle full-mode
+                            document.addEventListener('keydown', (e) => {
+                                // avoid interfering with inputs
+                                const tag = (document.activeElement && document.activeElement.tagName) || '';
+                                if (tag === 'INPUT' || tag === 'TEXTAREA' || document.activeElement && document.activeElement.isContentEditable) return;
+
+                                if (e.key === 'f' || e.key === 'F') {
+                                    if (fullModeBtn) fullModeBtn.click();
+                                    return;
+                                }
+
+                                const meta = e.ctrlKey || e.metaKey;
+                                if (!meta) return;
+
+                                if (e.key === '=' || e.key === '+') {
+                                    e.preventDefault();
+                                    if (currentZoom < maxZoom) { currentZoom = Math.min(currentZoom + zoomStep, maxZoom); updateZoom(); }
+                                } else if (e.key === '-') {
+                                    e.preventDefault();
+                                    if (currentZoom > minZoom) { currentZoom = Math.max(currentZoom - zoomStep, minZoom); updateZoom(); }
+                                } else if (e.key === '0') {
+                                    e.preventDefault();
+                                    currentZoom = 1; updateZoom();
                                 }
                             });
-                        }
-                });
+
+                            // Do a small delayed fit after everything settles
+                            setTimeout(() => safeResizeAndFit(40), 220);
+                    });
             </script>
             </div>
             </div>
@@ -1602,10 +1757,10 @@
         
         <!-- Zoom Controls -->
         <div class="zoom-controls">
-            <button class="zoom-btn" id="zoomIn" title="Zoom In">+</button>
-            <div class="zoom-level" id="zoomLevel">100%</div>
-            <button class="zoom-btn" id="zoomOut" title="Zoom Out">−</button>
-            <button class="zoom-btn zoom-reset-btn" id="zoomReset" title="Reset Zoom">↺</button>
+            <button class="zoom-btn" id="zoomIn" title="Zoom In" aria-label="Zoom in">+</button>
+            <div class="zoom-level" id="zoomLevel" role="status" aria-live="polite">100%</div>
+            <button class="zoom-btn" id="zoomOut" title="Zoom Out" aria-label="Zoom out">−</button>
+            <button class="zoom-btn zoom-reset-btn" id="zoomReset" title="Reset Zoom" aria-label="Reset zoom">↺</button>
         </div>
 
         <div class="info-grid">
@@ -2118,8 +2273,8 @@
         const minZoom = 0.5;
         const maxZoom = 2.5;
         
-        const diagramWrapper = document.getElementById('diagramZoomWrapper');
-        const zoomLevel = document.getElementById('zoomLevel');
+    const diagramWrapper = document.getElementById('diagramZoomWrapper');
+    const zoomLevel = document.getElementById('zoomLevel');
         const zoomInBtn = document.getElementById('zoomIn');
         const zoomOutBtn = document.getElementById('zoomOut');
         const zoomResetBtn = document.getElementById('zoomReset');
@@ -2155,6 +2310,9 @@
                 updateZoom();
             });
         }
+
+        // Ensure the initial zoom label is correct on load
+        updateZoom();
         
         // Mouse wheel zoom (optional)
         if (diagramWrapper) {
@@ -2170,6 +2328,50 @@
                 }, { passive: false });
             }
         }
+</script>
+
+    <script>
+        // Shortcuts toast behavior: show once per user (localStorage)
+        (function() {
+            try {
+                const key = 'diagram_shortcuts_seen_v1';
+                const toast = document.getElementById('shortcutsToast');
+                const dismiss = document.getElementById('dismissShortcuts');
+                const showAgain = document.getElementById('showShortcutsAgain');
+                if (!toast) return;
+
+                function showToast() {
+                    toast.style.display = 'flex';
+                    // auto-hide after 8s
+                    setTimeout(() => { try { toast.style.opacity = '0'; setTimeout(() => toast.style.display = 'none', 420); } catch(e){} }, 8000);
+                }
+
+                // only show if not seen
+                const seen = (window.localStorage && localStorage.getItem && localStorage.getItem(key));
+                if (!seen) {
+                    // small delay so it doesn't clash with initial animations
+                    setTimeout(() => showToast(), 900);
+                } else {
+                    // allow the 'show again' small button to be visible in the action area
+                    if (showAgain) showAgain.style.display = 'inline-block';
+                }
+
+                if (dismiss) {
+                    dismiss.addEventListener('click', () => {
+                        try { localStorage.setItem(key, '1'); } catch (e) {}
+                        try { toast.style.display = 'none'; } catch (e) {}
+                        if (showAgain) showAgain.style.display = 'inline-block';
+                    });
+                }
+
+                if (showAgain) {
+                    showAgain.addEventListener('click', () => {
+                        try { toast.style.display = 'flex'; } catch (e) {}
+                        // do not overwrite seen flag
+                    });
+                }
+            } catch (e) { console.warn('shortcuts toast init failed', e); }
+        })();
     </script>
 </body>
 </html>

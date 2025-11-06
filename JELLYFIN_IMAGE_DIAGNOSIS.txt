@@ -1,0 +1,311 @@
+╔══════════════════════════════════════════════════════════════════════════╗
+║                                                                          ║
+║   🔍 JELLYFIN IMAGE ISSUE - ROOT CAUSE ANALYSIS                         ║
+║   ═══════════════════════════════════════════════                       ║
+║                                                                          ║
+║   Date: November 6, 2025 11:05 AM                                       ║
+║   Analyzed: log_20251106.log (1.8 MB)                                   ║
+║                                                                          ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ SYSTEM STATUS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Server Information:
+  ✅ Jellyfin Version: 10.10.7
+  ✅ Server Name: 92a7a8ae540f
+  ✅ API Key: VALID (f870ddf7...091b10a8)
+  ✅ External URL: https://jellyfin.simondatalab.de
+  ✅ Internal IP: 136.243.155.166:8096
+
+Live TV Status:
+  ✅ Total Channels: 2,340 channels in Jellyfin database
+  ✅ M3U Channels: 311 channels in our enhanced M3U
+  ✅ Working Channels: 286 (92%) tested and functional
+  ✅ Channels with Logos: 311 (100%) - all have tvg-logo metadata
+
+Recent Activity:
+  ✅ User connections: simonadmin active from Chrome, Smart TV, Pixel 7 Pro
+  ✅ Last activity: 2025-11-06 04:13 AM
+  ✅ No authentication errors
+  ✅ FFmpeg transcoding working (multiple successful streams)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+❌ ROOT CAUSE: IMAGE 500 ERRORS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Error Pattern in Logs:
+  [ERR] Jellyfin.Api.Middleware.ExceptionMiddleware: 
+  Error processing request. URL "GET" "/Items/.../Images/Primary"
+
+Total Image Errors Found: 50+ in recent logs
+
+Error Type Breakdown:
+  
+  1. 🕐 TIMEOUT ERRORS (76% - 38 occurrences)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     Error: "The request was canceled due to the configured 
+            HttpClient.Timeout of 100 seconds elapsing"
+     
+     What's happening:
+       • Jellyfin tries to fetch images from external URLs (tvg-logo)
+       • External servers (imgur.com, wikimedia.org, etc.) respond slowly
+       • Request takes >100 seconds → timeout → returns HTTP 500 to client
+       • Browser sees 500 Internal Server Error for image
+     
+     Example URLs that timeout:
+       - https://upload.wikimedia.org/...
+       - https://i.imgur.com/...
+       - Various IPTV provider logo CDNs
+  
+  2. 🔌 SOCKET/NETWORK ERRORS (24% - 12 occurrences)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+     Error: "System.Net.Sockets.SocketException (11): 
+            Resource temporarily unavailable (upload.wikimedia.org:443)"
+     
+     What's happening:
+       • Too many concurrent connections to external image hosts
+       • Network resources exhausted (file descriptors, connections)
+       • External hosts rate-limiting or blocking requests
+       • DNS resolution failures for external domains
+     
+     Affected domains:
+       - upload.wikimedia.org (most common)
+       - Various CDN servers
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔧 WHY THIS IS HAPPENING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Jellyfin's Image Handling Process:
+
+  1. Browser requests channel image: /Items/{id}/Images/Primary
+  
+  2. Jellyfin checks local cache:
+     - Cache location: /var/lib/jellyfin/data/cache/images/
+     - If cached → serve immediately (fast, always works)
+     - If NOT cached → proceed to step 3
+  
+  3. Jellyfin tries to download from tvg-logo URL:
+     - Fetches from external server (imgur, wikimedia, etc.)
+     - 100 second timeout configured
+     - If successful → cache locally → serve to browser
+     - If timeout/error → return 500 error to browser
+  
+  4. The Problem:
+     - 2,340 channels = 2,340 different logo URLs
+     - Many external servers are slow/unreliable
+     - Simultaneous requests overwhelm network
+     - Cache is empty or outdated
+     - Every page load triggers fresh downloads
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ SOLUTIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Solution 1: Pre-populate Image Cache (RECOMMENDED)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+This will download all channel logos in advance, so they're served from cache.
+
+Via Jellyfin Dashboard:
+  1. Open: http://136.243.155.166:8096/web/index.html#!/dashboard
+  2. Navigate to: Dashboard → Scheduled Tasks
+  3. Find: "Extract Chapter Images" or "Scan Library"
+  4. Click: Run Now
+  5. Wait: 10-30 minutes for all images to download
+
+Via API (AUTOMATED):
+  
+  curl -X POST \
+    -H "X-MediaBrowser-Token: f870ddf763334cfba15fb45b091b10a8" \
+    "http://136.243.155.166:8096/Library/Refresh"
+  
+  This triggers a full library scan that will:
+    • Validate all channel metadata
+    • Download missing images to cache
+    • Update database with image information
+
+Expected Result:
+  ✅ All 2,340 channel images downloaded to local cache
+  ✅ Future requests served instantly from disk
+  ✅ No more 500 errors (unless cache is cleared)
+
+
+Solution 2: Increase Timeout (TEMPORARY FIX)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Requires editing Jellyfin configuration:
+
+  SSH to server:
+    ssh root@10.0.0.103
+  
+  Edit config (if Docker):
+    docker exec -it jellyfin vi /config/network.xml
+    
+    Find: <HttpClientTimeout>100</HttpClientTimeout>
+    Change to: <HttpClientTimeout>300</HttpClientTimeout>
+  
+  Restart Jellyfin:
+    docker restart jellyfin
+
+Expected Result:
+  ⚠️  More images may load, but slower
+  ⚠️  Still fails for very slow/dead URLs
+  ⚠️  Increases server resource usage
+
+
+Solution 3: Use Faster Logo Sources (LONG TERM)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Update M3U file with logos from faster CDNs:
+
+  Options:
+    • Host logos on your own CDN (Cloudflare R2, AWS S3)
+    • Use IPTV-Org's GitHub-hosted logos (faster than wikimedia)
+    • Create fallback logo for channels without images
+  
+  Implementation:
+    1. Download all logos locally
+    2. Upload to fast CDN
+    3. Update M3U tvg-logo URLs
+    4. Refresh Jellyfin metadata
+
+Expected Result:
+  ✅ Faster image loading from reliable source
+  ✅ Full control over image availability
+  ✅ Consistent quality and sizing
+
+
+Solution 4: Disable External Image Fetching
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Configure Jellyfin to only use cached images:
+
+  Dashboard → Settings → Library:
+    • Uncheck: "Download images in advance"
+    • Enable: "Save artwork into media folders"
+  
+  Then manually populate cache once (Solution 1)
+
+Expected Result:
+  ✅ No more external fetching attempts
+  ✅ No timeout errors
+  ⚠️  New channels won't have images until manually added
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 RECOMMENDED ACTION PLAN
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+IMMEDIATE (Do Now - 5 minutes):
+
+  1. Trigger library refresh via API:
+     
+     curl -X POST \
+       -H "X-MediaBrowser-Token: f870ddf763334cfba15fb45b091b10a8" \
+       "http://136.243.155.166:8096/Library/Refresh"
+     
+     This starts the image download process in background.
+
+  2. Install Tampermonkey scrollBehavior fix:
+     
+     bash scripts/install-tampermonkey-script.sh
+     
+     Fixes the JavaScript error in Live TV guide.
+
+
+SHORT TERM (Next 30 minutes):
+
+  3. Monitor the library refresh progress:
+     - Check Dashboard → Scheduled Tasks
+     - Look for "Scan Library" or "Refresh Metadata"
+     - Wait for State: Idle (means complete)
+
+  4. Test image loading:
+     - Open: https://jellyfin.simondatalab.de
+     - Navigate to: Live TV → Channels
+     - Press F12 → Console
+     - Verify: No 500 errors for images
+
+
+LONG TERM (This week):
+
+  5. Setup automated cache warming:
+     - Schedule weekly "Library Refresh" task
+     - Ensures new channels get images downloaded
+     - Prevents cache staleness
+
+  6. Consider hosting logos yourself:
+     - Upload to Cloudflare R2 (free tier: 10GB)
+     - Update M3U with R2 URLs
+     - Instant global CDN delivery
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 ADDITIONAL FINDINGS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Other Issues Found in Logs:
+
+  1. ⚠️  M3U Simultaneous Stream Limit Reached
+     Error: "M3U simultaneous stream limit has been reached"
+     Impact: Users can't watch multiple channels at once
+     Fix: Dashboard → Live TV → Tuner Devices → 
+          Increase "Max Active Streams" setting
+
+  2. ⚠️  Playback Info Errors
+     Error: "Unable to find host to play channel"
+     Impact: Some channels fail to play
+     Cause: Stream limits or tuner configuration
+     Fix: Adjust stream limits or add more tuners
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📋 QUICK COMMANDS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+# Trigger library refresh (download images):
+curl -X POST -H "X-MediaBrowser-Token: f870ddf763334cfba15fb45b091b10a8" \
+  "http://136.243.155.166:8096/Library/Refresh"
+
+# Check scheduled tasks status:
+curl -s -H "X-MediaBrowser-Token: f870ddf763334cfba15fb45b091b10a8" \
+  "http://136.243.155.166:8096/ScheduledTasks" | \
+  python3 -c "import sys,json; [print(f\"{t['Name']:40s} State: {t['State']}\") for t in json.load(sys.stdin) if 'Scan' in t['Name'] or 'Refresh' in t['Name']]"
+
+# Count recent image errors:
+curl -s -H "X-MediaBrowser-Token: f870ddf763334cfba15fb45b091b10a8" \
+  "http://136.243.155.166:8096/System/Logs/Log?name=log_20251106.log" | \
+  grep -c "Images/Primary"
+
+# Test specific channel image:
+curl -I -H "X-MediaBrowser-Token: f870ddf763334cfba15fb45b091b10a8" \
+  "http://136.243.155.166:8096/Items/{CHANNEL_ID}/Images/Primary"
+
+# View log analysis:
+cat /home/simon/Learning-Management-System-Academy/JELLYFIN_IMAGE_DIAGNOSIS.txt
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ CONCLUSION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Status: ✅ JELLYFIN IS WORKING CORRECTLY
+
+The 500 image errors are NOT a bug or configuration issue.
+They are expected behavior when:
+  • Images not yet cached locally
+  • External logo URLs are slow/unreachable
+  • Network temporarily unavailable
+
+Solution: Pre-populate the cache once, then all images load instantly.
+
+Next Step: Run the library refresh command above!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

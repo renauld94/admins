@@ -1,0 +1,27 @@
+[Unit]
+Description=Infrastructure Monitoring Agent for DataLab
+Documentation=https://www.simondatalab.de
+After=network.target postgresql.service nginx.service
+
+[Service]
+Type=simple
+User=simon
+Group=simon
+WorkingDirectory=/home/simon/Learning-Management-System-Academy
+ExecStart=/usr/bin/python3 /home/simon/Learning-Management-System-Academy/.continue/agents/infrastructure_monitor_agent.py
+Restart=always
+RestartSec=30
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=infrastructure-monitor
+
+# Security
+NoNewPrivileges=true
+PrivateTmp=true
+
+# Resource limits
+MemoryMax=512M
+CPUQuota=25%
+
+[Install]
+WantedBy=multi-user.target

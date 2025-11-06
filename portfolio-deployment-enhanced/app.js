@@ -1582,3 +1582,49 @@ try {
         } catch (err) { /* noop */ }
     });
 } catch (e) { /* noop */ }
+
+// Mobile-specific visual tuning: remove duplicate hero canvases and reduce render quality
+function normalizeMobileHeroCanvas() {
+    try {
+        // Only run on devices we flagged as mobile
+        if (!window.__IS_MOBILE_PORTFOLIO__) return;
+        const container = document.getElementById('hero-visualization');
+        if (!container) return;
+
+        const canvases = container.querySelectorAll('canvas');
+        if (canvases.length > 1) {
+            // Keep the first canvas and remove any additional canvases created by fallbacks/duplicate renders
+            for (let i = 1; i < canvases.length; i++) {
+                try { canvases[i].remove(); } catch (err) { try { canvases[i].parentNode && canvases[i].parentNode.removeChild(canvases[i]); } catch(e) { /* noop */ } }
+            }
+            console.log('[mobile] normalizeMobileHeroCanvas: removed', canvases.length - 1, 'extra canvas(es)');
+        }
+
+        // Lower rendering fidelity on mobile to improve fluidity
+        window.heroPerformance = window.heroPerformance || {};
+        // Cap pixel ratio and particles conservatively on mobile
+        window.heroPerformance.pixelRatio = Math.min(window.heroPerformance.pixelRatio || 1, 1);
+        window.heroPerformance.maxParticles = Math.min(window.heroPerformance.maxParticles || 2500, 2500);
+
+        // If a renderer exists, try to nudge its pixel ratio down (best-effort)
+        try {
+            const primaryCanvas = container.querySelector('canvas');
+            if (primaryCanvas && primaryCanvas._threeRenderer) {
+                const renderer = primaryCanvas._threeRenderer;
+                if (renderer.setPixelRatio) renderer.setPixelRatio(1);
+            }
+        } catch (e) { /* noop */ }
+    } catch (e) {
+        console.warn('normalizeMobileHeroCanvas failed', e);
+    }
+}
+
+// Apply normalization at DOMContentLoaded and shortly after to catch async mounts
+try {
+    document.addEventListener('DOMContentLoaded', () => {
+        try {
+            normalizeMobileHeroCanvas();
+            setTimeout(normalizeMobileHeroCanvas, 1200);
+        } catch (e) { /* noop */ }
+    }, { passive: true });
+} catch (e) { /* noop */ }

@@ -265,7 +265,8 @@
 
         .subtitle {
             font-size: 16px;
-            color: #64748b;
+            color: #ffffff;
+            opacity: 0.95;
             font-weight: 500;
             margin-bottom: 40px;
         }
@@ -331,8 +332,8 @@
         }
 
         .qr-code {
-            width: 120px;
-            height: 120px;
+            width: 140px;
+            height: 140px;
             background: #ffffff;
             border-radius: 12px;
             padding: 10px;
@@ -367,6 +368,7 @@
 
         /* Print styles */
         @media print {
+            /* Page size and bleed-aware margins for standard business card */
             @page { size: 3.5in 2in; margin: 0; }
             * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             body { background: white; }
@@ -377,8 +379,33 @@
                 border-radius: 0;
                 page-break-after: always;
             }
+            /* Use inch-based padding for predictable print layout */
             .card-content { padding: 0.3in; }
             .card-back { padding: 0.3in; }
+
+            /* Increase type sizes for print (point units) to improve legibility at 300 DPI */
+            /* Significantly larger sizes for professional printing quality */
+            body, .card-content, .card-back { font-size: 14pt; }
+            .brand-name { font-size: 30pt !important; font-weight: 900 !important; }
+            .tagline { font-size: 12pt !important; }
+            .brand-line { font-size: 22pt !important; }
+            .logo-tagline { font-size: 12pt !important; font-weight: 700 !important; }
+            .name { font-size: 36pt !important; font-weight: 900 !important; letter-spacing: -0.01em !important; }
+            .title { font-size: 18pt !important; font-weight: 800 !important; }
+            .subtitle { font-size: 15pt !important; font-weight: 600 !important; }
+            .contact-item { font-size: 14pt !important; font-weight: 600 !important; line-height: 1.4 !important; }
+            .contact-icon { width: 20pt !important; height: 20pt !important; }
+            .capability-item { font-size: 13pt !important; font-weight: 600 !important; }
+            .qr-label { font-size: 12pt !important; font-weight: 700 !important; }
+            .loading-text { font-size: 11pt !important; font-weight: 700 !important; }
+            .r3f-loading-subtitle { font-size: 10pt !important; }
+
+            /* Scale icons and graphics for better print visibility */
+            .logo-icon { width: 70px !important; height: 70px !important; }
+            .qr-code { width: 1.4in !important; height: 1.4in !important; }
+            .icon-badge { width: 22pt !important; height: 22pt !important; }
+            .icon-badge svg { width: 16pt !important; height: 16pt !important; }
+
             /* Hide helper content when printing */
             .instructions { display: none !important; }
         }
@@ -463,7 +490,7 @@
                 <div>
                     <div class="name">Neuro DataLab</div>
                     <div class="title">CT0 - Data Engineering & Analytics</div>
-                    <div class="subtitle" style="color:#ffffff; opacity:0.95">Enterprise Neuro AI & Collaborative Data Platforms</div>
+                    <div class="subtitle">Enterprise Neuro AI & Collaborative Data Platforms</div>
 
                     <div class="contact-info">
                         <div class="contact-item">
@@ -522,8 +549,8 @@
                     <img src="qr-code-print-300dpi.png" 
                          alt="Simon Renauld Portfolio QR Code" 
                          class="qr-code"
-                         width="120" 
-                         height="120">
+                         width="140" 
+                         height="140">
                     <div class="qr-label">Scan for portfolio</div>
                 </div>
             </div>
