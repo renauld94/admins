@@ -1,0 +1,15 @@
+[Unit]
+Description=Phase 2 Automation - run local simulator once
+After=network.target
+
+[Service]
+Type=oneshot
+User=simon
+WorkingDirectory=/home/simon/Learning-Management-System-Academy
+ExecStart=/usr/bin/env node /home/simon/Learning-Management-System-Academy/.continue/run_phase2_automation.js
+TimeoutStartSec=120
+StandardOutput=append:/tmp/phase2_automation.log
+StandardError=append:/tmp/phase2_automation.log
+
+[Install]
+WantedBy=multi-user.target

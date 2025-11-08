@@ -1,0 +1,89 @@
+{
+  "models": [
+    {
+      "title": "Llama 3.2 3B (Code Generation)",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "apiBase": "http://127.0.0.1:11434",
+      "contextLength": 8192,
+      "completionOptions": {
+        "temperature": 0.1,
+        "maxTokens": 4096
+      }
+    },
+    {
+      "title": "Llama 3.2 3B (Chat)",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
+      "apiBase": "http://127.0.0.1:11434",
+      "contextLength": 8192,
+      "completionOptions": {
+        "temperature": 0.5,
+        "maxTokens": 2048
+      }
+    },
+    {
+      "title": "Codestral 22B (When Ready)",
+      "provider": "ollama",
+      "model": "codestral:22b-v0.1-q4_0",
+      "apiBase": "http://127.0.0.1:11434",
+      "contextLength": 32000,
+      "completionOptions": {
+        "temperature": 0.1,
+        "maxTokens": 4096
+      }
+    }
+  ],
+  "tabAutocompleteModel": {
+    "title": "Llama 3.2 3B (Autocomplete)",
+    "provider": "ollama",
+    "model": "llama3.2:3b",
+    "apiBase": "http://127.0.0.1:11434",
+    "contextLength": 2048,
+    "completionOptions": {
+      "temperature": 0.3,
+      "maxTokens": 100
+    }
+  },
+  "embeddingsProvider": {
+    "provider": "ollama",
+    "model": "nomic-embed-text",
+    "apiBase": "http://127.0.0.1:11434"
+  },
+  "mcpServers": {
+    "vietnamese-tutor": {
+      "command": "python3",
+      "args": [
+        "/home/simon/Learning-Management-System-Academy/.continue/agents/agents_continue/vietnamese_tutor_agent.py"
+      ],
+      "env": {
+        "OLLAMA_BASE_URL": "http://127.0.0.1:11434",
+        "ASR_SERVICE_URL": "http://localhost:8000"
+      }
+    }
+  },
+  "customCommands": [
+    {
+      "name": "test",
+      "prompt": "Write comprehensive unit tests for highlighted code using the same testing framework used in the codebase.",
+      "description": "Write unit tests"
+    },
+    {
+      "name": "doc",
+      "prompt": "Generate detailed JSDoc documentation for highlighted code with parameter descriptions and examples.",
+      "description": "Generate documentation"
+    },
+    {
+      "name": "geodashboard",
+      "prompt": "Generate production-ready code for geodashboard. Context: {highlighted}",
+      "description": "Geodashboard development"
+    },
+    {
+      "name": "optimize",
+      "prompt": "Optimize highlighted code for performance and maintainability. Provide before/after comparison.",
+      "description": "Optimize code"
+    }
+  ],
+  "allowAnonymousTelemetry": false,
+  "disableIndexing": false
+}

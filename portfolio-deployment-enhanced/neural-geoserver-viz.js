@@ -110,8 +110,8 @@ class NeuralGeoServerViz {
             powerPreference: this.options.enableGPUAcceleration ? "high-performance" : "default"
         });
         
-        this.renderer.setSize(container.clientWidth, container.clientHeight);
-        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.renderer.setSize(container.clientWidth, container.clientHeight);
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, (window.PerformancePatch && window.PerformancePatch.maxDevicePixelRatio) || 1));
         this.renderer.shadowMap.enabled = true;
         this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         this.renderer.outputEncoding = THREE.sRGBEncoding;

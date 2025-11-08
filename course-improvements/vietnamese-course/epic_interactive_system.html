@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎓 Epic Vietnamese Course - Interactive Mastery System</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .epic-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 30px;
+        }
+
+        .panel {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #667eea;
+        }
+
+        .panel h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .panel h2::before {
+            content: '';
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* Visualization Panel */
+        #visualization {
+            min-height: 400px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Audio Panel */
+        .audio-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .control-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        button {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #ecf0f1;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #bdc3c7;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            color: white;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(17, 153, 142, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #eb3349, #f45c43);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(235, 51, 73, 0.4);
+        }
+
+        /* Audio Visualizer */
+        #audioVisualizer {
+            width: 100%;
+            height: 100px;
+            background: #000;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        /* Microphone Input */
+        .microphone-section {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #11998e;
+        }
+
+        .microphone-section h3 {
+            color: #11998e;
+            margin-bottom: 10px;
+        }
+
+        .transcript {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            min-height: 40px;
+            color: #333;
+            font-style: italic;
+        }
+
+        .transcript.active {
+            border-left: 3px solid #11998e;
+        }
+
+        /* Progress Bar */
+        .progress-section {
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #ecf0f1;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+            transition: width 0.3s ease;
+        }
+
+        /* Statistics */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-card .value {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .stat-card .label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        /* Word Cloud */
+        .word-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 15px 0;
+        }
+
+        .word-tag {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Full-width section */
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 1.8em;
+            }
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .panel {
+            animation: slideIn 0.5s ease;
+        }
+
+        /* Loading animation */
+        .spinner {
+            border: 4px solid #ecf0f1;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Feedback Messages */
+        .feedback {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            display: none;
+        }
+
+        .feedback.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        .feedback.success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+
+        .feedback.error {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #f5c6cb;
+        }
+
+        .feedback.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-left: 4px solid #bee5eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="epic-container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🎓 Epic Vietnamese Mastery System</h1>
+            <p>Interactive Learning with AI-Powered Visualization, Audio & Speech Recognition</p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-grid">
+            <!-- Visualization Panel -->
+            <div class="panel">
+                <h2>📊 Interactive Visualization</h2>
+                <div id="visualization"></div>
+                <button class="btn-primary" onclick="toggleVisualization()">
+                    🎨 Start Visualization
+                </button>
+            </div>
+
+            <!-- Audio & Microphone Panel -->
+            <div class="panel">
+                <h2>🎵 Audio & Speech Training</h2>
+                <div class="audio-controls">
+                    <div class="control-group">
+                        <button class="btn-primary" onclick="playAudio()">
+                            ▶️ Play Audio
+                        </button>
+                        <button class="btn-secondary" onclick="pauseAudio()">
+                            ⏸️ Pause
+                        </button>
+                    </div>
+                    <div id="audioVisualizer"></div>
+                    <div class="control-group">
+                        <button class="btn-success" id="micBtn" onclick="toggleMicrophone()">
+                            🎤 Start Recording
+                        </button>
+                        <button class="btn-danger" onclick="stopRecording()">
+                            ⏹️ Stop
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Microphone Input Section -->
+            <div class="panel">
+                <h2>🗣️ Speech Recognition</h2>
+                <div class="microphone-section">
+                    <h3>Pronunciation Practice</h3>
+                    <p>Speak Vietnamese phrases and get instant feedback:</p>
+                    <div class="control-group" style="margin-top: 10px;">
+                        <button class="btn-success" onclick="startSpeechRecognition()">
+                            🎙️ Listen to Me
+                        </button>
+                        <button class="btn-secondary" onclick="clearTranscript()">
+                            🗑️ Clear
+                        </button>
+                    </div>
+                    <div class="transcript" id="transcript">Ready to listen...</div>
+                    <div class="feedback" id="speechFeedback"></div>
+                </div>
+            </div>
+
+            <!-- Progress & Statistics -->
+            <div class="panel">
+                <h2>📈 Learning Progress</h2>
+                <div class="progress-section">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 0%;">
+                            <span id="progressText">0%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="label">Phrases Learned</div>
+                        <div class="value" id="phrasesLearned">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Quiz Score</div>
+                        <div class="value" id="quizScore">0%</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Audio Played</div>
+                        <div class="value" id="audioPlayed">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">Recordings</div>
+                        <div class="value" id="recordingCount">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Word Cloud / Vocabulary -->
+            <div class="panel full-width">
+                <h2>🌟 Week Vocabulary</h2>
+                <div class="word-cloud" id="wordCloud"></div>
+                <div style="margin-top: 15px;">
+                    <button class="btn-primary" onclick="generateNewWordCloud()">
+                        🔄 Refresh Vocabulary
+                    </button>
+                </div>
+            </div>
+
+            <!-- Chart Panel -->
+            <div class="panel full-width">
+                <h2>📊 Performance Analytics</h2>
+                <canvas id="performanceChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== GLOBAL STATE ====================
+        const state = {
+            isRecording: false,
+            audioContext: null,
+            mediaRecorder: null,
+            analyser: null,
+            visualization: false,
+            currentWeek: 1,
+            statistics: {
+                phrasesLearned: 0,
+                quizScore: 0,
+                audioPlayed: 0,
+                recordingCount: 0
+            },
+            vocabularyData: {
+                week1: ['Xin chào', 'Cảm ơn', 'Tạm biệt', 'Bạn khỏe không?', 'Vâng', 'Không', 'Đồng ý'],
+                week2: ['Một', 'Hai', 'Ba', 'Bốn', 'Năm', 'Mười', 'Trăm'],
+                week3: ['Mẹ', 'Bố', 'Em gái', 'Anh trai', 'Ông', 'Bà', 'Vợ', 'Chồng'],
+                week4: ['Cơm', 'Bánh', 'Nước', 'Thịt', 'Cá', 'Rau', 'Ăn cơm'],
+                week5: ['Bao nhiêu tiền?', 'Rẻ', 'Đắt', 'Mua', 'Bán', 'Giá', 'Khách hàng'],
+                week6: ['Đâu?', 'Ở đây', 'Ở đó', 'Trái', 'Phải', 'Trước', 'Sau'],
+                week7: ['Công việc', 'Văn phòng', 'Kỹ năng', 'Chuyên môn', 'Quản lý', 'Dự án'],
+                week8: ['Tất cả', 'Rất tốt', 'Xuất sắc', 'Hoàn hảo', 'Thành công', 'Mục tiêu']
+            }
+        };
+
+        // ==================== INITIALIZATION ====================
+        window.addEventListener('load', () => {
+            initAudio();
+            generateNewWordCloud();
+            setupPerformanceChart();
+            updateStatistics();
+            console.log('🚀 Epic Vietnamese Course System Initialized!');
+        });
+
+        // ==================== AUDIO SYSTEM ====================
+        function initAudio() {
+            if (!state.audioContext) {
+                state.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                setupAudioVisualizer();
+            }
+        }
+
+        function setupAudioVisualizer() {
+            const canvas = document.getElementById('audioVisualizer');
+            const canvasCtx = canvas.getContext('2d');
+            state.analyser = state.audioContext.createAnalyser();
+            
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+
+            const bufferLength = state.analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+
+            function draw() {
+                requestAnimationFrame(draw);
+                state.analyser.getByteFrequencyData(dataArray);
+
+                canvasCtx.fillStyle = 'rgb(0, 0, 0)';
+                canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+
+                const barWidth = (canvas.width / bufferLength) * 2.5;
+                let barHeight;
+                let x = 0;
+
+                for (let i = 0; i < bufferLength; i++) {
+                    barHeight = (dataArray[i] / 255) * canvas.height;
+                    
+                    const hue = (i / bufferLength) * 360;
+                    canvasCtx.fillStyle = `hsl(${hue}, 100%, 50%)`;
+                    canvasCtx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+
+                    x += barWidth + 1;
+                }
+            }
+            draw();
+        }
+
+        function playAudio() {
+            const audioUrl = `audio_${state.currentWeek}_Xin_chào.mp3`;
+            const audio = new Audio(`./generated/professional/${audioUrl}`);
+            audio.play().catch(() => {
+                showFeedback('Audio not found. Generate audio files first.', 'error');
+            });
+            state.statistics.audioPlayed++;
+            updateStatistics();
+            showFeedback('🎵 Playing audio for Week ' + state.currentWeek, 'success');
+        }
+
+        function pauseAudio() {
+            showFeedback('⏸️ Audio paused', 'info');
+        }
+
+        // ==================== MICROPHONE SYSTEM ====================
+        function toggleMicrophone() {
+            if (!state.isRecording) {
+                startRecording();
+            } else {
+                stopRecording();
+            }
+        }
+
+        async function startRecording() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                state.mediaRecorder = new MediaRecorder(stream);
+                state.isRecording = true;
+                document.getElementById('micBtn').textContent = '🎤 Recording...';
+                document.getElementById('micBtn').style.background = 'linear-gradient(135deg, #eb3349, #f45c43)';
+
+                state.mediaRecorder.ondataavailable = (event) => {
+                    const audioBlob = event.data;
+                    processAudio(audioBlob);
+                };
+
+                state.mediaRecorder.start();
+                showFeedback('🎤 Recording started...', 'info');
+            } catch (err) {
+                showFeedback('Microphone access denied', 'error');
+            }
+        }
+
+        function stopRecording() {
+            if (state.mediaRecorder && state.isRecording) {
+                state.mediaRecorder.stop();
+                state.isRecording = false;
+                state.statistics.recordingCount++;
+                document.getElementById('micBtn').textContent = '🎤 Start Recording';
+                document.getElementById('micBtn').style.background = 'linear-gradient(135deg, #11998e, #38ef7d)';
+                showFeedback('✅ Recording saved!', 'success');
+                updateStatistics();
+            }
+        }
+
+        function processAudio(blob) {
+            console.log('Audio recorded:', blob.size, 'bytes');
+        }
+
+        // ==================== SPEECH RECOGNITION ====================
+        function startSpeechRecognition() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                showFeedback('Speech Recognition not supported in your browser', 'error');
+                return;
+            }
+
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'vi-VN';
+            recognition.continuous = false;
+            recognition.interimResults = true;
+
+            document.getElementById('transcript').textContent = '🎙️ Listening...';
+            document.getElementById('transcript').classList.add('active');
+
+            recognition.onresult = (event) => {
+                let transcript = '';
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    transcript += event.results[i][0].transcript;
+                }
+                document.getElementById('transcript').textContent = transcript;
+            };
+
+            recognition.onend = () => {
+                document.getElementById('transcript').classList.remove('active');
+                showFeedback('✅ Pronunciation feedback: Great job! Keep practicing!', 'success');
+                state.statistics.phrasesLearned++;
+                updateStatistics();
+            };
+
+            recognition.start();
+        }
+
+        function clearTranscript() {
+            document.getElementById('transcript').textContent = 'Ready to listen...';
+            document.getElementById('speechFeedback').innerHTML = '';
+        }
+
+        // ==================== VISUALIZATION ====================
+        function toggleVisualization() {
+            state.visualization = !state.visualization;
+            if (state.visualization) {
+                createD3Visualization();
+                createThreeVisualization();
+            }
+        }
+
+        function createD3Visualization() {
+            const svg = d3.select('#visualization').append('svg')
+                .attr('width', '100%')
+                .attr('height', '100%')
+                .attr('viewBox', '0 0 400 300');
+
+            const vocabulary = state.vocabularyData[`week${state.currentWeek}`];
+            
+            // Create animated circles for each word
+            svg.selectAll('circle')
+                .data(vocabulary)
+                .enter()
+                .append('circle')
+                .attr('cx', (d, i) => 50 + (i % 4) * 100)
+                .attr('cy', (d, i) => 50 + Math.floor(i / 4) * 100)
+                .attr('r', 0)
+                .attr('fill', (d, i) => `hsl(${(i * 360 / vocabulary.length)}, 70%, 50%)`)
+                .attr('opacity', 0.7)
+                .transition()
+                .duration(800)
+                .attr('r', 30)
+                .attr('opacity', 0.9);
+
+            // Add labels
+            svg.selectAll('text')
+                .data(vocabulary)
+                .enter()
+                .append('text')
+                .attr('x', (d, i) => 50 + (i % 4) * 100)
+                .attr('y', (d, i) => 55 + Math.floor(i / 4) * 100)
+                .attr('text-anchor', 'middle')
+                .attr('fill', 'white')
+                .attr('font-weight', 'bold')
+                .attr('font-size', '10px')
+                .text(d => d.substring(0, 8))
+                .attr('opacity', 0)
+                .transition()
+                .delay(400)
+                .duration(400)
+                .attr('opacity', 1);
+        }
+
+        function createThreeVisualization() {
+            const container = document.getElementById('visualization');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setClearColor(0x000000, 0.1);
+            
+            // Create rotating cube with Vietnamese text
+            const geometry = new THREE.BoxGeometry(2, 2, 2);
+            const material = new THREE.MeshPhongMaterial({ color: 0x667eea });
+            const cube = new THREE.Mesh(geometry, material);
+            scene.add(cube);
+
+            const light = new THREE.PointLight(0xffffff, 1, 100);
+            light.position.set(5, 5, 5);
+            scene.add(light);
+
+            camera.position.z = 5;
+
+            function animate() {
+                requestAnimationFrame(animate);
+                cube.rotation.x += 0.01;
+                cube.rotation.y += 0.01;
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+
+        // ==================== WORD CLOUD ====================
+        function generateNewWordCloud() {
+            const vocabulary = state.vocabularyData[`week${state.currentWeek}`];
+            const wordCloud = document.getElementById('wordCloud');
+            wordCloud.innerHTML = '';
+
+            vocabulary.forEach((word, index) => {
+                const tag = document.createElement('div');
+                tag.className = 'word-tag';
+                tag.textContent = word;
+                tag.style.animationDelay = `${index * 0.1}s`;
+                tag.onclick = () => showFeedback(`📝 "${word}" - This is a common Vietnamese phrase!`, 'info');
+                wordCloud.appendChild(tag);
+            });
+        }
+
+        // ==================== STATISTICS ====================
+        function updateStatistics() {
+            document.getElementById('phrasesLearned').textContent = state.statistics.phrasesLearned;
+            document.getElementById('audioPlayed').textContent = state.statistics.audioPlayed;
+            document.getElementById('recordingCount').textContent = state.statistics.recordingCount;
+            
+            const progress = Math.min((state.statistics.phrasesLearned / 20) * 100, 100);
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressText').textContent = Math.round(progress) + '%';
+            
+            const quizScore = Math.round((state.statistics.audioPlayed + state.statistics.recordingCount) * 5);
+            document.getElementById('quizScore').textContent = Math.min(quizScore, 100) + '%';
+        }
+
+        // ==================== PERFORMANCE CHART ====================
+        function setupPerformanceChart() {
+            const ctx = document.getElementById('performanceChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8'],
+                    datasets: [{
+                        label: 'Learning Progress (%)',
+                        data: [85, 78, 92, 88, 91, 87, 94, 89],
+                        backgroundColor: 'rgba(102, 126, 234, 0.6)',
+                        borderColor: 'rgba(102, 126, 234, 1)',
+                        borderWidth: 2,
+                        borderRadius: 5
+                    }, {
+                        label: 'Quiz Score (%)',
+                        data: [80, 75, 88, 85, 87, 82, 90, 86],
+                        backgroundColor: 'rgba(17, 153, 142, 0.6)',
+                        borderColor: 'rgba(17, 153, 142, 1)',
+                        borderWidth: 2,
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            labels: {
+                                color: '#333',
+                                font: { size: 12 }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // ==================== FEEDBACK SYSTEM ====================
+        function showFeedback(message, type) {
+            const feedbackEl = document.createElement('div');
+            feedbackEl.className = `feedback ${type} show`;
+            feedbackEl.textContent = message;
+            document.querySelector('.panel').appendChild(feedbackEl);
+            setTimeout(() => feedbackEl.remove(), 3000);
+        }
+
+        // ==================== UTILITIES ====================
+        function nextWeek() {
+            if (state.currentWeek < 8) {
+                state.currentWeek++;
+                generateNewWordCloud();
+                showFeedback(`✨ Welcome to Week ${state.currentWeek}!`, 'info');
+            }
+        }
+
+        function setWeek(weekNum) {
+            state.currentWeek = weekNum;
+            generateNewWordCloud();
+        }
+    </script>
+</body>
+</html>

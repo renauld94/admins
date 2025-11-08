@@ -1,0 +1,50 @@
+name: CI - Viz Build & Smoke Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  viz-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install viz dependencies
+        working-directory: portfolio-deployment-enhanced/geospatial-viz
+        run: |
+          npm ci
+
+      - name: Build viz bundle
+        working-directory: portfolio-deployment-enhanced/geospatial-viz
+        run: |
+          npm run build
+
+      - name: Install Playwright
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install playwright
+          python -m playwright install chromium
+
+      - name: Start static server
+        working-directory: portfolio-deployment-enhanced/geospatial-viz
+        run: |
+          nohup python3 -m http.server 8000 > viz_http.log 2>&1 &
+          sleep 2
+
+      - name: Run headless smoke test
+        run: |
+          python3 portfolio-deployment-enhanced/geospatial-viz/ci/headless_capture.py http://localhost:8000/globe-3d-threejs.html

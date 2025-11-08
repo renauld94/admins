@@ -13,7 +13,7 @@ Features:
 - Quiz generation for different proficiency levels
 
 Integrates with:
-- Local Ollama models (qwen2.5-coder:7b, deepseek-coder:6.7b, phi3.5:3.8b)
+- Local Ollama models (llama3.2:3b)
 - ASR service at /course-improvements/vietnamese-course/asr_service/
 - Moodle course (id=10)
 """
@@ -36,9 +36,9 @@ os.makedirs(CONTEXT_DIR, exist_ok=True)
 
 # Ollama configuration - LOCAL GPU for speed
 OLLAMA_BASE_URL = "http://127.0.0.1:11434"
-PRIMARY_MODEL = "qwen2.5-coder:7b"  # Best for structured responses
-FAST_MODEL = "phi3.5:3.8b"  # Ultra-fast for quick feedback
-GRAMMAR_MODEL = "deepseek-coder:6.7b-instruct"  # Good for detailed analysis
+PRIMARY_MODEL = "llama3.2:3b"  # Available model for structured responses
+FAST_MODEL = "llama3.2:3b"  # Ultra-fast for quick feedback
+GRAMMAR_MODEL = "llama3.2:3b"  # Good for detailed analysis
 
 # ASR service configuration
 ASR_SERVICE_URL = "http://localhost:8000"  # Local ASR service

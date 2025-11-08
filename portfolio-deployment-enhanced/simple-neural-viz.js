@@ -57,7 +57,14 @@ class SimpleNeuralViz {
         // Renderer
         this.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
         this.renderer.setSize(container.clientWidth, container.clientHeight);
-        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        // Use global capped DPR if available, fallback to mobile-aware calculation
+        const cappedDPR = (typeof window !== 'undefined' && typeof window.getCappedDevicePixelRatio === 'function')
+            ? window.getCappedDevicePixelRatio()
+            : (() => {
+                const isMobile = window.__IS_MOBILE_PORTFOLIO__ || /Mobi|Android/i.test(navigator.userAgent || '');
+                return Math.min(window.devicePixelRatio, isMobile ? 1 : 2);
+            })();
+        this.renderer.setPixelRatio(cappedDPR);
         
         container.appendChild(this.renderer.domElement);
         

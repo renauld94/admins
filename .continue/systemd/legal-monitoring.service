@@ -1,0 +1,36 @@
+[Unit]
+Description=Legal Monitoring Agent - Digital Unicorn Case Evidence Collection
+Documentation=https://digitalunicorn-case.local
+After=network.target
+Wants=legal-monitoring.timer
+
+[Service]
+Type=simple
+User=simon
+Group=simon
+WorkingDirectory=/home/simon/Learning-Management-System-Academy/.continue/agents
+
+# Run the legal monitoring agent
+ExecStart=/usr/bin/python3 /home/simon/Learning-Management-System-Academy/.continue/agents/legal_monitoring_agent.py
+
+# Restart on failure
+Restart=on-failure
+RestartSec=60
+
+# Resource limits (prevent runaway)
+MemoryMax=1G
+CPUQuota=50%
+
+# Logging (use journal instead of files)
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=legal-monitoring
+
+# Security
+PrivateTmp=yes
+NoNewPrivileges=yes
+ProtectSystem=off
+ProtectHome=no
+
+[Install]
+WantedBy=multi-user.target

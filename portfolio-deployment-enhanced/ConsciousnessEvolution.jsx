@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import * as THREE from 'three';
+import * as THREE from 'https://unpkg.com/three@0.153.0/build/three.module.js';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';

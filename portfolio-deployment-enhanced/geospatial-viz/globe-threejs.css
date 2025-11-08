@@ -1,0 +1,51 @@
+/* Minimal styles for the Three.js globe */
+#container{width:100%;height:100vh;display:block}
+html,body{height:100%;margin:0}
+/* Respect mobile safe-area and avoid content under status bars */
+body{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
+
+#container canvas { -ms-touch-action: none; touch-action: none; }
+#ui{position:fixed;right:12px;top:12px;z-index:10;font-family:Inter,system-ui,Arial;color:#e6f9ff}
+#ui #stats,#ui #status{background:rgba(5,8,16,0.6);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:8px 12px;border-radius:8px;margin-bottom:8px;border:1px solid rgba(0,212,255,0.12)}
+#ui span{color:#00d4ff;font-weight:600}
+
+/* Stat Card for live events */
+.stat-card{position:fixed;left:12px;top:12px;z-index:15;width:280px;background:rgba(5,8,16,0.75);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-radius:10px;padding:12px;color:#e6f9ff;border:1px solid rgba(0,212,255,0.12);font-family:Inter,system-ui,Arial;max-height:300px;overflow-y:auto}
+.stat-card h3{margin:0 0 8px 0;color:#00d4ff;font-size:14px;text-transform:uppercase;letter-spacing:0.5px}
+.events-list{display:flex;flex-direction:column;gap:6px}
+.event-item{padding:6px;background:rgba(0,212,255,0.05);border-radius:4px;border-left:3px solid #00d4ff;font-size:12px;line-height:1.4}
+.event-item .mag{color:#ff8a65;font-weight:600}
+
+/* Menu toggle (mobile) */
+.menu-toggle{position:fixed;left:12px;top:12px;z-index:20;background:linear-gradient(135deg,#0ea5e9,#2563eb);color:#fff;border:none;padding:8px 10px;border-radius:8px;font-size:18px;box-shadow:0 8px 20px rgba(2,132,199,0.2);cursor:pointer}
+
+/* Legend panel */
+.legend{position:fixed;left:12px;bottom:12px;z-index:20;width:280px;background:rgba(5,8,16,0.8);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-radius:12px;padding:12px;color:#e6f9ff;border:1px solid rgba(0,212,255,0.15);font-family:Inter,system-ui,Arial;max-height:500px;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,0.3)}
+.legend-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(0,212,255,0.1)}
+.legend-header strong{color:#00d4ff;font-size:14px;text-transform:uppercase;letter-spacing:0.5px}
+.legend-close{background:none;border:none;color:#9fbfdc;font-size:16px;cursor:pointer;transition:color 0.2s}
+.legend-close:hover{color:#00d4ff}
+.legend-body{display:flex;flex-direction:column;gap:4px;max-height:450px;overflow-y:auto}
+.legend-body::-webkit-scrollbar{width:6px}
+.legend-body::-webkit-scrollbar-track{background:rgba(0,212,255,0.05);border-radius:3px}
+.legend-body::-webkit-scrollbar-thumb{background:rgba(0,212,255,0.2);border-radius:3px}
+.legend-item{display:flex;align-items:center;gap:8px;font-size:13px;padding:6px;border-radius:6px;transition:all 0.2s}
+.legend-item:hover{background:rgba(0,212,255,0.08)}
+.legend-color{width:12px;height:12px;border-radius:3px;display:inline-block}
+
+/* Extended semantic legend colors */
+.legend-color--healthcare{background:#00d4ff}
+.legend-color--research{background:#8b5cf6}
+.legend-color--infrastructure{background:#10b981}
+.legend-color--fishing{background:#f59e0b}
+.legend-color--educational{background:#ec4899}
+.legend-color--environmental{background:#06b6d4}
+.legend-color--communications{background:#f43f5e}
+.legend-color--energy{background:#eab308}
+.legend-color--transportation{background:#a855f7}
+
+@media (max-width: 768px){
+	.menu-toggle{left:auto;right:12px;top:auto;bottom:72px;padding:10px 12px;border-radius:999px;font-size:16px}
+	.legend{left:12px;right:12px;bottom:auto;top:80px;width:auto;padding:12px;max-height:250px}
+	.stat-card{left:12px;right:12px;top:auto;bottom:320px;width:auto;max-height:150px;font-size:11px}
+}

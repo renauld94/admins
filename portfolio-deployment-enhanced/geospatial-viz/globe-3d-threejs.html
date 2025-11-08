@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EPIC Geodashboard — 3D Globe (Three.js)</title>
+  <link rel="stylesheet" href="globe-threejs.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' fill='%2300d4ff'/%3E%3C/svg%3E">
+</head>
+<body>
+  <div id="container"></div>
+  <div id="ui">
+    <div id="stats">Nodes: <span id="nodeCount">0</span> | Events: <span id="eventCount">0</span></div>
+    <div id="status">WS: <span id="wsStatus">disconnected</span></div>
+  </div>
+
+  <!-- Live Event Stat Card -->
+  <div id="eventCard" class="stat-card">
+    <h3>Live Events</h3>
+    <div id="eventsList" class="events-list"></div>
+  </div>
+
+  <!-- Responsive Legend & Menu -->
+  <button id="menuToggle" class="menu-toggle" aria-label="Open menu">☰</button>
+  <aside id="legend" class="legend" aria-hidden="false">
+    <div class="legend-header">
+      <strong>Legend</strong>
+      <button id="legendClose" class="legend-close" aria-label="Close legend">✕</button>
+    </div>
+    <div class="legend-body">
+      <div class="legend-item"><span class="legend-color legend-color--node"></span> Nodes</div>
+      <div class="legend-item"><span class="legend-color legend-color--event"></span> Events</div>
+      <div class="legend-item"><span class="legend-color legend-color--infra"></span> Data Centers</div>
+    </div>
+  </aside>
+
+  <!-- Import map to resolve bare-specifier 'three' used by example modules like OrbitControls -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.153.0/build/three.module.js"
+    }
+  }
+  </script>
+
+  <!-- Load bundled globe script for production -->
+  <script type="module" src="dist/globe-bundle.js"></script>
+</body>
+</html>

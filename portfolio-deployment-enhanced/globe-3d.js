@@ -23,7 +23,7 @@
 
     // Create renderer
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, (window.PerformancePatch && window.PerformancePatch.maxDevicePixelRatio) || 1));
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.domElement.style.position = 'absolute';
     renderer.domElement.style.top = '0';

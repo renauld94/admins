@@ -7,7 +7,7 @@
 import React, { useRef, useEffect, useState, useMemo } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Text, Html } from '@react-three/drei';
-import * as THREE from 'three';
+import * as THREE from 'https://unpkg.com/three@0.153.0/build/three.module.js';
 
 // Neural Cluster Component
 function NeuralCluster({ layerData, position, onHover, onClick }) {

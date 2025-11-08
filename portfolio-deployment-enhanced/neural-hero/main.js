@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as THREE from 'https://unpkg.com/three@0.153.0/build/three.module.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
@@ -27,7 +27,7 @@ camera.position.z = 100;
 // Renderer setup
 const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setSize(CONFIG.resolution.width, CONFIG.resolution.height);
-renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, (window.PerformancePatch && window.PerformancePatch.maxDevicePixelRatio) || 1));
 renderer.shadowMap.enabled = true;
 document.getElementById('canvas-container').appendChild(renderer.domElement);
 

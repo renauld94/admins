@@ -1,0 +1,17 @@
+[Unit]
+Description=EPIC Course Enhancement Agent
+After=network.target
+
+[Service]
+Type=simple
+User=simonadmin
+WorkingDirectory=/home/simonadmin/vm159-agents/epic_course_enhancement
+Environment=PATH=/home/simonadmin/vm159-agents/epic_course_enhancement/.venv/bin
+ExecStart=/home/simonadmin/vm159-agents/epic_course_enhancement/.venv/bin/python /home/simonadmin/vm159-agents/epic_course_enhancement/epic_course_enhancement_agent.py
+Restart=on-failure
+RestartSec=10
+StandardOutput=file:/var/log/epic_course_enhancement.log
+StandardError=file:/var/log/epic_course_enhancement.err
+
+[Install]
+WantedBy=multi-user.target

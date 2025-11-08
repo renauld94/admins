@@ -15,7 +15,7 @@ import { createElement as h } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Canvas, useFrame, useThree, extend } from '@react-three/fiber';
 import { EffectComposer, Bloom, DepthOfField } from '@react-three/postprocessing';
-import * as THREE from 'three';
+import * as THREE from 'https://unpkg.com/three@0.153.0/build/three.module.js';
 import { useRef, useMemo, useState, useEffect } from 'react';
 
 // ═══════════════════════════════════════════════════════════════════════════

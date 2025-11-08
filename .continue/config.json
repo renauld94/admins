@@ -5,13 +5,27 @@
   
   "models": [
     {
-      "title": "DeepSeek Coder 6.7B (Main)",
+      "title": "Codestral 22B (Main)",
       "provider": "ollama",
-      "model": "deepseek-coder:6.7b",
+      "model": "codestral:22b-v0.1-q4_0",
+      "apiBase": "http://localhost:11434",
+      "contextLength": 16384,
+      "completionOptions": {
+        "temperature": 0.2,
+        "topP": 0.9,
+        "topK": 40,
+        "numPredict": 4096,
+        "stopTokens": ["\n\n", "```", "\n}"]
+      }
+    },
+    {
+      "title": "Llama 3.2 3B (Main - Fallback)",
+      "provider": "ollama",
+      "model": "llama3.2:3b",
       "apiBase": "http://localhost:11434",
       "contextLength": 8192,
       "completionOptions": {
-        "temperature": 0.1,
+        "temperature": 0.3,
         "topP": 0.9,
         "topK": 40,
         "numPredict": 2048,
@@ -19,22 +33,33 @@
       }
     },
     {
-      "title": "DeepSeek Coder 6.7B (Chat)",
+      "title": "Codestral 22B (Chat)",
       "provider": "ollama",
-      "model": "deepseek-coder:6.7b",
+      "model": "codestral:22b-v0.1-q4_0",
       "apiBase": "http://localhost:11434",
-      "contextLength": 8192,
+      "contextLength": 16384,
       "completionOptions": {
         "temperature": 0.4,
         "topP": 0.95
       }
     },
     {
-      "title": "DeepSeek Coder 6.7B (Code)",
+      "title": "Llama 3.2 3B (Chat - Fallback)",
       "provider": "ollama",
-      "model": "deepseek-coder:6.7b",
+      "model": "llama3.2:3b",
       "apiBase": "http://localhost:11434",
-      "contextLength": 4096,
+      "contextLength": 8192,
+      "completionOptions": {
+        "temperature": 0.5,
+        "topP": 0.95
+      }
+    },
+    {
+      "title": "Codestral 22B (Code)",
+      "provider": "ollama",
+      "model": "codestral:22b-v0.1-q4_0",
+      "apiBase": "http://localhost:11434",
+      "contextLength": 12288,
       "completionOptions": {
         "temperature": 0.1,
         "topP": 0.9,
@@ -44,25 +69,28 @@
   ],
   
   "tabAutocompleteModel": {
-    "title": "DeepSeek Coder 6.7B (Autocomplete)",
+    "title": "Codestral 22B (Autocomplete)",
     "provider": "ollama",
-    "model": "deepseek-coder:6.7b",
+    "model": "codestral:22b-v0.1-q4_0",
     "apiBase": "http://localhost:11434",
-    "contextLength": 2048,
+    "contextLength": 4096,
     "completionOptions": {
       "temperature": 0.15,
-      "maxTokens": 100,
+      "maxTokens": 120,
       "stopTokens": ["\n\n", "```", ";"]
     }
   },
 
   "modelRoles": {
-    "default": "DeepSeek Coder 6.7B (Main)",
-    "chat": "DeepSeek Coder 6.7B (Chat)",
-    "edit": "DeepSeek Coder 6.7B (Code)",
-    "autocomplete": "DeepSeek Coder 6.7B (Autocomplete)",
-    "summarize": "DeepSeek Coder 6.7B (Main)",
-    "apply": "DeepSeek Coder 6.7B (Code)"
+    "default": "Codestral 22B (Main)",
+    "chat": "Codestral 22B (Chat)",
+    "edit": "Codestral 22B (Code)",
+    "autocomplete": "Codestral 22B (Autocomplete)",
+    "summarize": "Codestral 22B (Main)",
+    "apply": "Codestral 22B (Code)",
+    "fallbackDefault": "Llama 3.2 3B (Main - Fallback)",
+    "fallbackChat": "Llama 3.2 3B (Chat - Fallback)",
+    "fallbackEdit": "Llama 3.2 3B (Code - Fallback)"
   },
 
   "communication": {

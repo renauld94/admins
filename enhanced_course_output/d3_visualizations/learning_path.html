@@ -1,0 +1,350 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J&J Python Academy - Learning Path</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body { 
+            font-family: 'Arial', sans-serif; 
+            margin: 0; 
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            color: #d51920;
+            font-size: 2.5em;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .header p {
+            color: #666;
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+        .path-container {
+            position: relative;
+            height: 600px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .node {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .node:hover {
+            transform: scale(1.1);
+        }
+        .node circle {
+            stroke: #fff;
+            stroke-width: 3px;
+            transition: all 0.3s ease;
+        }
+        .node text {
+            font-size: 12px;
+            font-weight: bold;
+            text-anchor: middle;
+            pointer-events: none;
+        }
+        .link {
+            fill: none;
+            stroke: #999;
+            stroke-width: 2px;
+            stroke-opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        .link:hover {
+            stroke-width: 4px;
+            stroke-opacity: 1;
+        }
+        .tooltip {
+            position: absolute;
+            background: rgba(0,0,0,0.9);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            max-width: 300px;
+            z-index: 1000;
+        }
+        .progress-bar {
+            background: #e0e0e0;
+            height: 8px;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        .stats-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border-left: 5px solid #d51920;
+            min-width: 250px;
+        }
+        .stats-panel h3 {
+            margin-top: 0;
+            color: #d51920;
+        }
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 J&J Python Academy Learning Path</h1>
+            <p>Interactive visualization of your clinical programming journey</p>
+        </div>
+        <div class="path-container" id="learning-path"></div>
+    </div>
+    
+    <div class="stats-panel">
+        <h3>📊 Learning Stats</h3>
+        <div class="stat-item">
+            <span>Progress</span>
+            <span id="overall-progress">0%</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+        </div>
+        <div class="stat-item">
+            <span>Modules</span>
+            <span>6 Total</span>
+        </div>
+        <div class="stat-item">
+            <span>Sessions</span>
+            <span id="total-sessions">42 Total</span>
+        </div>
+        <div class="stat-item">
+            <span>Est. Time</span>
+            <span id="estimated-time">~40 hours</span>
+        </div>
+        <div class="stat-item">
+            <span>Clinical Relevance</span>
+            <span style="color: #28a745; font-weight: bold;">93%</span>
+        </div>
+    </div>
+    
+    <div class="tooltip" id="tooltip"></div>
+
+    <script>
+        // Learning path data
+        const learningData = {
+            nodes: [
+                {id: "start", name: "Start Your Journey", x: 100, y: 300, type: "start", progress: 100, relevance: 1.0},
+                {id: "module1", name: "System Setup", x: 250, y: 200, type: "module", progress: 85, relevance: 0.85, sessions: 9},
+                {id: "module2", name: "Core Python", x: 400, y: 100, type: "module", progress: 60, relevance: 0.95, sessions: 8},
+                {id: "module3", name: "PySpark", x: 550, y: 150, type: "module", progress: 40, relevance: 0.98, sessions: 7},
+                {id: "module4", name: "Git & Bitbucket", x: 400, y: 300, type: "module", progress: 30, relevance: 0.90, sessions: 6},
+                {id: "module5", name: "Databricks", x: 700, y: 200, type: "module", progress: 20, relevance: 0.97, sessions: 8},
+                {id: "module6", name: "Advanced", x: 850, y: 250, type: "module", progress: 10, relevance: 0.92, sessions: 6},
+                {id: "databricks", name: "Databricks Platform", x: 1000, y: 150, type: "databricks", progress: 0, relevance: 1.0},
+                {id: "career", name: "Clinical Programming Career", x: 1150, y: 300, type: "career", progress: 0, relevance: 1.0}
+            ],
+            links: [
+                {source: "start", target: "module1"},
+                {source: "module1", target: "module2"},
+                {source: "module1", target: "module4"},
+                {source: "module2", target: "module3"},
+                {source: "module3", target: "module5"},
+                {source: "module4", target: "module5"},
+                {source: "module5", target: "module6"},
+                {source: "module5", target: "databricks"},
+                {source: "module6", target: "career"},
+                {source: "databricks", target: "career"}
+            ]
+        };
+
+        // Color schemes
+        const colors = {
+            start: "#28a745",
+            module: "#d51920",
+            databricks: "#ff6b35",
+            career: "#6f42c1"
+        };
+
+        // Create SVG
+        const svg = d3.select("#learning-path")
+            .append("svg")
+            .attr("width", "100%")
+            .attr("height", "100%");
+
+        // Create tooltip
+        const tooltip = d3.select("#tooltip");
+
+        // Create links
+        const links = svg.selectAll(".link")
+            .data(learningData.links)
+            .enter()
+            .append("line")
+            .attr("class", "link")
+            .attr("x1", d => learningData.nodes.find(n => n.id === d.source).x)
+            .attr("y1", d => learningData.nodes.find(n => n.id === d.source).y)
+            .attr("x2", d => learningData.nodes.find(n => n.id === d.target).x)
+            .attr("y2", d => learningData.nodes.find(n => n.id === d.target).y);
+
+        // Create nodes
+        const nodes = svg.selectAll(".node")
+            .data(learningData.nodes)
+            .enter()
+            .append("g")
+            .attr("class", "node")
+            .attr("transform", d => `translate(${d.x}, ${d.y})`)
+            .on("mouseover", function(event, d) {
+                // Show tooltip
+                const tooltipContent = `
+                    <strong>${d.name}</strong><br>
+                    Progress: ${d.progress}%<br>
+                    Clinical Relevance: ${(d.relevance * 100).toFixed(0)}%<br>
+                    ${d.sessions ? `Sessions: ${d.sessions}` : ''}
+                    ${d.type === 'databricks' ? 'Access your workspace!' : ''}
+                `;
+                
+                tooltip.html(tooltipContent)
+                    .style("opacity", 1)
+                    .style("left", (event.pageX + 10) + "px")
+                    .style("top", (event.pageY + 10) + "px");
+                    
+                // Highlight connected links
+                links.style("stroke-opacity", l => 
+                    l.source === d.id || l.target === d.id ? 1 : 0.3
+                );
+            })
+            .on("mouseout", function() {
+                tooltip.style("opacity", 0);
+                links.style("stroke-opacity", 0.7);
+            })
+            .on("click", function(event, d) {
+                if (d.type === 'databricks') {
+                    window.open('https://dbc-b975c647-8055.cloud.databricks.com/', '_blank');
+                }
+                if (d.type === 'module') {
+                    // Animate progress increase
+                    d.progress = Math.min(100, d.progress + 5);
+                    updateProgress();
+                }
+            });
+
+        // Add circles
+        nodes.append("circle")
+            .attr("r", d => d.type === 'start' || d.type === 'career' ? 25 : 20)
+            .attr("fill", d => colors[d.type])
+            .attr("opacity", d => d.progress > 0 ? 1 : 0.6);
+
+        // Add progress rings
+        nodes.append("circle")
+            .attr("r", d => d.type === 'start' || d.type === 'career' ? 30 : 25)
+            .attr("fill", "none")
+            .attr("stroke", d => colors[d.type])
+            .attr("stroke-width", 3)
+            .attr("stroke-dasharray", d => {
+                const circumference = 2 * Math.PI * (d.type === 'start' || d.type === 'career' ? 30 : 25);
+                const progress = circumference * (d.progress / 100);
+                return `${progress} ${circumference}`;
+            })
+            .attr("opacity", 0.8);
+
+        // Add text labels
+        nodes.append("text")
+            .attr("dy", ".35em")
+            .style("font-size", "10px")
+            .style("fill", "white")
+            .text(d => d.name.split(' ')[0]);
+
+        // Add module labels below
+        nodes.filter(d => d.type === 'module')
+            .append("text")
+            .attr("dy", "45px")
+            .style("font-size", "12px")
+            .style("fill", "#333")
+            .style("text-anchor", "middle")
+            .text(d => d.name);
+
+        function updateProgress() {
+            const totalProgress = learningData.nodes
+                .filter(n => n.type === 'module')
+                .reduce((sum, n) => sum + n.progress, 0) / 6;
+            
+            d3.select("#overall-progress").text(`${Math.round(totalProgress)}%`);
+            d3.select("#progress-fill").style("width", `${totalProgress}%`);
+            
+            // Update node progress rings
+            nodes.selectAll("circle:nth-child(2)")
+                .transition()
+                .duration(500)
+                .attr("stroke-dasharray", d => {
+                    const circumference = 2 * Math.PI * (d.type === 'start' || d.type === 'career' ? 30 : 25);
+                    const progress = circumference * (d.progress / 100);
+                    return `${progress} ${circumference}`;
+                });
+        }
+
+        // Initial progress update
+        updateProgress();
+
+        // Add floating particles animation
+        function createParticles() {
+            const particles = svg.selectAll(".particle")
+                .data(d3.range(20))
+                .enter()
+                .append("circle")
+                .attr("class", "particle")
+                .attr("r", 2)
+                .attr("fill", "#d51920")
+                .attr("opacity", 0.3);
+
+            function animateParticles() {
+                particles
+                    .attr("cx", () => Math.random() * 1200)
+                    .attr("cy", () => Math.random() * 600)
+                    .transition()
+                    .duration(5000)
+                    .ease(d3.easeLinear)
+                    .attr("cx", () => Math.random() * 1200)
+                    .attr("cy", () => Math.random() * 600)
+                    .on("end", animateParticles);
+            }
+
+            animateParticles();
+        }
+
+        createParticles();
+    </script>
+</body>
+</html>
+        

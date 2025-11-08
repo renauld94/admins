@@ -9,6 +9,7 @@ import sys
 import subprocess
 import json
 import base64
+import tempfile
 from typing import Dict, Any, Optional
 
 SSH_HOST = "moodle-vm9001"
@@ -322,6 +323,149 @@ def main():
     print()
     print("✅ You can now use call_webservice() function in your Python scripts!")
     return 0
+
+
+def create_page_direct(courseid: int, section: int, name: str, html_content: str) -> Dict[str, Any]:
+    """
+    Create a page module by directly writing to the Moodle database via SSH
+    This bypasses webservice limits and works with large HTML content
+    """
+    # Create PHP script that creates page directly
+    php_code = f"""<?php
+define('CLI_SCRIPT', true);
+require('/bitnami/moodle/config.php');
+global $DB;
+
+$courseid = {courseid};
+$name = {json.dumps(name)};
+$section = {section};
+$html_content = <<<'HTMLEOF'
+{html_content}
+HTMLEOF;
+
+try {{
+    // Get course
+    $course = $DB->get_record('course', array('id' => $courseid));
+    if (!$course) {{
+        echo json_encode(array('error' => 'Course not found'));
+        exit(1);
+    }}
+    
+    // Get or create course section
+    $course_section = $DB->get_record('course_sections', 
+        array('course' => $courseid, 'section' => $section));
+    if (!$course_section) {{
+        $new_section = new stdClass();
+        $new_section->course = $courseid;
+        $new_section->section = $section;
+        $new_section->name = 'Week ' . $section;
+        $new_section->summary = '';
+        $new_section->summaryformat = 0;
+        $new_section->sequence = '';
+        $new_section->visible = 1;
+        $sectionid = $DB->insert_record('course_sections', $new_section);
+        $course_section = $DB->get_record('course_sections', array('id' => $sectionid));
+    }}
+    
+    // Get page module
+    $module = $DB->get_record('modules', array('name' => 'page'));
+    if (!$module) {{
+        echo json_encode(array('error' => 'Page module not found'));
+        exit(1);
+    }}
+    
+    // Create page instance
+    $page = new stdClass();
+    $page->course = $courseid;
+    $page->name = substr($name, 0, 255);
+    $page->intro = '';
+    $page->introformat = 1;
+    $page->content = $html_content;
+    $page->contentformat = 1;
+    $page->legacyfiles = 0;
+    $page->legacyfileslast = 0;
+    $page->display = 5;
+    $page->displayoptions = 'a:2:{{s:4:"page";s:1:"0";s:6:"printi";s:0:"";}}';
+    $page->revision = 1;
+    $page->timemodified = time();
+    
+    $pageid = $DB->insert_record('page', $page);
+    
+    // Create course module
+    $cm = new stdClass();
+    $cm->course = $courseid;
+    $cm->module = $module->id;
+    $cm->instance = $pageid;
+    $cm->section = $course_section->id;
+    $cm->idnumber = '';
+    $cm->added = time();
+    $cm->score = 0;
+    $cm->indent = 0;
+    $cm->visible = 1;
+    $cm->visibleoncoursepage = 1;
+    $cm->visibleold = 1;
+    $cm->groupmode = 0;
+    $cm->groupingid = 0;
+    $cm->completion = 0;
+    $cm->completionview = 0;
+    $cm->completionexpected = 0;
+    $cm->showdescription = 0;
+    $cm->availability = null;
+    $cm->deletioninprogress = 0;
+    
+    $cmid = $DB->insert_record('course_modules', $cm);
+    
+    // Add to section sequence
+    if ($course_section->sequence) {{
+        $sequence = explode(',', $course_section->sequence);
+        if (!in_array($cmid, $sequence)) {{
+            $sequence[] = $cmid;
+            $course_section->sequence = implode(',', $sequence);
+            $DB->update_record('course_sections', $course_section);
+        }}
+    }} else {{
+        $course_section->sequence = strval($cmid);
+        $DB->update_record('course_sections', $course_section);
+    }}
+    
+    // Rebuild cache
+    rebuild_course_cache($courseid, true);
+    
+    echo json_encode(array('id' => $pageid, 'coursemodule' => $cmid, 'name' => $page->name));
+}} catch (Exception $e) {{
+    echo json_encode(array('error' => $e->getMessage()));
+    exit(1);
+}}
+?>"""
+    
+    try:
+        # Use stdin to pass PHP code directly
+        result = subprocess.run(
+            ["ssh", SSH_HOST,
+             f"cat | sudo docker exec -i {MOODLE_CONTAINER} php"],
+            input=php_code,
+            capture_output=True,
+            text=True,
+            timeout=30
+        )
+        output = result.stdout.strip()
+        stderr = result.stderr.strip()
+        
+        # Filter PHP warnings and get JSON
+        lines = output.split('\n')
+        json_lines = [l for l in lines if l.strip().startswith('{')]
+        
+        if not json_lines:
+            return {"error": "No JSON response", "raw_output": output[:500] if output else "(empty)", "stderr": stderr[:500]}
+        
+        return json.loads(json_lines[-1])
+        
+    except subprocess.TimeoutExpired:
+        return {"error": "Timeout creating page"}
+    except json.JSONDecodeError as e:
+        return {"error": f"Invalid JSON: {e}"}
+    except Exception as e:
+        return {"error": str(e)}
 
 
 if __name__ == "__main__":

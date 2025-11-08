@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EPIC Geodashboard - Integration Test</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #e6f9ff; font-family: 'Inter', system-ui, -apple-system, sans-serif; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { margin-bottom: 30px; color: #00d4ff; font-size: 28px; }
+        .test-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .test-card { background: rgba(5, 8, 16, 0.6); border: 1px solid rgba(0, 212, 255, 0.2); border-radius: 10px; padding: 20px; backdrop-filter: blur(10px); }
+        .test-card h2 { font-size: 16px; color: #00d4ff; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .test-item { padding: 10px; margin: 8px 0; border-radius: 6px; font-size: 13px; display: flex; align-items: center; gap: 10px; }
+        .status-ok { background: rgba(16, 185, 129, 0.1); border-left: 3px solid #10b981; }
+        .status-error { background: rgba(239, 68, 68, 0.1); border-left: 3px solid #ef4444; }
+        .status-pending { background: rgba(59, 130, 246, 0.1); border-left: 3px solid #3b82f6; }
+        .status-icon { display: inline-block; width: 8px; height: 8px; border-radius: 50%; }
+        .ok { background: #10b981; }
+        .error { background: #ef4444; }
+        .pending { background: #3b82f6; }
+        .details { background: rgba(255, 255, 255, 0.05); border-radius: 6px; padding: 12px; margin-top: 8px; font-size: 12px; font-family: 'Monaco', monospace; overflow-x: auto; max-height: 150px; overflow-y: auto; }
+        button { background: linear-gradient(135deg, #0ea5e9, #2563eb); color: #fff; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; margin: 8px 4px 8px 0; }
+        button:hover { opacity: 0.9; }
+        .log-area { background: rgba(5, 8, 16, 0.6); border: 1px solid rgba(0, 212, 255, 0.2); border-radius: 10px; padding: 20px; backdrop-filter: blur(10px); max-height: 300px; overflow-y: auto; }
+        .log-area h2 { color: #00d4ff; margin-bottom: 12px; }
+        .log-entry { padding: 6px; font-size: 12px; font-family: 'Monaco', monospace; border-bottom: 1px solid rgba(0, 212, 255, 0.1); }
+        .log-entry.success { color: #10b981; }
+        .log-entry.error { color: #ef4444; }
+        .log-entry.info { color: #94a3b8; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌍 EPIC Geodashboard - Integration Test</h1>
+        
+        <div class="test-grid">
+            <!-- Backend Health -->
+            <div class="test-card">
+                <h2>Backend Health</h2>
+                <div id="health-test" class="test-item status-pending">
+                    <span class="status-icon pending"></span>
+                    <span>Testing /health endpoint...</span>
+                </div>
+                <div id="health-details" class="details" style="display:none;"></div>
+            </div>
+
+            <!-- USGS Data -->
+            <div class="test-card">
+                <h2>USGS Earthquake Data</h2>
+                <div id="usgs-test" class="test-item status-pending">
+                    <span class="status-icon pending"></span>
+                    <span>Fetching earthquakes...</span>
+                </div>
+                <div id="usgs-details" class="details" style="display:none;"></div>
+            </div>
+
+            <!-- Analysis Endpoint -->
+            <div class="test-card">
+                <h2>Analysis API</h2>
+                <div id="analysis-test" class="test-item status-pending">
+                    <span class="status-icon pending"></span>
+                    <span>Testing /analysis endpoint...</span>
+                </div>
+                <div id="analysis-details" class="details" style="display:none;"></div>
+            </div>
+
+            <!-- WebSocket Connection -->
+            <div class="test-card">
+                <h2>WebSocket Connection</h2>
+                <div id="ws-test" class="test-item status-pending">
+                    <span class="status-icon pending"></span>
+                    <span>Connecting to /ws/realtime...</span>
+                </div>
+                <div id="ws-details" class="details" style="display:none;"></div>
+            </div>
+
+            <!-- 3D Globe -->
+            <div class="test-card">
+                <h2>3D Globe Rendering</h2>
+                <div id="globe-test" class="test-item status-pending">
+                    <span class="status-icon pending"></span>
+                    <span>Checking Three.js globe...</span>
+                </div>
+                <button onclick="testGlobeRender()">Open Globe</button>
+            </div>
+
+            <!-- Systemd Services -->
+            <div class="test-card">
+                <h2>Systemd Services</h2>
+                <div id="services-test" class="test-item status-pending">
+                    <span class="status-icon pending"></span>
+                    <span>Run service checks from terminal</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="log-area">
+            <h2>📋 Test Log</h2>
+            <div id="log-container"></div>
+        </div>
+    </div>
+
+    <script>
+        const log = (msg, type = 'info') => {
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+            document.getElementById('log-container').appendChild(entry);
+            document.getElementById('log-container').scrollTop = document.getElementById('log-container').scrollHeight;
+        };
+
+        const updateTest = (id, status, message, details = '') => {
+            const elem = document.getElementById(id);
+            elem.className = `test-item status-${status}`;
+            const icon = elem.querySelector('.status-icon');
+            icon.className = `status-icon ${status === 'ok' ? 'ok' : status === 'error' ? 'error' : 'pending'}`;
+            elem.innerHTML = `<span class="status-icon ${status === 'ok' ? 'ok' : status === 'error' ? 'error' : 'pending'}"></span><span>${message}</span>`;
+            if (details) {
+                const detailsElem = document.getElementById(id.replace('-test', '-details'));
+                detailsElem.textContent = details;
+                detailsElem.style.display = 'block';
+            }
+        };
+
+        const runTests = async () => {
+            log('Starting integration tests...', 'info');
+
+            // Test 1: Health Check
+            try {
+                log('Testing /health endpoint...', 'info');
+                const res = await fetch('http://localhost:8000/health');
+                if (res.ok) {
+                    const data = await res.json();
+                    updateTest('health-test', 'ok', '✓ Backend is healthy', JSON.stringify(data, null, 2));
+                    log('✓ Health check passed', 'success');
+                } else {
+                    updateTest('health-test', 'error', '✗ Health check failed', `Status: ${res.status}`);
+                    log('✗ Health check failed', 'error');
+                }
+            } catch (e) {
+                updateTest('health-test', 'error', '✗ Backend unreachable', e.message);
+                log(`✗ Backend error: ${e.message}`, 'error');
+                return;
+            }
+
+            // Test 2: USGS Data
+            try {
+                log('Fetching USGS earthquake data...', 'info');
+                const res = await fetch('http://localhost:8000/earthquakes');
+                if (res.ok) {
+                    const data = await res.json();
+                    const count = data.count || data.events?.length || 0;
+                    const topEvent = data.events?.[0];
+                    updateTest('usgs-test', 'ok', `✓ ${count} earthquakes loaded`, 
+                        `Top: ${topEvent?.mag}M - ${topEvent?.place}`);
+                    log(`✓ USGS data loaded: ${count} events`, 'success');
+                } else {
+                    updateTest('usgs-test', 'error', '✗ Failed to fetch earthquakes', `Status: ${res.status}`);
+                    log('✗ USGS fetch failed', 'error');
+                }
+            } catch (e) {
+                updateTest('usgs-test', 'error', '✗ USGS fetch error', e.message);
+                log(`✗ USGS error: ${e.message}`, 'error');
+            }
+
+            // Test 3: Analysis API
+            try {
+                log('Testing /analysis POST endpoint...', 'info');
+                const res = await fetch('http://localhost:8000/analysis', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ events: [{ mag: 4.5, place: 'Test' }] })
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    updateTest('analysis-test', 'ok', '✓ Analysis API working', JSON.stringify(data, null, 2));
+                    log('✓ Analysis API test passed', 'success');
+                } else {
+                    updateTest('analysis-test', 'error', '✗ Analysis API failed', `Status: ${res.status}`);
+                    log('✗ Analysis API failed', 'error');
+                }
+            } catch (e) {
+                updateTest('analysis-test', 'error', '✗ Analysis API error', e.message);
+                log(`✗ Analysis error: ${e.message}`, 'error');
+            }
+
+            // Test 4: WebSocket
+            try {
+                log('Attempting WebSocket connection...', 'info');
+                const ws = new WebSocket('ws://localhost:8000/ws/realtime');
+                let wsConnected = false;
+
+                ws.onopen = () => {
+                    wsConnected = true;
+                    updateTest('ws-test', 'ok', '✓ WebSocket connected', 'Connected to /ws/realtime');
+                    log('✓ WebSocket connection established', 'success');
+                    setTimeout(() => ws.close(), 2000);
+                };
+
+                ws.onerror = (e) => {
+                    if (!wsConnected) {
+                        updateTest('ws-test', 'error', '✗ WebSocket connection failed', e.message || 'Unknown error');
+                        log(`✗ WebSocket error: ${e.message}`, 'error');
+                    }
+                };
+
+                ws.onmessage = (e) => {
+                    log(`✓ WebSocket message received: ${e.data.substring(0, 60)}...`, 'success');
+                };
+
+                setTimeout(() => {
+                    if (!wsConnected) {
+                        updateTest('ws-test', 'error', '✗ WebSocket timeout', 'Connection took too long');
+                        log('✗ WebSocket timeout', 'error');
+                        try { ws.close(); } catch (_) {}
+                    }
+                }, 5000);
+            } catch (e) {
+                updateTest('ws-test', 'error', '✗ WebSocket setup error', e.message);
+                log(`✗ WebSocket setup error: ${e.message}`, 'error');
+            }
+
+            // Test 5: 3D Globe
+            try {
+                log('Checking 3D globe resources...', 'info');
+                const globeFile = await fetch('globe-3d-threejs.html');
+                if (globeFile.ok) {
+                    updateTest('globe-test', 'ok', '✓ Globe page available', 'Ready to open');
+                    log('✓ 3D globe page is ready', 'success');
+                } else {
+                    updateTest('globe-test', 'error', '✗ Globe page not found', `Status: ${globeFile.status}`);
+                    log('✗ Globe page error', 'error');
+                }
+            } catch (e) {
+                updateTest('globe-test', 'error', '✗ Globe check error', e.message);
+                log(`✗ Globe error: ${e.message}`, 'error');
+            }
+
+            log('Integration test complete!', 'info');
+        };
+
+        const testGlobeRender = () => {
+            log('Opening 3D globe...', 'info');
+            window.open('globe-3d-threejs.html', 'globe', 'width=1200,height=800');
+        };
+
+        // Run tests on page load
+        window.addEventListener('load', runTests);
+    </script>
+</body>
+</html>

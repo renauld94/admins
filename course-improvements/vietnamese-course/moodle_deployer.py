@@ -29,7 +29,7 @@ import hashlib
 import time
 
 # Import working Moodle client
-from moodle_client import call_webservice
+from moodle_client import call_webservice, create_page_direct
 
 # Configuration
 MOODLE_URL = "https://moodle.simondatalab.de"
@@ -112,23 +112,9 @@ class MoodleAPI:
         return self.call('core_course_get_contents', courseid=courseid)
     
     def create_page(self, courseid: int, section: int, name: str, content: str) -> Dict[str, Any]:
-        """Create a Page resource in course."""
-        # First, get course context
-        course_info = self.call('core_course_get_courses', options={'ids[]': courseid})
-        
-        # Create page module
-        result = self.call(
-            'mod_page_add_page',
-            courseid=courseid,
-            section=section,
-            name=name,
-            intro='',
-            content=content,
-            contentformat=1,  # HTML format
-            display=5,  # Display in page
-            visible=1
-        )
-        return result
+        """Create a Page resource in course using direct database access."""
+        # Use the direct creation method which can handle large HTML content
+        return create_page_direct(courseid, section, name, content)
     
     def create_assignment(self, courseid: int, section: int, name: str, 
                          intro: str, duedate: int = 0) -> Dict[str, Any]:
@@ -203,10 +189,11 @@ class MoodleAPI:
 class MoodleDeployer:
     """Automated Moodle deployment for Vietnamese course."""
     
-    def __init__(self, moodle_url: str, token: str, course_id: int):
+    def __init__(self, moodle_url: str, token: str, course_id: int, preview: bool = False):
         self.api = MoodleAPI(moodle_url, token)
         self.course_id = course_id
         self.manifest = self.load_manifest()
+        self.preview = preview
         
     def load_manifest(self) -> Dict[str, Any]:
         """Load deployment manifest."""
@@ -222,19 +209,23 @@ class MoodleDeployer:
         print("  DEPLOYING QUIZZES TO QUESTION BANK")
         print("=" * 70)
         
-        # Get default question category
-        try:
-            categories = self.api.call('core_question_get_categories', 
-                                      courseid=self.course_id)
-            if not categories:
-                print("❌ No question categories found")
+        # Get default question category (skip live API when previewing)
+        if self.preview:
+            print("(Preview) Skipping category lookup; using simulated category ID: 1")
+            default_category = 1
+        else:
+            try:
+                categories = self.api.call('core_question_get_categories', 
+                                          courseid=self.course_id)
+                if not categories:
+                    print("❌ No question categories found")
+                    return
+                
+                default_category = categories[0]['id']
+                print(f"Using question category: {categories[0]['name']} (ID: {default_category})")
+            except Exception as e:
+                print(f"❌ Failed to get question categories: {e}")
                 return
-            
-            default_category = categories[0]['id']
-            print(f"Using question category: {categories[0]['name']} (ID: {default_category})")
-        except Exception as e:
-            print(f"❌ Failed to get question categories: {e}")
-            return
         
         # Import each week's quiz
         for module in self.manifest.get('modules', []):
@@ -251,21 +242,24 @@ class MoodleDeployer:
             try:
                 with open(quiz_file, 'r', encoding='utf-8') as f:
                     gift_content = f.read()
-                
+
                 # Create category for this week
                 category_name = f"Week {week} - {module['title']}"
-                
-                # Import questions
+
                 print(f"  Importing questions to category: {category_name}")
-                result = self.api.import_questions(
-                    self.course_id, 
-                    default_category, 
-                    gift_content,
-                    category_name
-                )
-                
-                print(f"  ✓ Imported successfully")
-                
+
+                if self.preview:
+                    print(f"  (Preview) Would import GIFT from: {quiz_file}")
+                else:
+                    # Import questions
+                    result = self.api.import_questions(
+                        self.course_id, 
+                        default_category, 
+                        gift_content,
+                        category_name
+                    )
+                    print(f"  ✓ Imported successfully")
+
             except Exception as e:
                 print(f"  ❌ Failed: {e}")
         
@@ -293,22 +287,24 @@ class MoodleDeployer:
             try:
                 with open(lesson_file, 'r', encoding='utf-8') as f:
                     html_content = f.read()
-                
+
                 # Inject Vietnamese Tutor Agent widget
                 html_content = self.inject_agent_widget(html_content, week)
-                
+
                 page_name = f"Week {week}: {module['title']}"
-                
+
                 print(f"  Creating page: {page_name}")
-                result = self.api.create_page(
-                    self.course_id,
-                    week,  # Section number
-                    page_name,
-                    html_content
-                )
-                
-                print(f"  ✓ Created successfully")
-                
+                if self.preview:
+                    print(f"  (Preview) Would create Page resource for: {lesson_file}")
+                else:
+                    result = self.api.create_page(
+                        self.course_id,
+                        week,  # Section number
+                        page_name,
+                        html_content
+                    )
+                    print(f"  ✓ Created successfully")
+
             except Exception as e:
                 print(f"  ❌ Failed: {e}")
         
@@ -333,13 +329,16 @@ class MoodleDeployer:
             if flashcard_file.exists():
                 try:
                     print(f"  Uploading flashcards: {flashcard_file.name}")
-                    result = self.api.create_resource(
-                        self.course_id,
-                        week,
-                        f"Week {week} Flashcards - Anki Deck",
-                        [str(flashcard_file)]
-                    )
-                    print(f"  ✓ Flashcards uploaded")
+                    if self.preview:
+                        print(f"  (Preview) Would upload file: {flashcard_file}")
+                    else:
+                        result = self.api.create_resource(
+                            self.course_id,
+                            week,
+                            f"Week {week} Flashcards - Anki Deck",
+                            [str(flashcard_file)]
+                        )
+                        print(f"  ✓ Flashcards uploaded")
                 except Exception as e:
                     print(f"  ❌ Flashcard upload failed: {e}")
             else:
@@ -349,13 +348,16 @@ class MoodleDeployer:
             if dialogue_file.exists():
                 try:
                     print(f"  Uploading dialogue: {dialogue_file.name}")
-                    result = self.api.create_resource(
-                        self.course_id,
-                        week,
-                        f"Week {week} Practice Dialogues",
-                        [str(dialogue_file)]
-                    )
-                    print(f"  ✓ Dialogue uploaded")
+                    if self.preview:
+                        print(f"  (Preview) Would upload file: {dialogue_file}")
+                    else:
+                        result = self.api.create_resource(
+                            self.course_id,
+                            week,
+                            f"Week {week} Practice Dialogues",
+                            [str(dialogue_file)]
+                        )
+                        print(f"  ✓ Dialogue uploaded")
                 except Exception as e:
                     print(f"  ❌ Dialogue upload failed: {e}")
             else:
@@ -482,14 +484,17 @@ class MoodleDeployer:
             print(f"\nWeek {week}: {assignment['name']}")
             
             try:
-                result = self.api.create_assignment(
-                    self.course_id,
-                    week,
-                    assignment['name'],
-                    assignment['intro'],
-                    duedate
-                )
-                print(f"  ✓ Assignment created")
+                if self.preview:
+                    print(f"  (Preview) Would create assignment: {assignment['name']} (due: {duedate})")
+                else:
+                    result = self.api.create_assignment(
+                        self.course_id,
+                        week,
+                        assignment['name'],
+                        assignment['intro'],
+                        duedate
+                    )
+                    print(f"  ✓ Assignment created")
             except Exception as e:
                 print(f"  ❌ Failed: {e}")
         
@@ -725,36 +730,45 @@ function quickAction(action) {{
         print("  5. All assignments with descriptions")
         print("  6. Vietnamese Tutor Agent widgets on all pages")
         
-        response = input("\nProceed with deployment? (yes/no): ")
-        if response.lower() != 'yes':
-            print("Deployment cancelled.")
-            return
+        # If preview mode, skip interactive confirmation and just show plan
+        if self.preview:
+            print("(Preview mode) Showing planned actions without contacting Moodle.")
+        else:
+            response = input("\nProceed with deployment? (yes/no): ")
+            if response.lower() != 'yes':
+                print("Deployment cancelled.")
+                return
         
         # Execute deployment steps
         try:
+            # Run steps (they act as previews if self.preview is True)
             self.deploy_quizzes()
-            time.sleep(2)
-            
+            time.sleep(1)
+
             self.deploy_lessons()
-            time.sleep(2)
-            
+            time.sleep(1)
+
             self.deploy_resources()
-            time.sleep(2)
-            
+            time.sleep(1)
+
             self.deploy_assignments()
-            
+
             print("\n" + "=" * 70)
-            print("  🎉 DEPLOYMENT COMPLETE!")
+            if self.preview:
+                print("  ✅ PREVIEW COMPLETE - no changes made to Moodle")
+            else:
+                print("  🎉 DEPLOYMENT COMPLETE!")
             print("=" * 70)
-            print("\nAll content has been deployed to Moodle!")
-            print(f"View course: {MOODLE_URL}/course/view.php?id={self.course_id}")
-            print("\nDeployed:")
-            print(f"  ✓ {len(self.manifest.get('modules', []))} weeks of quizzes")
-            print(f"  ✓ {len(self.manifest.get('modules', []))} HTML lessons with Agent widgets")
-            print(f"  ✓ {len(self.manifest.get('modules', []))} flashcard sets")
-            print(f"  ✓ {len(self.manifest.get('modules', []))} dialogue files")
-            print(f"  ✓ 7 assignments")
-            
+            print("\nSummary:")
+            print(f"  Weeks processed (manifest): {len(self.manifest.get('modules', []))}")
+            print(f"  Lessons (page resources): {len(self.manifest.get('modules', []))}")
+            print(f"  Quizzes (GIFT): {len(self.manifest.get('modules', []))}")
+            print(f"  Flashcard files: {len(self.manifest.get('modules', []))}")
+            print(f"  Dialogue files: {len(self.manifest.get('modules', []))}")
+
+            if not self.preview:
+                print(f"\nView course: {MOODLE_URL}/course/view.php?id={self.course_id}")
+
         except Exception as e:
             print(f"\n❌ Deployment failed: {e}")
             print("Please check your Moodle token and permissions.")
@@ -770,16 +784,18 @@ def main():
     parser.add_argument("--configure-agent-widgets", action="store_true", help="Configure Agent widgets only")
     parser.add_argument("--moodle-url", default=MOODLE_URL, help="Moodle base URL")
     parser.add_argument("--course-id", type=int, default=COURSE_ID, help="Course ID")
+    parser.add_argument("--preview", action="store_true", help="Preview actions without contacting Moodle")
     
     args = parser.parse_args()
     
-    if not MOODLE_TOKEN:
+    if not MOODLE_TOKEN and not args.preview:
         print("❌ Moodle token not found!")
         print(f"Create one at: {MOODLE_URL}/admin/settings.php?section=webservicetokens")
         print(f"Save it to: {MOODLE_TOKEN_FILE}")
         sys.exit(1)
-    
-    deployer = MoodleDeployer(args.moodle_url, MOODLE_TOKEN, args.course_id)
+
+    token_to_use = MOODLE_TOKEN if MOODLE_TOKEN else ""
+    deployer = MoodleDeployer(args.moodle_url, token_to_use, args.course_id, preview=args.preview)
     
     if args.deploy_quizzes:
         deployer.deploy_quizzes()

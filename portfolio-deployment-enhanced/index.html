@@ -24,6 +24,10 @@
     <!-- Security: request HTTPS and upgrade insecure requests where supported -->
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains; preload">
+    <!-- Cache control: Force cache refresh for dynamic content -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
 
 
         <!-- Force HTTPS in browsers if someone enters http://simondatalab.de -->
@@ -69,7 +73,13 @@
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <!-- THREE.js loader for HERO SECTION ONLY - Epic cinematic neural visualization -->
-    <script defer src="three-loader.js"></script>
+    <script defer src="three-loader.js?v=20251107_090000"></script>
+    <!-- ENHANCED Epic visualization with 3D globe, dramatic lighting, bloom effects -->
+    <script defer src="epic-neural-cosmos-viz-enhanced.js?v=20251107_090000"></script>
+    <!-- Original epic visualization (fallback if enhanced unavailable) - load dynamically only if needed -->
+    <!-- <script defer src="epic-neural-cosmos-viz.js"></script> -->
+    <!-- Bulletproof hero visualization initialization -->
+    <script defer src="hero-viz-initialization.js?v=20251107_100000"></script>
     <!-- epic-neural-loading-enhanced.js is loaded non-blockingly from app.js when needed -->
                 <!-- JSON-LD structured data -->
                 <script type="application/ld+json">
@@ -101,6 +111,105 @@
 
             /* Convenient background helper when needed */
             .bg-dark { background-color: var(--dark) !important; color: var(--white) !important; }
+
+            /* Resume navigation link styling - Pure cinematic */
+            .resume-nav-link {
+                background: linear-gradient(135deg, #0ea5e9, #06b6d4) !important;
+                color: white !important;
+                border-radius: 8px !important;
+                padding: 8px 12px !important;
+                font-weight: 600 !important;
+                transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+                text-decoration: none !important;
+                position: relative !important;
+                overflow: hidden !important;
+            }
+
+            .resume-nav-link::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+                transition: left 0.6s ease !important;
+            }
+
+            .resume-nav-link:hover::before {
+                left: 100%;
+            }
+
+            .resume-nav-link:hover {
+                background: linear-gradient(135deg, #0284c7, #0891b2) !important;
+                transform: translateY(-3px) scale(1.05) !important;
+                box-shadow: 
+                    0 8px 24px rgba(14, 165, 233, 0.4),
+                    0 0 20px rgba(6, 182, 212, 0.2),
+                    inset 0 1px 0 rgba(255,255,255,0.2) !important;
+                letter-spacing: 0.5px !important;
+            }
+
+            .mobile-nav .resume-nav-link {
+                margin: 8px 0 !important;
+                display: inline-block !important;
+                text-align: center !important;
+                width: 100% !important;
+            }
+
+            /* Enhanced resume button in profile card - Pure cinematic effect */
+            .enhanced-resume-btn {
+                background: linear-gradient(135deg, #0ea5e9, #06b6d4) !important;
+                color: white !important;
+                border: none !important;
+                font-size: 1.05rem !important;
+                font-weight: 700 !important;
+                padding: 14px 20px !important;
+                box-shadow: 0 4px 16px rgba(14, 165, 233, 0.3) !important;
+                position: relative !important;
+                overflow: hidden !important;
+                transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+                letter-spacing: 0.3px !important;
+            }
+
+            .enhanced-resume-btn::before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 0;
+                height: 0;
+                border-radius: 50%;
+                background: radial-gradient(circle, rgba(255,255,255,0.5), transparent);
+                transform: translate(-50%, -50%);
+                transition: width 0.6s, height 0.6s !important;
+                pointer-events: none;
+            }
+
+            .enhanced-resume-btn:hover::before {
+                width: 300px;
+                height: 300px;
+            }
+
+            .enhanced-resume-btn:hover {
+                background: linear-gradient(135deg, #0284c7, #0891b2) !important;
+                transform: translateY(-4px) scale(1.08) !important;
+                box-shadow: 
+                    0 12px 32px rgba(14, 165, 233, 0.5),
+                    0 0 30px rgba(6, 182, 212, 0.3),
+                    0 0 60px rgba(14, 165, 233, 0.15),
+                    inset 0 2px 0 rgba(255,255,255,0.25) !important;
+            }
+
+            .enhanced-resume-btn svg {
+                transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                            filter 0.4s ease !important;
+            }
+
+            .enhanced-resume-btn:hover svg {
+                transform: translateY(-2px) !important;
+                filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.6)) !important;
+            }
         </style>
 
         <!-- Hero visualization constraints and lazy-load control -->
@@ -153,6 +262,9 @@
                 <li><a href="#projects" class="nav-link">Projects</a></li>
                 <li><a href="#expertise" class="nav-link">Expertise</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="assets/resume/simon-renauld-resume.pdf" class="nav-link resume-nav-link" download rel="noopener noreferrer">
+                    Resume
+                </a></li>
                 <li class="nav-dropdown">
                     <button class="dropdown-toggle" onclick="toggleDropdown()" aria-expanded="false" aria-haspopup="true">
                         Admin Tools
@@ -202,6 +314,9 @@
                     <li><a href="#projects" class="nav-link">Projects</a></li>
                     <li><a href="#expertise" class="nav-link">Expertise</a></li>
                     <li><a href="#contact" class="nav-link">Contact</a></li>
+                    <li><a href="assets/resume/simon-renauld-resume.pdf" class="nav-link resume-nav-link" download rel="noopener noreferrer">
+                        Download Resume
+                    </a></li>
                     <li class="mobile-dropdown">
                         <button class="mobile-dropdown-toggle" onclick="toggleMobileDropdown()" aria-expanded="false">
                             Admin Tools
@@ -327,7 +442,7 @@
                                 <span class="highlight-value">MLOps, Data Engineering, Governance</span>
                             </div>
                         </div>
-                        <a href="assets/resume/simon-renauld-resume.pdf" class="profile-cta" download rel="noopener noreferrer">
+                        <a href="assets/resume/simon-renauld-resume.pdf" class="profile-cta enhanced-resume-btn" download rel="noopener noreferrer">
                             Download Full Resume
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -479,6 +594,137 @@
                                 <span><strong>1</strong> unified workflow</span>
                                 <span><strong>Interactive</strong> insights</span>
                             </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- EPIC GEOSPATIAL SHOWCASE: Live Weather & Night Lights -->
+        <section id="geospatial-showcase" class="geospatial-showcase">
+            <div class="section-container">
+                <div class="section-header">
+                    <span class="section-label">Real-Time Earth Intelligence</span>
+                    <h2>Live Geospatial Analytics</h2>
+                    <p class="section-subtitle">Visualizing real-time weather systems and urban intelligence through interactive 3D mapping</p>
+                </div>
+
+                <div class="showcase-grid">
+                    <!-- Weather Radar Card -->
+                    <article class="showcase-card weather-card">
+                        <div class="showcase-visual">
+                            <div class="radar-container">
+                                <!-- Animated radar rings -->
+                                <svg class="radar-rings" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid slice">
+                                    <defs>
+                                        <radialGradient id="radarGrad" cx="50%" cy="50%" r="50%">
+                                            <stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:0.3" />
+                                            <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.1" />
+                                            <stop offset="100%" style="stop-color:#0ea5e9;stop-opacity:0" />
+                                        </radialGradient>
+                                        <filter id="radarGlow">
+                                            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                                            <feMerge>
+                                                <feMergeNode in="coloredBlur"/>
+                                                <feMergeNode in="SourceGraphic"/>
+                                            </feMerge>
+                                        </filter>
+                                    </defs>
+                                    <!-- Background circle -->
+                                    <circle cx="100" cy="100" r="95" fill="none" stroke="#064e3b" stroke-width="2" opacity="0.3"/>
+                                    <!-- Concentric rings (animated) -->
+                                    <circle cx="100" cy="100" r="70" fill="none" stroke="#0ea5e9" stroke-width="1" opacity="0.4" class="radar-pulse-1"/>
+                                    <circle cx="100" cy="100" r="50" fill="none" stroke="#06b6d4" stroke-width="1" opacity="0.3" class="radar-pulse-2"/>
+                                    <circle cx="100" cy="100" r="30" fill="none" stroke="#0ea5e9" stroke-width="1" opacity="0.2" class="radar-pulse-3"/>
+                                    <!-- Radial gradient overlay -->
+                                    <circle cx="100" cy="100" r="95" fill="url(#radarGrad)" filter="url(#radarGlow)"/>
+                                    <!-- Weather patterns (rain, clouds) -->
+                                    <path d="M 100 50 Q 110 60 100 70 Q 90 60 100 50" fill="#22d3ee" opacity="0.6" class="weather-particle-1"/>
+                                    <path d="M 130 90 Q 145 95 150 110" fill="none" stroke="#0ea5e9" stroke-width="2" opacity="0.5" class="weather-particle-2"/>
+                                    <circle cx="75" cy="110" r="8" fill="#0891b2" opacity="0.4" class="weather-particle-3"/>
+                                    <!-- Rotating sweep line -->
+                                    <line x1="100" y1="100" x2="100" y2="20" stroke="#00ff00" stroke-width="2" opacity="0.7" class="radar-sweep"/>
+                                </svg>
+                                <div class="radar-label">Live Weather Radar</div>
+                            </div>
+                        </div>
+                        <div class="showcase-content">
+                            <h3>Live Weather Radar (RainViewer)</h3>
+                            <p>Real-time precipitation and weather pattern analysis using global satellite and radar data. Track storms, monitor atmospheric conditions, and predict weather dynamics across any region on Earth.</p>
+                            <div class="showcase-features">
+                                <span class="feature-tag">Real-Time Data</span>
+                                <span class="feature-tag">Global Coverage</span>
+                                <span class="feature-tag">Satellite Integration</span>
+                            </div>
+                            <a href="https://www.simondatalab.de/geospatial-viz/globe-3d.html" class="showcase-cta">
+                                Explore Interactive 3D Globe
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Night Lights Card -->
+                    <article class="showcase-card nightlights-card">
+                        <div class="showcase-visual">
+                            <div class="nightlights-container">
+                                <!-- City lights animation -->
+                                <svg class="city-lights" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid slice">
+                                    <defs>
+                                        <radialGradient id="cityGlow" cx="50%" cy="50%" r="40%">
+                                            <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:0.8" />
+                                            <stop offset="70%" style="stop-color:#f97316;stop-opacity:0.3" />
+                                            <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:0" />
+                                        </radialGradient>
+                                        <filter id="cityBlur">
+                                            <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+                                            <feMerge>
+                                                <feMergeNode in="coloredBlur"/>
+                                                <feMergeNode in="SourceGraphic"/>
+                                            </feMerge>
+                                        </filter>
+                                    </defs>
+                                    <!-- Night sky background -->
+                                    <rect width="200" height="200" fill="#0f172a"/>
+                                    <!-- City glow center (Ho Chi Minh City) -->
+                                    <circle cx="100" cy="100" r="60" fill="url(#cityGlow)" filter="url(#cityBlur)"/>
+                                    <!-- Individual light points (dense urban core) -->
+                                    <circle cx="85" cy="85" r="2" fill="#fbbf24" opacity="0.9" class="light-twinkle-1"/>
+                                    <circle cx="115" cy="95" r="1.5" fill="#f97316" opacity="0.8" class="light-twinkle-2"/>
+                                    <circle cx="100" cy="110" r="2.5" fill="#fbbf24" opacity="0.9" class="light-twinkle-3"/>
+                                    <circle cx="90" cy="105" r="1" fill="#fed7aa" opacity="0.7" class="light-twinkle-4"/>
+                                    <circle cx="110" cy="85" r="1.5" fill="#f97316" opacity="0.8" class="light-twinkle-5"/>
+                                    <circle cx="95" cy="95" r="2" fill="#fbbf24" opacity="0.9" class="light-twinkle-6"/>
+                                    <circle cx="105" cy="105" r="1.5" fill="#fed7aa" opacity="0.7" class="light-twinkle-7"/>
+                                    <circle cx="88" cy="92" r="1" fill="#fbbf24" opacity="0.8" class="light-twinkle-8"/>
+                                    <!-- Surrounding secondary lights (suburbs/nearby regions) -->
+                                    <circle cx="60" cy="70" r="1" fill="#fed7aa" opacity="0.5" class="light-twinkle-sub1"/>
+                                    <circle cx="140" cy="120" r="1" fill="#fed7aa" opacity="0.5" class="light-twinkle-sub2"/>
+                                    <circle cx="70" cy="130" r="0.8" fill="#fbbf24" opacity="0.4" class="light-twinkle-sub3"/>
+                                    <!-- Stars in background -->
+                                    <circle cx="30" cy="30" r="0.5" fill="#e0e7ff" opacity="0.3"/>
+                                    <circle cx="170" cy="40" r="0.5" fill="#e0e7ff" opacity="0.3"/>
+                                    <circle cx="160" cy="160" r="0.5" fill="#e0e7ff" opacity="0.3"/>
+                                    <circle cx="40" cy="170" r="0.5" fill="#e0e7ff" opacity="0.3"/>
+                                </svg>
+                                <div class="nightlights-label">Ho Chi Minh City Night Lights</div>
+                            </div>
+                        </div>
+                        <div class="showcase-content">
+                            <h3>Urban Night Lights Intelligence</h3>
+                            <p>Analyze human activity and economic vitality through satellite-derived nighttime imagery. Ho Chi Minh City's luminous footprint reveals urban density, development patterns, and nocturnal dynamics across Southeast Asia's most vibrant metropolitan hub.</p>
+                            <div class="showcase-features">
+                                <span class="feature-tag">Satellite Imagery</span>
+                                <span class="feature-tag">Urban Analytics</span>
+                                <span class="feature-tag">Economic Indicators</span>
+                            </div>
+                            <a href="https://www.simondatalab.de/geospatial-viz/globe-3d.html" class="showcase-cta">
+                                Explore Interactive 3D Globe
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                            </a>
                         </div>
                     </article>
                 </div>
@@ -818,36 +1064,57 @@
     .project-card.compact {
         display: flex;
         gap: 12px;
-        background: linear-gradient(135deg, rgba(5,8,15,0.96), rgba(10,14,26,0.96));
-        border: 1px solid rgba(0,212,255,0.08);
-        padding: 14px;
+        background: #fff;
+        border: 1px solid rgba(15,23,42,0.06);
+        padding: 16px;
         border-radius: 12px;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    .project-left { width: 110px; flex: 0 0 110px; display:flex; flex-direction:column; gap:8px; align-items:flex-start; }
-    .project-badge { background: rgba(0,212,255,0.08); color:#00d4ff; padding:4px 8px; border-radius:8px; font-weight:700; font-size:0.8rem; }
-    .project-category.muted { color:#9db4d3; font-size:0.85rem; }
+    .project-card.compact:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+    .project-left { width: 100px; flex: 0 0 100px; display:flex; flex-direction:column; gap:8px; align-items:flex-start; }
+    .project-badge { background: rgba(14,165,233,0.1); color:#0369a1; padding:6px 10px; border-radius:6px; font-weight:700; font-size:0.8rem; border: 1px solid rgba(14,165,233,0.2); }
+    .project-category.muted { color:#475569; font-size:0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
     .project-right { flex:1; }
-    .project-title { margin:0 0 6px 0; font-size:1.05rem; }
-    .project-desc { margin:0 0 8px 0; color:#b0c4de; font-size:0.92rem; }
-    .tech-stack-inline { color:#9db4d3; font-size:0.86rem; margin-bottom:8px; }
-    .project-metrics { display:flex; gap:10px; flex-wrap:wrap; color:#e0e0e0; font-size:0.9rem; }
+    .project-title { margin:0 0 8px 0; font-size:1.1rem; font-weight:700; color:#1e293b; }
+    .project-desc { margin:0 0 10px 0; color:#475569; font-size:0.95rem; line-height:1.5; }
+    .tech-stack-inline { color:#64748b; font-size:0.9rem; margin-bottom:10px; font-weight: 500; }
+    .project-metrics { display:flex; gap:12px; flex-wrap:wrap; color:#1e293b; font-size:0.9rem; font-weight: 600; }
 
     /* Compact expertise: two-column tighter layout */
-    .expertise-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:18px; }
-    .expertise-card { padding:16px; border-radius:12px; background: linear-gradient(135deg, rgba(5,8,15,0.94), rgba(10,14,26,0.94)); border:1px solid rgba(0,212,255,0.06); }
-    .expertise-card h3 { margin-top:8px; margin-bottom:8px; }
-
-    .expertise-card + .expertise-card {
-        margin-top: 32px;
-        border-top: 2px solid #00d4ff;
-        opacity: 0.13;
-        padding-top: 32px;
+    .expertise-grid { display:grid; grid-template-columns: repeat(2, minmax(260px, 1fr)); gap:18px; }
+    .expertise-card { 
+        padding:18px; 
+        border-radius:12px; 
+        background: #fff;
+        border: 1px solid rgba(15,23,42,0.06);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
+    .expertise-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+    .expertise-card h3 { 
+        margin-top:0; 
+        margin-bottom:12px; 
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #1e293b;
+    }
+    .expertise-card p {
+        color: #475569;
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+
     .tech-category + .tech-category {
         margin-top: 28px;
-        border-top: 1.5px solid #00d4ff;
-        opacity: 0.13;
+        border-top: 1.5px solid rgba(15,23,42,0.1);
         padding-top: 28px;
     }
     .infra-preview-metrics {
@@ -1088,6 +1355,7 @@
     <!-- Inline fallback for dropdowns removed; app.js owns all nav wiring to avoid duplicate bindings -->
     
     <script src="app.js?v=20251018.2"></script>
+    <script defer src="geospatial-showcase.js?v=20251108"></script>
     <script defer src="build-info.js"></script>
     <!-- Globe 3D JS removed -->
 
@@ -1163,252 +1431,24 @@
     
     <!-- NEURAL GEOSERVER VISUALIZATION: GPU-Accelerated Three.js Neural-Spatial System -->
     <script>
-        console.log('[NEURAL GEOSERVER] Loading GPU-Accelerated Neural-Spatial Visualization');
-        console.log('   Device: Desktop | Pure Three.js implementation with GeoServer integration');
-        console.log('   Features: Real-time GeoServer layers as neural clusters, synaptic connections, Earth backdrop, Proxmox satellites');
-        console.log('   Performance: GPU acceleration, LOD, frustum culling, 10K+ particles, interactive metadata');
-        
-        // Simple global event bus for hero & showcase integration
+        // Global event bus for hero & showcase integration
         window.__HERO_EVENT_BUS__ = window.__HERO_EVENT_BUS__ || {
             listeners: {},
             on(e,f){this.listeners[e]=(this.listeners[e]||[]).concat(f);},
             emit(e,p){(this.listeners[e]||[]).forEach(f=>{try{f(p);}catch(err){console.warn('event handler error',err)}});}
         };
         
-
-        
-        // Control flag - enable EPIC HERO visualization in #hero-visualization div
-        // Set to false to prevent automatic loading (safe default for mobile/battery)
-    window.__ALLOW_NEURAL_AUTOLOAD__ = true;
         // URL override: add ?viz=on or ?viz=off to force behavior for debugging
         try {
             const q = new URLSearchParams(window.location.search);
             const viz = (q.get('viz') || '').toLowerCase();
-            if (viz === 'on') {
-                console.log('[NEURAL GEOSERVER] URL override: forcing autoload ON');
-                window.__ALLOW_NEURAL_AUTOLOAD__ = true;
-            } else if (viz === 'off') {
-                console.log('[NEURAL GEOSERVER] URL override: forcing autoload OFF');
+            if (viz === 'off') {
                 window.__ALLOW_NEURAL_AUTOLOAD__ = false;
             }
         } catch (e) { /* noop */ }
-
-        // Listen for THREE.js ready event and start EPIC visualization in hero section
-        window.addEventListener('threeJsReady', () => {
-            console.log('[NEURAL GEOSERVER] Received THREE.js ready event');
-            setTimeout(() => {
-                if (!window.__ALLOW_NEURAL_AUTOLOAD__) {
-                    console.log('[NEURAL GEOSERVER] Auto-load disabled; skipping neural visualization.');
-                    return;
-                }
-                if (typeof THREE !== 'undefined') {
-                    console.log('[NEURAL GEOSERVER] THREE.js confirmed available, starting EPIC hero visualization...');
-                    loadNeuralVisualization();
-                } else {
-                    console.error('[NEURAL GEOSERVER] THREE.js not available despite ready event');
-                }
-            }, 200);
-        });
         
-    // Expose manual starter for console/manual triggers
-    window.startHeroViz = function startHeroViz() { loadNeuralVisualization(); };
-
-    function loadNeuralVisualization() {
-            // Avoid loading heavy visualizations on small/mobile viewports.
-            if (window.__IS_MOBILE_PORTFOLIO__) {
-                console.log('[NEURAL GEOSERVER] Mobile viewport detected — loading simple fallback visualization instead of heavy assets.');
-                try { loadSimpleVisualization(); } catch (e) { console.warn('Simple visualization fallback failed', e); }
-                return;
-            }
-            console.log('Loading Epic Neural Visualization...');
-            
-            // Try to load the Epic Neural to Cosmos visualization first
-            const epicScript = document.createElement('script');
-            epicScript.src = './epic-neural-cosmos-viz.js';
-            epicScript.onload = () => {
-                console.log('Epic Neural Cosmos Viz loaded');
-
-                // Defer heavy initialization to idle time so we don't block the page load handler.
-                const init = () => {
-                    try {
-                        // Initialize epic visualization
-                        if (window.EpicNeuralToCosmosViz) {
-                            try {
-                                // Create the instance with deferred initialization so heavy setup
-                                // (phase creation) can be spread across idle frames instead of blocking
-                                const epicViz = new window.EpicNeuralToCosmosViz('hero-visualization', {
-                                    autoTransition: true,
-                                    transitionDuration: 20000, // 20 seconds per phase for portfolio
-                                    particleCount: 2500,
-                                    enableInteraction: true,
-                                    deferInit: true
-                                });
-
-                                window.epicNeuralViz = epicViz;
-
-                                // Emit initial mounted event (stats may be minimal until deferred init completes)
-                                window.__HERO_EVENT_BUS__?.emit('hero:mounted', {
-                                    ts: Date.now(),
-                                    variant: 'epic-neural-cosmos-viz-deferred',
-                                    mobile: false,
-                                    stats: epicViz.getStats()
-                                });
-
-                                // Schedule the heavy initialization to run after this idle handler finishes.
-                                // We schedule via setTimeout to avoid doing the heavy work inside the same
-                                // requestIdleCallback callback that triggered this init — runDeferredInit
-                                // itself will spread its work across further idle callbacks.
-                                setTimeout(() => {
-                                    try {
-                                        if (window.epicNeuralViz && typeof window.epicNeuralViz.runDeferredInit === 'function') {
-                                            if (typeof requestIdleCallback === 'function') {
-                                                requestIdleCallback(() => window.epicNeuralViz.runDeferredInit(), { timeout: 2000 });
-                                            } else {
-                                                // fallback if requestIdleCallback is not available
-                                                setTimeout(() => window.epicNeuralViz.runDeferredInit(), 120);
-                                            }
-                                        }
-                                    } catch (e) {
-                                        console.warn('Scheduling deferred epic init failed', e);
-                                    }
-                                }, 50);
-
-                                console.log('Epic Neural to Cosmos Visualization instantiated (deferred init scheduled)');
-                                return; // Success, don't load fallbacks
-
-                            } catch (error) {
-                                console.warn('Epic visualization failed to initialize:', error);
-                                loadSimpleVisualization();
-                            }
-                        } else {
-                            console.warn('Epic visualization class not found');
-                            loadSimpleVisualization();
-                        }
-                    } catch (e) {
-                        console.warn('Deferred epic init failed', e);
-                        loadSimpleVisualization();
-                    }
-                };
-
-                if (typeof requestIdleCallback === 'function') {
-                    requestIdleCallback(init, { timeout: 2000 });
-                } else {
-                    // Fallback, small delay to yield to load handler
-                    setTimeout(init, 120);
-                }
-            };
-            epicScript.onerror = (err) => {
-                console.warn('Failed to load epic neural visualization:', err);
-                loadSimpleVisualization();
-            };
-            document.head.appendChild(epicScript);
-        }
-        
-        function loadSimpleVisualization() {
-            console.log('Loading Simple Neural Viz as fallback...');
-            
-            // Load simple neural viz as fallback
-            const simpleScript = document.createElement('script');
-            simpleScript.src = './simple-neural-viz.js';
-            simpleScript.onload = () => {
-                console.log('Simple Neural Viz loaded');
-                
-                // Initialize simple visualization
-                if (window.SimpleNeuralViz) {
-                    const simpleViz = new window.SimpleNeuralViz('hero-visualization', {
-                        particleCount: 2000
-                    });
-                    
-                    window.simpleNeuralViz = simpleViz;
-                    
-                    // Emit success event
-                    window.__HERO_EVENT_BUS__?.emit('hero:mounted', {
-                        ts: Date.now(),
-                        variant: 'simple-neural-viz',
-                        mobile: false,
-                        stats: simpleViz.getStats()
-                    });
-                    
-                    console.log('Simple Neural Visualization initialized successfully');
-                }
-                
-                // Now try to load the advanced GeoServer visualization as enhancement
-                loadAdvancedVisualizationInline();
-            };
-            simpleScript.onerror = (err) => {
-                console.error('Failed to load simple neural visualization:', err);
-                showFallbackVisualization();
-            };
-            document.head.appendChild(simpleScript);
-        }
-        
-    function loadAdvancedVisualizationInline() {
-            console.log('Loading advanced GeoServer visualization...');
-            
-            const perfScript = document.createElement('script');
-            perfScript.src = './neural-geoserver-performance.js?v=PERF20250113';
-            perfScript.onload = () => {
-                const script = document.createElement('script');
-                script.src = './neural-geoserver-viz.js?v=NEURAL20250113';
-                script.onload = () => {
-                    console.log('Advanced GeoServer visualization loaded');
-                    
-                    // Replace simple viz with advanced one if it loads successfully
-                    try {
-                        if (window.NeuralGeoServerViz && window.simpleNeuralViz) {
-                            window.simpleNeuralViz.destroy();
-                            
-                            const viz = new window.NeuralGeoServerViz('hero-visualization', {
-                                geoserverUrl: 'https://www.simondatalab.de/geospatial-viz',
-                                // Avoid direct IP which may trigger certificate warnings in browsers.
-                                // Use proxmox domain if available, otherwise leave empty to prevent mixed-content warnings.
-                                proxmoxUrl: '',
-                                particleCount: 15000,
-                                enableGPUAcceleration: true,
-                                enableLOD: true,
-                                enableFrustumCulling: true,
-                                updateInterval: 5000
-                            });
-                            
-                            window.neuralGeoServerViz = viz;
-                            
-                            window.__HERO_EVENT_BUS__?.emit('hero:upgraded', {
-                                ts: Date.now(),
-                                variant: 'neural-geoserver-viz',
-                                stats: viz.getStats()
-                            });
-                            
-                            console.log('Advanced Neural GeoServer visualization active');
-                        }
-                    } catch (error) {
-                        console.warn('Advanced visualization failed, keeping simple version:', error);
-                    }
-                };
-                script.onerror = () => {
-                    console.warn('Advanced visualization failed to load, simple version remains active');
-                };
-                document.head.appendChild(script);
-            };
-            perfScript.onerror = () => {
-                console.warn('Performance optimizer unavailable, simple visualization remains active');
-            };
-            document.head.appendChild(perfScript);
-        }
-        
-        function showFallbackVisualization() {
-            const mount = document.getElementById('hero-visualization');
-            if (mount) {
-                mount.innerHTML = `
-                    <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: #0ea5e9; text-align: center; padding: 2rem;">
-                        <div>
-                            <div style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">Neural GeoServer</div>
-                            <div style="font-size: 1rem; opacity: 0.8;">Real-time Geospatial Intelligence</div>
-                            <div style="font-size: 0.8rem; opacity: 0.6; margin-top: 1rem;">Initialization in progress...</div>
-                        </div>
-                    </div>
-                `;
-            }
-        }
+        // Manual trigger exposed for debugging
+        window.startHeroViz = () => window.initHeroVisualization?.();
     </script>
 
     <!-- Metrics Count-Up on Scroll -->

@@ -1,0 +1,18 @@
+[Unit]
+Description=Geospatial Data Agent (FastAPI)
+After=network.target
+
+[Service]
+Type=simple
+User=simon
+WorkingDirectory=/home/simon/Learning-Management-System-Academy
+# Set environment variables for Ollama/Qwen model integration
+Environment="OLLAMA_URL=http://127.0.0.1:11434"
+Environment="OLLAMA_MODEL=qwen2.5:7b"
+Environment="ANALYSIS_ENABLED=true"
+ExecStart=/usr/bin/env uvicorn geospatial_data_agent:app --host 0.0.0.0 --port 8000 --loop asyncio
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

@@ -64,12 +64,49 @@
             tryNext();
         });
     }
+
+    // Load post-processing scripts required by EffectComposer and passes
+    function loadPostProcessing() {
+        return new Promise((resolve) => {
+            const sources = [
+                // EffectComposer and related passes/shaders for r128
+                'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js',
+                'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js',
+                'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js',
+                'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js',
+                'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js'
+            ];
+
+            let index = 0;
+            const tryNext = () => {
+                if (index >= sources.length) {
+                    console.log('Post-processing scripts loaded (or attempted)');
+                    return resolve();
+                }
+                const src = sources[index++];
+                const s = document.createElement('script');
+                s.src = src;
+                s.onload = () => {
+                    console.log('Loaded post-processing script from', src);
+                    tryNext();
+                };
+                s.onerror = () => {
+                    console.warn('Failed to load post-processing script from', src);
+                    tryNext();
+                };
+                document.head.appendChild(s);
+            };
+            tryNext();
+        });
+    }
     
     // Load both sequentially
     async function loadAll() {
         try {
             await loadThreeJS();
             await loadOrbitControls();
+            // then load post-processing scripts (EffectComposer, passes, shaders)
+            await loadPostProcessing();
             
             console.log('THREE.js and OrbitControls ready');
             window.dispatchEvent(new CustomEvent('threeJsReady'));

@@ -30,6 +30,10 @@
     
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Leaflet MarkerCluster for mobile performance -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
     
     <style>
         * {
@@ -1532,21 +1536,21 @@
 
             <div class="legend">
                 <h4>Network Legend</h4>
-                <div class="legend-item">
+                <div class="legend-item" role="button" tabindex="0" data-type="healthcare" aria-pressed="true">
                     <div class="legend-color legend-color--health"></div>
                     <span>Healthcare Networks</span>
                 </div>
-                <div class="legend-item">
+                <div class="legend-item" role="button" tabindex="0" data-type="research" aria-pressed="true">
                     <div class="legend-color legend-color--research"></div>
                     <span>Research Institutions</span>
                 </div>
-                <div class="legend-item">
+                <div class="legend-item" role="button" tabindex="0" data-type="infrastructure" aria-pressed="true">
                     <div class="legend-color legend-color--infra"></div>
                     <span>Data Centers</span>
                 </div>
-                <div class="legend-item">
+                <div class="legend-item" role="button" tabindex="0" data-type="fishing" aria-pressed="true">
                     <div class="legend-color legend-color--cloud"></div>
-                    <span>Cloud Infrastructure</span>
+                    <span>Coastal / Fishing</span>
                 </div>
             </div>
         </div>
@@ -1601,6 +1605,7 @@
                 this.generateNetworkData();
                 this.renderNetwork();
                 this.setupControls();
+                    this.buildLegendInteractivity();
                 this.setupMobileOptimizations();
                 this.initializeAI();
                 this.setupVoiceCommands();
@@ -1608,10 +1613,40 @@
                 this.checkAllServices();
                 this.hideLoading();
             }
+
+                // Legend interactivity: click or keyboard toggles node types and matching connections
+                buildLegendInteractivity() {
+                    try {
+                        const items = document.querySelectorAll('.legend .legend-item[data-type]');
+                        items.forEach(item => {
+                            const type = item.getAttribute('data-type');
+                            const toggle = () => {
+                                const pressed = item.getAttribute('aria-pressed') === 'true';
+                                const next = !pressed;
+                                item.setAttribute('aria-pressed', next ? 'true' : 'false');
+                                item.style.opacity = next ? '1' : '0.45';
+                            if (window.networkMap) {
+                                window.networkMap.toggleNodesByType(type, next);
+                                window.networkMap.toggleConnectionsByType(type, next);
+                                try { localStorage.setItem('geodash_legend_' + type, next ? '1' : '0'); } catch(_){}
+                            }
+                            };
+                            // restore persisted state if available
+                            try {
+                                const stored = localStorage.getItem('geodash_legend_' + type);
+                                if (stored === '0') { item.setAttribute('aria-pressed','false'); item.style.opacity = '0.45'; toggle(); }
+                            } catch(_){}
+                            item.addEventListener('click', toggle);
+                            item.addEventListener('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); toggle(); } });
+                        });
+                    } catch (e) { console.warn('Legend interactivity init failed', e); }
+                }
             
             createMap() {
                 // Initialize Leaflet map with default global view
                 this.map = L.map('map').setView([20, 0], 2);
+                // Initialize a marker cluster group for large marker sets (improves mobile performance)
+                this.markerCluster = L.markerClusterGroup({ chunkedLoading: true, removeOutsideVisibleBounds: true });
                 
                 // Make map globally accessible for weather/earthquake layers
                 window.map = this.map;
@@ -1632,6 +1667,8 @@
                 // Add location button for user-initiated geolocation
                 this.addLocationButton();
                 
+                // Add markerCluster to map (will be populated in renderNetwork)
+                this.markerCluster.addTo(this.map);
                 // Initialize stats
                 setTimeout(() => updateStats(), 1000);
             }
@@ -1833,6 +1870,8 @@
                 // Clear stored layers
                 this.connectionLayers = [];
                 this.labelLayers = [];
+                // Clear marker cluster
+                if (this.markerCluster) { this.markerCluster.clearLayers(); }
                 
                 // Render connections
                 this.connections.forEach(connection => {
@@ -1843,7 +1882,11 @@
                         color: this.getConnectionColor(connection),
                         weight: connection.strength * 3,
                         opacity: 0.6
-                    }).addTo(this.map);
+                    });
+                    // attach meta so legend toggles can hide/show connections by type
+                    polyline.options._meta = { fromType: connection.from.type, toType: connection.to.type };
+                    polyline._meta = polyline.options._meta;
+                    polyline.addTo(this.map);
                     
                     // Store for smart menu control
                     this.connectionLayers.push(polyline);
@@ -1858,7 +1901,11 @@
                         weight: 2,
                         opacity: 1,
                         fillOpacity: 0.8
-                    }).addTo(this.map);
+                    });
+                    // expose type on marker for toggles
+                    marker.options._type = node.type;
+                    marker._type = node.type;
+                    marker.addTo(this.map);
                     
                     // Add popup
                     marker.bindPopup(`
@@ -1873,6 +1920,12 @@
                     
                     // Store for smart menu control
                     this.labelLayers.push(marker);
+                    // Add to marker cluster instead of directly to map for performance
+                    if (this.markerCluster) {
+                        this.markerCluster.addLayer(marker);
+                    } else {
+                        marker.addTo(this.map);
+                    }
                 });
                 
                 this.updateStats();
@@ -2279,6 +2332,39 @@
                 } else {
                     if (this.map.hasLayer(this.infraLayer)) this.map.removeLayer(this.infraLayer);
                 }
+            }
+
+            // Toggle node markers by their semantic type (healthcare, research, infrastructure, fishing)
+            toggleNodesByType(type, show) {
+                try {
+                    this.labelLayers.forEach(marker => {
+                        const mType = marker.options && marker.options._type ? marker.options._type : (marker._type || null);
+                        if (mType === type) {
+                            if (show) {
+                                if (!this.map.hasLayer(marker)) this.map.addLayer(marker);
+                            } else {
+                                if (this.map.hasLayer(marker)) this.map.removeLayer(marker);
+                            }
+                        }
+                    });
+                } catch (e) { console.warn('toggleNodesByType', e); }
+            }
+
+            // Toggle polylines/connections that are associated with a node type
+            toggleConnectionsByType(type, show) {
+                try {
+                    this.connectionLayers.forEach(poly => {
+                        // stored in poly.options._meta when created
+                        const meta = poly.options && poly.options._meta ? poly.options._meta : poly._meta || {};
+                        if (meta && (meta.fromType === type || meta.toType === type)) {
+                            if (show) {
+                                if (!this.map.hasLayer(poly)) this.map.addLayer(poly);
+                            } else {
+                                if (this.map.hasLayer(poly)) this.map.removeLayer(poly);
+                            }
+                        }
+                    });
+                } catch (e) { console.warn('toggleConnectionsByType', e); }
             }
 
             // Services status checks (favicon fetch; avoids console image errors)

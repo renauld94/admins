@@ -1,0 +1,229 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                                                                            ║
+║            EMAIL REMEDIATION FOR simondatalab.de - QUICK START             ║
+║                         November 8, 2025                                   ║
+║                                                                            ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+PROBLEM SUMMARY
+===============
+
+Your email for simondatalab.de is not being delivered (especially to Gmail)
+due to 4 critical issues:
+
+  1. ⚠️  TWO SPF TXT records in DNS (should be 1) → Gmail rejects mail
+  2. ⚠️  TWO DMARC TXT records in DNS (should be 1) → Auth confusion
+  3. ❌ No TLS certificate on SMTP → Can't use port 587 (submission)
+  4. ❌ Port 587 closed → Clients can't send authenticated email
+
+SOLUTION (3 STEPS)
+==================
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│ STEP 1: FIX DNS RECORDS (5-10 minutes)                                  │
+│                                                                         │
+│ Go to: Hetzner Robot > DNS > simondatalab.de > TXT Records             │
+│                                                                         │
+│ A. Remove DUPLICATE SPF records                                        │
+│    DELETE both existing lines starting with "v=spf1"                   │
+│    ADD single record:                                                  │
+│      Name: @                                                           │
+│      Type: TXT                                                         │
+│      Value: v=spf1 ip4:136.243.155.166 a:mail.simondatalab.de ~all    │
+│                                                                         │
+│ B. Remove DUPLICATE DMARC records                                      │
+│    DELETE both existing lines starting with "_dmarc"                   │
+│    ADD single record:                                                  │
+│      Name: _dmarc                                                      │
+│      Type: TXT                                                         │
+│      Value: v=DMARC1; p=none; rua=mailto:webmaster@simondatalab.de    │
+│                                                                         │
+│ C. SAVE and wait 5-10 minutes for DNS propagation                      │
+│                                                                         │
+│ D. VERIFY (in terminal):                                               │
+│    dig +short TXT simondatalab.de | grep spf1                          │
+│    dig +short TXT _dmarc.simondatalab.de                               │
+│    (Both should return 1 line each, not 2)                             │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│ STEP 2: CONFIGURE POSTFIX (2-3 minutes)                                 │
+│                                                                         │
+│ Run this command (all-in-one):                                         │
+│                                                                         │
+│   scp email_remediation.sh root@136.243.155.166:/tmp/ && \            │
+│     ssh root@136.243.155.166 -p 2222 \                                │
+│     "sudo bash /tmp/email_remediation.sh"                             │
+│                                                                         │
+│ This script:                                                            │
+│   ✓ Obtains TLS certificate from Let's Encrypt                        │
+│   ✓ Configures STARTTLS on port 25                                    │
+│   ✓ Enables submission port 587 with authentication                   │
+│   ✓ Reloads Postfix                                                   │
+│   ✓ Verifies everything works                                         │
+│                                                                         │
+│ If script fails:                                                        │
+│   - Check SSH access: ssh root@136.243.155.166 -p 2222               │
+│   - Ensure you have root permissions                                   │
+│   - See EMAIL_REMEDIATION_POSTFIX_CONFIG.md for manual steps          │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│ STEP 3: VERIFY & TEST (10 minutes)                                      │
+│                                                                         │
+│ A. Verify ports are open (from local machine):                        │
+│    nc -vz mail.simondatalab.de 25                                     │
+│    nc -vz mail.simondatalab.de 587                                    │
+│    (Both should say "succeeded")                                       │
+│                                                                         │
+│ B. Test TLS certificate:                                               │
+│    openssl s_client -connect mail.simondatalab.de:25 -starttls smtp  │
+│    (Type: QUIT)                                                        │
+│    (Should show valid cert with CN=mail.simondatalab.de)              │
+│                                                                         │
+│ C. Send test email FROM simondatalab.de:                              │
+│    1. Go to Hetzner Webmail                                            │
+│    2. Log in as: webmaster@simondatalab.de                            │
+│    3. Send email to your Gmail account                                │
+│    4. Check if it arrives (should not be in spam)                     │
+│    5. If in Gmail spam, click on email dropdown > "Show original"    │
+│    6. Search for "spf=pass dkim=pass dmarc=pass"                     │
+│                                                                         │
+│ D. Send test email TO simondatalab.de:                                │
+│    1. From Gmail, send email to: webmaster@simondatalab.de           │
+│    2. Go to Hetzner Webmail                                            │
+│    3. Check if email appears in inbox                                 │
+│                                                                         │
+│ SUCCESS: Both tests pass, emails arrive, headers show "pass"          │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘
+
+DETAILED DOCUMENTS
+==================
+
+For complete information, see:
+
+  • EMAIL_REMEDIATION_MASTER_PLAN.md
+    → Complete step-by-step plan
+
+  • EMAIL_REMEDIATION_DNS_GUIDE.md
+    → Detailed DNS configuration instructions
+
+  • EMAIL_REMEDIATION_POSTFIX_CONFIG.md
+    → Manual Postfix configuration (if not using script)
+
+  • EMAIL_REMEDIATION_VERIFICATION.md
+    → Detailed verification and testing procedures
+
+  • email_remediation.sh
+    → Automation script (executable)
+
+FILES PROVIDED
+==============
+
+In this directory:
+
+  email_remediation.sh (12 KB)
+    → Automation script for Postfix configuration
+
+  EMAIL_REMEDIATION_DNS_GUIDE.md
+    → Step-by-step DNS record edits
+
+  EMAIL_REMEDIATION_POSTFIX_CONFIG.md
+    → Manual Postfix configuration guide
+
+  EMAIL_REMEDIATION_VERIFICATION.md
+    → Detailed verification tests
+
+  EMAIL_REMEDIATION_MASTER_PLAN.md
+    → Complete implementation plan
+
+  EMAIL_REMEDIATION_QUICKSTART.txt
+    → This file
+
+TIMELINE
+========
+
+  Step 1 (DNS):           5-10 minutes
+  DNS Propagation Wait:   5-10 minutes
+  Step 2 (Postfix):       2-3 minutes
+  Step 3 (Verification):  5-10 minutes
+  ─────────────────────────────────
+  TOTAL:                  ~30-40 minutes
+
+TROUBLESHOOTING
+===============
+
+Issue: DNS still shows 2 SPF records after waiting
+Fix:   Wait another 5-10 minutes. Some DNS caches are slow.
+      Run: dig +short TXT simondatalab.de
+
+Issue: Automation script fails or won't connect
+Fix:   Check SSH access: ssh root@136.243.155.166 -p 2222
+      If fails, check port 2222 is open to this IP
+      Or follow manual steps in EMAIL_REMEDIATION_POSTFIX_CONFIG.md
+
+Issue: Email still bounces after changes
+Fix:   Check maillog: ssh root@136.243.155.166 -p 2222
+                      tail /var/log/mail.log
+      Look for SPF/DKIM/DMARC errors
+      Verify DNS records again: dig +short TXT simondatalab.de
+
+Issue: Port 587 still shows "connection refused"
+Fix:   Check submission is enabled in master.cf:
+        grep "^submission" /etc/postfix/master.cf
+      If not found, enable with: sed -i 's/^#submission/submission/' /etc/postfix/master.cf
+      Then reload: postfix reload
+
+SUPPORT
+=======
+
+If stuck:
+  1. Check the relevant guide (.md file)
+  2. Review maillog for error messages
+  3. Re-run verification tests from Phase 1-5
+  4. Check "Troubleshooting" section in EMAIL_REMEDIATION_VERIFICATION.md
+
+QUICK REFERENCE
+================
+
+Verify DNS (single records):
+  dig +short TXT simondatalab.de
+  dig +short TXT _dmarc.simondatalab.de
+
+Test SMTP ports:
+  nc -vz mail.simondatalab.de 25
+  nc -vz mail.simondatalab.de 587
+
+Check Postfix status:
+  systemctl status postfix
+  postfix check
+  ss -tlnp | grep postfix
+
+View Postfix logs:
+  tail -50 /var/log/mail.log
+
+Test TLS certificate:
+  openssl s_client -connect mail.simondatalab.de:25 -starttls smtp
+
+Restart Postfix:
+  systemctl restart postfix
+
+READY TO START?
+===============
+
+1. Open Hetzner Robot DNS console
+2. Make DNS changes from STEP 1 (above)
+3. Wait 5-10 minutes
+4. Run the automation script (STEP 2)
+5. Verify (STEP 3)
+6. You're done!
+
+Questions? See EMAIL_REMEDIATION_MASTER_PLAN.md for complete details.
+
+═════════════════════════════════════════════════════════════════════════════
+Created: November 8, 2025
+Status: Ready for Implementation
+═════════════════════════════════════════════════════════════════════════════

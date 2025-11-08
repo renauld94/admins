@@ -869,6 +869,26 @@ body {
 .expertise-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-2); }
 .expertise-number { font-size: 0.875rem; font-weight: 700; color: var(--primary); margin-bottom: 0.75rem; letter-spacing: 0.05em; }
 .expertise-icon { margin-bottom: 1rem; color: var(--primary); }
+/* Card 01: Cyan (default - ML Operations) */
+.expertise-card:nth-child(1) .expertise-number,
+.expertise-card:nth-child(1) .expertise-icon { color: #0ea5e9; }
+.expertise-card:nth-child(1) .tech-highlights span { background: rgba(14,165,233,0.08); color: #0369a1; border-color: rgba(14,165,233,0.15); }
+.expertise-card:nth-child(1) .capability-list li::before { color: #0ea5e9; }
+/* Card 02: Emerald (Data Engineering) */
+.expertise-card:nth-child(2) .expertise-number,
+.expertise-card:nth-child(2) .expertise-icon { color: #10b981; }
+.expertise-card:nth-child(2) .tech-highlights span { background: rgba(16,185,129,0.08); color: #059669; border-color: rgba(16,185,129,0.15); }
+.expertise-card:nth-child(2) .capability-list li::before { color: #10b981; }
+/* Card 03: Violet (Governance & Security) */
+.expertise-card:nth-child(3) .expertise-number,
+.expertise-card:nth-child(3) .expertise-icon { color: #8b5cf6; }
+.expertise-card:nth-child(3) .tech-highlights span { background: rgba(139,92,246,0.08); color: #7c3aed; border-color: rgba(139,92,246,0.15); }
+.expertise-card:nth-child(3) .capability-list li::before { color: #8b5cf6; }
+/* Card 04: Rose (Analytics & BI) */
+.expertise-card:nth-child(4) .expertise-number,
+.expertise-card:nth-child(4) .expertise-icon { color: #f43f5e; }
+.expertise-card:nth-child(4) .tech-highlights span { background: rgba(244,63,94,0.08); color: #be174b; border-color: rgba(244,63,94,0.15); }
+.expertise-card:nth-child(4) .capability-list li::before { color: #f43f5e; }
 .expertise-card h3 { font-size: 1.15rem; font-weight: 700; margin: 0 0 0.75rem; color: #1e293b; line-height: 1.3; }
 .expertise-card > p { color: #334155; line-height: 1.6; margin-bottom: 1.15rem; font-size: 0.95rem; }
 .capability-list { list-style: none; padding: 0; margin: 0 0 1.25rem; }
@@ -1734,18 +1754,406 @@ body.no-scroll {
     z-index: 0;
 }
 
+/* ============================================================================
+   GEOSPATIAL SHOWCASE SECTION - EPIC WEATHER & NIGHT LIGHTS VISUALIZATION
+   ============================================================================ */
+
+.geospatial-showcase {
+    background: linear-gradient(135deg, #0f172a 0%, #111827 50%, #0f172a 100%);
+    padding: 80px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Animated background accent */
+.geospatial-showcase::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(14, 165, 233, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: float 20s ease-in-out infinite;
+    z-index: 0;
+}
+
+.geospatial-showcase::after {
+    content: '';
+    position: absolute;
+    bottom: -20%;
+    left: -5%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.05) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: float 25s ease-in-out infinite reverse;
+    z-index: 0;
+}
+
+.geospatial-showcase .section-container {
+    position: relative;
+    z-index: 1;
+}
+
+.showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 40px;
+    margin-top: 50px;
+}
+
+/* Showcase Card Base */
+.showcase-card {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(14, 165, 233, 0.2);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+}
+
+.showcase-card:hover {
+    border-color: rgba(14, 165, 233, 0.6);
+    box-shadow: 
+        0 20px 60px rgba(14, 165, 233, 0.15),
+        0 0 40px rgba(6, 182, 212, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transform: translateY(-12px);
+}
+
+/* Showcase Visual Container */
+.showcase-visual {
+    width: 100%;
+    height: 240px;
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.05) 0%, rgba(99, 102, 241, 0.02) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(14, 165, 233, 0.1);
+}
+
+/* Weather Radar Animation Container */
+.radar-container {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.radar-rings {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.3));
+}
+
+/* Radar pulse animations */
+.radar-pulse-1 {
+    animation: radar-pulse 3s ease-out infinite;
+}
+
+.radar-pulse-2 {
+    animation: radar-pulse 3s ease-out infinite 0.6s;
+}
+
+.radar-pulse-3 {
+    animation: radar-pulse 3s ease-out infinite 1.2s;
+}
+
+@keyframes radar-pulse {
+    0% { opacity: 0.8; r: 70px; }
+    100% { opacity: 0; r: 95px; }
+}
+
+/* Radar sweep rotation */
+.radar-sweep {
+    transform-origin: 100px 100px;
+    animation: radar-sweep 4s linear infinite;
+}
+
+@keyframes radar-sweep {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Weather particles floating animation */
+.weather-particle-1 {
+    animation: weather-float 6s ease-in-out infinite;
+}
+
+.weather-particle-2 {
+    animation: weather-drift 8s ease-in-out infinite;
+}
+
+.weather-particle-3 {
+    animation: weather-pulse 4s ease-in-out infinite;
+}
+
+@keyframes weather-float {
+    0%, 100% { transform: translate(0, 0); opacity: 0.6; }
+    50% { transform: translate(5px, -8px); opacity: 0.9; }
+}
+
+@keyframes weather-drift {
+    0%, 100% { transform: translate(0, 0); stroke-dashoffset: 0; }
+    50% { transform: translate(-8px, 10px); stroke-dashoffset: 5px; }
+}
+
+@keyframes weather-pulse {
+    0%, 100% { r: 8px; opacity: 0.4; }
+    50% { r: 10px; opacity: 0.7; }
+}
+
+.radar-label {
+    position: absolute;
+    bottom: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #06b6d4;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Night Lights Animation Container */
+.nightlights-container {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.city-lights {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 15px rgba(251, 191, 36, 0.4));
+}
+
+/* City light twinkling animations */
+.light-twinkle-1 {
+    animation: twinkle 3.5s ease-in-out infinite;
+}
+
+.light-twinkle-2 {
+    animation: twinkle 4.2s ease-in-out infinite 0.3s;
+}
+
+.light-twinkle-3 {
+    animation: twinkle 3.8s ease-in-out infinite 0.6s;
+}
+
+.light-twinkle-4 {
+    animation: twinkle 4.5s ease-in-out infinite 0.9s;
+}
+
+.light-twinkle-5 {
+    animation: twinkle 3.6s ease-in-out infinite 1.2s;
+}
+
+.light-twinkle-6 {
+    animation: twinkle 4.1s ease-in-out infinite 1.5s;
+}
+
+.light-twinkle-7 {
+    animation: twinkle 3.9s ease-in-out infinite 1.8s;
+}
+
+.light-twinkle-8 {
+    animation: twinkle 4.3s ease-in-out infinite 2.1s;
+}
+
+.light-twinkle-sub1, .light-twinkle-sub2, .light-twinkle-sub3 {
+    animation: twinkle-dim 5s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.5; r: 2px; }
+    50% { opacity: 1; r: 2.8px; }
+}
+
+@keyframes twinkle-dim {
+    0%, 100% { opacity: 0.3; r: 1px; }
+    50% { opacity: 0.6; r: 1.5px; }
+}
+
+.nightlights-label {
+    position: absolute;
+    bottom: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #fbbf24;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+/* Showcase Content */
+.showcase-content {
+    padding: 30px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.showcase-card h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #e2e8f0;
+    margin: 0 0 12px 0;
+    line-height: 1.3;
+}
+
+.showcase-card p {
+    font-size: 0.95rem;
+    color: rgba(226, 232, 240, 0.8);
+    margin: 0 0 20px 0;
+    line-height: 1.6;
+    flex-grow: 1;
+}
+
+.showcase-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.feature-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(14, 165, 233, 0.1);
+    border: 1px solid rgba(14, 165, 233, 0.3);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #0ea5e9;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    transition: all 0.3s ease;
+}
+
+.showcase-card:hover .feature-tag {
+    background: rgba(14, 165, 233, 0.2);
+    border-color: rgba(14, 165, 233, 0.5);
+}
+
+/* Showcase CTA Button */
+.showcase-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+    width: fit-content;
+}
+
+.showcase-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+    z-index: 1;
+}
+
+.showcase-cta svg {
+    transition: transform 0.4s ease;
+}
+
+.showcase-card:hover .showcase-cta {
+    background: linear-gradient(135deg, #0284c7, #0891b2);
+    box-shadow: 
+        0 12px 32px rgba(14, 165, 233, 0.4),
+        0 0 20px rgba(6, 182, 212, 0.2);
+    transform: translateX(4px);
+}
+
+.showcase-card:hover .showcase-cta::before {
+    left: 100%;
+}
+
+.showcase-card:hover .showcase-cta svg {
+    transform: translateX(4px);
+}
+
+/* Animations helper */
+@keyframes float {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(20px) translateX(-10px); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .geospatial-showcase {
+        padding: 50px 0;
+    }
+
+    .showcase-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .showcase-visual {
+        height: 200px;
+    }
+
+    .showcase-content {
+        padding: 24px;
+    }
+
+    .showcase-card h3 {
+        font-size: 1.2rem;
+    }
+
+    .showcase-card p {
+        font-size: 0.9rem;
+    }
+}
+
 /* Dark mode parity for adjusted components */
 @media (prefers-color-scheme: dark) {
-  .impact-card { background: rgba(14,165,233,0.06); border-color: rgba(14,165,233,0.25); }
-  .impact-card h3 { color: #e2e8f0 !important; }
-  .impact-card p { color: rgba(226,232,240,0.85) !important; }
-  .method-item { background: #111c2b; border-color: rgba(255,255,255,0.08); }
-  .method-item h4 { color: #e2e8f0 !important; }
-  .method-item p { color: rgba(226,232,240,0.85) !important; }
-  .dna-pair .base { background: #111c2b; color: #e2e8f0; border-color: rgba(14,165,233,0.35); }
-  .challenge-block, .solution-block, .outcomes-block { background: #111c2b; border-color: rgba(255,255,255,0.08); }
-  .challenge-block p, .solution-block p { color: rgba(226,232,240,0.9) !important; }
-  .metrics-row .metric { background: #111c2b; color: #d1fae5 !important; }
-  .metrics-row .metric strong { color: #6ee7b7; }
+  .geospatial-showcase {
+    background: linear-gradient(135deg, #0f172a 0%, #111827 50%, #0f172a 100%);
+  }
+  
+  .showcase-card {
+    background: rgba(15, 23, 42, 0.8);
+    border-color: rgba(14, 165, 233, 0.15);
+  }
+  
+  .showcase-card:hover {
+    border-color: rgba(14, 165, 233, 0.5);
+  }
+  
+  .showcase-card h3 {
+    color: #e0e7ff;
+  }
+  
+  .showcase-card p {
+    color: rgba(224, 231, 255, 0.8);
+  }
 }
+
 

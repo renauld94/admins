@@ -16,7 +16,31 @@
     } catch (e) { /* noop */ }
 })();
 
+// Small helper: clamp devicePixelRatio according to the global performance patch (if present).
+// Falls back safely to 1 if globals are missing.
+window.getClampedDevicePixelRatio = window.getClampedDevicePixelRatio || function getClampedDevicePixelRatio() {
+    try {
+        return Math.min(window.devicePixelRatio || 1, (window.PerformancePatch && window.PerformancePatch.maxDevicePixelRatio) || 1);
+    } catch (e) {
+        return 1;
+    }
+};
+
 function initializeAnimations() {
+    // Quick mobile gate: avoid heavy scroll-linked animations on small devices
+    const _isMobileAnim = !!(window.__IS_MOBILE_PORTFOLIO__ || (window.matchMedia && window.matchMedia('(max-width:720px)').matches));
+    if (_isMobileAnim) {
+        try {
+            console.log('[Animations] Mobile detected — skipping heavy ScrollTrigger animations for performance');
+            // Ensure key elements are visible without JS animation to avoid jank
+            document.querySelectorAll('.section-header, .project-card, .expertise-card, .value-item, .timeline-item').forEach(el => {
+                el.style.opacity = '1';
+                el.style.transform = 'none';
+            });
+        } catch (e) { /* noop */ }
+        return;
+    }
+
     // Check if GSAP is available
     if (typeof gsap === 'undefined') {
         console.warn('GSAP not loaded - animations disabled');
@@ -727,7 +751,7 @@ async function initializeHeroVisualization() {
         scene.fog = new THREE.FogExp2(0x0b1220, 0.08);
         const camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 100);
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(window.getClampedDevicePixelRatio());
         renderer.setSize(container.clientWidth, container.clientHeight);
         renderer.setClearColor(0x000000, 0);
         container.appendChild(renderer.domElement);
