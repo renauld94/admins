@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Epic Agent Orchestrator Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .header h1 {
+            font-size: 2em;
+            background: linear-gradient(135deg, #00d4ff, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .status-bar {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid #00d4ff;
+            border-radius: 6px;
+            font-size: 0.9em;
+        }
+        
+        .status-badge.connected {
+            border-color: #10b981;
+            background: rgba(16, 185, 129, 0.1);
+        }
+        
+        .status-badge.disconnected {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+        
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .card.agent-running .header {
+            color: #10b981;
+        }
+        
+        .card.agent-stopped .header {
+            color: #ef4444;
+        }
+        
+        .card h2 {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            font-size: 0.9em;
+        }
+        
+        .stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .stat:last-child {
+            border-bottom: none;
+        }
+        
+        .stat-label {
+            color: #a0a0b0;
+        }
+        
+        .stat-value {
+            color: #e0e0e0;
+            font-weight: 600;
+        }
+        
+        .model-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .model-tag {
+            display: inline-block;
+            background: rgba(124, 58, 237, 0.3);
+            border: 1px solid #7c3aed;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            color: #c084fc;
+        }
+        
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .logs-container {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+        }
+        
+        .log-entry {
+            display: flex;
+            gap: 10px;
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+        
+        .log-time {
+            color: #7c3aed;
+            flex-shrink: 0;
+            min-width: 120px;
+        }
+        
+        .log-level {
+            flex-shrink: 0;
+            min-width: 60px;
+            font-weight: 600;
+        }
+        
+        .log-level.info { color: #00d4ff; }
+        .log-level.success { color: #10b981; }
+        .log-level.warning { color: #f59e0b; }
+        .log-level.error { color: #ef4444; }
+        
+        .log-message {
+            flex: 1;
+            color: #a0a0b0;
+        }
+        
+        .refresh-btn {
+            background: linear-gradient(135deg, #00d4ff, #7c3aed);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .refresh-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
+        
+        .refresh-btn:active {
+            transform: scale(0.95);
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .card {
+            animation: fadeIn 0.3s ease forwards;
+        }
+        
+        .card:nth-child(2) { animation-delay: 0.1s; }
+        .card:nth-child(3) { animation-delay: 0.2s; }
+        .card:nth-child(4) { animation-delay: 0.3s; }
+        .card:nth-child(5) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Epic Agent Orchestrator</h1>
+            <button class="refresh-btn" onclick="refreshStatus()">🔄 Refresh</button>
+        </div>
+        
+        <div class="status-bar">
+            <div class="status-badge" id="tunnel-status">
+                <span class="dot"></span>
+                <span>SSH Tunnel: <strong id="tunnel-text">Checking...</strong></span>
+            </div>
+            <div class="status-badge" id="agents-status">
+                <span class="dot"></span>
+                <span>Agents: <strong id="agents-count">0/0</strong></span>
+            </div>
+            <div class="status-badge" id="models-status">
+                <span class="dot"></span>
+                <span>Models: <strong id="models-count">0</strong> Ready</span>
+            </div>
+        </div>
+        
+        <div class="grid" id="agents-grid">
+            <div class="card" style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+                <p>Loading agent status...</p>
+            </div>
+        </div>
+        
+        <div class="card full-width">
+            <h2>📊 System Logs</h2>
+            <div class="logs-container" id="logs">
+                <div class="log-entry">
+                    <span class="log-time">Loading...</span>
+                    <span class="log-level info">INFO</span>
+                    <span class="log-message">Initializing dashboard</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const API_BASE = "http://localhost:5100";
+        const REFRESH_INTERVAL = 5000; // 5 seconds
+        let logEntries = [];
+        
+        async function fetchStatus() {
+            try {
+                const response = await fetch(`${API_BASE}/status`);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                return await response.json();
+            } catch (error) {
+                console.error("Status fetch error:", error);
+                return null;
+            }
+        }
+        
+        async function fetchHealth() {
+            try {
+                const response = await fetch(`${API_BASE}/health`);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                return await response.json();
+            } catch (error) {
+                console.error("Health fetch error:", error);
+                return null;
+            }
+        }
+        
+        async function refreshStatus() {
+            const health = await fetchHealth();
+            const status = await fetchStatus();
+            
+            if (health) {
+                updateStatusBadges(health);
+            }
+            
+            if (status) {
+                updateAgentCards(status.agents);
+            }
+        }
+        
+        function updateStatusBadges(health) {
+            const tunnelBadge = document.getElementById("tunnel-status");
+            const agentsBadge = document.getElementById("agents-status");
+            
+            const tunnelConnected = health.tunnel === "connected";
+            tunnelBadge.className = `status-badge ${tunnelConnected ? 'connected' : 'disconnected'}`;
+            document.getElementById("tunnel-text").textContent = tunnelConnected ? "Connected" : "Disconnected";
+            
+            const agentsRunning = health.agents_running || 0;
+            const agentsTotal = health.total_agents || 0;
+            document.getElementById("agents-count").textContent = `${agentsRunning}/${agentsTotal}`;
+        }
+        
+        function updateAgentCards(agents) {
+            const grid = document.getElementById("agents-grid");
+            grid.innerHTML = "";
+            
+            for (const [name, agent] of Object.entries(agents)) {
+                const isRunning = agent.status === "running";
+                const uptime = formatUptime(agent.uptime);
+                
+                const card = document.createElement("div");
+                card.className = `card agent-${agent.status}`;
+                card.innerHTML = `
+                    <h2>
+                        ${isRunning ? '✅' : '❌'} ${formatAgentName(name)}
+                    </h2>
+                    <div class="card-content">
+                        <div class="stat">
+                            <span class="stat-label">Status:</span>
+                            <span class="stat-value">${agent.status.toUpperCase()}</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Port:</span>
+                            <span class="stat-value">${agent.port}</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Uptime:</span>
+                            <span class="stat-value">${uptime}</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Requests:</span>
+                            <span class="stat-value">${agent.request_count}</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Errors:</span>
+                            <span class="stat-value">${agent.error_count}</span>
+                        </div>
+                    </div>
+                    <div class="model-list">
+                        ${(agent.models_ready || []).map(m => 
+                            `<span class="model-tag">${m.split(':')[0]}</span>`
+                        ).join('')}
+                    </div>
+                `;
+                grid.appendChild(card);
+            }
+        }
+        
+        function formatAgentName(name) {
+            return name
+                .split('_')
+                .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+                .join(' ');
+        }
+        
+        function formatUptime(seconds) {
+            if (seconds < 60) return `${Math.floor(seconds)}s`;
+            if (seconds < 3600) return `${Math.floor(seconds / 60)}m`;
+            return `${Math.floor(seconds / 3600)}h`;
+        }
+        
+        // Auto-refresh
+        setInterval(refreshStatus, REFRESH_INTERVAL);
+        refreshStatus();
+    </script>
+</body>
+</html>

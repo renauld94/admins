@@ -76,26 +76,32 @@
         loadEpicVisualization();
     }
     
-    // Load Epic Neural Cosmos Visualization (enhanced version only - no duplicate loading)
+    // Load Epic Neural Cosmos Visualization (enhanced version)
     function loadEpicVisualization() {
         console.log('[HERO VIZ] Checking for enhanced visualization...');
         
-        // Check if enhanced version is already loaded (preloaded via index.html)
+        // Check if enhanced version is already loaded
         if (typeof window.EpicNeuralToCosmosVizEnhanced !== 'undefined') {
-            console.log('✅ [HERO VIZ] Enhanced visualization class already loaded, mounting...');
+            console.log('✅ [HERO VIZ] Enhanced visualization class found, mounting...');
             mountEpicVisualization();
             return;
         }
         
-        // If not already loaded, load it now (shouldn't normally happen since it's in index.html)
-        console.log('[HERO VIZ] Enhanced visualization not yet loaded, loading now...');
+        // Check if original is already loaded (fallback)
+        if (typeof window.EpicNeuralToCosmosViz !== 'undefined') {
+            console.log('✅ [HERO VIZ] Original visualization class found, mounting...');
+            mountEpicVisualization();
+            return;
+        }
+        
+        console.log('[HERO VIZ] Loading epic-neural-cosmos-viz-enhanced.js...');
         
         const script = document.createElement('script');
         script.src = './epic-neural-cosmos-viz-enhanced.js?v=' + Date.now();
         script.onload = () => {
             console.log('✅ [HERO VIZ] epic-neural-cosmos-viz-enhanced.js loaded');
             
-            if (typeof window.EpicNeuralToCosmosVizEnhanced === 'undefined') {
+            if (typeof EpicNeuralToCosmosVizEnhanced === 'undefined') {
                 console.error('[HERO VIZ] EpicNeuralToCosmosVizEnhanced class not found after loading');
                 showFallback();
                 return;
@@ -112,7 +118,7 @@
         document.head.appendChild(script);
     }
     
-    // Mount the visualization (enhanced version only)
+    // Mount the visualization (uses enhanced version if available)
     function mountEpicVisualization() {
         console.log('[HERO VIZ] Mounting Epic Neural Cosmos visualization...');
         
@@ -123,19 +129,17 @@
                 showFallback();
                 return;
             }
-            // Local mobile detection for use inside nested helpers
-            const isMobile = window.__IS_MOBILE_PORTFOLIO__ || /Mobi|Android/i.test(navigator.userAgent || '');
             
-            // Use enhanced version (no fallback to original to avoid duplicate class declarations)
-            const VizClass = window.EpicNeuralToCosmosVizEnhanced;
+            // Prefer enhanced version if available, fall back to original
+            const VizClass = window.EpicNeuralToCosmosVizEnhanced || window.EpicNeuralToCosmosViz;
             
             if (!VizClass) {
-                console.error('[HERO VIZ] EpicNeuralToCosmosVizEnhanced class not available');
+                console.error('[HERO VIZ] No visualization class available');
                 showFallback();
                 return;
             }
             
-            console.log('[HERO VIZ] Using visualization class: EpicNeuralToCosmosVizEnhanced');
+            console.log('[HERO VIZ] Using visualization class:', VizClass.name);
             
             // Create instance with deferred initialization
             const viz = new VizClass('hero-visualization', {
@@ -152,59 +156,30 @@
             
             console.log('✅ [HERO VIZ] Epic visualization instance created');
             console.log('[HERO VIZ] Scheduling deferred initialization...');
-
-            // Helper: attempt to lazy-load Three.js post-processing example scripts
-            function ensurePostProcessingLibs() {
-                if (window.THREE && window.THREE.EffectComposer) return Promise.resolve();
-                if (isMobile) return Promise.resolve(); // skip on mobile
-
-                const sources = [
-                    'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js',
-                    'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js',
-                    'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js',
-                    'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js'
-                ];
-
-                return new Promise((resolve) => {
-                    let i = 0;
-                    const next = () => {
-                        if (i >= sources.length) return resolve();
-                        const s = document.createElement('script');
-                        s.src = sources[i++];
-                        s.async = true;
-                        s.onload = () => next();
-                        s.onerror = () => {
-                            console.warn('[HERO VIZ] Post-processing script failed to load:', s.src);
-                            next();
-                        };
-                        document.head.appendChild(s);
-                    };
-                    next();
-                });
-            }
-
-            // Schedule deferred init in next frame, but ensure post-processing libs are loaded first on capable devices
-            const runDeferred = () => {
-                console.log('[HERO VIZ] Running deferred init...');
-                if (viz.runDeferredInit) {
-                    viz.runDeferredInit().catch(err => {
-                        console.error('[HERO VIZ] Deferred init failed:', err);
-                        showFallback();
-                    });
-                } else {
-                    console.log('[HERO VIZ] Visualization already initialized');
-                }
-            };
-
+            
+            // Schedule deferred init in next frame
             if (typeof requestIdleCallback === 'function') {
                 requestIdleCallback(() => {
-                    console.log('[HERO VIZ] requestIdleCallback fired - preparing deferred init');
-                    ensurePostProcessingLibs().then(runDeferred);
+                    console.log('[HERO VIZ] Running deferred init via requestIdleCallback...');
+                    if (viz.runDeferredInit) {
+                        viz.runDeferredInit().catch(err => {
+                            console.error('[HERO VIZ] Deferred init failed:', err);
+                            showFallback();
+                        });
+                    } else {
+                        console.log('[HERO VIZ] Visualization already initialized');
+                    }
                 }, { timeout: 3000 });
             } else {
+                // Fallback: use setTimeout with small delay
                 setTimeout(() => {
-                    console.log('[HERO VIZ] setTimeout fired - preparing deferred init');
-                    ensurePostProcessingLibs().then(runDeferred);
+                    console.log('[HERO VIZ] Running deferred init via setTimeout...');
+                    if (viz.runDeferredInit) {
+                        viz.runDeferredInit().catch(err => {
+                            console.error('[HERO VIZ] Deferred init failed:', err);
+                            showFallback();
+                        });
+                    }
                 }, 500);
             }
             
@@ -327,15 +302,37 @@
                 padding: 2rem;
                 font-family: system-ui, -apple-system, sans-serif;
             ">
-                <div style="text-align: center;">
+                <div style="max-width: 480px;">
                     <div style="
-                        font-size: 2rem;
-                        opacity: 0.5;
-                        font-weight: 300;
-                        letter-spacing: 1px;
-                    ">Loading...</div>
+                        font-size: 2.2rem;
+                        margin-bottom: 0.6rem;
+                        text-shadow: 0 0 30px rgba(14,165,233,0.55);
+                        font-weight: 700;
+                    ">Neuro DataLab</div>
+                    <div style="
+                        font-size: 1.1rem;
+                        opacity: 0.9;
+                        margin-bottom: 0.8rem;
+                        letter-spacing: 0.4px;
+                    ">From Neurons to Cosmos</div>
+                    <div style="
+                        font-size: 0.95rem;
+                        opacity: 0.8;
+                        margin-bottom: 1.2rem;
+                        line-height: 1.6;
+                    ">
+                        Enterprise ML Systems<br>
+                        Data Architecture<br>
+                        Geospatial Intelligence
+                    </div>
                 </div>
             </div>
+            <style>
+                @keyframes pulse {
+                    0%, 100% { opacity: 1; }
+                    50% { opacity: 0.7; }
+                }
+            </style>
         `;
         
         state.heroMounted = true;

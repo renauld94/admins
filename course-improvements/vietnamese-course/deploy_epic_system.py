@@ -12,7 +12,8 @@ GENERATED = SCRIPT_DIR / 'generated' / 'professional'
 SSH_HOST = 'moodle-vm9001'
 CONTAINER = 'moodle-databricks-fresh'
 EPIC_SYSTEM = SCRIPT_DIR / 'epic_interactive_system.html'
-PAGE_IDS = [163, 164, 165, 166, 167, 168, 169, 170]
+# ALL 100 pages in Course 10
+PAGE_IDS = [6, 7, 8, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 39, 41, 43, 47, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 114, 115, 116, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170]
 
 def read_epic_system():
     """Read the epic interactive HTML"""
@@ -71,9 +72,15 @@ def main():
     print(f'✓ Loaded epic system ({len(epic_html)} bytes)')
     print()
     
-    for i, pid in enumerate(PAGE_IDS, start=1):
-        week = i
-        print(f'Injecting into Page {pid} (Week {week})...', end=' ', flush=True)
+    total_pages = len(PAGE_IDS)
+    for idx, pid in enumerate(PAGE_IDS, start=1):
+        # Map page_id to week (pages 163-170 = weeks 1-8; others are supporting pages)
+        if pid >= 163:
+            week = pid - 162
+        else:
+            week = (pid % 10) if pid > 100 else (pid // 10)
+        
+        print(f'[{idx:3d}/{total_pages}] Injecting into Page {pid:3d}...', end=' ', flush=True)
         
         try:
             p = inject_system_into_page(pid, week, epic_html)
@@ -91,7 +98,9 @@ def main():
     print('✨ EPIC INTERACTIVE SYSTEM DEPLOYMENT COMPLETE!')
     print('=' * 70)
     print()
-    print('All 8 pages now feature:')
+    print(f'🎉 Deployed EPIC system to ALL {len(PAGE_IDS)} course pages!')
+    print()
+    print('Each page now features:')
     print('  ✓ Interactive D3.js visualizations')
     print('  ✓ Three.js 3D animations')
     print('  ✓ Web Audio API with real-time visualization')

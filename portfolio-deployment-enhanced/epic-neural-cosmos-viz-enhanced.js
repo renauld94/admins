@@ -35,22 +35,6 @@ class EpicNeuralToCosmosVizEnhanced {
         this.isTransitioning = false;
         this.isMobile = /Mobi|Android/i.test(navigator.userAgent || '');
         this.reduceMotion = (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) || false;
-
-        // Mobile-specific defaults to preserve battery and improve smoothness
-        if (this.isMobile) {
-            // Reduce particle count aggressively on mobile
-            this.options.particleCount = Math.max(400, Math.floor((this.options.particleCount || 5000) * 0.25));
-            // Disable heavy post-processing on mobile by default
-            this.options.enablePostProcessing = false;
-            // Cap pixel ratio for rendering
-            this.options.maxRendererPixelRatio = 1;
-            // Lower globe resolution on mobile
-            this.options.globeResolution = { detail: 8, canvasWidth: 1024, canvasHeight: 512 };
-        } else {
-            this.options.maxRendererPixelRatio = this.options.maxRendererPixelRatio || 2;
-            this.options.enablePostProcessing = (typeof this.options.enablePostProcessing === 'undefined') ? true : this.options.enablePostProcessing;
-            this.options.globeResolution = this.options.globeResolution || { detail: 64, canvasWidth: 2048, canvasHeight: 1024 };
-        }
         
         if (!this.options.deferInit) {
             this.init();
@@ -148,11 +132,7 @@ class EpicNeuralToCosmosVizEnhanced {
         
         this.renderer = renderer;
         this.renderer.setSize(container.clientWidth, container.clientHeight);
-        // Use global capped DPR if available, fallback to local calculation
-        const cappedDPR = (typeof window !== 'undefined' && typeof window.getCappedDevicePixelRatio === 'function')
-            ? window.getCappedDevicePixelRatio()
-            : Math.min(window.devicePixelRatio || 1, this.options.maxRendererPixelRatio || 2);
-        this.renderer.setPixelRatio(cappedDPR);
+        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
         
         // Enhanced tone mapping for glow effects
         this.renderer.outputEncoding = THREE.sRGBEncoding;
@@ -210,12 +190,6 @@ class EpicNeuralToCosmosVizEnhanced {
     }
     
     setupPostProcessing() {
-        // Respect mobile and options to avoid heavy post-processing on constrained devices
-        if (this.isMobile || this.options.enablePostProcessing === false) {
-            console.log('⚡ Skipping post-processing on mobile or by option');
-            return;
-        }
-
         if (!THREE.EffectComposer) {
             console.warn('EffectComposer not available, skipping post-processing');
             return;
@@ -225,16 +199,13 @@ class EpicNeuralToCosmosVizEnhanced {
             this.composer = new THREE.EffectComposer(this.renderer);
             this.composer.addPass(new THREE.RenderPass(this.scene, this.camera));
             
-            // Add bloom for glow effect if available (reduced strength on lower devices)
+            // Add bloom for glow effect if available
             if (THREE.UnrealBloomPass) {
-                const strength = this.isMobile ? 0.6 : 1.5;
-                const radius = this.isMobile ? 0.2 : 0.4;
-                const threshold = this.isMobile ? 0.9 : 0.85;
                 const bloomPass = new THREE.UnrealBloomPass(
                     new THREE.Vector2(window.innerWidth, window.innerHeight),
-                    strength,
-                    radius,
-                    threshold
+                    1.5,  // strength
+                    0.4,  // radius
+                    0.85  // threshold
                 );
                 this.composer.addPass(bloomPass);
             }
@@ -612,16 +583,12 @@ class EpicNeuralToCosmosVizEnhanced {
     
     createEarthGlobe(phase) {
         // Create simple Earth sphere
-    const detail = (this.options && this.options.globeResolution && this.options.globeResolution.detail) ? this.options.globeResolution.detail : 64;
-    const cw = (this.options && this.options.globeResolution && this.options.globeResolution.canvasWidth) ? this.options.globeResolution.canvasWidth : 2048;
-    const ch = (this.options && this.options.globeResolution && this.options.globeResolution.canvasHeight) ? this.options.globeResolution.canvasHeight : 1024;
-
-    const geometry = new THREE.IcosahedronGeometry(25, detail);
+        const geometry = new THREE.IcosahedronGeometry(25, 64);
         
-    // Create canvas texture for Earth (reduced resolution on mobile)
-    const canvas = document.createElement('canvas');
-    canvas.width = cw;
-    canvas.height = ch;
+        // Create canvas texture for Earth
+        const canvas = document.createElement('canvas');
+        canvas.width = 2048;
+        canvas.height = 1024;
         const ctx = canvas.getContext('2d');
         
         // Ocean blue

@@ -108,6 +108,30 @@
             // then load post-processing scripts (EffectComposer, passes, shaders)
             await loadPostProcessing();
             
+            // Some older example scripts expose constructors as globals (e.g. EffectComposer, ShaderPass)
+            // rather than attaching to the THREE namespace. Copy any globals we care about onto THREE
+            // so downstream code that expects e.g. THREE.EffectComposer or THREE.ShaderPass works.
+            try {
+                const globals = [
+                    'EffectComposer',
+                    'RenderPass',
+                    'ShaderPass',
+                    'CopyShader',
+                    'UnrealBloomPass',
+                    'TexturePass',
+                    'MaskPass',
+                    'SSAOPass',
+                ];
+                globals.forEach(name => {
+                    if (window[name] && !window.THREE[name]) {
+                        window.THREE[name] = window[name];
+                        console.log(`Mapped global ${name} -> THREE.${name}`);
+                    }
+                });
+            } catch (e) {
+                console.warn('Error while mapping postprocessing globals to THREE:', e);
+            }
+
             console.log('THREE.js and OrbitControls ready');
             window.dispatchEvent(new CustomEvent('threeJsReady'));
             
