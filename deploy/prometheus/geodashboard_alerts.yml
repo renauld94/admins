@@ -1,0 +1,185 @@
+# Prometheus alerting rules for EPIC Geodashboard
+# Location: /etc/prometheus/geodashboard_alerts.yml
+# These rules trigger alerts for critical issues
+
+groups:
+  - name: geodashboard_alerts
+    interval: 30s
+    rules:
+
+      # ════════════════════════════════════════════════════════════════════
+      # USGS Poller Alerts
+      # ════════════════════════════════════════════════════════════════════
+
+      - alert: USGSPollerHighErrorRate
+        expr: |
+          (rate(usgs_poll_errors_total[5m]) / 
+           (rate(usgs_poll_success_total[5m]) + rate(usgs_poll_errors_total[5m]))) > 0.5
+        for: 5m
+        labels:
+          severity: critical
+          component: usgs-poller
+        annotations:
+          summary: "USGS poller error rate >50% over 5 minutes"
+          description: |
+            Error rate: {{ $value | humanizePercentage }}
+            Instance: {{ $labels.instance }}
+            This indicates the USGS feed is failing to fetch.
+            Check network connectivity and USGS API status.
+
+      - alert: USGSPollerNoPolls
+        expr: |
+          rate(usgs_poll_success_total[1m]) == 0 and rate(usgs_poll_errors_total[1m]) == 0
+        for: 2m
+        labels:
+          severity: warning
+          component: usgs-poller
+        annotations:
+          summary: "USGS poller has not run in the last minute"
+          description: |
+            Instance: {{ $labels.instance }}
+            Check if the backend service is still running.
+
+      # ════════════════════════════════════════════════════════════════════
+      # HTTP Request Alerts
+      # ════════════════════════════════════════════════════════════════════
+
+      - alert: HighHTTPErrorRate
+        expr: |
+          (rate(http_requests_total{status=~"5.."}[5m]) / 
+           rate(http_requests_total[5m])) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+          component: http
+        annotations:
+          summary: "Backend HTTP 5xx error rate >10% over 5 minutes"
+          description: |
+            Error rate: {{ $value | humanizePercentage }}
+            Instance: {{ $labels.instance }}
+            Check backend logs for exceptions.
+
+      - alert: APIEndpointErrors
+        expr: |
+          rate(http_requests_total{endpoint=~"/earthquakes|/analysis",status=~"4..|5.."}[5m]) > 0.01
+        for: 5m
+        labels:
+          severity: warning
+          component: api
+        annotations:
+          summary: "High error rate on {{ $labels.endpoint }}"
+          description: |
+            Error rate: {{ $value | humanize }}/sec
+            Instance: {{ $labels.instance }}
+
+      # ════════════════════════════════════════════════════════════════════
+      # Request Latency Alerts
+      # ════════════════════════════════════════════════════════════════════
+
+      - alert: HighRequestLatency
+        expr: |
+          histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 2.0
+        for: 5m
+        labels:
+          severity: warning
+          component: performance
+        annotations:
+          summary: "P95 HTTP request latency >2s"
+          description: |
+            P95 latency: {{ $value | humanizeDuration }}
+            Instance: {{ $labels.instance }}
+            Check backend performance and database queries.
+
+      - alert: ModelCallTimeout
+        expr: |
+          histogram_quantile(0.99, rate(model_call_duration_seconds_bucket[5m])) > 15.0
+        for: 5m
+        labels:
+          severity: warning
+          component: ai-model
+        annotations:
+          summary: "P99 model call duration >15s"
+          description: |
+            P99 duration: {{ $value | humanizeDuration }}
+            Instance: {{ $labels.instance }}
+            AI model endpoint is slow. Check Ollama service.
+
+      # ════════════════════════════════════════════════════════════════════
+      # WebSocket Connection Alerts
+      # ════════════════════════════════════════════════════════════════════
+
+      - alert: TooManyWebSocketConnections
+        expr: ws_connections_active > 1000
+        for: 2m
+        labels:
+          severity: warning
+          component: websocket
+        annotations:
+          summary: "{{ $value }} active WebSocket connections"
+          description: |
+            Instance: {{ $labels.instance }}
+            High connection count. Monitor for memory leaks.
+
+      # ════════════════════════════════════════════════════════════════════
+      # Model Call Alerts
+      # ════════════════════════════════════════════════════════════════════
+
+      - alert: ModelCallErrors
+        expr: |
+          rate(model_calls_total{status="error"}[5m]) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+          component: ai-model
+        annotations:
+          summary: "Model API errors >0.1/sec"
+          description: |
+            Error rate: {{ $value | humanize }}/sec
+            Instance: {{ $labels.instance }}
+            Check Ollama/AI endpoint availability.
+
+      # ════════════════════════════════════════════════════════════════════
+      # Service Availability Alerts
+      # ════════════════════════════════════════════════════════════════════
+
+      - alert: BackendServiceDown
+        expr: up{job="geodashboard"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          component: backend
+        annotations:
+          summary: "Geodashboard backend is down"
+          description: |
+            Instance: {{ $labels.instance }}
+            The backend service has not responded for 1 minute.
+            Check service status: systemctl status geospatial-data-agent
+
+  # ════════════════════════════════════════════════════════════════════════
+  # SLA/Performance Recording Rules
+  # ════════════════════════════════════════════════════════════════════════
+
+  - name: geodashboard_sli
+    interval: 1m
+    rules:
+
+      # Request success rate (SLI)
+      - record: sli:http_request_success_rate:5m
+        expr: |
+          (rate(http_requests_total{status=~"2.."}[5m]) / 
+           rate(http_requests_total[5m])) or vector(0)
+
+      # Endpoint latency percentiles (SLI)
+      - record: sli:http_request_latency:p95:5m
+        expr: |
+          histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m]))
+
+      - record: sli:http_request_latency:p99:5m
+        expr: |
+          histogram_quantile(0.99, rate(http_request_duration_seconds_bucket[5m]))
+
+      # USGS availability (custom SLI)
+      - record: sli:usgs_poll_availability:5m
+        expr: |
+          (rate(usgs_poll_success_total[5m]) / 
+           (rate(usgs_poll_success_total[5m]) + rate(usgs_poll_errors_total[5m]))) or vector(0)

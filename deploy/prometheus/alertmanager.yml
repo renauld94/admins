@@ -1,0 +1,141 @@
+# Alertmanager configuration for EPIC Geodashboard
+# Location: /etc/alertmanager/alertmanager.yml
+# Handles alert routing and notifications
+
+global:
+  resolve_timeout: 5m
+  # SMTP configuration for email notifications (optional)
+  # smtp_smarthost: 'smtp.example.com:587'
+  # smtp_auth_username: 'alerts@example.com'
+  # smtp_auth_password: 'password'
+  # smtp_from: 'alertmanager@example.com'
+
+# Template files for notification formatting
+templates:
+  - '/etc/alertmanager/templates/*.tmpl'
+
+# Alert routing tree
+route:
+  receiver: 'default'
+  group_by: ['severity', 'component', 'instance']
+  group_wait: 30s       # Wait 30s for grouping
+  group_interval: 5m    # Re-group every 5m
+  repeat_interval: 4h   # Re-notify every 4h
+
+  # Sub-routes for specific alert types
+  routes:
+    # Critical USGS alerts → immediate notification
+    - match:
+        severity: critical
+        component: usgs-poller
+      receiver: 'critical'
+      repeat_interval: 15m
+
+    # Critical backend alerts → immediate notification
+    - match:
+        severity: critical
+        component: backend
+      receiver: 'critical'
+      repeat_interval: 15m
+
+    # AI model errors → warning receiver
+    - match:
+        severity: warning
+        component: ai-model
+      receiver: 'warning'
+      repeat_interval: 1h
+
+    # Performance warnings → warning receiver
+    - match:
+        severity: warning
+        component: performance
+      receiver: 'warning'
+      repeat_interval: 2h
+
+    # Everything else → default receiver
+    - match:
+        severity: warning
+      receiver: 'default'
+      repeat_interval: 4h
+
+# Receivers define where to send notifications
+receivers:
+  # Default receiver (logs/webhook)
+  - name: 'default'
+    webhook_configs:
+      - url: 'http://localhost:8080/alerts'  # Your webhook endpoint (optional)
+        send_resolved: true
+
+  # Critical alerts receiver (email + Slack)
+  - name: 'critical'
+    # Email notifications (requires SMTP setup in global)
+    email_configs:
+      - to: 'ops@example.com'
+        from: 'alertmanager@example.com'
+        smarthost: 'smtp.example.com:587'
+        auth_username: 'alertmanager@example.com'
+        auth_password: 'password'
+        headers:
+          Subject: '[CRITICAL] {{ .GroupLabels.component }} alert'
+        html: |
+          <h3>{{ .GroupLabels.component }} Alert ({{ .GroupLabels.severity }})</h3>
+          <p>Instance: {{ .GroupLabels.instance }}</p>
+          <ul>
+          {{ range .Alerts }}
+            <li>{{ .Labels.alertname }}: {{ .Annotations.summary }}</li>
+          {{ end }}
+          </ul>
+
+    # Slack notifications (requires Slack webhook URL)
+    slack_configs:
+      - api_url: 'https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK'
+        channel: '#geodashboard-alerts'
+        title: 'CRITICAL: {{ .GroupLabels.component }}'
+        text: |
+          *{{ .GroupLabels.alertname }}*
+          Severity: {{ .GroupLabels.severity }}
+          Instance: {{ .GroupLabels.instance }}
+          {{ .CommonAnnotations.description }}
+        send_resolved: true
+
+  # Warning receiver (email only, less frequent)
+  - name: 'warning'
+    email_configs:
+      - to: 'team@example.com'
+        headers:
+          Subject: '[WARNING] {{ .GroupLabels.component }} alert'
+
+  # PagerDuty integration (for on-call rotations)
+  - name: 'pagerduty'
+    pagerduty_configs:
+      - service_key: 'YOUR_PAGERDUTY_SERVICE_KEY'
+        description: '{{ .GroupLabels.alertname }}: {{ .CommonAnnotations.summary }}'
+
+# Inhibition rules (suppress certain alerts under conditions)
+inhibit_rules:
+  # Don't alert on high latency if the service is down
+  - source_match:
+      severity: critical
+      component: backend
+    target_match:
+      severity: warning
+      component: performance
+    equal: ['instance']
+
+  # Don't alert on 5xx errors if service is down
+  - source_match:
+      severity: critical
+      component: backend
+    target_match:
+      severity: warning
+      component: http
+    equal: ['instance']
+
+  # Don't alert on model errors if USGS poller is down
+  - source_match:
+      severity: critical
+      component: usgs-poller
+    target_match:
+      severity: warning
+      component: ai-model
+    equal: ['instance']

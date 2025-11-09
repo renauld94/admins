@@ -27,3 +27,28 @@ scrape_configs:
       - targets: ['172.17.0.1:9200']    # Agent exporter on Docker host gateway
     scrape_interval: 10s
     scrape_timeout: 5s
+
+  # ════════════════════════════════════════════════════════════════════════
+  # EPIC Geodashboard Backend Monitoring
+  # ════════════════════════════════════════════════════════════════════════
+
+  - job_name: 'geodashboard-backend'
+    static_configs:
+      - targets: ['localhost:8000']
+    metrics_path: '/metrics'
+    scrape_interval: 15s
+    scrape_timeout: 10s
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        replacement: 'geodashboard-backend'
+
+# Load alerting rules
+rule_files:
+  - 'geodashboard_alerts.yml'
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ['localhost:9093']
