@@ -40,13 +40,49 @@ app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # Prometheus metrics
-http_requests_total = Counter('http_requests_total', 'Total HTTP requests', ['method', 'endpoint', 'status'])
-http_request_duration_seconds = Histogram('http_request_duration_seconds', 'HTTP request duration', ['method', 'endpoint'])
-ws_connections_active = Gauge('ws_connections_active', 'Active WebSocket connections')
-usgs_poll_success = Counter('usgs_poll_success_total', 'Successful USGS polls')
-usgs_poll_errors = Counter('usgs_poll_errors_total', 'Failed USGS polls')
-model_calls_total = Counter('model_calls_total', 'Total model API calls', ['status'])
-model_call_duration_seconds = Histogram('model_call_duration_seconds', 'Model call duration')
+# Try to create metrics, but handle case where they're already registered
+try:
+    http_requests_total = Counter('http_requests_total', 'Total HTTP requests', ['method', 'endpoint', 'status'])
+except ValueError:
+    # Already registered in this process
+    from prometheus_client import REGISTRY
+    http_requests_total = REGISTRY._names_to_collectors['http_requests_total']
+
+try:
+    http_request_duration_seconds = Histogram('http_request_duration_seconds', 'HTTP request duration', ['method', 'endpoint'])
+except ValueError:
+    from prometheus_client import REGISTRY
+    http_request_duration_seconds = REGISTRY._names_to_collectors['http_request_duration_seconds']
+
+try:
+    ws_connections_active = Gauge('ws_connections_active', 'Active WebSocket connections')
+except ValueError:
+    from prometheus_client import REGISTRY
+    ws_connections_active = REGISTRY._names_to_collectors['ws_connections_active']
+
+try:
+    usgs_poll_success = Counter('usgs_poll_success_total', 'Successful USGS polls')
+except ValueError:
+    from prometheus_client import REGISTRY
+    usgs_poll_success = REGISTRY._names_to_collectors['usgs_poll_success_total']
+
+try:
+    usgs_poll_errors = Counter('usgs_poll_errors_total', 'Failed USGS polls')
+except ValueError:
+    from prometheus_client import REGISTRY
+    usgs_poll_errors = REGISTRY._names_to_collectors['usgs_poll_errors_total']
+
+try:
+    model_calls_total = Counter('model_calls_total', 'Total model API calls', ['status'])
+except ValueError:
+    from prometheus_client import REGISTRY
+    model_calls_total = REGISTRY._names_to_collectors['model_calls_total']
+
+try:
+    model_call_duration_seconds = Histogram('model_call_duration_seconds', 'Model call duration')
+except ValueError:
+    from prometheus_client import REGISTRY
+    model_call_duration_seconds = REGISTRY._names_to_collectors['model_call_duration_seconds']
 
 # CORS configuration - allow configurable origins for security
 allowed_origins = os.getenv("CORS_ORIGINS", "*").split(",")
