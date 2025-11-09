@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-11-08T21:34:30.744591",
+  "timestamp": "2025-11-09T10:17:20.716659",
   "services": [
     {
       "name": "accounts-daemon",
@@ -33,18 +33,6 @@
     },
     {
       "name": "agent-geo_intel",
-      "type": "systemd_service",
-      "status": "running",
-      "category": "other"
-    },
-    {
-      "name": "agent-portfolio",
-      "type": "systemd_service",
-      "status": "running",
-      "category": "other"
-    },
-    {
-      "name": "agent-systemops",
       "type": "systemd_service",
       "status": "running",
       "category": "other"
@@ -122,12 +110,6 @@
       "category": "container"
     },
     {
-      "name": "fwupd",
-      "type": "systemd_service",
-      "status": "running",
-      "category": "other"
-    },
-    {
       "name": "geospatial-data-agent",
       "type": "systemd_service",
       "status": "running",
@@ -188,6 +170,12 @@
       "category": "other"
     },
     {
+      "name": "nginx",
+      "type": "systemd_service",
+      "status": "running",
+      "category": "web"
+    },
+    {
       "name": "ntp",
       "type": "systemd_service",
       "status": "running",
@@ -195,12 +183,6 @@
     },
     {
       "name": "nvidia-persistenced",
-      "type": "systemd_service",
-      "status": "running",
-      "category": "other"
-    },
-    {
-      "name": "packagekit",
       "type": "systemd_service",
       "status": "running",
       "category": "other"
@@ -346,11 +328,6 @@
       "status": "detected"
     },
     {
-      "id": "VM13",
-      "type": "virtual_machine",
-      "status": "detected"
-    },
-    {
       "id": "VM15",
       "type": "virtual_machine",
       "status": "detected"
@@ -366,21 +343,6 @@
       "status": "detected"
     },
     {
-      "id": "VM16",
-      "type": "virtual_machine",
-      "status": "detected"
-    },
-    {
-      "id": "CT1988",
-      "type": "container",
-      "status": "detected"
-    },
-    {
-      "id": "CT1990",
-      "type": "container",
-      "status": "detected"
-    },
-    {
       "id": "VM2",
       "type": "virtual_machine",
       "status": "detected"
@@ -391,36 +353,48 @@
       "status": "detected"
     },
     {
-      "id": "CT2018",
-      "type": "container",
-      "status": "detected"
-    },
-    {
-      "id": "CT2025",
-      "type": "container",
-      "status": "detected"
-    },
-    {
-      "id": "VM22",
-      "type": "virtual_machine",
-      "status": "detected"
-    },
-    {
-      "id": "VM29",
-      "type": "virtual_machine",
-      "status": "detected"
-    },
-    {
       "id": "VM3",
       "type": "virtual_machine",
+      "status": "detected"
+    },
+    {
+      "id": "VM30",
+      "type": "virtual_machine",
+      "status": "detected"
+    },
+    {
+      "id": "VM4",
+      "type": "virtual_machine",
+      "status": "detected"
+    },
+    {
+      "id": "VM5",
+      "type": "virtual_machine",
+      "status": "detected"
+    },
+    {
+      "id": "CT9001",
+      "type": "container",
       "status": "detected"
     }
   ],
   "containers": [
     {
-      "name": "prometheus",
+      "name": "grafana-geodashboard",
+      "status": "running",
+      "image": "grafana/grafana:latest",
+      "type": "docker_container"
+    },
+    {
+      "name": "prometheus-geodashboard",
       "status": "running",
       "image": "prom/prometheus:latest",
+      "type": "docker_container"
+    },
+    {
+      "name": "alertmanager-geodashboard",
+      "status": "running",
+      "image": "prom/alertmanager:latest",
       "type": "docker_container"
     },
     {
@@ -474,17 +448,24 @@
       "status": "running"
     }
   ],
-  "web_servers": [],
+  "web_servers": [
+    {
+      "name": "Nginx",
+      "type": "web_server",
+      "service": "nginx",
+      "status": "running"
+    }
+  ],
   "monitoring": [],
   "authentication": [],
   "statistics": {
-    "total_services": 52,
-    "total_vms": 20,
-    "total_containers": 6,
+    "total_services": 49,
+    "total_vms": 16,
+    "total_containers": 8,
     "total_databases": 3,
-    "total_web_servers": 0,
+    "total_web_servers": 1,
     "total_monitoring": 0
   },
   "sensitive_data_detected": false,
-  "mermaid_diagram": "graph TB\n    classDef webServer fill:#00d4ff,stroke:#0099ff,stroke-width:2px\n    classDef database fill:#10b981,stroke:#059669,stroke-width:2px\n    classDef vm fill:#8b5cf6,stroke:#7c3aed,stroke-width:2px\n    classDef monitoring fill:#f59e0b,stroke:#d97706,stroke-width:2px\n\n    DB0[PostgreSQL]\n    class DB0 database\n    DB1[MySQL]\n    class DB1 database\n    DB2[MariaDB]\n    class DB2 database\n    VM0[CT0925]\n    class VM0 vm\n    VM1[VM10]\n    class VM1 vm\n    VM2[VM103]\n    class VM2 vm\n    VM3[VM104]\n    class VM3 vm\n    VM4[VM106]\n    class VM4 vm\n    VM5[VM110]\n    class VM5 vm\n    VM6[VM13]\n    class VM6 vm\n    VM7[VM15]\n    class VM7 vm\n    VM8[VM150]\n    class VM8 vm\n    VM9[VM159]\n    class VM9 vm\n    WEB0 --> VM0"
+  "mermaid_diagram": "graph TB\n    classDef webServer fill:#00d4ff,stroke:#0099ff,stroke-width:2px\n    classDef database fill:#10b981,stroke:#059669,stroke-width:2px\n    classDef vm fill:#8b5cf6,stroke:#7c3aed,stroke-width:2px\n    classDef monitoring fill:#f59e0b,stroke:#d97706,stroke-width:2px\n\n    WEB0[Nginx]\n    class WEB0 webServer\n    DB0[PostgreSQL]\n    class DB0 database\n    DB1[MySQL]\n    class DB1 database\n    DB2[MariaDB]\n    class DB2 database\n    VM0[CT0925]\n    class VM0 vm\n    VM1[VM10]\n    class VM1 vm\n    VM2[VM103]\n    class VM2 vm\n    VM3[VM104]\n    class VM3 vm\n    VM4[VM106]\n    class VM4 vm\n    VM5[VM110]\n    class VM5 vm\n    VM6[VM15]\n    class VM6 vm\n    VM7[VM150]\n    class VM7 vm\n    VM8[VM159]\n    class VM8 vm\n    VM9[VM2]\n    class VM9 vm\n\n    WEB0 --> DB0\n    WEB0 --> VM0"
 }

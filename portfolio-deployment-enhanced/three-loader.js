@@ -74,6 +74,7 @@
                 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js',
                 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js',
                 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js',
+                'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js',
                 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js'
             ];
 
@@ -117,6 +118,7 @@
                     'RenderPass',
                     'ShaderPass',
                     'CopyShader',
+                    'LuminosityHighPassShader',
                     'UnrealBloomPass',
                     'TexturePass',
                     'MaskPass',

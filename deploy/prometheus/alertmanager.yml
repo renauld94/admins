@@ -60,56 +60,56 @@ route:
 
 # Receivers define where to send notifications
 receivers:
-  # Default receiver (logs/webhook)
+  # Default receiver (webhook for now, email optional)
   - name: 'default'
     webhook_configs:
-      - url: 'http://localhost:8080/alerts'  # Your webhook endpoint (optional)
+      - url: 'http://localhost:5001/alerts'  # Local webhook receiver (optional)
         send_resolved: true
 
-  # Critical alerts receiver (email + Slack)
+  # Critical alerts receiver (webhook + optional email/Slack)
   - name: 'critical'
-    # Email notifications (requires SMTP setup in global)
-    email_configs:
-      - to: 'ops@example.com'
-        from: 'alertmanager@example.com'
-        smarthost: 'smtp.example.com:587'
-        auth_username: 'alertmanager@example.com'
-        auth_password: 'password'
-        headers:
-          Subject: '[CRITICAL] {{ .GroupLabels.component }} alert'
-        html: |
-          <h3>{{ .GroupLabels.component }} Alert ({{ .GroupLabels.severity }})</h3>
-          <p>Instance: {{ .GroupLabels.instance }}</p>
-          <ul>
-          {{ range .Alerts }}
-            <li>{{ .Labels.alertname }}: {{ .Annotations.summary }}</li>
-          {{ end }}
-          </ul>
+    webhook_configs:
+      - url: 'http://localhost:5001/alerts'
+        send_resolved: true
+    
+    # Optional email notifications (uncomment and configure if needed)
+    # email_configs:
+    #   - to: 'ops@example.com'
+    #     from: 'alertmanager@example.com'
+    #     smarthost: 'smtp.example.com:587'
+    #     auth_username: 'alertmanager@example.com'
+    #     auth_password: 'password'
+    #     headers:
+    #       Subject: '[CRITICAL] {{ .GroupLabels.component }} alert'
 
-    # Slack notifications (requires Slack webhook URL)
-    slack_configs:
-      - api_url: 'https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK'
-        channel: '#geodashboard-alerts'
-        title: 'CRITICAL: {{ .GroupLabels.component }}'
-        text: |
-          *{{ .GroupLabels.alertname }}*
-          Severity: {{ .GroupLabels.severity }}
-          Instance: {{ .GroupLabels.instance }}
-          {{ .CommonAnnotations.description }}
+    # Optional Slack notifications (uncomment and add webhook URL)
+    # slack_configs:
+    #   - api_url: 'https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK'
+    #     channel: '#geodashboard-alerts'
+    #     title: 'CRITICAL: {{ .GroupLabels.component }}'
+    #     text: |
+    #       *{{ .GroupLabels.alertname }}*
+    #       Severity: {{ .GroupLabels.severity }}
+    #       Instance: {{ .GroupLabels.instance }}
+    #       {{ .CommonAnnotations.description }}
+    #     send_resolved: true
+
+  # Warning receiver (webhook for now)
+  - name: 'warning'
+    webhook_configs:
+      - url: 'http://localhost:5001/alerts'
         send_resolved: true
 
-  # Warning receiver (email only, less frequent)
-  - name: 'warning'
-    email_configs:
-      - to: 'team@example.com'
-        headers:
-          Subject: '[WARNING] {{ .GroupLabels.component }} alert'
-
-  # PagerDuty integration (for on-call rotations)
+  # PagerDuty integration (optional, uncomment and configure)
   - name: 'pagerduty'
-    pagerduty_configs:
-      - service_key: 'YOUR_PAGERDUTY_SERVICE_KEY'
-        description: '{{ .GroupLabels.alertname }}: {{ .CommonAnnotations.summary }}'
+    webhook_configs:
+      - url: 'http://localhost:5001/alerts'
+        send_resolved: true
+    
+    # Optional PagerDuty (uncomment and add service key)
+    # pagerduty_configs:
+    #   - service_key: 'YOUR_PAGERDUTY_SERVICE_KEY'
+    #     description: '{{ .GroupLabels.alertname }}: {{ .CommonAnnotations.summary }}'
 
 # Inhibition rules (suppress certain alerts under conditions)
 inhibit_rules:
