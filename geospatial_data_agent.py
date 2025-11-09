@@ -6,9 +6,16 @@ Geospatial Data Agent
   - /earthquakes (fetch USGS recent feed, filter magn >=4)
   - /weather (placeholder for RainViewer integration)
   - WebSocket /ws/realtime broadcasting earthquake events and simulated node pulses
+  - /metrics (Prometheus metrics endpoint)
 
 This is intentionally conservative: if external services (Ollama/Qwen) are not available,
 the agent returns sensible placeholders.
+
+Hardening features:
+- CORS with configurable origins
+- Rate limiting via slowapi
+- Request timeouts
+- Prometheus metrics for requests, errors, WS connections
 """
 import asyncio
 import os
@@ -18,14 +25,34 @@ from typing import List, Dict, Any, Optional
 
 import httpx
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, PlainTextResponse
 from fastapi.middleware.cors import CORSMiddleware
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
+from prometheus_client import Counter, Histogram, Gauge, generate_latest, CONTENT_TYPE_LATEST
+
+# Rate limiter
+limiter = Limiter(key_func=get_remote_address, default_limits=["100/minute"])
 
 app = FastAPI(title="Geospatial Data Agent")
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
+# Prometheus metrics
+http_requests_total = Counter('http_requests_total', 'Total HTTP requests', ['method', 'endpoint', 'status'])
+http_request_duration_seconds = Histogram('http_request_duration_seconds', 'HTTP request duration', ['method', 'endpoint'])
+ws_connections_active = Gauge('ws_connections_active', 'Active WebSocket connections')
+usgs_poll_success = Counter('usgs_poll_success_total', 'Successful USGS polls')
+usgs_poll_errors = Counter('usgs_poll_errors_total', 'Failed USGS polls')
+model_calls_total = Counter('model_calls_total', 'Total model API calls', ['status'])
+model_call_duration_seconds = Histogram('model_call_duration_seconds', 'Model call duration')
+
+# CORS configuration - allow configurable origins for security
+allowed_origins = os.getenv("CORS_ORIGINS", "*").split(",")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=allowed_origins if allowed_origins != ["*"] else ["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -53,10 +80,12 @@ class ConnectionManager:
     async def connect(self, websocket: WebSocket):
         await websocket.accept()
         self.active.append(websocket)
+        ws_connections_active.set(len(self.active))
 
     def disconnect(self, websocket: WebSocket):
         if websocket in self.active:
             self.active.remove(websocket)
+        ws_connections_active.set(len(self.active))
 
     async def broadcast(self, message: Dict[str, Any]):
         data = json.dumps(message)
@@ -74,12 +103,21 @@ manager = ConnectionManager()
 
 
 @app.get("/health")
-async def health():
+@limiter.limit("60/minute")
+async def health(request: Request):
+    http_requests_total.labels(method="GET", endpoint="/health", status=200).inc()
     return {"status": "ok"}
 
 
+@app.get("/metrics")
+async def metrics():
+    """Prometheus metrics endpoint"""
+    return PlainTextResponse(generate_latest(), media_type=CONTENT_TYPE_LATEST)
+
+
 @app.get("/earthquakes")
-async def earthquakes():
+@limiter.limit("30/minute")
+async def earthquakes(request: Request):
     """Fetch USGS feed and return magnitude >= EARTHQUAKE_MIN_MAG
     Returns a compact list of events with mag, place, time, coords
     """
@@ -103,14 +141,18 @@ async def earthquakes():
                         "time": props.get("time"),
                         "coords": {"lon": coords[0], "lat": coords[1], "depth": coords[2]},
                     })
+            http_requests_total.labels(method="GET", endpoint="/earthquakes", status=200).inc()
             return {"count": len(results), "events": results}
         except Exception as e:
+            http_requests_total.labels(method="GET", endpoint="/earthquakes", status=502).inc()
             return JSONResponse(status_code=502, content={"error": "failed to fetch USGS", "details": str(e)})
 
 
 @app.get("/weather")
-async def weather():
+@limiter.limit("30/minute")
+async def weather(request: Request):
     # Placeholder endpoint for RainViewer integration
+    http_requests_total.labels(method="GET", endpoint="/weather", status=200).inc()
     return {"status": "placeholder", "note": "RainViewer integration coming in Phase 4"}
 
 
@@ -163,9 +205,11 @@ async def usgs_poller(interval: int = 60):
                     if analysis:
                         payload["analysis"] = analysis
                     await manager.broadcast(payload)
-            except Exception:
-                # ignore errors; try again next interval
-                pass
+                usgs_poll_success.inc()
+            except Exception as e:
+                # Log and count errors
+                logger.warning(f"USGS poller error: {e}")
+                usgs_poll_errors.inc()
             await asyncio.sleep(interval)
 
 
@@ -213,10 +257,17 @@ async def analyze_events_summary(events: List[Dict[str, Any]], model_url: Option
                     attempt += 1
                     try:
                         logger.info(f"Model call attempt {attempt}/{MODEL_RETRIES} to %s", effective_url)
+                        import time
+                        start = time.time()
                         r = await client.post(f"{effective_url}/api/generate", json=payload)
+                        duration = time.time() - start
+                        model_call_duration_seconds.observe(duration)
+                        
                         if r.status_code != 200:
+                            model_calls_total.labels(status="error").inc()
                             logger.warning("Model server returned status %s on attempt %s: %s", r.status_code, attempt, r.text[:200])
                         else:
+                            model_calls_total.labels(status="success").inc()
                             # parse response
                             try:
                                 j = r.json()
@@ -283,6 +334,7 @@ async def analyze_events_summary(events: List[Dict[str, Any]], model_url: Option
 
 
 @app.post("/analysis")
+@limiter.limit("20/minute")
 async def analysis_endpoint(request: Request):
     """Accept a JSON payload with 'events' list and return analysis summary.
     This endpoint reads and parses the request body manually to be tolerant of
@@ -298,6 +350,7 @@ async def analysis_endpoint(request: Request):
         # Fallback: read raw body and attempt to coerce/repair common non-JSON shapes
         raw = await request.body()
         if not raw:
+            http_requests_total.labels(method="POST", endpoint="/analysis", status=400).inc()
             return JSONResponse(status_code=400, content={"error": "empty body"})
         s = raw.decode("utf-8", errors="ignore")
         import re
@@ -305,12 +358,15 @@ async def analysis_endpoint(request: Request):
         try:
             payload = json.loads(s2)
         except Exception as e:
+            http_requests_total.labels(method="POST", endpoint="/analysis", status=400).inc()
             return JSONResponse(status_code=400, content={"error": "invalid json", "details": str(e)})
 
     events = payload.get("events") if isinstance(payload, dict) else None
     if not events or not isinstance(events, list):
+        http_requests_total.labels(method="POST", endpoint="/analysis", status=400).inc()
         return JSONResponse(status_code=400, content={"error": "invalid payload, expected 'events' list"})
     summary = await analyze_events_summary(events)
+    http_requests_total.labels(method="POST", endpoint="/analysis", status=200).inc()
     return summary
 
 
