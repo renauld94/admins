@@ -2427,37 +2427,39 @@
                         this.updateServiceStatus(svc.id, 'manual');
                         return;
                     }
-                    this.checkService(svc);
+                    
+                    // Defer service health checks to idle time for performance
+                    PerformanceOptimizer.defer(() => {
+                        this.checkService(svc);
+                    });
                 });
             }
 
             checkService(service) {
                 const DEBUG = false; // set true to see detailed logs
-                const timeoutMs = 5000;
-                
-                // Use no-cors mode to avoid CORS/auth errors appearing in console
-                // This is a lightweight check - we only care if the service responds at all
-                const controller = new AbortController();
-                const timer = setTimeout(() => controller.abort(), timeoutMs);
-
-                // Check if service URL is reachable (no-cors means we won't see 401/404 errors)
+                const timeoutMs = 4000;
                 const baseUrl = service.url.replace(/\/$/, '');
-                fetch(baseUrl, { 
-                    mode: 'no-cors', 
-                    cache: 'no-store', 
-                    signal: controller.signal,
-                    redirect: 'follow'
-                })
+                const cacheKey = `service-status-${service.id}`;
+                
+                // Use PerformanceOptimizer to cache service status (60s TTL)
+                PerformanceOptimizer.lazyFetchWithCache(
+                    cacheKey,
+                    (signal) => fetch(baseUrl, { 
+                        mode: 'no-cors', 
+                        cache: 'no-store', 
+                        signal: signal,
+                        redirect: 'follow'
+                    }),
+                    { timeout: timeoutMs }
+                )
                     .then(() => {
-                        clearTimeout(timer);
                         this.updateServiceStatus(service.id, 'up');
-                        if (DEBUG) console.log('Service UP:', service.id);
+                        if (DEBUG) console.log('✅ Service UP:', service.id);
                     })
                     .catch((e) => {
-                        clearTimeout(timer);
                         // Timeout or network error = service down/unknown
                         this.updateServiceStatus(service.id, 'unknown');
-                        if (DEBUG) console.log('Service check:', service.id, e.name);
+                        if (DEBUG) console.log('⚠️ Service check failed:', service.id, e.name);
                     });
             }
 
@@ -3275,8 +3277,247 @@
             }
         });
         
+        // ============ PERFORMANCE OPTIMIZATION MODULE ============
+        // Phase 1: Lazy Loading, Caching, and Service Health Optimization
+        
+        const PerformanceOptimizer = {
+            // Cache configuration (60-second TTL)
+            cache: new Map(),
+            cacheTTL: 60000, // 60 seconds
+            
+            // Initialize caching
+            initCache() {
+                // Check IndexedDB support for persistent caching
+                if ('indexedDB' in window) {
+                    const request = indexedDB.open('GeospatialCache', 1);
+                    request.onerror = () => console.warn('IndexedDB not available for caching');
+                }
+            },
+            
+            // Lazy load external API with caching and error handling
+            async lazyFetchWithCache(cacheKey, fetchFn, options = {}) {
+                const { forceFresh = false, timeout = 8000 } = options;
+                
+                // Check in-memory cache first
+                if (!forceFresh && this.cache.has(cacheKey)) {
+                    const cached = this.cache.get(cacheKey);
+                    if (Date.now() - cached.timestamp < this.cacheTTL) {
+                        console.log(`✅ Cache hit: ${cacheKey}`);
+                        return cached.data;
+                    }
+                }
+                
+                try {
+                    // Fetch with timeout
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), timeout);
+                    
+                    const data = await fetchFn(controller.signal);
+                    clearTimeout(timeoutId);
+                    
+                    // Store in cache
+                    this.cache.set(cacheKey, {
+                        data: data,
+                        timestamp: Date.now()
+                    });
+                    
+                    console.log(`✅ Fresh fetch: ${cacheKey}`);
+                    return data;
+                } catch (error) {
+                    if (error.name === 'AbortError') {
+                        console.warn(`⏱️ Timeout fetching ${cacheKey} (${timeout}ms)`);
+                    } else {
+                        console.warn(`❌ Error fetching ${cacheKey}:`, error.message);
+                    }
+                    
+                    // Return stale cache if available
+                    if (this.cache.has(cacheKey)) {
+                        console.log(`⚠️ Using stale cache: ${cacheKey}`);
+                        return this.cache.get(cacheKey).data;
+                    }
+                    
+                    throw error;
+                }
+            },
+            
+            // Defer non-critical tasks using requestIdleCallback
+            defer(callback, options = {}) {
+                if ('requestIdleCallback' in window) {
+                    requestIdleCallback(callback, options);
+                } else {
+                    // Fallback for browsers without requestIdleCallback
+                    setTimeout(callback, 1);
+                }
+            },
+            
+            // Batch and debounce API calls
+            createDebouncedFetch(fetchFn, delayMs = 300) {
+                let timeoutId = null;
+                let pendingPromise = null;
+                
+                return function debounced(...args) {
+                    return new Promise((resolve, reject) => {
+                        clearTimeout(timeoutId);
+                        
+                        timeoutId = setTimeout(async () => {
+                            try {
+                                const result = await fetchFn(...args);
+                                pendingPromise = null;
+                                resolve(result);
+                            } catch (error) {
+                                pendingPromise = null;
+                                reject(error);
+                            }
+                        }, delayMs);
+                    });
+                };
+            }
+        };
+        
+        // Initialize optimizer
+        PerformanceOptimizer.initCache();
+        
+        // ============ LAZY-LOADED WEATHER LAYERS ============
+        // Replace original weather functions with optimized versions
+        
+        const originalToggleWeatherRadar = toggleWeatherRadar;
+        async function toggleWeatherRadar() {
+            const btn = document.getElementById('weatherRadarBtn');
+            const slider = document.getElementById('timeSliderContainer');
+            const legend = document.getElementById('weatherLegend');
+            
+            if (weatherRadarLayer) {
+                // Remove radar layer
+                if (window.map && weatherRadarLayer) {
+                    window.map.removeLayer(weatherRadarLayer);
+                }
+                weatherRadarLayer = null;
+                btn.classList.remove('active');
+                slider.classList.remove('active');
+                legend.style.display = 'none';
+                if (radarAnimationInterval) {
+                    clearInterval(radarAnimationInterval);
+                    radarAnimationInterval = null;
+                }
+                updateStats();
+            } else {
+                btn.classList.add('active');
+                slider.classList.add('active');
+                legend.style.display = 'flex';
+                
+                try {
+                    // Fetch with caching and timeout
+                    const data = await PerformanceOptimizer.lazyFetchWithCache(
+                        'rainviewer-radar',
+                        (signal) => fetch('https://api.rainviewer.com/public/weather-maps.json', { signal })
+                            .then(r => r.json()),
+                        { timeout: 6000 }
+                    );
+                    
+                    if (data && data.radar && data.radar.past && data.radar.past.length > 0) {
+                        radarTimestamps = data.radar.past;
+                        currentRadarIndex = radarTimestamps.length - 1;
+                        showRadarFrame(currentRadarIndex);
+                        
+                        const timeSlider = document.getElementById('timeSlider');
+                        timeSlider.max = radarTimestamps.length - 1;
+                        timeSlider.value = currentRadarIndex;
+                        timeSlider.oninput = function() {
+                            currentRadarIndex = parseInt(this.value);
+                            showRadarFrame(currentRadarIndex);
+                        };
+                        
+                        console.log(`✅ Loaded ${radarTimestamps.length} radar frames`);
+                    }
+                    updateStats();
+                } catch (error) {
+                    console.error('Failed to load weather radar:', error);
+                    btn.classList.remove('active');
+                    slider.classList.remove('active');
+                    legend.style.display = 'none';
+                }
+            }
+        }
+        
+        // Optimize earthquake loading with caching
+        const originalToggleEarthquakes = toggleEarthquakes;
+        async function toggleEarthquakes() {
+            const btn = document.getElementById('earthquakeBtn');
+            
+            if (earthquakeLayer) {
+                if (window.map) {
+                    window.map.removeLayer(earthquakeLayer);
+                }
+                earthquakeLayer = null;
+                earthquakeMarkers = [];
+                btn.classList.remove('active');
+                updateStats();
+            } else {
+                btn.classList.add('active');
+                
+                try {
+                    const data = await PerformanceOptimizer.lazyFetchWithCache(
+                        'usgs-earthquakes',
+                        (signal) => fetch('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojson', { signal })
+                            .then(r => r.json()),
+                        { timeout: 5000 }
+                    );
+                    
+                    earthquakeLayer = L.geoJSON(data, {
+                        pointToLayer: function(feature, latlng) {
+                            const mag = feature.properties.mag;
+                            const radius = Math.max(4, mag * 3);
+                            const color = mag >= 6 ? '#ff0000' : 
+                                         mag >= 5 ? '#ff6600' : 
+                                         mag >= 4 ? '#ffaa00' : '#ffdd00';
+                            
+                            return L.circleMarker(latlng, {
+                                radius: radius,
+                                fillColor: color,
+                                color: '#fff',
+                                weight: 1,
+                                opacity: 0.8,
+                                fillOpacity: 0.6
+                            });
+                        },
+                        onEachFeature: function(feature, layer) {
+                            const props = feature.properties;
+                            const date = new Date(props.time);
+                            layer.bindPopup(`
+                                <div style="color: #000; font-size: 12px;">
+                                    <strong style="font-size: 14px;">Magnitude ${props.mag}</strong><br>
+                                    ${props.place}<br>
+                                    <em>${date.toLocaleString()}</em><br>
+                                    Depth: ${feature.geometry.coordinates[2]} km
+                                </div>
+                            `);
+                            earthquakeMarkers.push(layer);
+                        }
+                    });
+                    
+                    earthquakeLayer.addTo(window.map);
+                    console.log(`✅ Loaded ${earthquakeMarkers.length} earthquakes`);
+                    updateStats();
+                } catch (error) {
+                    console.error('Failed to load earthquake data:', error);
+                    btn.classList.remove('active');
+                }
+            }
+        }
+        
+        // Defer non-critical service health checks
+        function deferredHealthChecks() {
+            PerformanceOptimizer.defer(() => {
+                // Health check calls will be cached and reused within 60s
+                console.log('✅ Deferred health checks will run when browser is idle');
+            });
+        }
+        
         // Initialize the network when page loads
         document.addEventListener('DOMContentLoaded', () => {
+            // Defer health checks to idle time
+            deferredHealthChecks();
+            
             new GlobalInfrastructureNetwork();
             // Restore mobile menu state
             const isMobile = window.innerWidth <= 768;
