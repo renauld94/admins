@@ -304,15 +304,36 @@
             geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
             geometry.setAttribute('velocity', new THREE.BufferAttribute(velocities, 3));
             
-            // Material with glow
+            // Create circular sprite texture for round particles
+            const canvas = document.createElement('canvas');
+            canvas.width = 64;
+            canvas.height = 64;
+            const ctx = canvas.getContext('2d');
+            
+            // Create radial gradient for soft glow effect
+            const gradient = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+            gradient.addColorStop(0, 'rgba(255, 255, 255, 1.0)');
+            gradient.addColorStop(0.2, 'rgba(255, 255, 255, 0.8)');
+            gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.4)');
+            gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+            
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 64, 64);
+            
+            const texture = new THREE.CanvasTexture(canvas);
+            texture.needsUpdate = true;
+            
+            // Enhanced material with round sprite texture and glow
             const material = new THREE.PointsMaterial({
-                size: 3,
+                size: 4,
+                map: texture,
                 sizeAttenuation: true,
                 transparent: true,
-                opacity: 0.9,
+                opacity: 1.0,
                 vertexColors: true,
                 blending: THREE.AdditiveBlending,
-                depthWrite: false
+                depthWrite: false,
+                depthTest: true
             });
             
             this.particles = new THREE.Points(geometry, material);
