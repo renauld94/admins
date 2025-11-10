@@ -776,6 +776,9 @@
                 // Enable lighting
                 this.viewer.scene.globe.enableLighting = true;
                 
+                // Initialize Geoserver WMS layers
+                this.initializeGeoserverWMS();
+                
                 // Load geospatial data
                 this.loadGeospatialData();
 
@@ -843,6 +846,139 @@
                 }
                 const loading = document.getElementById('loading');
                 if (loading) loading.style.display = 'none';
+            }
+            
+            initializeGeoserverWMS() {
+                try {
+                    const geoserverUrl = 'http://136.243.155.166:8080/geoserver/wms';
+                    
+                    // Store WMS layer providers
+                    this.wmsLayers = {
+                        'Healthcare': null,
+                        'Research': null,
+                        'Infrastructure': null
+                    };
+                    
+                    // Create WMS imagery providers for Cesium
+                    const healthcareProvider = new Cesium.WebMapServiceImageryProvider({
+                        url: geoserverUrl,
+                        layers: 'geoserver:healthcare_network',
+                        parameters: {
+                            transparent: true,
+                            format: 'image/png'
+                        },
+                        proxy: new Cesium.DefaultProxy('/'),
+                        enablePickFeatures: false
+                    });
+                    
+                    const researchProvider = new Cesium.WebMapServiceImageryProvider({
+                        url: geoserverUrl,
+                        layers: 'geoserver:research_zones',
+                        parameters: {
+                            transparent: true,
+                            format: 'image/png'
+                        },
+                        proxy: new Cesium.DefaultProxy('/'),
+                        enablePickFeatures: false
+                    });
+                    
+                    const infrastructureProvider = new Cesium.WebMapServiceImageryProvider({
+                        url: geoserverUrl,
+                        layers: 'geoserver:infrastructure_network',
+                        parameters: {
+                            transparent: true,
+                            format: 'image/png'
+                        },
+                        proxy: new Cesium.DefaultProxy('/'),
+                        enablePickFeatures: false
+                    });
+                    
+                    // Store providers for toggling
+                    this.wmsLayers['Healthcare'] = healthcareProvider;
+                    this.wmsLayers['Research'] = researchProvider;
+                    this.wmsLayers['Infrastructure'] = infrastructureProvider;
+                    
+                    console.log('✅ Geoserver WMS layers initialized for 3D globe');
+                    
+                    // Add WMS controls to UI
+                    this.setupWMSControls();
+                    
+                } catch (error) {
+                    console.warn('⚠️ WMS initialization failed (may be expected if Geoserver unavailable):', error.message);
+                }
+            }
+            
+            setupWMSControls() {
+                // Create WMS control panel for 3D globe
+                const controlPanel = document.createElement('div');
+                controlPanel.id = 'wms-globe-controls';
+                controlPanel.innerHTML = `
+                    <div style="background: rgba(15, 23, 42, 0.95); padding: 12px; border-radius: 8px; border: 1px solid rgba(14, 165, 233, 0.3); font-family: Inter, sans-serif; color: #e8eef8; min-width: 160px;">
+                        <div style="font-size: 0.85em; font-weight: 700; color: #00d4ff; text-transform: uppercase; letter-spacing: 0.5px; padding-bottom: 8px; border-bottom: 1px solid rgba(0, 212, 255, 0.2); margin-bottom: 8px;">WMS Layers</div>
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.9em; user-select: none;">
+                                <input type="checkbox" id="wmsHealthcareGlobe" onchange="window.globeApp.toggleWMSLayer(this)" />
+                                Healthcare
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.9em; user-select: none;">
+                                <input type="checkbox" id="wmsResearchGlobe" onchange="window.globeApp.toggleWMSLayer(this)" />
+                                Research
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 0.9em; user-select: none;">
+                                <input type="checkbox" id="wmsInfrastructureGlobe" onchange="window.globeApp.toggleWMSLayer(this)" />
+                                Infrastructure
+                            </label>
+                        </div>
+                    </div>
+                `;
+                
+                // Position controls in top-left of Cesium viewer
+                controlPanel.style.cssText = `
+                    position: absolute;
+                    top: 10px;
+                    left: 10px;
+                    z-index: 100;
+                `;
+                
+                const cesiumContainer = document.getElementById('cesiumContainer');
+                if (cesiumContainer) {
+                    cesiumContainer.appendChild(controlPanel);
+                }
+            }
+            
+            toggleWMSLayer(checkbox) {
+                const layerName = checkbox.id.replace('wms', '').replace('Globe', '');
+                const isChecked = checkbox.checked;
+                
+                try {
+                    if (layerName === 'Healthcare' && this.wmsLayers['Healthcare']) {
+                        if (isChecked) {
+                            this.viewer.imageryLayers.addImageryProvider(this.wmsLayers['Healthcare']);
+                            console.log('✅ Healthcare WMS layer added to 3D globe');
+                        } else {
+                            this.viewer.imageryLayers.remove(this.wmsLayers['Healthcare']);
+                            console.log('❌ Healthcare WMS layer removed from 3D globe');
+                        }
+                    } else if (layerName === 'Research' && this.wmsLayers['Research']) {
+                        if (isChecked) {
+                            this.viewer.imageryLayers.addImageryProvider(this.wmsLayers['Research']);
+                            console.log('✅ Research WMS layer added to 3D globe');
+                        } else {
+                            this.viewer.imageryLayers.remove(this.wmsLayers['Research']);
+                            console.log('❌ Research WMS layer removed from 3D globe');
+                        }
+                    } else if (layerName === 'Infrastructure' && this.wmsLayers['Infrastructure']) {
+                        if (isChecked) {
+                            this.viewer.imageryLayers.addImageryProvider(this.wmsLayers['Infrastructure']);
+                            console.log('✅ Infrastructure WMS layer added to 3D globe');
+                        } else {
+                            this.viewer.imageryLayers.remove(this.wmsLayers['Infrastructure']);
+                            console.log('❌ Infrastructure WMS layer removed from 3D globe');
+                        }
+                    }
+                } catch (error) {
+                    console.warn('Error toggling WMS layer:', error.message);
+                }
             }
             
             loadGeospatialData() {
@@ -1480,8 +1616,9 @@
             }
         }
         
-        // Initialize globe app
+        // Initialize globe app - make globally accessible for UI controls
         const globeApp = new GlobeApp();
+        window.globeApp = globeApp;
     </script>
 </body>
 </html>

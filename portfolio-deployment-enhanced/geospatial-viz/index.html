@@ -1259,6 +1259,60 @@
             font-weight: 600;
             font-size: 0.9em;
         }
+        
+        /* Geoserver WMS Controls */
+        .wms-control-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .wms-control-header {
+            font-size: 0.85em;
+            font-weight: 700;
+            color: #00d4ff;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+        }
+        
+        .wms-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        
+        .wms-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            color: #e8eef8;
+            transition: color 0.2s ease;
+            user-select: none;
+        }
+        
+        .wms-checkbox:hover {
+            color: #00d4ff;
+        }
+        
+        .wms-checkbox input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            accent-color: #00d4ff;
+            transition: transform 0.2s ease;
+        }
+        
+        .wms-checkbox input[type="checkbox"]:hover {
+            transform: scale(1.2);
+        }
+        
+        .wms-checkbox input[type="checkbox"]:checked + label {
+            color: #00d4ff;
+        }
 
         /* Respect reduced motion preferences */
         @media (prefers-reduced-motion: reduce) {
@@ -1700,10 +1754,133 @@
                 // Add location button for user-initiated geolocation
                 this.addLocationButton();
                 
+                // Initialize WMS layers from Geoserver
+                this.initializeGeoserverWMS();
+                
                 // Add markerCluster to map (will be populated in renderNetwork)
                 this.markerCluster.addTo(this.map);
                 // Initialize stats
                 setTimeout(() => updateStats(), 1000);
+            }
+            
+            initializeGeoserverWMS() {
+                const geoserverUrl = 'http://136.243.155.166:8080/geoserver/wms';
+                
+                // Healthcare facilities WMS layer
+                this.healthcareWMS = L.tileLayer.wms(geoserverUrl, {
+                    layers: 'geoserver:healthcare_network',
+                    format: 'image/png',
+                    transparent: true,
+                    opacity: 0.7,
+                    attribution: 'Geoserver WMS',
+                    zIndex: 100,
+                    crossOrigin: 'anonymous'
+                });
+                
+                // Research zones WMS layer
+                this.researchWMS = L.tileLayer.wms(geoserverUrl, {
+                    layers: 'geoserver:research_zones',
+                    format: 'image/png',
+                    transparent: true,
+                    opacity: 0.6,
+                    attribution: 'Geoserver WMS',
+                    zIndex: 99,
+                    crossOrigin: 'anonymous'
+                });
+                
+                // Infrastructure network WMS layer
+                this.infrastructureWMS = L.tileLayer.wms(geoserverUrl, {
+                    layers: 'geoserver:infrastructure_network',
+                    format: 'image/png',
+                    transparent: true,
+                    opacity: 0.5,
+                    attribution: 'Geoserver WMS',
+                    zIndex: 98,
+                    crossOrigin: 'anonymous'
+                });
+                
+                // Store WMS layers for control
+                this.wmsLayers = {
+                    'Healthcare Network': this.healthcareWMS,
+                    'Research Zones': this.researchWMS,
+                    'Infrastructure': this.infrastructureWMS
+                };
+                
+                // Add layer control to toggle WMS visibility
+                this.addWMSLayerControl();
+                
+                console.log('✅ Geoserver WMS layers initialized');
+            }
+            
+            addWMSLayerControl() {
+                // Create WMS control panel
+                const wmsControl = L.control({position: 'topleft'});
+                
+                wmsControl.onAdd = (map) => {
+                    const div = L.DomUtil.create('div', 'wms-control-panel');
+                    div.innerHTML = `
+                        <div class="wms-control-header">
+                            <strong>WMS Layers</strong>
+                        </div>
+                        <div class="wms-controls">
+                            <label class="wms-checkbox">
+                                <input type="checkbox" id="healthcareWMSToggle" onchange="window.networkMap.toggleWMSLayer('Healthcare Network', this.checked)" />
+                                Healthcare
+                            </label>
+                            <label class="wms-checkbox">
+                                <input type="checkbox" id="researchWMSToggle" onchange="window.networkMap.toggleWMSLayer('Research Zones', this.checked)" />
+                                Research
+                            </label>
+                            <label class="wms-checkbox">
+                                <input type="checkbox" id="infrastructureWMSToggle" onchange="window.networkMap.toggleWMSLayer('Infrastructure', this.checked)" />
+                                Infrastructure
+                            </label>
+                        </div>
+                    `;
+                    
+                    div.style.cssText = `
+                        background: rgba(15, 23, 42, 0.95);
+                        padding: 12px;
+                        border-radius: 8px;
+                        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+                        border: 1px solid rgba(14, 165, 233, 0.3);
+                        font-family: Inter, sans-serif;
+                        color: #e8eef8;
+                        min-width: 160px;
+                    `;
+                    
+                    return div;
+                };
+                
+                wmsControl.addTo(this.map);
+            }
+            
+            toggleWMSLayer(layerName, enabled) {
+                if (!this.wmsLayers[layerName]) {
+                    console.warn(`WMS layer not found: ${layerName}`);
+                    return;
+                }
+                
+                const layer = this.wmsLayers[layerName];
+                
+                if (enabled) {
+                    if (!this.map.hasLayer(layer)) {
+                        layer.addTo(this.map);
+                        console.log(`✅ WMS layer added: ${layerName}`);
+                    }
+                } else {
+                    if (this.map.hasLayer(layer)) {
+                        this.map.removeLayer(layer);
+                        console.log(`❌ WMS layer removed: ${layerName}`);
+                    }
+                }
+                
+                // Store preference
+                try {
+                    localStorage.setItem(`wms_layer_${layerName}`, enabled ? '1' : '0');
+                } catch (e) {
+                    console.warn('Could not save WMS layer preference:', e);
+                }
             }
             
             addLocationButton() {
