@@ -1,0 +1,145 @@
+{
+  "report_generated_at": "2025-11-09T12:04:51.858933",
+  "integration_timeline": "Phase 1 Week 2 - Phase 1 Week 4",
+  "phase_breakdown": [
+    {
+      "phase": "Phase 1: Foundation Setup",
+      "duration_days": 7,
+      "start_date": "November 16, 2025",
+      "end_date": "November 22, 2025",
+      "tasks": [
+        {
+          "task": "Create Databricks workspace",
+          "effort_hours": 4,
+          "dependencies": []
+        },
+        {
+          "task": "Set up Unity Catalog",
+          "effort_hours": 6,
+          "dependencies": [
+            "Create Databricks workspace"
+          ]
+        },
+        {
+          "task": "Load Moodle data to Delta tables",
+          "effort_hours": 8,
+          "dependencies": [
+            "Set up Unity Catalog"
+          ]
+        },
+        {
+          "task": "Create baseline PySpark jobs",
+          "effort_hours": 10,
+          "dependencies": [
+            "Load Moodle data to Delta tables"
+          ]
+        }
+      ],
+      "total_effort_hours": 28,
+      "risk_level": "Medium"
+    },
+    {
+      "phase": "Phase 2: Integration & APIs",
+      "duration_days": 7,
+      "start_date": "November 23, 2025",
+      "end_date": "November 29, 2025",
+      "tasks": [
+        {
+          "task": "Build Moodle REST API adapter",
+          "effort_hours": 12,
+          "dependencies": [
+            "Create baseline PySpark jobs"
+          ]
+        },
+        {
+          "task": "Configure real-time data sync",
+          "effort_hours": 10,
+          "dependencies": [
+            "Build Moodle REST API adapter"
+          ]
+        },
+        {
+          "task": "Create Databricks SQL warehouse",
+          "effort_hours": 6,
+          "dependencies": []
+        },
+        {
+          "task": "Build SQL queries for dashboards",
+          "effort_hours": 14,
+          "dependencies": [
+            "Create Databricks SQL warehouse",
+            "Load Moodle data to Delta tables"
+          ]
+        }
+      ],
+      "total_effort_hours": 42,
+      "risk_level": "Medium"
+    },
+    {
+      "phase": "Phase 3: Dashboard & Visualization",
+      "duration_days": 7,
+      "start_date": "November 30, 2025",
+      "end_date": "December 6, 2025",
+      "tasks": [
+        {
+          "task": "Build Databricks SQL dashboard",
+          "effort_hours": 16,
+          "dependencies": [
+            "Build SQL queries for dashboards"
+          ]
+        },
+        {
+          "task": "Embed visualizations in Moodle",
+          "effort_hours": 12,
+          "dependencies": [
+            "Build Databricks SQL dashboard"
+          ]
+        },
+        {
+          "task": "Configure alerts & notifications",
+          "effort_hours": 8,
+          "dependencies": [
+            "Embed visualizations in Moodle"
+          ]
+        },
+        {
+          "task": "Performance optimization",
+          "effort_hours": 10,
+          "dependencies": [
+            "Embed visualizations in Moodle"
+          ]
+        }
+      ],
+      "total_effort_hours": 46,
+      "risk_level": "Low"
+    }
+  ],
+  "total_project_timeline": {
+    "total_days": 21,
+    "total_hours": 116,
+    "team_size_recommended": 2,
+    "start_date": "November 16, 2025",
+    "target_completion": "December 6, 2025"
+  },
+  "cost_estimate": {
+    "databricks_services": {
+      "workspace_setup": "$500",
+      "compute_credits_21_days": "$3,000",
+      "SQL_warehouse_credits": "$1,500",
+      "total_databricks": "$5,000"
+    },
+    "development_team": {
+      "senior_engineer_hours": 40,
+      "junior_engineer_hours": 76,
+      "total_development_cost": "$5,500"
+    },
+    "total_integration_cost": "$10,500"
+  },
+  "success_criteria": [
+    "Real-time data sync: <5 min latency",
+    "Dashboard load time: <2 seconds",
+    "Query performance: <10 seconds for complex queries",
+    "Data accuracy: 99%+ match with Moodle",
+    "User adoption: 80%+ of instructors using dashboard"
+  ]
+}

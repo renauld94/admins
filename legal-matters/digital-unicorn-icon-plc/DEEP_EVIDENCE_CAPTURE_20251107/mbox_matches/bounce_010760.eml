@@ -1,0 +1,364 @@
+X-GM-THRID: 1801539550087134975
+X-Gmail-Labels: Archived,Important,Category Updates,Unread
+Delivered-To: sn.renauld@gmail.com
+Received: by 2002:a17:906:da02:b0:a6e:f8ac:652a with SMTP id fi2csp1864690ejb;
+        Mon, 10 Jun 2024 21:59:59 -0700 (PDT)
+X-Google-Smtp-Source: 
+ AGHT+IHsgJpwU+lcDPDhcwo6E//ZMZVTYlejISPQ7nvfJvLOF9QJh5o8BTm2O3KGkTUnm5ciKlwG
+X-Received: by 2002:a05:620a:bc6:b0:795:37ff:519a with SMTP id
+ af79cd13be357-7953c5c6000mr1153928585a.71.1718081999161;
+        Mon, 10 Jun 2024 21:59:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1718081999; cv=none;
+        d=google.com; s=arc-20160816;
+        b=f5B1HhQFp29NtO1TRlSnunVOQZjxBmcH5aYshilgJRM8G/DIPvRAZ+PFGtKja5J1ow
+         D8Ni+kBtyf3hYwLH16etAWp5HNv3gwxa/GBobDu2OHAXBEl722BCfC0gYqL+j4mLykhG
+         tgvrEyuXUk5uMzNNmvbSi5B1oL87yrfzVNg27V7Xn15REYkZ1OXhjCfOJVMCOY5Ju+tL
+         WTCRhYHe5b1oG0Mrj4TsAUH9b3XnAvkMVbdGUKk6P8+J/cWfr2yQy4l33GBh93dGgCEo
+         lBrHAv8b7ISlL9N2DYxBRqlELIimEWAfdEh9/VinDvtChaD3iuVr99eNW05EckqC+LZA
+         0Lmw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20160816;
+        h=content-transfer-encoding:to:reply-to:mime-version:subject
+         :message-id:from:date:dkim-signature:dkim-signature;
+        bh=QSEm9se/L0mCFX+iSFPpd/UmbIoWdBqoYB1wpUZ/fMk=;
+        fh=UdbUcDkJKvqffcPeSfMTJ3BaP9WLNp68ZQroZAlxuH8=;
+        b=J9zzFTjSvq/sJ8wkdhE5diyNucDnBUwSkwNAiEpCtDP2fRYRDbKv3GH9qFplJrCb5V
+         hkiXf6T5J6d96IuILNY9lDXGvhb5l9ltYsYdGqQRHwEYJlyFdjWzRRjwtdFEtCBWB+XS
+         7xzxor3trUhtjlXoHZUwoTV2EgaYrjTs5/YhDlcZUnY1MjAj1OHP87d2ZPQDYuiMMESX
+         6nrwlwFOxW7tKmad7+wjHsn3zgQaX57cSAxKLoiZtADyrXToms8ZQnRE0x/JBpFkOnDU
+         yMYrmaEfW7frqj0C4mXgQru2r6udfdN0NqJmgVWz4con6AR6e0c7qDyI9G3sAY8pRd8B
+         kW+Q==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@digitalocean.com header.s=s1 header.b=s4z29ll8;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=mb+UojGr;
+       spf=pass (google.com: domain of
+ bounces+28395035-5881-sn.renauld=gmail.com@em6554.digitalocean.com designates
+ 168.245.49.182 as permitted sender)
+ smtp.mailfrom="bounces+28395035-5881-sn.renauld=gmail.com@em6554.digitalocean.com";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE)
+ header.from=referrals.digitalocean.com
+Return-Path: 
+ <bounces+28395035-5881-sn.renauld=gmail.com@em6554.digitalocean.com>
+Received: from o2.outbound-sg.digitalocean.com
+ (o2.outbound-sg.digitalocean.com. [168.245.49.182])
+        by mx.google.com with ESMTPS id
+ af79cd13be357-7954828c8ebsi892188885a.281.2024.06.10.21.59.58
+        for <sn.renauld@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 10 Jun 2024 21:59:59 -0700 (PDT)
+Received-SPF: pass (google.com: domain of
+ bounces+28395035-5881-sn.renauld=gmail.com@em6554.digitalocean.com designates
+ 168.245.49.182 as permitted sender) client-ip=168.245.49.182;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@digitalocean.com header.s=s1 header.b=s4z29ll8;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=mb+UojGr;
+       spf=pass (google.com: domain of
+ bounces+28395035-5881-sn.renauld=gmail.com@em6554.digitalocean.com designates
+ 168.245.49.182 as permitted sender)
+ smtp.mailfrom="bounces+28395035-5881-sn.renauld=gmail.com@em6554.digitalocean.com";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE)
+ header.from=referrals.digitalocean.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=digitalocean.com;
+	h=from:subject:mime-version:reply-to:x-feedback-id:to:content-type:
+	content-transfer-encoding:cc:content-type:from:subject:to;
+	s=s1; bh=QSEm9se/L0mCFX+iSFPpd/UmbIoWdBqoYB1wpUZ/fMk=;
+	b=s4z29ll8w8NsAY5wewI7zqYWvxDm0eMkLxGalQEX5pNhsdJszZ1S79Wn6RT7sPL0b+rJ
+	gTm64Hbdn/DPZLhwamPKggpWI6VkW0CmcPECsermn+6O843qTaurM32Ugk4vdlLsqxU1sb
+	YwF15mq5caksrJF+v71NhEwyfgyozX+e3z4eP2+ry8tyrVF6hm1iv1XkOOeVlY8YxYtOHv
+	03Q9J9Vszcyr6IzgXWslkVeE5s6DGyl2IPFq9RWu0zAnpIAyYpEzuFZ24NZgcofl/nno8O
+	Pn89iCkJXQnTnEOxy1IvT5BKRCw5h5hvnYfMHsu0b/28NAyzW0hE4XLk8zQAz0OA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendgrid.info;
+	h=from:subject:mime-version:reply-to:x-feedback-id:to:content-type:
+	content-transfer-encoding:cc:content-type:from:subject:to;
+	s=smtpapi; bh=QSEm9se/L0mCFX+iSFPpd/UmbIoWdBqoYB1wpUZ/fMk=;
+	b=mb+UojGr70p1I0dw25xiYtn3Dx370hkfkg6DmLYnJGggW+w1JZ8NpIpbuUxQ6jbm+0My
+	rv0Jz/HXTcPguy7gb0u6ApNCKg5PY7jEva0ruIRqW6G7itDyZZjNmHHcDKu1OOne6bSGN4
+	x2+pd+bpAl+oaafsJAsalHZqzovJCCSMc=
+Received: by filterdrecv-659c47b755-drlc6 with SMTP id
+ filterdrecv-659c47b755-drlc6-1-6667D9CE-55
+        2024-06-11 04:59:58.413300128 +0000 UTC m=+3651530.157609082
+Received: from em5376.referrals.digitalocean.com (unknown)
+	by geopod-ismtpd-17 (SG) with ESMTP id ynQwZbJBQWmHUbrMFE1yUg
+	for <sn.renauld@gmail.com>; Tue, 11 Jun 2024 04:59:58.300 +0000 (UTC)
+Date: Tue, 11 Jun 2024 04:59:58 +0000 (UTC)
+From: DigitalOcean <no-reply@referrals.digitalocean.com>
+Message-ID: 
+ <6667d9ce916b_12ab5b390c9a8175149@cloud-worker-565c989f97-fkkts.mail>
+Subject: You were removed from the ReLoved 2024 team
+Mime-Version: 1.0
+Reply-To: sn.renauld@gmail.com
+X-Feedback-ID: 28395035:SG
+X-SG-EID: 
+ =?us-ascii?Q?u001=2EIrsp9SSQ08zT63q1jQS2DBJMkUi2sWIyoqy58ELCYfGu5QnhaETneKS92?=
+ =?us-ascii?Q?Qu9vnsdCZ0kgfx3qO6ZV65nmXxB8PswmKVwQCVG?=
+ =?us-ascii?Q?GZUbjnY4O0DuR5ypWtENlTQ4poCctZps0kSlc0r?=
+ =?us-ascii?Q?sdGcijps0NM9YZV+=2F18RjBYZpp4f9q0B2PWF11D?=
+ =?us-ascii?Q?fgXJMl13ujxxg5NNHhEjGaQfv0=2F2l3p6orPM2UJ?=
+ =?us-ascii?Q?CWRFXKzzqyjG9rCFClttC4CNTDaeDUd4o7tF+LP?=
+ =?us-ascii?Q?YYKdlTIuwGESo6MUxnRIcqH+Uw=3D=3D?=
+To: sn.renauld@gmail.com
+X-Entity-ID: u001.UCy5ctI0XlLs8rtaiT3Iig==
+Content-Type: text/html; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="initial-scale=1.0"> <!-- So that mobile webkit will display zoomed in -->
+  <meta name="format-detection" content="telephone=no"> <!-- disable auto telephone linking in iOS -->
+  <title>Subject Line (for proofing, doesn't show in actual email)</title>
+  <style type="text/css">
+
+    /* Force Hotmail to display emails at full width */
+    .ReadMsgBody {
+      width: 100%;
+      background-color: #eeeeee;
+    }
+
+    /* Force Hotmail to display emails at full width */
+    .ExternalClass {
+      width: 100%;
+      background-color: #eeeeee;
+    }
+
+    /* Forces Hotmail to display normal line spacing. */
+    .ExternalClass,
+    .ExternalClass p,
+    .ExternalClass span,
+    .ExternalClass font,
+    .ExternalClass td,
+    .ExternalClass div {
+      line-height:100%;
+    }
+
+    /* Resolves webkit padding issue. */
+    table {
+      border-spacing:0;
+    }
+
+    /* Resolves the Outlook 2007, 2010, and Gmail td padding issue. */
+    table td {
+      border-collapse:collapse;
+    }
+
+    /* Yahoo auto-sensing link color and border */
+    .yshortcuts a {
+      border-bottom: none !important;
+    }
+
+    /* Media queries for when the viewport is larger than the default email width */
+    @media only screen and (min-width: 651px) {
+      table[class="content"] {
+        width: 600px;
+        margin: 0 auto;
+      }
+    }
+
+    /* Media queries for when the viewport is smaller than the default email width but not too narrow. */
+    @media screen and (max-device-width: 650px), screen and (max-width: 650px) {
+
+      /* Constrain email width for small screens */
+      table[class="email-container"] {
+        width: 100% !important;
+      }
+      /* Constrain tables for small screens */
+      table[class="fluid"] {
+        width: 100% !important;
+      }
+
+      /* Force images to resize to full width of their container */
+      img[class="fluid"],
+      img[class="force-col-center"] {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+      }
+      /* And center these ones */
+        img[class="force-col-center"] {
+        margin: auto !important;
+      }
+
+      /* Force table cells into rows */
+      td[class="force-col"],
+      td[class="force-col-center"] {
+        display: block !important;
+        width: 100% !important;
+        clear: both;
+      }
+      /* And center these ones */
+      td[class="force-col-center"] {
+        text-align: center !important;
+      }
+
+      /* Force table cells into rows */
+      /* Float a previously stacked image to the left */
+      img[class="col-3-img-l"] {
+        float: left;
+        margin: 0 15px 15px 0;
+      }
+      /* Float a previously stacked image to the right */
+      img[class="col-3-img-r"] {
+        float: right;
+        margin: 0 0 15px 15px;
+      }
+
+      /* Make bulletproof buttons full width */
+      a[class="button"] {
+        width: 100% !important;
+      }
+
+      td[class="hide"] {
+        display: none;
+        visibility: hidden;
+        opacity: 0;s
+      }
+
+    }
+
+    /* Media queries for when the viewport is narrow. */
+    /* Rules prefixed with 'hh-' (for 'handheld') repeat much of what's above, but these don't trigger until the smaller screen width. */
+    @media screen and (max-device-width: 425px), screen and (max-width: 425px) {
+
+      /* Helper only visible on handhelds. All styles are inline along with a `display:none`, which this class overrides */
+      div[class="hh-visible"] {
+        display: block !important;
+      }
+
+      /* Center stuff */
+      div[class="hh-center"] {
+        text-align: center;
+        width: 100% !important;
+      }
+
+      /* Constrain tables for small screens */
+      table[class="hh-fluid"] {
+        width: 100% !important;
+      }
+
+      /* Force images to resize to full width of their container */
+      img[class="hh-fluid"],
+      img[class="hh-force-col-center"] {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+      }
+      /* And center these ones */
+      img[class="hh-force-col-center"] {
+        margin: auto !important;
+      }
+
+      /* Force table cells into rows */
+      td[class="hh-force-col"],
+      td[class="hh-force-col-center"] {
+        display: block !important;
+        width: 100% !important;
+        clear: both;
+      }
+      /* And center these ones */
+      td[class="hh-force-col-center"] {
+        text-align: center !important;
+      }
+
+      /* Stack the previously floated images */
+      img[class="col-3-img-l"],
+      img[class="col-3-img-r"] {
+        float: none !important;
+        margin: 15px auto !important;
+        text-align: center !important;
+      }
+
+    }
+
+  </style>
+</head>
+<body bgcolor="#f4f4f4" link="398bce" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" style="margin:0; padding:0;-webkit-text-size-adjust:none; -ms-text-size-adjust:none;background: #f4f4f4;">
+<table class="content" cellpadding="0" cellspacing="0" border="0" height="100%" width="100%" bgcolor="#f4f4f4" style="background: #f4f4f4;"><tr><td>
+
+<!-- CSS Image background in Outlook : BEGIN -->
+<!-- Best used with absolute image paths -->
+<!--[if gte mso 9]>
+  <v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t">
+    <v:fill type="tile" color="#eeeeee" src="https://assets.digitalocean.com/email/background-fallback.png">
+  </v:background>
+<![endif]-->
+<!-- CSS Image background in Outlook : END -->
+  <!-- Logo Left Nav Right + Vertical Padding : BEGIN -->
+  <table border="0" width="600" cellpadding="0" cellspacing="0" align="center" class="email-container">
+    <tr>
+      <td height="30" style="font-size: 0; line-height: 0;">&nbsp;</td>
+    </tr>
+    <tr>
+      <td valign="middle" style="padding:20px 0;text-align:left;border-collapse:collapse">
+        <a href="https://www.digitalocean.com" target="_blank" border="0">
+          <img src="https://cloud.digitalocean.com/DigitalOcean-logo-blue.png" alt="Logo" height="29" width="180" />
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td height="10" style="font-size: 0; line-height: 0;">&nbsp;</td>
+    </tr>
+  </table>
+  <!-- Logo Left Nav Right + Vertical Padding : END -->
+
+  <!-- Email Container : BEGIN -->
+  <!-- This table wraps the whole body email within it's width (600px), sets the background color (white) and border (thin, gray, solid) -->
+    <table border="0" width="600" cellpadding="0" cellspacing="0" align="center" style="background: #ffffff;border: 1px solid #e5e5e5;" class="email-container">
+
+      <!-- Single Fluid Image, No Crop : BEGIN -->
+      <tr>
+        <td>
+
+        </td>
+      </tr>
+      <!-- Single Fluid Image, No Crop : END -->
+
+      <!-- Full Width, Fluid Column : BEGIN -->
+      <tr>
+        <td style="border-bottom: 1px solid #e5e5e5;">
+
+          <table border="0" width="100%" cellpadding="0" cellspacing="0" align="center">
+            <tr>
+              <td style="padding: 30px; font-family: sans-serif; font-size: 16px; line-height: 25px; color: #666666;">
+                <h2>You were removed from the ReLoved 2024 team</h2>
+
+<p>
+  The ReLoved 2024 team Owner 'Lisa Le Long' &lt;lelong.lisa@gmail.com> has removed you from the team. You no longer have
+  access to the team or its resources.
+</p>
+
+<p>If you believe this was in error, please reach out to a ReLoved 2024 team Owner directly.</p>
+
+              </td>
+            </tr>
+          </table>
+
+        </td>
+      </tr>
+
+      <!-- Full Width, Fluid Column : END -->
+
+  </table>
+  <!-- Email Container : END -->
+
+  <!-- Footer : BEGIN -->
+  <table border="0" width="100%" cellpadding="0" cellspacing="0" align="center" class="email-container">
+    <tr>
+      <td style="text-align: center;padding: 20px 0px 5px;font-family: Helvetica, Arial, sans-serif; font-size: 12px; line-height: 18px;color: #888888;">
+        &copy; DigitalOcean<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: center;padding: 10px 0px 20px 0px;font-family: sans-serif; font-size: 12px; line-height: 18px;color: #888888;">
+        <a href="http://do.co/email_twitter"><img src="https://assets.digitalocean.com/email/twitter-icon.png" style="border: none;"></a>&nbsp; &nbsp;
+        <a href="http://do.co/email_facebook"><img src="https://assets.digitalocean.com/email/facebook-icon.png" style="border: none;"></a>
+      </td>
+    </tr>
+  </table>
+  <!-- Footer : END -->
+
+</td></tr></table>
+<img src="http://url3521.digitalocean.com/wf/open?upn=u001.wJ4wQoWqpttL0LnWj9yCngQD-2BPKOSnIWwGo2A-2BWj6XiaVUY4c7RnAkkbnmwu9tUHfls1mJr-2FKc18rQYd1LiAdYVgMDfAQolT3o2YuplLWxQiZnQQoUkQ4xc863O1rTGs6hI2W0E6ESe0Y8cixAtY8WP2x6BQjHeBRLLi4Sp-2Bs1kGqVwpXD3A7HgcyLAk5nr2hXBOx8z3dZS5dBgZvRLNZTB1IF8zg3ATb1oYeipc-2B14-3D" alt="" width="1" height="1" border="0" style="height:1px !important;width:1px !important;border-width:0 !important;margin-top:0 !important;margin-bottom:0 !important;margin-right:0 !important;margin-left:0 !important;padding-top:0 !important;padding-bottom:0 !important;padding-right:0 !important;padding-left:0 !important;"/></body>
+</html>
+

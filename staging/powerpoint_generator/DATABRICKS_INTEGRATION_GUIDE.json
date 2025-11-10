@@ -1,0 +1,79 @@
+{
+  "title": "Databricks Integration Guide for Vietnamese Course",
+  "generated_at": "2025-11-09T12:04:04.252311",
+  "overview": "\nThis guide enables clinical data analysis and impact measurement \nusing Databricks and PySpark for the Vietnamese language learning course.\n            ",
+  "modules": [
+    {
+      "module_id": 101,
+      "module_name": "Foundations of Vietnamese",
+      "clinical_data_points": [
+        "Student engagement metrics (attendance, duration)",
+        "Comprehension assessment scores",
+        "Vocabulary retention rates",
+        "Pronunciation accuracy via audio analysis"
+      ],
+      "databricks_queries": [
+        "\nSELECT \n  student_id,\n  module_id,\n  AVG(engagement_score) as avg_engagement,\n  COUNT(DISTINCT day) as days_active,\n  AVG(duration_minutes) as avg_session_duration\nFROM course_analytics\nWHERE module_id = 101\n  AND course_id = 10\nGROUP BY student_id, module_id\nORDER BY avg_engagement DESC;\n                        "
+      ],
+      "impact_metrics": {
+        "primary": "Pronunciation Accuracy (%)",
+        "secondary": [
+          "Vocabulary Retention",
+          "Comprehension",
+          "Engagement"
+        ],
+        "target": 85,
+        "current": 78
+      }
+    },
+    {
+      "module_id": 102,
+      "module_name": "Interactive Communication",
+      "clinical_data_points": [
+        "Conversation practice minutes",
+        "Peer interaction quality",
+        "Response time accuracy",
+        "Vocabulary usage in context"
+      ],
+      "databricks_queries": [
+        "\nSELECT \n  student_id,\n  COUNT(*) as conversation_sessions,\n  AVG(conversation_score) as avg_score,\n  MAX(conversation_score) as best_score,\n  SUM(practice_minutes) as total_practice_minutes\nFROM communication_analytics\nWHERE module_id = 102 AND course_id = 10\nGROUP BY student_id\nHAVING SUM(practice_minutes) > 30\nORDER BY avg_score DESC;\n                        "
+      ],
+      "impact_metrics": {
+        "primary": "Conversation Proficiency",
+        "secondary": [
+          "Fluency",
+          "Accuracy",
+          "Confidence"
+        ],
+        "target": 88,
+        "current": 82
+      }
+    }
+  ],
+  "pyspark_examples": {
+    "setup": "\nfrom pyspark.sql import SparkSession\nfrom pyspark.sql.functions import avg, count, sum as spark_sum, col\n\n# Initialize Spark\nspark = SparkSession.builder \\\n    .appName(\"VietnamseCoursAnalytics\") \\\n    .config(\"spark.databricks.delta.preview.enabled\", \"true\") \\\n    .getOrCreate()\n\n# Load course data\ncourse_analytics = spark.read.table(\"course_analytics\")\nstudent_profiles = spark.read.table(\"student_profiles\")\n                ",
+    "aggregation": "\n# Calculate module-level metrics\nmodule_metrics = course_analytics \\\n    .filter((col(\"course_id\") == 10) & (col(\"status\") == \"completed\")) \\\n    .groupBy(\"module_id\") \\\n    .agg(\n        count(\"student_id\").alias(\"students_completed\"),\n        avg(\"score\").alias(\"avg_score\"),\n        avg(\"completion_time_minutes\").alias(\"avg_time\"),\n        sum(\"engagement_points\").alias(\"total_engagement\")\n    ) \\\n    .orderBy(\"module_id\")\n\nmodule_metrics.show()\n                ",
+    "clinical_relevance": "\n# Measure clinical relevance impact\nclinical_impact = course_analytics \\\n    .join(student_profiles, \"student_id\") \\\n    .groupBy(\"module_id\") \\\n    .agg(\n        avg(col(\"clinical_relevance_score\")).alias(\"avg_relevance\"),\n        count(col(\"assessment_score\") > 80).alias(\"high_achievers\"),\n        avg(col(\"retention_rate\")).alias(\"avg_retention\"),\n        avg(col(\"application_to_practice\")).alias(\"practical_application\")\n    )\n\nclinical_impact.write \\\n    .mode(\"overwrite\") \\\n    .option(\"mergeSchema\", \"true\") \\\n    .saveAsTable(\"clinical_impact_metrics\")\n                "
+  },
+  "deployment_checklist": [
+    "1. Set up Databricks workspace (Community Edition: free for learning)",
+    "2. Create Unity Catalog for course data",
+    "3. Load course analytics data (student progress, engagement)",
+    "4. Configure Moodle API integration with Databricks",
+    "5. Build PySpark jobs for nightly metric calculations",
+    "6. Create SQL queries for dashboard visualizations",
+    "7. Set up automated reports (weekly, monthly)",
+    "8. Configure alerts for low engagement/completion",
+    "9. Build Databricks SQL warehouse for dashboards",
+    "10. Integrate visualizations into Moodle course page"
+  ],
+  "databricks_advantages": [
+    "Real-time analytics on large-scale course data",
+    "Clinical data privacy compliance (HIPAA-ready)",
+    "Automatic scaling for growing student base",
+    "Integration with Moodle via REST APIs",
+    "Cost-effective for educational institutions",
+    "Support for machine learning workflows",
+    "Built-in data governance and audit trails"
+  ]
+}

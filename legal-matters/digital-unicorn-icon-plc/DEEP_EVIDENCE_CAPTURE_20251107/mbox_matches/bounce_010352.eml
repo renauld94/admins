@@ -1,0 +1,662 @@
+X-GM-THRID: 1754613172670723514
+X-Gmail-Labels: Inbox,Category Updates,Unread
+Delivered-To: sn.renauld@gmail.com
+Received: by 2002:a8a:121e:0:0:0:0:0 with SMTP id k30csp3168596oco;
+        Mon, 9 Jan 2023 21:45:17 -0800 (PST)
+X-Google-Smtp-Source: 
+ AMrXdXsAIxW17DqxvUgLLGCC0s6lUj+UqRAvcaLzJgUK53cACyICQogmiFuUHxPfp4wteBmYbrdO
+X-Received: by 2002:a25:fb02:0:b0:7b4:c76c:ec45 with SMTP id
+ j2-20020a25fb02000000b007b4c76cec45mr16094137ybe.35.1673329517615;
+        Mon, 09 Jan 2023 21:45:17 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1673329517; cv=none;
+        d=google.com; s=arc-20160816;
+        b=lGM2Pc/ENo2bYlNKGMc2/fs+spBlAFqHuIZtyYG8LDzwShikX54Hf+wh3D15fnOu6T
+         4OygJSyp575KNUWcv1I6mhVWZCNPsYbp4pxONrdswebeiTSu62IYw8LtEg6dH+473tTq
+         USclfQMnxU1ZXJ/QtpvMTp5BVNrVXr4e2z+yLd9uTbpnKb5CZpsWc1q9jjo6cnlCtY2U
+         P3se++UG77vX0mxVYwwLwHuGPJh0zrGnAR+meE+dCnWvzX6McTRzhH6rsp1o1HByxDt0
+         AobJ7QH//ln3hVe30d4nI70rtGvS5CfTHk7ls31ZvsaaG8osx5B1dYfldKj6itV4S3cK
+         n3Bg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20160816;
+        h=to:reply-to:message-id:subject:mime-version:from:feedback-id:date
+         :dkim-signature:dkim-signature;
+        bh=GZlSHsMA6YEjKwOrYbcWXdIdkXlbkPJvGErWKDfxtNk=;
+        b=PxqPQ1RqJkysytzx/IhbvZ4EvtVki09xxddgGob7AAJcDHJfJzGRc3gZxE+pLtyvSd
+         vJ1i/7JOulubp35Bv9g2iRseIWsI3R5Xb3waZw8LiPVslh4AGWBQW6odY+CwLSlUI2o1
+         daDVlkwfsHEdnk2ZSO8MqCeRnfZNtWhe7hvKVOyXMf5RncSTmPq4jFo0VZM04vlxAcyc
+         KeyA0vhBS2LvkUj1DBCHCGavGmj+WX9THvLZb9xbr9ceDdvvWqIkcauDoOiOpPMlqCFG
+         ORpZU+mJWnUUVJJH0AS3mg7T3WvfxLb9i6NaP591DIDpWMTVijSTP4BzGjtumHHSoR4V
+         A4SQ==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@stackoverflow.email header.s=s1 header.b=UzCgMHnb;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=ml8Gq84C;
+       spf=pass (google.com: domain of
+ bounces+5841141-41e8-sn.renauld=gmail.com@em.stackoverflow.email designates
+ 168.245.32.199 as permitted sender)
+ smtp.mailfrom="bounces+5841141-41e8-sn.renauld=gmail.com@em.stackoverflow.email";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE)
+ header.from=stackoverflow.email
+Return-Path: 
+ <bounces+5841141-41e8-sn.renauld=gmail.com@em.stackoverflow.email>
+Received: from o16824532x199.outbound-mail.sendgrid.net
+ (o16824532x199.outbound-mail.sendgrid.net. [168.245.32.199])
+        by mx.google.com with ESMTPS id
+ y77-20020a253250000000b007b88eaa1b88si10931372yby.117.2023.01.09.21.45.17
+        for <sn.renauld@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 Jan 2023 21:45:17 -0800 (PST)
+Received-SPF: pass (google.com: domain of
+ bounces+5841141-41e8-sn.renauld=gmail.com@em.stackoverflow.email designates
+ 168.245.32.199 as permitted sender) client-ip=168.245.32.199;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@stackoverflow.email header.s=s1 header.b=UzCgMHnb;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=ml8Gq84C;
+       spf=pass (google.com: domain of
+ bounces+5841141-41e8-sn.renauld=gmail.com@em.stackoverflow.email designates
+ 168.245.32.199 as permitted sender)
+ smtp.mailfrom="bounces+5841141-41e8-sn.renauld=gmail.com@em.stackoverflow.email";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE)
+ header.from=stackoverflow.email
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stackoverflow.email;
+	h=content-type:from:mime-version:subject:reply-to:x-feedback-id:to:cc:
+	content-type:from:subject:to;
+	s=s1; bh=GZlSHsMA6YEjKwOrYbcWXdIdkXlbkPJvGErWKDfxtNk=;
+	b=UzCgMHnbXDOBBzCw7ERrhoCjeTA+g7HMqJ00zxpNGx13nqNxwPRRn0Wmp91yBiV+at1i
+	KczS1ABJL6evvWmg3+iyiDvYEGrzS/n0VRgHNbPQZRgRNA8p7Dbuan0/HoCYWH5LZ25iQu
+	akB3kZTwll//2hWLN1Avb5Guquha5BodQUzvVXtr+Hu6O6UY7YM1wCTbeJZTrWn87bSfOS
+	wYiJYgZe0h4oepTf7qqm83dfo9jYn1kI0HCxn4PpP+URVP00yDRDXykROos/zLa30XC2O+
+	EAca83ZEZUXidpA46MCtjXzftUBNj2WvYdF5A1rsv8sCvyzOypOMW/EdLuD8Yd8g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendgrid.info;
+	h=content-type:from:mime-version:subject:reply-to:x-feedback-id:to:cc:
+	content-type:from:subject:to;
+	s=smtpapi; bh=GZlSHsMA6YEjKwOrYbcWXdIdkXlbkPJvGErWKDfxtNk=;
+	b=ml8Gq84CpFkK7S+xb3RYsoyMwPJS/dO0VkBNhJ6RwTPX2kv28XtcpiCnOUwrEkaYbdJ3
+	T9tojtB4/UvfJimQl1rd3gxUKS5uUz03HOvDZa4YDzrDhyEkQJce2dq3iHQJR+cjqi60jB
+	VryfTAZ8xSgViAVBh/F06aQA+yB+h3IlI=
+Received: by filterdrecv-6c9d546748-cq925 with SMTP id
+ filterdrecv-6c9d546748-cq925-1-63BCFB6C-32
+        2023-01-10 05:45:16.756938674 +0000 UTC m=+4603110.056884900
+Received: from NTg0MTE0MQ (unknown)
+	by geopod-ismtpd-3-5 (SG) with HTTP
+	id NanS_zadSDCeOha28sHqdQ
+	for <sn.renauld@gmail.com>;
+	Tue, 10 Jan 2023 05:45:16.749 +0000 (UTC)
+Content-Type: multipart/alternative;
+ boundary=6d5f4d5b9aea3e303a7ec24f01c6c5f1ad8ae1770e9aeabc5f6575e1be96
+Date: Tue, 10 Jan 2023 05:45:16 +0000 (UTC)
+Feedback-ID: 504207:351221:7014:iterable
+From: Stack Overflow <do-not-reply@stackoverflow.email>
+Mime-Version: 1.0
+Subject: Your friendly, fear-free guide to getting started
+X-Campaign-ID: 351221
+X-Message-ID: f21ae8bbb9744f17b9f874e16f75caa6
+Message-ID: <NanS_zadSDCeOha28sHqdQ@geopod-ismtpd-3-5>
+Reply-To: do-not-reply@stackoverflow.email
+X-Feedback-ID: 5841141:SG
+X-SG-EID: 
+ =?us-ascii?Q?dS5vRUIVQDy3PcFfIFS4qYRV6oplzdNSHVVJNo9oQwP5Dyf6MKIiGStsXhSN2s?=
+ =?us-ascii?Q?jD66yWZvMOD6iFh5N57Ol+mXtcI2IRwT2ocTtIz?=
+ =?us-ascii?Q?8+oKOitnPOf3PJ+J4L+VplcllJMgutdjH5lR+qQ?=
+ =?us-ascii?Q?43bX913PIDtFNrOn54PCvh9WSZfd=2FJES63Lk99=2F?=
+ =?us-ascii?Q?ljkkBSR0CNFjr146BYyI+qyZ7nFs0NkWshVGsZ0?=
+ =?us-ascii?Q?xED55D7AyYHBJjeBgLpY++DJ9jYp6oWr3D2KBnc?=
+ =?us-ascii?Q?QEbybGeUA4tqHCRk=2Fx3cA=3D=3D?=
+X-SG-ID: 
+ =?us-ascii?Q?N2C25iY2uzGMFz6rgvQsb8raWjw0ZPf1VmjsCkspi=2FIARr5ApfQLGQYXi0KvHQ?=
+ =?us-ascii?Q?0z8is3PBHzHILkYleToLj7Sh3YCDsVZSjicZNIU?=
+ =?us-ascii?Q?0xp8tOow=2FJmiW6MLvnOW0hBJjAR1kQ=2FLUK8E29j?=
+ =?us-ascii?Q?GPrZerkc7XcW8f07woVt+BoHNeiU6hILTOnPZRu?=
+ =?us-ascii?Q?7RSDfjti9w3Ql?=
+To: sn.renauld@gmail.com
+X-Entity-ID: PNJDrTxzvfKKRANhDkbhyw==
+
+--6d5f4d5b9aea3e303a7ec24f01c6c5f1ad8ae1770e9aeabc5f6575e1be96
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0
+
+Thanks for joining the world=E2=80=99s largest developer community.=20
+ <https://stackoverflow.com/>=20
+
+How to learn and share on Stack Overflow
+
+Quick tips to help you get started
+
+
+
+
+
+Get a quick summary of how the site works.
+
+Take product tour =C2=BB <https://stackoverflow.com/tour>
+
+
+
+
+Improve your chances of getting an answer.
+
+Learn how to ask =C2=BB <https://stackoverflow.com/help/how-to-ask>
+
+
+
+
+Do your part to build a kind, collaborative community.
+
+Follow our Code of Conduct =C2=BB <https://stackoverflow.com/conduct>
+
+
+
+
+Create custom views based on tech you like.
+
+Browse and save tags =C2=BB <https://stackoverflow.com/tags>
+
+
+
+
+
+
+Improve team collaboration and easily share knowledge with your colleagues.
+
+Get Stack Overflow for Teams for free =C2=BB=20
+<https://stackoverflow.co/teams?utm_source=3Dso-owned&utm_medium=3Demail&ut=
+m_campaign=3Dpublic-email&utm_content=3Dgetting-started>
+
+
+This message was sent to sn.renauld@gmail.com because your Stack Overflow=20
+activity triggered this tip or reminder.
+
+unsubscribe=20
+<https://itr-links.stackoverflow.email/e/eh?_t=3D3603a3d8f3104ca5bd7015a584=
+5f7fb7&_m=3Df21ae8bbb9744f17b9f874e16f75caa6&_e=3DTaHCquD3gmhWWwMGrA8fpjAdt=
+-XiCAzHjXzLhQzrfvQNS6zMWTqtlsX2idaQAq6ufqEcDVQLJH9reoPBm3m7DMAdnGZqSSdDATgN=
+W-V8Ccm4WgHpNRj5cGV8lrP1kli48zgJTQbfTIns0ofk6iQQZESd5NdY0QmkpBW3Dks2ryEu8ak=
+ZsdQ3ebP6TMKaNIodbQTIQ6TmNXRq1-aByK2yxfTS74CUgfBtFBRXDEUsgMSM3pbZKyxhPjydzc=
+zYvNm7jbJahb6LW3baVfOKfifVurvvzumnNG9tXb5CTwYF6IPwuM-zHjerbwAlVgkkgU7Zj0_-h=
+eKSi1OhTV4BwCWdHQ%3D%3D>
+manage email settings=20
+<https://stackoverflow.email/subscriptions/manage?iterable=3D1&id=3D2748473=
+4&auth=3Dc70a7217b09030976f9a4cc94207a8ee9b4c8fb5b86026178aeb736a8134b28e&b=
+ucketId=3D8&campaignId=3D351221&templateId=3D504207&messageId=3Df21ae8bbb97=
+44f17b9f874e16f75caa6&email=3Dsn.renauld%40gmail.com>
+Share feedback <http://meta.stackoverflow.com>
+
+
+
+
+Stack Overflow, 110 William Street, 28th Floor, New York, NY 10038=20
+
+<3=20=
+
+--6d5f4d5b9aea3e303a7ec24f01c6c5f1ad8ae1770e9aeabc5f6575e1be96
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=utf-8
+Mime-Version: 1.0
+
+<!DOCTYPE html> <html lang=3D"en" xmlns=3D"http://www.w3.org/1999/xhtml" xm=
+lns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-microsoft-co=
+m:office:office" style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adj=
+ust: 100%; margin: 0 !important; padding: 0 !important; height: 100% !impor=
+tant; width: 100% !important;"> <head> <meta charset=3D"utf-8"> <meta name=
+=3D"viewport" content=3D"width=3Ddevice-width"> <meta http-equiv=3D"X-UA-Co=
+mpatible" content=3D"IE=3Dedge"> <meta name=3D"x-apple-disable-message-refo=
+rmatting"> <title></title> <!-- CSS Reset : BEGIN --> <style>html,body{marg=
+in:0!important;padding:0!important;height:100%!important;width:100%!importa=
+nt}*{-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}div[style*=3D"=
+margin: 16px 0"]{margin:0!important}table,td{mso-table-lspace:0!important;m=
+so-table-rspace:0!important}table{border:0;border-spacing:0;border-collapse=
+:collapse}img{-ms-interpolation-mode:bicubic}a{text-decoration:none}a[x-app=
+le-data-detectors],.unstyle-auto-detected-links a,.aBn{border-bottom:0!impo=
+rtant;cursor:default!important;color:inherit!important;text-decoration:none=
+!important;font-size:inherit!important;font-family:inherit!important;font-w=
+eight:inherit!important;line-height:inherit!important}u+#body a,#MessageVie=
+wBody a{color:inherit;text-decoration:none;font-size:inherit;font-family:in=
+herit;font-weight:inherit;line-height:inherit}.im{color:inherit!important}.=
+a6S{display:none!important;opacity:.01!important}img.g-img+div{display:none=
+!important}@media only screen and (min-device-width:320px) and (max-device-=
+width:374px){u ~ div .email-container{min-width:320px!important}}@media onl=
+y screen and (min-device-width:375px) and (max-device-width:413px){u ~ div =
+.email-container{min-width:375px!important}}@media only screen and (min-dev=
+ice-width:414px){u ~ div .email-container{min-width:414px!important}}</styl=
+e> <!-- What it does: Helps DPI scaling in Outlook 2007-2013 --> <!--[if gt=
+e mso 9]><xml> <o:OfficeDocumentSettings> <o:AllowPNG/> <o:PixelsPerInch>96=
+</o:PixelsPerInch> </o:OfficeDocumentSettings> </xml><![endif]--> <!-- CSS =
+Reset : END --> <!-- Progressive Enhancements : BEGIN --> <style>.s-btn__pr=
+imary:hover{background:#07c!important;border-color:#07c!important}.s-btn__w=
+hite:hover{background:#eff0f1!important;border-color:#eff0f1!important}.s-b=
+tn__outlined:hover{background:rgba(0,119,204,.05)!important;color:#005999!i=
+mportant}.s-tag:hover,.post-tag:hover{border-color:#cee0ed!important;backgr=
+ound:#cee0ed!important}.has-markdown a,.has-markdown a:visited{color:#07c!i=
+mportant;text-decoration:none!important}code{padding:1px 5px;background-col=
+or:#eff0f1;color:#242729;font-size:13px;line-height:inherit;font-family:Con=
+solas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstrea=
+m Vera Sans Mono,Courier New,monospace,sans-serif}pre{margin:0 0 15px;line-=
+height:17px;background-color:#eff0f1;padding:4px 8px;border-radius:3px;over=
+flow-x:auto}pre code{margin:0 0 15px;padding:0;line-height:17px;background-=
+color:none}blockquote{margin:0 0 15px;padding:4px 10px;background-color:#ff=
+f8dc;border-left:2px solid #ffeb8e}blockquote p{padding:4px 0;margin:0;over=
+flow-wrap:break-word}.bar{border-radius:5px}.btr{border-top-left-radius:5px=
+;border-top-right-radius:5px}.bbr{border-bottom-left-radius:5px;border-bott=
+om-right-radius:5px}@media screen and (max-width:680px){.stack-column,.stac=
+k-column-center{display:block!important;width:100%!important;max-width:100%=
+!important;direction:ltr!important}.stack-column-center{text-align:center!i=
+mportant}.hide-on-mobile{display:none!important;max-height:0!important;over=
+flow:hidden!important;visibility:hidden!important}.sm-p-none{padding:0!impo=
+rtant}.sm-pt-none{padding-top:0!important}.sm-pb-none{padding-bottom:0!impo=
+rtant}.sm-pr-none{padding-right:0!important}.sm-pl-none{padding-left:0!impo=
+rtant}.sm-px-none{padding-left:0!important;padding-right:0!important}.sm-py=
+-none{padding-top:0!important;padding-bottom:0!important}.sm-p{padding:20px=
+!important}.sm-pt{padding-top:20px!important}.sm-pb{padding-bottom:20px!imp=
+ortant}.sm-pr{padding-right:20px!important}.sm-pl{padding-left:20px!importa=
+nt}.sm-px{padding-left:20px!important;padding-right:20px!important}.sm-py{p=
+adding-top:20px!important;padding-bottom:20px!important}.sm-mb{margin-botto=
+m:20px!important}.bar,.btr,.bbr{border-top-left-radius:0;border-top-right-r=
+adius:0;border-bottom-left-radius:0;border-bottom-right-radius:0}}</style> =
+<!-- Progressive Enhancements : END --> </head> <body width=3D"100%" style=
+=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; background:=
+ #f3f3f5; mso-line-height-rule: exactly; margin: 0 !important; height: 100%=
+ !important; width: 100% !important; padding: 0 !important;"><span style=3D=
+"color:transparent;visibility:hidden;display:none;opacity:0;height:0;width:=
+0;font-size:0;">Thanks for joining the world=E2=80=99s largest developer co=
+mmunity.</span><img src=3D"https://itr-links.stackoverflow.email/e/eo?_t=3D=
+3603a3d8f3104ca5bd7015a5845f7fb7&amp;_m=3Df21ae8bbb9744f17b9f874e16f75caa6&=
+amp;_e=3D4AgUYHaKyeiX9jRJplvZVDqht9aR-hok2NBnUexLMPlIGrFChqu9kX1Vg6w8ARw2Ps=
+jJ-fwrvoI4Iy6ZCjo3xGl7p8GR51PCrqYpx8tJplj2572ubgsORqj0QTDOQL-FTzYEHCAZxf1bw=
+GN65es9_w%3D%3D" style=3D"border:0;width:1px;height:1px;border-width:0px!im=
+portant;display:none!important;line-height:0!important;" width=3D"1" height=
+=3D"1"/> <center style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adj=
+ust: 100%; width: 100%; background: #f3f3f5;"> <!--[if mso | IE]><table rol=
+e=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%" style=3D"background-color: #f3f3f5;"> <tr> <td><![endif]--> <div =
+class=3D"email-container" style=3D"-ms-text-size-adjust: 100%; -webkit-text=
+-size-adjust: 100%; max-width: 680px; margin: 0 auto;"> <!--[if mso]><table=
+ role=3D"presentation" cellspacing=3D"0" cellpadding=3D"0" border=3D"0" wid=
+th=3D"680" align=3D"center"> <tr> <td><![endif]--> <table border=3D"0" cell=
+padding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"-ms-text-siz=
+e-adjust: 100%; -webkit-text-size-adjust: 100%; border: 0; border-spacing: =
+0; border-collapse: collapse; max-width: 680px; width: 100%; mso-table-lspa=
+ce: 0pt !important; mso-table-rspace: 0pt !important;" width=3D"100%"> <!--=
+ Logo : BEGIN --> <tr style=3D"-ms-text-size-adjust: 100%; -webkit-text-siz=
+e-adjust: 100%;"> <td style=3D"-ms-text-size-adjust: 100%; -webkit-text-siz=
+e-adjust: 100%; padding: 20px 30px; text-align: left; mso-table-lspace: 0pt=
+ !important; mso-table-rspace: 0pt !important;" class=3D"sm-px" align=3D"le=
+ft"> <a href=3D"https://itr-links.stackoverflow.email/u/click?_t=3D3603a3d8=
+f3104ca5bd7015a5845f7fb7&_m=3Df21ae8bbb9744f17b9f874e16f75caa6&_e=3DTaHCquD=
+3gmhWWwMGrA8fpiA1G-GjqdMnXUJTu1O1JycjExQObZHwhxkATEMsrpM0wGHUSce7uQHYk6zPh7=
+rEl1N2AacovfpbVEJddojd8lgdkvZUOyLzcT4sZIzroNd4H6ihkCDpiD6MDMjbL6OjkGW_S6CI7=
+1LjyGDFaxQxfaFLHV0uexU9jI2ia39-psu02E8XDj-76VT09AdxeklUPsRLPEK95mstuPKuaV9X=
+Esv-8XFx7Sts60ij8vYaG7wt-fG3y4HJFt9M1mrJ9fO3eVUihNgWmYlBPQjuf8u4PzaS5o0NfIU=
+pzo_l3g8KroeP" style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjus=
+t: 100%; text-decoration: none;"><img src=3D"https://info.stackoverflowsolu=
+tions.com/rs/719-EMH-566/images/logo-stack-overflow.png" alt=3D"Stack Overf=
+low." border=3D"0" style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-a=
+djust: 100%; -ms-interpolation-mode: bicubic; font-family: arial, sans-seri=
+f; font-size: 15px; line-height: 15px; color: #54595F;" height=3D"36" width=
+=3D"146"></a> </td> </tr> <!-- Logo : END --> <tr style=3D"-ms-text-size-ad=
+just: 100%; -webkit-text-size-adjust: 100%;"> <td bgcolor=3D"#ffffff" style=
+=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; border-top-=
+left-radius: 5px; border-top-right-radius: 5px; padding: 30px; font-family:=
+ sans-serif; mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !impor=
+tant;" class=3D"sm-p btr"> <h1 style=3D"-ms-text-size-adjust: 100%; -webkit=
+-text-size-adjust: 100%; margin: 0 0 4px; font-size: 21px; line-height: 23p=
+x; font-weight: 400; color: #242629;">How to learn and share on Stack Overf=
+low</h1> <p style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: =
+100%; margin: 0; font-size: 15px; line-height: 21px; color: #54595F;">Quick=
+ tips to help you get started</p> </td> </tr> <tr style=3D"-ms-text-size-ad=
+just: 100%; -webkit-text-size-adjust: 100%;"> <td bgcolor=3D"#ffffff" style=
+=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; border-bott=
+om-left-radius: 5px; border-bottom-right-radius: 5px; padding: 0 30px 30px;=
+ mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !important;" class=
+=3D"sm-px sm-pb bbr"> <table border=3D"0" cellpadding=3D"0" cellspacing=3D"=
+0" role=3D"presentation" style=3D"-ms-text-size-adjust: 100%; -webkit-text-=
+size-adjust: 100%; border: 0; border-spacing: 0; border-collapse: collapse;=
+ width: 100%; mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !impo=
+rtant;" width=3D"100%"> <tr style=3D"-ms-text-size-adjust: 100%; -webkit-te=
+xt-size-adjust: 100%;"> <td style=3D"-ms-text-size-adjust: 100%; -webkit-te=
+xt-size-adjust: 100%; width: 100%; padding-bottom: 10px; mso-table-lspace: =
+0pt !important; mso-table-rspace: 0pt !important;" width=3D"100%"> <div sty=
+le=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; display: =
+table; width: 100%; text-align: left; font-size: 0;"> <!--[if mso]><table r=
+ole=3D"presentation" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=
+=3D"600"> <tr> <td align=3D"left" valign=3D"middle" width=3D"120"><![endif]=
+--> <div style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100=
+%; display: inline-block; margin: 0 -1px; width: 120px; vertical-align: mid=
+dle;" class=3D"stack-column"> <table role=3D"presentation" cellspacing=3D"0=
+" cellpadding=3D"0" border=3D"0" width=3D"100%" align=3D"left" style=3D"-ms=
+-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; border: 0; border-=
+spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt !important; ms=
+o-table-rspace: 0pt !important;"> <tr style=3D"-ms-text-size-adjust: 100%; =
+-webkit-text-size-adjust: 100%;"> <td style=3D"-ms-text-size-adjust: 100%; =
+-webkit-text-size-adjust: 100%; font-family: arial, sans-serif; font-size: =
+15px; line-height: 140%; color: #3C3F44; text-align: left; padding: 5px 20p=
+x 5px 0; mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !important=
+;" align=3D"left"> <img alt=3D"Product tour artwork." border=3D"0" src=3D"h=
+ttps://info.stackoverflowsolutions.com/rs/719-EMH-566/images/17-07-12-Produ=
+ctTour.png" height=3D"100" width=3D"100" style=3D"-ms-text-size-adjust: 100=
+%; -webkit-text-size-adjust: 100%; -ms-interpolation-mode: bicubic;"> </td>=
+ </tr> </table> </div> <!--[if mso]></td> <td align=3D"left" valign=3D"midd=
+le" width=3D"480"><![endif]--> <div style=3D"-ms-text-size-adjust: 100%; -w=
+ebkit-text-size-adjust: 100%; display: inline-block; margin: 0 -1px; max-wi=
+dth: 480px; min-width: 220px; vertical-align: middle;" class=3D"stack-colum=
+n"> <table role=3D"presentation" cellspacing=3D"0" cellpadding=3D"0" border=
+=3D"0" width=3D"100%" style=3D"-ms-text-size-adjust: 100%; -webkit-text-siz=
+e-adjust: 100%; border: 0; border-spacing: 0; border-collapse: collapse; ms=
+o-table-lspace: 0pt !important; mso-table-rspace: 0pt !important;"> <tr sty=
+le=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;"> <td sty=
+le=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding: =
+0 10px; font-family: sans-serif; font-size: 15px; line-height: 21px; color:=
+ #3B4045; text-align: left; mso-table-lspace: 0pt !important; mso-table-rsp=
+ace: 0pt !important;" class=3D"sm-px-none" align=3D"left"> <p style=3D"-ms-=
+text-size-adjust: 100%; -webkit-text-size-adjust: 100%; margin: 0 0 10px;">=
+Get a quick summary of how the site works.</p> <p style=3D"-ms-text-size-ad=
+just: 100%; -webkit-text-size-adjust: 100%; margin: 0;"><a href=3D"https://=
+itr-links.stackoverflow.email/u/click?_t=3D3603a3d8f3104ca5bd7015a5845f7fb7=
+&_m=3Df21ae8bbb9744f17b9f874e16f75caa6&_e=3DTaHCquD3gmhWWwMGrA8fpiA1G-GjqdM=
+nXUJTu1O1JydAgLjbPD7KKba0AiaMnHTr98C2LlsYPQ6c0IWq32XI2CMWwIRfp44vFkrRX59Xno=
+Rfr0wT0Pai5Iklkh9ey5QEESO4vtKVjCsIQufyc942NvjqeVOERZzeoFTHcHeVyPN_7WAraYao0=
+p-z3XQdDB4o3DOQY7uZAmuMddN7XK1FfhxGeMbVqR0CKFMEWNo_KAamikcJCCMUYc4Hwslve8WG=
+_Is1alFaNwJkw3yzsXnwXjJK7BCeUERn9UUEbLXWHXpZT3l2zkmhKzeyS-XfeWUk" style=3D"=
+-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; color: #0077CC;=
+ text-decoration: none;">Take product tour =C2=BB</a></p> </td> </tr> </tab=
+le> </div> <!--[if mso]></td> </tr> </table><![endif]--> </div> </td> </tr>=
+ <tr style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;">=
+ <td style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; w=
+idth: 100%; padding-bottom: 10px; mso-table-lspace: 0pt !important; mso-tab=
+le-rspace: 0pt !important;" width=3D"100%"> <div style=3D"-ms-text-size-adj=
+ust: 100%; -webkit-text-size-adjust: 100%; display: table; width: 100%; tex=
+t-align: left; font-size: 0;"> <!--[if mso]><table role=3D"presentation" bo=
+rder=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"600"> <tr> <td alig=
+n=3D"left" valign=3D"middle" width=3D"120"><![endif]--> <div style=3D"-ms-t=
+ext-size-adjust: 100%; -webkit-text-size-adjust: 100%; display: inline-bloc=
+k; margin: 0 -1px; width: 120px; vertical-align: middle;" class=3D"stack-co=
+lumn"> <table role=3D"presentation" cellspacing=3D"0" cellpadding=3D"0" bor=
+der=3D"0" width=3D"100%" align=3D"left" style=3D"-ms-text-size-adjust: 100%=
+; -webkit-text-size-adjust: 100%; border: 0; border-spacing: 0; border-coll=
+apse: collapse; mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !im=
+portant;"> <tr style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjus=
+t: 100%;"> <td style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjus=
+t: 100%; font-family: arial, sans-serif; font-size: 15px; line-height: 140%=
+; color: #3C3F44; text-align: left; padding: 5px 20px 5px 0; mso-table-lspa=
+ce: 0pt !important; mso-table-rspace: 0pt !important;" align=3D"left"> <img=
+ alt=3D"Question artwork." border=3D"0" src=3D"https://info.stackoverflowso=
+lutions.com/rs/719-EMH-566/images/17-07-12-AskQuestion.png" height=3D"100" =
+width=3D"100" style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust=
+: 100%; -ms-interpolation-mode: bicubic;"> </td> </tr> </table> </div> <!--=
+[if mso]></td> <td align=3D"left" valign=3D"middle" width=3D"480"><![endif]=
+--> <div style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100=
+%; display: inline-block; margin: 0 -1px; max-width: 480px; min-width: 220p=
+x; vertical-align: middle;" class=3D"stack-column"> <table role=3D"presenta=
+tion" cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=3D"100%" style=
+=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; border: 0; =
+border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt !import=
+ant; mso-table-rspace: 0pt !important;"> <tr style=3D"-ms-text-size-adjust:=
+ 100%; -webkit-text-size-adjust: 100%;"> <td style=3D"-ms-text-size-adjust:=
+ 100%; -webkit-text-size-adjust: 100%; padding: 0 10px; font-family: sans-s=
+erif; font-size: 15px; line-height: 21px; color: #3B4045; text-align: left;=
+ mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !important;" class=
+=3D"sm-px-none" align=3D"left"> <p style=3D"-ms-text-size-adjust: 100%; -we=
+bkit-text-size-adjust: 100%; margin: 0 0 10px;">Improve your chances of get=
+ting an answer.</p> <p style=3D"-ms-text-size-adjust: 100%; -webkit-text-si=
+ze-adjust: 100%; margin: 0;"><a href=3D"https://itr-links.stackoverflow.ema=
+il/u/click?_t=3D3603a3d8f3104ca5bd7015a5845f7fb7&_m=3Df21ae8bbb9744f17b9f87=
+4e16f75caa6&_e=3DTaHCquD3gmhWWwMGrA8fpiA1G-GjqdMnXUJTu1O1Jyc1tKJG7QW9gkyaHO=
+CTSifIpWM9l72TxftJNxHdHF5WZK798AyW96iEdIErtjl5QS1wStJicWErpXK-sxrSV4B06EgcV=
+GnZBD6-fLeJVZw-SfIFj9jhjJ5GSUZ6dHgzSEGd7veZvFiegBIWg73dc3BNnqxNynQZdAwYKYij=
+xWyhOl48QkN4aAlNjdhU-wD7J1VlVJrAXz8fqro37JEBogZFDgpdUV3VJdHeLmCCRDd1nYF4Tjc=
+Ra63K-d9E6XePE8yioU5U8yeJTzmPKGc_BTFD0r9T9xqmpRJLgFdOFUdP0g%3D%3D" style=3D=
+"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; color: #0077CC=
+; text-decoration: none;">Learn how to ask =C2=BB</a></p> </td> </tr> </tab=
+le> </div> <!--[if mso]></td> </tr> </table><![endif]--> </div> </td> </tr>=
+ <tr style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;">=
+ <td style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; w=
+idth: 100%; padding-bottom: 10px; mso-table-lspace: 0pt !important; mso-tab=
+le-rspace: 0pt !important;" width=3D"100%"> <div style=3D"-ms-text-size-adj=
+ust: 100%; -webkit-text-size-adjust: 100%; display: table; width: 100%; tex=
+t-align: left; font-size: 0;"> <!--[if mso]><table role=3D"presentation" bo=
+rder=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"600"> <tr> <td alig=
+n=3D"left" valign=3D"middle" width=3D"120"><![endif]--> <div style=3D"-ms-t=
+ext-size-adjust: 100%; -webkit-text-size-adjust: 100%; display: inline-bloc=
+k; margin: 0 -1px; width: 120px; vertical-align: middle;" class=3D"stack-co=
+lumn"> <table role=3D"presentation" cellspacing=3D"0" cellpadding=3D"0" bor=
+der=3D"0" width=3D"100%" align=3D"left" style=3D"-ms-text-size-adjust: 100%=
+; -webkit-text-size-adjust: 100%; border: 0; border-spacing: 0; border-coll=
+apse: collapse; mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !im=
+portant;"> <tr style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjus=
+t: 100%;"> <td style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjus=
+t: 100%; font-family: arial, sans-serif; font-size: 15px; line-height: 140%=
+; color: #3C3F44; text-align: left; padding: 5px 20px 5px 0; mso-table-lspa=
+ce: 0pt !important; mso-table-rspace: 0pt !important;" align=3D"left"> <img=
+ alt=3D"Code of conduct smiley face." border=3D"0" src=3D"https://info.stac=
+koverflowsolutions.com/rs/719-EMH-566/images/Welcome-3.png" height=3D"100" =
+width=3D"100" style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust=
+: 100%; -ms-interpolation-mode: bicubic;"> </td> </tr> </table> </div> <!--=
+[if mso]></td> <td align=3D"left" valign=3D"middle" width=3D"480"><![endif]=
+--> <div style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100=
+%; display: inline-block; margin: 0 -1px; max-width: 480px; min-width: 220p=
+x; vertical-align: middle;" class=3D"stack-column"> <table role=3D"presenta=
+tion" cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=3D"100%" style=
+=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; border: 0; =
+border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt !import=
+ant; mso-table-rspace: 0pt !important;"> <tr style=3D"-ms-text-size-adjust:=
+ 100%; -webkit-text-size-adjust: 100%;"> <td style=3D"-ms-text-size-adjust:=
+ 100%; -webkit-text-size-adjust: 100%; padding: 0 10px; font-family: sans-s=
+erif; font-size: 15px; line-height: 21px; color: #3B4045; text-align: left;=
+ mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !important;" class=
+=3D"sm-px-none" align=3D"left"> <p style=3D"-ms-text-size-adjust: 100%; -we=
+bkit-text-size-adjust: 100%; margin: 0 0 10px;">Do your part to build a kin=
+d, collaborative community.</p> <p style=3D"-ms-text-size-adjust: 100%; -we=
+bkit-text-size-adjust: 100%; margin: 0;"><a href=3D"https://itr-links.stack=
+overflow.email/u/click?_t=3D3603a3d8f3104ca5bd7015a5845f7fb7&_m=3Df21ae8bbb=
+9744f17b9f874e16f75caa6&_e=3DTaHCquD3gmhWWwMGrA8fpiA1G-GjqdMnXUJTu1O1JyeKxb=
+b2LJtqCzzf8P1y6NE5CnrTEWwp1FwRCyHERWHZ1-VEtjckOEHUSU6ISK1FWuuDEjH6vFBKAI9q9=
+cNHyMfnSsErUUD9qTuCwylIfmEL-bMY8F39ZTihcEgNx81XlgBx2N_gCO-MuWZuKtShClgpg4VJ=
+C0yuJo8a-GRiDZxWhFcPhXASK3Nhuxm8Tei0aza0BPYG-ofYKPrWibTCJa65aJirG0ePiVn75lO=
+LCFpF2JUstRnjR-WqpisN9vXrTYMWFJIMTdG43lY225Mw-sDP" style=3D"-ms-text-size-a=
+djust: 100%; -webkit-text-size-adjust: 100%; color: #0077CC; text-decoratio=
+n: none;">Follow our Code of Conduct =C2=BB</a></p> </td> </tr> </table> </=
+div> <!--[if mso]></td> </tr> </table><![endif]--> </div> </td> </tr> <tr s=
+tyle=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;"> <td s=
+tyle=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; width: =
+100%; mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !important;" =
+width=3D"100%"> <div style=3D"-ms-text-size-adjust: 100%; -webkit-text-size=
+-adjust: 100%; display: table; width: 100%; text-align: left; font-size: 0;=
+"> <!--[if mso]><table role=3D"presentation" border=3D"0" cellspacing=3D"0"=
+ cellpadding=3D"0" width=3D"600"> <tr> <td align=3D"left" valign=3D"middle"=
+ width=3D"120"><![endif]--> <div style=3D"-ms-text-size-adjust: 100%; -webk=
+it-text-size-adjust: 100%; display: inline-block; margin: 0 -1px; width: 12=
+0px; vertical-align: middle;" class=3D"stack-column"> <table role=3D"presen=
+tation" cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=3D"100%" ali=
+gn=3D"left" style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: =
+100%; border: 0; border-spacing: 0; border-collapse: collapse; mso-table-ls=
+pace: 0pt !important; mso-table-rspace: 0pt !important;"> <tr style=3D"-ms-=
+text-size-adjust: 100%; -webkit-text-size-adjust: 100%;"> <td style=3D"-ms-=
+text-size-adjust: 100%; -webkit-text-size-adjust: 100%; font-family: arial,=
+ sans-serif; font-size: 15px; line-height: 140%; color: #3C3F44; text-align=
+: left; padding: 5px 20px 5px 0; mso-table-lspace: 0pt !important; mso-tabl=
+e-rspace: 0pt !important;" align=3D"left"> <img alt=3D"Tech tags." border=
+=3D"0" src=3D"https://info.stackoverflowsolutions.com/rs/719-EMH-566/images=
+/17-07-12-TechTags.png" height=3D"100" width=3D"100" style=3D"-ms-text-size=
+-adjust: 100%; -webkit-text-size-adjust: 100%; -ms-interpolation-mode: bicu=
+bic;"> </td> </tr> </table> </div> <!--[if mso]></td> <td align=3D"left" va=
+lign=3D"middle" width=3D"480"><![endif]--> <div style=3D"-ms-text-size-adju=
+st: 100%; -webkit-text-size-adjust: 100%; display: inline-block; margin: 0 =
+-1px; max-width: 480px; min-width: 220px; vertical-align: middle;" class=3D=
+"stack-column"> <table role=3D"presentation" cellspacing=3D"0" cellpadding=
+=3D"0" border=3D"0" width=3D"100%" style=3D"-ms-text-size-adjust: 100%; -we=
+bkit-text-size-adjust: 100%; border: 0; border-spacing: 0; border-collapse:=
+ collapse; mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !importa=
+nt;"> <tr style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 10=
+0%;"> <td style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 10=
+0%; padding: 0 10px; font-family: sans-serif; font-size: 15px; line-height:=
+ 21px; color: #3B4045; text-align: left; mso-table-lspace: 0pt !important; =
+mso-table-rspace: 0pt !important;" class=3D"sm-px-none" align=3D"left"> <p =
+style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; margin=
+: 0 0 10px;">Create custom views based on tech you like.</p> <p style=3D"-m=
+s-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; margin: 0;"><a hr=
+ef=3D"https://itr-links.stackoverflow.email/u/click?_t=3D3603a3d8f3104ca5bd=
+7015a5845f7fb7&_m=3Df21ae8bbb9744f17b9f874e16f75caa6&_e=3DTaHCquD3gmhWWwMGr=
+A8fpiA1G-GjqdMnXUJTu1O1JydqOythqlAB11x_7UjyYzvk9m_rsZ8HN2xVQmUnEB6VItXqRr1H=
+l4BfRcON8SkTgrXwSJc6TuRhfQFLuP6fBG9RPo5lJITf5Pb7LIt5sTtLGBk7lGAqGGWZMz1_pGj=
+YFPr5BdTU8Kzj1qTSYgsdAZMVI9bbyIn5lcW-wM8ulBUVVi7Um5MvabQ9BEnKmaW6xyZtz0SpVT=
+ww6ZhFR4aRow4FC8ayce1_Oe621mpstNNptmPDZtC3LKANWlxoxL6n_Oh6p2aqzeZ9fZYadg7lW=
+JUp" style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; c=
+olor: #0077CC; text-decoration: none;">Browse and save tags =C2=BB</a></p> =
+</td> </tr> </table> </div> <!--[if mso]></td> </tr> </table><![endif]--> <=
+/div> </td> </tr> </table> </td> </tr> <tr style=3D"-ms-text-size-adjust: 1=
+00%; -webkit-text-size-adjust: 100%;"> <td style=3D"-ms-text-size-adjust: 1=
+00%; -webkit-text-size-adjust: 100%; font-size: 0; line-height: 0; height: =
+30px; mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !important;" =
+height=3D"30">&nbsp;</td> </tr> <tr style=3D"-ms-text-size-adjust: 100%; -w=
+ebkit-text-size-adjust: 100%;"> <td bgcolor=3D"#ffffff" style=3D"-ms-text-s=
+ize-adjust: 100%; -webkit-text-size-adjust: 100%; border-radius: 5px; paddi=
+ng: 30px; mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !importan=
+t;" class=3D"sm-px sm-pb bar"> <table border=3D"0" cellpadding=3D"0" cellsp=
+acing=3D"0" role=3D"presentation" style=3D"-ms-text-size-adjust: 100%; -web=
+kit-text-size-adjust: 100%; border: 0; border-spacing: 0; border-collapse: =
+collapse; width: 100%; mso-table-lspace: 0pt !important; mso-table-rspace: =
+0pt !important;" width=3D"100%"> <tr style=3D"-ms-text-size-adjust: 100%; -=
+webkit-text-size-adjust: 100%;"> <td style=3D"-ms-text-size-adjust: 100%; -=
+webkit-text-size-adjust: 100%; width: 100%; mso-table-lspace: 0pt !importan=
+t; mso-table-rspace: 0pt !important;" width=3D"100%"> <div style=3D"-ms-tex=
+t-size-adjust: 100%; -webkit-text-size-adjust: 100%; display: table; width:=
+ 100%; text-align: left; font-size: 0;"> <!--[if mso]><table role=3D"presen=
+tation" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"600"> <tr=
+> <td align=3D"left" valign=3D"middle" width=3D"120"><![endif]--> <div styl=
+e=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; display: i=
+nline-block; margin: 0 -1px; width: 120px; vertical-align: middle;" class=
+=3D"stack-column"> <table role=3D"presentation" cellspacing=3D"0" cellpaddi=
+ng=3D"0" border=3D"0" width=3D"100%" align=3D"left" style=3D"-ms-text-size-=
+adjust: 100%; -webkit-text-size-adjust: 100%; border: 0; border-spacing: 0;=
+ border-collapse: collapse; mso-table-lspace: 0pt !important; mso-table-rsp=
+ace: 0pt !important;"> <tr style=3D"-ms-text-size-adjust: 100%; -webkit-tex=
+t-size-adjust: 100%;"> <td style=3D"-ms-text-size-adjust: 100%; -webkit-tex=
+t-size-adjust: 100%; font-family: arial, sans-serif; font-size: 15px; line-=
+height: 140%; color: #3C3F44; text-align: left; padding: 5px 20px 5px 10; m=
+so-table-lspace: 0pt !important; mso-table-rspace: 0pt !important;" align=
+=3D"left"> <img alt=3D"Stack Overflow for Teams" border=3D"0" src=3D"https:=
+//info.stackoverflowsolutions.com/rs/719-EMH-566/images/iterable-teams.png"=
+ height=3D"75" width=3D"75" style=3D"-ms-text-size-adjust: 100%; -webkit-te=
+xt-size-adjust: 100%; -ms-interpolation-mode: bicubic;"> </td> </tr> </tabl=
+e> </div> <!--[if mso]></td> <td align=3D"left" valign=3D"middle" width=3D"=
+480"><![endif]--> <div style=3D"-ms-text-size-adjust: 100%; -webkit-text-si=
+ze-adjust: 100%; display: inline-block; margin: 0 -1px; max-width: 480px; m=
+in-width: 220px; vertical-align: middle;" class=3D"stack-column"> <table ro=
+le=3D"presentation" cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=
+=3D"100%" style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 10=
+0%; border: 0; border-spacing: 0; border-collapse: collapse; mso-table-lspa=
+ce: 0pt !important; mso-table-rspace: 0pt !important;"> <tr style=3D"-ms-te=
+xt-size-adjust: 100%; -webkit-text-size-adjust: 100%;"> <td style=3D"-ms-te=
+xt-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding: 0 10px; font=
+-family: sans-serif; font-size: 15px; line-height: 21px; color: #3B4045; te=
+xt-align: left; mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !im=
+portant;" class=3D"sm-px-none" align=3D"left"> <p style=3D"-ms-text-size-ad=
+just: 100%; -webkit-text-size-adjust: 100%; margin: 10px 0; line-height: 21=
+px;">Improve team collaboration and easily share knowledge with your collea=
+gues.</p> <p style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust:=
+ 100%; margin: 0; line-height: 21px;"> <a href=3D"https://itr-links.stackov=
+erflow.email/u/click?_t=3D3603a3d8f3104ca5bd7015a5845f7fb7&_m=3Df21ae8bbb97=
+44f17b9f874e16f75caa6&_e=3DTaHCquD3gmhWWwMGrA8fpiA1G-GjqdMnXUJTu1O1JyedzuHZ=
+O6FQORqn7hbNVLXg7ZmmJTK8caykKjKGE1oQgUpycEHpSJwdCyF4iBkaaRWrh_Jo4my1tPfVAi8=
+yKJdw_T_8voh_OdBiD3WhFWkZ-0Rv_NYMc_8GfwTf03CVoHhHz2vxx-Y6TVCci_M2X8Ehcsupv5=
+0hRdErkDNs5Lrwt8O48AhcabpjcIomLAOtsli57Dd8Tdb4YJ27pEdX_qH2rNXpULEiXjt166ICQ=
+6hnq6PyUrOJf9RedcWOOnZ2rWc6cXfN6a2TerQYyQTtsF-H5iGH141GtxO1jZBN0DK5wQTKdQzH=
+C81QHi3pi4yD8xTI8umVzfAIFHLJZiFmBuJfYs6vfCs7m_CLKI5JdRmR7xNrqUJ62ne3l2IM8q2=
+ogcntSE9-Pn8h8KT1TcMDEauV" style=3D"-ms-text-size-adjust: 100%; -webkit-tex=
+t-size-adjust: 100%; color: #0077CC; text-decoration: none;">Get Stack Over=
+flow for Teams for free =C2=BB</a> </p> </td> </tr> </table> </div> <!--[if=
+ mso]></td> </tr> </table><![endif]--> </div> </td> </tr> </table> </td> </=
+tr> <!-- Paste Jobs Code Here : BEGIN --> <!-- Paste Jobs Code Here : END -=
+-> <tr style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;=
+"> <td class=3D"-x-gmail-data-detectors" style=3D"-ms-text-size-adjust: 100=
+%; -webkit-text-size-adjust: 100%; color: #9EA3A9; font-family: sans-serif;=
+ font-size: 12px; line-height: 18px; padding: 16px 20px 0 20px; width: 100%=
+; text-align: left; mso-table-lspace: 0pt !important; mso-table-rspace: 0pt=
+ !important;" width=3D"100%" align=3D"left"> <p style=3D"-ms-text-size-adju=
+st: 100%; -webkit-text-size-adjust: 100%; margin: 0 0 4px;">This message wa=
+s sent to sn.renauld@gmail.com because your Stack Overflow activity trigger=
+ed this tip or reminder.</p> <p style=3D"-ms-text-size-adjust: 100%; -webki=
+t-text-size-adjust: 100%; margin: 0;"><a href=3D"https://itr-links.stackove=
+rflow.email/e/eh?_t=3D3603a3d8f3104ca5bd7015a5845f7fb7&_m=3Df21ae8bbb9744f1=
+7b9f874e16f75caa6&_e=3DTaHCquD3gmhWWwMGrA8fpjAdt-XiCAzHjXzLhQzrfvQNS6zMWTqt=
+lsX2idaQAq6ufqEcDVQLJH9reoPBm3m7DMAdnGZqSSdDATgNW-V8Ccm4WgHpNRj5cGV8lrP1kli=
+48zgJTQbfTIns0ofk6iQQZESd5NdY0QmkpBW3Dks2ryEu8akZsdQ3ebP6TMKaNIodbQTIQ6TmNX=
+Rq1-aByK2yxfypsMzfqF7cm8JDSFsnODDBvqAe8UPNG557IDFfS707AgTeTJeR5h99Qk3WwEZP5=
+x32crmA4kAUf3Qy9uUB8kcm9t1mjMRKAH25qaPpis_UWWZtEiP9HVTZy9mjC52Vavch3cVhdgU1=
+rNK1rXhZoXCoD4RzAed606FffAv35d-Hm6T82zNL_5S59pWmyNoFWW_0-0m2-UISUAYLO0aLzC2=
+07w6vKxyNtJwZe_JmD0E7" style=3D"-ms-text-size-adjust: 100%; -webkit-text-si=
+ze-adjust: 100%; color: #93999F; text-decoration: underline;">unsubscribe</=
+a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=3D"https://itr-links.stackoverflow.email/=
+u/click?_t=3D3603a3d8f3104ca5bd7015a5845f7fb7&_m=3Df21ae8bbb9744f17b9f874e1=
+6f75caa6&_e=3DTaHCquD3gmhWWwMGrA8fpjAdt-XiCAzHjXzLhQzrfvQNS6zMWTqtlsX2idaQA=
+q6uLnOJTw2zyoMV-ZahaSigh_LZe_QAAv_0mFw33O1s-j97lzmufuSEaDegZ49A_kqMuHAMnXka=
+2yzmo2BF3NAd7TvNzEtOwt8Mqu5nUePOHLLyZ3JlgAuSpUlnyw7hgYIKWOEz4meM8KxQsdU5t24=
+JV07YLRprVKo_uz5nzJSXKyuNT_Od5cLWxeGV2sQO99-hg_08dqHNXSbsLNx5GGNFU4JV2_nybl=
+gyJlUkcfLmmfivD0oY_6vDkSnhS0H6vtxtwEqjf764FUIMp12rMfMER5aqByx-sXDlkvwxfojlk=
+BAOfpvAshqKlWfd9Z7rhdURNO69HvRdMSYoQl7MMqUVxa4cNOZ8xE7IAz-mIFePWVd21ZvYGthS=
+aaBHFKUt31SPrbXohqn_UNqSMd7ZFB_25wARihmD4rap3ptaLtWlmaVtQunzbs-KAgdtsZUDsB0=
+I6M2Gjf-Brw0BvR_wfqTkFLVRukcU8UGLQLujp45ZP_oOJA7LNdqJ9gV6Rk5xrR6oIi0YPgY8A_=
+DVOBZYdzDksHbzS3VqSRz6hB3UgtVIGEBbNMa2pX_6fKe51gzZKBpc" style=3D"-ms-text-s=
+ize-adjust: 100%; -webkit-text-size-adjust: 100%; color: #93999F; text-deco=
+ration: underline;">manage&nbsp;email&nbsp;settings</a>&nbsp;&nbsp;&nbsp;&n=
+bsp;<a href=3D"https://itr-links.stackoverflow.email/u/click?_t=3D3603a3d8f=
+3104ca5bd7015a5845f7fb7&_m=3Df21ae8bbb9744f17b9f874e16f75caa6&_e=3DxDfdpfia=
+lHctl8hgsRKP36vhFsEBX7Jd4eHeSU-21RXxlh5wb7JPntEG7l0iwwujc-7KAe7oXXLpcSu9Mvg=
+-Z-NYN1817Bm8-pVP2QgOiWDQArFoq-37_Tgt_9vKcUP0W9iTQZf0ZykdR05GNxnlFsatf9oGxH=
+aNmI_Ktx1B0325atP91SXHEfja-adKOlle_VxfhwIPFXQlGiaRRKOhlgXO9PxAvFKQPyvBIBGkD=
+bBf9DovjsDCeVKW8NNs4vxMF4eT-MsaJrQKuUy-RGS6J_EdFzl9CYLe_OWb3dlofCOiZJNQCamO=
+4Cst9H-TVpVu" style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust=
+: 100%; color: #93999F; text-decoration: underline;">Share&nbsp;feedback</a=
+></p> </td> </tr> <!-- HR line : BEGIN --> <tr style=3D"-ms-text-size-adjus=
+t: 100%; -webkit-text-size-adjust: 100%;"> <td style=3D"-ms-text-size-adjus=
+t: 100%; -webkit-text-size-adjust: 100%; padding: 16px 20px; mso-table-lspa=
+ce: 0pt !important; mso-table-rspace: 0pt !important;" valign=3D"middle" wi=
+dth=3D"100%"> <table aria-hidden=3D"true" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0" role=3D"presentation" style=3D"-ms-text-size-adjust: 100%; =
+-webkit-text-size-adjust: 100%; border: 0; border-spacing: 0; border-collap=
+se: collapse; width: 100%; mso-table-lspace: 0pt !important; mso-table-rspa=
+ce: 0pt !important;" width=3D"100%"> <tbody style=3D"-ms-text-size-adjust: =
+100%; -webkit-text-size-adjust: 100%;"> <tr style=3D"-ms-text-size-adjust: =
+100%; -webkit-text-size-adjust: 100%;"> <td bgcolor=3D"#E4E6E7" height=3D"1=
+" style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; font=
+-size: 0; line-height: 0; mso-table-lspace: 0pt !important; mso-table-rspac=
+e: 0pt !important;" width=3D"100%"></td> </tr> </tbody> </table> </td> </tr=
+> <!-- HR line : END --> <tr style=3D"-ms-text-size-adjust: 100%; -webkit-t=
+ext-size-adjust: 100%;"> <td style=3D"-ms-text-size-adjust: 100%; -webkit-t=
+ext-size-adjust: 100%; padding: 0 20px 2px 20px; width: 100%; text-align: l=
+eft; mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !important;" w=
+idth=3D"100%" align=3D"left"><img align=3D"left" alt=3D"Stack Overflow" bor=
+der=3D"0" height=3D"24" src=3D"https://info.stackoverflowsolutions.com/rs/7=
+19-EMH-566/images/logo-stackoverflow-gray-small.png" style=3D"-ms-text-size=
+-adjust: 100%; -webkit-text-size-adjust: 100%; -ms-interpolation-mode: bicu=
+bic; display: block;" width=3D"122"></td> </tr> <tr style=3D"-ms-text-size-=
+adjust: 100%; -webkit-text-size-adjust: 100%;"> <td class=3D"x-gmail-data-d=
+etectors" style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 10=
+0%; padding: 0 20px 8px 20px; width: 100%; font-size: 12px; line-height: 16=
+px; font-family: arial, sans-serif; color: #93999F; text-align: left; mso-t=
+able-lspace: 0pt !important; mso-table-rspace: 0pt !important;" width=3D"10=
+0%" align=3D"left"><strong style=3D"-ms-text-size-adjust: 100%; -webkit-tex=
+t-size-adjust: 100%;">Stack&nbsp;Overflow</strong>, <span class=3D"mobile-l=
+ink--footer" style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust:=
+ 100%;">110 William Street, 28th Floor, New York, NY 10038</span></td> </tr=
+> <!-- Heart : BEGIN --> <tr style=3D"-ms-text-size-adjust: 100%; -webkit-t=
+ext-size-adjust: 100%;"> <td style=3D"-ms-text-size-adjust: 100%; -webkit-t=
+ext-size-adjust: 100%; padding: 0 20px 16px 20px; mso-table-lspace: 0pt !im=
+portant; mso-table-rspace: 0pt !important;"> <!-- Adjust the padding so tha=
+t it matches the rest of the footer. The heart should at least be left-alig=
+ned with the lines above. --> <table align=3D"left" border=3D"0" cellpaddin=
+g=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"-ms-text-size-adju=
+st: 100%; -webkit-text-size-adjust: 100%; border: 0; border-spacing: 0; bor=
+der-collapse: collapse; background: #ffffff; border-radius: 1px; line-heigh=
+t: 0px; mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !important;=
+"> <tbody style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 10=
+0%;"> <tr style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 10=
+0%;"> <td style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 10=
+0%; mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !important;"> <=
+div style=3D"-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; bo=
+rder-radius: 1px; border: 1px solid #D6D9DC; padding: 3px 6px; line-height:=
+ 11px; font-family: Consolas, monospace; font-size: 11px; color: #E06C77;" =
+title=3D"because we care">&lt;3</div> </td> </tr> </tbody> </table> </td> <=
+/tr> <!-- Heart : END --> </table> </div> <!--[if mso | IE]></td> </tr> </t=
+able><![endif]--> </center> </body> </html>
+--6d5f4d5b9aea3e303a7ec24f01c6c5f1ad8ae1770e9aeabc5f6575e1be96--
+

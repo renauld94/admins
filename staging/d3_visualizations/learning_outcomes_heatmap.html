@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Outcomes Heatmap</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #1A3A52;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .heatmap-container {
+            overflow-x: auto;
+        }
+        
+        .cell {
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .cell:hover {
+            stroke: #333;
+            stroke-width: 2;
+        }
+        
+        .cell-text {
+            font-size: 11px;
+            text-anchor: middle;
+            pointer-events: none;
+            font-weight: 500;
+        }
+        
+        .heatmap-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        
+        .axis-label {
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔥 Learning Outcomes Heatmap</h1>
+        <p class="subtitle">Color intensity indicates importance of learning outcome within each module</p>
+        
+        <div class="heatmap-container">
+            <svg id="heatmap"></svg>
+        </div>
+    </div>
+    
+    <script>
+        const rawData = [{"module": "Foundations of Vietnamese", "outcome": "Pronunciation", "importance": 85}, {"module": "Foundations of Vietnamese", "outcome": "Basic vocabulary", "importance": 85}, {"module": "Foundations of Vietnamese", "outcome": "Cultural context", "importance": 85}, {"module": "Interactive Communication", "outcome": "Conversational skills", "importance": 90}, {"module": "Interactive Communication", "outcome": "Medical terminology", "importance": 90}, {"module": "Interactive Communication", "outcome": "Active listening", "importance": 90}, {"module": "Professional Expression", "outcome": "Professional tone", "importance": 95}, {"module": "Professional Expression", "outcome": "Presentation skills", "importance": 95}, {"module": "Professional Expression", "outcome": "Documentation", "importance": 95}, {"module": "Navigation & Culture", "outcome": "Cultural competence", "importance": 70}, {"module": "Navigation & Culture", "outcome": "Regional variations", "importance": 70}, {"module": "Navigation & Culture", "outcome": "Business etiquette", "importance": 70}, {"module": "Professional Development", "outcome": "Career progression", "importance": 92}, {"module": "Professional Development", "outcome": "Industry trends", "importance": 92}, {"module": "Professional Development", "outcome": "Networking", "importance": 92}, {"module": "Mastery & Specialization", "outcome": "Specialized vocabulary", "importance": 98}, {"module": "Mastery & Specialization", "outcome": "Research participation", "importance": 98}, {"module": "Mastery & Specialization", "outcome": "Thought leadership", "importance": 98}];
+        const modules = [...new Set(rawData.map(d => d.module))];
+        const outcomes = [...new Set(rawData.map(d => d.outcome))];
+        
+        // Build matrix
+        const matrix = {};
+        modules.forEach(m => {
+            matrix[m] = {};
+            outcomes.forEach(o => {
+                matrix[m][o] = 0;
+            });
+        });
+        
+        rawData.forEach(d => {
+            matrix[d.module][d.outcome] = d.importance;
+        });
+        
+        // Dimensions
+        const margin = {top: 20, right: 20, bottom: 200, left: 300};
+        const cellSize = 40;
+        const width = outcomes.length * cellSize + margin.left + margin.right;
+        const height = modules.length * cellSize + margin.top + margin.bottom;
+        
+        const svg = d3.select("#heatmap")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+        
+        // Color scale
+        const colorScale = d3.scaleLinear()
+            .domain([0, 50, 100])
+            .range(["#f0f0f0", "#C4A73C", "#E8423C"]);
+        
+        // X axis (outcomes)
+        svg.selectAll(".x-label")
+            .data(outcomes)
+            .enter()
+            .append("text")
+            .attr("class", "x-label axis-label")
+            .attr("x", (d, i) => i * cellSize + cellSize / 2)
+            .attr("y", -10)
+            .attr("text-anchor", "start")
+            .attr("transform", (d, i) => `rotate(-45 ${i * cellSize + cellSize / 2} -10)`)
+            .text(d => d);
+        
+        // Y axis (modules)
+        svg.selectAll(".y-label")
+            .data(modules)
+            .enter()
+            .append("text")
+            .attr("class", "y-label axis-label")
+            .attr("x", -10)
+            .attr("y", (d, i) => i * cellSize + cellSize / 2 + 5)
+            .attr("text-anchor", "end")
+            .text(d => d.substring(0, 20));
+        
+        // Cells
+        svg.selectAll(".cell")
+            .data(rawData)
+            .enter()
+            .append("rect")
+            .attr("class", "cell")
+            .attr("x", d => outcomes.indexOf(d.outcome) * cellSize)
+            .attr("y", d => modules.indexOf(d.module) * cellSize)
+            .attr("width", cellSize)
+            .attr("height", cellSize)
+            .attr("fill", d => colorScale(d.importance))
+            .attr("stroke", "#ccc")
+            .attr("stroke-width", 1);
+        
+        // Cell values
+        svg.selectAll(".cell-value")
+            .data(rawData)
+            .enter()
+            .append("text")
+            .attr("class", "cell-text")
+            .attr("x", d => outcomes.indexOf(d.outcome) * cellSize + cellSize / 2)
+            .attr("y", d => modules.indexOf(d.module) * cellSize + cellSize / 2 + 5)
+            .text(d => d.importance + "%")
+            .attr("fill", d => d.importance > 75 ? "white" : "black");
+    </script>
+</body>
+</html>

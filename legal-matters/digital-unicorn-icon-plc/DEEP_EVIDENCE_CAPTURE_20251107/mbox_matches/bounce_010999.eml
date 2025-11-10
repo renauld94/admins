@@ -1,0 +1,879 @@
+X-GM-THRID: 1819095817763356556
+X-Gmail-Labels: Inbox,Important,Category Promotions,Unread
+Delivered-To: sn.renauld@gmail.com
+Received: by 2002:a17:907:7212:b0:aab:de38:9884 with SMTP id
+ dr18csp3448817ejc;
+        Sat, 21 Dec 2024 15:49:20 -0800 (PST)
+X-Google-Smtp-Source: 
+ AGHT+IEr849EXmwI6m3a0HFHQQejKlvemsRLZkiqnBs/Nq9ha7FEnXV/tEmCyZ9xzDxzA+uy9KYQ
+X-Received: by 2002:a05:620a:4446:b0:7b6:ea67:72d0 with SMTP id
+ af79cd13be357-7b9bac05241mr1293981785a.4.1734824960114;
+        Sat, 21 Dec 2024 15:49:20 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1734824960; cv=none;
+        d=google.com; s=arc-20240605;
+        b=dVL6dZrw5QXgMzBfHU3bPQBUJWhauRF/FvYwAtCc9NhgUlXSQyHId9/U6GwCLSb74M
+         SlxSGRBI6a/X50cBMaDLbQhnpNulAC7CJPFxpNovbwjX715PZzDmSNErBWDqaP9KE7Qr
+         xUcs/qMmXo+WBfMym/0pc/cvfTmadL10cTbxCvUbkub/UFv6b1NOQv8iuabNFpfMM7QO
+         qEo2e0WaqGfLk+DQxs1wTZEYfPzgJsAgdTumBENRhko9JXUZtgekJ6tGwvovxrb5of6R
+         bIDkyu1aEyqHBAkQHCFOE/XH0Ll93cVZb9Y56GpCjuv1oqXwomRZYvYhRoHLwbl8k0pA
+         cqQQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605;
+        h=to:subject:message-id:mime-version:from:date:dkim-signature
+         :dkim-signature;
+        bh=xA7bX82SbC2FwrcEKhXhhMgRj9LZ69QGQwRGlU47EOA=;
+        fh=DuOS6qAF6lgy/atjlPcsCjPK1w/7E2CXM9BdTx+G3Hk=;
+        b=laZjF2baYjXnzta8dNauIyNfRpiU8p3JhXiSxvBeJn2W8gHHVbAwWQk/V1ViUCY50k
+         mXeccR8VcVR3SwNEvA+4Jjuy6+ImVOHgoaRMJr4EQ1gxXKu75y5RntlKWKcTqiMNX87v
+         w2PSP7/wh5owtdM1HLPgDLIYynsHN7NfP8/CDxTCAO+dVRDeyZb/911JcnGUToafegCY
+         qDnTDj3amSC0D2Y9iA+5WG3koX49I146hTyvAqYKTi+ChA9LXOy39U4Au7IsyMSESvZj
+         DMcbYRThbGUcOg4sIQCzhRtizWIEHDdnDlFAFsIeDlxxsdt1mfLy6BoFm8WFa87m8hsT
+         D/pQ==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@alerts.jobot.com header.s=s1 header.b=bWpUBXVI;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=LsSMy2at;
+       spf=pass (google.com: domain of
+ bounces+28616192-45f6-sn.renauld=gmail.com@em3911.alerts.jobot.com designates
+ 149.72.194.137 as permitted sender)
+ smtp.mailfrom="bounces+28616192-45f6-sn.renauld=gmail.com@em3911.alerts.jobot.com";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=jobot.com
+Return-Path: 
+ <bounces+28616192-45f6-sn.renauld=gmail.com@em3911.alerts.jobot.com>
+Received: from o41.ptr5779.alerts.jobot.com (o41.ptr5779.alerts.jobot.com.
+ [149.72.194.137])
+        by mx.google.com with ESMTPS id
+ af79cd13be357-7b9ac2ced33si829494285a.189.2024.12.21.15.49.19
+        for <sn.renauld@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 21 Dec 2024 15:49:20 -0800 (PST)
+Received-SPF: pass (google.com: domain of
+ bounces+28616192-45f6-sn.renauld=gmail.com@em3911.alerts.jobot.com designates
+ 149.72.194.137 as permitted sender) client-ip=149.72.194.137;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@alerts.jobot.com header.s=s1 header.b=bWpUBXVI;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=LsSMy2at;
+       spf=pass (google.com: domain of
+ bounces+28616192-45f6-sn.renauld=gmail.com@em3911.alerts.jobot.com designates
+ 149.72.194.137 as permitted sender)
+ smtp.mailfrom="bounces+28616192-45f6-sn.renauld=gmail.com@em3911.alerts.jobot.com";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=jobot.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alerts.jobot.com;
+	h=content-type:from:mime-version:subject:x-feedback-id:to:cc:
+	content-type:from:subject:to;
+	s=s1; bh=xA7bX82SbC2FwrcEKhXhhMgRj9LZ69QGQwRGlU47EOA=;
+	b=bWpUBXVIQ9lglY5bSgvIzyoE9Wu0lPL7wg2lDOXEKXFl0kRU/Ra1BwItN9rJnqbucTwC
+	NRTjbdKEg5DOJAWBLuUBqYNuiDqUpA/Yv6od482yt+zBUI9qIGrXclXfcsj+MFPCpV3KfH
+	Dc6CboYT8ECUgiVVFaGP701HlrNuHLFWrLDrE4QXkUe3p7QudliOI6zvov2noSf24rz4Ok
+	NroUYxyzZEUSN56dLZMJvvTCDgs+E86rHctf/Q1zcAafL4YPWO2xRt2Q7dgzMtslTT854L
+	AFmJ8uHOfkqVmGJQKoyBxBhEW/UjL3xlYSHrttUTJ4aU+DvvEgcdgGNAb381NpuA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendgrid.info;
+	h=content-type:from:mime-version:subject:x-feedback-id:to:cc:
+	content-type:from:subject:to;
+	s=smtpapi; bh=xA7bX82SbC2FwrcEKhXhhMgRj9LZ69QGQwRGlU47EOA=;
+	b=LsSMy2atcEV+vecd+CRy5I82AOextICPY+k3LpXNMbFTEFj1T3s7gMcALhxXccYddirX
+	coEBYX2V/jOvkLJahoaubEzSny6ASnMA04jLUzss80OLB8M+AIu7prxYluxyQPH6B1suN+
+	gt6UAb+zE99YPFDeLI3zRRwFZP3PyAgRU=
+Received: by recvd-5cfbf7bc9-8qhfb with SMTP id
+ recvd-5cfbf7bc9-8qhfb-1-676753FD-C
+	2024-12-21 23:49:17.594063168 +0000 UTC m=+3205606.172215400
+Received: from Mjg2MTYxOTI (unknown)
+	by geopod-ismtpd-1 (SG) with HTTP
+	id 8iSlWRn9Q3O9ISmP-bcirA
+	Sat, 21 Dec 2024 23:49:17.530 +0000 (UTC)
+Content-Type: multipart/alternative;
+ boundary=95757626c6707513973d6553d4a4e742b999824e09358238ff36a2877c9a
+Date: Sat, 21 Dec 2024 23:49:17 +0000 (UTC)
+From: Jobot <no-reply@alerts.jobot.com>
+Mime-Version: 1.0
+Message-ID: <8iSlWRn9Q3O9ISmP-bcirA@geopod-ismtpd-1>
+Subject: Happy Holidays from Jobot!
+X-Feedback-ID: 28616192:SG
+X-SG-EID: 
+ =?us-ascii?Q?u001=2E22hWPKzRaCQ3QmZYepm83nxzV6f3yjjI3tTAfjFfEoaaUsTxu3oMa4oRW?=
+ =?us-ascii?Q?Zz8wp4aujBDIXK=2FjoDnmH31SUyqZpMCVfIVgzLA?=
+ =?us-ascii?Q?5HaXz3Rew82hrtv9Jhib=2Foq3nZRhQ+jjRzlxRf7?=
+ =?us-ascii?Q?zqSjZK1oSRuclV7uZXWBw2P4c1yrhpMDBcLB85p?=
+ =?us-ascii?Q?toaU1wnCeIUoAS5l95pYxU9Oeln9pW9bWN+=2FGyE?=
+ =?us-ascii?Q?OwKzpFh0SEUw3wdr9LoJGY=3D?=
+X-SG-ID: 
+ =?us-ascii?Q?u001=2ESdBcvi+Evd=2FbQef8eZF3Br+FkGDNwHelEDiTju02HuMRZG=2Ffgm17nBrAm?=
+ =?us-ascii?Q?9NZA+RD0DT9S0vAsSJ6l4YAI9LrRCUaegJ7ZcKZ?=
+ =?us-ascii?Q?r8ux+GSep0E=3D?=
+To: SIMON RENAULD <sn.renauld@gmail.com>
+X-Entity-ID: u001.LvsZ2prQ477DIYnBM3MvBA==
+
+--95757626c6707513973d6553d4a4e742b999824e09358238ff36a2877c9a
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0
+
+Jobot Logo
+[https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpMKyCre6ul4lZVdRs79gNMKpReXbcRzMoy59XXHLlQ2KlzUaO95AOFw2ti4AYWP1-2BTPdmBbl=
+ANoetKBZaatY6by5uKJ2bPlN1VIXovckJsKXpav-2FmFkLgAwirvYIR4qLCw-3D-3DXYbB_rO1J=
+RqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwVT742bifcx-2BMNf-2FpNjukxmLySdn-2BP=
+Vy-2BX94aOjHIVfNKAsXFeQAJjGyvZNDLvZnwiLXN5jAjdO8uel4Xnek94DwpiECkHGixMNXc5N=
+qIPaND89dTblQ7TmIoW5bh4d7vWxsa2t1UiusIm6hrZBSMq4KOgBaK2BT9TAllEAC9L2fB5TcyO=
+gpItnP8TopSsoeKv34qKR9wFu61xcBej9c-2BBPQHE5WXtROYVLwgSbNRCJyg-3D-3D]
+
+[https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpMKyCre6ul4lZVdRs79gNMKpReXbcRzMoy59XXHLlQ2KlzUaO95AOFw2ti4AYWP1-2BcYZLtyP=
+WEny7kwHEYLjxso7zwgIykbv-2FUxURUoecod5uHhbp02dGhfmg76DZ-2Bx-2BruUaXthrIpQVy=
+I1d3OMDQ4Y-3D-a0Z_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwVT742bifcx-2B=
+MNf-2FpNjukxm16K3M-2FYUVj13Q1VXtjK33XSzmLvPFJqfE4CgLg4Qbimbes0YogGCl2M-2BRc=
+gMf9aW2cNgkLLilm6QX8o1UUBVl5xeO7bVokBij9tZ-2Bnst-2FVR6CPnsHCk3Z5WuSXJvMScQU=
+NO5xttj-2BAk-2F960PQqtMp2KQcGp1HG-2FYHryEwbSlN0PWdRRqqBgwisfYWzXMpChNOYB1Cc=
+-2BR0hXc8GHbcR5PHA-3D-3D]
+
+=E2=80=8A
+=E2=80=8A
+
+
+HAPPY HOLIDAYS
+SIMON!
+
+=E2=80=8A
+
+=E2=80=99Twas the season for reflection,
+As the year comes to a close.
+>From career moves to growing teams,
+Here=E2=80=99s to all the paths we chose.
+
+=C2=A0
+
+For candidates searching,
+Or clients scaling with care,
+We=E2=80=99ve been proud to support you
+And grateful to have been there.
+
+=C2=A0
+
+And if this year we missed you,
+We hope to reconnect.
+Whether finding your next step or building anew,
+Jobot is here to partner with you.
+
+=C2=A0
+
+So here=E2=80=99s to rest and renewal,
+And all that=E2=80=99s in store.
+May the new year bring good opportunities
+To grow, connect, and open new doors.
+
+=C2=A0
+
+- Heidi + Jobot
+
+=E2=80=8A
+
+=E2=80=8A
+
+Looking for your next opportunity or planning to grow your team?
+Discover how Jobot connects good people with good jobs.
+
+=E2=80=8A
+Explore Opportunities with Jobot [https://url9751.alerts.jobot.com/ls/click=
+?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2BpJytVoWLjk24guVYZLminHQ-3DV6ct_rO1JRqZrx5=
+Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwVT742bifcx-2BMNf-2FpNjukxmfckgacJnxAugQ2Q=
+JMFTMmLT-2F3UBC0Kmm5zR2U8-2B7iyNyFFLR2j-2Fpsn8Bi5hb7tTLKR2pmyjTH07U2HYX9wBu=
+-2FJ-2F7fiABFF-2FfWCqK0J1hSt7aoyzQJJvYxMRtZlEGHn2nuv1-2FHJusMv0dcrho5nqF6uz=
+Cvb6EzzITWtwyZtOwFr-2BbbiwtOCP8AwAId5jJbyfe-2F6Wl2GKkc0V8MfOM6-2FTG1A-3D-3D=
+]
+
+=E2=80=8A
+
+[https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpMKyCre6ul4lZVdRs79gNMKpReXbcRzMoy59XXHLlQ2KlzUaO95AOFw2ti4AYWP1-2Bd6bZbrs=
+xfPOwzN5JrGw3XbwLQg0RuPTMZEqINS1b37dr9c4lbT1-2FIvJEfyiKehBX6PLtPn2UIRcC8mCY=
+OCoE9RGuS-2FcW4PoZDd7gbLWAdrfDkdcvH2BmIAFzPbABacKTQ-3D-3Db1O1_rO1JRqZrx5Oo2=
+5BATZItEvIKK9wiuA6UN-2BXngf09BwVT742bifcx-2BMNf-2FpNjukxmCCQqd3W6KP8Z-2FFh1=
+i2Z7aYE-2FyjZmug3K48tZ4KBCai-2BlP-2BhAtNknx1d27f0rGCTRXYIshHOFTBHF3wMrvU0Cp=
+xiDSW4I4L8hVgU7d2Xh-2FmWN9u8Rbx-2BGB3-2BKhHPznbfMSPXHRgGSPE4brcotLF8An5uBNr=
+OvGky4Gf5gn-2BFBG3kB1aHxAdsN70GYp0MK9ag545zdO96BN1Y-2FlW960tf7ig-3D-3D]
+
+Search Jobs [https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0=
+Y9UfX4wWW5-2BpJytVoWLjk24guVYZLminHQ-3DU4JD_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6=
+UN-2BXngf09BwVT742bifcx-2BMNf-2FpNjukxmaK9sL-2FLRNpzdRfVxGvzV7LWdKjKsrI-2FB=
+syr4-2FlNyy-2FmWQSSRo9Kn-2Fkkb8YXVB8CWmtswWS10V-2BeNqqd7nbq-2BILAfAy7T4CLcx=
+cO1GRtCXL5286BK7JeZAbxm5N5BT-2BCKl2tBv678FWMxTfZig0B4L1N1yn-2BzUmVJ4FQALATH=
+eJ9GDJlLyzjYAd0TGsZ0si0JvQX44Ts33mAokE11RlTjog-3D-3D]
+
+Partner with Us [https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSn=
+I8Q0Y9UfX4wWW5-2BpPgUH35pVfp6KoMQz10qa5E-3DDdYV_rO1JRqZrx5Oo25BATZItEvIKK9w=
+iuA6UN-2BXngf09BwVT742bifcx-2BMNf-2FpNjukxme5ZiSkQRjhrNHQTPfPhdoS7D2FfzGTCA=
+QcGVQdIxtYuKhtaP7Qo6MuGezrWEjkH5kfZYtViKhprKxe-2FetGG0iJwE8k2lDPb2pOVpTlkUw=
+WvdOlh5tNDL85yh50QjGbWz-2FQpuGtceYa-2F9HETCVxJl4K7OFWQYmo7-2F-2B5OWEFmT2vkg=
+1LbxaeLoV6T3Y4bTa3dVRK2V0R2j4jRmxEkse6l2mQ-3D-3D]
+
+Learn About Jobot [https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzD=
+SnI8Q0Y9UfX4wWW5-2BpKhO28o706jUQAunB7JXxs0QAEVNDvqNj4hpfDgqPURRVxHI_rO1JRqZ=
+rx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwVT742bifcx-2BMNf-2FpNjukxm4BF9FKkUb8b2=
+pnTGQz-2FdcjRM6Gjzpl9888QY7o8-2B4ENWFNle7r0vZh0oaRO2Qn0Y-2FxIUaqf5zGZw5Ff6m=
+DwPjSUWerJhH7aYI2UIP4XzvCG3TXFvid-2FE-2FNOyniWrLzY9gSW3m1oQjucWUnhQd-2BZn6R=
+ZekRvdUKa2-2FarcY5cZs3yc-2BVzYSFssosln24pdysK-2Bjc964NVwue5HATN-2BBqHcVA-3D=
+-3D]
+
+Stay Connected
+
+LinkedIn
+[https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpOW3uVKSXI53L92np1Ed0MLJmnnqG9thdxe0LTRYdhUUeKEUDjoL4tcGDcllh2Ydx0YoNaEfv9=
+kcDGnJg5HFM02U3awlzkEXFQ3JmGXWzOyIQswHRnS-2Fu391q-2FerMLoUCR23Q6noV0cVr0w6M=
+6nnGWs-3Dlusz_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwVT742bifcx-2BMNf-=
+2FpNjukxmCHs-2F3xBAjB5Om-2FslBRR9uYhW2ety9VDodZDvrLdI7CP4lF6b9rxYhBDPRy-2Ba=
+CVGoYUR45kcudnQ9E2YY4UPc-2Bp600nvFVQt5LXID3MhMFYchBOR6z7MIBuxMPFI919EN4JCqP=
+-2FKsqLvftT7Or7GM3rQv6SB9XXe6-2Fx-2BvmhjmWDTk3yJ-2BH0jPLIHKO4f9APEBoC-2FPss=
+-2Fy-2FjWpRWa1XrLcfg-3D-3D]https://url9751.alerts.jobot.com/ls/click?upn=3D=
+u001.nzDSnI8Q0Y9UfX4wWW5-2BpPRkN-2BkxGSEONcuBgJ9KfzQuHtzbdyCAfwnDxDhCBP1hUM=
+nVCqqRugnIM02JmQ8S1A-3D-3Dpp6d_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09Bw=
+VT742bifcx-2BMNf-2FpNjukxmQF6cL0qMTqwLl94yZLeVSOZjTJQhETUoUbjZd6j-2FFfX-2FZ=
+wo8Lz2K1aOHkSVGUJBKu7q9MrXM8V5Q7Uh9u7G-2BHnSZAbWi4a7Zhc8ZmGg7RATMxiahTLXmwu=
+eSc-2BTFnjbWXbBCliSIBEHTOvB5ng98RcwiYUmANgn3ZToq4OTZQdbD52P92fCUJEX3e-2BL1b=
+gPk4PGcvJqVeA-2BoaTMy7u7VyQ-3D-3D
+Instagram
+[https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpOW3uVKSXI53L92np1Ed0MLJmnnqG9thdxe0LTRYdhUUeKEUDjoL4tcGDcllh2Ydx0YoNaEfv9=
+kcDGnJg5HFM02U3awlzkEXFQ3JmGXWzOyI-2FrDfuXsRY3v-2FAMbuhjVpGd2nEqYvFa5xPDCJR=
+i3wC6U-3D0m2C_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwVT742bifcx-2BMNf-=
+2FpNjukxmfTltL5Nh7Y64-2Fizhwn4TQnC-2FhhQalQ3lmZ-2FeuSymTUUdWb394fy4ieb302sO=
+Y-2FQGSwAfgY-2FZkp8I8Hl9nbXDLyMnqPSbc2dHBnxYWq3tWYbkh8bHVZW7XIB7kqJ-2ByR-2B=
+IDvigr6aHZRSzqAAYJBymvQj1uSR-2F1kHVB1LTylDhvhSX6Jsr8YF-2BvLGnsypnOA-2BqIOtS=
+k5rWvQjoUE5yZazX2Q-3D-3D]https://url9751.alerts.jobot.com/ls/click?upn=3Du0=
+01.nzDSnI8Q0Y9UfX4wWW5-2BpI-2FOr7Lrd9uCqO1yAKFz8I2MZ0VL82sMkML8tuAT6EsOb8RD=
+_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwVT742bifcx-2BMNf-2FpNjukxmVXGG=
+vSEdFj1Qr01TFKlftn-2F7KqoFFS5RREkl0bnuia-2B5qSQUpsb1DDyfMn5iZsvy0Ir2ZS8k9ey=
+X-2BKA9zGzgZIIsUqvrjL7jmNcFpwD-2BLhoMwgkjFU3rK6OguKsNEFkkVlUKIf1GTp6m16FRyQ=
+vKLVHx3TXu-2BEaXl0hEnLc4AnStDcpQ4m0hC-2FSsruPxK6yelZ2XXpXcagIp0FV9ox-2BPMA-=
+3D-3D
+
+2024 =C2=A9 All Rights Reserved
+
+Unsubscribe [https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0=
+Y9UfX4wWW5-2BpA2bCbg4puiQAdqk26y-2Fa5t8SUqG6h8n4tXTqI-2FVSTv-2Fj0ronUCsNDCh=
+P2J179tz5mePNaW6GERhNsM4rtZQ-2FQI5aAtfBnka1zN7Ud0Ddja8wEggSRf9ImHX8-2FxmvBb=
+-2FEKoToyDIgjxAx4OxUKEm11buIEeERMLdHGhPQKvlibLQ7h-S_rO1JRqZrx5Oo25BATZItEvI=
+KK9wiuA6UN-2BXngf09BwVT742bifcx-2BMNf-2FpNjukxmAY6IiztZLwBPppNbbWa9xmu322-2=
+B6twODUsGpg9d-2B4vdFm4q8SNoWM2WQcIqOgFmViNmt2GMgjxZad0DxlrmFnaxc0vq2ONEKBl-=
+2FDlmuChwDwNSHRQLRuUHku4ydETtGMFKbc-2BYKMudICOy-2FGmDCDTjvbTFbdoR3t8aVMXSMR=
+8Bcvhr4WpVXcaq22y-2FsxGSQgNerWqLAs-2BCQh4km5QcsKqw-3D-3D]
+--95757626c6707513973d6553d4a4e742b999824e09358238ff36a2877c9a
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=utf-8
+Mime-Version: 1.0
+
+<!DOCTYPE html>
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" lang=3D"en">
+
+<head>
+	<title>Happy Holidays from Jobot!</title>
+	<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8">
+	<meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D1=
+.0"><!--[if mso]><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:Pixe=
+lsPerInch><o:AllowPNG/></o:OfficeDocumentSettings></xml><![endif]--><!--[if=
+ !mso]><!--><!--<![endif]-->
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			margin: 0;
+			padding: 0;
+		}
+
+		a[x-apple-data-detectors] {
+			color: inherit !important;
+			text-decoration: inherit !important;
+		}
+
+		#MessageViewBody a {
+			color: inherit;
+			text-decoration: none;
+		}
+
+		p {
+			line-height: inherit
+		}
+
+		.desktop_hide,
+		.desktop_hide table {
+			mso-hide: all;
+			display: none;
+			max-height: 0px;
+			overflow: hidden;
+		}
+
+		.image_block img+div {
+			display: none;
+		}
+
+		sup,
+		sub {
+			font-size: 75%;
+			line-height: 0;
+		}
+
+		@media (max-width:700px) {
+			.social_block.desktop_hide .social-table {
+				display: inline-block !important;
+			}
+
+			.mobile_hide {
+				display: none;
+			}
+
+			.row-content {
+				width: 100% !important;
+			}
+
+			.stack .column {
+				width: 100%;
+				display: block;
+			}
+
+			.mobile_hide {
+				min-height: 0;
+				max-height: 0;
+				max-width: 0;
+				overflow: hidden;
+				font-size: 0px;
+			}
+
+			.desktop_hide,
+			.desktop_hide table {
+				display: table !important;
+				max-height: none !important;
+			}
+		}
+	</style><!--[if mso ]><style>sup, sub { font-size: 100% !important; } sup =
+{ mso-text-raise:10% } sub { mso-text-raise:-10% }</style> <![endif]-->
+</head>
+
+<body class=3D"body" style=3D"background-color: #ffffff; margin: 0; padding=
+: 0; -webkit-text-size-adjust: none; text-size-adjust: none;">
+	<table class=3D"nl-container" width=3D"100%" border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0" role=3D"presentation" style=3D"mso-table-lspace: 0pt; m=
+so-table-rspace: 0pt; background-color: #ffffff;">
+		<tbody>
+			<tr>
+				<td>
+					<table class=3D"row row-1" align=3D"center" width=3D"100%" border=3D"0=
+" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"mso-ta=
+ble-lspace: 0pt; mso-table-rspace: 0pt;">
+						<tbody>
+							<tr>
+								<td>
+									<table class=3D"row-content stack" align=3D"center" border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"mso-table=
+-lspace: 0pt; mso-table-rspace: 0pt; background-color: #fafafa; color: #000=
+000; width: 680px; margin: 0 auto;" width=3D"680">
+										<tbody>
+											<tr>
+												<td class=3D"column column-1" width=3D"100%" style=3D"mso-table=
+-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; pa=
+dding-bottom: 15px; vertical-align: top; border-radius: 0px 0px 0px 0px; bo=
+rder-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
+													<table class=3D"image_block block-1" width=3D"100%" border=3D"=
+0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"mso-t=
+able-lspace: 0pt; mso-table-rspace: 0pt;">
+														<tr>
+															<td class=3D"pad" style=3D"padding-top:5px;width:100%;paddin=
+g-right:0px;padding-left:0px;">
+																<div class=3D"alignment" align=3D"center" style=3D"line-hei=
+ght:10px">
+																	<div style=3D"max-width: 136px;"><img src=3D"https://d15k2=
+d11r6t6rl.cloudfront.net/pub/bfra/wzuvgpkw/n34/hbo/29r/Jobot%20Snowflake.pn=
+g" style=3D"display: block; height: auto; border: 0; width: 100%;" width=3D=
+"136" alt=3D"Jobot Logo" title=3D"Jobot Logo" height=3D"auto"></div>
+																</div>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table class=3D"row row-2" align=3D"center" width=3D"100%" border=3D"0=
+" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"mso-ta=
+ble-lspace: 0pt; mso-table-rspace: 0pt;">
+						<tbody>
+							<tr>
+								<td>
+									<table class=3D"row-content stack" align=3D"center" border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"mso-table=
+-lspace: 0pt; mso-table-rspace: 0pt; background-color: #fafafa; color: #000=
+000; border-radius: 0; width: 680px; margin: 0 auto;" width=3D"680">
+										<tbody>
+											<tr>
+												<td class=3D"column column-1" width=3D"100%" style=3D"mso-table=
+-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; ve=
+rtical-align: top; border-radius: 0px; border-top: 0px; border-right: 0px; =
+border-bottom: 0px; border-left: 0px;">
+													<table class=3D"image_block block-1" width=3D"100%" border=3D"=
+0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"mso-t=
+able-lspace: 0pt; mso-table-rspace: 0pt;">
+														<tr>
+															<td class=3D"pad" style=3D"width:100%;">
+																<div class=3D"alignment" align=3D"center" style=3D"line-hei=
+ght:10px">
+																	<div style=3D"max-width: 680px;"><img src=3D"https://d15k2=
+d11r6t6rl.cloudfront.net/pub/bfra/wzuvgpkw/22z/9e5/32k/49065074-7325-467b-b=
+acd-63fe3ca79a5d.jpg" style=3D"display: block; height: auto; border: 0; wid=
+th: 100%;" width=3D"680" alt title height=3D"auto"></div>
+																</div>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table class=3D"row row-3" align=3D"center" width=3D"100%" border=3D"0=
+" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"mso-ta=
+ble-lspace: 0pt; mso-table-rspace: 0pt;">
+						<tbody>
+							<tr>
+								<td>
+									<table class=3D"row-content stack" align=3D"center" border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"mso-table=
+-lspace: 0pt; mso-table-rspace: 0pt; background-color: #fafafa; color: #000=
+000; background-image: url('https://d1oco4z2z1fhwp.cloudfront.net/templates=
+/default/5331/white-bkg-mail.png'); background-position: center top; backgr=
+ound-repeat: repeat; width: 680px; margin: 0 auto;" width=3D"680">
+										<tbody>
+											<tr>
+												<td class=3D"column column-1" width=3D"16.666666666666668%" sty=
+le=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-=
+align: left; vertical-align: top; border-top: 0px; border-right: 0px; borde=
+r-bottom: 0px; border-left: 0px;">
+													<div class=3D"spacer_block block-1" style=3D"height:5px;line-h=
+eight:5px;font-size:1px;">&#8202;</div>
+												</td>
+												<td class=3D"column column-2" width=3D"66.66666666666667%" styl=
+e=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-a=
+lign: left; vertical-align: top; border-top: 0px; border-right: 0px; border=
+-bottom: 0px; border-left: 0px;">
+													<div class=3D"spacer_block block-1" style=3D"height:15px;line-=
+height:15px;font-size:1px;">&#8202;</div>
+													<table class=3D"paragraph_block block-2" width=3D"100%" border=
+=3D"0" cellpadding=3D"10" cellspacing=3D"0" role=3D"presentation" style=3D"=
+mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
+														<tr>
+															<td class=3D"pad">
+																<div style=3D"color:#28b2e6;font-family:Arial, 'Helvetica N=
+eue', Helvetica, sans-serif;font-size:30px;line-height:120%;text-align:cent=
+er;mso-line-height-alt:36px;">
+																	<h1 style=3D"margin: 0; word-break: break-word;color:#28b2=
+e6;font-size:30px;"><span style=3D"word-break: break-word;"><strong>Happy H=
+olidays<br>SIMON!</strong></span></h1>
+																</div>
+															</td>
+														</tr>
+													</table>
+													<table class=3D"divider_block block-3" width=3D"100%" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"m=
+so-table-lspace: 0pt; mso-table-rspace: 0pt;">
+														<tr>
+															<td class=3D"pad" style=3D"padding-bottom:20px;padding-left:=
+10px;padding-right:10px;padding-top:10px;">
+																<div class=3D"alignment" align=3D"center">
+																	<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" ro=
+le=3D"presentation" width=3D"15%" style=3D"mso-table-lspace: 0pt; mso-table=
+-rspace: 0pt;">
+																		<tr>
+																			<td class=3D"divider_inner" style=3D"font-size: 1px; lin=
+e-height: 1px; border-top: 2px solid #333333;"><span style=3D"word-break: b=
+reak-word;">&#8202;</span></td>
+																		</tr>
+																	</table>
+																</div>
+															</td>
+														</tr>
+													</table>
+													<table class=3D"paragraph_block block-4" width=3D"100%" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"m=
+so-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
+														<tr>
+															<td class=3D"pad" style=3D"padding-bottom:40px;padding-left:=
+10px;padding-right:10px;padding-top:10px;">
+																<div style=3D"color:#555555;font-family:Arial, 'Helvetica N=
+eue', Helvetica, sans-serif;font-size:16px;line-height:150%;text-align:cent=
+er;mso-line-height-alt:24px;">
+																	<p style=3D"margin: 0;">=E2=80=99Twas the season for refle=
+ction,<br>As the year comes to a close.<br>From career moves to growing tea=
+ms,<br>Here=E2=80=99s to all the paths we chose.</p>
+																	<p style=3D"margin: 0;">&nbsp;</p>
+																	<p style=3D"margin: 0;">For candidates searching,<br>Or cl=
+ients scaling with care,<br>We=E2=80=99ve been proud to support you<br>And =
+grateful to have been there.</p>
+																	<p style=3D"margin: 0;">&nbsp;</p>
+																	<p style=3D"margin: 0;">And if this year we missed you,<br=
+>We hope to reconnect.<br>Whether finding your next step or building anew,<=
+br>Jobot is here to partner with you.</p>
+																	<p style=3D"margin: 0;">&nbsp;</p>
+																	<p style=3D"margin: 0;">So here=E2=80=99s to rest and rene=
+wal,<br>And all that=E2=80=99s in store.<br>May the new year bring good opp=
+ortunities<br>To grow, connect, and open new doors.</p>
+																	<p style=3D"margin: 0;">&nbsp;</p>
+																	<p style=3D"margin: 0;">- Heidi + Jobot</p>
+																</div>
+															</td>
+														</tr>
+													</table>
+												</td>
+												<td class=3D"column column-3" width=3D"16.666666666666668%" sty=
+le=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-=
+align: left; vertical-align: top; border-top: 0px; border-right: 0px; borde=
+r-bottom: 0px; border-left: 0px;">
+													<div class=3D"spacer_block block-1" style=3D"height:5px;line-h=
+eight:5px;font-size:1px;">&#8202;</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table class=3D"row row-4" align=3D"center" width=3D"100%" border=3D"0=
+" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"mso-ta=
+ble-lspace: 0pt; mso-table-rspace: 0pt;">
+						<tbody>
+							<tr>
+								<td>
+									<table class=3D"row-content stack" align=3D"center" border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"mso-table=
+-lspace: 0pt; mso-table-rspace: 0pt; background-color: #fafafa; color: #000=
+000; width: 680px; margin: 0 auto;" width=3D"680">
+										<tbody>
+											<tr>
+												<td class=3D"column column-1" width=3D"100%" style=3D"mso-table=
+-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; ve=
+rtical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; =
+border-left: 0px;">
+													<div class=3D"spacer_block block-1" style=3D"height:15px;line-=
+height:15px;font-size:1px;">&#8202;</div>
+													<table class=3D"paragraph_block block-2" width=3D"100%" border=
+=3D"0" cellpadding=3D"10" cellspacing=3D"0" role=3D"presentation" style=3D"=
+mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
+														<tr>
+															<td class=3D"pad">
+																<div style=3D"color:#333333;direction:ltr;font-family:Arial=
+, 'Helvetica Neue', Helvetica, sans-serif;font-size:16px;font-weight:400;le=
+tter-spacing:0px;line-height:150%;text-align:center;mso-line-height-alt:24p=
+x;">
+																	<p style=3D"margin: 0;"><strong>Looking for your next oppo=
+rtunity or planning to grow your team?</strong><br>Discover how Jobot conne=
+cts good people with good jobs.</p>
+																</div>
+															</td>
+														</tr>
+													</table>
+													<div class=3D"spacer_block block-3" style=3D"height:15px;line-=
+height:15px;font-size:1px;">&#8202;</div>
+													<table class=3D"button_block block-4" width=3D"100%" border=3D=
+"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"mso-=
+table-lspace: 0pt; mso-table-rspace: 0pt;">
+														<tr>
+															<td class=3D"pad" style=3D"padding-left:10px;padding-right:1=
+0px;text-align:center;">
+																<div class=3D"alignment" align=3D"center"><!--[if mso]>
+<v:roundrect xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:w=3D"urn:schem=
+as-microsoft-com:office:word" href=3D"https://jobot.com/" style=3D"height:4=
+2px;width:330px;v-text-anchor:middle;" arcsize=3D"72%" stroke=3D"false" fil=
+lcolor=3D"#28b2e6">
+<w:anchorlock/>
+<v:textbox inset=3D"0px,0px,0px,0px">
+<center dir=3D"false" style=3D"color:#ffffff;font-family:Arial, sans-serif;=
+font-size:16px">
+<![endif]--><a class=3D"button" href=3D"https://url9751.alerts.jobot.com/ls=
+/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2BpJytVoWLjk24guVYZLminHQ-3D2FMY_rO1J=
+RqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwVT742bifcx-2BMNf-2FpNjukxm3nT-2BVW1=
+MtQFu7W1Zy51OfwHZWCBv9wr03HFx8G23KW6eLNS3rSsIM5KnvejqBkYsvQkgDVE5HOxpIZvca-=
+2FHJZXTGki1gl5VaGgTRnfU-2Flk-2FMuJ1x5hapV4s2mcuFFYap3oDM9P-2Fbrrpp2OW7x9vvK=
+5ephPOIdQqk90QmPa353q-2FbF1q7B1X4dk-2ByHs4HKs5fQo-2BgPyZPiQpno4zuPXvuEg-3D-=
+3D" target=3D"_blank" style=3D"background-color:#28b2e6;border-bottom:0px s=
+olid transparent;border-left:0px solid transparent;border-radius:30px;borde=
+r-right:0px solid transparent;border-top:0px solid transparent;color:#fffff=
+f;display:inline-block;font-family:Arial, 'Helvetica Neue', Helvetica, sans=
+-serif;font-size:16px;font-weight:undefined;mso-border-alt:none;padding-bot=
+tom:5px;padding-top:5px;text-align:center;text-decoration:none;width:auto;w=
+ord-break:keep-all;"><span style=3D"word-break: break-word; padding-left: 5=
+0px; padding-right: 50px; font-size: 16px; display: inline-block; letter-sp=
+acing: normal;"><span style=3D"word-break: break-word; line-height: 32px;">=
+Explore Opportunities with Jobot</span></span></a><!--[if mso]></center></v=
+:textbox></v:roundrect><![endif]--></div>
+															</td>
+														</tr>
+													</table>
+													<div class=3D"spacer_block block-5" style=3D"height:25px;line-=
+height:25px;font-size:1px;">&#8202;</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table class=3D"row row-5" align=3D"center" width=3D"100%" border=3D"0=
+" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"mso-ta=
+ble-lspace: 0pt; mso-table-rspace: 0pt;">
+						<tbody>
+							<tr>
+								<td>
+									<table class=3D"row-content stack" align=3D"center" border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"mso-table=
+-lspace: 0pt; mso-table-rspace: 0pt; background-color: #28b2e6; border-radi=
+us: 0; color: #000000; width: 680px; margin: 0 auto;" width=3D"680">
+										<tbody>
+											<tr>
+												<td class=3D"column column-1" width=3D"33.333333333333336%" sty=
+le=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-=
+align: left; vertical-align: top; border-top: 0px; border-right: 0px; borde=
+r-bottom: 0px; border-left: 0px;">
+													<table class=3D"image_block block-1" width=3D"100%" border=3D"=
+0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"mso-t=
+able-lspace: 0pt; mso-table-rspace: 0pt;">
+														<tr>
+															<td class=3D"pad" style=3D"width:100%;">
+																<div class=3D"alignment" align=3D"center" style=3D"line-hei=
+ght:10px">
+																	<div style=3D"max-width: 226.667px;"><img src=3D"https://d=
+15k2d11r6t6rl.cloudfront.net/pub/bfra/wzuvgpkw/gm9/l4v/tmk/Jobot%20Logo-Upd=
+ate%202024-Primary%20-%20One%20Color%20-%20White.png" style=3D"display: blo=
+ck; height: auto; border: 0; width: 100%;" width=3D"226.667" alt title heig=
+ht=3D"auto"></div>
+																</div>
+															</td>
+														</tr>
+													</table>
+												</td>
+												<td class=3D"column column-2" width=3D"33.333333333333336%" sty=
+le=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-=
+align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top; bo=
+rder-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
+													<table class=3D"paragraph_block block-1" width=3D"100%" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"m=
+so-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
+														<tr>
+															<td class=3D"pad" style=3D"padding-bottom:5px;padding-top:25=
+px;">
+																<div style=3D"color:#ffffff;font-family:Arial, 'Helvetica N=
+eue', Helvetica, sans-serif;font-size:12px;font-weight:400;line-height:120%=
+;text-align:center;mso-line-height-alt:14.399999999999999px;">
+																	<p style=3D"margin: 0; word-break: break-word;"><a href=3D=
+"https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpJytVoWLjk24guVYZLminHQ-3DFTGD_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09B=
+wVT742bifcx-2BMNf-2FpNjukxmopNDmn8K7Gq-2BQleCt8YTECSpmLV4HyffGlSRejUmCY5-2F=
+obTmyRwh2K7SYg1HU5DSx9CGD2NlLr53-2FoabPipxwSOxweINbE2CG8DTtID7YTUxnK4rc8Pgg=
+lxWLksvMHkjWmcL8bs2RyunMC0XodfI1F1KlYxWvGlfKg4lwsKVhnpnq0KqG-2Fx79wBq88UrW2=
+ahIaahOoRJ8IJ08-2FPSvSZGYg-3D-3D" target=3D"_blank" title=3D"Search" style=
+=3D"text-decoration: underline; color: #ffffff;" rel=3D"noopener">Search Jo=
+bs</a></p>
+																</div>
+															</td>
+														</tr>
+													</table>
+													<table class=3D"paragraph_block block-2" width=3D"100%" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"m=
+so-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
+														<tr>
+															<td class=3D"pad" style=3D"padding-bottom:5px;padding-top:5p=
+x;">
+																<div style=3D"color:#ffffff;direction:ltr;font-family:Arial=
+, 'Helvetica Neue', Helvetica, sans-serif;font-size:12px;font-weight:400;le=
+tter-spacing:0px;line-height:120%;text-align:center;mso-line-height-alt:14.=
+399999999999999px;">
+																	<p style=3D"margin: 0;"><a href=3D"https://url9751.alerts.=
+jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2BpPgUH35pVfp6KoMQz10qa5E=
+-3DGmIh_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwVT742bifcx-2BMNf-2FpNju=
+kxmHyYtcgZ746QRC6hbEB97ISO1c9PaM3Fm5GUkrX2bSuWiBDc7QZfhZ2hbpAGvJ-2BE36JRhAs=
+T4lsdtoo1A3cCOCKNdrqz5ne7O8792IbEpnU8fJPZyoSz2NSP7kKSCOROfVyKZhCsoABy74r0O4=
+P4r1CIx7uTLaP3GB-2BUNEA7JMlVxj5mu1mluwxEcd2ljNim9O-2Bqz-2Bbl64ktfSjSRa6dpBQ=
+-3D-3D" target=3D"_blank" title=3D"Hire" style=3D"text-decoration: underlin=
+e; color: #ffffff;" rel=3D"noopener">Partner with Us</a></p>
+																</div>
+															</td>
+														</tr>
+													</table>
+													<table class=3D"paragraph_block block-3" width=3D"100%" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"m=
+so-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
+														<tr>
+															<td class=3D"pad" style=3D"padding-bottom:15px;padding-top:5=
+px;">
+																<div style=3D"color:#ffffff;direction:ltr;font-family:Arial=
+, 'Helvetica Neue', Helvetica, sans-serif;font-size:12px;font-weight:400;le=
+tter-spacing:0px;line-height:120%;text-align:center;mso-line-height-alt:14.=
+399999999999999px;">
+																	<p style=3D"margin: 0;"><a href=3D"https://url9751.alerts.=
+jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2BpKhO28o706jUQAunB7JXxs0=
+QAEVNDvqNj4hpfDgqPURRm584_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwVT742=
+bifcx-2BMNf-2FpNjukxmhiwPQMvITw2kn9TwbHrG-2FQu5OA3zE1E6ZhCpAjmJBS823dqMaLRT=
+6Evbsk8N7a3yAyRpAnE4-2F-2FPNun0qIkcApv9AIKEm-2F0SxE6U6vTfwIUm-2B3WSiEsmUdck=
+-2FMsYFWcfsv6s45iYrsSmsZv2hDRfjCl9Xz4Si7zVE5ypwpdPmUzUbSaiHRxgQqM4Lr-2FLbKf=
+gOLEdfUUEKkJipJFBVZfGrmA-3D-3D" target=3D"_blank" style=3D"text-decoration:=
+ underline; color: #ffffff;" rel=3D"noopener">Learn About Jobot</a></p>
+																</div>
+															</td>
+														</tr>
+													</table>
+												</td>
+												<td class=3D"column column-3" width=3D"33.333333333333336%" sty=
+le=3D"mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-=
+align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top; bo=
+rder-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
+													<table class=3D"paragraph_block block-1" width=3D"100%" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"m=
+so-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
+														<tr>
+															<td class=3D"pad" style=3D"padding-bottom:10px;padding-left:=
+10px;padding-right:10px;padding-top:20px;">
+																<div style=3D"color:#ffffff;font-family:Arial, 'Helvetica N=
+eue', Helvetica, sans-serif;font-size:14px;font-weight:400;line-height:120%=
+;text-align:center;mso-line-height-alt:16.8px;">
+																	<p style=3D"margin: 0; word-break: break-word;"><span styl=
+e=3D"word-break: break-word;"><strong><span style=3D"word-break: break-word=
+;">Stay Connected</span></strong></span></p>
+																</div>
+															</td>
+														</tr>
+													</table>
+													<table class=3D"social_block block-2" width=3D"100%" border=3D=
+"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"mso-=
+table-lspace: 0pt; mso-table-rspace: 0pt;">
+														<tr>
+															<td class=3D"pad" style=3D"text-align:center;padding-right:0=
+px;padding-left:0px;">
+																<div class=3D"alignment" align=3D"center">
+																	<table class=3D"social-table" width=3D"72px" border=3D"0" =
+cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"mso-tabl=
+e-lspace: 0pt; mso-table-rspace: 0pt; display: inline-block;">
+																		<tr>
+																			<td style=3D"padding:0 2px 0 2px;"><a href=3D"https://ur=
+l9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2BpPRkN-2Bkx=
+GSEONcuBgJ9KfzQuHtzbdyCAfwnDxDhCBP1hUMnVCqqRugnIM02JmQ8S1A-3D-3DrDCp_rO1JRq=
+Zrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwVT742bifcx-2BMNf-2FpNjukxmOKrG52LeN8H=
+oneEIr5yAXX8MWFtj-2BQsa0UWki0pTFZO8-2BJvI-2B-2FKfMVaByCpDDQ-2FDEntDq7IOZ1M3=
+kVHZsr7uPxsNQdzmn7Tt1OtBydncCSv7zeahBcysSK2LXikoJk2pavV1Bia-2Bxyvaf2FjWGI5s=
+D7S8f-2BWUJCS2SunsIG6O-2Bm5EJcv7TLZYV28FOitv5pkzJRf-2BVh4OjNpA94VyXGrXg-3D-=
+3D" target=3D"_blank"><img src=3D"https://app-rsrc.getbee.io/public/resourc=
+es/social-networks-icon-sets/t-only-logo-white/linkedin@2x.png" width=3D"32=
+" height=3D"auto" alt=3D"LinkedIn" title=3D"LinkedIn" style=3D"display: blo=
+ck; height: auto; border: 0;"></a></td>
+																			<td style=3D"padding:0 2px 0 2px;"><a href=3D"https://ur=
+l9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2BpI-2FOr7Lr=
+d9uCqO1yAKFz8I2MZ0VL82sMkML8tuAT6EsO4LzE_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-=
+2BXngf09BwVT742bifcx-2BMNf-2FpNjukxmwENyTKR9rOQ8X84rR-2FifulFVRYmFUGY7w4lQq=
+UMwrzST30WBizVcKyUTEE9o3M5a3-2B17220ccZdS4Nyi54pdF4TEIc5WHnl5wP3rx1Sf-2BYHF=
+ljRlgWScjkSsXC7n-2BSG8TotnruQbtz0yvGhpRF5J91Tf-2BeyrA4akbEIySSeixxK5bwdVWCi=
+HzKMej5FgfXr9MJOz0Tnu-2FauzoTEoGIGZXg-3D-3D" target=3D"_blank"><img src=3D"=
+https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-onl=
+y-logo-white/instagram@2x.png" width=3D"32" height=3D"auto" alt=3D"Instagra=
+m" title=3D"instagram" style=3D"display: block; height: auto; border: 0;"><=
+/a></td>
+																		</tr>
+																	</table>
+																</div>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table class=3D"row row-6" align=3D"center" width=3D"100%" border=3D"0=
+" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"mso-ta=
+ble-lspace: 0pt; mso-table-rspace: 0pt;">
+						<tbody>
+							<tr>
+								<td>
+									<table class=3D"row-content stack" align=3D"center" border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"mso-table=
+-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 680px; margin: =
+0 auto;" width=3D"680">
+										<tbody>
+											<tr>
+												<td class=3D"column column-1" width=3D"100%" style=3D"mso-table=
+-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; pa=
+dding-bottom: 20px; vertical-align: top; border-top: 0px; border-right: 0px=
+; border-bottom: 0px; border-left: 0px;">
+													<table class=3D"paragraph_block block-1" width=3D"100%" border=
+=3D"0" cellpadding=3D"10" cellspacing=3D"0" role=3D"presentation" style=3D"=
+mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
+														<tr>
+															<td class=3D"pad">
+																<div style=3D"color:#555555;font-family:Arial, 'Helvetica N=
+eue', Helvetica, sans-serif;font-size:12px;line-height:120%;text-align:cent=
+er;mso-line-height-alt:14.399999999999999px;">
+																	<p style=3D"margin: 0; word-break: break-word;"><span styl=
+e=3D"word-break: break-word;">2024 =C2=A9 All Rights Reserved</span></p>
+																</div>
+															</td>
+														</tr>
+													</table>
+													<table class=3D"paragraph_block block-2" width=3D"100%" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"m=
+so-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
+														<tr>
+															<td class=3D"pad" style=3D"padding-left:10px;padding-right:1=
+0px;">
+																<div style=3D"color:#555555;font-family:Arial, 'Helvetica N=
+eue', Helvetica, sans-serif;font-size:12px;line-height:120%;text-align:cent=
+er;mso-line-height-alt:14.399999999999999px;">
+																	<a href=3D"https://url9751.alerts.jobot.com/ls/click?upn=
+=3Du001.nzDSnI8Q0Y9UfX4wWW5-2BpA2bCbg4puiQAdqk26y-2Fa5t8SUqG6h8n4tXTqI-2FVS=
+Tv-2Fj0ronUCsNDChP2J179tz5mePNaW6GERhNsM4rtZQ-2FQI5aAtfBnka1zN7Ud0Ddja8wEgg=
+SRf9ImHX8-2FxmvBb-2FEKoToyDIgjxAx4OxUKEm11buIEeERMLdHGhPQKvlibLQ_ndZ_rO1JRq=
+Zrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwVT742bifcx-2BMNf-2FpNjukxm0Jj13YF3PiR=
+WjiYdUiLOBWpD1v0wZToogd8XFZo7KFA6DkVAOw13x3GSUvK7tgG2LFBQgxBBNgaQH7D3ykYi6D=
+-2FZkGYImM4tCJ4oEcrQfrCBW1K-2F0oNtpSzvUNsIs4eDE1te4v3pSbqXDi0Ye7XdFYMwYsdo2=
+nIaaMvIJb6Y3tzBnVaLJrfPcY37L7Po42AbbCZ9UwOtzR0b028BzHDmaA-3D-3D" style=3D"t=
+ext-decoration: underline; font-family: 'Open Sans',sans-serif; color: rgb(=
+165, 162, 155); font-size: 13px; text-align: center;" class=3D"foot-text">U=
+nsubscribe</a>
+																</div>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</tbody>
+	</table><!-- End -->
+<img src=3D"https://url9751.alerts.jobot.com/wf/open?upn=3Du001.wJ4wQoWqptt=
+L0LnWj9yCngQD-2BPKOSnIWwGo2A-2BWj6Xj3uBs6fcrG7uf0jEjZ-2BjYcFC-2B-2F-2Fy5enV=
+b00CHg8RqDm2cs3nv-2FqRWginHQRgbdJeKUSqIIuQjSnHSIgMOJBGcbIBjfJFqsrcj58i-2FGd=
+khMpbwQzkhlNqdQkkYLK2fFh-2Bt9-2BaxKxhZ7YCPY0S3iRt7UGeT8wPjEhNGZ5vCwespwfv06=
+eBq6TObOiB-2BTMlBpJPDqfR0LM79OotfCHIUBkeDfvkYAVWt5acPgvCegEKui4g-3D-3D" alt=
+=3D"" width=3D"1" height=3D"1" border=3D"0" style=3D"height:1px !important;=
+width:1px !important;border-width:0 !important;margin-top:0 !important;marg=
+in-bottom:0 !important;margin-right:0 !important;margin-left:0 !important;p=
+adding-top:0 !important;padding-bottom:0 !important;padding-right:0 !import=
+ant;padding-left:0 !important;"/></body>
+
+</html>
+--95757626c6707513973d6553d4a4e742b999824e09358238ff36a2877c9a--
+

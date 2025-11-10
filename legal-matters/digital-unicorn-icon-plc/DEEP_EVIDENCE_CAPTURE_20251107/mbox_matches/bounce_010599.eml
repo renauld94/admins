@@ -1,0 +1,715 @@
+X-GM-THRID: 1714572433839151673
+X-Gmail-Labels: Inbox,Important,Opened,Category Updates
+Delivered-To: sn.renauld@gmail.com
+Received: by 2002:a05:7110:4343:b0:fb:6c4:3307 with SMTP id g3csp4232267gee;
+        Sun, 24 Oct 2021 23:34:53 -0700 (PDT)
+X-Google-Smtp-Source: 
+ ABdhPJznW9MZG/EDk3yx8pR+ZUHZgDoqbmxNiM25QiQlqAws0wxBk/Rc57iCumy+eQtRmj+50TTB
+X-Received: by 2002:a17:90a:9418:: with SMTP id
+ r24mr18257427pjo.238.1635143693703;
+        Sun, 24 Oct 2021 23:34:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1635143693; cv=none;
+        d=google.com; s=arc-20160816;
+        b=hh9EOf8pAOB8mCYhtUvj96581Vn0qXvL7h+sKZxBsFUO68127nT7B/ncslHG3FmQne
+         pmaXYzFeeYuxkBN65ON9VhgOe1Xre4v9vScgVUp8VewkL3THCEopmIE0dCOFy4v3ItW7
+         vs5AV3a20+pIrngOOH0llBS7t2LK4g+0I9PS7KT46BrS5FPXi3HsQvTjdo7rGxBx42j3
+         5UKNPzNLKx1cu/CHH0+2IFTS6WPRiOz/KzTyZ5sgVK5J4qAwzgaKwawQwdkcgoDdbXv5
+         R/Fa3++ESwagMdz+Y/UTbqfKlBX8g7CtJ6+mj0t+YcTSdPhKQ1/C1ZWUmdI6iQouBv3W
+         sUUQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20160816;
+        h=to:reply-to:message-id:subject:mime-version:list-unsubscribe:from
+         :date:dkim-signature:dkim-signature;
+        bh=vNCOGsKmbzv46geJlg4BZWbn6Ca1rBRfirCxB7bauB0=;
+        b=MCHTFRZD2TSSAfgU7NejMzKqgbtpHkOoX3uy8O+2jmxSN23hy6N0NbtCdfYAsDCSnt
+         WjWMEetWwbSb97GOaySvaCCHNfpR9+aVvsZRy99N+ZCPmoIZFhRumDREDc5w0HdbVfzi
+         8te0oz9yLuesu3+POJ3/VjptAHs52qUNufhk2CblVmx4XoJSex2lFU9VtDB+QlS5rVfx
+         5qalk0AhxKOYVW14rKFGU8WDYq4vq1ssKgGDSJwDbQ1Yy/oU2MK4a7QehzwF5x0kHc10
+         tdnq2jfzkVOWMzzrVcsPLZONv+QGmOEItuTsXeJrycZcW+nH/Voe5RIePLRSs8A1Dov2
+         Uj3w==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@epam.com header.s=bmy header.b=LCG83GDT;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=M0IXwF1a;
+       spf=pass (google.com: domain of
+ bounces+15257641-9b85-sn.renauld=gmail.com@trm.epam.com designates
+ 149.72.206.74 as permitted sender)
+ smtp.mailfrom="bounces+15257641-9b85-sn.renauld=gmail.com@trm.epam.com";
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=epam.com
+Return-Path: <bounces+15257641-9b85-sn.renauld=gmail.com@trm.epam.com>
+Received: from wrqvczqx.outbound-mail.sendgrid.net
+ (wrqvczqx.outbound-mail.sendgrid.net. [149.72.206.74])
+        by mx.google.com with ESMTPS id b2si839705pls.311.2021.10.24.23.34.53
+        for <sn.renauld@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 24 Oct 2021 23:34:53 -0700 (PDT)
+Received-SPF: pass (google.com: domain of
+ bounces+15257641-9b85-sn.renauld=gmail.com@trm.epam.com designates
+ 149.72.206.74 as permitted sender) client-ip=149.72.206.74;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@epam.com header.s=bmy header.b=LCG83GDT;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=M0IXwF1a;
+       spf=pass (google.com: domain of
+ bounces+15257641-9b85-sn.renauld=gmail.com@trm.epam.com designates
+ 149.72.206.74 as permitted sender)
+ smtp.mailfrom="bounces+15257641-9b85-sn.renauld=gmail.com@trm.epam.com";
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=epam.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=epam.com;
+	h=content-type:from:list-unsubscribe:mime-version:subject:reply-to:
+	x-feedback-id:to;
+	s=bmy; bh=vNCOGsKmbzv46geJlg4BZWbn6Ca1rBRfirCxB7bauB0=;
+	b=LCG83GDTeOLCMLcAq7A8/P9BqKyo4pdft9ui3FvlxeGw/lZftD6e9YxfcJMenvdu74zY
+	yknCcxtRTgwW3JuHfh2b9tQFvscPb/T4zGI2Dn2aFQwLpYiwjfyUFd4pCPHw369QFeWmka
+	x2a6rj4VxWo8oJLTlHk+7wScf7IK9oVLWrfT9Y2ZPSoI9aVijush9wVon1EGKZPpA2i68Q
+	9U3sXXwuTMr5APkWcyCaqB54KlzCzOGl+sq++/GmAJuGCuW/dR3q6M3K8pPA7No45cRLE0
+	WyJIyZUE0Chw3sJKoP7+61de9WQV7lnvLeN7c8J9wxQH7Sci7cfx7fo29DihZDBA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendgrid.info;
+	h=content-type:from:list-unsubscribe:mime-version:subject:reply-to:
+	x-feedback-id:to;
+	s=smtpapi; bh=vNCOGsKmbzv46geJlg4BZWbn6Ca1rBRfirCxB7bauB0=;
+	b=M0IXwF1aAIDr1AD698keXqeVxOl8V4AvoRMy5HL3BZxngdTBpaizSo5KSOTd+dTrPShd
+	wgRaUW9tu21xNbQE89QkqvmnEPyHWX8cIDXKBEz4aIFS5YXj5tpOzIsMYSHHBbNJyFznHs
+	QHBgLXEIbaPutisvo8xQnowimYNSeIN1g=
+Received: by filterdrecv-766cf57cc-spdnf with SMTP id
+ filterdrecv-766cf57cc-spdnf-1-6176500C-27
+        2021-10-25 06:34:52.765476086 +0000 UTC m=+4608841.705876558
+Received: from MTUyNTc2NDE (unknown)
+	by geopod-ismtpd-4-2 (SG) with HTTP
+	id 4FylD8F7QgqYMBaX8azHCA
+	for <sn.renauld@gmail.com>;
+	Mon, 25 Oct 2021 06:34:52.650 +0000 (UTC)
+Content-Type: multipart/alternative;
+ boundary=4fa219c823acd226253f7be915cd4b1a815001cfc4c0ba2839d5f077f41d
+Date: Mon, 25 Oct 2021 06:34:52 +0000 (UTC)
+From: "Tatiana [EPAM Anywhere]" <tatiana@epam.com>
+List-Unsubscribe: <mailto:tatiana@epam.com>
+Mime-Version: 1.0
+Subject: Welcome to EPAM Anywhere!
+X-250ok-CID: 
+ 67b4fb7191b6459fa911:7f922c2f-d988-4ac8-b42e-4ac028e0ca5b:aLnUQRGhXY
+Message-ID: <4FylD8F7QgqYMBaX8azHCA@geopod-ismtpd-4-2>
+Reply-To: "Tatiana [EPAM Anywhere]"
+	<tatiana-epam-anywhere-rxy_pagtz@campaign.beamery.com>
+X-Feedback-ID: 15257641:SG
+X-SG-EID: 
+ =?us-ascii?Q?6FYL0bAe7lSwTMGizU3QjyrryaPiafoyObfl0HtYMQttkOPXg50xougLH2k8q0?=
+ =?us-ascii?Q?TCNHZs2VN2h=2FLtOB8lNc0jENwSf=2FhTOGDXe83PY?=
+ =?us-ascii?Q?dtdof=2FZF1gTe6TUFAvwwMAosJj9hILG+2432AP2?=
+ =?us-ascii?Q?gNnwHwpAvtAmL=2FRAdIP169YtaeDf4iaMX+dqwkU?=
+ =?us-ascii?Q?O7K8TB0XIqkcT4bhtnPFHXpj8aHAopOCcnvDY+V?=
+ =?us-ascii?Q?aJATsRcLTJ5IWaHXOG8Yp2hPMz2WWvT6kDvMZm?=
+X-SG-ID: 
+ =?us-ascii?Q?N2C25iY2uzGMFz6rgvQsb8raWjw0ZPf1VmjsCkspi=2FIARr5ApfQLGQYXi0KvHQ?=
+ =?us-ascii?Q?0zbGgp6UoLupLUtloNis=2FaFOKR3rciBIrzZxhA9?=
+ =?us-ascii?Q?X5CrOQG2aaprmzJ3w6unfypIVXPd=2FOHGyKIJDdO?=
+ =?us-ascii?Q?5S7QYMQrnhcgnnSTQ4r8Jlm6vQrOO=2FMpTeQ6PCU?=
+ =?us-ascii?Q?s657dUedQvCxcQljaMsfMqq25Cd=2FBgO9Bdyq3O1?=
+ =?us-ascii?Q?Alkt3aOYhWXXVaeNMJqkB9RaEPu0G37qPWo4X=2Fj?=
+ =?us-ascii?Q?FbX2b7CJt1UQ2uCcYh9QBG36gexxwyAk0MkXGZd?=
+ =?us-ascii?Q?uPoxk4ddnHhkfTv3OQ1=2FaGhy0Cjc5wGRWYHwEXy?=
+ =?us-ascii?Q?L5bNM0wIHJAPfCtDGJj8p2BKrPceOg9WHZfeSoc?=
+ =?us-ascii?Q?BdFMg9kt6AroTHv=2F4G0pdwKM04xfQ2kZ24VbL0R?=
+ =?us-ascii?Q?VSla1f6qyDlBlxtH0UDmjHj6+2lYR1pVFgI36QE?=
+ =?us-ascii?Q?xb3Nx65Kb1tBA9whAZKorA8G=2F25NrE+gUlWcc62?=
+ =?us-ascii?Q?Zuhj9GF4Zu1Q6MwHYfhmw8BjGMUAR88=2F9UG=2FckX?=
+ =?us-ascii?Q?N9V2uUSr3Q8lfFGzdwhJY9u3utP+inlotFQmeMD?=
+ =?us-ascii?Q?riav=2FdyrlZDrfjhaSJ=2FVUu9F0rWdd8KzPoCNx91?=
+ =?us-ascii?Q?+ymSSWLINyvw4tLEn9oX2khmY2Ap9KZHaaYj0RB?=
+ =?us-ascii?Q?caJq3I0E6=2F+NOsBBZxnQUJNAWN6tVDUgQyflfpx?=
+ =?us-ascii?Q?hiLNa4zPUYxF8AUAZWbrCY2Go6YrZgul51LtIT0?=
+ =?us-ascii?Q?5qPDtyZUPb5xKrVFr8FLic=3D?=
+To: sn.renauld@gmail.com
+X-Entity-ID: BdpOoosqkEb61P5xcL8q3A==
+
+--4fa219c823acd226253f7be915cd4b1a815001cfc4c0ba2839d5f077f41d
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Mime-Version: 1.0
+
+[http://careerslink.epam.com/ss/c/QgVgVH5Lk831uR-UNeAr3mgA_wgwi9FTq-NbrMQto=
+p90i_lGMpRTKy0W5NTsfhdP4QMZN21tD5Vf0bex-fiCWfuspfnA8-ZMRn1fx8JdhmNE_Eoax1zS=
+LoOnUXQERBP3j5TGCAVnfRwjDG-CV0pwRur2swN4uDZXDjZlal62NhA/3gg/WGatBPyJTziyo5z=
+k733ZBA/t0/5MTW3bfnSHT-EC3i_LcjO3Yk1Q33Y6ra_CCuVCrlLX4]
+Hello Simon!
+
+Welcome to EPAM Anywhere
+[http://careerslink.epam.com/ss/c/xQod6_fREurEz1toDBubEcKGrnYjO5FgL2l_wae60=
+En9KoBZ96vix5KBqNXg0RDQvjzdS5QKbBJV6SSgZx3GkPuHrKDpzMUfM7Ts_ERQ6QZrudxRV3g-=
+bysDWlJHjBnunwRMBlavECcQntXRGDyXwQUT8xNg_pYVM984iTGY2KUDzLtmRRavWO4QYZNQplJ=
+T9-wIBqv_vkZxrzcmRPM3yK3fBT-n2Sh8aULo07dR_DFiYEG5TJY6NXkYty0WQWH3/3gg/WGatB=
+PyJTziyo5zk733ZBA/t1/_VEoAKXUuR1GSOjsv5wgUK26I6fjk2d2ohAEpAVIgG0]
+, an innovative platform for remote work.
+
+EPAM Anywhere isn't your typical job platform. It offers an accelerated
+recruiting experience that changes the game of job interviews.
+
+We're offering:
+
+ * Streamlined technical interviews
+ * Automated assessment of your skill levels
+ * Only necessary communication and fast responses from our recruiters
+
+COMPLETE NEXT STEPS IN YOUR APPLICATION
+[http://careerslink.epam.com/ss/c/xQod6_fREurEz1toDBubEcKGrnYjO5FgL2l_wae60=
+En9KoBZ96vix5KBqNXg0RDQvjzdS5QKbBJV6SSgZx3GkPuHrKDpzMUfM7Ts_ERQ6QZrudxRV3g-=
+bysDWlJHjBnunwRMBlavECcQntXRGDyXwQUT8xNg_pYVM984iTGY2KUDzLtmRRavWO4QYZNQplJ=
+T9-wIBqv_vkZxrzcmRPM3yK3fBT-n2Sh8aULo07dR_DFiYEG5TJY6NXkYty0WQWH3/3gg/WGatB=
+PyJTziyo5zk733ZBA/t2/GMQlEJFVvfWOEzmuKhHXioEiapkw_jSno7EY_Z1lscs]
+Personal skill manager [http://careerslink.epam.com/ss/c/tyi2sJevxS8GN7VEzn=
+c2KfB7P7yNTsdw0Rb9NOcWzhxE8DW7nj18ShOuMJumcSYx6gHbeEHoRhVGg5vEMW6ySeSQ_teLs=
+UgUAu9fkEGsnLCBHqYtNFbI_3T-bu2vU6ibMOVa9ANzMb3d7XOglBDgpkkxcrRPQlM-lQ9QaQl8=
+fY4/3gg/WGatBPyJTziyo5zk733ZBA/t3/Jkaq63AGujGEqwZ4nDYdmRKxQyZp6kAtNQ-xc9sA-=
+qU]
+Personal skill manager
+
+Even working remotely, you can boost your skills and pursue ambitious caree=
+r
+goals. We'll put you in touch with a mentor that'll help you build your
+professional path and accelerate your career development.
+
+
+Learning opportunities [http://careerslink.epam.com/ss/c/tyi2sJevxS8GN7VEzn=
+c2KfB7P7yNTsdw0Rb9NOcWzhxE8DW7nj18ShOuMJumcSYx6gHbeEHoRhVGg5vEMW6ySeSQ_teLs=
+UgUAu9fkEGsnLCBHqYtNFbI_3T-bu2vU6ibycMcgZXBkjUEB213xmrum2tamUqQgHf6kOKRHe2Q=
+_rE/3gg/WGatBPyJTziyo5zk733ZBA/t4/6kFuMqN-8dll01mhXTWvbyhCqd4S3pl_8HsVI7Z5I=
+jA]
+Learning opportunities
+
+Join EPAM Anywhere and get an access to with 5,000+ online internal courses=
+,
+improve your English language, and read books from our internal library!
+
+
+Access to EPAM communities [http://careerslink.epam.com/ss/c/tyi2sJevxS8GN7=
+VEznc2KfB7P7yNTsdw0Rb9NOcWzhxE8DW7nj18ShOuMJumcSYx6gHbeEHoRhVGg5vEMW6ySeSQ_=
+teLsUgUAu9fkEGsnLCBHqYtNFbI_3T-bu2vU6ibPjn4QI-MSKQ6bzlgcQUkVFHEA8-YkKjmJAxo=
+1x2--Cs/3gg/WGatBPyJTziyo5zk733ZBA/t5/X9muqsJec9huIfnhcyMZaAq94WqGbjo8TpSRS=
+o7sLJQ]
+Access to EPAM communities
+
+EPAM Anywhere is a community of top IT talents. We invite you to take part =
+in
+exciting projects, share expertise with professionals from various domains,=
+ and
+be recognized by your peers!
+
+
+Corporate benefit [http://careerslink.epam.com/ss/c/tyi2sJevxS8GN7VEznc2KfB=
+7P7yNTsdw0Rb9NOcWzhxE8DW7nj18ShOuMJumcSYx6gHbeEHoRhVGg5vEMW6ySeSQ_teLsUgUAu=
+9fkEGsnLCBHqYtNFbI_3T-bu2vU6ib-sXEN3yFlFPglrxXl3694ujIw90Xd3Ty8LWLA6cnjps/3=
+gg/WGatBPyJTziyo5zk733ZBA/t6/__OSmfWrajYR5_gx1UPzJSSAsU9xJSj5wMeJvG-7RG0]
+Corporate benefits
+
+As a global company we provide a lot of benefits and discounts of being an
+EPAMer. Working remotely, you'll get access to a discount program, referral
+program, EPAM's offices and co-working spaces and more.
+
+
+Check out howEPAM Anywhere jobs
+[http://careerslink.epam.com/ss/c/xQod6_fREurEz1toDBubEcKGrnYjO5FgL2l_wae60=
+En6MQlcK34tUApMG6FE-V0UX2L0ZGHbdBvIOsEXqtJziJfaEkR5yWlcnrP33yjlB95e0f4Id-85=
+eV6F7e60puPDi2nD62YBap3GHQWcFDaJWFYYesWx4vasopoHwwrHu0zfXlByO5HEtDr7e_DuaOq=
+w/3gg/WGatBPyJTziyo5zk733ZBA/t7/RKl0QeRQIo3teIhC0EeOFVbi0cPUyLBWpqJHT-nDCtA=
+]=20
+and apply for hot remote jobs!
+
+
+
+
+Email Support [supportme@epam.com?subject=3DEPAM%20Anywhere%20support] in c=
+ase of
+any questions
+
+=A9 2021 EPAM Systems, Inc. All Rights Reserved
+--4fa219c823acd226253f7be915cd4b1a815001cfc4c0ba2839d5f077f41d
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=utf-8
+Mime-Version: 1.0
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.=
+w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html style=3D"width:100%;fon=
+t-family:arial, 'helvetica neue', helvetica, sans-serif;-webkit-text-size-a=
+djust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0;"><head><meta chars=
+et=3D"UTF-8"><meta content=3D"width=3Ddevice-width, initial-scale=3D1" name=
+=3D"viewport"><meta name=3D"x-apple-disable-message-reformatting"><meta htt=
+p-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge"><meta content=3D"telephon=
+e=3Dno" name=3D"format-detection"><title>Welcome to EPAM Anywhere_OPTION 2<=
+/title><!--[if (mso 16)]>
+    <style type=3D"text/css">
+    a {text-decoration: none;}
+    </style>
+    <![endif]--><!--[if gte mso 9]><style>sup { font-size: 100% !important;=
+ }</style><![endif]--><!--[if gte mso 9]>
+<xml>
+    <o:OfficeDocumentSettings>
+    <o:AllowPNG></o:AllowPNG>
+    <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+</xml>
+<![endif]--><style type=3D"text/css">
+#outlook a {
+	padding:0;
+}
+.ExternalClass {
+	width:100%;
+}
+.ExternalClass,
+.ExternalClass p,
+.ExternalClass span,
+.ExternalClass font,
+.ExternalClass td,
+.ExternalClass div {
+	line-height:100%;
+}
+.es-button {
+	mso-style-priority:100!important;
+	text-decoration:none!important;
+}
+a[x-apple-data-detectors] {
+	color:inherit!important;
+	text-decoration:none!important;
+	font-size:inherit!important;
+	font-family:inherit!important;
+	font-weight:inherit!important;
+	line-height:inherit!important;
+}
+.es-desk-hidden {
+	display:none;
+	float:left;
+	overflow:hidden;
+	width:0;
+	max-height:0;
+	line-height:0;
+	mso-hide:all;
+}
+</style></head><body aria-disabled=3D"false" class=3D"fr-no-selection" data=
+-gr-ext-installed=3D"" data-new-gr-c-s-check-loaded=3D"14.1033.0" data-new-=
+gr-c-s-loaded=3D"14.1033.0" spellcheck=3D"false" style=3D'width: 100%; font=
+-family: arial, "helvetica neue", helvetica, sans-serif; padding: 0px; marg=
+in: 0px;'><div class=3D"es-wrapper-color" style=3D"background-color:#E4EBF5=
+;"><!--[if gte mso 9]>
+			<v:background xmlns:v=3D"urn:schemas-microsoft-com:vml" fill=3D"t">
+				<v:fill type=3D"tile" color=3D"#e4ebf5"></v:fill>
+			</v:background>
+		<![endif]--><table cellpadding=3D"0" cellspacing=3D"0" class=3D"es-wrappe=
+r" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:colla=
+pse;border-spacing:0px;padding:0;Margin:0;width:100%;height:100%;background=
+-repeat:repeat;background-position:center top;" width=3D"100%"><tbody><tr f=
+r-original-style=3D"border-collapse:collapse;" style=3D"border-collapse: co=
+llapse; user-select: none;"><td fr-original-style=3D"padding:0;Margin:0;" s=
+tyle=3D"padding: 0px; margin: 0px; user-select: none; border: 0px;" valign=
+=3D"top"><table align=3D"center" cellpadding=3D"0" cellspacing=3D"0" class=
+=3D"es-content" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-c=
+ollapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100=
+%;"><tbody><tr fr-original-style=3D"border-collapse:collapse;" style=3D"bor=
+der-collapse: collapse; user-select: none;"><td align=3D"center" fr-origina=
+l-style=3D"padding:0;Margin:0;" style=3D"padding: 0px; margin: 0px; user-se=
+lect: none; border: 0px;"><table align=3D"center" bgcolor=3D"#ffffff" cellp=
+adding=3D"0" cellspacing=3D"0" class=3D"es-content-body" style=3D"mso-table=
+-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0p=
+x;background-color:#FFFFFF;" width=3D"600"><tbody><tr fr-original-style=3D"=
+border-collapse:collapse;" style=3D"border-collapse: collapse; user-select:=
+ none;"><td align=3D"left" bgcolor=3D"#00213D" fr-original-style=3D"padding=
+:0;Margin:0;background-color:#00213D;" style=3D"padding: 0px; margin: 0px; =
+background-color: rgb(0, 33, 61); user-select: none; border: 0px;"><table c=
+ellpadding=3D"0" cellspacing=3D"0" style=3D"mso-table-lspace:0pt;mso-table-=
+rspace:0pt;border-collapse:collapse;border-spacing:0px;" width=3D"100%"><tb=
+ody><tr fr-original-style=3D"border-collapse:collapse;" style=3D"border-col=
+lapse: collapse; user-select: none;"><td align=3D"center" fr-original-style=
+=3D"padding:0;Margin:0;" style=3D"padding: 0px; margin: 0px; user-select: n=
+one; border: 0px;" valign=3D"top" width=3D"600"><table cellpadding=3D"0" ce=
+llspacing=3D"0" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-c=
+ollapse:collapse;border-spacing:0px;" width=3D"100%"><tbody><tr fr-original=
+-style=3D"border-collapse:collapse;" style=3D"border-collapse: collapse; us=
+er-select: none;"><td align=3D"center" fr-original-style=3D"padding:0;Margi=
+n:0;font-size:0px;" style=3D"padding: 0px; margin: 0px; font-size: 0px; use=
+r-select: none; border: 0px;"><img src=3D"https://seed-email-attachments-pr=
+oduction.s3.eu-west-1.amazonaws.com/2244d3d3-344c-4af7-9547-34c31c7106a6.pn=
+g" alt=3D"" style=3D"display: block; border: 0px none; outline: currentcolo=
+r none medium; text-decoration: none; height: 203px; cursor: pointer;" widt=
+h=3D"600" height=3D"203" fr-original-style=3D"display: block; border: 0px n=
+one; outline: currentcolor none medium; text-decoration: none; height: 203p=
+x;" fr-original-class=3D"adapt-img fr-draggable"></td></tr></tbody></table>=
+</td></tr></tbody></table></td></tr><tr fr-original-style=3D"border-collaps=
+e:collapse;" style=3D"border-collapse: collapse; user-select: none;"><td al=
+ign=3D"left" fr-original-style=3D"padding:0;Margin:0;padding-top:30px;paddi=
+ng-left:30px;padding-right:30px;" style=3D"padding: 30px 30px 0px; margin: =
+0px; user-select: none; border: 0px;"><table cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:c=
+ollapse;border-spacing:0px;" width=3D"100%"><tbody><tr fr-original-style=3D=
+"border-collapse:collapse;" style=3D"border-collapse: collapse; user-select=
+: none;"><td align=3D"center" fr-original-style=3D"padding:0;Margin:0;" sty=
+le=3D"padding: 0px; margin: 0px; user-select: none; border: 0px;" valign=3D=
+"top" width=3D"540"><table cellpadding=3D"0" cellspacing=3D"0" style=3D"mso=
+-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spac=
+ing:0px;" width=3D"100%"><tbody><tr fr-original-style=3D"border-collapse:co=
+llapse;" style=3D"border-collapse: collapse; user-select: none;"><td align=
+=3D"left" fr-original-style=3D"padding:0;Margin:0;padding-bottom:20px;" sty=
+le=3D"padding: 0px 0px 20px; margin: 0px; user-select: none; border: 0px;">=
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-size:32px;font-family:arial, 'helvetica=
+ neue', helvetica, sans-serif;line-height:48px;color:#222222;"><strong>Hell=
+o Simon!</strong></p></td></tr><tr fr-original-style=3D"border-collapse:col=
+lapse;" style=3D"border-collapse: collapse; user-select: none;"><td align=
+=3D"left" fr-original-style=3D"padding:0;Margin:0;padding-bottom:10px;" sty=
+le=3D"padding: 0px 0px 10px; margin: 0px; user-select: none; border: 0px;">=
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-size:14px;font-family:arial, 'helvetica=
+ neue', helvetica, sans-serif;line-height:24px;color:#4C4C4C;">Welcome to <=
+a fr-original-style=3D"-webkit-text-size-adjust:none;-ms-text-size-adjust:n=
+one;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helve=
+tica, sans-serif;font-size:14px;text-decoration:underline;color:#008ACE;lin=
+e-height:24px;" href=3D"http://careerslink.epam.com/ss/c/xQod6_fREurEz1toDB=
+ubEcKGrnYjO5FgL2l_wae60En9KoBZ96vix5KBqNXg0RDQvjzdS5QKbBJV6SSgZx3GkPuHrKDpz=
+MUfM7Ts_ERQ6QZrudxRV3g-bysDWlJHjBnunwRMBlavECcQntXRGDyXwQUT8xNg_pYVM984iTGY=
+2KUDzLtmRRavWO4QYZNQplJT9-wIBqv_vkZxrzcmRPM3yK3fBT-n2Sh8aULo07dR_DFiYEG5TJY=
+6NXkYty0WQWH3/3gg/WGatBPyJTziyo5zk733ZBA/h8/XpdnWrp9MxP1ma5ZSKDr1KFF8y_uNVf=
+Dd6uiCBnidbA" rel=3D"noopener noreferrer" style=3D'text-size-adjust: none; =
+font-family: arial, "helvetica neue", helvetica, sans-serif; font-size: 14p=
+x; text-decoration: underline; color: rgb(0, 138, 206); line-height: 24px; =
+user-select: auto;' target=3D"_blank">EPAM Anywhere</a>, an innovative plat=
+form for remote work.</p></td></tr><tr fr-original-style=3D"border-collapse=
+:collapse;" style=3D"border-collapse: collapse; user-select: none;"><td ali=
+gn=3D"left" fr-original-style=3D"padding:0;Margin:0;padding-bottom:10px;" s=
+tyle=3D"padding: 0px 0px 10px; margin: 0px; user-select: none; border: 0px;=
+"><p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:n=
+one;mso-line-height-rule:exactly;font-size:14px;font-family:arial, 'helveti=
+ca neue', helvetica, sans-serif;line-height:21px;color:#333333;">EPAM Anywh=
+ere isn&#39;t your typical job platform. It offers an <strong>accelerated r=
+ecruiting experience</strong> that changes the game of job interviews.</p><=
+/td></tr><tr fr-original-style=3D"border-collapse:collapse;" style=3D"borde=
+r-collapse: collapse; user-select: none;"><td align=3D"left" fr-original-st=
+yle=3D"padding:0;Margin:0;padding-bottom:5px;" style=3D"padding: 0px 0px 5p=
+x; margin: 0px; user-select: none; border: 0px;"><p style=3D"Margin:0;-webk=
+it-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exa=
+ctly;font-size:14px;font-family:arial, 'helvetica neue', helvetica, sans-se=
+rif;line-height:21px;color:#333333;">We&#39;re offering:</p></td></tr><tr f=
+r-original-style=3D"border-collapse:collapse;" style=3D"border-collapse: co=
+llapse; user-select: none;"><td align=3D"left" fr-original-style=3D"padding=
+:0;Margin:0;padding-bottom:30px;" style=3D"padding: 0px 0px 30px; margin: 0=
+px; user-select: none; border: 0px;"><ul><li style=3D"-webkit-text-size-adj=
+ust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:1=
+4px;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:=
+14px;Margin-bottom:15px;color:#333333;">Streamlined technical interviews</l=
+i><li style=3D"-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-=
+line-height-rule:exactly;font-size:14px;font-family:arial, 'helvetica neue'=
+, helvetica, sans-serif;line-height:14px;Margin-bottom:15px;color:#333333;"=
+>Automated assessment of your skill levels</li><li style=3D"-webkit-text-si=
+ze-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-=
+size:14px;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-h=
+eight:14px;Margin-bottom:15px;color:#333333;">Only necessary communication =
+and fast responses from our recruiters</li></ul></td></tr><tr fr-original-s=
+tyle=3D"border-collapse:collapse;" style=3D"border-collapse: collapse; user=
+-select: none;"><td align=3D"left" fr-original-style=3D"padding:0;Margin:0;=
+" style=3D"padding: 0px; margin: 0px; user-select: none; border: 0px;"><spa=
+n class=3D"es-button-border" style=3D"border-style:solid;border-color:#008A=
+CE;background:#008ACE none repeat scroll 0% 0%;border-width:0px;display:inl=
+ine-block;border-radius:0px;width:auto;"><a fr-original-class=3D"es-button"=
+ fr-original-style=3D"mso-style-priority:100 !important;text-decoration:non=
+e;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-r=
+ule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font=
+-size:14px;color:#FFFFFF;border-style:solid;border-color:#008ACE;border-wid=
+th:15px 40px;display:inline-block;background:#008ACE none repeat scroll 0% =
+0%;border-radius:0px;font-weight:bold;font-style:normal;line-height:17px;wi=
+dth:auto;text-align:center;" href=3D"http://careerslink.epam.com/ss/c/xQod6=
+_fREurEz1toDBubEcKGrnYjO5FgL2l_wae60En9KoBZ96vix5KBqNXg0RDQvjzdS5QKbBJV6SSg=
+Zx3GkPuHrKDpzMUfM7Ts_ERQ6QZrudxRV3g-bysDWlJHjBnunwRMBlavECcQntXRGDyXwQUT8xN=
+g_pYVM984iTGY2KUDzLtmRRavWO4QYZNQplJT9-wIBqv_vkZxrzcmRPM3yK3fBT-n2Sh8aULo07=
+dR_DFiYEG5TJY6NXkYty0WQWH3/3gg/WGatBPyJTziyo5zk733ZBA/h9/wRg5Tf-QHODbI351_4=
+W5ctsSWh2i4J9oHBentqkn6OA" rel=3D"noopener noreferrer" style=3D'text-decora=
+tion: none; text-size-adjust: none; font-family: arial, "helvetica neue", h=
+elvetica, sans-serif; font-size: 14px; color: rgb(255, 255, 255); border-st=
+yle: solid; border-color: rgb(0, 138, 206); border-width: 15px 40px; displa=
+y: inline-block; background: none 0% 0% repeat scroll rgb(0, 138, 206); bor=
+der-radius: 0px; font-weight: bold; font-style: normal; line-height: 17px; =
+width: auto; text-align: center; user-select: auto;' target=3D"_blank">COMP=
+LETE NEXT STEPS IN YOUR APPLICATION</a></span></td></tr><tr fr-original-sty=
+le=3D"border-collapse:collapse;" style=3D"border-collapse: collapse; user-s=
+elect: none;"><td align=3D"center" fr-original-style=3D"padding:0;Margin:0;=
+padding-top:40px;padding-bottom:40px;font-size:0;" style=3D"padding: 40px 0=
+px; margin: 0px; font-size: 0px; user-select: none; border: 0px;"><table bo=
+rder=3D"0" cellpadding=3D"0" cellspacing=3D"0" height=3D"100%" style=3D"mso=
+-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spac=
+ing:0px;" width=3D"100%"><tbody><tr fr-original-style=3D"border-collapse:co=
+llapse;" style=3D"border-collapse: collapse; user-select: none;"><td fr-ori=
+ginal-style=3D"padding:0;Margin:0px 0px 0px 0px;border-bottom:1px solid #CC=
+CCCC;background:none;height:1px;width:100%;margin:0px;" style=3D"padding: 0=
+px; border-width: 0px 0px 1px; border-bottom-style: solid; border-bottom-co=
+lor: rgb(204, 204, 204); background: none; height: 1px; width: 100%; margin=
+: 0px; user-select: none; border-top-style: initial; border-right-style: in=
+itial; border-left-style: initial; border-top-color: initial; border-right-=
+color: initial; border-left-color: initial; border-image: initial;"><br></t=
+d></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table>=
+</td></tr><tr fr-original-style=3D"border-collapse:collapse;" style=3D"bord=
+er-collapse: collapse; user-select: none;"><td align=3D"left" fr-original-s=
+tyle=3D"padding:0;Margin:0;padding-left:30px;padding-right:30px;" style=3D"=
+padding: 0px 30px; margin: 0px; user-select: none; border: 0px;"><table cel=
+lpadding=3D"0" cellspacing=3D"0" style=3D"mso-table-lspace:0pt;mso-table-rs=
+pace:0pt;border-collapse:collapse;border-spacing:0px;" width=3D"100%"><tbod=
+y><tr fr-original-style=3D"border-collapse:collapse;" style=3D"border-colla=
+pse: collapse; user-select: none;"><td align=3D"center" fr-original-style=
+=3D"padding:0;Margin:0;" style=3D"padding: 0px; margin: 0px; user-select: n=
+one; border: 0px;" valign=3D"top" width=3D"540"><table cellpadding=3D"0" ce=
+llspacing=3D"0" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-c=
+ollapse:collapse;border-spacing:0px;" width=3D"100%"><tbody><tr fr-original=
+-style=3D"border-collapse:collapse;" style=3D"border-collapse: collapse; us=
+er-select: none;"><td align=3D"center" fr-original-style=3D"padding:0;Margi=
+n:0;padding-bottom:25px;font-size:0px;" style=3D"padding: 0px 0px 25px; mar=
+gin: 0px; font-size: 0px; user-select: none; border: 0px;"><img src=3D"http=
+s://fbuefo.stripocdn.email/content/guids/CABINET_abca59f66c2deb63c2a4201e7b=
+51cb8a/images/92881592820053593.png" alt=3D"Personal skill manager" style=
+=3D"display: block; border: 0px none; outline: currentcolor none medium; te=
+xt-decoration: none; cursor: pointer;" title=3D"Personal skill manager" wid=
+th=3D"540" height=3D"300" fr-original-style=3D"display: block; border: 0px =
+none; outline: currentcolor none medium; text-decoration: none;" fr-origina=
+l-class=3D"fr-draggable"></td></tr><tr fr-original-style=3D"border-collapse=
+:collapse;" style=3D"border-collapse: collapse; user-select: none;"><td ali=
+gn=3D"left" fr-original-style=3D"padding:0;Margin:0;padding-bottom:15px;" s=
+tyle=3D"padding: 0px 0px 15px; margin: 0px; user-select: none; border: 0px;=
+"><p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:n=
+one;mso-line-height-rule:exactly;font-size:24px;font-family:arial, 'helveti=
+ca neue', helvetica, sans-serif;line-height:29px;color:#222222;"><strong>Pe=
+rsonal skill manager</strong></p></td></tr><tr fr-original-style=3D"border-=
+collapse:collapse;" style=3D"border-collapse: collapse; user-select: none;"=
+><td align=3D"left" fr-original-style=3D"padding:0;Margin:0;padding-bottom:=
+10px;" style=3D"padding: 0px 0px 10px; margin: 0px; user-select: none; bord=
+er: 0px;"><p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-=
+adjust:none;mso-line-height-rule:exactly;font-size:14px;font-family:arial, =
+'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;">Ev=
+en working remotely, you can boost your skills and pursue ambitious career =
+goals. We&#39;ll put you in touch with a mentor that&#39;ll help you build =
+your professional path and accelerate your career development.</p></td></tr=
+><tr fr-original-style=3D"border-collapse:collapse;" style=3D"border-collap=
+se: collapse; user-select: none;"><td align=3D"left" fr-original-style=3D"p=
+adding:0;Margin:0;padding-bottom:40px;" style=3D"padding: 0px 0px 40px; mar=
+gin: 0px; user-select: none; border: 0px;"><br></td></tr></tbody></table></=
+td></tr></tbody></table></td></tr><tr fr-original-style=3D"border-collapse:=
+collapse;" style=3D"border-collapse: collapse; user-select: none;"><td alig=
+n=3D"left" fr-original-style=3D"padding:0;Margin:0;padding-left:30px;paddin=
+g-right:30px;" style=3D"padding: 0px 30px; margin: 0px; user-select: none; =
+border: 0px;"><table cellpadding=3D"0" cellspacing=3D"0" style=3D"mso-table=
+-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0p=
+x;" width=3D"100%"><tbody><tr fr-original-style=3D"border-collapse:collapse=
+;" style=3D"border-collapse: collapse; user-select: none;"><td align=3D"cen=
+ter" fr-original-style=3D"padding:0;Margin:0;" style=3D"padding: 0px; margi=
+n: 0px; user-select: none; border: 0px;" valign=3D"top" width=3D"540"><tabl=
+e cellpadding=3D"0" cellspacing=3D"0" style=3D"mso-table-lspace:0pt;mso-tab=
+le-rspace:0pt;border-collapse:collapse;border-spacing:0px;" width=3D"100%">=
+<tbody><tr fr-original-style=3D"border-collapse:collapse;" style=3D"border-=
+collapse: collapse; user-select: none;"><td align=3D"center" fr-original-st=
+yle=3D"padding:0;Margin:0;padding-bottom:25px;font-size:0px;" style=3D"padd=
+ing: 0px 0px 25px; margin: 0px; font-size: 0px; user-select: none; border: =
+0px;"><img src=3D"https://fbuefo.stripocdn.email/content/guids/CABINET_abca=
+59f66c2deb63c2a4201e7b51cb8a/images/42731592820243942.png" alt=3D"Learning =
+opportunities" style=3D"display: block; border: 0px none; outline: currentc=
+olor none medium; text-decoration: none; cursor: pointer;" title=3D"Learnin=
+g opportunities" width=3D"540" height=3D"300" fr-original-style=3D"display:=
+ block; border: 0px none; outline: currentcolor none medium; text-decoratio=
+n: none;" fr-original-class=3D"fr-draggable"></td></tr><tr fr-original-styl=
+e=3D"border-collapse:collapse;" style=3D"border-collapse: collapse; user-se=
+lect: none;"><td align=3D"left" fr-original-style=3D"padding:0;Margin:0;pad=
+ding-bottom:15px;" style=3D"padding: 0px 0px 15px; margin: 0px; user-select=
+: none; border: 0px;"><p style=3D"Margin:0;-webkit-text-size-adjust:none;-m=
+s-text-size-adjust:none;mso-line-height-rule:exactly;font-size:24px;font-fa=
+mily:arial, 'helvetica neue', helvetica, sans-serif;line-height:29px;color:=
+#222222;"><strong>Learning opportunities</strong></p></td></tr><tr fr-origi=
+nal-style=3D"border-collapse:collapse;" style=3D"border-collapse: collapse;=
+ user-select: none;"><td align=3D"left" fr-original-style=3D"padding:0;Marg=
+in:0;padding-bottom:10px;" style=3D"padding: 0px 0px 10px; margin: 0px; use=
+r-select: none; border: 0px;"><p style=3D"Margin:0;-webkit-text-size-adjust=
+:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:14px=
+;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21p=
+x;color:#333333;">Join EPAM Anywhere and get an access to with 5,000+ onlin=
+e internal courses, improve your English language, and read books from our =
+internal library!</p></td></tr><tr fr-original-style=3D"border-collapse:col=
+lapse;" style=3D"border-collapse: collapse; user-select: none;"><td align=
+=3D"left" fr-original-style=3D"padding:0;Margin:0;padding-bottom:40px;" sty=
+le=3D"padding: 0px 0px 40px; margin: 0px; user-select: none; border: 0px;">=
+<br></td></tr></tbody></table></td></tr></tbody></table></td></tr><tr fr-or=
+iginal-style=3D"border-collapse:collapse;" style=3D"border-collapse: collap=
+se; user-select: none;"><td align=3D"left" fr-original-style=3D"padding:0;M=
+argin:0;padding-left:30px;padding-right:30px;" style=3D"padding: 0px 30px; =
+margin: 0px; user-select: none; border: 0px;"><table cellpadding=3D"0" cell=
+spacing=3D"0" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-col=
+lapse:collapse;border-spacing:0px;" width=3D"100%"><tbody><tr fr-original-s=
+tyle=3D"border-collapse:collapse;" style=3D"border-collapse: collapse; user=
+-select: none;"><td align=3D"center" fr-original-style=3D"padding:0;Margin:=
+0;" style=3D"padding: 0px; margin: 0px; user-select: none; border: 0px;" va=
+lign=3D"top" width=3D"540"><table cellpadding=3D"0" cellspacing=3D"0" style=
+=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;bord=
+er-spacing:0px;" width=3D"100%"><tbody><tr fr-original-style=3D"border-coll=
+apse:collapse;" style=3D"border-collapse: collapse; user-select: none;"><td=
+ align=3D"center" fr-original-style=3D"padding:0;Margin:0;padding-bottom:25=
+px;font-size:0px;" style=3D"padding: 0px 0px 25px; margin: 0px; font-size: =
+0px; user-select: none; border: 0px;"><img src=3D"https://fbuefo.stripocdn.=
+email/content/guids/CABINET_abca59f66c2deb63c2a4201e7b51cb8a/images/4921592=
+820259396.png" alt=3D"Access to EPAM communities" style=3D"display: block; =
+border: 0px none; outline: currentcolor none medium; text-decoration: none;=
+ cursor: pointer;" title=3D"Access to EPAM communities" width=3D"540" heigh=
+t=3D"300" fr-original-style=3D"display: block; border: 0px none; outline: c=
+urrentcolor none medium; text-decoration: none;" fr-original-class=3D"fr-dr=
+aggable"></td></tr><tr fr-original-style=3D"border-collapse:collapse;" styl=
+e=3D"border-collapse: collapse; user-select: none;"><td align=3D"left" fr-o=
+riginal-style=3D"padding:0;Margin:0;padding-bottom:15px;" style=3D"padding:=
+ 0px 0px 15px; margin: 0px; user-select: none; border: 0px;"><p style=3D"Ma=
+rgin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-hei=
+ght-rule:exactly;font-size:24px;font-family:arial, 'helvetica neue', helvet=
+ica, sans-serif;line-height:29px;color:#222222;"><strong>Access to EPAM com=
+munities</strong></p></td></tr><tr fr-original-style=3D"border-collapse:col=
+lapse;" style=3D"border-collapse: collapse; user-select: none;"><td align=
+=3D"left" fr-original-style=3D"padding:0;Margin:0;padding-bottom:10px;" sty=
+le=3D"padding: 0px 0px 10px; margin: 0px; user-select: none; border: 0px;">=
+<p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:non=
+e;mso-line-height-rule:exactly;font-size:14px;font-family:arial, 'helvetica=
+ neue', helvetica, sans-serif;line-height:21px;color:#333333;">EPAM Anywher=
+e is a community of top IT talents. We invite you to take part in exciting =
+projects, share expertise with professionals from various domains, and be r=
+ecognized by your peers!</p></td></tr><tr fr-original-style=3D"border-colla=
+pse:collapse;" style=3D"border-collapse: collapse; user-select: none;"><td =
+align=3D"left" fr-original-style=3D"padding:0;Margin:0;padding-bottom:40px;=
+" style=3D"padding: 0px 0px 40px; margin: 0px; user-select: none; border: 0=
+px;"><br></td></tr></tbody></table></td></tr></tbody></table></td></tr><tr =
+fr-original-style=3D"border-collapse:collapse;" style=3D"border-collapse: c=
+ollapse; user-select: none;"><td align=3D"left" fr-original-style=3D"paddin=
+g:0;Margin:0;padding-left:30px;padding-right:30px;" style=3D"padding: 0px 3=
+0px; margin: 0px; user-select: none; border: 0px;"><table cellpadding=3D"0"=
+ cellspacing=3D"0" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;borde=
+r-collapse:collapse;border-spacing:0px;" width=3D"100%"><tbody><tr fr-origi=
+nal-style=3D"border-collapse:collapse;" style=3D"border-collapse: collapse;=
+ user-select: none;"><td align=3D"center" fr-original-style=3D"padding:0;Ma=
+rgin:0;" style=3D"padding: 0px; margin: 0px; user-select: none; border: 0px=
+;" valign=3D"top" width=3D"540"><table cellpadding=3D"0" cellspacing=3D"0" =
+style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse=
+;border-spacing:0px;" width=3D"100%"><tbody><tr fr-original-style=3D"border=
+-collapse:collapse;" style=3D"border-collapse: collapse; user-select: none;=
+"><td align=3D"center" fr-original-style=3D"padding:0;Margin:0;padding-bott=
+om:25px;font-size:0px;" style=3D"padding: 0px 0px 25px; margin: 0px; font-s=
+ize: 0px; user-select: none; border: 0px;"><img src=3D"https://fbuefo.strip=
+ocdn.email/content/guids/CABINET_abca59f66c2deb63c2a4201e7b51cb8a/images/89=
+41592820299293.png" alt=3D"Corporate benefit" style=3D"display: block; bord=
+er: 0px none; outline: currentcolor none medium; text-decoration: none; cur=
+sor: pointer;" title=3D"Corporate benefit" width=3D"540" height=3D"300" fr-=
+original-style=3D"display: block; border: 0px none; outline: currentcolor n=
+one medium; text-decoration: none;" fr-original-class=3D"fr-draggable"></td=
+></tr><tr fr-original-style=3D"border-collapse:collapse;" style=3D"border-c=
+ollapse: collapse; user-select: none;"><td align=3D"left" fr-original-style=
+=3D"padding:0;Margin:0;padding-bottom:15px;" style=3D"padding: 0px 0px 15px=
+; margin: 0px; user-select: none; border: 0px;"><p style=3D"Margin:0;-webki=
+t-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exac=
+tly;font-size:24px;font-family:arial, 'helvetica neue', helvetica, sans-ser=
+if;line-height:29px;color:#222222;"><strong>Corporate benefits</strong></p>=
+</td></tr><tr fr-original-style=3D"border-collapse:collapse;" style=3D"bord=
+er-collapse: collapse; user-select: none;"><td align=3D"left" fr-original-s=
+tyle=3D"padding:0;Margin:0;padding-bottom:10px;" style=3D"padding: 0px 0px =
+10px; margin: 0px; user-select: none; border: 0px;"><p style=3D"Margin:0;-w=
+ebkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:=
+exactly;font-size:14px;font-family:arial, 'helvetica neue', helvetica, sans=
+-serif;line-height:21px;color:#333333;">As a global company we provide a lo=
+t of benefits and discounts of being an EPAMer. Working remotely, you&#39;l=
+l get access to a discount program, referral program, EPAM&#39;s offices an=
+d co-working spaces and more.</p></td></tr><tr fr-original-style=3D"border-=
+collapse:collapse;" style=3D"border-collapse: collapse; user-select: none;"=
+><td align=3D"left" fr-original-style=3D"padding:0;Margin:0;padding-bottom:=
+40px;" style=3D"padding: 0px 0px 40px; margin: 0px; user-select: none; bord=
+er: 0px;"><br></td></tr><tr fr-original-style=3D"border-collapse:collapse;"=
+ style=3D"border-collapse: collapse; user-select: none;"><td align=3D"left"=
+ fr-original-style=3D"padding:0;Margin:0;" style=3D"padding: 0px; margin: 0=
+px; user-select: none; border: 0px;"><p style=3D"Margin:0;-webkit-text-size=
+-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-si=
+ze:14px;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-hei=
+ght:21px;color:#333333;">Check out how<a fr-original-style=3D"-webkit-text-=
+size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;fon=
+t-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:14px;text=
+-decoration:underline;color:#008ACE;" href=3D"http://careerslink.epam.com/s=
+s/c/xQod6_fREurEz1toDBubEcKGrnYjO5FgL2l_wae60En6MQlcK34tUApMG6FE-V0UX2L0ZGH=
+bdBvIOsEXqtJziJfaEkR5yWlcnrP33yjlB95e0f4Id-85eV6F7e60puPDi2nD62YBap3GHQWcFD=
+aJWFYYesWx4vasopoHwwrHu0zfXlByO5HEtDr7e_DuaOqw/3gg/WGatBPyJTziyo5zk733ZBA/h=
+10/W5uuuDREvWde3bV-VT0uheV-L0dL0c1LkeLlbUWZ6Ko" rel=3D"noopener noreferrer"=
+ style=3D'text-size-adjust: none; font-family: arial, "helvetica neue", hel=
+vetica, sans-serif; font-size: 14px; text-decoration: underline; color: rgb=
+(0, 138, 206); user-select: auto;' target=3D"_blank">&nbsp;EPAM Anywhere jo=
+bs</a> and apply for hot remote jobs!</p></td></tr></tbody></table></td></t=
+r></tbody></table></td></tr><tr fr-original-style=3D"border-collapse:collap=
+se;" style=3D"border-collapse: collapse; user-select: none;"><td align=3D"l=
+eft" fr-original-style=3D"Margin:0;padding-left:30px;padding-right:30px;pad=
+ding-top:40px;padding-bottom:40px;" style=3D"margin: 0px; padding: 40px 30p=
+x; user-select: none; border: 0px;"><table cellpadding=3D"0" cellspacing=3D=
+"0" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:coll=
+apse;border-spacing:0px;" width=3D"100%"><tbody><tr fr-original-style=3D"bo=
+rder-collapse:collapse;" style=3D"border-collapse: collapse; user-select: n=
+one;"><td align=3D"center" fr-original-style=3D"padding:0;Margin:0;" style=
+=3D"padding: 0px; margin: 0px; user-select: none; border: 0px;" valign=3D"t=
+op" width=3D"540"><table cellpadding=3D"0" cellspacing=3D"0" style=3D"mso-t=
+able-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacin=
+g:0px;" width=3D"100%"><tbody><tr fr-original-style=3D"border-collapse:coll=
+apse;" style=3D"border-collapse: collapse; user-select: none;"><td align=3D=
+"left" fr-original-style=3D"padding:0;Margin:0;padding-top:5px;padding-bott=
+om:20px;" style=3D"padding: 5px 0px 20px; margin: 0px; user-select: none; b=
+order: 0px;"><p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-si=
+ze-adjust:none;mso-line-height-rule:exactly;font-size:14px;font-family:aria=
+l, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;"=
+><br></p></td></tr></tbody></table></td></tr></tbody></table></td></tr><tr =
+fr-original-style=3D"border-collapse:collapse;" style=3D"border-collapse: c=
+ollapse; user-select: none;"><td align=3D"left" bgcolor=3D"#222222" fr-orig=
+inal-style=3D"Margin:0;padding-top:25px;padding-bottom:25px;padding-left:30=
+px;padding-right:30px;background-color:#222222;" style=3D"margin: 0px; padd=
+ing: 25px 30px; background-color: rgb(34, 34, 34); user-select: none; borde=
+r: 0px;"><table cellpadding=3D"0" cellspacing=3D"0" style=3D"mso-table-lspa=
+ce:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;" w=
+idth=3D"100%"><tbody><tr fr-original-style=3D"border-collapse:collapse;" st=
+yle=3D"border-collapse: collapse; user-select: none;"><td align=3D"center" =
+fr-original-style=3D"padding:0;Margin:0;" style=3D"padding: 0px; margin: 0p=
+x; user-select: none; border: 0px;" valign=3D"top" width=3D"540"><table cel=
+lpadding=3D"0" cellspacing=3D"0" style=3D"mso-table-lspace:0pt;mso-table-rs=
+pace:0pt;border-collapse:collapse;border-spacing:0px;" width=3D"100%"><tbod=
+y><tr fr-original-style=3D"border-collapse:collapse;" style=3D"border-colla=
+pse: collapse; user-select: none;"><td align=3D"center" fr-original-style=
+=3D"padding:0;Margin:0;padding-bottom:15px;" style=3D"padding: 0px 0px 15px=
+; margin: 0px; user-select: none; border: 0px;"><p style=3D"Margin:0;-webki=
+t-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exac=
+tly;font-size:12px;font-family:arial, 'helvetica neue', helvetica, sans-ser=
+if;line-height:18px;color:#FFFFFF;">Email <a fr-original-style=3D"-webkit-t=
+ext-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly=
+;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:12px;=
+text-decoration:underline;color:#5CB8E5;" href=3D"mailto:supportme@epam.com=
+?subject=3DEPAM%20Anywhere%20support" style=3D'text-size-adjust: none; font=
+-family: arial, "helvetica neue", helvetica, sans-serif; font-size: 12px; t=
+ext-decoration: underline; color: rgb(92, 184, 229); user-select: auto;' ta=
+rget=3D"_blank">Support</a> in case of any questions</p></td></tr><tr fr-or=
+iginal-style=3D"border-collapse:collapse;" style=3D"border-collapse: collap=
+se; user-select: none;"><td align=3D"center" fr-original-style=3D"padding:0=
+;Margin:0;" style=3D"padding: 0px; margin: 0px; user-select: none; border: =
+0px;"><p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adju=
+st:none;mso-line-height-rule:exactly;font-size:8px;font-family:arial, 'helv=
+etica neue', helvetica, sans-serif;line-height:12px;color:#B2B2B2;">&copy; =
+2021 EPAM Systems, Inc. All Rights Reserved</p></td></tr></tbody></table></=
+td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table=
+></td></tr></tbody></table></div><img src=3D"http://careerslink.epam.com/ss=
+/o/WvlWcu76BLOppwwoA48_Rw/3gg/WGatBPyJTziyo5zk733ZBA/ho.gif" alt=3D"" width=
+=3D"1" height=3D"1" border=3D"0" style=3D"height:1px !important;width:1px !=
+important;border-width:0 !important;margin-top:0 !important;margin-bottom:0=
+ !important;margin-right:0 !important;margin-left:0 !important;padding-top:=
+0 !important;padding-bottom:0 !important;padding-right:0 !important;padding=
+-left:0 !important;"/></body></html><span style=3D"font-size: 9px;">Don=E2=
+=80=99t want to receive these e-mails? <a clicktracking=3Doff href=3D"http:=
+//beamery.com/unsubscribe/521c1e9661e6a4e81ca32b6299317e813354f37563109ade7=
+719a466882c284fc9b616b6da7ad3d71c68b9ab3e80b087e6835391987c2343ee829be78587=
+a8e23553ab9e6773595cf427de11291d986c9341c29466cce6c7c1c06775e93b677551feea4=
+ea9d1e61dca3b52e8365f2a8e6fa400e08a05b19b639006beb43c5e31c38d7d71c33db92492=
+37fc5005d110f0ef71cf333a089dedff4e60d6890f63034c66984c5e1831b1c8b40bb46c530=
+aec38db116e564f6bce7bd122e1dc3cf07486fb283c482b261a2690aa7c8c69fa04e2b2d3e3=
+972ee701d5c295fd790344c85bb69dbdb1ba/false" target=3D"_blank">Click to unsu=
+bscribe</a></span>=20
+ <style> @media print{ #_two50 { background-image:url('http://250okanalytic=
+s.beamery.com/ea/YmJu51wZvF/?t=3Dp&e=3Dsn.renauld@gmail.com&c=3D67b4fb7191b=
+6459fa911:7f922c2f-d988-4ac8-b42e-4ac028e0ca5b:aLnUQRGhXY'); } } blockquote=
+ #_two50, #mailContainerBody #_two50, div.OutlookMessageHeader, table.moz-e=
+mail-headers-table { background-image:url('http://250okanalytics.beamery.co=
+m/ea/YmJu51wZvF/?t=3Df&e=3Dsn.renauld@gmail.com&c=3D67b4fb7191b6459fa911:7f=
+922c2f-d988-4ac8-b42e-4ac028e0ca5b:aLnUQRGhXY'); } </style> <div id=3D'_two=
+50'></div> <img id=3D'_two50_img' src=3D'http://250okanalytics.beamery.com/=
+ea/YmJu51wZvF/?e=3Dsn.renauld@gmail.com&c=3D67b4fb7191b6459fa911:7f922c2f-d=
+988-4ac8-b42e-4ac028e0ca5b:aLnUQRGhXY' width=3D'1' height=3D'1' style=3D'ma=
+rgin:0 !important; padding:0 !important; border:0 !important; height:1px !i=
+mportant; width:1px !important;' />
+--4fa219c823acd226253f7be915cd4b1a815001cfc4c0ba2839d5f077f41d--
+

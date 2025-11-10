@@ -1,0 +1,964 @@
+X-GM-THRID: 1827608447904947600
+X-Gmail-Labels: Archived,Opened,Category Updates
+Delivered-To: sn.renauld@gmail.com
+Received: by 2002:a17:906:478d:b0:ac5:432a:b3c7 with SMTP id
+ cw13csp2016276ejc;
+        Tue, 25 Mar 2025 15:53:57 -0700 (PDT)
+X-Google-Smtp-Source: 
+ AGHT+IEA9zxhEKCxvcpX5eKRFCelOsvFx51f/Tls42+SUJ/HWc/ypLibGbxxoWpYvv+roWrHZqa1
+X-Received: by 2002:a17:90b:2dc7:b0:2ee:d371:3227 with SMTP id
+ 98e67ed59e1d1-3030fea3935mr34495375a91.17.1742943237256;
+        Tue, 25 Mar 2025 15:53:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1742943237; cv=none;
+        d=google.com; s=arc-20240605;
+        b=JX27dY87EsB6A7WMMHUuZcGym09u0ju6a5ObFyW4s8bSGxsQcd5ipwAKsMWItb44Nh
+         U6FBhD8jmUaam2I4ICb5N9Ud9P6oKVuJ0lGoC7IFlV/C1ArgXcWS8l9mkhO8DPTAXHDM
+         3vBV1VUwPji4+sdKLf0QSjL8ON43a+wmIb95Z05jGDvhPt6JwPuequO3XLaPQ2OG6lM+
+         1bDPV/l5eI25fQiQCFMwaBhkkrfJQCy4vLcNu2LTSzPC8zwZLOC1R/xg3gJlhlxwZRcq
+         9RJVh7X+3GvGWZAfD/aqVMFhjw/EWNGPmJzKGOOE/vz5lQIpcbe9ughvpIFYdFH68fEQ
+         9veA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605;
+        h=to:reply-to:subject:message-id:mime-version:from:date
+         :dkim-signature:dkim-signature;
+        bh=eQ1MrHPDANP40aHw0EewEDQv3LDTBEPRCYCUmf9p9Lg=;
+        fh=SVrWua73g93ud+HNnwqOPFYXv7xTIrWpmG8uVXL4iuw=;
+        b=bSZ3H0WCrmuYlSmp3ulNZOz/rp6tbjOV2S0trtJA60t7iH/E1EODxCnwcnLyIqt1zI
+         upOuQBo5j2f6sGi/j+1c5RZk3vOwNwBwL7DkeGu1TgVB5YxCAYWRMXbWpTUkg4XququQ
+         d6h5TvDhWERySD+bR/lWs/ApdPQbXjyeBBNPrFdVsKgYJG+NfDEjGyyO2VpfUzGt0t62
+         Zrk/ERbPjg+5wjo6OFCLWGid7cati91dt1slV/fmZFkALx8O3wuzog+CbnXFUhjSX1xh
+         9yn4l7uK7930Z18u8DidMwuqmU4fxKVd7TVcEwBdvqzevJZ1cVBpgP8t8ZhYkL6Fgpst
+         i3wQ==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@figma.com header.s=sg header.b=0Vx+HQ7I;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=z1mpUxc1;
+       spf=pass (google.com: domain of
+ bounces+3302489-c5c1-sn.renauld=gmail.com@email.figma.com designates
+ 149.72.216.165 as permitted sender)
+ smtp.mailfrom="bounces+3302489-c5c1-sn.renauld=gmail.com@email.figma.com";
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=figma.com
+Return-Path: <bounces+3302489-c5c1-sn.renauld=gmail.com@email.figma.com>
+Received: from wrqvdvxr.outbound-mail.sendgrid.net
+ (wrqvdvxr.outbound-mail.sendgrid.net. [149.72.216.165])
+        by mx.google.com with ESMTPS id
+ 98e67ed59e1d1-3030f5b38cbsi16259023a91.42.2025.03.25.15.53.56
+        for <sn.renauld@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 Mar 2025 15:53:57 -0700 (PDT)
+Received-SPF: pass (google.com: domain of
+ bounces+3302489-c5c1-sn.renauld=gmail.com@email.figma.com designates
+ 149.72.216.165 as permitted sender) client-ip=149.72.216.165;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@figma.com header.s=sg header.b=0Vx+HQ7I;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=z1mpUxc1;
+       spf=pass (google.com: domain of
+ bounces+3302489-c5c1-sn.renauld=gmail.com@email.figma.com designates
+ 149.72.216.165 as permitted sender)
+ smtp.mailfrom="bounces+3302489-c5c1-sn.renauld=gmail.com@email.figma.com";
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=figma.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=figma.com;
+	h=content-type:from:mime-version:subject:reply-to:to:cc:content-type:
+	from:subject:to;
+	s=sg; bh=eQ1MrHPDANP40aHw0EewEDQv3LDTBEPRCYCUmf9p9Lg=;
+	b=0Vx+HQ7Ixf2ag5u2fg/Cll24ydzb0ZJ4qEmpE/d6QM/+mk/UD4xqxOVwjIDKtv+92a7L
+	AMrEl1R683shAfa1GseDYXVb8HrYLqUtLgMpnsHO7X+F4IWdF7eviAhU/Q8DhzfeZBK0gV
+	kEmAd5LGO794XDUyP1+RMRQ/BOQdnJ4lM=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendgrid.info;
+	h=content-type:from:mime-version:subject:reply-to:to:cc:content-type:
+	from:subject:to;
+	s=smtpapi; bh=eQ1MrHPDANP40aHw0EewEDQv3LDTBEPRCYCUmf9p9Lg=;
+	b=z1mpUxc10AkE2/YB2npulRECDNaxuyZsNbdJr0QCmcEIWKedKR/UJizi59e/skEi+FSD
+	i3ujuNBoGw3xWGAWroDaaVCun2Up250gKhd5Eko46iR7qkcUY6YXXDk0O3s8qeXJ9pQBLc
+	O5nf5zaSsZ2iqaNxGEqAhDrp99sUmsIg4=
+Received: by recvd-56b5bc89b5-nvk6c with SMTP id
+ recvd-56b5bc89b5-nvk6c-1-67E33403-3
+	2025-03-25 22:53:55.02569965 +0000 UTC m=+11323912.196625702
+Received: from MzMwMjQ4OQ (unknown)
+	by geopod-ismtpd-13 (SG) with HTTP
+	id SyKjZRQ_RUy56K0QXk3D6g
+	Tue, 25 Mar 2025 22:53:54.952 +0000 (UTC)
+Content-Type: multipart/alternative;
+ boundary=b94a7e2bbc234458d82c4ea16aca05468372a52903e6aec36d953f2a661b
+Date: Tue, 25 Mar 2025 22:53:55 +0000 (UTC)
+From: Figma <comments-Om0AxIko2GhxVJrbmvlD44@email.figma.com>
+Mime-Version: 1.0
+Message-ID: <SyKjZRQ_RUy56K0QXk3D6g@geopod-ismtpd-13>
+Subject: 2 new comments in COUCOU - UIX Design
+Reply-To: Figma <no-reply@figma.com>
+X-SG-EID: 
+ =?us-ascii?Q?u001=2Eziets0RKxs2VeerSR3QrieaIwaAsa5=2FEwl73j6TJLv16=2F=2FkrmmqJ9Fete?=
+ =?us-ascii?Q?tb7jgNKeL9zBJ2ICh13rHu9pM1WxU7qa9nZ4AR0?=
+ =?us-ascii?Q?0k46dyPj1as0aIg+WpctMBy6EZfEkY8gSPHxpPj?=
+ =?us-ascii?Q?y54bI7QaccmwFW8+bW1un8YvObdlRFU=2Fcshjr+L?=
+ =?us-ascii?Q?A0ukRMrH5Sa6QA8vkFaWgs6FQIKWTW9qslY6Rzm?=
+ =?us-ascii?Q?IJbz2Id7kx7qjTQbTVaFbm=2FSVsCSvG4CzHLhco+?=
+ =?us-ascii?Q?eKCgUXxp1gkjPzZ3ZvAU=2F9TuLw=3D=3D?=
+X-SG-ID: 
+ =?us-ascii?Q?u001=2ESdBcvi+Evd=2FbQef8eZF3Bg5oJpzZaiSsfs9wkQyniAraLz3x2n4xuBeHt?=
+ =?us-ascii?Q?O+CJA7AF4kgvh4NabIqRIYg1B3+uVI019MicB=2F4?=
+ =?us-ascii?Q?J6UpjwmILgMlhScajJQw4ZX=2FTwG1hE0T5il1MOb?=
+ =?us-ascii?Q?15b3HrK+BkcoxNjr9UzJrSiQgYh3KNZnV3VmJjH?=
+ =?us-ascii?Q?c8oWE5CMFT+NKZvs6Ws8e9Hbu8f=2FvykSXy2XqSH?=
+ =?us-ascii?Q?HL6bSutKnLZW20FneVxc4AoZtuHnTMDNFbe222J?= =?us-ascii?Q?W0ab?=
+To: "Simon Renauld (Figma)" <sn.renauld@gmail.com>
+X-Entity-ID: u001.5O/wue/x2VjQS58QuiIxZg==
+
+--b94a7e2bbc234458d82c4ea16aca05468372a52903e6aec36d953f2a661b
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0
+
+=20=
+
+--b94a7e2bbc234458d82c4ea16aca05468372a52903e6aec36d953f2a661b
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=utf-8
+Mime-Version: 1.0
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www=
+.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang=3D"en" lang=3D"en" xmlns=3D"http://www.w3.org/1999/xhtml" xm=
+lns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-microsoft-co=
+m:office:office">
+  <head>
+    <title>Figma</title>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8=
+">
+    <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=
+=3D1">
+    <meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3DEdge">
+    <meta name=3D"format-detection" content=3D"telephone=3Dno, date=3Dno, a=
+ddress=3Dno, email=3Dno">
+    <meta name=3D"x-apple-disable-message-reformatting">
+    <meta name=3D"color-scheme" content=3D"light dark">
+    <meta name=3D"supported-color-schemes" content=3D"light dark">
+    <style type=3D"text/css">
+      /*<![CDATA[*/
+      :root {
+        color-scheme: light dark;
+        supported-color-schemes: light dark;
+      }
+      /*]]>*/
+    </style>
+    <style type=3D"text/css">
+      /*<![CDATA[*/
+      @font-face {
+        font-family: 'Whyte';
+        font-style: normal;
+        font-weight: normal;
+        src: /*url(.eot?#iefix) format('embedded-opentype'),
+        url(.woff2) format('woff2'),
+        url(.ttf) format('truetype'),*/
+        url(https://static.figma.com/uploads/9254519927cf4912e61627442d7ab7=
+a5a9226581.woff) format('woff');
+        mso-font-alt: 'Arial';
+      }
+
+      h1{font-size: 26px; line-height:32px; font-family:'Whyte', Helvetica,=
+ Arial, sans-serif; color:#000000; text-align: center; font-weight: normal;=
+ margin: 0;}
+      h2{font-size: 20px; line-height:28px; font-family:'Whyte', Helvetica,=
+ Arial, sans-serif; color:#000000; text-align: center; font-weight: normal;=
+margin: 0;}
+      h3{font-weight:bold; font-size: 20px; line-height: 28px; font-family:=
+'Whyte', Helvetica, Arial, sans-serif; color:#000000; text-align: left;marg=
+in: 0;}
+      h4{font-size:18px; line-height: 24px; font-family:'Whyte', Helvetica,=
+ Arial, sans-serif; color:#333333; font-weight: normal;margin: 0;}
+      h5{font-size: 36px; font-weight:bold; line-height: 42px; font-family:=
+'Whyte', Helvetica, Arial, sans-serif; color:#000000; margin: 0;}
+      h6{font-weight:bold; font-size: 32px; line-height: 38px; font-family:=
+'Whyte', Helvetica, Arial, sans-serif; color:#000000; letter-spacing:-1px; =
+margin: 0;}
+      sup{font-size: 12px; color: #9747FF; font-weight: bold; font-family:'=
+Whyte', Helvetica, Arial, sans-serif; vertical-align: top; line-height: 0; =
+mso-font-size: 12px !important; mso-text-raise:40%;}
+
+      a{outline:none;color:#000; text-decoration:none;}
+      a:hover{text-decoration:none !important;}
+      .h-u a{text-decoration:underline;}
+      .h-u a:hover, .active-t a:hover{text-decoration:none !important;}
+      a[x-apple-data-detectors]{color:inherit !important; text-decoration:n=
+one !important;}
+      .active-i a:hover,
+      .active-t:hover{opacity:0.8;}
+      .active-i a,
+      .active-t{transition:all 0.3s ease;}
+      .link:hover { text-decoration:none !important; }
+      .cta-border:hover { border-bottom: 1px solid transparent !important; =
+}
+      .fadeimg {
+        transition: 0.3s!important;
+        opacity: 1!important;
+      }
+      .fadeimg:hover {
+        transition: 0.3s!important;
+        opacity: 0.8!important;
+      }
+      .cta { transition: 0.3s !important; }
+      a img{border:none; outline: none; text-decoration: none;}
+      b, strong{font-weight:700;}
+      p{margin:0;}
+      th{padding:0;}
+      table, td{mso-table-lspace:0; mso-table-rspace:0; border-spacing: 0; =
+border: 0;}
+      .ns span,
+      .ns a{color:inherit !important; text-decoration:none !important; bord=
+er:none !important;}
+      .text-secondary { color: #848484 !important; }
+      .gmail-emoji-fix img{height:1em;width:1em}
+      .bg-secondary { background-color: #F5F5F5; }
+
+      @media only screen and (max-width:375px) and (min-width:320px) {
+        .gmail-fix{min-width:320px !important;}
+      }
+      @media only screen and (max-width:414px) and (min-width:413px) {
+        .gmail-fix{min-width:413px !important;}
+      }
+
+      @media screen and (max-width: 800px) {
+        .w-100p{width:100%!important;}
+        .wi-100p img{width:100%!important;height:auto!important;}
+        .wi-33p img{width:33%!important;height:auto!important;}
+        .tflex{display:block!important;width:100%!important;}
+        .thold{display:table!important;width:100%!important;}
+        .trow{display:table-row!important;width:100%!important;}
+        .tfoot{display:table-footer-group!important;width:100%!important;}
+
+        .fs-18{font-size:18px!important;}
+        .fs-22{font-size:22px!important;}
+        .fs-32{font-size:32px!important;}
+        .lh-38{line-height: 38px!important;}
+        .lh-26{line-height: 26px!important;}
+
+        .pt-0{padding-top:0!important;}
+        .pt-24{padding-top:24px!important;}
+        .pt-40{padding-top:40px!important;}
+        .pt-60{padding-top:60px!important;}
+        .pt-70{padding-top:70px!important;}
+
+        .pb-0{padding-bottom:0!important;}
+        .pb-24{padding-bottom:24px!important;}
+        .pb-40{padding-bottom:40px!important;}
+        .pb-60{padding-bottom:50px!important;}
+        .pb-70{padding-bottom:70px!important;}
+
+        .pl-0{padding-left:0px!important;}
+        .pl-20{padding-left:20px!important;}
+        .pl-35{padding-left:35px!important;}
+
+        .pr-0{padding-right:0px!important;}
+        .pr-20{padding-right:20px!important;}
+        .pr-35{padding-right:35px!important;}
+
+        .plr-15{padding-left:15px!important;padding-right:15px!important;}
+        .plr-25{padding-left:25px!important;padding-right:25px!important;}
+
+        .ptb-24{padding-top:24px!important;padding-bottom:24px!important;}
+        .ptb-45{padding-top:45px!important;padding-bottom:45px!important;}
+        .ptb-60{padding-top:60px!important;padding-bottom:60px!important;}
+      }
+      /*]]>*/
+    </style>
+    <style type=3D"text/css">
+      /*<![CDATA[*/
+      @media (prefers-color-scheme: dark) {
+
+        /* Shows Dark Mode-Only Content, Like Images */
+        .dark-img {
+          display: block !important;
+          width: auto !important;
+          overflow: visible !important;
+          float: none !important;
+          max-height: inherit !important;
+          max-width: inherit !important;
+          line-height: auto !important;
+          margin-top: 0px !important;
+          visibility: inherit !important;
+        }
+
+        /* Hides Light Mode-Only Content, Like Images */
+        .light-img {
+          display: none;
+          display: none !important;
+        }
+
+        /* Custom Dark Mode Background Color */
+        .darkmode {
+          background-color: #000000 !important;
+        }
+
+        /* Custom Dark Mode Font Colors */
+        h1, h2, h3, h4, h5, h6, p, ul, li {
+          color: #fdfdfd !important;
+        }
+        span {
+          color: #fdfdfd !important;
+        }
+        a {
+          color: #fdfdfd !important;
+        }
+
+
+        /* Custom Dark Mode Text Link Color */
+        .link { color: #ffffff !important;}
+        .footer a { color: #fdfdfd !important; }
+        .cta-border { color: #fdfdfd !important; border: 3px solid #fdfdfd =
+!important; }
+        .cta-border span { color: #7EABCE !important; }
+        .btn-black { background-color: #fdfdfd !important; color: #000000 !=
+important; border: 3px solid #fdfdfd !important; border-radius: 5px !import=
+ant; mso-color: #000000 !important; mso-border: 3px solid #fdfdfd !importan=
+t; mso-border-radius: 5px !important;}
+        .btn-white { background-color: #fdfdfd !important; color: #000000 !=
+important; border: 3px solid #fdfdfd !important; border-radius: 5px !import=
+ant; mso-color: #000000!important; mso-border: 3px solid #fdfdfd !important=
+; mso-border-radius: 5px !important;}
+        .btn-white2 { background-color: #000000 !important; color: #ffffff =
+!important; border: 3px solid #fdfdfd !important; border-radius: 5px !impor=
+tant; mso-color: #ffffff !important; mso-border: 3px solid #fdfdfd !importa=
+nt; mso-border-radius: 5px !important; }
+        .text-secondary { color: #C9C9C9 !important; }
+        .bc { border-color: #444444 !important; mso-border-color: #444444 !=
+important; }
+        .bg-secondary {background-color: #383838 !important; }
+      }
+
+      /* Copy dark mode styles for android support */
+      /* Shows Dark Mode-Only Content, Like Images */
+      [data-ogsc] .dark-img {
+        display: block !important;
+        width: auto !important;
+        overflow: visible !important;
+        float: none !important;
+        max-height: inherit !important;
+        max-width: inherit !important;
+        line-height: auto !important;
+        margin-top: 0px !important;
+        visibility: inherit !important;
+      }
+
+      /* Hides Light Mode-Only Content, Like Images */
+      [data-ogsc] .light-img {
+        display: none;
+        display: none !important;
+      }
+
+      /* Custom Dark Mode Background Color */
+      [data-ogsc] .darkmode {
+        background-color: #000000 !important;
+      }
+
+      [data-ogsc] .darkmode2, [data-ogsc] .callout {
+        background-color: #1c1c1c !important;
+      }
+
+      /* Custom Dark Mode Font Colors */
+      [data-ogsc] h1, [data-ogsc] h2, [data-ogsc] h3, [data-ogsc] h4, [data=
+-ogsc] h5, [data-ogsc] h6, [data-ogsc] p, [data-ogsc] li, [data-ogsc] ul {
+        color: #fdfdfd !important;
+      }
+      [data-ogsc] span {
+        color: #000000 !important;
+      }
+      [data-ogsc] a {
+        color: #000000 !important;
+      }
+
+      /* Custom Dark Mode Text Link Color */
+      [data-ogsc] .link { color: #ffffff !important;}
+      [data-ogsc] .btn-link { color: #ffffff !important; text-decoration: n=
+one !important;}
+      [data-ogsc] .footer a { color: #fdfdfd !important; }
+      [data-ogsc] .cta-border { color: #7EABCE !important; border-bottom: 3=
+px solid #7EABCE !important; }
+      [data-ogsc] .cta-border span { color: #7EABCE !important; }
+      [data-ogsc] .btn-black { background-color: #fdfdfd !important; color:=
+ #000000 !important; border: 3px solid #fdfdfd !important; border-radius: 5=
+px !important; mso-background-color-alt: #fdfdfd !important; mso-color-alt:=
+ #000000 !important; mso-border-alt: 3px solid #fdfdfd !important; mso-bord=
+er-radius-alt: 5px !important;}
+      [data-ogsc] .btn-white { background-color: #fdfdfd !important; color:=
+ #000000 !important; border: 3px solid #fdfdfd !important; border-radius: 5=
+px !important; mso-background-color-alt: #fdfdfd !important; mso-color-alt:=
+ #000000!important; mso-border-alt: 3px solid #fdfdfd !important; mso-borde=
+r-radius-alt: 5px !important;}
+      [data-ogsc] .btn-white2 { background-color: #000000 !important; color=
+: #ffffff !important; border: 3px solid #fdfdfd !important; border-radius: =
+5px !important; mso-color-alt: #ffffff !important; mso-border-alt: 3px soli=
+d #fdfdfd !important; mso-border-radius-alt: 5px !important; mso-background=
+-color-alt: #000000 !important;}
+      [data-ogsc] .bc { border-color: #444444 !important; mso-border-color:=
+ #444444 !important; }
+      [data-ogsc] .bg-secondary {background-color: #383838 !important; }
+      /*]]>*/
+    </style>
+  </head>
+  <!--target dark mode-->
+  <!-- Allow for better image rendering on Windows hi-DPI displays. -->
+  <!--[if mso]>
+    <noscript>
+      <xml>
+        <o:OfficeDocumentSettings>
+        <o:AllowPNG/>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+      </xml>
+    </noscript>
+  <![endif]-->
+  <!--to support dark mode meta tags-->
+  <!--[if (gte mso 9)|(IE)]>
+    <!-->
+      <!--<![endif]-->
+      <!--mobile styles-->
+      <!--mobile styles-->
+      <!--dark mode styles-->
+      <!--dark mode styles-->
+      <!--[if gte mso 9]>
+    <style>
+    sup { font-size: 60% !important; }
+    </style>
+  <![endif]-->
+  <body id=3D"body" class=3D"darkmode" style=3D"background-color:#fff;-webk=
+it-text-size-adjust:100%;-ms-text-size-adjust:100%;font-family:'Whyte', Hel=
+vetica, Arial, sans-serif;">
+  <div style=3D"display:none;font-size:1px;color:#fff;line-height:1px;max-h=
+eight:0px;max-width:0px;opacity:0;overflow:hidden;">
+    Maxime commented
+    =C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=
+=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=
+=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=
+=8C=C2=A0=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=C2=A0=E2=80=8C=
+=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=
+=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=
+=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=
+=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=C2=A0=E2=80=
+=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=
+=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=
+=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=
+=E2=80=8C=C2=A0=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=
+=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=
+=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0
+
+  </div>
+  <table align=3D"center" class=3D"darkmode gmail-fix" width=3D"100%" style=
+=3D"margin:0 auto;min-width:320px" cellspacing=3D"0" cellpadding=3D"0">
+    <tr>
+      <td align=3D"center" width=3D"580">
+        <table class=3D"w-100p darkmode" width=3D"580" style=3D"padding:10p=
+x;" cellpadding=3D"0" cellspacing=3D"0">
+          <!-- HEADER -->
+<tr>
+  <td align=3D"left" class=3D"pb-32 darkmode" style=3D"padding: 28px 24px 2=
+4px;">
+    <a style=3D"text-decoration: none;" href=3D"https://click.figma.com/ls/=
+click?upn=3Du001.Y4GnNWhdnCDA1MWI-2FhIyfOSqzSOOn-2BuE-2BZrF9-2BcnUGiivhcOhY=
+3M9uAFq63kbTUtR394Qn5A4XzkUEvl-2ByqtsYh-2BxlR0RnDSpFoxoU98JCKmCnPt9cKPNvEB3=
+KOcKCIteZnOkbLTLoDFxKIm9Nw2Bg-3D-3D3K6v_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2=
+BXngf09BwXjDxGOp7MaYke4XWOfTAzsMwdkHxi9s3XL9ZQrcStLFLGHej6Rc7dSt72DEXaeZOXE=
+A-2BdzX27ELSvTd1MXRDpdEniLuI9I7PzPcFxnRvVAaD0cokrBP-2F4CPXATsYEdPPx10sY84LY=
+WwzWixyKJI5ZwD-2FvutJqa0iJWqg-2FYrVNWwtFb3hYugH0ZBg91Vt-2Ba-2B6rojZfvAWfZYN=
+BTAPHo3hkhP8uzAmNEFs7b7RcsVAIiXRpmX77HAHqVoGSHVsjVr2KmFNLaIcPwpb0NfMw48aipp=
+rys-2BJBAVyj-2BQXQ4PujFId-2BdxMgQ3X1ZGoSM1qP7zZdH8ZUDUzONfVLXWLMDkkjIBaj9WF=
+z4qKkAND-2B5mlG6oSu21EVqi4RG554a3LGsvkI-3D">
+      <img class=3D"light-img" src=3D"https://static.figma.com/uploads/fd22=
+2b164c8e5d3814c3cfb3476d3a32ed159390" width=3D"65" style=3D"width: 65px; ma=
+x-width: 65px; font-size:22px;
+          font-family: 'Whyte', Arial,
+            Helvetica, sans-serif; vertical-align: top; line-height: 24px; =
+background-color: #ffffff; color: #000000; text-align: center;" alt=3D"Figm=
+a">
+      <!--[if !mso]>
+      <! -->
+      <div class=3D"dark-img" style=3D"display:none; overflow:hidden; float=
+:left; width:0px; max-height:0px; max-width:0px; line-height:0px; visibilit=
+y:hidden;" align=3D"left">
+        <img src=3D"https://static.figma.com/uploads/c2698d9a70dc8fe5ec7bc5=
+0d0141f831bf2ab2df" width=3D"65" style=3D"width: 65px; max-width: 65px; fon=
+t-size: 22px; font-family: 'Whyte', Arial,
+            Helvetica, sans-serif; vertical-align: top; line-height: 24px; =
+background-color: #ffffff; color: #000000; text-align: center;" alt=3D"Figm=
+a">
+      </div>
+      <!--<![endif]-->
+    </a>
+</td>
+</tr>
+<!--- END HEADER -->
+
+          <tr>
+            <td class=3D"darkmode">
+            <table cellpadding=3D"0">
+              <tr>
+                <td style=3D"vertical-align:middle;mso-padding-right-alt:10=
+px">
+                  <a style=3D"text-decoration:none" universal=3D"true" href=
+=3D"https://click.figma.com/uni/ls/click?upn=3Du001.Y4GnNWhdnCDA1MWI-2FhIyf=
+OSqzSOOn-2BuE-2BZrF9-2BcnUGiivhcOhY3M9uAFq63kbTUtR394Qn5A4XzkUEvl-2Byqtsag2=
+03BVrLdvpctbPUji9-2BR9eXZ6LTDCA4NbqqAK2tyPU7hQvV8DX-2Fly4O9Gb-2Bb1eR90wT8g-=
+2B9sWQ-2BOfBUzas6k-3DhC7F_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXjDxG=
+Op7MaYke4XWOfTAzsMAqlA-2FKOwwhmRh3nbxQrxZf4XlTle3PcO81E9YOyKX1rltqbR-2F-2Fs=
+F-2Fv72nJPHFvTGXwDtt1ZhT6-2BirccjJ94YF3D9mv8QRaOxzCQIhsUN7cFhZQD79x6ETKv-2F=
+pf54tKUuWB7IvqKG-2BdtsVBydeR3hSonihJEdqC-2FJ-2BaEIgNkhcajhnBkVwazwBI4K6IQR7=
+QEGfcX7p9O2yujy4Zf0zQd-2F2psLHRJ84lTS7mkHsFr4RFftUnqZaothuGwReNMVbqn2SHvSp4=
+eiXclfxdojEB5NNNS7JtK3EEGFVxB0mRtoHJoc-2Fc8Lnj3HgFv9R3ZIyfMgKbhamIVmQpqDGoC=
+28JKa342QM-2Fjj8iA5-2FFCy-2FnXvzg-3D">
+                    <img style=3D"max-width:24px;max-height:24px;float:left=
+;padding-right:10px;" width=3D"24" height=3D"24" src=3D"https://static.figm=
+a.com/uploads/8202cd8f494fa04610e67f5a3c1372ea5733984e">
+
+                  </a>
+                </td>
+                <td>
+                  <p style=3D"font-family:'Whyte',Arial,Helvetica,sans-seri=
+f;font-size:16px;line-height:24px;font-weight:normal;color:#808080;font-wei=
+ght:normal;margin:0;">
+                    COUCOU - UIX Design
+                  </p>
+                </td>
+              </tr>
+            </table>
+            </td>
+          </tr>
+          <tr>
+            <td class=3D"darkmode" align=3D"left" style=3D"padding-top:8px;=
+text-align:left;">
+              <p style=3D"font-family:'Whyte',Arial,Helvetica,sans-serif;fo=
+nt-size:24px;line-height:32px;font-weight:bold;color:#000;margin:0;padding-=
+bottom:0px;">
+                2 new comments from Maxime
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td class=3D"wi-100p darkmode" align=3D"center" style=3D"paddin=
+g-top:16px;padding-bottom:32px;mso-padding-alt:14px 0px;">
+              <a class=3D"link active-t darkmode" universal=3D"true" style=
+=3D"padding:12px 24px;color:#fff;background-color:#0d99ff;text-align:center=
+;text-decoration:none;font-family:'Whyte',Arial,Helvetica,sans-serif;font-w=
+eight:bold;font-size:18px;line-height:24px;display:block;border-radius:4px;=
+" href=3D"https://click.figma.com/uni/ls/click?upn=3Du001.Y4GnNWhdnCDA1MWI-=
+2FhIyfOSqzSOOn-2BuE-2BZrF9-2BcnUGiivhcOhY3M9uAFq63kbTUtR394Qn5A4XzkUEvl-2By=
+qtsag203BVrLdvpctbPUji9-2BR9eXZ6LTDCA4NbqqAK2tyPU7hQvV8DX-2Fly4O9Gb-2Bb1eR9=
+0wT8g-2B9sWQ-2BOfBUzas6k-3DXWJO_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09B=
+wXjDxGOp7MaYke4XWOfTAzsrPznkRiCp-2FBbuRKHU4i8m-2Fvdj1HGqF0jj8nmSpO3AOerR-2F=
+r-2FWliPpLWMqVSzfjaslrdNUs-2Bx9pQu0jkB1fG6-2FBtbmon4P80weOTI1jzMRarW2GDnSwT=
+ZEQMox5fblhmX3-2Fx9oxXyZM9TM3GELcwYnibtoPqkt6yFiTH29mTjiUzqgKMVh-2F-2BFe3pV=
+krrkL3zGHDjv9kRAt3Gwh-2B-2BBcWA6VDlQfSJkgbYZ4HZwTwv0VbbupothClAG2rK04J-2FeD=
+rAn-2FHPbVmiYV-2FrO9zO3x98NAcdyg7s5IAMnUzZjIad13HfrnEUPl64rfGq42tKFiT2Gadaa=
+vQIEn0O0646wb2BTbdBfOeFNBHZoQd3xUbJQeYM-3D">
+                View in Figma
+              </a>
+            </td>
+          </tr>
+          <!-- Show comment if we only have 1 thread -->
+          <!-- If we have more than 1 thread, show the thumbnail -->
+            <tr width=3D"560" height=3D"auto" align=3D"center">
+              <td>
+                <a universal=3D"true" href=3D"https://click.figma.com/uni/l=
+s/click?upn=3Du001.Y4GnNWhdnCDA1MWI-2FhIyfOSqzSOOn-2BuE-2BZrF9-2BcnUGiivhcO=
+hY3M9uAFq63kbTUtR394Qn5A4XzkUEvl-2Byqtsag203BVrLdvpctbPUji9-2BR9eXZ6LTDCA4N=
+bqqAK2tyPU7hQvV8DX-2Fly4O9Gb-2Bb1eR90wT8g-2B9sWQ-2BOfBUzas6k-3Dqeux_rO1JRqZ=
+rx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXjDxGOp7MaYke4XWOfTAzsm4IboH1BQXPK0i5H=
+uHxc782yVh62cbm8zOZSTSh1HI2PawPJb1jGkgs8RBGmVp3N6VrEoAMLBOqZ6M1qDKN6nIGTGkV=
+ZEHbrm3KX5QXwtGASd1NbawiNphPW111fZodJ1YI1aXbUz2ql5ABoz6OgeUw2fDGTFIK6H77F7F=
+GFQhCCrEQ7PapIXsPweuxG3tmPjc8vLMpCCyMr5KSLCPJVoMPX-2FIFtnMeNp5hKCuXMqznGKLX=
+F6bKx3pp1voGdZ4Dz3Ta9tGMtRNO0kqhkzxU8LJkTqIz-2FqS3IY-2BsdyIzGTQI2PcOcSybJZc=
+hxpTqaXp1a3ofk1CHfrX0oeEbeUA04oflFhRNn0MNUCZSXROkbaCw-3D">
+                  <img src=3D"https://api-cdn.figma.com/resize/thumbnails/e=
+89cb463-84fd-4f0a-a11a-9b96e692ee47?height=3D500&amp;width=3D800&amp;mode=
+=3Dembed" height=3D"auto" width=3D"560" alt=3D"View file" style=3D"font-siz=
+e: 14px; font-family: 'Whyte', Arial, Helvetica, sans-serif; color: #000000=
+; vertical-align: top; line-height: 18px; background-color: #F2F2F2 !import=
+ant; text-align: center; border-radius-bottom-left: 8px; border-radius-bott=
+om-right: 8px;">
+                </a>
+              </td>
+            </tr>
+          <tr>
+            <td align=3D"center" class=3D"darkmode" style=3D"padding:64px 3=
+2px 0px;text-align:center;">
+             <p style=3D"font-family:'Whyte',Arial,Helvetica,sans-serif;fon=
+t-size:14px;line-height:26px;font-weight:400;color:#000;font-weight:normal;=
+margin:0;">You commented on this file, so you're subscribed to all new acti=
+vity</p>
+             <p style=3D"font-family:'Whyte',Arial,Helvetica,sans-serif;fon=
+t-size:14px;line-height:26px;font-weight:bold;color:#000;font-weight:normal=
+;margin:0;padding-bottom:24px;">
+                <a class=3D"link" href=3D"https://click.figma.com/ls/click?=
+upn=3Du001.Y4GnNWhdnCDA1MWI-2FhIyfOSqzSOOn-2BuE-2BZrF9-2BcnUGiivhcOhY3M9uAF=
+q63kbTUtR394Qn5A4XzkUEvl-2ByqtsVE2PTLqAIDfbyztp9nG3qKISAy-2FiSvYrbsJJIJjTrk=
+Zoo6ZzVYMeX0Ue4xS2O-2FbLgYHpArX06t8bu20SXjBMWo-3DM7A3_rO1JRqZrx5Oo25BATZItE=
+vIKK9wiuA6UN-2BXngf09BwXjDxGOp7MaYke4XWOfTAzsL5JXDwqUvNf2P2ilNiC8n2uLjkD7s6=
+iw2H3Jl5AF9xk-2B0rb9qiol1JByHTuRzoApnrjKrBeldxo4flQO4aFxj7NejpLFv-2FT9nTFf2=
+HhpUJ02XSAfejNJihny-2B2HGJ8c8-2FtmIrPRYYDu18sTJ4T1I8o3aOCA63VEcJV-2BtL8X-2B=
+hi9rCvQ6h23MxyIpto1bOdV1PYNPNw3a8Z4YcDtyVau-2BGXLCSFiJNhoBQqNjPd4QWjfwGLNRJ=
+zz0LD1TIYojswjQxTA75BC3Zl5YpcIOQVsp8WEciiUz73i1LJ6gNe-2BelPa-2FEq-2Fg09gj2x=
+lA5VzrJBj8ebipLFWXKwLINAJXusGNEaOiMrqLxigHVdX2K8nWayY-3D" style=3D"color:#0=
+00000;font-weight:bold;text-decoration:none">
+                  Get mentions and replies only
+                </a>
+                or
+                <a class=3D"link" href=3D"https://click.figma.com/ls/click?=
+upn=3Du001.Y4GnNWhdnCDA1MWI-2FhIyfOSqzSOOn-2BuE-2BZrF9-2BcnUGiivhcOhY3M9uAF=
+q63kbTUtR394Qn5A4XzkUEvl-2ByqtsQtVZ46lviQZrYZlgTbCvNVw-2BmQs6zusauVdXn03s37=
+EzG4-2FHaBrcAeBcysygLHMhv2cCtyDqAEXlc6MbPQgkZo-3DSEX2_rO1JRqZrx5Oo25BATZItE=
+vIKK9wiuA6UN-2BXngf09BwXjDxGOp7MaYke4XWOfTAzsD0q3Lh5pWsbegs7FvvYVercAdH26AK=
+TDQaQ-2FSJmEOvpOdiGtSOe9c8x-2FtSX4Q2iPNUJou06zn4S-2Fx0hEbgFYg-2FIBHtb4x5bbK=
+vlwonYG6mVuG015LC0apUhLmuOV-2F1yGJr7iqrJqzW28UcOPy1Pb-2BX5ve2gn-2F5QOu2x949=
+a1QLWZ8qTxi-2BrHlour5tbkAiuqIfpKmSEPZUS1K7qNTIJ-2BefcezagnbAgh4O1q9xwpKVyUX=
+SYhh7prf31YGKQ8i-2FkCC61veA-2B4Rd5RODnlHkPy3jcXgYh-2F0CHwQO3lZd4hq6PWYrZfQx=
+iTebEgpX2ZgyMfKJG7OZWmuslxdN5VRnHOtAqvcvMr8PSqSJiZqudpSo4-3D" style=3D"colo=
+r:#000000;font-weight:bold;text-decoration:none">
+                  Unsubscribe
+                </a>
+              </p>
+            </td>
+          </tr>
+            <!-- Mobile app download prompt -->
+            <tr>
+  <td>
+    <table class=3D"w-100p darkmode" width=3D"540" align=3D"center" style=
+=3D"max-width: 540px; margin: 0 auto;" cellpadding=3D"0" cellspacing=3D"0">
+      <tbody>
+        <tr>
+          <td class=3D"pt-60 darkmode" align=3D"center" style=3D"border-top=
+: 1px solid #DEDEDE; color: #000000; font-size: 18px; line-height: 32px; fo=
+nt-family: 'Whyte', Arial, Helvetica, sans-serif; text-align: center; paddi=
+ng: 48px 24px 32px;">Try the Figma mobile app to stay on top of activity li=
+ke comments, replies, and @mentions when you=E2=80=99re on the go.</td>
+        </tr>
+      </tbody>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td>
+    <table class=3D"w-100p darkmode" width=3D"400" align=3D"center" style=
+=3D"max-width: 400px; margin: 0 auto; padding: 0 0 48px 0;" cellpadding=3D"=
+0" cellspacing=3D"0">
+      <tbody>
+        <tr>
+          <td class=3D"active-i" style=3D"line-height: 1px; font-size: 1px;=
+ mso-line-height-rule: at-least;"><img src=3D"https://static.figma.com/uplo=
+ads/9b6de78ffe5b3506e4f575b27a6febb8d407b1cf" width=3D"24" style=3D"width: =
+24px; max-width: 24px; font-size: 10px; line-height: 12px; font-family: 'Wh=
+yte', Arial, Helvetica, sans-serif; color: #000; background-color: #fff; ve=
+rtical-align: top; text-align: center; border-radius: 50%" alt=3D"Apple Log=
+o"></td>
+          <td width=3D"12" style=3D"font-size: 1px; line-height: 1px;"></td=
+>
+          <td style=3D"font-size: 18px; color: #000000; font-weight:700; te=
+xt-decoration: underline; font-family: 'Whyte', Arial, Helvetica, sans-seri=
+f;"><a style=3D"color: #000000;" href=3D"https://click.figma.com/ls/click?u=
+pn=3Du001.Y4GnNWhdnCDA1MWI-2FhIyfBmL7jPVMq7ejXho9MWZvG-2BkVuFdU8eSz87g-2BhH=
+ek9lWANxNwc-2BpXS6t-2B2jspPPEhOdsOmTW50H8kSXUdFZE8yw-3DZ_HP_rO1JRqZrx5Oo25B=
+ATZItEvIKK9wiuA6UN-2BXngf09BwXjDxGOp7MaYke4XWOfTAzs0vEsJJHCigz3ST0LALS8uHXg=
+hcnC1F2zdma6hHt1Oa-2Bv1VU-2BGiQ6DMfo5wprLaYiswfnlsBGLR2ztXS2GT7r-2Bf3qQjqx0=
+br6Ds-2FfEtHN0LnKyUghYrs0Xdwgf3VLLeDAD4Y9eHmb5kbiGOH522UTSpsWkJJePFy8n5laHJ=
+kcQsLlQPQ-2FZqZ5N7Zm8C5xz8VWeu8lHOt9k2wZ-2BycC4gM0TAkg3f2fe2F3ALznOIa-2Bd-2=
+FcJKzBo5QtUHUW3JFtL5Gf6FZwDmxQJ6-2BoyjC-2FiK9nOVLseUulzKybLMYOPnf9lFK2xTXz8=
+8yLyMeaMOv5ojxwyLcX4wdiv8blbTBs5FghJAow70BJIdHxKh1T6v2Gs-2B4E-3D">Figma for=
+ iOS</a></td>
+          <td width=3D"40" style=3D"font-size: 1px; line-height: 1px;"></td=
+>
+          <td class=3D"active-i" style=3D"line-height: 1px; font-size: 1px;=
+ mso-line-height-rule: at-least;"><img src=3D"https://static.figma.com/uplo=
+ads/29a5c50202d5452241687c5e999e2b51dd6c1ed7" width=3D"24" style=3D"width: =
+30px; max-width: 24px; font-size: 10px; line-height: 12px; font-family: 'Wh=
+yte', Arial, Helvetica, sans-serif; color:
+            #000; background-color: #fff; vertical-align: top; text-align: =
+center; border-radius: 50%" alt=3D"Android logo"></td>
+          <td width=3D"12" style=3D"font-size: 1px; line-height: 1px;"></td=
+>
+          <td style=3D"font-size: 18px; color: #000000; font-weight:700; te=
+xt-decoration: underline; font-family: 'Whyte', Arial, Helvetica, sans-seri=
+f;"><a style=3D"color: #000000;" href=3D"https://click.figma.com/ls/click?u=
+pn=3Du001.Y4GnNWhdnCDA1MWI-2FhIyfJV1NUZkQ-2FIhql-2Fweie80YMFGq0neGCfRtEqW4w=
+dTijFJQ1O-2FHIz7RSKkJMh1RSci3SKbaGR7eAuKuu-2Fvf5GgdNQq0EYYSSiLqdNx2Pn9vblmA=
+Pl_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXjDxGOp7MaYke4XWOfTAzsQ1xGyO=
+vezjGZCCY9s9ZhCY3G919p4NoU0-2F95G5CTmZi-2F8hrvErhLreIVPo6SJ3M3edyCWkkOfIl5e=
+Eqk1SbdYPokgektaocO8Ou5hrE68RbKblE1-2FO3VNrK61e-2F2cpuo68L-2FJHFbRyNc0q1WpN=
+zNukEZ-2BQC-2BAiAD-2FcfOT6Tvc0jJxMt80z7UEvXXvLgdRCWx8QDE-2BqpUCm8g8wDngnBtg=
+uKIUEkGD4Rs0lsQjG4BI019o-2FLpCGEWzN9QIHSW2kKzDcH0umbdzqLidf2GBejoOCLpJ3WaUM=
+DXrrveysG2Gt-2FOprxW6qEw8ucysSxfVlhIuXXouVAIfUZK7WHYTPu5DPtUDv5-2Br00mu0JCn=
+lVXlVU-3D">Figma for Android</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </td>
+</tr>
+
+            <!-- Footer -->
+            <tr>
+  <td>
+    <table class=3D"w-100p darkmode" width=3D"540" align=3D"center" style=
+=3D"max-width: 540px; margin: 0 auto;" cellpadding=3D"0" cellspacing=3D"0">
+      <tbody>
+        <tr>
+            <td class=3D"pt-60 darkmode" align=3D"center" style=3D"border-t=
+op: 1px solid #DEDEDE; color: #a5a5a5; font-size: 14px; line-height: 18px; =
+font-family: 'Whyte', Arial, Helvetica, sans-serif; text-align: center; pad=
+ding: 60px 24px 32px;">
+                Figma is a design platform for teams who build products tog=
+ether. Born on the Web, Figma helps the entire product team create, test, a=
+nd ship better designs, faster.
+            </td>
+        </tr>
+      </tbody>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td style=3D"padding:0px 0 32px;">
+    <table align=3D"center" style=3D"margin:0 auto;" cellpadding=3D"0" cell=
+spacing=3D"0">
+      <tbody>
+      <tr>
+        <td align=3D"left" class=3D"active-i" style=3D" line-height:1px; fo=
+nt-size:1px; mso-line-height-rule:at-least;">
+<a style=3D"text-decoration:none;" href=3D"https://click.figma.com/ls/click=
+?upn=3Du001.Y4GnNWhdnCDA1MWI-2FhIyfOSqzSOOn-2BuE-2BZrF9-2BcnUGiivhcOhY3M9uA=
+Fq63kbTUtR394Qn5A4XzkUEvl-2ByqtsfGhZ3QJy4wrWUoXu-2FsN-2BWH7MxKD-2FKStkvr4el=
+F35NCMqSv0VwVrvI0SwLZ4EAlopdAXega0tFkocXB8iNiJGIc-3DbhbB_rO1JRqZrx5Oo25BATZ=
+ItEvIKK9wiuA6UN-2BXngf09BwXjDxGOp7MaYke4XWOfTAzsC2-2BBC1B-2B-2FUIk6PiCcn-2B=
+qiACSHK4ex08AWMtJZVuxYJbwF3wI1NTKiMXIJYScsBbeDYhb93nyH24WUqXF1hBWqqzgE5NKNk=
+cVlpiynIU3XC4rDuOukWGAEjbBnMlv1htk4xzkWEGIfnhiiGyIXhaJKJtPFGXvdnnk8qN2oAk0o=
+3Zb95mJ6xlII3o5s6-2BLkM7SeZ-2BRWincDNN3-2FHr6R3zN8cbcadioFs7pFbH32U0IILwoIQ=
+DjeRzxcxY8V-2BbBWzoY6Lqy9bCtHpAYa2FcpC0p5r83iYp7ImUv6BJWB874kzX0rh7uS-2Fapm=
+AAx64KtMNSO6IUxnfHaxX9WH8pJFmLroVs0jJhsKut1FjJppZClXRs-3D"> <img class=3D"l=
+ight-img" src=3D"https://static.figma.com/uploads/a9c9c230c0a9395f5eaa1c4ac=
+b6ee89d13782987" width=3D"30" style=3D"width:30px; max-width: 30px; font-si=
+ze:10px; line-height:12px; font-family:'Whyte', Arial, Helvetica, sans-seri=
+f; color:#000000; vertical-align:top; text-align: center;" alt=3D"Figma">
+          <!--[if !mso]>
+            <! -->
+        </a>
+          <div class=3D"dark-img" style=3D"display: none; overflow: hidden;=
+ float: left; width: 0px; max-height: 0px; max-width: 0px; line-height: 0px=
+; visibility: hidden;" align=3D"left">
+            <a style=3D"text-decoration: none;" href=3D"https://click.figma=
+.com/ls/click?upn=3Du001.Y4GnNWhdnCDA1MWI-2FhIyfOSqzSOOn-2BuE-2BZrF9-2BcnUG=
+iivhcOhY3M9uAFq63kbTUtR394Qn5A4XzkUEvl-2ByqtsfGhZ3QJy4wrWUoXu-2FsN-2BWH7MxK=
+D-2FKStkvr4elF35NCMqSv0VwVrvI0SwLZ4EAlopdAXega0tFkocXB8iNiJGIc-3DlzB8_rO1JR=
+qZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXjDxGOp7MaYke4XWOfTAzsoBak5MITOfCmDn=
+KnJ2R7KTOjMdtZenkbTvXkvsvburIyQ1naS3YWD-2BPSXlMPjqLK2DN10sI2kLVSoNDjPUq6pkn=
+dVxFBN01d4RR3276T4ETceMED-2BcB7ZTVY2vLqSxIS6xnuv2sXFQYE8kApbmNyDkAShevzpUrE=
+uwytcWnNAVumBHs6v0SwGXHGwUHw1sn1uxQfwvKdfiSGpskr0mrewU1tbvbV4N7uO45-2FexL5v=
+AnYZpljDHzHYlsbES8tzD-2FgYR8N26ggt81IvegXP2srJj6-2FghJev8Gj3LOqG3OofZV4Bg2y=
+LsubkJXvKBi8P3d6h2-2FE1SMkLaK8pTowH5bPRlUGB-2FrogRugIHaeA3Y7m3c-3D"> <img s=
+rc=3D"https://static.figma.com/uploads/769e425786691503108639759683aa50ea3f=
+530b" width=3D"30" style=3D"width: 30px; max-width: 30px; font-size:10px; l=
+ine-height:12px; font-family:'Whyte', Arial, Helvetica, sans-serif; color:#=
+ffffff; vertical-align:top; text-align: center;" alt=3D"Figma"></a>
+          </div>
+          <!--<![endif]-->
+        </td>
+
+        <td width=3D"30" style=3D"font-size:1px; line-height:1px;"></td>
+
+
+        <td align=3D"left" class=3D"active-i" style=3D" line-height:1px; fo=
+nt-size:1px; mso-line-height-rule:at-least;">
+<a style=3D"text-decoration:none;" href=3D"https://click.figma.com/ls/click=
+?upn=3Du001.Y4GnNWhdnCDA1MWI-2FhIyfEajKrRlDskPMW-2FGcLSM0-2Ft0RjfOK-2BwedG2=
+7i6x5XAABFCf6_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXjDxGOp7MaYke4XWO=
+fTAzsg1XBzr5LkBE8nfXWKHUV82Z2csDY9v8JOi85hdyYxEcpjZu4dwrTliLkKpFYvg5bHKCXUo=
+mTQJiTU9OFZhgRsUoocMcrzc24D-2BXEcm-2B-2B5M0FRHzKaK7-2BYiuJ4YHE6cW-2BniRlxyR=
+RKSDKKPstgbWHa9sbG24cfd-2BkYJ0fBpgM7ZCnNqWtiQH5GMmkntcYjyGKa6MBckjVKQ8fRZuA=
+axyxPO2UZQtx-2BPdHYWRqlzq6gqsiIP8WZl88uSZR0IaklmgPQSk8t1C2bpyBOMEGJ-2FZ8HRC=
+rtFicYe7C4ueKlSxGhwvTTuwFL5ddoqC0k44Z6Q6QfIu49Da9z9kW9mt3kCYCssubywxhZmxgwt=
+6Q5FOdkpI-3D"> <img class=3D"light-img" src=3D"https://static.figma.com/upl=
+oads/5bb05074a2c9507b003979dd88c1bb852fb875b7" width=3D"30" style=3D"width:=
+30px; max-width: 30px; font-size:10px; line-height:12px; font-family:'Whyte=
+', Arial, Helvetica, sans-serif; color:#000000; vertical-align:top; text-al=
+ign: center;" alt=3D"Twitter">
+          <!--[if !mso]>
+            <! -->
+        </a>
+          <div class=3D"dark-img" style=3D"display: none; overflow: hidden;=
+ float: left; width: 0px; max-height: 0px; max-width: 0px; line-height: 0px=
+; visibility: hidden;" align=3D"left">
+            <a style=3D"text-decoration: none;" href=3D"https://click.figma=
+.com/ls/click?upn=3Du001.Y4GnNWhdnCDA1MWI-2FhIyfEajKrRlDskPMW-2FGcLSM0-2Ft0=
+RjfOK-2BwedG27i6x5XAABmtY7_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXjDx=
+GOp7MaYke4XWOfTAzsZ19b-2B59mvBaeQbMkxZT8tBT5trCjKHXinqVR4YXqmuR6LSF5atvKoLh=
+abp1FhS-2FyxpFHs0TK-2BFO-2BfxVuhkhuCql-2FkCNUmji-2FDaQ-2FRwHWtayJnzBT9oT8we=
+dwyNHz5lzZy9l9d9fqDWxfd9cAQfdf6w-2BVj7OyLd0RV7c8BA1UVREtAOIjjSfAEoYJvS3SGi4=
+1zW-2Bqod4ygWVzyj73wqjOgF63IxYbw-2BIxo0qpp7BMLFhHEGtN34249-2F80QHzKwpgHSBUj=
+-2FxPcpFgQUcGNWTRS7n5seyZppTX-2B0NdQgPr-2B5Vj5wbfGMQHL1H02ZaUl0t2WxTLNz4XEl=
+Y3mdy6c-2BxUtDnChEod4JMcaAj-2B1z-2BZ8pi8-3D"> <img src=3D"https://static.fi=
+gma.com/uploads/c52f06a7ea02bb178ecbfd8b511e30d4bcc35ae3" width=3D"30" styl=
+e=3D"width: 30px; max-width: 30px; font-size:10px; line-height:12px; font-f=
+amily:'Whyte', Arial, Helvetica, sans-serif; color:#ffffff; vertical-align:=
+top; text-align: center;" alt=3D"Twitter"></a>
+          </div>
+          <!--<![endif]-->
+        </td>
+        <td width=3D"30" style=3D"font-size:1px; line-height:1px;"></td>
+
+        <td align=3D"left" class=3D"active-i" style=3D" line-height:1px; fo=
+nt-size:1px; mso-line-height-rule:at-least;">
+<a style=3D"text-decoration:none;" href=3D"https://click.figma.com/ls/click=
+?upn=3Du001.Y4GnNWhdnCDA1MWI-2FhIyfMdt-2F7TIl06yrasjuzGDvE0zAz-2F-2FAEhgk6x=
+wp0-2FFqdJTS7kv_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXjDxGOp7MaYke4X=
+WOfTAzsWVFOvuZchb9Tp0uox3nGQRm7-2BWtw41j8OtCaorVx8GegubJcKsjQw36YD4vu0K93K1=
+0tCxz8b-2FU9rGBpIdXPMwWWOR993ZqYL4-2FW7b8D5IMyph47ODidD5QpdoeKHUaosu-2FTcbb=
+4DuPAN8ch3wKt-2BjI5yQAUm9GR-2BsdVI35TgW7JWOEx8V8XpXrNl5GkRN204eOUx-2Bqt4Fla=
+LWB0G-2F5N7sXdUwdrOCuDm0fLcyHm-2Bs0jAO7kxXyyuPEvy-2F-2FG851ohobe5vGjTlm2Hve=
+t7xElbFc3NTGY51PxGeZDWyy8SlGr4-2FhWiRYYoGABvNSeja-2FjjQ2OXtyovjzDF1MplAcEb5=
+ieuVW0-2FMKaikZFn1GhHA8-3D"> <img class=3D"light-img" src=3D"https://static=
+.figma.com/uploads/9dc8394d92432c5cd16ab9e61ee574da29434ec8" width=3D"30" s=
+tyle=3D"width:30px; max-width: 30px; font-size:10px; line-height:12px; font=
+-family:'Whyte', Arial, Helvetica, sans-serif; color:#000000; vertical-alig=
+n:top; text-align: center;" alt=3D"Instagram">
+          <!--[if !mso]>
+            <! -->
+        </a>
+          <div class=3D"dark-img" style=3D"display: none; overflow: hidden;=
+ float: left; width: 0px; max-height: 0px; max-width: 0px; line-height: 0px=
+; visibility: hidden;" align=3D"left">
+            <a style=3D"text-decoration: none;" href=3D"https://click.figma=
+.com/ls/click?upn=3Du001.Y4GnNWhdnCDA1MWI-2FhIyfMdt-2F7TIl06yrasjuzGDvE0zAz=
+-2F-2FAEhgk6xwp0-2FFqdJTj2gv_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXj=
+DxGOp7MaYke4XWOfTAzsYbuSyR766y7BhBEM0bxOrnEk2-2F35xJgZByTiKQPrmq9hM-2FVxuF-=
+2FM4ybMuFZ4UXKTb6M9BSGQg3Vi4mxN-2Fe5Giwg57zuXs1EMz6Fk-2B-2FZQn-2B9RUgBgvzUj=
+b0-2FOaZjV91hgd4oquffNZKEZTpbswPlay6Cf-2B-2BzJd4dXxHdXlgFgYycnqb8ysAsG5iKkE=
+mEWoZSEWt3NZbaNi-2F8w51LURsh5KQuVMo0rTlecZlNft5BefNfAwp-2BCaupmTIIXYvlV02kF=
+10vnsCmChOeoWtPJLyvdDFbBH9rP9PDc48WRL4fCqq2w8AT7QbL1geygD6RAFuar0Juqbf1brzW=
+rASO-2FBC-2BLi6nfjUqD9KeyMLrsHQ1PxJY-3D"> <img src=3D"https://static.figma.=
+com/uploads/84f161959a9a78266ee5955b0abc7961bec5e7c8" width=3D"30" style=3D=
+"width: 30px; max-width: 30px; font-size:10px; line-height:12px; font-famil=
+y:'Whyte', Arial, Helvetica, sans-serif; color:#ffffff; vertical-align:top;=
+ text-align: center;" alt=3D"Instagram"></a>
+          </div>
+          <!--<![endif]-->
+        </td>
+
+
+        <td width=3D"30" style=3D"font-size:1px; line-height:1px;"></td>
+        <td align=3D"left" class=3D"active-i" style=3D" line-height:1px; fo=
+nt-size:1px; mso-line-height-rule:at-least;">
+<a style=3D"text-decoration:none;" href=3D"https://click.figma.com/ls/click=
+?upn=3Du001.Y4GnNWhdnCDA1MWI-2FhIyfIu5diBYcdg-2BcNuMMcM74os6Ay0Wf3QRPHmoaeL=
+igO9TXjc8_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXjDxGOp7MaYke4XWOfTAz=
+sjQcuDJrvbCzOVuXPCBROKARlPoYD1jMKkanao1IYsy1N8E11j9Or0rHe2aVh44-2FxokWBiwDB=
+RXA4p55c00k-2BaDf9Q8Rkf-2FKUwO7PR5-2B2nAv1tH8XU-2F5-2FuZYMZu-2F7MyFaUAc9qPp=
+r4STRQvzGA66NBmvtmtoKeaXxoobJTVSIpG6U7U424Wwel-2FOanbZ6EakszJr5992Bidjme-2F=
+SfVa74PHn2DoO3XOgaSakErUQPMxKcQ6SRVYCXzj1k-2BUXHMR2KMwasZgho9Ho4fnTuJCuPlKt=
+1pZe2UIQkJan9ZarGmTxHKYCr871na0cCqEESjPOt0zW1H5BfQEYIvpBr3E-2BpbX3aMhVv100d=
+9cmYyEXb60Y-3D"> <img class=3D"light-img" src=3D"https://static.figma.com/u=
+ploads/4db5401f0db17df56b55b663da4ec93b18f2d707" width=3D"30" style=3D"widt=
+h:30px; max-width: 30px; font-size:10px; line-height:12px; font-family:'Why=
+te', Arial, Helvetica, sans-serif; color:#000000; vertical-align:top; text-=
+align: center;" alt=3D"YouTube">
+          <!--[if !mso]>
+            <! -->
+        </a>
+          <div class=3D"dark-img" style=3D"display: none; overflow: hidden;=
+ float: left; width: 0px; max-height: 0px; max-width: 0px; line-height: 0px=
+; visibility: hidden;" align=3D"left">
+            <a style=3D"text-decoration: none;" href=3D"https://click.figma=
+.com/ls/click?upn=3Du001.Y4GnNWhdnCDA1MWI-2FhIyfIu5diBYcdg-2BcNuMMcM74os6Ay=
+0Wf3QRPHmoaeLigO9TGClo_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXjDxGOp7=
+MaYke4XWOfTAzsb2lRgJe264KcgHZF2yStGG5-2Bm-2BeLoBlkTQX5MIUsH9nRz-2FGusH1Jzi6=
+Gbohiimg8jzMdKmu8JebxR7sj2YVLyW0v06kTsNxjYSW7mMoDeklmMwT9Npj6DrwglU42MRKgvE=
+J-2BvzxUVzrdrOTENld1h0Yo-2B5-2BVnbx1bR7hoGq6U37whEiCxfJFwENUDLR5h-2FxvKAVAm=
+Z01LdQiBrdjsVzVFKaY9CLn-2F831tsVsEaiHutBlf0R34Tnm0Hw7kAlKw-2B0EOCXvB50MaGAl=
+lNocLHtQLOTU4hjtxXwHFfINI8UzEpXQZ9DIAePB-2FGjnx3EMm8VDOCmnZPbnt41V9ol7gWYjy=
+VjqmcmoHvyevos-2FIVHgYGk-3D"> <img src=3D"https://static.figma.com/uploads/=
+e9ea90d138f7a23ad8bbe972be6617d61ee85ba1" width=3D"30" style=3D"width: 30px=
+; max-width: 30px; font-size:10px; line-height:12px; font-family:'Whyte', A=
+rial, Helvetica, sans-serif; color:#ffffff; vertical-align:top; text-align:=
+ center;" alt=3D"YouTube"></a>
+          </div>
+          <!--<![endif]-->
+        </td>
+
+        <td width=3D"30" style=3D"font-size:1px; line-height:1px;"></td>
+
+        <td align=3D"left" class=3D"active-i" style=3D" line-height:1px; fo=
+nt-size:1px; mso-line-height-rule:at-least;">
+<a style=3D"text-decoration:none;" href=3D"https://click.figma.com/ls/click=
+?upn=3Du001.Y4GnNWhdnCDA1MWI-2FhIyfBae3SEQH59GPp6LIQwPKqji7lHWjSODVYJtofqli=
+YDLJctO_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXjDxGOp7MaYke4XWOfTAzs9=
+sRVo-2Fo-2BJ3NJpHvUlQOsoYu5JteE0mufG1YDEEtu9ilE1SAldKd6i-2FpMsM51-2BrrK813-=
+2BmZcI5Q-2BjMMVbIN0FM0LHmQ6MR7yfEwQGRyVmdWM8zNpZ68tYEN5iHVZYVWT0kedXb4oUY0I=
+5NnSBWJXyX1Jj5EGJqunG9Cmupz5gwe2NRkPpZFWhZjcHF5otckqYkqNzWI-2FXiD0ErWRaZeSL=
+WYX-2BYhD50AZ3C8Ie46MiLN2CzWZKVfLxVJnzYgvLDJv1EdisqbRqT9us3Oq-2Bgkrk-2Fp9Aq=
+nFB7FETzWgGdg4471oKwt1H1ggaBWnPn1NuHzNoPyZzBZMGj-2BwCralbAmaoqqUivqfvJ7X6we=
+cxJc5Lrck-3D"> <img class=3D"light-img" src=3D"https://static.figma.com/upl=
+oads/02676955b299a6571870721434fcc596c6b8de56" width=3D"30" style=3D"width:=
+30px; max-width: 30px; font-size:10px; line-height:12px; font-family:'Whyte=
+', Arial, Helvetica, sans-serif; color:#000000; vertical-align:top; text-al=
+ign: center;" alt=3D"LinkedIn">
+          <!--[if !mso]>
+            <! -->
+        </a>
+          <div class=3D"dark-img" style=3D"display: none; overflow: hidden;=
+ float: left; width: 0px; max-height: 0px; max-width: 0px; line-height: 0px=
+; visibility: hidden;" align=3D"left">
+            <a style=3D"text-decoration: none;" href=3D"https://click.figma=
+.com/ls/click?upn=3Du001.Y4GnNWhdnCDA1MWI-2FhIyfBae3SEQH59GPp6LIQwPKqji7lHW=
+jSODVYJtofqliYDLKV2L_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXjDxGOp7Ma=
+Yke4XWOfTAzsvmTtQN6utmEUOpfH5xbvKHGTrL6xPkAn5WGjYKCGIZBiEdFFWkMT2o7diBM5JPa=
+Hab6InXYlVLGQf8V0-2Ft5pDhb2WiSEJjHFZ-2FCI5q1wGcJSwkV4TbakA9dE2VHwx8aKE-2FH7=
+U3E6kl8vipEfXL5NQTbEhlOIAYg-2FpndPOpk8C4C-2FExBCaw31KnY-2BEKP7F16yu-2BmbOvG=
+e66fASWatdil24Uhd1N68BtQ1Xu739PFft11zvYLHTMoUXRQ2X2xO0pbWg35NlW7I-2FUOvtYip=
+UHOh2wQfU-2BaAjrORYBAJ7JwSiGeXIzmiFc4ZZvCA3JiWr8qWWJor8HLA7H7JgLdzY9C8bAPPA=
+2HzDq0gsgSBdmNsbYg-3D"> <img src=3D"https://static.figma.com/uploads/c94ec9=
+dc33c98e9c1553d601d31aede0d120d98d" width=3D"30" style=3D"width: 30px; max-=
+width: 30px; font-size:10px; line-height:12px; font-family:'Whyte', Arial, =
+Helvetica, sans-serif; color:#ffffff; vertical-align:top; text-align: cente=
+r;" alt=3D"LinkedIn"></a>
+          </div>
+          <!--<![endif]-->
+        </td>
+
+      </tr>
+      </tbody>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td align=3D"center" style=3D"font-size: 12px; line-height: 17px; font-fa=
+mily: 'Whyte', Arial, Helvetica, sans-serif; color: #a5a5a5; padding: 0 0 3=
+2px;">760 Market Street, Floor 10<br>
+    San Francisco, CA, 94102</td>
+</tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+<img src=3D"https://click.figma.com/wf/open?upn=3Du001.wJ4wQoWqpttL0LnWj9yC=
+ngQD-2BPKOSnIWwGo2A-2BWj6Xh3WssoRcsnPsQRxLsqk-2BYzUuZeZpxF3qV6Q599QQZA-2BU8=
+vXTydDT-2FSAEFC9lOhWXfa6uNmJZcczUzhNmgaSYQ5d1WaxzQHPrfZQh-2FQWj5-2F1ZUnEB92=
+N5HR4Lg80jeXTLXMez4qt8um4FqJXwrSOjq-2BctID-2FjtNHMIWXrAzWJGY4eHWuKJzYUSjQeV=
+8ilNDKCsg9sh8M1vqFGWgugdyl-2FU28q-2BoCUdJtQBSTreeJrt0yXw6Ce87rJQlAdhJhQ5hGa=
+VlrQmk2kU7zfSSHGc8ezdDJP4d62D67-2F0SJo-2FjUKqJWbJCTuxEhbMJVS7jjIfce25jCpZd-=
+2F9-2BkxwzCq45ovblY7vWKxyJ760sBVEF-2FjLeCvxmPLAUA9yl6RyFNEm4XXbE-3D" alt=3D=
+"" width=3D"1" height=3D"1" border=3D"0" style=3D"height:1px !important;wid=
+th:1px !important;border-width:0 !important;margin-top:0 !important;margin-=
+bottom:0 !important;margin-right:0 !important;margin-left:0 !important;padd=
+ing-top:0 !important;padding-bottom:0 !important;padding-right:0 !important=
+;padding-left:0 !important;"/></body>
+
+</html>
+
+--b94a7e2bbc234458d82c4ea16aca05468372a52903e6aec36d953f2a661b--
+

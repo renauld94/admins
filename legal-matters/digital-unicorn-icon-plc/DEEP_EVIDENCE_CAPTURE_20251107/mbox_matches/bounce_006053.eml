@@ -1,0 +1,664 @@
+X-GM-THRID: 1815688308418606517
+X-Gmail-Labels: Inbox,Important,Opened,Category Personal
+Delivered-To: sn.renauld@gmail.com
+Received: by 2002:a17:906:2699:b0:aa2:128:c066 with SMTP id t25csp195413ejc;
+        Thu, 14 Nov 2024 01:08:26 -0800 (PST)
+X-Google-Smtp-Source: 
+ AGHT+IEkEh+PV0+9B35Xti+rAWznzdHeqr9fgT3Z6Y/eQSuphBicmkiIo29e7hipMHXPlf02cBos
+X-Received: by 2002:ac8:5802:0:b0:462:b9de:deb8 with SMTP id
+ d75a77b69052e-46358fbe952mr17186321cf.37.1731575306352;
+        Thu, 14 Nov 2024 01:08:26 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1731575306; cv=none;
+        d=google.com; s=arc-20240605;
+        b=ZBUyJdK1skHqQ9RUnthDSKU3qRqkeueVCseZumgWYVGm1oeCvbf9TpOVThxwfg3h8X
+         ZXooZmeIwaP0blDsyCtQ4GD/Q0bFOyhOdw5EavSTa9m1dwCtkYMUNyFDNEoxUoNjW8w0
+         e4RZeg90GtPWXnGDrgcEzyCXGLtaP4rkt6L8sqJz+pEWE3pNBBPlHnXUjP+Gh91NLLPy
+         WFwcHvqXB9rEXa2kQBqQ/dQlIf5BNigXidCWDxO3yDx1FXo5YDQs1MjEihW2tlk9YEhE
+         uyhnb9KTPkiTctpJcTD7xpdL8oi3qZ65hz44OMH+NV2W/MJye1MBltCzv5cMohy+h8eV
+         C/2g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605;
+        h=to:mime-version:from:subject:date:message-id:dkim-signature
+         :dkim-signature;
+        bh=DWh8u+bD/+B+ZENzS53rXdk9PTC/Tl7vzO4yjV5d8mc=;
+        fh=UdbUcDkJKvqffcPeSfMTJ3BaP9WLNp68ZQroZAlxuH8=;
+        b=HfZ7i49ZkZPm7kloXgT71e824qPoA06yRG4+2V9SM/ic0oNoNyVB0hH3MjclHV6xTG
+         H3nFagcc9kSckVSRIIC77LxEFnCUNvmpPeUZjPDkQ2Cfrsx8kHaQyD/ZwANnGVqUPsL4
+         2/jMHYC+2069jK+WQ5dhwT5Yj3sc0XmK6SZ/2AaZqwOHrWZL3FoTT6MdggWYzHas/03J
+         REwyiFh7mYgqYSQrlCsZVwbxoc8qEaovurFPhuh28sdhyhFuu4sP+hh8QpgDztOQKAOp
+         JM0MjxxnpDsxs5cIbz6W8xDEHyyOOe9NxEKO/hun5ck+SuFY56oS0x/gNlrrv1SY9pU2
+         ZsUg==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@noip.com header.s=s1 header.b="Jp/5intH";
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=ymAwNqds;
+       spf=pass (google.com: domain of
+ bounces+1423439-b9ae-sn.renauld=gmail.com@em3906.noip.com designates
+ 167.89.45.214 as permitted sender)
+ smtp.mailfrom="bounces+1423439-b9ae-sn.renauld=gmail.com@em3906.noip.com";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=noip.com
+Return-Path: <bounces+1423439-b9ae-sn.renauld=gmail.com@em3906.noip.com>
+Received: from o1.em.www.noip.com (o1.em.www.noip.com. [167.89.45.214])
+        by mx.google.com with ESMTPS id
+ d75a77b69052e-4635a98d3easi6830541cf.64.2024.11.14.01.08.25
+        for <sn.renauld@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 Nov 2024 01:08:26 -0800 (PST)
+Received-SPF: pass (google.com: domain of
+ bounces+1423439-b9ae-sn.renauld=gmail.com@em3906.noip.com designates
+ 167.89.45.214 as permitted sender) client-ip=167.89.45.214;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@noip.com header.s=s1 header.b="Jp/5intH";
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=ymAwNqds;
+       spf=pass (google.com: domain of
+ bounces+1423439-b9ae-sn.renauld=gmail.com@em3906.noip.com designates
+ 167.89.45.214 as permitted sender)
+ smtp.mailfrom="bounces+1423439-b9ae-sn.renauld=gmail.com@em3906.noip.com";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=noip.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=noip.com;
+	h=subject:from:mime-version:x-feedback-id:to:content-type:cc:
+	content-type:from:subject:to;
+	s=s1; bh=DWh8u+bD/+B+ZENzS53rXdk9PTC/Tl7vzO4yjV5d8mc=;
+	b=Jp/5intHgfi4U2LJgpQsVQHWfqkoKwg02rfYjf2WhQhNpwUABNvBPqTqa+YuhlVAgT0G
+	eQyFhy6ewszaZHZjBVjjK0ushUAyjAMe6H1xdUtGMPcyu3T4W6D9hXWF5/tGB7r2InelkR
+	3VN6HTX2a/0m8x9/A1CpTEpWtXoqrpIl1GASHKWYPDFzGpPNb9ZrBO4TvQg1cAbffJKCMQ
+	Gw6UVO/RcHBZIbLzsGnK/E0wx5W0E9OuZ6XPcmzU+1Hu8LitwK5f301wwvVAUE7W5sehUu
+	0Y0qHIVcVIlQt2uz4AjPrV2aTRhAQPa0HED+xfWis2ESKH9h8RrzuxTidcASxJRA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendgrid.info;
+	h=subject:from:mime-version:x-feedback-id:to:content-type:cc:
+	content-type:from:subject:to;
+	s=smtpapi; bh=DWh8u+bD/+B+ZENzS53rXdk9PTC/Tl7vzO4yjV5d8mc=;
+	b=ymAwNqdsNiUDmnDA2Unvxtny9EGifaG6hOCld+pbzZKm9FplBZROJuQuvChiVo4S5Hh9
+	FmmtOHd5WyZJrPbZuudAXYBUys6mn3UxJWyRc8s3TkNBJ/4Hb/5u3yhlE0ymMKAwqQ2mYs
+	xL7Sn3tsgV5XC5ZhSgFTPSZpZN0QCzna0=
+Received: by recvd-7c977b9d6-nqq9w with SMTP id
+ recvd-7c977b9d6-nqq9w-1-6735BE07-F
+	2024-11-14 09:08:23.602074039 +0000 UTC m=+5411525.747350058
+Received: from www.noip.com (unknown)
+	by geopod-ismtpd-0 (SG) with ESMTP
+	id NelIE2RzSCGHdwkhKTFJUw
+	for <sn.renauld@gmail.com>;
+	Thu, 14 Nov 2024 09:08:23.448 +0000 (UTC)
+Message-ID: <b431f6aa453c924fc0692ba7fb0b49f7@swift.generated>
+Date: Thu, 14 Nov 2024 09:08:23 +0000 (UTC)
+Subject: Welcome to No-IP
+From: No-IP Notices <noreply-36123503@noip.com>
+MIME-Version: 1.0
+X-Feedback-ID: 1423439:SG
+X-SG-EID: 
+ =?us-ascii?Q?u001=2Eoi4RWJM3NUA3Ssq=2FOdLhs3EtuUXvzVevbGjYJrtMDz02cjyqu1gPKKcC0?=
+ =?us-ascii?Q?JO6QwERTQeC=2FncgDMjkwNTdbU09qNSF70C8e2JL?=
+ =?us-ascii?Q?aYQ3JQLGN6xaXrdt724xD6=2FnyLIlRJM=2F37y2xRx?=
+ =?us-ascii?Q?tr7y417mtF5yycc9rD2EncIxH2TGA7JFoUOjn1G?=
+ =?us-ascii?Q?41Mnt=2F48+fDaycIrF8z0yVZnYh+tklDWoSePoBV?=
+ =?us-ascii?Q?is=2FUJ6Y1vEtaUyaEF2=2F6zxfZQrFts6QDXJDvp4W?=
+ =?us-ascii?Q?doRK?=
+X-SG-ID: 
+ =?us-ascii?Q?u001=2ESdBcvi+Evd=2FbQef8eZF3BvufoO+NYbGPJVutx5ZMUbi6fkJqnpyt5ltOi?=
+ =?us-ascii?Q?34+XLGqf35EiqMXYbjlR=2FgN6HU5IwW4I07HIqWR?=
+ =?us-ascii?Q?al1QVVwx9h+Lt3Cd2fpveAOk3mG=2FosEIKDSViSD?=
+ =?us-ascii?Q?cx0CY6IY5qyLW8w=3D=3D?=
+To: sn.renauld@gmail.com
+X-Entity-ID: u001.hvlCMewRlm7HYqxBaVwI8w==
+Content-Type: multipart/alternative;
+ boundary="_=_swift_1731575303_8015bd0cb650db9984d6d24f4dab207c_=_"
+
+
+--_=_swift_1731575303_8015bd0cb650db9984d6d24f4dab207c_=_
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+
+
+Thanks For Joining Us!
+
+Thanks again for signing up for a No-IP account. We have two options for ge=
+tting your account configured; you can do it on your own, or we can help yo=
+u. Follow the steps below to configure your account, or configure your devi=
+ce now using our Configuration Assistant.
+
+You can log in at this link: https://www.noip.com/login
+
+If you are still lost and need additional help, please open a support ticke=
+t or give us a call, 775-853-1883. Our Customer Success Team is here to hel=
+p!
+
+
+--_=_swift_1731575303_8015bd0cb650db9984d6d24f4dab207c_=_
+Content-Type: text/html; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org=
+/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+  <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D=
+1.0, maximum-scale=3D1.0, user-scalable=3D0" />
+  <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8">
+  <title>No-IP - Free Dynamic DNS - Managed DNS - Managed Email - Domain Re=
+gistration</title>
+  <meta charset=3D"utf-8">
+  <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D=
+1">
+  <meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge" />
+  <link href'https://fonts.googleapis.com/css?familyOpen+Sans:400,300=3D
+  ,300italic,400italic,600,600italic,700italic,800,800italic,700' rel'styl=
+=3D
+  esheet' type'text/css'>
+  <style type=3D"text/css">
+      /* CLIENT-SPECIFIC STYLES */
+      body, table, td, a{-webkit-text-size-adjust: 100%; -ms-text-size-adju=
+st: 100%; font-family: 'Open Sans', Helvetica, Arial, sans-serif; line-heig=
+ht: 25px;} /* Prevent WebKit and Windows mobile changing default text sizes=
+ */
+      table, td{mso-table-lspace: 0pt; mso-table-rspace: 0pt;} /* Remove sp=
+acing between tables in Outlook 2007 and up */
+      img{-ms-interpolation-mode: bicubic;} /* Allow smoother rendering of =
+resized image in Internet Explorer */
+
+      /* RESET STYLES */
+      img{border: 0; height: auto; line-height: 100%; outline: none; text-d=
+ecoration: none;}
+      table{border-collapse: collapse !important;}
+      body{height: 100% !important; margin: 0 !important; padding: 0 !impor=
+tant; width: 100% !important;}
+      .padding-copy { padding: 5px 20px !important; text-align: left;}
+      .padding-top { padding: 40px 40px!important; text-align: left;}
+      .padding-bottom { padding: 0 20px 20px !important; text-align: left;}
+
+      /* iOS BLUE LINKS */
+      a[x-apple-data-detectors] {
+          color: inherit !important;
+          text-decoration: none !important;
+          font-size: inherit !important;
+          font-family: inherit !important;
+          font-weight: inherit !important;
+          line-height: inherit !important;
+      }
+
+      /* MOBILE STYLES */
+      @media screen and (max-width: 525px) {
+
+          /* ALLOWS FOR FLUID TABLES */
+          .wrapper {
+            width: 100% !important;
+              max-width: 100% !important;
+          }
+
+          /* ADJUSTS LAYOUT OF LOGO IMAGE */
+          .logo img {
+            margin: 0 auto !important;
+          }
+
+          /* USE THESE CLASSES TO HIDE CONTENT ON MOBILE */
+          .mobile-hide {
+            display: none !important;
+          }
+
+          .img-max {
+            max-width: 100% !important;
+            width: 100% !important;
+            height: auto !important;
+          }
+
+          /* FULL-WIDTH TABLES */
+          .responsive-table {
+            width: 100% !important;
+          }
+
+          /* UTILITY CLASSES FOR ADJUSTING PADDING ON MOBILE */
+          .padding {
+            padding: 10px 5% 15px 5% !important;
+          }
+
+          .padding-meta {
+            padding: 30px 5% 0px 5% !important;
+            text-align: left;
+          }
+
+          .padding-copy {
+           padding: 5px 20px !important;
+            text-align: left;
+          }
+
+          .no-padding {
+            padding: 0 !important;
+          }
+
+          .section-padding {
+            padding: 50px 15px 50px 15px !important;
+          }
+
+          /* ADJUST BUTTONS ON MOBILE */
+          .mobile-button-container {
+              margin: 0 auto;
+              width: 100% !important;
+          }
+
+          .mobile-button {
+              padding: 15px !important;
+              border: 0 !important;
+              font-size: 16px !important;
+              display: block !important;
+          }
+
+          .logo {
+          	padding-left: 0px;
+          }
+
+      }
+
+      /* ANDROID CENTER FIX */
+      div[style*=3D"margin: 16px 0;"] { margin: 0 !important; }
+  </style>
+
+  </head>
+  <body style=3D"margin: 0 !important; padding: 0 !important; background-co=
+lor: #f9f9f9;">
+
+  <!-- HEADER -->
+  <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" al=
+ign=3D"center">
+      <tr>
+          <td align=3D"center">
+              <!--[if (gte mso 9)|(IE)]>
+              <table align=3D"center" border=3D"0" cellspacing=3D"0" cellpa=
+dding=3D"0" width=3D"500">
+              <tr>
+              <td align=3D"center" valign=3D"top" width=3D"500">
+              <![endif]-->
+              <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=
+=3D"100%" style=3D"max-width: 600px;" class=3D"wrapper">
+                  <tr>
+                      <td align=3D"left" valign=3D"top" style=3D"padding: 3=
+0px 0;" class=3D"logo">
+                                              <a href=3D"https://url9788.no=
+ip.com/ls/click?upn=3Du001.JUxgKyJMTnaF8kWw9u-2FSu29gF4WwSFEH4kZQ6aeC9lwdU1=
+U8cRX3kk9lk-2B9RKM6f04SCGMaqeWzzFZrnoJR4NWBnZoVlCk-2FRVtnAvPAworOHPnEz1lSSK=
+IKt-2FtsixYgWWky9_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwW8auCzQxLtRlC=
+N3WqX5aIsqpPGUW4nh93RpWrq2OHjzqGvZZTlv6LIEci8wDnPyJxhvHvnqEWpt8PSZS7XM3LJsL=
+gP7xw-2BevWVkwX0DB-2B5j8EKNps7vCatGmu3q3Xz0EctyWH2XY0P-2Bv3sDJ-2BIiO2a3pIFt=
+TopQH9KTdB005BPKmbeOa3H6fqlIbFFDqIJtylhP3vahnn-2FVgFu0F-2FsyOT8XufvhNe3QEXU=
+PioVjfbOREG-2FhPG4taWEbpCjlNj4iwjDksNpMLfg4bw8Xnr6F2Ts">
+                                            <img src=3D"https://d8jtxgaul97=
+l0.cloudfront.net/img/logo-grey@2x.png" style=3D"outline: none; border: 0;"=
+/>
+                    </a>
+                  </td>
+              </tr>
+          </table>
+          <!--[if (gte mso 9)|(IE)]>
+          </td>
+          </tr>
+          </table>
+          <![endif]-->
+      </td>
+  </tr>
+  <tr>
+      <td  align=3D"center" style=3D"padding: 15px;">
+          <!--[if (gte mso 9)|(IE)]>
+          <table align=3D"center" border=3D"0" cellspacing=3D"0" cellpaddin=
+g=3D"0" width=3D"500">
+          <tr>
+          <td align=3D"center" valign=3D"top" width=3D"500">
+          <![endif]-->
+          <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"=
+100%" style=3D"max-width: 600px; padding: 20px; padding-top: 20px;" class=
+=3D"responsive-table">
+              <tr>
+                  <td>
+                      <!-- COPY -->
+                      <table width=3D"100%" style=3D"max-width: 600px; back=
+ground-color: #2A3644; margin-bottom: 30px;" border=3D"0" cellspacing=3D"0"=
+ cellpadding=3D"0">
+    <tr>
+      <td align=3D"center" style=3D"font-size: 14px; font-family: 'Open San=
+s', Helvetica, Arial, sans-serif; color: #ffffff; padding: 15px; text-align=
+: center;">
+        <h1>Welcome to No-IP!</h1>
+        <p>
+        Thanks again for creating a No-IP account.<br> Follow the steps bel=
+ow to configure Dynamic DNS on your account.
+        </p>
+      </td>
+  </tr>
+</table>
+
+<table width=3D"100%" bgcolor=3D"#ffffff" style=3D"max-width: 600px;" borde=
+r=3D"0" cellspacing=3D"0" cellpadding=3D"0">
+    <tr>
+      <td align=3D"left" style=3D"font-size: 14px; font-family: 'Open Sans'=
+, Helvetica, Arial, sans-serif; color: #666666; padding-top: 30px;" class=
+=3D"padding-top">
+        <p>We have two options to help get your new account configured; you=
+ can do it on your own, or we can help you. Follow the steps below to confi=
+gure your account, or configure your device now using our <a href=3D"https:=
+//url9788.noip.com/ls/click?upn=3Du001.JUxgKyJMTnaF8kWw9u-2FSu74aRAuyVBOL-2=
+BHsPPrjo1iAs5PuEZRqlfE2PyvVBv4YfYIOLtBviHDAkz2UeG37kND-2BQSY171lfaou-2BmRSV=
+PpyW0-2BjS2SyoMsSnUiHZbxD-2BEbuCesQBWG-2FuXTIOr47Sw5w-3D-3D1XXg_rO1JRqZrx5O=
+o25BATZItEvIKK9wiuA6UN-2BXngf09BwW8auCzQxLtRlCN3WqX5aIs30y0dEpNZPOVLsABoHal=
+Y8CXyhypOo2ESCs1m0PlN3oNoAhwwdwrArRCUjhAIH0sAnb3A9967fKabacfxakvAQ34bqEYIyX=
+VV2I0VCEkqCgpM9Zfnd9XFQItW9dhPptmBC22j0SSMGzv2swh1A3S6FU-2BRPSDdNUrXn65nM6m=
+VzA68jpKjGEeqf3YhK04Hd3Z0-2BSDX-2FTZ3yyWCp8bAsXaKwwdbzEkXPzB7MzbVsp7qcOItfY=
+wtf1paIHIcjODGQjq" style=3D"text-decoration: underline;"> Device Configurat=
+ion Assistant.</a></p>
+
+        <p style=3D"padding-bottom: 30px;">If you need additional help, ple=
+ase <a href=3D"https://url9788.noip.com/ls/click?upn=3Du001.JUxgKyJMTnaF8kW=
+w9u-2FSu54yqd9mvNh7-2B2wfCX5yL1INUOJWGdQkLNsoLuKu9PF6hWTC_rO1JRqZrx5Oo25BAT=
+ZItEvIKK9wiuA6UN-2BXngf09BwW8auCzQxLtRlCN3WqX5aIsWwtWxsb-2B4Ya7q6SWYZoehQaV=
+dizfAAufIEtMHG2OlZiuZPrk7aJXOSCkRzJQAxL99AsA161xaOe9vvpJEGVZEvyHb8S9DlsHlVI=
+J-2FRk0UD1BqGP38MtJrbUmtwlf-2FgBLRWEK71KyqUx9HOCkpxOXYIJL32Mz3NZumOj4UuffhW=
+Do1x6w2eMpXLrXicl4WsmB2cMv2SaI09Ota6E2SqJrTdGzsY8z2nwcXVYAxSypZYPds22vFyNmj=
+ipfXJQagYrK" style=3D"text-decoration: underline;">open a support ticket</a=
+>, or give us a call, 1-775-853-1883. Our Customer Success Team is here to =
+help!</p>
+        <hr style=3D"border-color:#2A3644; margin-bottom: 30px;" />
+        <h2 style=3D"color:#2A3644;">Dynamic DNS Account Configuration</h2>
+        <table width=3D"100%">
+          <tr>
+            <td width=3D"40px" align=3D"left" valign=3D"top" style=3D"paddi=
+ng-bottom:30px; padding-top: 5px;">
+               <img src=3D"https://d8jtxgaul97l0.cloudfront.net/img/getting=
+-started-1@2x.png" alt=3D"Step 1" style=3D"-ms-interpolation-mode: bicubic;=
+ border: 0; display: block; outline: 0; text-decoration: none; width: 21px;=
+" width=3D"21" border=3D"0">
+            </td>
+            <td  style=3D"padding-bottom:30px;">
+              <a href=3D"https://url9788.noip.com/ls/click?upn=3Du001.JUxgK=
+yJMTnaF8kWw9u-2FSu1PklCPWEqawqbK7ooVomtPrIkUVBePvxj5YXlSGq0R-2F3dI__rO1JRqZ=
+rx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwW8auCzQxLtRlCN3WqX5aIsSfxYw8bCBRjUix5q=
+MBLJmOkjtdi2qRMNay8PM4CAXaG55ofa-2Fdd-2FdVF9hf6TlgF0MW0Jc44XTOYDjgHX6L4aYQK=
+Y4re-2BJfjpFgHr-2B6X43BWTDK9SOE2X-2FOfex1jFuYkcfpVpMQP-2FQOvQ60C53TAphuKP1N=
+hcy2cqL4YwBiOOZZyf9wSWxDYzOln5AbYo22Wadl5JqfCLyuhVE1jA1mSBAQkXR9Ai-2FKp1Yzb=
+nalykZbhGhYvY0w9b6m3Gi5r9bn-2Bs" style=3D"text-decoration: underline;">Logi=
+n</a> to your No-IP account.
+            </td>
+          </tr>
+          <tr>
+            <td width=3D"40px" align=3D"left" valign=3D"top" style=3D"paddi=
+ng-bottom:30px; padding-top: 5px;">
+               <img src=3D"https://d8jtxgaul97l0.cloudfront.net/img/getting=
+-started-2@2x.png" alt=3D"Step 2" style=3D"-ms-interpolation-mode: bicubic;=
+ border: 0; display: block; outline: 0; text-decoration: none; width: 21px;=
+" width=3D"21" border=3D"0">
+            </td>
+            <td style=3D"padding-bottom:30px;">
+              <p style=3D"margin-top: 0">Create a hostname <img src=3D"http=
+s://d8jtxgaul97l0.cloudfront.net/img/getting-started-hostname.png" alt=3D"(=
+example: yourname.ddns.net)" style=3D"-ms-interpolation-mode: bicubic; bord=
+er: 0; display: inline-block; outline: 0; text-decoration: none; width: 201=
+px; margin-bottom: -3px;" width=3D"201" border=3D"0"></p>
+              <p>This hostname will be the URL you will use to connect to y=
+our device from anywhere.</p>
+            </td>
+          </tr>
+          <tr>
+            <td width=3D"40px" align=3D"left" valign=3D"top" style=3D"paddi=
+ng-bottom:30px; padding-top: 5px;">
+               <img src=3D"https://d8jtxgaul97l0.cloudfront.net/img/getting=
+-started-3@2x.png" alt=3D"Step 3" style=3D"-ms-interpolation-mode: bicubic;=
+ border: 0; display: block; outline: 0; text-decoration: none; width: 21px;=
+" width=3D"21" border=3D"0">
+            </td>
+            <td style=3D"padding-bottom:30px;">
+              <p style=3D"margin-top:0;">Download and Install the <a href=
+=3D"https://url9788.noip.com/ls/click?upn=3Du001.JUxgKyJMTnaF8kWw9u-2FSu4DZ=
+8QwmVfzJ17bsgTLmQs1JWDkjlVpMo5frZIN-2FMn9OlNw0_rO1JRqZrx5Oo25BATZItEvIKK9wi=
+uA6UN-2BXngf09BwW8auCzQxLtRlCN3WqX5aIsw36-2FA9ArrBPzc8qSn02OcE-2F1mzNyAhNLs=
+GuvQrK7svddPWoGveAUIHtQgqQd6AI2fiWD4bbPsEc-2BDoaconFDmkE5GO-2FvrXmIfdDMIM5Q=
+KYKMVBhNGSd5ryeLr-2B14oudHV8Rk4BpboxMYcUHEzoWWm1HUtK6fhCR76yY-2FRmQLiQKymtD=
+yAV6Ah6K0iEvvT9SAA0sMwc7GWuiuyD50cwUgPbzL9KwPG2lruNCrL9PXO-2B3NkoaUmqmFMCu-=
+2B24MtTqlt" style=3D"text-decoration: underline;"> Dynamic Update Client (D=
+UC)</a>.</p>
+              <p>This software is only needed if your router or device does=
+ not have No-IP as an integrated Dynamic DNS provider. ( <a href=3D"https:/=
+/url9788.noip.com/ls/click?upn=3Du001.JUxgKyJMTnaF8kWw9u-2FSu6sdR89bVp1TUmA=
+HGtA6nmaJO0s0bKjdIv3HUSaVI1I-2FTUYXsEhgJaypvm546LnzcPTXF0EWM-2FD25xFxYOjmTk=
+dWou25DwOveL0s3EAD34pbVGem_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwW8au=
+CzQxLtRlCN3WqX5aIsujex-2Fkv0Q-2FEMyDnEA2eOloyEF6JDN-2Fl7Chc8zlGv9t8GarGb-2F=
+5uJ8CMnSg-2BGmYwcoSOE2FHcqlZtpOdNajq6sTZHk-2FCGnrRT2qPZqUcMNpSqxrklW5uSiwEW=
+Ixv8qyP0D-2Bu9qHKlfgNS94CLdvzW9x4fuRZjGEt2i9PKLhktAn4-2BXBDnpBcQd-2FzF2TfW-=
+2FFwu8NGOVCxxJP1dSYzg6zMCFoewHhhsBnmZSBvtd-2FQjd01UHmsawMi9m3Uum491-2Fufa" =
+style=3D"text-decoration: underline;">What is an integrated Dynamic DNS pro=
+vider</a> ?)</p>
+              <p>After installation, you will need to login to the DUC and =
+configure it to update the hostname you added in Step 2. (<a href=3D"https:=
+//url9788.noip.com/ls/click?upn=3Du001.JUxgKyJMTnaF8kWw9u-2FSu6sdR89bVp1TUm=
+AHGtA6nmaJO0s0bKjdIv3HUSaVI1I-2FdOxO0497YXy-2FwQht6qQry7OuWQ98uCVmKcgw6XtVo=
+CdGQygVpboBi2hRNqpiHsOMxfj7PsmWuXrA8Az-2BhpLAQA-3D-3DpnWL_rO1JRqZrx5Oo25BAT=
+ZItEvIKK9wiuA6UN-2BXngf09BwW8auCzQxLtRlCN3WqX5aIsSlkx2FqI9JhAm9PhDAgIiIyUc7=
+VWSsr52RURog8fTnrxfbaX15nb8jtxH1HARP5B-2BXD5mpTslAte4H1l8KIVDyOY6Lxaq73UK2W=
+lZdwilQnryuhPyAt8x-2FrnrUQ-2Fbb35pw00JHfeblQMVRpbmbt16XUznXFivdoiBYQRl3JRHZ=
+66sUNjrOFNxlJXY1-2BR-2BjTZUxm4CU8tceit4UnXS1Jhi9kvHcs8FimpP4sEv-2BPeUzilbxf=
+P89olHGzzgvv3QfoI" style=3D"text-decoration: underline;">Windows DUC Instru=
+ctions</a>, <a href=3D"https://url9788.noip.com/ls/click?upn=3Du001.JUxgKyJ=
+MTnaF8kWw9u-2FSu6sdR89bVp1TUmAHGtA6nmaJO0s0bKjdIv3HUSaVI1I-2FI4LlaMyuVaAlTr=
+xqDiESvr23ysZ3-2FbRepzrx25gkpg063V2O2cReKU7hDafyennV0TWWT-2F8cP8BGnb0nip2nM=
+A-3D-3DCoS9_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwW8auCzQxLtRlCN3WqX5=
+aIsPh4di2qN362fqtdg9eagIsqk3tOHiIgdpjwobdjoeQ-2B-2Fc0m0EEIPTR8xH-2FEsY0o5-2=
+F1uPl-2FSS-2F9UJBNMdIMCWgumcrqKDfSPAEqzywAh5-2B8zLPi1EKaZhqEREfqvZOTmwORfuv=
+XY1vYS-2FrXcETVJGSojPQtZMw77qY0toa4nsliMIMNO8sAZIuZi6qEVbd9gnGq-2BkdiaCXoj4=
+GuiR5SwWuaz1peeLyN-2FeTJLO-2FfLxYpOcSURYin-2BNOVnsqNVi4FvA" style=3D"text-d=
+ecoration: underline;">Mac DUC link Instructions</a>, &amp; <a href=3D"http=
+s://url9788.noip.com/ls/click?upn=3Du001.JUxgKyJMTnaF8kWw9u-2FSu6sdR89bVp1T=
+UmAHGtA6nmaJO0s0bKjdIv3HUSaVI1I-2FdOxO0497YXy-2FwQht6qQry2JjjYojS6i5A6zTXEz=
+9d8EeLgHW884VDQF-2Fuvmz9vz2QPCf_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09B=
+wW8auCzQxLtRlCN3WqX5aIseUZLlHSlAWsfbEVpuR9eNvR8iK8KxzHu2b3gUUG4r-2F1Jo35GlT=
+QRLCwGNdrn8C6zQiEuTcok14XACQqcz150aXUv1pBouIFaLNNmyEdWfse5h0bglQxUfgbYhlHwy=
+8GY1PZ5p1162VeMxrhJR6WjnVJlF5eM3eFoyooJ0Fzqe9GC5cHVYFDVyWTXxW8Uu7zu-2Br0woG=
+a47eG-2BGEANZFmIyOl5VaQmPL9u-2BAgG70B9xdAPLQXfCxE75TZznzvStFgu" style=3D"te=
+xt-decoration: underline;">Linux DUC Instructions</a>)</p>
+            </td>
+          </tr>
+          <tr>
+            <td width=3D"40px" align=3D"left" valign=3D"top" style=3D"paddi=
+ng-bottom:30px; padding-top: 5px;">
+               <img src=3D"https://d8jtxgaul97l0.cloudfront.net/img/getting=
+-started-4@2x.png" alt=3D"Step 4" style=3D"-ms-interpolation-mode: bicubic;=
+ border: 0; display: block; outline: 0; text-decoration: none; width: 21px;=
+" width=3D"21" border=3D"0">
+            </td>
+            <td style=3D"padding-bottom:30px;">
+              <p style=3D"margin-top:0px;">If you are behind a router or fi=
+rewall, you will need to open and forward the correct ports for the service=
+s you wish to run.</p>
+              <p><strong><a href=3D"https://url9788.noip.com/ls/click?upn=
+=3Du001.JUxgKyJMTnaF8kWw9u-2FSu6sdR89bVp1TUmAHGtA6nmaJO0s0bKjdIv3HUSaVI1I-2=
+F-2B3kJjFnkb2LkRMkSBRYWZujwRQK1vLRWwnFtBPq4H8MO0o-2B3b0fzycMh7ZEkshaCvbIjP0=
+OKtyKIVRZKNCon7g-3D-3DKY8s_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwW8au=
+CzQxLtRlCN3WqX5aIsiyCvrKUi9UJgExuWczZnMe9ZOgqTxAO3FVkO6e-2B-2FfM0U8HvNzbftP=
+RS6TLuXhccMOuHVCj2A3FUdjv5dxIO1ZwcH8M6X3YDPbXSV-2FnOodOJ4lQyEnEF2MTlICmMsie=
+P-2BIy8sddjigguLFlRo4D5-2FMlaycanv4DhJyOfHTLx2gyNqDLLFjUtT876YatYrMR8uM-2Ba=
+KZluu-2BzqHsDp-2FNyh4lWQoCdYvgZ1wDIAXhsuZJ2oWdEf-2BMcOD5oPb153sBlTd" style=
+=3D"text-decoration: underline;">Port Forwarding Guides</a></strong></p>
+              <p style=3D"margin-bottom:0px;">
+                Not sure which ports to forward? Check out this <a href=3D"=
+https://url9788.noip.com/ls/click?upn=3Du001.JUxgKyJMTnaF8kWw9u-2FSu29r3jha=
+j9mer-2BSCuVsqswtrim-2FAC3Jy6eLRmkaqOKV40zTy_rO1JRqZrx5Oo25BATZItEvIKK9wiuA=
+6UN-2BXngf09BwW8auCzQxLtRlCN3WqX5aIsyRxs-2BnT6xSSr83eO-2FNmNvRCSffMhNq6NcQ6=
+gRKfqWNA4shkaG-2F98q-2FXUOr8XIkfda0H7nz04xw21h9RfTnSZqmbYS2frm02SVedSaRo1PV=
+KIRxli966tJ8popG3M9-2FAetyqsq0lEQGLqgiScyyV5dQDWsQ0YxVkxkU7nNA2iW5UL7Rp920D=
+X793v1c9IxUqWgqOlAOU7i-2FIQnrFBowlXGCLzy-2FxTbANSbDZddKlPxzoI50JyO3mhrnq7E0=
+ltU2Rp" style=3D"text-decoration: underline;">list of common ports</a> and =
+what they are used for.
+              </p>
+            </td>
+          </tr>
+        </table>
+        <hr style=3D"border-color:#2A3644; margin-bottom: 30px;" />
+        <h2 style=3D"color:#2A3644;">Device Configuration Assistant</h2>
+        <p>
+          <strong style=3D"color:#2A3644;">Not sure how to set up your acco=
+unt or your hostname on your own?</strong>
+        </p>
+        <p>
+          Our Device Configuration Assistant will walk you through device c=
+onfiguration and port forwarding to help ensure your hostname and network a=
+re properly configured from the start.
+        </p>
+        <p style=3D"margin-bottom: 30px;">
+          <a href=3D"https://url9788.noip.com/ls/click?upn=3Du001.JUxgKyJMT=
+naF8kWw9u-2FSu74aRAuyVBOL-2BHsPPrjo1iAs5PuEZRqlfE2PyvVBv4YfYIOLtBviHDAkz2Ue=
+G37kND-2BQSY171lfaou-2BmRSVPpyW0-2BjS2SyoMsSnUiHZbxD-2BEbuCesQBWG-2FuXTIOr4=
+7Sw5w-3D-3D5t17_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwW8auCzQxLtRlCN3=
+WqX5aIsQbonpwCt-2BuUO6tqbrS2r7tlIT7b2QRwQFf-2BjxnZBgR1hkhgXGzgjMdknYgYihHTs=
+Zo-2BGrZEsIfsgfRy80x61Dxorox1Z7uRWiky8NbZGShEtA-2F3LZFJrSjXPORszwtYoyKYOcr0=
+BsmE9O2-2FjyGESA9GhGw2LpmXMzXzaryxk6wO6sPjk0m4reImA7YNG4KoTaOUwJkHeM2DeedLW=
+R8Ysz0yNyl6tGVueiLVylx9tt-2FmjFPNtY1YfhVNC2JW5ePSY" style=3D"text-decoratio=
+n: underline;">Go to the Device Configuration Assistant now to begin the co=
+nfiguration process.</a>
+        </p>
+        <hr style=3D"border-color:#2A3644; margin-bottom: 30px;" />
+        <h2 style=3D"color:#2A3644;">3 Cool Ways to Use No-IP For Remote Ac=
+cess</h2>
+        <p>
+          <a href=3D"https://url9788.noip.com/ls/click?upn=3Du001.JUxgKyJMT=
+naF8kWw9u-2FSuyiq2Qcsf7R-2FuksdIziyHHXoEVye-2BHG-2Bn-2BvckrY1V-2F18x3T96jUp=
+e-2By-2FJvJhiCbSNg-3D-3De5GM_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwW8=
+auCzQxLtRlCN3WqX5aIsv3QUs-2BM-2BX-2BjQXv4JqoM9Xf-2Bz9Qg1HKem9am1GJHVE6WDuU2=
+pEMYNV-2FlaECmaVQAT72cMtbtxj0JOvOvPAFewxib9iPXN2L18fpFXHIfrJfJYFnobO0M4jhGW=
+gvSOFTV25hZDJW8eDPsouyAMihLQLc1l-2FdoPTsF0B4J3LhPMG-2BTA5Q9EI17qYKiSrg-2Fpv=
+5LFe8lgtNaIjSPV7h-2BP4iW2tvyMoTkaL5e6iRcqGFiyDlmGN-2FocM-2BsAtK0VS2xdeawG" =
+style=3D"text-decoration: underline;">How to Access Your Security Camera Fr=
+om Anywhere</a>
+        </p>
+        <p>
+          <a href=3D"https://url9788.noip.com/ls/click?upn=3Du001.JUxgKyJMT=
+naF8kWw9u-2FSuyiq2Qcsf7R-2FuksdIziyHHW9dnP7Us87Ml55X5naF-2FTKYUeKu5rFxxVC2e=
+h4pFeI4A-3D-3DZnEw_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwW8auCzQxLtRl=
+CN3WqX5aIslJYs1jSqPD0c7op2cExP9lMeuRvihXOQjXMRXLTuazP2gbpMSc6yS38jXrOWEnLTk=
+cEp5TE61iS3ejjHFWYrtelp-2FqfLO7TRjP-2B3qd0bUYfal031TAYsEVo0BbZ-2BcosE9TD10l=
+SbE9VKoeMRssuspFrpZq-2ButmQRaLie4Wob-2FO3NhbMWOjnEAMfNG5WuEeIZNkMvD864THksz=
+Dq2sF84gwm7pQgyABH4udNuKLhD89UGBOFjSKbQ6nsWcwG7mRgo" style=3D"text-decorati=
+on: underline;">How to Build and Host Your Own Minecraft Server</a>
+        </p>
+        <p style=3D"margin-bottom: 30px;">
+          <a href=3D"https://url9788.noip.com/ls/click?upn=3Du001.JUxgKyJMT=
+naF8kWw9u-2FSuyiq2Qcsf7R-2FuksdIziyHHW9dnP7Us87Ml55X5naF-2FTKYUeKu5rFxxVC2e=
+h4pFeI4A-3D-3DmhrS_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwW8auCzQxLtRl=
+CN3WqX5aIsh95M1jbPCOrnHRvjK5cZBnxcUq2NZAhzHzaxii-2FG4HmxAT-2BcNT5TIGVj61NLi=
+Nr0Lb9ahLMNYa-2FU0qvWwNJA-2FxVcY40Q6F-2FyusWJIEQqNmM0xE9CP-2FOfXMM2xQZocxre=
+OUc56ku8QIDTWWQ2xl59iqze4dKXqDB72VaW-2Ft7TxqAfqpWyzg7bIqRkYO3ArcZxheHlOFoch=
+TQoliF67RQOQmbNBW-2FFUheLSckNuIUwHvc3Gt-2F3MISaLLgU0stzPYJ0" style=3D"text-=
+decoration: underline;">Remote Access Your Computer with Dynamic DNS</a>
+        </p>
+         <hr style=3D"border-color:#2A3644; margin-bottom: 30px;" />
+        <h2 style=3D"color:#2A3644;">No-IP Referral Program</h2>
+        <p>
+          <strong style=3D"color:#2A3644;">Start earning No-IP Credits Now!=
+</strong>
+        </p>
+        <p>
+          Do you want to earn No-IP Credits for referring your Friends and =
+Family?
+        </p>
+        <p style=3D"margin-bottom: 30px;">
+          <a href=3D"https://url9788.noip.com/ls/click?upn=3Du001.JUxgKyJMT=
+naF8kWw9u-2FSu74aRAuyVBOL-2BHsPPrjo1iAs5PuEZRqlfE2PyvVBv4Yf5sXPSmFB5fNW4NLN=
+xLGPBw-3D-3Dgp5S_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwW8auCzQxLtRlCN=
+3WqX5aIsQ2JtPl1iKLMFc3ale3xO5QjEzAHM7OLHtZEWKip0qQeUvxF9TrAxCT4aaQJoaF3xZjC=
+LGafZnrvHiLOfe1cM2uwNime2BSE6Oej1Q-2FxhGzcrsBHTi5oEw6347Reftu1E4GCYPG9diH6s=
+5c4V4NFnKcJL9FA9Gs8JwvnAly0qMsJKYWhirEuQhdBz5Co-2Fpcckg3MHwSSfIL1MgWJcJ0d4m=
+vOF8pBDPleg2t-2BXK6NtFi-2FHk1tjuG3ig6FmS-2BL6hLK-2F" style=3D"text-decorati=
+on: underline;">Learn More and Sign Up For the No-IP Referral Program</a>
+        </p>
+        <hr style=3D"border-color:#2A3644; margin-bottom: 30px;" />
+        <h2 style=3D"color:#2A3644;">Need Help?</h2>
+        <p>
+          Our <a href=3D"https://url9788.noip.com/ls/click?upn=3Du001.JUxgK=
+yJMTnaF8kWw9u-2FSu6sdR89bVp1TUmAHGtA6nmaJO0s0bKjdIv3HUSaVI1I-2Feb3nFsoca5Wq=
+O-2FYdmfM4kyxEE-2BtGRkKyv4cpqBfgyFA7IjZo2mAmynLEH-2B-2BddDZhodAi_rO1JRqZrx5=
+Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwW8auCzQxLtRlCN3WqX5aIsNxuxkMSSSCqvPdyo2Z3=
+3rUpI3t7Is05IRb9lTAc3QRaDDv-2FJY9Nd4cx9luIO6DzydyWxUcn0IP2fayNHLmk8G6oiBcm1=
+fVrdLlRyvQSp44k07WLVgRhK0ZELWwJLqhKfs3VjnStHLIK7UykV9SNE-2FSeqYpoUdvbQBjYtr=
+7bBMnawCf1wfX0oWxV8DhOXxNX9q4cbFDUP-2Bdm2uK3BfKPvduENINRvdKOIe1OkIOEcytvwqs=
+SdDjJWyPm2QaesmASb" style=3D"text-decoration: underline;">Getting Started G=
+uide</a> is a great resource for additional configuration assistance. If yo=
+u still need help, please <a href=3D"https://url9788.noip.com/ls/click?upn=
+=3Du001.JUxgKyJMTnaF8kWw9u-2FSu54yqd9mvNh7-2B2wfCX5yL1INUOJWGdQkLNsoLuKu9PF=
+62Fso_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwW8auCzQxLtRlCN3WqX5aIsjp-=
+2FFpXvMlccF06ms6dKOGYANv-2F7Y74gm7rWt7uda082E0hgOY0qNyMD-2FGArEoMw9JrhvchYv=
+AosTrkLRr7OTtjx0jsmYNTvUUuZ5vG3khXgg4hjY-2Bb7fIsXsyYR0GYmR5ARwwjO-2Fdj2fydo=
+cFO6KnNYGvrfd5qJl5IKCJ3GAh1cmujuUwj64V0RCaf1PJ9SJ72YEMXwyqXTdyfh4v60PcIvy2c=
+PfZIJE0pxjP0OqsTCANJDBQaNzo1YpHRMnHbHw" style=3D"text-decoration: underline=
+;">open a support ticket</a> give us a call, 775-853-1883. Our In-House Cus=
+tomer Support Team is here to help.
+        </p>
+      </td>
+  </tr>
+</table>
+                    </td>
+                  </tr>
+                </table>
+                  <!--[if (gte mso 9)|(IE)]>
+                  </td>
+                  </tr>
+                  </table>
+                  <![endif]-->
+              </td>
+            </tr>
+            <tr>
+            <td bgcolor=3D"#f9f9f9" align=3D"center" style=3D"padding: 20px=
+ 0px;">
+                  <!--[if (gte mso 9)|(IE)]>
+                  <table align=3D"center" border=3D"0" cellspacing=3D"0" ce=
+llpadding=3D"0" width=3D"500">
+                  <tr>
+                  <td align=3D"center" valign=3D"top" width=3D"500">
+                  <![endif]-->
+                  <!-- UNSUBSCRIBE COPY -->
+              <table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpadd=
+ing=3D"0" align=3D"center" style=3D"max-width: 600px;" class=3D"responsive-=
+table">
+                <tr>
+                  <td align=3D"center" style=3D"font-size: 12px; line-heigh=
+t: 18px; font-family: 'Open Sans', Helvetica, Arial, sans-serif; color:#666=
+666;">
+                        Vitalwerks Internet Solutions, LLC c/o No-IP.com<br=
+>
+                                            425 Maestro Dr. Suite 200<br>
+                        Reno, Nevada 89511 USA<br>
+                        +1 775-853-1883
+                  </td>
+                </tr>
+                <tr>
+                      <!-- START left block -->
+                  <td class=3D"td-display-block-center-pad18" width=3D"280"=
+ valign=3D"top" style=3D"padding:18px 0px 0px 0px; font-weight:300; font-si=
+ze:12px; letter-spacing:0.025em; line-height:40px; color:#ffffff; font-fami=
+ly:'Poppins', sans-serif; mso-line-height-rule: exactly;" align=3Dcenter co=
+lspan=3D2 >
+                        &copy; 1999-2024 Vitalwerks Internet Solutions, LLC=
+ dba No-IP
+                  </td>
+                      <!-- END left block -->
+                      <!-- START right block -->
+                                        <!-- END right block -->
+                </tr>
+              </table>
+                <!--[if (gte mso 9)|(IE)]>
+                </td>
+                </tr>
+                </table>
+                <![endif]-->
+              </td>
+            </tr>
+          </table>
+
+        <img src=3D"https://url9788.noip.com/wf/open?upn=3Du001.wJ4wQoWqptt=
+L0LnWj9yCngQD-2BPKOSnIWwGo2A-2BWj6XgItJT9Fo-2B6sTw0avKJY4C1DjiJH32zNENVhiXg=
+GS6TqoIt68H0A3KMsPmhO6WNYQvzDNbRdwJ7VcQQrA03nMBiuTFc2dvXWQ4fX1LmwkTrGkscU9b=
+ANjr010-2BRr6B6kKDQS4riey8gfm076yCcm7z-2BFDy3Tmx3MgfPKZjN6QX9Wq3TadCumiCkn5=
+tN6adJ5gZip3SANXiDfkGq2pMgRfwsn05HK45h-2FcjpHaOVqrUYPPoVb0G8BrsXBXSLUyQufTZ=
+TpCn7LaLZ-2B8-2B6II08KQia" alt=3D"" width=3D"1" height=3D"1" border=3D"0" s=
+tyle=3D"height:1px !important;width:1px !important;border-width:0 !importan=
+t;margin-top:0 !important;margin-bottom:0 !important;margin-right:0 !import=
+ant;margin-left:0 !important;padding-top:0 !important;padding-bottom:0 !imp=
+ortant;padding-right:0 !important;padding-left:0 !important;"/></body>
+      </html>
+
+
+--_=_swift_1731575303_8015bd0cb650db9984d6d24f4dab207c_=_--
+
+

@@ -1,0 +1,1909 @@
+X-GM-THRID: 1845580131313823714
+X-Gmail-Labels: Inbox,Opened,Category Updates
+Delivered-To: sn.renauld@gmail.com
+Received: by 2002:a17:907:7e82:b0:b41:506:9291 with SMTP id qb2csp2192296ejc;
+        Fri, 10 Oct 2025 00:46:10 -0700 (PDT)
+X-Google-Smtp-Source: 
+ AGHT+IGOk3pR+rIePAnNNZagTjrL/yjVcwVef1cVjtpxpd/XOdgDKxOawjA2meX7qgYciIGMG4h+
+X-Received: by 2002:a05:620a:4546:b0:864:8e84:6ed2 with SMTP id
+ af79cd13be357-883529b35ebmr1572259585a.10.1760082370227;
+        Fri, 10 Oct 2025 00:46:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1760082370; cv=none;
+        d=google.com; s=arc-20240605;
+        b=TYAqu35gHmvVSlyXa2Mup3oxKID3ouFGWdX2OlrnL01eD/gg4n7Zbjpi9Xb+gS5nzJ
+         N9IEjJMmcx06t7VLuRXI3hbO0vSC5fBtUI4E8k+CiSvRgouydHnynVuIPIsURMJb3eKV
+         8zDckgoBHGIPN48yBWUYS2RPJM4+6f/OYuOEwSZ6No5k2oj8kHf7XdTEPoeEQJfrnRg6
+         I7mqSaLAHf/VXOAPvBKQOMaxha95mB528AlNVfwSasyRusItXVzvwXo4kBrW78Y8NA56
+         /K5Vfe3I6AO/+EqeeiVbbE+jG/ocbJBUhtV31DtTQN//eWxm5yEdd57zcYlarcaI12Gl
+         sD5A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605;
+        h=to:reply-to:mime-version:subject:message-id:from:date
+         :dkim-signature:dkim-signature;
+        bh=5ZDEj3PK8vjub352iE3PekX4teIZyigYt0lge9iWhu0=;
+        fh=PS+1PpKbugN1TpmcDEkdQ0Zps38F1SzOC+DqdLOHqOY=;
+        b=JBNccKMT/viLVB5TWhB2/Trr3SYkDRYTIxzuu1WCBeX0B9M+CAnLqBF5xeJK2w5LJm
+         uMN9BlaB3z0z0/3qgLEyCE3XT/jwgYcl7hC0YfDKB3O1Kv07yljEClFHnTeDY04nPAVd
+         DkS/dfIS6N0Mh/1+ln/ImIDEiPmX2xBwBnasL5DYqcjsaIt3tEMPJSf+RGQM0TctX1W0
+         UgkoflV4HS9xagTkbL4WfqKRyQhCutTkvWm50wdwq/lixZrcsAtMtj7ojCiDQC499ntW
+         RViL5rdOxT0AMdfBrjd4htuw6Jmj8qr2GXvfxkklwk0FJOmnmHXvM7cDh+YTVJ4IYf1W
+         es7A==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@glueup.com header.s=s1 header.b=3WzmRnvx;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=bntRHxNk;
+       spf=pass (google.com: domain of
+ bounces+2327994-7cb5-sn.renauld=gmail.com@cmail.glueup.com designates
+ 149.72.112.132 as permitted sender)
+ smtp.mailfrom="bounces+2327994-7cb5-sn.renauld=gmail.com@cmail.glueup.com";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=glueup.com
+Return-Path: <bounces+2327994-7cb5-sn.renauld=gmail.com@cmail.glueup.com>
+Received: from wrqvthvq.outbound-mail.sendgrid.net
+ (wrqvthvq.outbound-mail.sendgrid.net. [149.72.112.132])
+        by mx.google.com with ESMTPS id
+ af79cd13be357-885f2441cfasi90640785a.1209.2025.10.10.00.46.09
+        for <sn.renauld@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 Oct 2025 00:46:10 -0700 (PDT)
+Received-SPF: pass (google.com: domain of
+ bounces+2327994-7cb5-sn.renauld=gmail.com@cmail.glueup.com designates
+ 149.72.112.132 as permitted sender) client-ip=149.72.112.132;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@glueup.com header.s=s1 header.b=3WzmRnvx;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=bntRHxNk;
+       spf=pass (google.com: domain of
+ bounces+2327994-7cb5-sn.renauld=gmail.com@cmail.glueup.com designates
+ 149.72.112.132 as permitted sender)
+ smtp.mailfrom="bounces+2327994-7cb5-sn.renauld=gmail.com@cmail.glueup.com";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=glueup.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=glueup.com;
+	h=date:from:subject:mime-version:content-type:reply-to:to:cc:
+	content-type:date:feedback-id:from:subject:to;
+	s=s1; bh=5ZDEj3PK8vjub352iE3PekX4teIZyigYt0lge9iWhu0=;
+	b=3WzmRnvxvNcsn5kAEVSE9uIn2FOVMcX7ePxnmRs9HAInvVHdsQtzSKq4AJEs+WLIyvvR
+	6QFUE3/GVx0qYWav0RRb8Dp9cT6qM8LCasWNobi/yqdY+ABytkBJVi7WkT/Ypx9R1V557m
+	LMJANMbOjrsG97K5gjJ1bvraPdG2XOh1nuiWIRccC+CJjLn5i9s62Z4lYRY6max01mbQDA
+	5cKYyG8vWJLt0l01Wv1YpRik8MLTbdc7SKDxfCyGrTngmMgXnC/bza+fkzuoV39BS2+x7/
+	C76kFJvZhSf0cOLIp3li7tWxMHNiGDQpJIWit0JG+h1idANRNCal0xA/GoH26IDg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendgrid.info;
+	h=date:from:subject:mime-version:content-type:reply-to:to:cc:
+	content-type:date:feedback-id:from:subject:to;
+	s=smtpapi; bh=5ZDEj3PK8vjub352iE3PekX4teIZyigYt0lge9iWhu0=;
+	b=bntRHxNky8UBqqCBB6DpkA5WTKdRSAqVmK8L1rl3W1eEmZmeMiGo003Z46zLMNIIs/UT
+	Ape3hsywPFmMgQ5qXBQf3WVEkE+jF1mmVwA6KH+yuBtZkW1ZJsRKLS2FUWa4IHbLlbYB+G
+	iU9PZzRXY3wbOrFpLBedM2rDs0kLxtr4g=
+Received: by recvd-566f48c6f7-zzzqr with SMTP id
+ recvd-566f48c6f7-zzzqr-1-68E8B9C1-14
+	2025-10-10 07:46:09.445698051 +0000 UTC m=+3227097.586307656
+Received: from mx1.glueupmail.com (unknown)
+	by geopod-ismtpd-11 (SG)
+	with ESMTP id tDBXYAbWRyihurHBdiLKPw
+	for <sn.renauld@gmail.com>;
+	Fri, 10 Oct 2025 07:46:09.332 +0000 (UTC)
+Date: Fri, 10 Oct 2025 07:46:09 +0000 (UTC)
+From: "Australian Chamber of Commerce Vietnam (AusCham)"
+	<no-reply@glueup.com>
+Message-ID: 
+ <Registration_{67306717_d02b9c26-0a2c-4f86-949e-e0516e769c1a}_659597070.7168415.1760082369120@ebcprobe01>
+Subject: Wine Tasting and Social Gathering - A Story in Every Glass
+ Registration Status - Awaiting Approval
+MIME-Version: 1.0
+Content-Type: multipart/mixed;
+	boundary="----=_Part_7168413_1904618534.1760082369119"
+X-Message-Category: Registration
+Reply-To: Thuy Hoang <events@auschamvn.org>
+X-SG-EID: 
+ =?us-ascii?Q?u001=2EhR80XbbcY3tGYb=2FwXRZThOP41b2b7OfFBvdxE53c4qZqpeMJ7FUXb1khL?=
+ =?us-ascii?Q?OITOfxjr=2FPGAXqJujrFLFc6iIDouY2iAnTRxhxs?=
+ =?us-ascii?Q?wJC3XPm+DaMEADE1Gb8n=2FIphvLmuYkgJI6=2FwL7A?=
+ =?us-ascii?Q?haxdXk6h55j35j2l6FGWTY32pYoX0gKD8rYQZll?=
+ =?us-ascii?Q?fof05XHuz1quBBnE+3Odf84ZEJeKQgK2oiWQQMM?=
+ =?us-ascii?Q?6Vp33=2FbGM=2FedHQeqkVOp2MDSvIxyERY8oHcSR=2F+?=
+ =?us-ascii?Q?aBRON4VQuqo1DyWylOWDuZ5Z8=2FpwFud2wMvravL?=
+ =?us-ascii?Q?UGwWwFVU=3D?=
+X-SG-ID: 
+ =?us-ascii?Q?u001=2ESdBcvi+Evd=2FbQef8eZF3BpTL9BgbK5wfSJMJGMsmprAKSFn87LXAOG5rB?=
+ =?us-ascii?Q?et8AzHbTpezAf0KFq7M9iniLRTurBAEGSXFpJrY?=
+ =?us-ascii?Q?8qu=2FXkDV1McMSHx25Z6plGXZxGfa=2Fi6=2Fyc2hdCD?=
+ =?us-ascii?Q?lLkz50k2R+BGAEwQ+Wf=2Fc7CcxjG7UXaJ1RowIUl?=
+ =?us-ascii?Q?rVYB8M8gpVm4TBo4SR6ThCCb2SwP1KfgvfXsH4+?=
+ =?us-ascii?Q?2xIeM4b1CcY+cjS+KNBI6A=3D?=
+To: Simon Renauld <sn.renauld@gmail.com>
+X-Entity-ID: u001.aEiYnrRTNbQqn8SNnSqBmw==
+
+------=_Part_7168413_1904618534.1760082369119
+Content-Type: multipart/related;
+	boundary="----=_Part_7168414_1705490526.1760082369119"
+
+------=_Part_7168414_1705490526.1760082369119
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html><html xmlns=3D"http://www.w3.org/1999/xhtml"><head><meta htt=
+p-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8" /><meta nam=
+e=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D1"><title>W=
+ine Tasting and Social Gathering - A Story in Every Glass Registration Stat=
+us - Awaiting Approval</title><link rel=3D"apple-touch-icon" sizes=3D"180x1=
+80" href=3D"/images/favicons/apple-touch-icon.png"><link rel=3D"icon" type=
+=3D"image/png" href=3D"/images/favicons/favicon-32x32.png" sizes=3D"32x32">=
+<link rel=3D"icon" type=3D"image/png" href=3D"/images/favicons/favicon-16x1=
+6.png" sizes=3D"16x16"><style type=3D"text/css"> @media only screen {
+        html {
+            min-height:     100%;
+            background:     #f5f5f6;
+            #cant-read-email {
+                display: none;
+            }
+        }
+    }
+   =20
+    .ReadMsgBody {
+        width:100%;
+        background-color:#fff;
+    }
+    .ExternalClass {
+        width:100%;
+        background-color:#fff;
+    }
+
+    .eventTracker_left{
+        width: 30%;
+    }
+
+    .eventTracker_right{
+        width: 70%;
+    }
+
+    .eventTracker_portrait_left{
+        width:  34%;
+    }
+    .eventTracker_portrait_right{
+        width:  66%;
+    }
+
+    .module_percent_48{
+        width: 48%;
+        float: left;
+    }
+    .module_percent_33{
+        width: 33%;
+    }
+    .module_percent_32{
+        width: 32%;
+    }
+    .module_percent_67{
+        width: 67%;
+    }
+    .module_percent_64{
+        width: 64%;
+    }
+    .module_percent_100{
+        width: 100%;
+    }
+
+    .event-speaker{
+        width: 200px;
+        height:200px;
+    }
+
+    img.event-speaker{
+        height: auto;
+    }
+
+    table {
+        border-collapse:collapse;
+        border-spacing: 0;
+    }
+
+    a,a:link,a:visited {
+        text-decoration:none;
+    }
+
+    a:hover,.ExternalClass a:hover {
+        text-decoration:underline;
+    }
+
+    a > img{
+        margin: 0 auto;
+    }
+
+    .module_percent_33 img{
+        display: inline !important;
+    }
+
+    p:first-child{
+        margin-top:0;
+    }
+
+    h2,h2 a,h2 a:visited,h3,h3 a,h3 a:visited,h4,h5,h6,.t_cht {
+        color:#000!important;
+    }
+
+    .ExternalClass p {
+        margin-bottom:0!important;
+        padding:0!important;
+        display:inline!important;
+        color:red;
+    }
+
+    .ExternalClass a:link,.ExternalClass a:hover,ExternalClass a:visited {
+        text-decoration:none;
+    }
+
+    html, body{
+        background-color: #ffffff;
+    }
+
+    body {
+        width:100%;
+        margin:0;
+        padding:0;
+        font-family:Arial;
+        -webkit-text-size-adjust:none;
+    }
+
+    table {
+        border-collapse:collapse;
+        border-spacing:0;
+    }
+
+    .socials{
+        width: auto !important;
+    }
+
+    #cant-read-notice{
+        display: none;
+    }
+
+    #tablet-only{
+        display: none;
+    }
+
+    #mobile-only{
+        display: none;
+    }
+
+    .alignHeight, .alignHeightElement{
+        height: 100%;
+    }
+
+    .custom-input-text div{
+        line-height:      1.4em;
+    }
+    .custom-input-text ol,
+    .custom-input-text ul{
+        padding-left:     2.5em;
+        margin:           0.5em 0;
+    }
+    .custom-input-text ol li,
+    .custom-input-text ul li{
+        line-height:        1.2em;
+        margin:             0.5em 0;
+        padding-left:       0.2em;
+    }
+    .custom-input-text ol li > li,
+    .custom-input-text ul li > li{
+        list-style:     inherit;
+    }
+    .custom-input-text ul{
+        list-style:     disc;
+    }
+    .custom-input-text ol{
+        list-style:     decimal;
+    }
+    .custom-input-text p{
+        margin-top:     0;
+        margin-bottom:  0;
+    }
+    .custom-input-text b,
+    .custom-input-text strong{
+        font-weight:    700;
+        font-style:     inherit;
+    }
+    .custom-input-text i,
+    .custom-input-text em{
+        font-style:     italic;
+        font-weight:    inherit;
+    }
+    .custom-input-text .font-size-tiny{
+        font-size:      0.7em !important;
+    }
+    .custom-input-text .font-size-tiny strong{
+        font-size:      10px !important;
+    }
+    .custom-input-text .font-size-small{
+        font-size:      0.85em !important;
+    }
+    .custom-input-text .font-size-small strong{
+        font-size:      12px !important;
+    }
+    .custom-input-text .font-size-large{
+        font-size:      1.2em !important;
+        line-height:    1.2em !important;
+    }
+    .custom-input-text .font-size-large strong{
+        font-size:      17px !important;
+        line-height:    17px !important;
+    }
+    .custom-input-text .font-size-huge{
+        font-size:      1.5em !important;
+        line-height:    1.1em !important;
+    }
+    .custom-input-text .font-size-huge strong{
+        font-size:      21px !important;
+        line-height:    15px !important;
+    }
+    #text-email{
+        display:              none;
+        width:                0px;
+        height:               0px;
+        color:                white;
+    }
+    .text-email-block{
+        margin:               20px;
+        padding:              20px;
+        font-family:          arial;
+        width:                700px;
+        background:           #fff;
+        border:               1px solid #dcdcdc;
+    }
+    .text-email-block pre{
+        margin:             0;
+        white-space:        pre-wrap;
+    }
+
+    .unsubscribe-url-wrapper a{
+        color:              #979797 !important;
+        text-decoration:    underline !important;
+    }
+
+    a[x-apple-data-detectors] {
+        color: inherit !important;
+        text-decoration: none !important;
+        font-size: inherit !important;
+        font-family: inherit !important;
+        font-weight: inherit !important;
+        line-height: inherit !important;
+    }
+    .ql-indent-1 {
+        margin-left:       2em !important;
+    }
+    .ql-indent-2 {
+        margin-left:       4em !important;
+    }
+    .ql-indent-3,
+    .ql-indent-4,
+    .ql-indent-5,
+    .ql-indent-6,
+    .ql-indent-7,
+    .ql-indent-8 {
+        margin-left:       6em !important;
+    }
+    /* Outlook Classic specific fixes for font sizes */
+    [if mso] .x_font-size-tiny { font-size: 9.8px !important; }
+    [if mso] .x_font-size-small { font-size: 11.9px !important; }
+    [if mso] .x_font-size-large { font-size: 16.8px !important; }
+    [if mso] .x_font-size-huge { font-size: 21px !important; }
+    @media only screen and (max-width: 600px) {
+        .device-width,
+        .half-device-width{
+            width:          440px !important;
+            padding-left:   0 !important;
+            padding-right:  0 !important;
+            border:         0 !important;
+            margin-left:    0 !important;
+            margin-right:   0 !important;
+        }
+        #tablet-only{
+            display:        inline-block !important;
+        }
+        #desktop-only{
+            display: none !important;
+        }
+        .mobile-remove-padding{
+            padding:        0 !important;
+        }
+
+        .mobile-remove-top-padding{
+            padding-top:    0 !important;
+        }
+
+        .mobile-auto-height{
+            height:         auto !important;
+        }
+
+        .mobile-auto-width{
+            width:          auto !important;
+        }
+
+        .mobile-add-left-padding{
+            padding-left:   10px !important;
+        }
+
+        .mobile-add-right-padding{
+            padding-right:  10px !important;
+        }
+
+        .mobile-add-bottom-padding{
+            padding-bottom: 16px !important;
+        }
+
+        .mobile-add-top-padding{
+            padding-top:    16px !important;
+        }
+
+        .mobile-body-padding.device-width,
+        .mobile-body-padding{
+            width:          410px !important;
+            padding-left:   16px !important;
+            padding-right:  16px !important;
+        }
+
+        .alignHeight, .alignHeightElement{
+            height:         auto;
+            width:          100%;
+        }
+
+        .fullWidth,
+        .fullWidth table{
+            width:          100% !important;
+            height:         auto !important;
+        }
+
+        .fullWidth table td{
+            height:         auto !important;
+        }
+
+        .fullWidth .socialBlock{
+            width:  auto !important;
+        }
+
+        .emptyContent{
+            display:        none !important;
+        }
+
+        .hasMargin{
+            margin-bottom:  20px;
+        }
+
+        .image-block{
+            margin:         0 !important;
+        }
+    }
+
+    @media only screen and (max-width: 479px) {
+        .device-width{
+            width:          100% !important;
+        }
+        #tablet-only{
+            display:        none !important;
+        }
+        #mobile-only{
+            display:        inline-block !important;
+        }
+        .half-device-width{
+            width:          190px !important;
+        }
+
+        .mobile-body-padding.device-width,
+        .mobile-body-padding{
+            width:          360px !important;
+        }
+
+        .small-device-width{
+            width:          360px !important;
+            padding:        0 !important;
+        }
+
+        .background-contain-mobile{
+           background-size: contain !important;
+        }
+    }
+
+    @media only screen and (max-width: 414px) {
+        #tablet-only{
+            display:        none !important;
+        }
+        #mobile-only{
+            display:        inline-block !important;
+        }
+        .half-device-width{
+            width:          140px !important;
+        }
+
+        .mobile-body-padding.device-width,
+        .mobile-body-padding{
+            width:          250px !important;
+        }
+
+        .small-device-width{
+            width:          250px !important;
+            padding:        0 !important;
+        }
+    }
+
+    @media screen yahoo {
+        .yahoo-mail{
+          display:none !important;
+      }
+    } </style><!--[if mso]><style type=3D"text/css"> /* Outlook Classic fon=
+t size fixes */
+.x_font-size-tiny { font-size: 9.8px !important; }
+.x_font-size-small { font-size: 11.9px !important; }
+.x_font-size-large { font-size: 16.8px !important; }
+.x_font-size-huge { font-size: 21px !important; }
+
+/* Also target the standard classes in case they're used */
+.font-size-tiny { font-size: 9.8px !important; }
+.font-size-small { font-size: 11.9px !important; }
+.font-size-large { font-size: 16.8px !important; }
+.font-size-huge { font-size: 21px !important; } </style><![endif]--><style =
+type=3D"text/css"> @font-face
+    {
+        font-family: 'Helvetica Neue';
+        font-style: normal;
+        font-weight: 200;
+        src: url('https://auschamvn.glueup.com/font/helveticaneue/Helvetica=
+NeueLTStd-Lt.otf') format('opentype');
+    }
+    @font-face
+    {
+        font-family: 'Helvetica Neue';
+        font-style: normal;
+        font-weight: 300;
+        src: url('https://auschamvn.glueup.com/font/helveticaneue/Helvetica=
+NeueLTStd-Rg.otf') format('opentype');
+    }
+    @font-face
+    {
+        font-family: 'Helvetica Neue';
+        font-style: normal;
+        font-weight: 400;
+        src: url('https://auschamvn.glueup.com/font/helveticaneue/Helvetica=
+NeueLTStd-Md.otf') format('opentype');
+    }
+    @font-face
+    {
+        font-family: 'Helvetica Neue';
+        font-style: bold;
+        font-weight: 500;
+        src: url('https://auschamvn.glueup.com/font/helveticaneue/Helvetica=
+NeueReg.otf') format('opentype');
+    }
+    @font-face
+    {
+        font-family: 'Helvetica Neue';
+        font-style: bold;
+        font-weight: 600;
+        src: url('https://auschamvn.glueup.com/font/helveticaneue/Helvetica=
+NeueLTStd-Bd.otf') format('opentype');
+    }
+    a{
+        text-decoration:    none;
+    }
+    a:hover{
+        color:              #147dc2;
+        text-decoration:    none;
+    }
+    a:active{
+        color:              #147dc2;
+        text-decoration:    none;
+    }
+    a:visited{
+        color:              #147dc2;
+        text-decoration:    none;
+    }
+    h1 a:visited{
+        color:              #147dc2;
+        text-decoration:    none;
+    }
+    h2 a:visited{
+        color:              #147dc2;
+        text-decoration:    none;
+    }
+    h3 a:visited{
+        color:              #147dc2;
+        text-decoration:    none;
+    }
+    h4 a:visited{
+        color:              #147dc2;
+        text-decoration:    none;
+    }
+    h5 a:visited{
+        color:              #147dc2;
+        text-decoration:    none;
+    }
+    h6 a:visited{
+        color:              #147dc2;
+        text-decoration:    none;
+    }
+    table.button:hover table tr td a{
+        color:      #fefefe
+    }
+    table.button:active table tr td a{
+        color:      #fefefe
+    }
+    table.button table tr td a:visited{
+        color:      #fefefe
+    }
+    table.button.tiny:hover table tr td a{
+        color:      #fefefe
+    }
+    table.button.tiny:active table tr td a{
+        color:      #fefefe
+    }
+    table.button.tiny table tr td a:visited{
+        color:      #fefefe
+    }
+    table.button.small:hover table tr td a{
+        color:      #fefefe
+    }
+    table.button.small:active table tr td a{
+        color:      #fefefe
+    }
+    table.button.small table tr td a:visited{
+        color:      #fefefe
+    }
+    table.button.large:hover table tr td a{
+        color:      #fefefe
+    }
+    table.button.large:active table tr td a{
+        color:      #fefefe
+    }
+    table.button.large table tr td a:visited{
+        color:      #fefefe
+    }
+    table.button:hover table td{
+        background: #147dc2;
+        color:      #fefefe
+    }
+    table.button:visited table td{
+        background: #147dc2;
+        color:      #fefefe
+    }
+    table.button:active table td{
+        background: #147dc2;
+        color:      #fefefe
+    }
+    table.button:hover table a{
+        border:     0 solid #147dc2
+    }
+    table.button:visited table a{
+        border:     0 solid #147dc2
+    }
+    table.button:active table a{
+        border:     0 solid #147dc2
+    }
+    .success{
+      color: #42BE65;
+    }
+    .hide-for-large {
+        display:        none !important;
+        width:          0;
+        mso-hide:       all;
+        overflow:       hidden;
+    }
+    @media only screen and (max-width: 596px) {
+        .small-float-center {
+            margin:         0 auto !important;
+            float:          none !important;
+            text-align:     center !important;
+        }
+        .small-text-center {
+            text-align:     center !important;
+        }
+        .small-text-left {
+            text-align:     left !important;
+        }
+    }
+    @media only screen and (max-width: 596px) {
+        .hide-for-large {
+            display:        block !important;
+            width:          auto !important;
+            overflow:       visible !important;
+            max-height:     none !important;
+            font-size:      inherit !important;
+            line-height:    inherit !important;
+        }
+    }
+    @media only screen and (max-width: 596px) {
+        table.body .hide-for-large,
+        table.body table.container .row.hide-for-large {
+            display:        table !important;
+            width:          100% !important;
+        }
+    }
+    @media only screen and (max-width: 596px) {
+        table.body table.container .callout-inner.hide-for-large {
+            display:        table-cell !important;
+            width:          100% !important;
+        }
+    }
+    @media only screen and (max-width: 596px) {
+        table.body .show-for-large {
+            display:        none !important;
+            width:          0;
+            mso-hide:       all;
+            overflow:       hidden;
+        }
+    }
+    @media only screen and (max-width: 596px) {
+        table.body img {
+            width:          auto;
+            height:         auto;
+        }
+        table.body center {
+            min-width:      0 !important;
+        }
+        table.body .container {
+            width:          100% !important;
+        }
+          table.body .columns,
+          table.body .column {
+            height:             auto !important;
+            -moz-box-sizing:    border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing:         border-box;
+            padding-left:       16px !important;
+            padding-right:      16px !important;
+        }
+        table.body .columns .column,
+        table.body .columns .columns,
+        table.body .column .column,
+        table.body .column .columns {
+            padding-left:       0 !important;
+            padding-right:      0 !important;
+        }
+        table.body .collapse .columns,
+        table.body .collapse .column,
+        table.body .small-collapse .columns {
+            padding-left:       0 !important;
+            padding-right:      0 !important;
+        }
+        td.small-1,
+        th.small-1 {
+            display:    inline-block !important;
+            width:      8.33333% !important;
+        }
+        td.small-2,
+        th.small-2 {
+            display:    inline-block !important;
+            width:      16.66667% !important;
+        }
+        td.small-3,
+        th.small-3 {
+            display:    inline-block !important;
+            width:      25% !important;
+        }
+        td.small-4,
+        th.small-4 {
+            display:    inline-block !important;
+            width:      33.33333% !important;
+        }
+        td.small-5,
+        th.small-5 {
+            display:    inline-block !important;
+            width:      41.66667% !important;
+        }
+        td.small-6,
+        th.small-6 {
+            display:    inline-block !important;
+            width:      50% !important;
+        }
+        td.small-7,
+        th.small-7 {
+            display:    inline-block !important;
+            width:      58.33333% !important;
+        }
+        td.small-8,
+        th.small-8 {
+            display:    inline-block !important;
+            width:      66.66667% !important;
+        }
+        td.small-9,
+        th.small-9 {
+            display:    inline-block !important;
+            width:      75% !important;
+        }
+        td.small-10,
+        th.small-10 {
+            display:    inline-block !important;
+            width:      83.33333% !important;
+        }
+        td.small-11,
+        th.small-11 {
+            display:    inline-block !important;
+            width:      91.66667% !important;
+        }
+        td.small-12,
+        th.small-12 {
+            display:    inline-block !important;
+            width:      100% !important;
+        }
+        .columns td.small-12,
+        .column td.small-12,
+        .columns th.small-12,
+        .column th.small-12 {
+            display:        block !important;
+            width:          100% !important;
+        }
+        table.body table.columns td.expander,
+        table.body table.columns th.expander {
+            display:        none !important;
+        }
+        table.menu {
+            width:          100% !important;
+        }
+    }
+    @media only screen and (max-width: 596px) {
+        table.container {
+            min-width:      450px !important;
+            box-shadow:     none !important;
+        }
+        table.container table.container {
+            width:          95% !important;
+            min-width:      95% !important;
+            box-shadow:     0 1px 6px #a2a2a2 !important;
+        }
+        th.callout-inner {
+            padding:        25px 15px 10px !important;
+        }
+        .first.larger {
+            padding-left:   0 !important;
+        }
+        .last.larger {
+            padding-right:  0 !important;
+        }
+        .right-border {
+            border:         none !important;
+        }
+        .map-img {
+            margin:         -30px auto 0 !important;
+        }
+        .small-float-right {
+            float:          right !important;
+            margin-right:   35% !important;
+        }
+        .large-img {
+            width:          160px !important;
+        }
+        .mobile-img {
+            width:          240px !important;
+        }
+        .rounded {
+            width:          300px !important;
+            height:         40px !important;
+        }
+        .rounded img {
+            width:          22px !important;
+            margin:         2px 8px 0 8px !important;
+        }
+        .rounded p,
+        .dark-blue-text-download {
+            font-size:      12px !important;
+            font-weight:    300 !important;
+            line-height:    44px !important;
+            max-width:      250px !important;
+        }
+        th.callout-inner.less-padding {
+            padding:        15px 20px !important;
+        }
+        .small-remove-margin {
+            margin-left:    0 !important;
+        }
+        .reduce-margin-top {
+            margin-top:     -15px !important;
+        }
+        .small-left-margin {
+            margin-left:    -32px !important;
+        }
+        .smaller-left-margin {
+            margin-left:    -6px !important;
+        }
+        .smaller-left-margin-2 {
+            margin-left:    -4px !important;
+        }
+        .add-margin-left {
+            margin-left:    0 !important;
+        }
+    }
+
+    .box{
+        margin:             0 0 0 10px;
+        Margin:             0 0 0 10px;
+        color:              #3A3A3A;
+        font-family:        'Helvetica Neue', Arial, sans-serif;
+        font-weight:        300;
+        padding:            0;
+        margin:             0;
+        Margin:             0;
+        text-align:         left;
+        font-size:          16px;
+        line-height:        1.3;
+        margin-bottom:      10px;
+        Margin-bottom:      10px;
+        text-align:         center;
+        margin:             0 auto;
+        Margin:             0 auto;
+        margin-top:         0px;
+        padding:            3px 3px;
+        text-transform:     uppercase;
+        font-weight:        500;
+        font-size:          10px;
+        border-radius:      3px;
+        width:              2.75em;
+
+    }
+    .paid{
+        margin:             0 0 0 10px;
+        Margin:             0 0 0 10px;
+        color:              #3A3A3A;
+        font-family:        'Helvetica Neue', Arial, sans-serif;
+        font-weight:        300;
+        margin:             0;
+        Margin:             0;
+        text-align:         left;
+        font-size:          16px;
+        line-height:        1.3;
+        margin-bottom:      10px;
+        Margin-bottom:      10px;
+        text-align:         center;
+        margin:             0 auto;
+        Margin:             0 auto;
+        margin-top:         0px;
+        padding:            3px 3px;
+        text-transform:     uppercase;
+        font-weight:        500;
+        font-size:          10px;
+        border-radius:      3px;
+        min-width:          5em;
+        background-color:   #01bb33;
+        color:              #ffffff;
+    }
+    .notpaid{
+        margin:             0 0 0 10px;
+        Margin:             0 0 0 10px;
+        color:              #3A3A3A;
+        font-family:        'Helvetica Neue', Arial, sans-serif;
+        font-weight:        300;
+        margin:             0;
+        Margin:             0;
+        text-align:         left;
+        font-size:          16px;
+        line-height:        1.3;
+        margin-bottom:      10px;
+        Margin-bottom:      10px;
+        text-align:         center;
+        margin:             0 auto;
+        Margin:             0 auto;
+        margin-top:         0px;
+        padding:            3px 3px;
+        text-transform:     uppercase;
+        font-weight:        500;
+        font-size:          10px;
+        border-radius:      3px;
+        min-width:          5em;
+        background-color:   #ef727b;
+        color:              #ffffff;
+    }
+    .payatthedoor{
+        margin:             0 0 0 10px;
+        Margin:             0 0 0 10px;
+        color:              #3A3A3A;
+        font-family:        'Helvetica Neue', Arial, sans-serif;
+        font-weight:        300;
+        margin:             0;
+        Margin:             0;
+        text-align:         left;
+        font-size:          16px;
+        line-height:        1.3;
+        margin-bottom:      10px;
+        Margin-bottom:      10px;
+        text-align:         center;
+        margin:             0 auto;
+        Margin:             0 auto;
+        margin-top:         0px;
+        padding:            3px 3px;
+        text-transform:     uppercase;
+        font-weight:        500;
+        font-size:          10px;
+        border-radius:      3px;
+        min-width:          5em;
+        background-color:   #f6a623;
+        color:              #ffffff;
+    }
+    .free{
+        margin:             0 0 0 10px;
+        Margin:             0 0 0 10px;
+        color:              #3A3A3A;
+        font-family:        'Helvetica Neue', Arial, sans-serif;
+        font-weight:        300;
+        margin:             0;
+        Margin:             0;
+        text-align:         left;
+        font-size:          16px;
+        line-height:        1.3;
+        margin-bottom:      10px;
+        Margin-bottom:      10px;
+        text-align:         center;
+        margin:             0 auto;
+        Margin:             0 auto;
+        margin-top:         0px;
+        padding:            3px 3px;
+        text-transform:     uppercase;
+        font-weight:        500;
+        font-size:          10px;
+        border-radius:      3px;
+        min-width:          5em;
+        background-color:   #01bb33;
+        color:              #ffffff;
+    }
+
+    .eb-footer-link{
+        color:                #3a5e85;
+        text-decoration:      none;
+    }
+    .declined-tag{
+        padding:              2px 5px 3px;
+        color:                #e51423;
+        background:           #fce3e5;
+        border-radius:        4px;
+    }
+    .strike-through{
+        text-decoration:    line-through;
+        display:            inline-block;
+        padding-bottom:     4px;
+    }
+    #text-email{
+        display:              none;
+        width:                0px;
+        height:               0px;
+        color:                white;
+    }
+    .text-email-block{
+        margin:               20px;
+        padding:              20px;
+        font-family:          arial;
+        width:                700px;
+        background:           #fff;
+        border:               1px solid #dcdcdc;
+    }
+    .text-email-block pre{
+        margin:             0;
+        white-space:        pre-wrap;
+    }
+    .disabled{
+        font-size:          13px;
+        color:              #a1a1a1;
+        font-weight:        200;
+        color:              #a1a1a1 !important;
+        font-size:          10px !important;
+    }
+   =20
+    .track-title,
+    .session-title{
+        display: block;
+    }
+
+    .track-title{
+        margin-top: 8px;
+        margin-bottom: 4px;
+        color: #a1a1a1;
+        color: #a1a1a1 !important;
+    }
+
+    .session-title + br{
+        display: none;
+    }
+
+    .session-selected-title{
+        margin-top: 4px;
+        display: inline-block;
+    }
+
+    .addon-image{
+        float: left;
+        margin-right: 8px;
+    }
+
+    .addon-image img{
+        border-radius: 4px;
+    }
+
+    .addon-details{
+        vertical-align: top;
+        line-height: 130%;
+    }
+
+    .addon-details > span{
+        display: block;
+        line-height: 130%;
+    }
+
+    .addon-details .addon-desc{
+        color: #6e6e6e;
+    }
+
+    .addon-details .addon-quantity-value{
+        color: #6e6e6e;
+    }
+
+    .addon-details .addon-price{
+        font-size : 11px;
+    }
+    span.success{
+        color: #2E8545;
+    }
+    span.error{
+        color: #C72B33;
+        ;
+    }
+    .heading{
+        display:         block;
+        font-weight:     500;
+        margin-bottom:   8px;
+    }
+    .section{
+        display:         block;
+        padding:         16px 0;
+    }
+
+    /* Font size classes for HTML editor */
+    .font-size-tiny{
+        font-size:      0.7em !important;
+    }
+    .font-size-tiny strong{
+        font-size:      10px !important;
+    }
+    .font-size-small{
+        font-size:      0.85em !important;
+    }
+    .font-size-small strong{
+        font-size:      12px !important;
+    }
+    .font-size-large{
+        font-size:      1.2em !important;
+        line-height:    1.2em !important;
+    }
+    .font-size-large strong{
+        font-size:      17px !important;
+        line-height:    17px !important;
+    }
+    .font-size-huge{
+        font-size:      1.5em !important;
+        line-height:    1.1em !important;
+    }
+    .font-size-huge strong{
+        font-size:      21px !important;
+        line-height:    15px !important;
+    }
+
+    /* Bold formatting support for HTML editor */
+    strong, b, .ql-bold {
+        font-weight:    700 !important;
+    }
+   =20
+    /* Ensure bold works in various contexts */
+    p strong, p b, p .ql-bold,
+    div strong, div b, div .ql-bold,
+    span strong, span b, span .ql-bold {
+        font-weight:    700 !important;
+    }
+    p.ql-indent-1 {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    @media only screen and (max-width: 596px) {
+        .box,
+        .paid,
+        .notpaid,
+        .payatthedoor,
+        .free{
+            font-size:      7px;
+        }
+    }
+    /* Email table span p tag margin styles */
+    table span p {
+        margin: 0 !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        margin-block-start: 0 !important;
+        margin-block-end: 0 !important;
+        margin-inline-start: 0 !important;
+        margin-inline-end: 0 !important;
+    }
+
+    /* Outlook-specific fixes for email clients */
+    table span p {
+        mso-margin-top-alt: 0pt !important;
+        mso-margin-bottom-alt: 0pt !important;
+        mso-margin-left-alt: 0pt !important;
+        mso-margin-right-alt: 0pt !important;
+    } </style><style> html,
+        body {
+            background: #f5f5f6;
+        } </style><!--[if mso]-><style type=3D"text/css"> body,
+        table,
+        td,
+        p,
+        div{
+            font-family: 'Arial';
+        }
+
+        li {
+            text-align:  -webkit-match-parent;
+            display:     list-item;
+            text-indent:  -1em;
+        } </style><![endif]--></head><body leftmargin=3D"0" topmargin=3D"0"=
+ marginwidth=3D"0" marginheight=3D"0" yahoo=3D"fix" style=3D"font-family:'H=
+elveticaNeueWeb', 'Helvetica Neue', 'Helvetica', 'PingFang SC', '=E5=B9=B3=
+=E6=96=B9', 'Microsoft YaHei', '=E5=BE=AE=E8=BD=AF=E9=9B=85=E9=BB=91', 'STX=
+ihei', '=E5=8D=8E=E6=96=87=E7=BB=86=E9=BB=91', 'Microsoft JhengHei', '=E5=
+=BE=AE=E8=BB=9F=E6=AD=A3=E9=BB=91=E9=AB=94', 'Apple LiGothic', '=E8=98=8B=
+=E6=9E=9C=E5=84=B7=E4=B8=AD=E9=BB=91', 'Dutum', '=EB=8F=8B=EC=9B=80=EC=B2=
+=B4', 'Dotum', '=EB=8F=8B=EC=9B=80', '=E3=83=A1=E3=82=A4=E3=83=AA=E3=82=AA'=
+, 'meiryo', 'Myanmar Text', 'Cordia New', 'Arial', sans-serif; background-c=
+olor: #f5f5f6; font-size:14px;"><p style=3D"height: 0;width:0;font-size:0;d=
+isplay:none !important;visibility:hidden;mso-hide:all;color:#ffffff;line-he=
+ight:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">Wine Tast=
+ing and Social Gathering - A Story in Every Glass Registration Status - Awa=
+iting Approval</p><div style=3D" font-size:75px;line-height:75px;" class=3D=
+"show-for-large">&nbsp;</div><table class=3D"body" data-made-with-foundatio=
+n style=3D"border-spacing: 0; border-collapse: collapse; vertical-align: to=
+p; background: #f5f5f6; height: 100%; width: 100%;"><tr><td class=3D"float-=
+center" align=3D"center" valign=3D"top" style=3D"word-wrap: break-word; -we=
+bkit-hyphens: none; -moz-hyphens: none; hyphens: none; vertical-align: top;=
+ float: none; border-collapse: collapse !important;"><div class=3D"device-w=
+idth" style=3D"background-color:#ffffff; width:600px;  margin: 0 auto; box-=
+shadow: 0 2px 5px #9b9b9b;"><table style=3D"border-top: 5px solid #000000" =
+class=3D"device-width" width=3D"600" border=3D"0" cellpadding=3D"0" cellspa=
+cing=3D"0" align=3D"center" bgcolor=3D"#ffffff"><tr><td style=3D"padding:48=
+px 0 0;"><!-- HEADER ---><!-- END HEADER ---><!-- CONTENT ---><!-- BEGIN or=
+ganizationLogo Block --><table class=3D"device-width" width=3D"600" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" align=3D"center" bgcolor=3D"#fff=
+fff"><tr><td style=3D"padding:0;"><table class=3D"device-width" width=3D"60=
+0" border=3D"0" align=3D"left" cellpadding=3D"0" cellspacing=3D"0"><tr><td =
+valign=3D"top" bgcolor=3D"#FFFFFF"><table class=3D"device-width" align=3D"c=
+enter" border=3D"0" bgcolor=3D"#FFFFFF" style=3D"padding:0; border:0px;bord=
+er-collapse:collapse; font-family: Arial, sans-serif; text-align: Center; b=
+ackground-color: #FFFFFF;" cellspacing=3D"0" cellpadding=3D"0"><tr><td widt=
+h=3D"600" class=3D"device-width" valign=3D"top" align=3D"Center" style=3D" =
+line-height:10px; background-color: #FFFFFF;"><img title=3D"image" alt=3D"i=
+mage" style=3D"padding:40px 8px; width:400px;" class=3D"device-width" src=
+=3D"https://auschamvn.glueup.com/resources/public/images/logo/400x200/a85bd=
+14c-61fc-480f-8442-82cce25c343b.png" srcset=3D"https://auschamvn.glueup.com=
+/resources/public/images/logo/400x200/a85bd14c-61fc-480f-8442-82cce25c343b.=
+png" alt=3D"&lt;org_name&gt;"></td></tr></table></td></tr></table></td></tr=
+></table><!-- END organizationLogo Block --><!-- BEGIN emailTitle Block -->=
+<table class=3D"device-width" width=3D"600" border=3D"0" cellpadding=3D"0" =
+cellspacing=3D"0" align=3D"center" bgcolor=3D"#ffffff"><tr><td style=3D"pad=
+ding:0;"><div style=3D"mso-line-height-rule: exactly; font-size:24px;line-h=
+eight:24px;" class=3D"">&nbsp;</div><table class=3D"row" style=3D" border-s=
+pacing: 0; border-collapse: collapse; vertical-align: top; padding: 0; widt=
+h: 100%; text-align: left; position: relative; display: table;"><tbody><tr =
+style=3D" padding: 0; vertical-align: top; text-align: left;"><th class=3D"=
+small-1 large-1 columns first" style=3D" color: #3A3A3A; font-weight: 300; =
+padding: 0; margin: 0 auto; Margin: 0 auto; font-size: 16px; line-height: 1=
+.3; text-align: left; padding-bottom: 16px; width: 32.33333px; padding-left=
+: 8px; padding-left: 16px; padding-right: 8px;"><table style=3D" border-spa=
+cing: 0; border-collapse: collapse; vertical-align: top; padding: 0; width:=
+ 100%; text-align: left;"><tr style=3D" padding: 0; vertical-align: top; te=
+xt-align: left;"><th style=3D" color: #3A3A3A; font-weight: 300; padding: 0=
+; margin: 0; Margin: 0; font-size: 16px; line-height: 1.3; text-align: left=
+;"></th></tr></table></th><th class=3D"small-10 large-10 columns" style=3D"=
+ color: #3A3A3A; font-weight: 300; padding: 0; margin: 0 auto; Margin: 0 au=
+to; font-size: 16px; line-height: 1.3; text-align: left; padding-left: 16px=
+; padding-left: 8px; padding-bottom: 16px; width: 467.33333px; padding-righ=
+t: 8px;"><table style=3D" border-spacing: 0; border-collapse: collapse; ver=
+tical-align: top; padding: 0; width: 100%; text-align: left;"><tr style=3D"=
+ padding: 0; vertical-align: top; text-align: left;"><th style=3D" color: #=
+3A3A3A; font-weight: 300; padding: 0; margin: 0; Margin: 0; font-size: 16px=
+; line-height: 1.3; text-align: left;"><h1 class=3D"text-center" style=3D" =
+color: inherit; font-weight: 200 !important; padding: 0; margin: 0; Margin:=
+ 0; font-size: 30px; line-height: 1.4em; text-align: center; word-wrap: nor=
+mal; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; margin-botto=
+m: 10px; Margin-bottom: 10px;"><span style=3D" font-family: 'HelveticaNeueW=
+eb', 'Helvetica Neue', 'Helvetica', 'PingFang SC', '=E5=B9=B3=E6=96=B9', 'M=
+icrosoft YaHei', '=E5=BE=AE=E8=BD=AF=E9=9B=85=E9=BB=91', 'STXihei', '=E5=8D=
+=8E=E6=96=87=E7=BB=86=E9=BB=91', 'Microsoft JhengHei', '=E5=BE=AE=E8=BB=9F=
+=E6=AD=A3=E9=BB=91=E9=AB=94', 'Apple LiGothic', '=E8=98=8B=E6=9E=9C=E5=84=
+=B7=E4=B8=AD=E9=BB=91', 'Dutum', '=EB=8F=8B=EC=9B=80=EC=B2=B4', 'Dotum', '=
+=EB=8F=8B=EC=9B=80', '=E3=83=A1=E3=82=A4=E3=83=AA=E3=82=AA', 'meiryo', 'Mya=
+nmar Text', 'Cordia New', 'Arial', sans-serif;">Thank you for submitting yo=
+ur registration request.</span></h1></th><th class=3D"expander" style=3D" c=
+olor: #3A3A3A; font-weight: 300; padding: 0 !important; margin: 0; Margin: =
+0; font-size: 16px; line-height: 1.3; text-align: left; visibility: hidden;=
+ width: 0;"></th></tr></table></th><th class=3D"small-1 large-1 columns las=
+t" style=3D" color: #3A3A3A; font-weight: 300; padding: 0; margin: 0 auto; =
+Margin: 0 auto; font-size: 16px; line-height: 1.3; text-align: left; paddin=
+g-left: 16px; padding-left: 8px; padding-bottom: 16px; width: 32.33333px; p=
+adding-right: 8px; padding-right: 16px;"><table style=3D" border-spacing: 0=
+; border-collapse: collapse; vertical-align: top; padding: 0; width: 100%; =
+text-align: left;"><tr style=3D" padding: 0; vertical-align: top; text-alig=
+n: left;"><th style=3D" color: #3A3A3A; font-weight: 300; padding: 0; margi=
+n: 0; Margin: 0; font-size: 16px; line-height: 1.3; text-align: left;"></th=
+></tr></table></th></tr></tbody></table></td></tr></table><!-- END emailTit=
+le Block --><!-- BEGIN html Block --><table class=3D"device-width" width=3D=
+"600" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" align=3D"center" bgc=
+olor=3D"#ffffff"><tr><td style=3D"padding:0;"><table class=3D"row" style=3D=
+" border-spacing: 0; border-collapse: collapse; vertical-align: top; paddin=
+g: 0; width: 100%; text-align: left; position: relative; display: table;"><=
+tbody><tr style=3D" padding: 0; vertical-align: top; text-align: left;"><th=
+ class=3D"small-1 large-1 columns first" style=3D" color: #3A3A3A; font-wei=
+ght: 300; padding: 0; margin: 0 auto; Margin: 0 auto; font-size: 16px; line=
+-height: 1.3; text-align: left; padding-bottom: 16px; width: 32.33333px; pa=
+dding-left: 8px; padding-left: 16px; padding-right: 8px;"><table style=3D" =
+border-spacing: 0; border-collapse: collapse; vertical-align: top; padding:=
+ 0; width: 100%; text-align: left;"><tr style=3D" padding: 0; vertical-alig=
+n: top; text-align: left;"><th style=3D" color: #3A3A3A; font-weight: 300; =
+padding: 0; margin: 0; Margin: 0; font-size: 16px; line-height: 1.3; text-a=
+lign: left;"></th></tr></table></th><th class=3D"small-10 large-10 columns"=
+ style=3D" color: #3A3A3A; font-weight: 300; padding: 0; margin: 0 auto; Ma=
+rgin: 0 auto; font-size: 16px; line-height: 1.3; text-align: left; padding-=
+left: 16px; padding-left: 8px; padding-bottom: 16px; width: 467.33333px; pa=
+dding-right: 8px;"><div style=3D"mso-line-height-rule: exactly; font-size:1=
+5px;line-height:15px;" class=3D"">&nbsp;</div><table style=3D" border-spaci=
+ng: 0; border-collapse: collapse; vertical-align: top; padding: 0; width: 1=
+00%; text-align: left;"><tr style=3D" padding: 0; vertical-align: top; text=
+-align: left;"><th style=3D" color: #3A3A3A; font-weight: 300; padding: 0; =
+margin: 0; Margin: 0; font-size: 16px; line-height: 1.3; text-align: left;"=
+><h5 class=3D"text-center" style=3D" color: #3A3A3A; font-weight: 300; padd=
+ing: 0; margin: 0; Margin: 0; font-size: 16px; line-height: 1.3; text-align=
+: left;"><span style=3D" font-family: 'HelveticaNeueWeb', 'Helvetica Neue',=
+ 'Helvetica', 'PingFang SC', '=E5=B9=B3=E6=96=B9', 'Microsoft YaHei', '=E5=
+=BE=AE=E8=BD=AF=E9=9B=85=E9=BB=91', 'STXihei', '=E5=8D=8E=E6=96=87=E7=BB=86=
+=E9=BB=91', 'Microsoft JhengHei', '=E5=BE=AE=E8=BB=9F=E6=AD=A3=E9=BB=91=E9=
+=AB=94', 'Apple LiGothic', '=E8=98=8B=E6=9E=9C=E5=84=B7=E4=B8=AD=E9=BB=91',=
+ 'Dutum', '=EB=8F=8B=EC=9B=80=EC=B2=B4', 'Dotum', '=EB=8F=8B=EC=9B=80', '=
+=E3=83=A1=E3=82=A4=E3=83=AA=E3=82=AA', 'meiryo', 'Myanmar Text', 'Cordia Ne=
+w', 'Arial', sans-serif;"><p><strong>Payment Details:</strong></p><p><br></=
+p><p>Account name: AUSCHAM VIETNAM</p><p>Account Number (VND): 072100062730=
+3</p><p>Bank Name: Vietcombank - Ky Dong Branch</p><p><br></p><p>Please not=
+e the invoice #&nbsp;</p><p><br></p><p>For more information about payment/r=
+eceipt/invoice. Please contact: Ms. Hoan Nguyen =E2=80=93 <a href=3D"mailto=
+:accounts@auschamvn.org" rel=3D"noopener noreferrer" target=3D"_blank">acco=
+unts@auschamvn.org</a></p></span></h5></th><th class=3D"expander" style=3D"=
+ color: #3A3A3A; font-weight: 300; padding: 0 !important; margin: 0; Margin=
+: 0; font-size: 16px; line-height: 1.3; text-align: left; visibility: hidde=
+n; width: 0;"></th></tr></table><div style=3D"mso-line-height-rule: exactly=
+; font-size:10px;line-height:10px;" class=3D"">&nbsp;</div></th><th class=
+=3D"small-1 large-1 columns last" style=3D" color: #3A3A3A; font-weight: 30=
+0; padding: 0; margin: 0 auto; Margin: 0 auto; font-size: 16px; line-height=
+: 1.3; text-align: left; padding-left: 16px; padding-left: 8px; padding-bot=
+tom: 16px; width: 32.33333px; padding-right: 8px; padding-right: 16px;"><ta=
+ble style=3D" border-spacing: 0; border-collapse: collapse; vertical-align:=
+ top; padding: 0; width: 100%; text-align: left;"><tr style=3D" padding: 0;=
+ vertical-align: top; text-align: left;"><th style=3D" color: #3A3A3A; font=
+-weight: 300; padding: 0; margin: 0; Margin: 0; font-size: 16px; line-heigh=
+t: 1.3; text-align: left;"></th></tr></table></th></tr></tbody></table></td=
+></tr></table><!-- END html Block --><!-- BEGIN dataTable Block --><table c=
+lass=3D"device-width" width=3D"600" border=3D"0" cellpadding=3D"0" cellspac=
+ing=3D"0" align=3D"center" bgcolor=3D"#ffffff"><tr><td style=3D"padding:0;"=
+><div style=3D"mso-line-height-rule: exactly; font-size:45px;line-height:16=
+px;">&nbsp;</div><table align=3D"center" class=3D"container" style=3D" bord=
+er-spacing: 0; border-collapse: collapse; padding: 0; vertical-align: top; =
+text-align: inherit; width: 570px; margin: 0 auto; Margin: 0 auto; box-shad=
+ow: 0 2px 5px #9b9b9b; box-shadow: 0 1px 6px #a2a2a2; border: 1px solid #f5=
+f5f5;"><tbody><tr style=3D" padding: 0; vertical-align: top; text-align: le=
+ft;"><td style=3D" color: #3A3A3A; font-weight: 300; padding: 0; margin: 0;=
+ Margin: 0; font-size: 16px; line-height: 1.3; text-align: left; word-wrap:=
+ break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; vert=
+ical-align: top; border-collapse: collapse !important;"><table class=3D"row=
+ collapse" style=3D" border-spacing: 0; border-collapse: collapse; vertical=
+-align: top; padding: 0; width: 100%; text-align: left; position: relative;=
+ display: table; border-top: 4px solid #523817;"><tbody style=3D"line-heigh=
+t: 0 !important;padding: 0!important;margin: 0!important;"><tr style=3D" pa=
+dding: 0; vertical-align: top; text-align: left;"><th class=3D"small-12 lar=
+ge-12 columns" style=3D" color: #3A3A3A; font-weight: 300; padding: 0; marg=
+in: 0 auto; Margin: 0 auto; font-size: 16px; line-height: 1.3; text-align: =
+left; padding-left: 16px; padding-left: 8px; padding-left: 0; padding-botto=
+m: 16px; padding-bottom: 0 !important; width: 564px; width: 580px; padding-=
+right: 8px; padding-right: 0;"><table style=3D" border-spacing: 0; border-c=
+ollapse: collapse; vertical-align: top; padding: 0; width: 100%; text-align=
+: left;"><tr style=3D" padding: 0; vertical-align: top; text-align: left;">=
+<th style=3D" color: #3A3A3A; font-weight: 300; padding: 0; margin: 0; Marg=
+in: 0; font-size: 16px; line-height: 1.3; text-align: left;"></th><th class=
+=3D"expander" style=3D" color: #3A3A3A; font-weight: 300; padding: 0 !impor=
+tant; margin: 0; Margin: 0; font-size: 16px; line-height: 1.3; text-align: =
+left; visibility: hidden; width: 0;"></th></tr></table></th></tr></tbody></=
+table><table class=3D"row collapse" style=3D" border-spacing: 0; border-col=
+lapse: collapse; vertical-align: top; padding: 0; width: 100%; text-align: =
+left; position: relative; display: table;"><tbody><tr style=3D" padding: 0;=
+ vertical-align: top; text-align: left;"><th class=3D"small-12 large-large-=
+12 columns first last" style=3D" color: #3A3A3A; font-weight: 300; padding:=
+ 0; margin: 0 auto; Margin: 0 auto; font-size: 16px; line-height: 1.3; text=
+-align: left;"><table class=3D"row" style=3D" border-spacing: 0; border-col=
+lapse: collapse; vertical-align: top; padding: 0; width: 100%; text-align: =
+left; position: relative; display: table;"><tbody><tr style=3D" padding: 0;=
+ vertical-align: top; text-align: left;"><th class=3D"small-12 large-12 las=
+t columns first" style=3D" color: #3A3A3A; font-weight: 300; padding: 0; ma=
+rgin: 0 auto; Margin: 0 auto; font-size: 16px; line-height: 1.3; text-align=
+: left; padding-bottom: 16px; width: 564px; padding-left: 8px; padding-left=
+: 16px; padding-right: 8px; padding-right: 16px; width:588px;width:100%;pad=
+ding-left:0 !important;padding-right:0 !important;padding-bottom:0 !importa=
+nt;"><table style=3D" border-spacing: 0; border-collapse: collapse; vertica=
+l-align: top; padding: 0; width: 100%; text-align: left;"><tr style=3D" pad=
+ding: 0; vertical-align: top; text-align: left;"><th style=3D" color: #3A3A=
+3A; font-weight: 300; padding: 0; margin: 0; Margin: 0; font-size: 16px; li=
+ne-height: 1.3; text-align: left; padding:20px 25px 0 !important;"><h4 clas=
+s=3D"name" style=3D" color: inherit; font-weight: 200 !important; padding: =
+0; margin: 0; Margin: 0; font-size: 16px; line-height: 1.4em; text-align: l=
+eft; word-wrap: normal; -webkit-hyphens: none; -moz-hyphens: none; hyphens:=
+ none; margin-bottom: 10px; Margin-bottom: 10px;"><strong style=3D" font-we=
+ight: 400 !important;">Wine Tasting and Social Gathering - A Story in Every=
+ Glass</strong></h4><h6 class=3D"orange-text smaller" style=3D" color: inhe=
+rit; font-weight: 200 !important; font-weight: 500 !important; font-weight:=
+ 300 !important; padding: 0; margin: 0; Margin: 0; font-size: 19px; font-si=
+ze: 12px; line-height: 1.3; text-align: left; word-wrap: normal; -webkit-hy=
+phens: none; -moz-hyphens: none; hyphens: none; margin-bottom: 10px; Margin=
+-bottom: 10px; color:#523817;">by Australian Chamber of Commerce Vietnam (A=
+usCham)</h6><div style=3D"mso-line-height-rule: exactly; font-size:2px;line=
+-height:2px;" class=3D"">&nbsp;</div></th><th class=3D"expander" style=3D" =
+color: #3A3A3A; font-weight: 300; padding: 0 !important; margin: 0; Margin:=
+ 0; font-size: 16px; line-height: 1.3; text-align: left; visibility: hidden=
+; width: 0;"></th></tr></table></th></tr></tbody></table></th></tr></tbody>=
+</table><table class=3D"row collapse" style=3D" border-spacing: 0; border-c=
+ollapse: collapse; vertical-align: top; padding: 0; width: 100%; text-align=
+: left; position: relative; display: table;"><tbody><tr style=3D" padding: =
+0; vertical-align: top; text-align: left;"><th class=3D"small-12 large-larg=
+e-7 columns first" style=3D" color: #3A3A3A; font-weight: 300; padding: 0; =
+margin: 0 auto; Margin: 0 auto; font-size: 16px; line-height: 1.3; text-ali=
+gn: left; padding-bottom:16px;width:322.33333px;padding-left:8px;padding-ri=
+ght:8px;padding-left:16px;padding-right:0;padding-left:0;width:338.33333px;=
+width:346.33333px;"><table style=3D" border-spacing: 0; border-collapse: co=
+llapse; vertical-align: top; padding: 0; width: 100%; text-align: left;"><t=
+r style=3D" padding: 0; vertical-align: top; text-align: left;"><th style=
+=3D" color: #3A3A3A; font-weight: 300; padding: 0; margin: 0; Margin: 0; fo=
+nt-size: 16px; line-height: 1.3; text-align: left;"><table class=3D"callout=
+" style=3D" border-spacing: 0; border-collapse: collapse; vertical-align: t=
+op; padding: 0; width: 100%; text-align: left;"><tr style=3D" padding: 0; v=
+ertical-align: top; text-align: left;"><th class=3D"callout-inner normal" s=
+tyle=3D" color: #3A3A3A; font-weight: 300; padding: 10px; padding: 20px 25p=
+x 0; padding: 20px 25px 0px; margin: 0; Margin: 0; font-size: 16px; line-he=
+ight: 1.3; text-align: left; width: 100%; border: none; border: none !impor=
+tant; background: none; padding-top:0;"><table class=3D"row" style=3D" bord=
+er-spacing: 0; border-collapse: collapse; vertical-align: top; padding: 0; =
+width: 100%; text-align: left; position: relative; display: table;"><tbody>=
+<tr><th class=3D"small-12 large-12 "><table class=3D"row divider" style=3D"=
+ border-spacing: 0; border-collapse: collapse; vertical-align: top; padding=
+: 0; width: 100%; text-align: left; position: relative; display: table;"><t=
+body><tr style=3D" padding: 0; vertical-align: top; text-align: left;"><th =
+class=3D"small-12 large-12 columns first last larger" style=3D" color: #3A3=
+A3A; font-weight: 300; padding: 0; margin: 0 auto; Margin: 0 auto; font-siz=
+e: 16px; line-height: 1.3; text-align: left; width: 564px;"><table style=3D=
+" border-spacing: 0; border-collapse: collapse; vertical-align: top; paddin=
+g: 0; width: 100%; text-align: left;"><tr style=3D" padding: 0; vertical-al=
+ign: top; text-align: left;"><th style=3D" color: #3A3A3A; font-weight: 300=
+; padding: 0; margin: 0; Margin: 0; font-size: 16px; line-height: 1px; text=
+-align: left; height: 1px; border: 0; background:  #f5f5f6 !important;">&nb=
+sp;</th></tr></table></th></tr></tbody></table></th></tr><tr><th class=3D"s=
+mall-12 large-12" style=3D" padding-top: 8px; padding-top: 16px; padding-bo=
+ttom: 8px; padding-bottom: 16px;"><table class=3D"row" style=3D" border-spa=
+cing: 0; border-collapse: collapse; vertical-align: top; padding: 0; width:=
+ 100%; text-align: left; position: relative; display: table; margin-top: -5=
+px;"><tbody><tr style=3D" padding: 0; vertical-align: top; text-align: left=
+;"><th style=3D" color: #3A3A3A; font-weight: 300; padding: 0; margin: 0 au=
+to; Margin: 0 auto; font-size: 16px; line-height: 1.3; text-align: left; ">=
+<table style=3D" border-spacing: 0; border-collapse: collapse; vertical-ali=
+gn: top; padding: 0; width: 100%; text-align: left;"><tr style=3D" padding:=
+ 0; vertical-align: top; text-align: left;"><th style=3D" color: #3A3A3A; f=
+ont-weight: 300; padding: 0; margin: 0; Margin: 0; font-size: 16px; line-he=
+ight: 1.3; text-align: left;"><table class=3D"row" style=3D" border-spacing=
+: 0; border-collapse: collapse; vertical-align: top; padding: 0; width: 100=
+%; text-align: left; position: relative; display: table;"><tbody><tr style=
+=3D" padding: 0; vertical-align: top; text-align: left;"><th class=3D"small=
+-2 large-2 columns first" style=3D" color: #3A3A3A; font-weight: 300; paddi=
+ng: 0; margin: 0 auto; Margin: 0 auto; font-size: 16px; line-height: 1.3; t=
+ext-align: left; padding-bottom: 16px; width: 16.66667%; padding-left: 8px;=
+ padding-left: 16px; padding-left: 0 !important; padding-right: 8px; paddin=
+g-right: 0 !important; width: 6%"><table style=3D" border-spacing: 0; borde=
+r-collapse: collapse; vertical-align: top; padding: 0; width: 100%; text-al=
+ign: left;"><tr style=3D" padding: 0; vertical-align: top; text-align: left=
+;"><th style=3D" color: #3A3A3A; font-weight: 300; padding: 0; margin: 10px=
+ 0 0 0; Margin: 10px 0 0 0; font-size: 16px; line-height: 1.3; text-align: =
+right; width: 20px;"><img src=3D"https://auschamvn.glueup.com/images/email/=
+icons/date.png" srcset=3D"https://auschamvn.glueup.com/images/email/icons/d=
+ate@2x.png 2x" width=3D"20"  style=3D" outline: none; text-decoration: none=
+; -ms-interpolation-mode: bicubic; width: 20px; max-width: 100%; clear: bot=
+h; display: block; float: right; text-align: right; margin-top: 10px; Margi=
+n-top: 10px; margin-right: 10px; Margin-right: 10px; padding-right:20px; fl=
+oat:left;"></th></tr></table></th><th class=3D"small-10 large-10 columns la=
+st" style=3D" color: #3A3A3A; font-weight: 300; padding: 0; margin: 0 auto;=
+ Margin: 0 auto; font-size: 16px; line-height: 1.3; text-align: left; paddi=
+ng-bottom: 16px; width: 83.33333%; padding-left: 8px; padding-left: 16px; p=
+adding-left: 0 !important; padding-right: 8px; padding-right: 0 !important;=
+ width: 94%"><table style=3D" border-spacing: 0; border-collapse: collapse;=
+ vertical-align: top; padding: 0; width: 100%; text-align: left;"><tr style=
+=3D" padding: 0; vertical-align: top; text-align: left;"><th style=3D" colo=
+r: #3A3A3A; font-weight: 300; padding: 0; margin: 0; Margin: 0; font-size: =
+16px; line-height: 1.3; text-align: left;"><p style=3D" color: #3A3A3A; fon=
+t-weight: 300; padding: 0; margin: 0; Margin: 0; font-size: 16px; line-heig=
+ht: 1.3; text-align: left; margin-bottom: 0; Margin-bottom: 0; padding-bott=
+om: 8px;"><small style=3D" font-size: 13px; font-size: 10px !important; col=
+or: #a1a1a1; color: #a1a1a1 !important; font-weight: 200; "></small></p><p =
+class=3D"small" style=3D" color: #3A3A3A; font-weight: 500; padding: 0; mar=
+gin: 0; Margin: 0; font-size: 11px; line-height: 1.3; text-align: left;">Oc=
+tober 21, 2025<br /> 17:30 - 19:30 (GMT +07:00)</p></th></tr></table></th><=
+/tr></tbody></table></th></tr></table></th></tr></tbody></table><table clas=
+s=3D"row" style=3D" border-spacing: 0; border-collapse: collapse; vertical-=
+align: top; padding: 0; width: 100%; text-align: left; position: relative; =
+display: table; margin-top: -5px;"><tbody><tr style=3D" padding: 0; vertica=
+l-align: top; text-align: left;"><th style=3D" color: #3A3A3A; font-weight:=
+ 300; padding: 0; margin: 0 auto; Margin: 0 auto; font-size: 16px; line-hei=
+ght: 1.3; text-align: left; "><table style=3D" border-spacing: 0; border-co=
+llapse: collapse; vertical-align: top; padding: 0; width: 100%; text-align:=
+ left;"><tr style=3D" padding: 0; vertical-align: top; text-align: left;"><=
+th style=3D" color: #3A3A3A; font-weight: 300; padding: 0; margin: 0; Margi=
+n: 0; font-size: 16px; line-height: 1.3; text-align: left;"><table class=3D=
+"row" style=3D" border-spacing: 0; border-collapse: collapse; vertical-alig=
+n: top; padding: 0; width: 100%; text-align: left; position: relative; disp=
+lay: table;"><tbody><tr style=3D" padding: 0; vertical-align: top; text-ali=
+gn: left;"><th class=3D"small-2 large-2 columns first" style=3D" color: #3A=
+3A3A; font-weight: 300; padding: 0; margin: 0 auto; Margin: 0 auto; font-si=
+ze: 16px; line-height: 1.3; text-align: left; padding-bottom: 16px; width: =
+16.66667%; padding-left: 8px; padding-left: 16px; padding-left: 0 !importan=
+t; padding-right: 8px; padding-right: 0 !important; width: 6%"><table style=
+=3D" border-spacing: 0; border-collapse: collapse; vertical-align: top; pad=
+ding: 0; width: 100%; text-align: left;"><tr style=3D" padding: 0; vertical=
+-align: top; text-align: left;"><th style=3D" color: #3A3A3A; font-weight: =
+300; padding: 0; margin: 10px 0 0 0; Margin: 10px 0 0 0; font-size: 16px; l=
+ine-height: 1.3; text-align: right; width: 20px;"><img src=3D"https://ausch=
+amvn.glueup.com/images/email/icons/location.png" srcset=3D"https://auschamv=
+n.glueup.com/images/email/icons/location@2x.png 2x" width=3D"20"  style=3D"=
+ outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; wid=
+th: 20px; max-width: 100%; clear: both; display: block; float: right; text-=
+align: right; margin-top: 10px; Margin-top: 10px; margin-right: 10px; Margi=
+n-right: 10px; padding-right:20px; float:left;"></th></tr></table></th><th =
+class=3D"small-10 large-10 columns last" style=3D" color: #3A3A3A; font-wei=
+ght: 300; padding: 0; margin: 0 auto; Margin: 0 auto; font-size: 16px; line=
+-height: 1.3; text-align: left; padding-bottom: 16px; width: 83.33333%; pad=
+ding-left: 8px; padding-left: 16px; padding-left: 0 !important; padding-rig=
+ht: 8px; padding-right: 0 !important; width: 94%"><table style=3D" border-s=
+pacing: 0; border-collapse: collapse; vertical-align: top; padding: 0; widt=
+h: 100%; text-align: left;"><tr style=3D" padding: 0; vertical-align: top; =
+text-align: left;"><th style=3D" color: #3A3A3A; font-weight: 300; padding:=
+ 0; margin: 0; Margin: 0; font-size: 16px; line-height: 1.3; text-align: le=
+ft;"><p style=3D" color: #3A3A3A; font-weight: 300; padding: 0; margin: 0; =
+Margin: 0; font-size: 16px; line-height: 1.3; text-align: left; margin-bott=
+om: 0; Margin-bottom: 0; padding-bottom: 8px;"><small style=3D" font-size: =
+13px; font-size: 10px !important; color: #a1a1a1; color: #a1a1a1 !important=
+; font-weight: 200; "></small></p><p class=3D"small" style=3D" color: #3A3A=
+3A; font-weight: 500; padding: 0; margin: 0; Margin: 0; font-size: 11px; li=
+ne-height: 1.3; text-align: left;">The Shed<br/>178 Pasteur Street<br/>H=E1=
+=BB=93 Ch&iacute; Minh, Vietnam</p><table style=3D" border-spacing: 0; bord=
+er-collapse: collapse; vertical-align: top; padding: 0; width: 100%; text-a=
+lign: left;"><tr style=3D" padding: 0; vertical-align: top; text-align: lef=
+t;"><th style=3D" color: #3A3A3A; font-weight: 500; padding: 0; margin: 0; =
+Margin: 0; font-size: 11px; line-height: 1.3; text-align: left;"><a href=3D=
+"http://maps.google.com/?daddr=3D10.778263,106.698457" target=3D"_blank" st=
+yle=3D" margin-bottom: 0; Margin-bottom: 0; margin: 0; Margin: 0; font-size=
+: 11px; color: #02abe3;">Show on map</a></th></tr></table></th></tr></table=
+></th></tr></tbody></table></th></tr></table></th></tr></tbody></table><tab=
+le class=3D"row" style=3D" border-spacing: 0; border-collapse: collapse; ve=
+rtical-align: top; padding: 0; width: 100%; text-align: left; position: rel=
+ative; display: table; margin-top: -5px;"><tbody><tr style=3D" padding: 0; =
+vertical-align: top; text-align: left;"><th style=3D" color: #3A3A3A; font-=
+weight: 300; padding: 0; margin: 0 auto; Margin: 0 auto; font-size: 16px; l=
+ine-height: 1.3; text-align: left; "><table style=3D" border-spacing: 0; bo=
+rder-collapse: collapse; vertical-align: top; padding: 0; width: 100%; text=
+-align: left;"><tr style=3D" padding: 0; vertical-align: top; text-align: l=
+eft;"><th style=3D" color: #3A3A3A; font-weight: 300; padding: 0; margin: 0=
+; Margin: 0; font-size: 16px; line-height: 1.3; text-align: left;"><table c=
+lass=3D"row" style=3D" border-spacing: 0; border-collapse: collapse; vertic=
+al-align: top; padding: 0; width: 100%; text-align: left; position: relativ=
+e; display: table;"><tbody><tr style=3D" padding: 0; vertical-align: top; t=
+ext-align: left;"><th class=3D"small-2 large-2 columns first" style=3D" col=
+or: #3A3A3A; font-weight: 300; padding: 0; margin: 0 auto; Margin: 0 auto; =
+font-size: 16px; line-height: 1.3; text-align: left; padding-bottom: 16px; =
+width: 16.66667%; padding-left: 8px; padding-left: 16px; padding-left: 0 !i=
+mportant; padding-right: 8px; padding-right: 0 !important; width: 6%"><tabl=
+e style=3D" border-spacing: 0; border-collapse: collapse; vertical-align: t=
+op; padding: 0; width: 100%; text-align: left;"><tr style=3D" padding: 0; v=
+ertical-align: top; text-align: left;"><th style=3D" color: #3A3A3A; font-w=
+eight: 300; padding: 0; margin: 10px 0 0 0; Margin: 10px 0 0 0; font-size: =
+16px; line-height: 1.3; text-align: right; width: 20px;"><img src=3D"https:=
+//auschamvn.glueup.com/images/email/icons/link.png" srcset=3D"https://ausch=
+amvn.glueup.com/images/email/icons/link@2x.png 2x" width=3D"20"  style=3D" =
+outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; widt=
+h: 20px; max-width: 100%; clear: both; display: block; float: right; text-a=
+lign: right; margin-top: 10px; Margin-top: 10px; margin-right: 10px; Margin=
+-right: 10px; padding-right:20px; float:left;"></th></tr></table></th><th c=
+lass=3D"small-10 large-10 columns last" style=3D" color: #3A3A3A; font-weig=
+ht: 300; padding: 0; margin: 0 auto; Margin: 0 auto; font-size: 16px; line-=
+height: 1.3; text-align: left; padding-bottom: 16px; width: 83.33333%; padd=
+ing-left: 8px; padding-left: 16px; padding-left: 0 !important; padding-righ=
+t: 8px; padding-right: 0 !important; width: 94%"><table style=3D" border-sp=
+acing: 0; border-collapse: collapse; vertical-align: top; padding: 0; width=
+: 100%; text-align: left;"><tr style=3D" padding: 0; vertical-align: top; t=
+ext-align: left;"><th style=3D" color: #3A3A3A; font-weight: 300; padding: =
+0; margin: 0; Margin: 0; font-size: 16px; line-height: 1.3; text-align: lef=
+t;"><div style=3D"mso-line-height-rule: exactly; font-size:3px;line-height:=
+3px;" class=3D"">&nbsp;</div><a class=3D"small" href=3D"https://auschamvn.g=
+lueup.com/track/rd?type=3DsystemEmail&status=3DClicked&tracking_id=3D673067=
+17%3Ad02b9c26-0a2c-4f86-949e-e0516e769c1a&redirect_url=3Dhttps%3A%2F%2Fausc=
+hamvn.glueup.com%2Fevent%2Fwine-tasting-and-social-gathering-a-story-in-eve=
+ry-glass-157488%2F&ts=3D1760082368&ps=3DeVVaYktKTU9JQ3ErT09Ua3JOdTdYZ3gwWDV=
+jWGs2QzFVSk9CeDZNdG93TkFnMWUrMWlPOGI4Z3JWeWtVUzNwSTE2enRrbzJGQkpFcjRoQXRJaC=
+trOVk3TG84Tzh2SGVvaWxoLzBVR1pIV09ua1BPUHJXU1FSamtLUXJaZnhQdGdkaVE1Q1FNM0ZrY=
+zh2ZGFDWEZZRDhBPT0=3D" style=3D" color: #02abe3; font-weight: 500; padding:=
+ 0; margin: 0; Margin: 0; font-size: 11px; line-height: 1.3; text-align: le=
+ft;">https://auschamvn.glueup.com/event/wine-tasting-and-social-gathering-a=
+-story-in-every-glass-157488/</a></th></tr></table></th></tr></tbody></tabl=
+e></th></tr></table></th></tr></tbody></table></th></tr><tr class=3D"show-f=
+or-large"><th class=3D"small-12 large-12"><table class=3D"row divider" styl=
+e=3D" border-spacing: 0; border-collapse: collapse; vertical-align: top; pa=
+dding: 0; width: 100%; text-align: left; position: relative; display: table=
+;"><tbody><tr style=3D" padding: 0; vertical-align: top; text-align: left;"=
+><th class=3D"small-12 large-12 columns first last larger" style=3D" color:=
+ #3A3A3A; font-weight: 300; padding: 0; margin: 0 auto; Margin: 0 auto; fon=
+t-size: 16px; line-height: 1.3; text-align: left; width: 564px;"><table sty=
+le=3D" border-spacing: 0; border-collapse: collapse; vertical-align: top; p=
+adding: 0; width: 100%; text-align: left;"><tr style=3D" padding: 0; vertic=
+al-align: top; text-align: left;"><th style=3D" color: #3A3A3A; font-weight=
+: 300; padding: 0; margin: 0; Margin: 0; font-size: 16px; line-height: 1px;=
+ text-align: left; height: 1px; border: 0; background:  #f5f5f6 !important;=
+">&nbsp;</th></tr></table></th></tr></tbody></table></th></tr></tbody></tab=
+le></th></tr></table></th></tr></table></th><th class=3D"small-12 large-5 c=
+olumns last reduce-margin-top" style=3D" text-align: left;"><a style=3D" co=
+lor: #3A3A3A; font-weight: 300; padding: 0; margin: 0; Margin: 0; font-size=
+: 11px; line-height: 1.3; margin-bottom: 10px; Margin-bottom: 10px;" href=
+=3D"http://maps.google.com/?daddr=3D10.778263,106.698457"><img src=3D"https=
+://auschamvn.glueup.com/map/image-(10.778263,106.698457)-18-235x200.png" wi=
+dth=3D"235" height=3D"200" align=3D"center" class=3D"float-center map-img" =
+style=3D" float: none; text-align: center; width: 100%;"/></a></th></tr></t=
+body></table><div style=3D"mso-line-height-rule: exactly; font-size:25px;li=
+ne-height:25px;" class=3D"">&nbsp;</div><table class=3D"row" style=3D" bord=
+er-spacing: 0; border-collapse: collapse; vertical-align: top; padding: 0; =
+width: 100%; text-align: left; position: relative; display: table;"><tbody>=
+<tr style=3D" padding: 0; vertical-align: top; text-align: left;"><th class=
+=3D"small-12 large-4 columns first larger" style=3D" color: #3A3A3A; font-w=
+eight: 300; padding: 0; margin: 0 auto; Margin: 0 auto; font-size: 16px; li=
+ne-height: 1.3; text-align: left; padding-bottom: 16px; width: 177.33333px;=
+ padding-left: 8px; padding-left: 16px; padding-left: 30px; padding-right: =
+8px;"><table style=3D" border-spacing: 0; border-collapse: collapse; vertic=
+al-align: top; padding: 0; width: 100%; text-align: left;"><tr style=3D" pa=
+dding: 0; vertical-align: top; text-align: left;"><th style=3D" color: #3A3=
+A3A; font-weight: 300; padding: 0; margin: 0; Margin: 0; font-size: 16px; l=
+ine-height: 1.3; text-align: left;"><h4 class=3D"name" style=3D" color: inh=
+erit; font-weight: 500; font-weight: 300 !important; padding: 0; margin: 0;=
+ Margin: 0; font-size: 23px; font-size: 14px; line-height: 1.3; text-align:=
+ left; word-wrap: normal; -webkit-hyphens: none; -moz-hyphens: none; hyphen=
+s: none; margin-bottom: 10px; Margin-bottom: 10px;"><strong style=3D" font-=
+weight: 400 !important;">Your Order Breakdown</strong></h4></th><th class=
+=3D"expander" style=3D" color: #3A3A3A; font-weight: 300; padding: 0 !impor=
+tant; margin: 0; Margin: 0; font-size: 16px; line-height: 1.3; text-align: =
+left; visibility: hidden; width: 0;"></th></tr></table></th><th class=3D"sm=
+all-6 large-4 columns reduce-margin-top" style=3D" color: #3A3A3A; font-wei=
+ght: 300; padding: 0; margin: 0 auto; Margin: 0 auto; font-size: 16px; line=
+-height: 1.3; text-align: left; padding-left: 16px; padding-left: 8px; padd=
+ing-bottom: 16px; width: 177.33333px; padding-right: 8px;"><table style=3D"=
+ border-spacing: 0; border-collapse: collapse; vertical-align: top; padding=
+: 0; width: 100%; text-align: left;"><tr style=3D" padding: 0; vertical-ali=
+gn: top; text-align: left;"><th style=3D" color: #3A3A3A; font-weight: 300;=
+ padding: 0; margin: 0; Margin: 0; font-size: 16px; line-height: 1.3; text-=
+align: left;"><p class=3D"text-right small-text-left" style=3D" color: #3A3=
+A3A; font-weight: 300; padding: 0; margin: 0 auto; Margin: 0 auto; font-siz=
+e: 16px; line-height: 1.3; text-align: right; margin-bottom: 10px; Margin-b=
+ottom: 10px;"><small style=3D" font-size: 13px; font-size: 10px !important;=
+ color: #a1a1a1; color: #a1a1a1 !important; font-weight: 200; ">Registratio=
+n ID&nbsp;&nbsp;</small><strong style=3D" font-weight: 400!important; font-=
+size: 11px;">7805310</strong></p></th><th class=3D"expander" style=3D" colo=
+r: #3A3A3A; font-weight: 300; padding: 0 !important; margin: 0; Margin: 0; =
+font-size: 16px; line-height: 1.3; text-align: left; visibility: hidden; wi=
+dth: 0;"></th></tr></table></th><th class=3D"small-6 large-4 columns last l=
+arger reduce-margin-top" style=3D" color: #3A3A3A; font-weight: 300; paddin=
+g: 0; margin: 0 auto; Margin: 0 auto; font-size: 16px; line-height: 1.3; te=
+xt-align: left; padding-left: 16px; padding-left: 8px; padding-bottom: 16px=
+; width: 177.33333px; padding-right: 8px; padding-right: 16px; padding-righ=
+t: 30px;"><table style=3D" border-spacing: 0; border-collapse: collapse; ve=
+rtical-align: top; padding: 0; width: 100%; text-align: left;"><tr style=3D=
+" padding: 0; vertical-align: top; text-align: left;"><th style=3D" color: =
+#3A3A3A; font-weight: 300; padding: 0; margin: 0; Margin: 0; font-size: 16p=
+x; line-height: 1.3; text-align: left;"><p class=3D"text-right small-text-l=
+eft" style=3D" color: #3A3A3A; font-weight: 300; padding: 0; margin: 0 auto=
+; Margin: 0 auto; font-size: 16px; line-height: 1.3; text-align: right; mar=
+gin-bottom: 10px; Margin-bottom: 10px;"><small style=3D" font-size: 13px; f=
+ont-size: 10px !important; color: #a1a1a1; color: #a1a1a1 !important; font-=
+weight: 200; ">Order Date&nbsp;&nbsp;</small><strong style=3D" font-weight:=
+ 400!important; font-size: 11px;">Oct 10, 2025</strong></p></th><th class=
+=3D"expander" style=3D" color: #3A3A3A; font-weight: 300; padding: 0 !impor=
+tant; margin: 0; Margin: 0; font-size: 16px; line-height: 1.3; text-align: =
+left; visibility: hidden; width: 0;"></th></tr></table></th></tr></tbody></=
+table><table class=3D"row" style=3D" border-spacing: 0; border-collapse: co=
+llapse; vertical-align: top; padding: 0; width: 100%; text-align: left; pos=
+ition: relative; display: table;  background-color:#f5f5f6;"><tbody><tr sty=
+le=3D" padding: 0; vertical-align: top; text-align: left;"><th class=3D"sma=
+ll-1 large-1 columns first show-for-large" style=3D" color: #3A3A3A; font-w=
+eight: 300; padding: 0; margin: 0 auto; Margin: 0 auto; font-size: 16px; li=
+ne-height: 1.3; text-align: left; padding-bottom: 16px; width: 32.33333px; =
+padding-left: 8px; padding-left: 16px; padding-right: 8px;"><table style=3D=
+" border-spacing: 0; border-collapse: collapse; vertical-align: top; paddin=
+g: 0; width: 100%; text-align: left;"><tr style=3D" padding: 0; vertical-al=
+ign: top; text-align: left;"><th style=3D" color: #3A3A3A; font-weight: 300=
+; padding: 0; margin: 0; Margin: 0; font-size: 16px; line-height: 1.3; text=
+-align: left;"></th></tr></table></th><th class=3D"small-6 large-5 columns"=
+ style=3D" color: #3A3A3A; font-weight: 300; padding: 0; margin: 0 auto; Ma=
+rgin: 0 auto; font-size: 16px; line-height: 1.3; text-align: left; padding-=
+left: 16px; padding-left: 8px; padding-bottom: 16px; padding-right: 8px;  t=
+ext-align:left;width:84%;"><table style=3D" border-spacing: 0; border-colla=
+pse: collapse; vertical-align: top; padding: 0; width: 100%; text-align: le=
+ft;"><tr style=3D" padding: 0; vertical-align: top; text-align: left;"><th>=
+<div style=3D"mso-line-height-rule: exactly; font-size:25px;line-height:25p=
+x;" class=3D"">&nbsp;</div><h6 class=3D"smaller" style=3D" color: inherit; =
+font-weight: 200 !important; font-weight: 500 !important; padding: 0; margi=
+n: 0 auto; Margin: 0 auto; font-size: 19px; font-size: 12px; line-height: 1=
+.3; text-align: left; word-wrap: normal; -webkit-hyphens: none; -moz-hyphen=
+s: none; hyphens: none; margin-bottom: 10px; Margin-bottom: 10px;  text-ali=
+gn:left;"><strong style=3D" font-weight: 400 !important;">Item</strong></h6=
+></th><th class=3D"expander"></th></tr></table></th><th class=3D"large-1 co=
+lumns last show-for-large" style=3D" color: #3A3A3A; font-weight: 300; padd=
+ing: 0; margin: 0 auto; Margin: 0 auto; font-size: 16px; line-height: 1.3; =
+text-align: left; width: 8.33%; padding-bottom: 16px; padding-left: 8px; pa=
+dding-right: 8px;"><table><tr><th></th><th class=3D"expander"></th></tr></t=
+able></th></tr></tbody></table><div style=3D"mso-line-height-rule: exactly;=
+ font-size:15px;line-height:15px;" class=3D"">&nbsp;</div><table class=3D"r=
+ow" style=3D" border-spacing: 0; border-collapse: collapse; vertical-align:=
+ top; padding: 0; width: 100%; text-align: left; position: relative; displa=
+y: table;"><tbody><tr style=3D" padding: 0; vertical-align: top; text-align=
+: left;"><th class=3D"small-1 large-1 columns first show-for-large" style=
+=3D" color: #3A3A3A; font-weight: 300; padding: 0; margin: 0 auto; Margin: =
+0 auto; font-size: 16px; line-height: 1.3; text-align: left; padding-bottom=
+: 16px; width: 32.33333px; padding-left: 8px; padding-left: 16px; padding-r=
+ight: 8px;"><table style=3D" border-spacing: 0; border-collapse: collapse; =
+vertical-align: top; padding: 0; width: 100%; text-align: left;"><tr style=
+=3D" padding: 0; vertical-align: top; text-align: left;"><th style=3D" colo=
+r: #3A3A3A; font-weight: 300; padding: 0; margin: 0; Margin: 0; font-size: =
+16px; line-height: 1.3; text-align: left;"></th></tr></table></th><th class=
+=3D"small-6 large-5 columns" style=3D" color: #3A3A3A; font-weight: 300; pa=
+dding: 0; margin: 0 auto; Margin: 0 auto; font-size: 16px; line-height: 1.3=
+; text-align: left; padding-left: 16px; padding-left: 8px; padding-bottom: =
+16px; padding-right: 8px;  width:84%;"><table style=3D" border-spacing: 0; =
+border-collapse: collapse; vertical-align: top; padding: 0; width: 100%; te=
+xt-align: left;"><tr style=3D" padding: 0; vertical-align: top; text-align:=
+ left;"><th style=3D" color: #3A3A3A; font-weight: 300; padding: 0; margin:=
+ 0; Margin: 0; font-size: 16px; line-height: 1.3; text-align: left;"><div s=
+tyle=3D"mso-line-height-rule: exactly; font-size:10px;line-height:10px;" cl=
+ass=3D"">&nbsp;</div><p class=3D"small" style=3D" color: #3A3A3A; font-weig=
+ht: 300; padding: 0; margin: 0 auto; Margin: 0 auto; font-size: 11px; line-=
+height: 1.3; text-align: left; margin-bottom: 10px; Margin-bottom: 10px; te=
+xt-align:left;">AusCham Members<br/><span class=3D"disabled"> Simon Renauld=
+ </span><span class=3D"hidden"></span></p></th><th class=3D"expander"></th>=
+</tr></table></th><th class=3D"large-1 last columns show-for-large" style=
+=3D" color: #3A3A3A; font-weight: 300; padding: 0; margin: 0 auto; Margin: =
+0 auto; font-size: 16px; line-height: 1.3; text-align: left; width: 8.33%; =
+padding-bottom: 16px; padding-left: 8px; padding-right: 8px;"><table><tr><t=
+h></th><th class=3D"expander"></th></tr></table></th></tr></tbody></table><=
+/td></tr></tbody></table><div style=3D"mso-line-height-rule: exactly; font-=
+size:40px;line-height:40px;" class=3D"">&nbsp;</div><div style=3D"mso-line-=
+height-rule: exactly; font-size:45px;line-height:16px;">&nbsp;</div></td></=
+tr></table><!-- END dataTable Block --><!-- BEGIN contact Block --><table c=
+lass=3D"device-width" width=3D"600" border=3D"0" cellpadding=3D"0" cellspac=
+ing=3D"0" align=3D"center" bgcolor=3D"#ffffff"><tr><td style=3D"padding:0;"=
+><table class=3D"row" style=3D" border-spacing: 0; border-collapse: collaps=
+e; vertical-align: top; padding: 0; width: 100%; text-align: left; position=
+: relative; display: table;"><tbody><tr style=3D" padding: 0; vertical-alig=
+n: top; text-align: left;"><th class=3D"small-1 large-1 columns first" styl=
+e=3D" color: #3A3A3A; font-weight: 300; padding: 0; margin: 0 auto; Margin:=
+ 0 auto; font-size: 16px; line-height: 1.3; text-align: left; padding-botto=
+m: 16px; width: 32.33333px; padding-left: 8px; padding-left: 16px; padding-=
+right: 8px;"><table style=3D" border-spacing: 0; border-collapse: collapse;=
+ vertical-align: top; padding: 0; width: 100%; text-align: left;"><tr style=
+=3D" padding: 0; vertical-align: top; text-align: left;"><th style=3D" colo=
+r: #3A3A3A; font-weight: 300; padding: 0; margin: 0; Margin: 0; font-size: =
+16px; line-height: 1.3; text-align: left;"></th></tr></table></th><th class=
+=3D"small-10 large-10 columns" style=3D" color: #3A3A3A; font-weight: 300; =
+padding: 0; margin: 0 auto; Margin: 0 auto; font-size: 12px; line-height: 1=
+.3; text-align: left; padding-left: 16px; padding-left: 8px; padding-bottom=
+: 16px; width: 467.33333px; padding-right: 8px;"><table style=3D" border-sp=
+acing: 0; border-collapse: collapse; vertical-align: top; padding: 0; width=
+: 100%; text-align: left;"><tr style=3D" padding: 0; vertical-align: top; t=
+ext-align: left;"><th style=3D" color: #3A3A3A; font-weight: 300; padding: =
+0; margin: 0; Margin: 0; font-size: 12px; line-height: 1.3; text-align: lef=
+t;"><h5 class=3D"text-center" style=3D" color: inherit; font-weight: 300 !i=
+mportant; padding: 0; margin: 0; Margin: 0; font-size: 12px; line-height: 1=
+.4em; text-align: center; word-wrap: normal; -webkit-hyphens: none; -moz-hy=
+phens: none; hyphens: none; margin-bottom: 10px; Margin-bottom: 10px; font-=
+family: 'HelveticaNeueWeb', 'Helvetica Neue', 'Helvetica', 'PingFang SC', '=
+=E5=B9=B3=E6=96=B9', 'Microsoft YaHei', '=E5=BE=AE=E8=BD=AF=E9=9B=85=E9=BB=
+=91', 'STXihei', '=E5=8D=8E=E6=96=87=E7=BB=86=E9=BB=91', 'Microsoft JhengHe=
+i', '=E5=BE=AE=E8=BB=9F=E6=AD=A3=E9=BB=91=E9=AB=94', 'Apple LiGothic', '=E8=
+=98=8B=E6=9E=9C=E5=84=B7=E4=B8=AD=E9=BB=91', 'Dutum', '=EB=8F=8B=EC=9B=80=
+=EC=B2=B4', 'Dotum', '=EB=8F=8B=EC=9B=80', '=E3=83=A1=E3=82=A4=E3=83=AA=E3=
+=82=AA', 'meiryo', 'Myanmar Text', 'Cordia New', 'Arial', sans-serif;"> If =
+you have any issues, please contact <a href=3D"mailto:events@auschamvn.org?=
+subject=3DInquiry: Wine Tasting and Social Gathering - A Story in Every Gla=
+ss" target=3D"_blank" class=3D"default-link-small" style=3D" text-align: le=
+ft; color: #02abe3; text-decoration: none !important; font-size: 12px !impo=
+rtant; font-weight: 200 !important;"><span style=3D" font-family: 'Helvetic=
+aNeueWeb', 'Helvetica Neue', 'Helvetica', 'PingFang SC', '=E5=B9=B3=E6=96=
+=B9', 'Microsoft YaHei', '=E5=BE=AE=E8=BD=AF=E9=9B=85=E9=BB=91', 'STXihei',=
+ '=E5=8D=8E=E6=96=87=E7=BB=86=E9=BB=91', 'Microsoft JhengHei', '=E5=BE=AE=
+=E8=BB=9F=E6=AD=A3=E9=BB=91=E9=AB=94', 'Apple LiGothic', '=E8=98=8B=E6=9E=
+=9C=E5=84=B7=E4=B8=AD=E9=BB=91', 'Dutum', '=EB=8F=8B=EC=9B=80=EC=B2=B4', 'D=
+otum', '=EB=8F=8B=EC=9B=80', '=E3=83=A1=E3=82=A4=E3=83=AA=E3=82=AA', 'meiry=
+o', 'Myanmar Text', 'Cordia New', 'Arial', sans-serif;">events@auschamvn.or=
+g</span></a></h5></th><th class=3D"expander" style=3D" color: #3A3A3A; font=
+-weight: 300; padding: 0 !important; margin: 0; Margin: 0; font-size: 16px;=
+ line-height: 1.3; text-align: left; visibility: hidden; width: 0;"></th></=
+tr></table></th><th class=3D"small-1 large-1 columns last" style=3D" color:=
+ #3A3A3A; font-weight: 300; padding: 0; margin: 0 auto; Margin: 0 auto; fon=
+t-size: 16px; line-height: 1.3; text-align: left; padding-left: 16px; paddi=
+ng-left: 8px; padding-bottom: 16px; width: 32.33333px; padding-right: 8px; =
+padding-right: 16px;"></th></tr></tbody></table></td></tr></table><!-- END =
+contact Block --><div style=3D"mso-line-height-rule: exactly; font-size:20p=
+x;line-height:20px;" class=3D"">&nbsp;</div><table class=3D"row footer" sty=
+le=3D" border-spacing: 0; border-collapse: collapse; vertical-align: top; p=
+adding: 0; width: 100%; text-align: left; position: relative; background: #=
+f5f5f6; display: table;"><tbody><tr style=3D" padding: 0; vertical-align: t=
+op; text-align: left;"><th class=3D"small-12 large-12 columns first last" s=
+tyle=3D" color: #3A3A3A; font-weight: 300; padding: 0; margin: 0 auto; Marg=
+in: 0 auto; font-size: 16px; line-height: 1.3; text-align: left; padding-bo=
+ttom: 0px; width: 564px; padding-left: 8px; padding-left: 16px; padding-rig=
+ht: 8px; padding-right: 16px;"><table style=3D" border-spacing: 0; border-c=
+ollapse: collapse; vertical-align: top; padding: 0; width: 100%; text-align=
+: left;"><tr style=3D" padding: 0; vertical-align: top; text-align: left;">=
+<th><table style=3D" color: #3A3A3A; font-weight: 300; padding: 0; margin: =
+0; Margin: 0; font-size: 16px; line-height: 1.3; text-align: center; width:=
+100%;"><tr><td style=3D"padding-top:10px;"><center data-parsed=3D"" style=
+=3D" width: 100%; min-width: 580px; min-width: 532px;"><a target=3D"blank" =
+href=3D"https://www.glueup.com/track/rd?type=3DsystemEmail&status=3DOpened&=
+tracking_id=3D67306717%3Ad02b9c26-0a2c-4f86-949e-e0516e769c1a&redirect_url=
+=3Dhttps%3A%2F%2Fwww.glueup.com&ts=3D1760082369&ps=3DbGx3a0I5QVhVaEN3Q2l5Vk=
+9GSzhJSDYzejhsU3VJMnowZk5NaE5MSEtLQT0=3D" style=3D"text-decoration:none;"><=
+img src=3D"https://www.glueup.com/images/eb-email-logo.gif" srcset=3D"https=
+://www.glueup.com/images/eb-email-logo.gif" alt=3D"Glueup" width=3D"21" hei=
+ght=3D"21" align=3D"center" border=3D"0" style=3D" outline: none; text-deco=
+ration: none; -ms-interpolation-mode: bicubic; width: 21px; max-width: 100%=
+; clear: both; display: block; margin: 0 auto; Margin: 0 auto; text-align: =
+center;;"></a></center></td></tr><tr><td style=3D"padding-bottom: 10px;"><c=
+enter data-parsed=3D"" style=3D" width: 100%; min-width: 580px; min-width: =
+532px;"><a class=3D'eb-footer-link' target=3D"blank" href=3D"https://www.gl=
+ueup.com/track/rd?type=3DsystemEmail&status=3DOpened&tracking_id=3D67306717=
+%3Ad02b9c26-0a2c-4f86-949e-e0516e769c1a&redirect_url=3Dhttps%3A%2F%2Fwww.gl=
+ueup.com&ts=3D1760082369&ps=3DbGx3a0I5QVhVaEN3Q2l5Vk9GSzhJSDYzejhsU3VJMnowZ=
+k5NaE5MSEtLQT0=3D" style=3D"text-decoration:none;"><span class=3D"text-cent=
+er small" style=3D" color: #3A3A3A; font-weight: 300; padding: 0; margin: 0=
+; Margin: 0; font-size: 16px; line-height: 1.3; text-align: left; text-alig=
+n:center;font-size:11px;color: #3a5e85!important;font-size: 10px;"><strong =
+style=3D"font-weight:400 !important;text-decoration:none; font-family:'Helv=
+eticaNeueWeb', 'Helvetica Neue', 'Helvetica', 'PingFang SC', '=E5=B9=B3=E6=
+=96=B9', 'Microsoft YaHei', '=E5=BE=AE=E8=BD=AF=E9=9B=85=E9=BB=91', 'STXihe=
+i', '=E5=8D=8E=E6=96=87=E7=BB=86=E9=BB=91', 'Microsoft JhengHei', '=E5=BE=
+=AE=E8=BB=9F=E6=AD=A3=E9=BB=91=E9=AB=94', 'Apple LiGothic', '=E8=98=8B=E6=
+=9E=9C=E5=84=B7=E4=B8=AD=E9=BB=91', 'Dutum', '=EB=8F=8B=EC=9B=80=EC=B2=B4',=
+ 'Dotum', '=EB=8F=8B=EC=9B=80', '=E3=83=A1=E3=82=A4=E3=83=AA=E3=82=AA', 'me=
+iryo', 'Myanmar Text', 'Cordia New', 'Arial', sans-serif">Powered by Glue U=
+p</strong></span></a></center></td></tr></table></th><th class=3D"expander"=
+ style=3D" color: #3A3A3A; font-weight: 300; padding: 0 !important; margin:=
+ 0; Margin: 0; font-size: 16px; line-height: 1.3; text-align: left; visibil=
+ity: hidden; width: 0;"><div id=3D"image-tracker"><img alt=3D"" style=3D"wi=
+dth:1px; height:1px;" src=3D"https://auschamvn.glueup.com__https://www.glue=
+up.com/track/image?type=3DsystemEmail&tracking_id=3D67306717%3Ad02b9c26-0a2=
+c-4f86-949e-e0516e769c1a" width=3D"1" height=3D"1" /></div></th></tr></tabl=
+e></th></tr></tbody></table><!-- END CONTENT ---></td></tr></table><!-- End=
+ Wrapper --></div></td></tr></table><div style=3D"font-size:75px;line-heigh=
+t:75px;" class=3D"show-for-large">&nbsp;</div><!-- BEGIN textEmail Block --=
+><div id=3D"text-email" style=3D"display:none;"><p style=3D"height: 0;width=
+:0;font-size:0;display:none !important;visibility:hidden;mso-hide:all;color=
+:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hi=
+dden;">Wine Tasting and Social Gathering - A Story in Every Glass Registrat=
+ion Status - Awaiting Approval</p></div><!-- END textEmail Block --><img sr=
+c=3D"http://rc.glueup.email/wf/open?upn=3Du001.wJ4wQoWqpttL0LnWj9yCngQD-2BP=
+KOSnIWwGo2A-2BWj6XhI9ycBrjOsm7MIwKhycUcb9GvcutyBybRuJ81y7Ijv-2FeaFhLGKd94pN=
+-2BzldaJOYCdD04SXqWGujJI1Zq03ktg1zNBiTDYyn60jR5We1Wm-2Bguc6YdvRhiPBJJ-2FMS7=
+ioV1HO8ejD27z8zoUtM43M0inj79sIuyI9zGGUPq6LWCo51nsqJJODYogDMvXHJ-2B7burxmu2b=
+SFTbTNFHg62XYBl7TKkqtghwJhm3yuSttwlxhusYF3lWgLqJzIf5k8ljSVvAaRDiwPHCWifo4FN=
+-2BHNDE6R6mO8TntIYWvBzxDVofktm8FryX2pbJL3QPX-2BCMdFVLrEXuyV17qmDbCs986nFr7T=
+P8STmX8Oxfmo6m21AGGPQ-3D-3D" alt=3D"" width=3D"1" height=3D"1" border=3D"0"=
+ style=3D"height:1px !important;width:1px !important;border-width:0 !import=
+ant;margin-top:0 !important;margin-bottom:0 !important;margin-right:0 !impo=
+rtant;margin-left:0 !important;padding-top:0 !important;padding-bottom:0 !i=
+mportant;padding-right:0 !important;padding-left:0 !important;"/></body></h=
+tml>
+------=_Part_7168414_1705490526.1760082369119--
+
+------=_Part_7168413_1904618534.1760082369119--
+

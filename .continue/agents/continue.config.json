@@ -1,0 +1,105 @@
+{
+  "models": [
+    {
+      "title": "Job Search Automation VM 159",
+      "provider": "anthropic",
+      "model": "claude-3-5-sonnet-20241022",
+      "apiKey": "${CONTINUE_API_KEY}"
+    }
+  ],
+  "slashCommands": [
+    {
+      "name": "job-search",
+      "description": "Execute job discovery automation",
+      "prompt": "Run job discovery to find 50-100 new opportunities"
+    },
+    {
+      "name": "linkedin",
+      "description": "Execute LinkedIn network growth",
+      "prompt": "Send 15 LinkedIn connections to hiring managers, recruiters, and peers"
+    },
+    {
+      "name": "status",
+      "description": "Check automation status",
+      "prompt": "Show comprehensive status of all automation systems"
+    },
+    {
+      "name": "report",
+      "description": "Generate automation report",
+      "prompt": "Create detailed report of today's job discoveries and LinkedIn activity"
+    }
+  ],
+  "customCommands": [
+    {
+      "name": "Start Job Discovery",
+      "description": "Execute epic_job_search_agent.py daily",
+      "command": "cd /home/simon/Learning-Management-System-Academy/job-search-toolkit && /usr/bin/python3 epic_job_search_agent.py daily"
+    },
+    {
+      "name": "Start LinkedIn Outreach",
+      "description": "Execute daily_linkedin_outreach.py",
+      "command": "cd /home/simon/Learning-Management-System-Academy/job-search-toolkit && /usr/bin/python3 daily_linkedin_outreach.py"
+    },
+    {
+      "name": "Check System Status",
+      "description": "Run Continue Agent status check",
+      "command": "cd /home/simon/Learning-Management-System-Academy/.continue/agents && /usr/bin/python3 continue_agent_vm159.py"
+    },
+    {
+      "name": "View Job Database",
+      "description": "Show recent job discoveries",
+      "command": "cd /home/simon/Learning-Management-System-Academy/job-search-toolkit && /usr/bin/python3 -c \"import sqlite3; db=sqlite3.connect('data/job_search.db'); cursor=db.cursor(); cursor.execute('SELECT COUNT(*) FROM opportunities'); print(f'Total Jobs: {cursor.fetchone()[0]}'); cursor.execute('SELECT title, company, salary_range FROM opportunities LIMIT 5'); [print(f'{row[0]} @ {row[1]}: {row[2]}') for row in cursor.fetchall()]\""
+    },
+    {
+      "name": "View LinkedIn Activity",
+      "description": "Show LinkedIn automation summary",
+      "command": "cd /home/simon/Learning-Management-System-Academy/job-search-toolkit && /usr/bin/python3 -c \"import sqlite3; db=sqlite3.connect('data/linkedin_contacts.db'); cursor=db.cursor(); cursor.execute('SELECT SUM(connections_sent), SUM(messages_sent) FROM daily_activity'); row=cursor.fetchone(); print(f'Total Connections: {row[0] or 0}'); print(f'Total Messages: {row[1] or 0}')\""
+    }
+  ],
+  "workspace": {
+    "folders": [
+      {
+        "path": "/home/simon/Learning-Management-System-Academy/job-search-toolkit",
+        "name": "Job Search Toolkit"
+      },
+      {
+        "path": "/home/simon/Learning-Management-System-Academy/.continue",
+        "name": "Continue Agents"
+      }
+    ]
+  },
+  "debugging": {
+    "enabled": true,
+    "logLevel": "info",
+    "logFile": "/home/simon/Learning-Management-System-Academy/.continue/agents/logs/continue_debug.log"
+  },
+  "settings": {
+    "vm_instance": "159",
+    "base_directory": "/home/simon/Learning-Management-System-Academy",
+    "automation_enabled": true,
+    "job_search_enabled": true,
+    "linkedin_enabled": true,
+    "email_tracking_enabled": true,
+    "crm_enabled": true,
+    "rate_limiting": {
+      "linkedin_connections_per_day": 15,
+      "linkedin_messages_per_day": 5,
+      "linkedin_endorsements_per_day": 20,
+      "request_delay_seconds": 2
+    },
+    "email_config": {
+      "primary": "contact@simondatalab.de",
+      "backup": "sn@gmail.com",
+      "daily_digest": true,
+      "include_linkedin_summary": true
+    },
+    "job_search_config": {
+      "regions": ["Vietnam", "Southeast Asia", "Australia", "APAC", "USA Remote", "Canada Remote", "Europe Remote"],
+      "target_roles": 22,
+      "target_companies": "Tier-1 + Tier-2 + APAC Leaders",
+      "work_preferences": "Remote/Hybrid + On-site (Asia only)",
+      "salary_range": "$150K-$350K",
+      "minimum_score": 70
+    }
+  }
+}

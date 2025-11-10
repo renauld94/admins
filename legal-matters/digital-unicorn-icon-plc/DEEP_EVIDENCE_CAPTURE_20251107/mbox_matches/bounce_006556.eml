@@ -1,0 +1,238 @@
+X-GM-THRID: 1811655034579232631
+X-Gmail-Labels: Archived,Category Updates,Unread
+Delivered-To: sn.renauld@gmail.com
+Received: by 2002:a17:906:bc89:b0:a93:9da4:2ebd with SMTP id lv9csp1993478ejb;
+        Mon, 30 Sep 2024 13:41:17 -0700 (PDT)
+X-Google-Smtp-Source: 
+ AGHT+IHDcMJX8xqXE+hHjOnqPMiDrjaXg4SxRcOK1SZDD4NN8cttHAs0EQt4REO+gD0M8Ib4SmXb
+X-Received: by 2002:a05:622a:1904:b0:451:d6b3:3930 with SMTP id
+ d75a77b69052e-45c9f2a311emr228109721cf.47.1727728877015;
+        Mon, 30 Sep 2024 13:41:17 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1727728877; cv=none;
+        d=google.com; s=arc-20240605;
+        b=FWAqHC+5haBKbgUYf8FHiBGg9TSJUwkyS0y16gurFmwAovsa8sJI3+x+f5XGtjyb/L
+         xjGP1RArQA2AMlSBDttNyq1yDnBJqXJ4pZ1YaRGvv6rRpINHIgQJ0LcfYwcY7HaFAi2X
+         SOObLJdZWEw6HSoVztvDVFy0dWCsIRk2KTzerltxslNGddsdXytjzgaNGQR+WIQCNop5
+         y4yQDt2NVvSBw/T0GG1xTJIPwwAtRLIyYFAMXX/4LcxbdGsfpK6wQBi8iySIaW8dXLek
+         b0zXm5aD23gtAyDY3//RNSarH0tdrM9iyvI0OITJNP6B7S8zJavq4/VhO8ZdtpBJjs32
+         9enQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605;
+        h=content-transfer-encoding:mime-version:subject:message-id:to:from
+         :date:sender:dkim-signature:dkim-signature;
+        bh=qJhXpABRYsKr3173eF5hv8KaIanwxT6outfxZFcI8Rk=;
+        fh=UdbUcDkJKvqffcPeSfMTJ3BaP9WLNp68ZQroZAlxuH8=;
+        b=Tk90JlMj+G23k7nM6IaG+6JNTv2DInGUzjvU+4Il+uQFwgUa3SqyxqAZiTCtTr7VZc
+         6kZFbzKg1QbuPZ7ls+kbxD6IjVH92SSKbFx+Hq+ytn/YXPOzW37lyCEM1biOijwz72vw
+         pVlFFHu+iiEDkTs23UAdbZ4189f3n5mvrgx/GxP/jtXfC0jrJbaH0dfKR9DQPVIyYAly
+         XbO1RQDH6K5R4amxa+ZcJowzs2ZJmA8CxV+Xlq3qZOY8EjN0KLhzsv6v7S0oDk/iXQcw
+         4KcXwxbQiPpPFIA2JKigc2cU6aPUUjaDJ+TTUVBaPLn3EQTA3j5bxskqaSwgHb5sl3q/
+         X16A==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@heroku.com header.s=mx header.b=XolBxmpT;
+       dkim=pass header.i=@mailgun.org header.s=mg header.b=GqFFHY0T;
+       spf=pass (google.com: domain of
+ bounce+3b85da.034c41-sn.renauld=gmail.com@heroku.com designates 69.72.32.153
+ as permitted sender)
+ smtp.mailfrom="bounce+3b85da.034c41-sn.renauld=gmail.com@heroku.com";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE)
+ header.from=notifications.heroku.com
+Return-Path: <bounce+3b85da.034c41-sn.renauld=gmail.com@heroku.com>
+Received: from m32-153.mailgun.net (m32-153.mailgun.net. [69.72.32.153])
+        by mx.google.com with UTF8SMTPS id
+ d75a77b69052e-45c9f34d0a0si93826261cf.502.2024.09.30.13.41.16
+        for <sn.renauld@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 30 Sep 2024 13:41:16 -0700 (PDT)
+Received-SPF: pass (google.com: domain of
+ bounce+3b85da.034c41-sn.renauld=gmail.com@heroku.com designates 69.72.32.153
+ as permitted sender) client-ip=69.72.32.153;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@heroku.com header.s=mx header.b=XolBxmpT;
+       dkim=pass header.i=@mailgun.org header.s=mg header.b=GqFFHY0T;
+       spf=pass (google.com: domain of
+ bounce+3b85da.034c41-sn.renauld=gmail.com@heroku.com designates 69.72.32.153
+ as permitted sender)
+ smtp.mailfrom="bounce+3b85da.034c41-sn.renauld=gmail.com@heroku.com";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE)
+ header.from=notifications.heroku.com
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=heroku.com; q=dns/txt;
+ s=mx; t=1727728876; x=1727736076;
+ h=Content-Transfer-Encoding: Content-Type: Mime-Version: Subject: Subject:
+ Message-ID: To: To: From: From: Date: Sender: Sender: X-Feedback-Id;
+ bh=qJhXpABRYsKr3173eF5hv8KaIanwxT6outfxZFcI8Rk=;
+ b=XolBxmpT7JNCDyVQ9WAApzP6czxZRWC6Th5NqZ/QItVA9du+rj5BpDRh5MCST7UIA2K5M4wWMvAZfOVuD1e3PWVarqpmNwjCrgYloHLO4B9Izw6zKUWxqCxum+S52K8evJJSWkYDkSWWo/1kD5Hh1DyJ5SgN7UH0oQTW4QWVXUE=
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mailgun.org;
+ q=dns/txt; s=mg; t=1727728876; x=1727736076;
+ h=Content-Transfer-Encoding: Content-Type: Mime-Version: Subject: Subject:
+ Message-ID: To: To: From: From: Date: Sender: Sender: X-Feedback-Id;
+ bh=qJhXpABRYsKr3173eF5hv8KaIanwxT6outfxZFcI8Rk=;
+ b=GqFFHY0TreDUqRXXKHXhoxQ3M47Fcl/+SuRgsaeiLS0UnmstFhAHmVNlBqE33GGRVXKAZcOCSigVuB4Hccpgd7lMIcTenZd4h28smRmuyxzByjZZohKD6dTphFk269Zx14phj4W9torw7HD0/bO0juoilDJT7r3mnLl3CuqFRSg=
+X-Feedback-Id: bot@notifications.heroku.com::5b80668dfa60950001f60ef0:mailgun
+X-Mailgun-Sending-Ip: 69.72.32.153
+X-Mailgun-Sid: WyIxNDIwZCIsInNuLnJlbmF1bGRAZ21haWwuY29tIiwiMDM0YzQxIl0=
+Received: from localhost.localdomain
+ (ec2-52-21-115-250.compute-1.amazonaws.com
+ [52.21.115.250]) by 72d45ce6ffca with SMTP id 66fb0cecdaa66311b412b282
+ (version=TLS1.3, cipher=TLS_AES_128_GCM_SHA256); Mon, 30 Sep 2024 20:41:16
+ GMT
+Sender: bot@notifications.heroku.com
+Date: Mon, 30 Sep 2024 20:41:16 +0000
+From: Heroku Notifications <bot@notifications.heroku.com>
+To: sn.renauld@gmail.com
+Message-ID: <42bb7f50-0543-4da8-9918-6f15ec3db57c@notifications.heroku.com>
+Subject: Remember to Register a Backup MFA Verification Method
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_66fb0cec918b9_aa15d39b842629783"
+Content-Transfer-Encoding: 7bit
+
+
+----==_mimepart_66fb0cec918b9_aa15d39b842629783
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Thank you for protecting your account by enabling MFA. We noticed that yo=
+u have only one MFA verification method registered.
+
+We strongly recommend registering multiple verification methods so that y=
+ou can always access your account. For example, if you=E2=80=99re using a=
+ mobile authenticator app as your primary verification method, it=E2=80=99=
+s a good idea to also generate temporary recovery codes in case you forge=
+t or lose your mobile device.
+
+Visit [Account Settings](https://dashboard.heroku.com/account) and select=
+ Manage Multi-Factor Authentication to register one or more additional MF=
+A verification methods.
+
+Thank you.
+
+----==_mimepart_66fb0cec918b9_aa15d39b842629783
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://ww=
+w.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns=3D"http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF=
+-8" />
+  </head>
+  <body style=3D"width: 100% !important; -webkit-text-size-adjust: none; =
+margin: 0; padding: 0;">
+    <center>
+      <table id=3D"backgroundTable" style=3D"border-spacing: 0; border-co=
+llapse: collapse; font-family: proxima-nova, 'helvetica neue', helvetica,=
+ arial, geneva, sans-serif; height: 100% !important; width: 100% !importa=
+nt; color: #4c4c4c; font-size: 15px; line-height: 150%; background: #ffff=
+ff; margin: 0; padding: 0; border: 0;">
+        <tr style=3D"vertical-align: top; padding: 0;">
+          <td align=3D"center" valign=3D"top" style=3D"vertical-align: to=
+p; padding: 0;">
+            <table id=3D"templateContainer" style=3D"border-spacing: 0; b=
+order-collapse: collapse; font-family: proxima-nova, 'helvetica neue', he=
+lvetica, arial, geneva, sans-serif; height: 100%; width: 600px; color: #4=
+c4c4c; font-size: 15px; line-height: 150%; background: #ffffff; margin: 4=
+0px 0; padding: 0; border: 0;">
+              <tr style=3D"vertical-align: top; padding: 0;">
+                <td class=3D"templateContainerPadding" align=3D"center" v=
+align=3D"top" style=3D"vertical-align: top; padding: 0 40px;">
+                  <table id=3D"templateContent" style=3D"border-spacing: =
+0; border-collapse: collapse; font-family: proxima-nova, 'helvetica neue'=
+, helvetica, arial, geneva, sans-serif; height: 100%; width: 100%; backgr=
+ound: #ffffff; margin: 0; padding: 0; border: 0;">
+                    <tr style=3D"vertical-align: top; padding: 0;">
+                      <td style=3D"vertical-align: top; text-align: left;=
+ padding: 0;" align=3D"left" valign=3D"top">
+                        <h1 id=3D"logo" style=3D"color: #6E5BAA; display:=
+ block; font-family: hybrea, proxima-nova, 'helvetica neue', helvetica, a=
+rial, geneva, sans-serif; font-size: 32px; font-weight: 200; text-align: =
+left; margin: 0 0 40px;" align=3D"left"><img src=3D"https://s3.amazonaws.=
+com/heroku.newsletter/heroku-logo.png" alt=3D"heroku" width=3D"120" heigh=
+t=3D"42" style=3D"outline: none; text-decoration: none; border: 0;" /></h=
+1>
+
+                        <p style=3D"margin: 20px 0;">
+
+                          <p>Thank you for protecting your account by ena=
+bling MFA. We noticed that you have only one MFA verification method regi=
+stered.</p>
+
+<p>We strongly recommend registering multiple verification methods so tha=
+t you can always access your account. For example, if you=E2=80=99re usin=
+g a mobile authenticator app as your primary verification method, it=E2=80=
+=99s a good idea to also generate temporary recovery codes in case you fo=
+rget or lose your mobile device.</p>
+
+<p>Visit <a href=3D"https://dashboard.heroku.com/account">Account Setting=
+s</a> and select Manage Multi-Factor Authentication to register one or mo=
+re additional MFA verification methods.</p>
+
+<p>Thank you.</p>
+
+
+                        </p>
+
+                          <img src=3D"https://telex.heroku.com/user/notif=
+ications/42bb7f50-0543-4da8-9918-6f15ec3db57c/read.png" height=3D"1" widt=
+h=3D"1">
+
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </center>
+
+<style type=3D"text/css">
+body {
+width: 100% !important;
+}
+.ReadMsgBody {
+width: 100%;
+}
+.ExternalClass {
+width: 100%;
+}
+body {
+-webkit-text-size-adjust: none;
+}
+body {
+margin: 0; padding: 0;
+}
+code {
+white-space: pre-wrap;
+}
+img {
+border: 0; outline: none; text-decoration: none;
+}
+#backgroundTable {
+height: 100% !important; margin: 0; padding: 0; width: 100% !important;
+}
+#backgroundTable {
+color: #4c4c4c; background-color: #ffffff; font-family: proxima-nova, 'he=
+lvetica neue', helvetica, arial, geneva, sans-serif; font-size: 15px; lin=
+e-height: 150%;
+}
+@media (max-width: 540px) {
+  #templateContainer {
+    width: 100% !important;
+  }
+  #templateContainer .templateContainerPadding {
+    padding: 0 5% !important;
+  }
+}
+</style>
+</body>
+</html>
+
+
+----==_mimepart_66fb0cec918b9_aa15d39b842629783--
+

@@ -1,0 +1,92 @@
+{
+  "timestamp": "2025-11-09T12:58:04.138254",
+  "status": "ready",
+  "deployment_steps": [
+    {
+      "step": 1,
+      "action": "Backup existing CSS",
+      "command": "cp /var/www/moodle/theme/boost/css/defaults.css /var/www/moodle/theme/boost/css/defaults.css.backup_20251109",
+      "critical": true,
+      "estimated_time_seconds": 5
+    },
+    {
+      "step": 2,
+      "action": "Copy Vietnamese CSS to production",
+      "command": "cp /home/simon/Learning-Management-System-Academy/staging/moodle_visual_style.css /var/www/moodle/theme/boost/css/vietnamese_course.css",
+      "critical": true,
+      "estimated_time_seconds": 2
+    },
+    {
+      "step": 3,
+      "action": "Set correct permissions",
+      "command": "chmod 644 /var/www/moodle/theme/boost/css/vietnamese_course.css",
+      "critical": true,
+      "estimated_time_seconds": 1
+    },
+    {
+      "step": 4,
+      "action": "Update Moodle config (add to config.php)",
+      "command": "$THEME->sheets = array('vietnamese_course');",
+      "critical": true,
+      "estimated_time_seconds": 2,
+      "note": "Add after existing sheets array"
+    },
+    {
+      "step": 5,
+      "action": "Clear Moodle caches",
+      "command": "php /var/www/moodle/admin/cli/purge_caches.php",
+      "critical": true,
+      "estimated_time_seconds": 30
+    },
+    {
+      "step": 6,
+      "action": "Verify CSS loaded in browser",
+      "command": "curl -H 'Accept: text/css' https://moodle.local/theme/boost/css/vietnamese_course.css | head -20",
+      "critical": false,
+      "estimated_time_seconds": 3
+    }
+  ],
+  "rollback_plan": [
+    {
+      "step": 1,
+      "action": "Restore backup CSS",
+      "command": "cp /var/www/moodle/theme/boost/css/defaults.css.backup_20251109 /var/www/moodle/theme/boost/css/defaults.css"
+    },
+    {
+      "step": 2,
+      "action": "Revert config.php changes",
+      "command": "Restore original $THEME->sheets array"
+    },
+    {
+      "step": 3,
+      "action": "Clear caches again",
+      "command": "php /var/www/moodle/admin/cli/purge_caches.php"
+    },
+    {
+      "step": 4,
+      "action": "Verify rollback",
+      "command": "Check homepage displays original styling"
+    }
+  ],
+  "total_estimated_time_seconds": 43,
+  "pre_deployment_checklist": [
+    "\u2713 Backup Moodle database created",
+    "\u2713 CSS file verified (colors, components, responsive)",
+    "\u2713 DBA approval received",
+    "\u2713 Maintenance window scheduled",
+    "\u2713 Team notified of deployment",
+    "\u2713 Rollback procedure documented"
+  ],
+  "post_deployment_verification": [
+    "Verify 4/4 colors visible on homepage",
+    "Test card components styling",
+    "Test module section styling",
+    "Test progress bar styling",
+    "Test responsive design (mobile/tablet/desktop)",
+    "Test cross-browser (Chrome, Firefox, Safari, Edge)",
+    "Verify quiz components styled correctly",
+    "Verify assignment components styled correctly",
+    "Check page load time (<2s)",
+    "Verify no JavaScript errors in console"
+  ]
+}

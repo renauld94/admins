@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinical Relevance vs Completion Analysis</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #1A3A52;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        
+        .chart-wrapper {
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .bubble {
+            cursor: pointer;
+            transition: all 0.2s ease;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+        
+        .bubble:hover {
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.2));
+            opacity: 0.9;
+        }
+        
+        .bubble-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-anchor: middle;
+            fill: white;
+            pointer-events: none;
+        }
+        
+        .axis-label {
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .tooltip {
+            position: absolute;
+            background: rgba(0,0,0,0.9);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            pointer-events: none;
+            display: none;
+            z-index: 1000;
+        }
+        
+        .tooltip.show {
+            display: block;
+        }
+        
+        .insights {
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .insight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .insight-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .insight-text {
+            font-size: 13px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Clinical Relevance vs Completion Analysis</h1>
+        <p class="subtitle">Bubble size represents study time; bubble position shows relevance vs completion rate</p>
+        
+        <div class="chart-wrapper">
+            <svg id="bubble-chart" width="900" height="600"></svg>
+            <div class="tooltip"></div>
+        </div>
+        
+        <div class="insights">
+            <div class="insight">
+                <div class="insight-title">🎯 High Priority</div>
+                <div class="insight-text">Mastery & Professional modules have 92-98% clinical relevance but require 90-120 min study time</div>
+            </div>
+            <div class="insight">
+                <div class="insight-title">📈 Completion Leaders</div>
+                <div class="insight-text">Foundations module leads with 92% completion, providing strong foundation for advanced topics</div>
+            </div>
+            <div class="insight">
+                <div class="insight-title">⚖️ Balanced Path</div>
+                <div class="insight-text">Intermediate modules offer good balance of clinical relevance (80-90%) with reasonable completion (84-88%)</div>
+            </div>
+            <div class="insight">
+                <div class="insight-title">🚀 Growth Opportunity</div>
+                <div class="insight-text">Expert modules (98% relevance) could improve completion (76%) with enhanced engagement strategies</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const data = [{"module": "Foundations of Vietnamese", "relevance": 85, "completion": 92, "time": 45, "color": "#E8423C"}, {"module": "Interactive Communication", "relevance": 90, "completion": 88, "time": 60, "color": "#C4A73C"}, {"module": "Professional Expression", "relevance": 95, "completion": 84, "time": 75, "color": "#1A3A52"}, {"module": "Navigation & Culture", "relevance": 70, "completion": 86, "time": 50, "color": "#7BA68F"}, {"module": "Professional Development", "relevance": 92, "completion": 81, "time": 90, "color": "#E8423C"}, {"module": "Mastery & Specialization", "relevance": 98, "completion": 76, "time": 120, "color": "#C4A73C"}];
+        
+        // Dimensions
+        const margin = {top: 20, right: 20, bottom: 60, left: 60};
+        const width = 900 - margin.left - margin.right;
+        const height = 600 - margin.top - margin.bottom;
+        
+        // Scales
+        const xScale = d3.scaleLinear()
+            .domain([65, 100])
+            .range([0, width]);
+        
+        const yScale = d3.scaleLinear()
+            .domain([70, 95])
+            .range([height, 0]);
+        
+        const radiusScale = d3.scaleSqrt()
+            .domain([0, 120])
+            .range([20, 60]);
+        
+        // Create SVG
+        const svg = d3.select("#bubble-chart")
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+        
+        // Add axes
+        svg.append("g")
+            .attr("transform", `translate(0,${height})`)
+            .call(d3.axisBottom(xScale))
+            .append("text")
+            .attr("x", width / 2)
+            .attr("y", 40)
+            .attr("text-anchor", "middle")
+            .attr("fill", "black")
+            .attr("class", "axis-label")
+            .text("Clinical Relevance (%)");
+        
+        svg.append("g")
+            .call(d3.axisLeft(yScale))
+            .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 0 - margin.left)
+            .attr("x", 0 - (height / 2))
+            .attr("dy", "1em")
+            .attr("text-anchor", "middle")
+            .attr("fill", "black")
+            .attr("class", "axis-label")
+            .text("Completion Rate (%)");
+        
+        // Tooltip
+        const tooltip = d3.select(".tooltip");
+        
+        // Draw bubbles
+        svg.selectAll(".bubble")
+            .data(data)
+            .enter()
+            .append("circle")
+            .attr("class", "bubble")
+            .attr("cx", d => xScale(d.relevance))
+            .attr("cy", d => yScale(d.completion))
+            .attr("r", d => radiusScale(d.time))
+            .attr("fill", d => d.color)
+            .attr("opacity", 0.8)
+            .on("mouseover", function(event, d) {
+                tooltip.html(`
+                    <strong>${d.module}</strong><br/>
+                    Relevance: ${d.relevance}%<br/>
+                    Completion: ${d.completion}%<br/>
+                    Avg Time: ${d.time} min
+                `)
+                    .style("left", (event.pageX + 10) + "px")
+                    .style("top", (event.pageY - 28) + "px")
+                    .classed("show", true);
+                
+                d3.select(this).transition()
+                    .attr("opacity", 1)
+                    .attr("r", d => radiusScale(d.time) * 1.2);
+            })
+            .on("mouseout", function(event, d) {
+                tooltip.classed("show", false);
+                d3.select(this).transition()
+                    .attr("opacity", 0.8)
+                    .attr("r", d => radiusScale(d.time));
+            });
+        
+        // Add labels
+        svg.selectAll(".label")
+            .data(data)
+            .enter()
+            .append("text")
+            .attr("class", "bubble-label")
+            .attr("x", d => xScale(d.relevance))
+            .attr("y", d => yScale(d.completion) + 4)
+            .text(d => d.module.split(" ").slice(0, 2).join(" "));
+    </script>
+</body>
+</html>

@@ -1,0 +1,670 @@
+X-GM-THRID: 1787183017470692058
+X-Gmail-Labels: Archived,Category Updates,Unread
+Delivered-To: sn.renauld@gmail.com
+Received: by 2002:a92:c949:0:b0:35f:fe9e:9833 with SMTP id i9csp4909896ilq;
+        Thu, 4 Jan 2024 09:49:02 -0800 (PST)
+X-Google-Smtp-Source: 
+ AGHT+IEuwNJ20HYVG2sfk+0wGk6+fib8rfriG25BQow3KpgJc6d7tLp8grw5v7grUDHIvVeQWV+L
+X-Received: by 2002:a05:600c:a46:b0:40d:5e74:8a13 with SMTP id
+ c6-20020a05600c0a4600b0040d5e748a13mr293246wmq.104.1704390542586;
+        Thu, 04 Jan 2024 09:49:02 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1704390542; cv=none;
+        d=google.com; s=arc-20160816;
+        b=c/XEV6jhT3Fya4tM/s6oZj79xSD+J2ub+weTsrHA+OqddcKB2PGfFqae7ikM43m2yk
+         XP2th8RSdloQ/MJMFk2YqXq1lbiuiDP89zUnNH0U5IS4s6+KqTVFgTdrRHWwzlWcN3oc
+         sbcu/788t8dVu9kt7Xw4gjZL+Kzcd53K1NDN6YJOEhmZZoW59dwic/2TqueFBZxwc7Ia
+         T5zYJHlH9zXVG/C6zSnOOKMcQOT5CclhdYyG0Pso1REc5EAzZK1MynWcVyNNdKRIsTyr
+         7qhmfVJcKGM5GPq8DdJDF4Pz1G+X8NNJoA6qoiPNhFA2nmk64UIjZSLKDofoq7defYXA
+         hk9A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20160816;
+        h=from:mime-version:date:to:reply-to:subject:message-id
+         :dkim-signature;
+        bh=XQXcDWzFMZP2JrBVoDM930k8+8tAm3ZDTPgXUW4DtkI=;
+        fh=UdbUcDkJKvqffcPeSfMTJ3BaP9WLNp68ZQroZAlxuH8=;
+        b=kgYyv/fnVscNEXTy5aQuDKZWAFbyAAe+qloiTR9MaDx3IorYZq79N52JaUZXK0JCpH
+         LsuSokecCyqKb+j1NhTMCyGwCPzkYLktOOYEbRXkgDUkGYMNSh7mi6blv2u5UfV0DOK8
+         BgF9t3n9VjMZwJW5Ru7h3tOI5DpIdR+JP3EtmY3QGDGD8Ub/fHjJjhvFr4tL2I8fX3B+
+         22HxOVuJKc1A7HKV9nbb4aHlfmWNMNCZSP9lo84VxpJ+RfdfCZ9qyobVSj55HFzgwVZB
+         PD7v/9eFudGcY7eDgxVy64IDbfJhylnl0L4oVdTk9Bg3Clt+lF2/9UmC9656TT1ANsTi
+         emmA==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@odoo.com header.s=mail header.b=UoVXc1LM;
+       spf=pass (google.com: domain of bounce@mail.odoo.com designates
+ 51.91.164.78 as permitted sender) smtp.mailfrom=bounce@mail.odoo.com;
+       dmarc=pass (p=REJECT sp=QUARANTINE dis=NONE) header.from=odoo.com
+Return-Path: <bounce@mail.odoo.com>
+Received: from mo1a.odoo.com (mo1a-fo.odoo.com. [51.91.164.78])
+        by mx.google.com with ESMTPS id
+ f14-20020adffcce000000b003370e7cf368si7109265wrs.336.2024.01.04.09.49.01
+        for <sn.renauld@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Jan 2024 09:49:02 -0800 (PST)
+Received-SPF: pass (google.com: domain of bounce@mail.odoo.com designates
+ 51.91.164.78 as permitted sender) client-ip=51.91.164.78;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@odoo.com header.s=mail header.b=UoVXc1LM;
+       spf=pass (google.com: domain of bounce@mail.odoo.com designates
+ 51.91.164.78 as permitted sender) smtp.mailfrom=bounce@mail.odoo.com;
+       dmarc=pass (p=REJECT sp=QUARANTINE dis=NONE) header.from=odoo.com
+Received: from of22.odoo.com (of22.odoo.com [141.94.170.104])
+	by mo1a.odoo.com (Postfix) with ESMTPS id 728CF11FB46
+	for <sn.renauld@gmail.com>; Thu,  4 Jan 2024 18:49:01 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=odoo.com; s=mail;
+	t=1704390541; bh=7PM2z9NaC3+Oz1jmdDWHcrONu9W03MsY5vyArF+qO+M=;
+	h=Subject:Reply-To:To:Date:From:From;
+	b=UoVXc1LM9zSGncvRdRe+FOE1eUMQHugNySjwzbdQuD42zv80TuLlN6EXVoevhOM8U
+	 zOs5dEsIjzK0NQVhZuqoG/phi5JT+Aaouv/TBjm5uyCmdnT8GuTMtNhhjtCZ2yAkPj
+	 gyzdCoW7nH0vmrNcevWk/wmwmmsQCef+OzGeqF+M=
+Message-Id: 
+ <641283903552256.1704390532.973696470260620-openerp-8857005-crm.lead@of22.odoo.com>
+Subject: (Odoo Webinar) Web Design Service 101: Unleash website power boosting
+ success with Odoo!
+Reply-To: "Odoo S.A. HK Partnership" <catchall@mail.odoo.com>
+To: sn.renauld@gmail.com
+Date: Thu, 04 Jan 2024 17:49:01 -0000
+X-Odoo-Objects: crm.lead-8857005
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="===============6345639028754360170=="
+From: "Odoo APAC Events" <myam@odoo.com>
+
+--===============6345639028754360170==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+[1]
+
+
+
+One of the most common questions that business owners and entrepreneurs often=
+ ask: 'I created a website, and now what?'
+Building a website is an exciting milestone, but it's just the beginning of y=
+our digital journey. The true power of a website lies in its ability to attra=
+ct visitors, engage them, and drive meaningful business outcomes.
+Date: 26th Jan 2024=C2=A0*
+Time: 1100 - 1200 (GMT+8)=C2=A0*
+Platform: YouTube Live streaming=C2=A0*
+In this webinar, we will delve into the world of website management and show =
+you how Odoo can be the catalyst for unlocking the full potential of your web=
+site.
+We will walk you through the following topics:
+1- Key strategies: where to start?
+2- Get the most of Odoo Website integrations
+3- Marketing and Analytics for Website Success
+4- Trends to watch in 2024
+*This webinar will be presented in English.
+To sign up for the session, please visit the following link to complete the f=
+ree registration:
+None [2] https://www.odoo.com/event/wds101-unleash-website-power-boosting-suc=
+cess-with-odoo-4851/register/*
+
+Best regards,
+Odoo APAC Team
+
+
+
+
+
+
+
+[3]
+
+[4]
+
+[5]
+
+
+
+
+
+
+
+Unsubscribe [6]
+| Contact [7]
+
+
+
+
+=C2=A9 2024 All Rights Reserved
+
+
+
+
+
+
+[1] https://www.odoo.com/r/eDL/m/130583505
+[2] https://www.odoo.com/r/A0e/m/130583505
+[3] https://www.odoo.com/r/AmK/m/130583505
+[4] https://www.odoo.com/r/mAo/m/130583505
+[5] https://www.odoo.com/r/2BB5/m/130583505
+[6] https://www.odoo.com/unsubscribe_from_list
+[7] https://www.odoo.com/r/nNK/m/130583505
+
+--===============6345639028754360170==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+
+        <!DOCTYPE html>
+        <html xmlns:o=3D"urn:schemas-microsoft-com:office:office" xmlns:v=3D"=
+urn:schemas-microsoft-com:vml" xmlns=3D"http://www.w3.org/1999/xhtml">
+            <head>
+                <meta http-equiv=3D"Content-Type" content=3D"text/html; chars=
+et=3DUTF-8"/>
+                <meta name=3D"format-detection" content=3D"telephone=3Dno"/>
+                <meta name=3D"viewport" content=3D"width=3Ddevice-width; init=
+ial-scale=3D1.0; maximum-scale=3D1.0; user-scalable=3Dno;"/>
+                <meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3D9; IE=3D=
+8; IE=3D7; IE=3DEDGE"/>
+
+                <style>
+.o_layout * {
+    box-sizing: border-box !important;
+}
+.o_layout :not(.fa) {
+    font-family: Arial,Helvetica Neue,Helvetica,sans-serif;
+}
+/* Remove space around the email design. */
+    html,
+    body {
+        margin: 0 auto !important;
+        padding: 0 !important;
+        height: 100% !important;
+        width: 100% !important;
+    }
+
+    /* Stop Outlook resizing small text. */
+    * {
+        -ms-text-size-adjust: 100%;
+    }
+
+    /* Stop Outlook from adding extra spacing to tables. */
+    table,
+    td {
+        mso-table-lspace: 0pt !important;
+        mso-table-rspace: 0pt !important;
+    }
+
+    /* Use a better rendering method when resizing images in Outlook IE. */
+    img {
+        -ms-interpolation-mode:bicubic;
+    }
+
+    /* Prevent Windows 10 Mail from underlining links. Styles for underlined =
+links should be inline. */
+    a {
+        text-decoration: none;
+    }
+@media screen and (max-width: 768px) {
+    .o_mail_snippet_general .container {
+        width: 100% !important;
+    }
+    .s_header_social table td, .s_header_text_social table td, .s_header_logo=
+ table td,
+    .o_mail_block_footer_social td,
+    .s_showcase td,
+    .s_mail_product_list td,
+    .s_references td {
+        text-align: center !important;
+    }
+}
+@media screen and (max-width: 1135px) {
+    .o_stacking_wrapper {
+        width: 100% !important;
+        height: unset !important;
+    }
+    td {
+        max-width: inherit !important;
+    }
+    img:only-child:not(.img-fluid) {
+        object-fit: cover;
+        min-width: 100% !important;
+    }
+    .o_desktop_h100 {
+        height: unset !important;
+    }
+}
+</style>
+
+               =20
+               =20
+            </head>
+            <body>
+                <table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=
+=3D"100%" align=3D"center" role=3D"presentation" class=3D"o_layout oe_unremov=
+able oe_unmovable bg-200 o_empty_theme" data-name=3D"Mailing" style=3D"margin=
+: 0px; direction: ltr; text-size-adjust: 100%; background-color: #f3f4f6; tex=
+t-align: inherit; color: #111827; line-height: 1.5; font-weight: 400; font-si=
+ze: 14px; font-family: Inter, &#39;Odoo Unicode Support Noto&#39;, sans-serif=
+; min-height: 100%; box-sizing: content-box; overflow: initial; width: 100% !=
+important; border-collapse: collapse;"><tbody style=3D"vertical-align: top;">=
+<tr><td><table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=3D"100%=
+" align=3D"center" role=3D"presentation" class=3D"o_mail_wrapper o_mail_regul=
+ar oe_unremovable" style=3D"margin: 0px auto; font-family: Arial, &#39;Helvet=
+ica Neue&#39;, Helvetica, sans-serif; box-sizing: border-box; max-width: 720p=
+x; padding-left: 15px; padding-right: 15px; width: 100% !important; border-co=
+llapse: collapse; text-align: inherit; font-size: unset; line-height: inherit=
+; color: #111827; font-weight: 400;"><tbody style=3D"vertical-align: top;"><t=
+r style=3D"font-family: Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-seri=
+f; box-sizing: border-box; margin-left: -15px; margin-right: -15px; margin-to=
+p: 0px;"><td><table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=3D=
+"100%" align=3D"center" role=3D"presentation" style=3D"width: 100% !important=
+; border-collapse: collapse; text-align: inherit; font-size: unset; line-heig=
+ht: inherit; height: 100%; color: #111827; font-family: Arial, &#39;Helvetica=
+ Neue&#39;, Helvetica, sans-serif; font-weight: 400;"><tbody style=3D"vertica=
+l-align: top;"><tr><td><!--[if mso]>
+                    <table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" r=
+ole=3D"presentation" style=3D"width: 100%;">
+                        <tr>
+                            <td valign=3D"top" style=3D"width: 720px;"><![end=
+if]--><div class=3D"o_stacking_wrapper" style=3D"display: inline-block; verti=
+cal-align: top;"><table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" widt=
+h=3D"100%" align=3D"center" role=3D"presentation" class=3D"o_stacking_wrapper=
+" style=3D"width: 720px; border-collapse: collapse; text-align: inherit; font=
+-size: unset; line-height: inherit; color: #111827; font-family: Arial, &#39;=
+Helvetica Neue&#39;, Helvetica, sans-serif; font-weight: 400;"><tbody style=
+=3D"vertical-align: top;"><tr><!--[if mso]><td colspan=3D"12" class=3D"o_mail=
+_no_options o_mail_wrapper_td bg-white oe_structure o_editable theme_selectio=
+n_done o_converted_col" width=3D"720" style=3D"padding: 0px; text-align: star=
+t; font-family: Arial, &quot;Helvetica Neue&quot;, Helvetica, sans-serif; pos=
+ition: relative; box-sizing: border-box; color: #111827; background-color: #f=
+fffff; margin-top: 0px; width: 100%;width: 720px;"><![endif]--><!--[if !mso]>=
+<!--><td colspan=3D"12" class=3D"o_mail_no_options o_mail_wrapper_td bg-white=
+ oe_structure o_editable theme_selection_done" style=3D"padding: 0px; text-al=
+ign: start; font-family: Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-ser=
+if; position: relative; box-sizing: border-box; color: #111827; background-co=
+lor: #ffffff; margin-top: 0px; max-width: 720px; width: 100%;"><!--<![endif]-=
+-><table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=3D"100%" alig=
+n=3D"center" role=3D"presentation" class=3D"s_header_social o_mail_block_head=
+er_social o_mail_snippet_general pt16 pb16" data-snippet=3D"s_mail_block_head=
+er_social" data-name=3D"Left Logo" style=3D"margin: 0px auto; font-family: Ar=
+ial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif; box-sizing: border-box;=
+ width: 100% !important; border-collapse: collapse; text-align: start; font-s=
+ize: unset; line-height: inherit; color: #111827; font-weight: 400;"><tbody s=
+tyle=3D"vertical-align: top;"><tr><td style=3D"padding: 16px 0px;">
+        <table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=3D"100%=
+" align=3D"center" role=3D"presentation" style=3D"margin: 0px auto; font-fami=
+ly: Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif; border-collapse: =
+separate; box-sizing: border-box; max-width: 1320px; width: 100% !important; =
+text-align: start; font-size: unset; line-height: inherit; color: #111827; fo=
+nt-weight: 400;"><tbody style=3D"vertical-align: top;">
+            <tr style=3D"font-family: Arial, &#39;Helvetica Neue&#39;, Helvet=
+ica, sans-serif; box-sizing: border-box; margin-left: 0px; margin-right: 0px;=
+ margin-top: 0px;"><td style=3D"padding: 0px;"><table cellspacing=3D"0" cellp=
+adding=3D"0" border=3D"0" width=3D"100%" align=3D"center" role=3D"presentatio=
+n" style=3D"width: 100% !important; border-collapse: collapse; text-align: st=
+art; font-size: unset; line-height: inherit; height: 100%; color: #111827; fo=
+nt-family: Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif; font-weigh=
+t: 400;"><tbody style=3D"vertical-align: top;"><tr><td style=3D"padding: 0px;=
+"><!--[if mso]>
+                    <table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" r=
+ole=3D"presentation" style=3D"width: 100%;">
+                        <tr>
+                            <td valign=3D"top" style=3D"width: 720px;"><![end=
+if]--><div class=3D"o_stacking_wrapper" style=3D"display: inline-block; verti=
+cal-align: top;"><table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" widt=
+h=3D"100%" align=3D"center" role=3D"presentation" class=3D"o_stacking_wrapper=
+" style=3D"width: 720px; border-collapse: collapse; text-align: start; font-s=
+ize: unset; line-height: inherit; height: 146.875px; color: #111827; font-fam=
+ily: Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif; font-weight: 400=
+;"><tbody style=3D"vertical-align: top;"><tr><!--[if mso]><td colspan=3D"12" =
+class=3D"pt16 pb16 o_converted_col" width=3D"720" style=3D"font-family: Arial=
+, &quot;Helvetica Neue&quot;, Helvetica, sans-serif; align-self: center; box-=
+sizing: border-box; margin-top: 0px; width: 100%; padding: 16px 0px; vertical=
+-align: middle;width: 720px;"><![endif]--><!--[if !mso]><!--><td colspan=3D"1=
+2" class=3D"pt16 pb16" style=3D"font-family: Arial, &#39;Helvetica Neue&#39;,=
+ Helvetica, sans-serif; align-self: center; box-sizing: border-box; margin-to=
+p: 0px; max-width: 720px; width: 100%; padding: 16px 0px; vertical-align: mid=
+dle;"><!--<![endif]-->
+                    <a style=3D"border-style:none;padding:0 0px 0 0px;font-fa=
+mily:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border=
+-box;color:#017e84;text-decoration:none;float:none;" target=3D"_blank" href=
+=3D"https://www.odoo.com/r/eDL/m/130583505" data-bs-original-title=3D"" title=
+=3D"">
+                         <!--[if mso]><img src=3D"https://www.odoo.com/web/im=
+age/42194704-0cd21a91/WDS%20mkt%20%281%29.png?access_token=3D12f30f8e-bc6a-4f=
+c6-9e5c-e2984d5493a5" class=3D"img img-fluid o_we_custom_image" style=3D"heig=
+ht: auto; width: 720px;" loading=3D"" data-mimetype=3D"image/png" data-origin=
+al-id=3D"42194704" data-original-src=3D"/web/image/42194704-0cd21a91/WDS%20mk=
+t%20%281%29.png" data-mimetype-before-conversion=3D"image/png" width=3D"720">=
+<![endif]--><!--[if !mso]><!--><img src=3D"https://www.odoo.com/web/image/421=
+94704-0cd21a91/WDS%20mkt%20%281%29.png?access_token=3D12f30f8e-bc6a-4fc6-9e5c=
+-e2984d5493a5" class=3D"img img-fluid o_we_custom_image" style=3D"display: in=
+line-block; box-sizing: border-box; vertical-align: middle; height: auto; max=
+-width: 100%; width: 720px;" loading=3D"" data-mimetype=3D"image/png" data-or=
+iginal-id=3D"42194704" data-original-src=3D"/web/image/42194704-0cd21a91/WDS%=
+20mkt%20%281%29.png" data-mimetype-before-conversion=3D"image/png" width=3D"7=
+20"/><!--<![endif]-->
+                    </a>
+                </td></tr></tbody></table></div><!--[if mso]></td></tr></tabl=
+e><![endif]--></td></tr></tbody></table></td></tr>
+        </tbody></table>
+    </td></tr></tbody></table><table cellspacing=3D"0" cellpadding=3D"0" bord=
+er=3D"0" width=3D"100%" align=3D"center" role=3D"presentation" class=3D"s_tex=
+t_block o_mail_snippet_general pb40 pt0" data-snippet=3D"s_text_block" data-n=
+ame=3D"Text" style=3D"margin: 0px auto; font-family: Arial, &#39;Helvetica Ne=
+ue&#39;, Helvetica, sans-serif; box-sizing: border-box; width: 100% !importan=
+t; border-collapse: collapse; text-align: start; font-size: unset; line-heigh=
+t: inherit; color: #111827; font-weight: 400;"><tbody style=3D"vertical-align=
+: top;"><tr><td style=3D"padding: 0px 15px 40px;"><table cellspacing=3D"0" ce=
+llpadding=3D"0" border=3D"0" width=3D"100%" align=3D"center" role=3D"presenta=
+tion" style=3D"width: 100% !important; border-collapse: collapse; text-align:=
+ start; font-size: unset; line-height: inherit; color: #111827; font-family: =
+Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif; font-weight: 400;"><t=
+body style=3D"vertical-align: top;"><tr><td style=3D"padding: 0px;">
+            <div class=3D"container s_allow_columns" style=3D"padding:0 0px 0=
+ 0px;margin:0 auto 0 auto;font-family:Arial, &#39;Helvetica Neue&#39;, Helvet=
+ica, sans-serif;border-collapse:separate;box-sizing:border-box;max-width:1320=
+px;width:100%;" width=3D"100%" o-temp-width=3D"690">
+                <p style=3D"font-family:Arial, &#39;Helvetica Neue&#39;, Helv=
+etica, sans-serif;box-sizing:border-box;margin-bottom: 0px;">One of the most =
+common questions that business owners and entrepreneurs often ask: 'I created=
+ a website, and now what?' </p><p class=3D"o_default_snippet_text" style=3D"f=
+ont-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:=
+border-box;margin-bottom: 0px;"><br style=3D"font-family:Arial, &#39;Helvetic=
+a Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;"/></p><p class=3D"o=
+_default_snippet_text" style=3D"font-family:Arial, &#39;Helvetica Neue&#39;, =
+Helvetica, sans-serif;box-sizing:border-box;margin-bottom: 0px;">Building a w=
+ebsite is an exciting milestone, but it's just the beginning of your digital =
+journey. The true power of a website lies in its ability to attract visitors,=
+ engage them, and drive meaningful business outcomes.</p><p class=3D"o_defaul=
+t_snippet_text" style=3D"font-family:Arial, &#39;Helvetica Neue&#39;, Helveti=
+ca, sans-serif;box-sizing:border-box;margin-bottom: 0px;"><br style=3D"font-f=
+amily:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:borde=
+r-box;"/></p><p style=3D"font-family:Arial, &#39;Helvetica Neue&#39;, Helveti=
+ca, sans-serif;box-sizing:border-box;margin-bottom: 0px;"><strong style=3D"fo=
+nt-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:b=
+order-box;font-weight:bolder;">Date: 26th Jan 2024=C2=A0</strong></p><p style=
+=3D"font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-si=
+zing:border-box;margin-bottom: 0px;"> <strong style=3D"font-family:Arial, &#3=
+9;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;font-weigh=
+t:bolder;">Time: 1100 - 1200 (GMT+8)=C2=A0</strong></p><p class=3D"o_default_=
+snippet_text" style=3D"font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica=
+, sans-serif;box-sizing:border-box;margin-bottom: 0px;"><strong style=3D"font=
+-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:bor=
+der-box;font-weight:bolder;">Platform: YouTube Live streaming=C2=A0</strong><=
+/p><p class=3D"o_default_snippet_text" style=3D"font-family:Arial, &#39;Helve=
+tica Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;margin-bottom: 0p=
+x;"><br style=3D"font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans=
+-serif;box-sizing:border-box;"/></p><p style=3D"font-family:Arial, &#39;Helve=
+tica Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;margin-bottom: 0p=
+x;">In this webinar, we will delve into the world of website management and s=
+how you how Odoo can be the catalyst for unlocking the full potential of your=
+ website.</p><p class=3D"o_default_snippet_text" style=3D"font-family:Arial, =
+&#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;margin-=
+bottom: 0px;"><br style=3D"font-family:Arial, &#39;Helvetica Neue&#39;, Helve=
+tica, sans-serif;box-sizing:border-box;"/></p><p class=3D"o_default_snippet_t=
+ext" style=3D"font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-se=
+rif;box-sizing:border-box;margin-bottom: 0px;">We will walk you through the f=
+ollowing topics:</p><p class=3D"o_default_snippet_text" style=3D"font-family:=
+Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;=
+margin-bottom: 0px;"><br style=3D"font-family:Arial, &#39;Helvetica Neue&#39;=
+, Helvetica, sans-serif;box-sizing:border-box;"/></p><p class=3D"o_default_sn=
+ippet_text" style=3D"font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, =
+sans-serif;box-sizing:border-box;margin-bottom: 0px;">1- Key strategies: wher=
+e to start?=C2=A0</p><p class=3D"o_default_snippet_text" style=3D"font-family=
+:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border-box=
+;margin-bottom: 0px;"><br style=3D"font-family:Arial, &#39;Helvetica Neue&#39=
+;, Helvetica, sans-serif;box-sizing:border-box;"/></p><p class=3D"o_default_s=
+nippet_text" style=3D"font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica,=
+ sans-serif;box-sizing:border-box;margin-bottom: 0px;">2- Get the most of Odo=
+o Website integrations</p><p class=3D"o_default_snippet_text" style=3D"font-f=
+amily:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:borde=
+r-box;margin-bottom: 0px;"><br style=3D"font-family:Arial, &#39;Helvetica Neu=
+e&#39;, Helvetica, sans-serif;box-sizing:border-box;"/></p><p class=3D"o_defa=
+ult_snippet_text" style=3D"font-family:Arial, &#39;Helvetica Neue&#39;, Helve=
+tica, sans-serif;box-sizing:border-box;margin-bottom: 0px;">3- Marketing and =
+Analytics for Website Success</p><p class=3D"o_default_snippet_text" style=3D=
+"font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizin=
+g:border-box;margin-bottom: 0px;"><br style=3D"font-family:Arial, &#39;Helvet=
+ica Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;"/></p><p class=3D=
+"o_default_snippet_text" style=3D"font-family:Arial, &#39;Helvetica Neue&#39;=
+, Helvetica, sans-serif;box-sizing:border-box;margin-bottom: 0px;">4- Trends =
+to watch in 2024</p><p class=3D"o_default_snippet_text" style=3D"font-family:=
+Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;=
+margin-bottom: 0px;"><br style=3D"font-family:Arial, &#39;Helvetica Neue&#39;=
+, Helvetica, sans-serif;box-sizing:border-box;"/></p><p class=3D"o_default_sn=
+ippet_text" style=3D"font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, =
+sans-serif;box-sizing:border-box;margin-bottom: 0px;">*This webinar will be p=
+resented in English.</p><p class=3D"o_default_snippet_text" style=3D"font-fam=
+ily:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border-=
+box;margin-bottom: 0px;"><br style=3D"font-family:Arial, &#39;Helvetica Neue&=
+#39;, Helvetica, sans-serif;box-sizing:border-box;"/></p><p style=3D"font-fam=
+ily:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border-=
+box;margin-bottom: 0px;">To sign up for the session, please visit the followi=
+ng link to complete the free registration:</p><p style=3D"font-family:Arial, =
+&#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;margin-=
+bottom: 0px;"><a href=3D"https://www.odoo.com/r/A0e/m/130583505" style=3D"tex=
+t-decoration:none;border-style:none;padding:0 0px 0 0px;font-family:Arial, &#=
+39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;color:#01=
+7e84;"><strong style=3D"font-family:Arial, &#39;Helvetica Neue&#39;, Helvetic=
+a, sans-serif;box-sizing:border-box;font-weight:bolder;"><em style=3D"font-fa=
+mily:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border=
+-box;">https://www.odoo.com/event/wds101-unleash-website-power-boosting-succe=
+ss-with-odoo-4851/register</em></strong></a><br style=3D"font-family:Arial, &=
+#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;"/></p><=
+p style=3D"margin:0px 0 16px 0;font-family:Arial, &#39;Helvetica Neue&#39;, H=
+elvetica, sans-serif;box-sizing:border-box;"><br style=3D"font-family:Arial, =
+&#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;"/></p>=
+<p style=3D"margin:0px 0 16px 0;font-family:Arial, &#39;Helvetica Neue&#39;, =
+Helvetica, sans-serif;box-sizing:border-box;"><br style=3D"font-family:Arial,=
+ &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;"/></p=
+><p style=3D"margin:0px 0 16px 0;font-family:Arial, &#39;Helvetica Neue&#39;,=
+ Helvetica, sans-serif;box-sizing:border-box;"><br style=3D"font-family:Arial=
+, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;"/></=
+p><p style=3D"margin:0px 0 16px 0;font-family:Arial, &#39;Helvetica Neue&#39;=
+, Helvetica, sans-serif;box-sizing:border-box;">Best regards,</p><p style=3D"=
+margin:0px 0 16px 0;font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, s=
+ans-serif;box-sizing:border-box;">Odoo APAC Team=C2=A0</p><p style=3D"margin:=
+0px 0 16px 0;font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-ser=
+if;box-sizing:border-box;"><br style=3D"font-family:Arial, &#39;Helvetica Neu=
+e&#39;, Helvetica, sans-serif;box-sizing:border-box;"/></p></div>
+        </td></tr></tbody></table></td></tr></tbody></table><table cellspacin=
+g=3D"0" cellpadding=3D"0" border=3D"0" width=3D"100%" align=3D"center" role=
+=3D"presentation" class=3D"s_footer_social o_mail_block_footer_social o_mail_=
+footer_social_center o_mail_snippet_general bg-200 pt16" data-snippet=3D"s_ma=
+il_block_footer_social" data-name=3D"Footer Center" style=3D"margin: 0px auto=
+; font-family: Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif; backgr=
+ound-color: #f3f4f6; color: #111827; box-sizing: border-box; width: 100% !imp=
+ortant; border-collapse: collapse; text-align: start; font-size: unset; line-=
+height: inherit; font-weight: 400;"><tbody style=3D"vertical-align: top;"><tr=
+><td style=3D"padding: 16px 0px 0px;">
+        <table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=3D"100%=
+" align=3D"center" role=3D"presentation" style=3D"margin: 0px auto; font-fami=
+ly: Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif; border-collapse: =
+separate; box-sizing: border-box; max-width: 1320px; width: 100% !important; =
+text-align: start; font-size: unset; line-height: inherit; color: #111827; fo=
+nt-weight: 400;"><tbody style=3D"vertical-align: top;">
+            <tr style=3D"font-family: Arial, &#39;Helvetica Neue&#39;, Helvet=
+ica, sans-serif; box-sizing: border-box; margin-left: 0px; margin-right: 0px;=
+ margin-top: 0px;"><td style=3D"padding-top: 0px; padding-right: 0px; padding=
+-left: 0px;"><table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=3D=
+"100%" align=3D"center" role=3D"presentation" style=3D"width: 100% !important=
+; border-collapse: collapse; text-align: start; font-size: unset; line-height=
+: inherit; height: 100%; color: #111827; font-family: Arial, &#39;Helvetica N=
+eue&#39;, Helvetica, sans-serif; font-weight: 400;"><tbody style=3D"vertical-=
+align: top;"><tr><td style=3D"padding: 0px;"><!--[if mso]>
+                    <table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" r=
+ole=3D"presentation" style=3D"width: 100%;">
+                        <tr>
+                            <td valign=3D"top" style=3D"width: 720px;"><![end=
+if]--><div class=3D"o_stacking_wrapper" style=3D"display: inline-block; verti=
+cal-align: top;"><table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" widt=
+h=3D"100%" align=3D"center" role=3D"presentation" class=3D"o_stacking_wrapper=
+" style=3D"width: 720px; border-collapse: collapse; text-align: start; font-s=
+ize: unset; line-height: inherit; color: #111827; font-family: Arial, &#39;He=
+lvetica Neue&#39;, Helvetica, sans-serif; font-weight: 400;"><tbody style=3D"=
+vertical-align: top;"><tr><!--[if mso]><td colspan=3D"12" class=3D"o_mail_foo=
+ter_social o_converted_col" width=3D"720" style=3D"font-family: Arial, &quot;=
+Helvetica Neue&quot;, Helvetica, sans-serif; box-sizing: border-box; margin-t=
+op: 0px; padding: 0px 15px; width: 100%; text-align: center;width: 720px;"><!=
+[endif]--><!--[if !mso]><!--><td colspan=3D"12" class=3D"o_mail_footer_social=
+" style=3D"font-family: Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-seri=
+f; box-sizing: border-box; margin-top: 0px; padding: 0px 15px; max-width: 720=
+px; width: 100%; text-align: center;"><!--<![endif]-->
+
+    <a aria-label=3D"Facebook" title=3D"Facebook" href=3D"https://www.odoo.co=
+m/r/AmK/m/130583505" style=3D"text-decoration:none;border-style:none;padding:=
+0 0px 0 0px;font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-seri=
+f;box-sizing:border-box;color:#017e84;">
+        <span style=3D"font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica=
+, sans-serif;box-sizing:border-box;display: inline-block; width: 8px; height:=
+ 14px; vertical-align: text-bottom;" class=3D"oe_unbreakable " width=3D"8"><i=
+mg width=3D"8" height=3D"14" src=3D"https://www.odoo.com/web_editor/font_to_i=
+mg/61594/rgb(1%2C126%2C132)/rgb(243%2C244%2C246)/8x14" data-class=3D"fa fa-fa=
+cebook" data-style=3D"null" style=3D"box-sizing: border-box; line-height: 14p=
+x; width: 8px; height: 14px; vertical-align: unset; margin: 0px;"/></span>
+    </a>=C2=A0=C2=A0
+    <a style=3D"text-decoration:none;border-style:none;padding:0 0px 0 0px;fo=
+nt-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:b=
+order-box;color:#017e84;margin-left:10px" aria-label=3D"LinkedIn" title=3D"Li=
+nkedIn" href=3D"https://www.odoo.com/r/mAo/m/130583505">
+        <span style=3D"font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica=
+, sans-serif;box-sizing:border-box;display: inline-block; width: 12px; height=
+: 14px; vertical-align: text-bottom;" class=3D"oe_unbreakable " width=3D"12">=
+<img width=3D"12" height=3D"14" src=3D"https://www.odoo.com/web_editor/font_t=
+o_img/61665/rgb(1%2C126%2C132)/rgb(243%2C244%2C246)/12x14" data-class=3D"fa f=
+a-linkedin" data-style=3D"null" style=3D"box-sizing: border-box; line-height:=
+ 14px; width: 12px; height: 14px; vertical-align: unset; margin: 0px;"/></spa=
+n>
+    </a>=C2=A0=C2=A0
+    <a style=3D"text-decoration:none;border-style:none;padding:0 0px 0 0px;fo=
+nt-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:b=
+order-box;color:#017e84;margin-left:10px" aria-label=3D"Twitter" title=3D"Twi=
+tter" href=3D"https://www.odoo.com/r/2BB5/m/130583505">
+        <span style=3D"font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica=
+, sans-serif;box-sizing:border-box;display: inline-block; width: 13px; height=
+: 14px; vertical-align: text-bottom;" class=3D"oe_unbreakable " width=3D"13">=
+<img width=3D"13" height=3D"14" src=3D"https://www.odoo.com/web_editor/font_t=
+o_img/61593/rgb(1%2C126%2C132)/rgb(243%2C244%2C246)/13x14" data-class=3D"fa f=
+a-twitter" data-style=3D"null" style=3D"box-sizing: border-box; line-height: =
+14px; width: 13px; height: 14px; vertical-align: unset; margin: 0px;"/></span>
+    </a>=C2=A0=C2=A0
+    <a style=3D"text-decoration: none; border-style: none; padding: 0px; font=
+-family: Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif; box-sizing: =
+border-box; color: #111827; margin-left: 10px;" aria-label=3D"Instagram" titl=
+e=3D"Instagram">
+        <span style=3D"font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica=
+, sans-serif;box-sizing:border-box;display: inline-block; width: 12px; height=
+: 14px; vertical-align: text-bottom;" class=3D"oe_unbreakable " width=3D"12">=
+<img width=3D"12" height=3D"14" src=3D"https://www.odoo.com/web_editor/font_t=
+o_img/61805/rgb(17%2C24%2C39)/rgb(243%2C244%2C246)/12x14" data-class=3D"fa fa=
+-instagram" data-style=3D"null" style=3D"box-sizing: border-box; line-height:=
+ 14px; width: 12px; height: 14px; vertical-align: unset; margin: 0px;"/></spa=
+n>
+    </a>=C2=A0=C2=A0
+    <a style=3D"text-decoration: none; border-style: none; padding: 0px; font=
+-family: Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif; box-sizing: =
+border-box; color: #111827; margin-left: 10px;" aria-label=3D"TikTok" title=
+=3D"TikTok">
+        <span style=3D"font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica=
+, sans-serif;box-sizing:border-box;display: inline-block; width: 12.25px; hei=
+ght: 14px; vertical-align: text-bottom;" class=3D"oe_unbreakable " width=3D"1=
+2.25"><img width=3D"12.25" height=3D"14" src=3D"https://www.odoo.com/web_edit=
+or/font_to_img/57467/rgb(17%2C24%2C39)/rgb(243%2C244%2C246)/12x14" data-class=
+=3D"fa fa-tiktok" data-style=3D"null" style=3D"box-sizing: border-box; line-h=
+eight: 14px; width: 12.25px; height: 14px; vertical-align: unset; margin: 0px=
+;"/></span>
+    </a>
+                </td></tr></tbody></table></div><!--[if mso]></td></tr></tabl=
+e><![endif]--></td></tr></tbody></table></td></tr>
+            <tr style=3D"font-family: Arial, &#39;Helvetica Neue&#39;, Helvet=
+ica, sans-serif; box-sizing: border-box; margin-left: 0px; margin-right: 0px;=
+ margin-top: 0px;"><td style=3D"padding-right: 0px; padding-left: 0px;"><tabl=
+e cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=3D"100%" align=3D"ce=
+nter" role=3D"presentation" style=3D"width: 100% !important; border-collapse:=
+ collapse; text-align: start; font-size: unset; line-height: inherit; height:=
+ 100%; color: #111827; font-family: Arial, &#39;Helvetica Neue&#39;, Helvetic=
+a, sans-serif; font-weight: 400;"><tbody style=3D"vertical-align: top;"><tr><=
+td style=3D"padding: 0px;"><!--[if mso]>
+                    <table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" r=
+ole=3D"presentation" style=3D"width: 100%;">
+                        <tr>
+                            <td valign=3D"top" style=3D"width: 720px;"><![end=
+if]--><div class=3D"o_stacking_wrapper" style=3D"display: inline-block; verti=
+cal-align: top;"><table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" widt=
+h=3D"100%" align=3D"center" role=3D"presentation" class=3D"o_stacking_wrapper=
+" style=3D"width: 720px; border-collapse: collapse; text-align: start; font-s=
+ize: unset; line-height: inherit; color: #111827; font-family: Arial, &#39;He=
+lvetica Neue&#39;, Helvetica, sans-serif; font-weight: 400;"><tbody style=3D"=
+vertical-align: top;"><tr><!--[if mso]><td colspan=3D"12" class=3D"o_mail_foo=
+ter_links o_default_snippet_text o_converted_col" width=3D"720" style=3D"font=
+-family: Arial, &quot;Helvetica Neue&quot;, Helvetica, sans-serif; box-sizing=
+: border-box; margin-top: 0px; padding: 0px 15px; width: 100%; text-align: ce=
+nter;width: 720px;"><![endif]--><!--[if !mso]><!--><td colspan=3D"12" class=
+=3D"o_mail_footer_links o_default_snippet_text" style=3D"font-family: Arial, =
+&#39;Helvetica Neue&#39;, Helvetica, sans-serif; box-sizing: border-box; marg=
+in-top: 0px; padding: 0px 15px; max-width: 720px; width: 100%; text-align: ce=
+nter;"><!--<![endif]-->
+                    <a role=3D"button" href=3D"https://www.odoo.com/mailing/1=
+4435/unsubscribe?res_id=3D8857005&email=3Dsn.renauld%40gmail.com&token=3D2a47=
+26c2bf3768ca8a56220a57a1933f7bff33655ecf340ee9122d329d770e45196170f07c22ff747=
+08e9e605d278ee6b696311c1a9e9d2db5a1a7ee6e90c91c" class=3D"btn btn-link o_defa=
+ult_snippet_text" style=3D"text-decoration:none;border-radius:3.5px;border-st=
+yle:none;padding:0px;font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, =
+sans-serif;box-sizing:border-box;transition-property:color, background-color,=
+ border-color, box-shadow;transition-delay:0s, 0s, 0s, 0s;transition-timing-f=
+unction:ease-in-out, ease-in-out, ease-in-out, ease-in-out;transition-duratio=
+n:0.15s, 0.15s, 0.15s, 0.15s;font-size:14px;background-color:transparent;user=
+-select:auto;vertical-align:middle;text-align:center;line-height:1.5;font-wei=
+ght:400;display:inline-block;cursor:pointer;color:#017e84;">Unsubscribe</a>
+         | <a role=3D"button" href=3D"https://www.odoo.com/r/nNK/m/130583505"=
+ class=3D"btn btn-link o_default_snippet_text" style=3D"text-decoration:none;=
+border-radius:3.5px;border-style:none;padding:0px;font-family:Arial, &#39;Hel=
+vetica Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;transition-prop=
+erty:color, background-color, border-color, box-shadow;transition-delay:0s, 0=
+s, 0s, 0s;transition-timing-function:ease-in-out, ease-in-out, ease-in-out, e=
+ase-in-out;transition-duration:0.15s, 0.15s, 0.15s, 0.15s;font-size:14px;back=
+ground-color:transparent;user-select:auto;vertical-align:middle;text-align:ce=
+nter;line-height:1.5;font-weight:400;display:inline-block;cursor:pointer;colo=
+r:#017e84;">Contact</a>
+                </td></tr></tbody></table></div><!--[if mso]></td></tr></tabl=
+e><![endif]--></td></tr></tbody></table></td></tr>
+            <tr style=3D"font-family: Arial, &#39;Helvetica Neue&#39;, Helvet=
+ica, sans-serif; box-sizing: border-box; margin-left: 0px; margin-right: 0px;=
+ margin-top: 0px;"><td style=3D"padding-right: 0px; padding-bottom: 0px; padd=
+ing-left: 0px;"><table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=
+=3D"100%" align=3D"center" role=3D"presentation" style=3D"width: 100% !import=
+ant; border-collapse: collapse; text-align: start; font-size: unset; line-hei=
+ght: inherit; height: 100%; color: #111827; font-family: Arial, &#39;Helvetic=
+a Neue&#39;, Helvetica, sans-serif; font-weight: 400;"><tbody style=3D"vertic=
+al-align: top;"><tr><td style=3D"padding: 0px;"><!--[if mso]>
+                    <table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" r=
+ole=3D"presentation" style=3D"width: 100%;">
+                        <tr>
+                            <td valign=3D"top" style=3D"width: 720px;"><![end=
+if]--><div class=3D"o_stacking_wrapper" style=3D"display: inline-block; verti=
+cal-align: top;"><table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" widt=
+h=3D"100%" align=3D"center" role=3D"presentation" class=3D"o_stacking_wrapper=
+" style=3D"width: 720px; border-collapse: collapse; text-align: start; font-s=
+ize: unset; line-height: inherit; color: #111827; font-family: Arial, &#39;He=
+lvetica Neue&#39;, Helvetica, sans-serif; font-weight: 400;"><tbody style=3D"=
+vertical-align: top;"><tr><!--[if mso]><td colspan=3D"12" class=3D"o_converte=
+d_col" width=3D"720" style=3D"font-family: Arial, &quot;Helvetica Neue&quot;,=
+ Helvetica, sans-serif; box-sizing: border-box; margin-top: 0px; padding: 0px=
+ 15px; width: 100%;width: 720px;"><![endif]--><!--[if !mso]><!--><td colspan=
+=3D"12" style=3D"font-family: Arial, &#39;Helvetica Neue&#39;, Helvetica, san=
+s-serif; box-sizing: border-box; margin-top: 0px; padding: 0px 15px; max-widt=
+h: 720px; width: 100%;" class=3D""><!--<![endif]-->
+                    <p style=3D"margin:0px 0 16px 0;font-family:Arial, &#39;H=
+elvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;text-align: c=
+enter;" class=3D"o_default_snippet_text">
+                        =C2=A9 2024 All Rights Reserved
+                    </p>
+                </td></tr></tbody></table></div><!--[if mso]></td></tr></tabl=
+e><![endif]--></td></tr></tbody></table></td></tr>
+        </tbody></table>
+    </td></tr></tbody></table></td></tr></tbody></table></div><!--[if mso]></=
+td></tr></table><![endif]--></td></tr></tbody></table></td></tr></tbody></tab=
+le></td></tr></tbody></table>
+           =20
+<img src=3D"https://www.odoo.com/mail/track/212402153/5d926ff9fa2ae40e5652671=
+64ce750efd0ec1380c421d7ed2479cbb9abf4c7e8/blank.gif"/>
+</body>
+        </html>
+
+--===============6345639028754360170==--
+

@@ -1,0 +1,926 @@
+X-GM-THRID: 1785057125691944682
+X-Gmail-Labels: Inbox,Category Promotions,Unread
+Delivered-To: sn.renauld@gmail.com
+Received: by 2002:a05:6e02:dc8:b0:35a:f050:ad81 with SMTP id l8csp3750818ilj;
+        Mon, 11 Dec 2023 22:38:54 -0800 (PST)
+X-Google-Smtp-Source: 
+ AGHT+IH9oCuTg9/ZRiEFX5ZBZomNIcM/wqIn/ZHeAQkRnshqxCMtqVVA43hRLJ2ltdD0Tjq0CakN
+X-Received: by 2002:a05:6512:1149:b0:50b:fd76:8772 with SMTP id
+ m9-20020a056512114900b0050bfd768772mr1958304lfg.28.1702363134409;
+        Mon, 11 Dec 2023 22:38:54 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1702363134; cv=none;
+        d=google.com; s=arc-20160816;
+        b=nsUbDZ0lw1/aVWhN129qoc5oVBEhmGPPd6jQo8JAa3uz4yDu1NoVVMizmya6ZOtS3s
+         ToEfk7MSXprT/DqVAKZWmuPZdIsCfzk+7YXMv4+y8xSQoXXZgvHXhKyz++Y+t/3JHa4U
+         fFtt0iSCu05MHt6EGaosPDe4WXusgVtkduBhktQ8+1aXa1VBB+5iyGvXQruxg4ZkiwLe
+         H7onfKkMXhzmFIjKrS0HrdY0PiOjcmoGgOrVwB9Q5nlALhE/cxBlGqYgbnn8lrAaW/0R
+         IQBUqMKHwfCCfugb6KKCam9Cii72uUStysPoMN/jLwzC0+9OBj9USpSx+KACm/nh3H4p
+         ek8g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20160816;
+        h=from:mime-version:date:to:reply-to:subject:message-id
+         :dkim-signature;
+        bh=rfrd2RyvdUt9062ds5R3MAoi4Mj8E0uketQfykBCHjM=;
+        fh=UdbUcDkJKvqffcPeSfMTJ3BaP9WLNp68ZQroZAlxuH8=;
+        b=fzfilGm8gaD/2ENHJh58AdsgdXe9tWA83ZQbGLOhxdWIrhAOaXLITytNueQxb04WZ4
+         JxNJjXQ+OgB/dCHDJCfuCk0pr/lt6n7dnRiWPHyGkgAA8sZ5XhqzhzmlYElOPvJHNurU
+         VYtM/DshXqu3kiz/bNkiTnZAC2hv61N0ZcBKkDDMvuSRXedoqzswDB85i6LlYE+677h1
+         8i/APTTeaCcmMmAnJwLQYQfe2F0F8OlWTKl5y95da0YDsFcIer+ZNgtTKG5/y/HtokJT
+         M6SI4UgBTeqW4iDwtW9m59BYSNjB7QIIk3SAyHaAt+WZLo0biI3dW4bhFAyuYjmsm/vg
+         mFFg==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@odoo.com header.s=mail header.b=SjAyBzKH;
+       spf=pass (google.com: domain of bounce@mail.odoo.com designates
+ 195.154.60.200 as permitted sender) smtp.mailfrom=bounce@mail.odoo.com;
+       dmarc=pass (p=REJECT sp=QUARANTINE dis=NONE) header.from=odoo.com
+Return-Path: <bounce@mail.odoo.com>
+Received: from mailsaas5.odoo.com (mailsaas4.odoo.com. [195.154.60.200])
+        by mx.google.com with ESMTPS id
+ s17-20020a056402521100b0054c76af6411si4299728edd.82.2023.12.11.22.38.54
+        for <sn.renauld@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 11 Dec 2023 22:38:54 -0800 (PST)
+Received-SPF: pass (google.com: domain of bounce@mail.odoo.com designates
+ 195.154.60.200 as permitted sender) client-ip=195.154.60.200;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@odoo.com header.s=mail header.b=SjAyBzKH;
+       spf=pass (google.com: domain of bounce@mail.odoo.com designates
+ 195.154.60.200 as permitted sender) smtp.mailfrom=bounce@mail.odoo.com;
+       dmarc=pass (p=REJECT sp=QUARANTINE dis=NONE) header.from=odoo.com
+Received: from of22.odoo.com (of22.odoo.com [141.94.170.104])
+	by mailsaas5.odoo.com (Postfix) with ESMTPS id 07B162017CF
+	for <sn.renauld@gmail.com>; Tue, 12 Dec 2023 07:38:54 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=odoo.com; s=mail;
+	t=1702363134; bh=vuqqMtAqzMBbpBg0VRD61OeE4s2feChQInBFxl/pEPM=;
+	h=Subject:Reply-To:To:Date:From:From;
+	z=Subject:=20=3D?utf-8?b?W/Cfk6zguYDguIrguLTguI3guKPguYjguKfguKHguI
+	 fguLLguJldIA=3D=3D?=3D=0D=0A=20=3D?utf-8?b?4Lie4Lia4LiB4Lix4Lia4Lm
+	 A4Lij4Liy4LmE4LiU4LmJ4LiX4Li14LmI?=3D=20Odoo=0D=0A=20Roadshow=20Ch
+	 iang=20Mai=20=3D?utf-8?b?4Lin4Lix4LiZ4LiX4Li14LmIIDEg4LiB4Li44Lih4
+	 Lig?=3D=0D=0A=20=3D?utf-8?b?4Liy4Lie4Lix4LiZ4LiY4LmM?=3D=202567|Re
+	 ply-To:=20"Anh=20Nguyen=20(anng)"=20<anng@odoo.com>|To:=20sn.renau
+	 ld@gmail.com|Date:=20Tue,=2012=20Dec=202023=2006:38:54=20-0000|Fro
+	 m:=20"Odoo=20Events"=20<hkevents@odoo.com>;
+	b=SjAyBzKH4pNpbgp/6cUvulx3+0GZ3rBuXnWiuIGDHoyBiYc3gvM/LTd+Bap847lw0
+	 HePXhIFLR+vsYyRtD+q1rOGP2fXX1mWZsbCCag9HsWNY8NoLDE57DUGg/GvqGsw9Bi
+	 AQHMVACNJyGcjZqgnEM680veNGBCeTKPGwekfa3o=
+Message-Id: 
+ <607663400234156.1702363127.123713254928589-openerp-reply_to@of22.odoo.com>
+Subject: =?utf-8?b?W/Cfk6zguYDguIrguLTguI3guKPguYjguKfguKHguIfguLLguJldIA==?=
+ =?utf-8?b?4Lie4Lia4LiB4Lix4Lia4LmA4Lij4Liy4LmE4LiU4LmJ4LiX4Li14LmI?= Odoo
+ Roadshow Chiang Mai =?utf-8?b?4Lin4Lix4LiZ4LiX4Li14LmIIDEg4LiB4Li44Lih4Lig?=
+ =?utf-8?b?4Liy4Lie4Lix4LiZ4LiY4LmM?= 2567
+Reply-To: "Anh Nguyen (anng)" <anng@odoo.com>
+To: sn.renauld@gmail.com
+Date: Tue, 12 Dec 2023 06:38:54 -0000
+X-Odoo-Objects: crm.lead-8857005
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="===============4792070594089972046=="
+From: "Odoo Events" <hkevents@odoo.com>
+
+--===============4792070594089972046==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+
+Tm9uZSBbMV0NCg0KT2RvbyDguIHguLPguKXguLHguIfguIjguLDguKHguLLguYDguIrguLXguKLg
+uIfguYPguKvguKHguYjguITguKPguLHguYnguIfguYHguKPguIEhDQoqDQrguYDguIrguLTguI3g
+uJ7guJrguIHguLHguJogT2RvbyAxNyDguKPguLjguYjguJnguKXguYjguLLguKrguLjguJTguYHg
+uKXguLDguJTguLnguJ/guLXguYDguIjguK3guKPguYzguYPguKvguKHguYjguJfguLHguYnguIfg
+uKvguKHguJTguYHguJrguJrguJXguLHguKfguJXguYjguK3guJXguLHguKfguYPguJnguIfguLLg
+uJnguJnguLXguYkg4LmA4Lij4Liy4LiI4Liw4LiV4Lit4Lia4LiX4Li44LiB4LiE4Liz4LiW4Liy
+4Lih4LiC4Lit4LiH4LiE4Li44LiTOiBPZG9vIOC4hOC4t+C4reC4reC4sOC5hOC4oyDguIvguK3g
+uJ/guJXguYzguYHguKfguKPguYzguJnguLXguYnguKHguLXguJvguKPguLDguYLguKLguIrguJng
+uYzguJXguYjguK3guJjguLjguKPguIHguLTguIjguILguK3guIfguITguLjguJPguK3guKLguYjg
+uLLguIfguYTguKM/IOC4muC4o+C4tOC4qeC4seC4l+C4l+C4teC5iOC5g+C4iuC5ieC4o+C4sOC4
+muC4miBFUlAg4LmA4Lie4Li34LmI4Lit4Lii4LiB4Lij4Liw4LiU4Lix4Lia4LiB4Liy4Lij4LiX
+4Liz4LiH4Liy4LiZ4LmB4Lil4Liw4Liq4Lij4LmJ4Liy4LiH4LiB4Liy4Lij4LmA4LiV4Li04Lia
+4LmC4LiV4LmB4Lia4Lia4LiB4LmJ4Liy4Lin4LiB4Lij4Liw4LmC4LiU4LiU4LiC4Lit4LiH4Lie
+4Lin4LiB4LmA4LiC4Liy4LiZ4Lix4LmJ4LiZ4LmA4Lib4LmH4LiZ4Lit4Lii4LmI4Liy4LiH4LmE
+4LijPyDguYHguKXguLDguK3guLfguYjguJnguYbguK3guLXguIHguKHguLLguIHguKHguLLguKIu
+Li4NCuKAiw0K4Lin4Lix4LiZ4LiX4Li14LmIOiAxIOC4geC4uOC4oeC4oOC4suC4nuC4seC4meC4
+mOC5jCAyNTY3DQrguYDguKfguKXguLI6IDk6MzAgLSA1OjAwIOC4mS4NCg0K4Liq4LiW4Liy4LiZ
+4LiX4Li14LmIOsKgQ2hpYW5nIE1haSBNYXJyaW90dCBIb3RlbCAgIDx0YWJsZSBhbGlnbj0iY2Vu
+dGVyIiBib3JkZXI9IjAiDQpyb2xlPSJwcmVzZW50YXRpb24iIGNlbGxwYWRkaW5nPSIwIiBjZWxs
+c3BhY2luZz0iMCINCnN0eWxlPSJib3JkZXItcmFkaXVzOiA2cHg7IGJvcmRlci1jb2xsYXBzZTog
+c2VwYXJhdGUgIWltcG9ydGFudDsiPg0KDQoNCuKAi+KAi+KAi+KAi+C4peC4h+C4l+C4sOC5gOC4
+muC4teC4ouC4meC4o+C4seC4muC4muC4seC4leC4o+C4n+C4o+C4tSBbMl0NCg0K4LiE4Li44LiT
+4LiE4Lin4Lij4LmA4LiC4LmJ4Liy4Lij4LmI4Lin4Lih4LmA4LiL4Liq4LiK4Lix4LmI4LiZ4LmD
+4LiU4Lia4LmJ4Liy4LiHPyDguJTguLnguKPguLLguKLguKXguLDguYDguK3guLXguKLguJTguJTg
+uYnguLLguJnguKXguYjguLLguIc6DQoqDQoNCg0KDQoNCg0KDQoNCg0KDQoNCuC4o+C5iOC4p+C4
+oeC5gOC4m+C5h+C4mSBMb2NhbCBQYXJ0bmVyIOC4geC4seC4miBPZG9vDQooOS4zMC0xMS4zMCDg
+uJkuKSoNCuC5gOC4i+C4quC4iuC4seC5iOC4meC4meC4teC5ieC4oeC4teC5hOC4p+C5ieC4quC4
+s+C4q+C4o+C4seC4muC4nOC4ueC5ieC4p+C4suC4h+C4o+C4sOC4muC4muC5hOC4reC4l+C4tSDg
+uJfguLXguYjguJvguKPguLbguIHguKnguLLguJjguLjguKPguIHguLTguIjguJTguLTguIjguLTg
+uJfguLHguKUg4Lir4Lij4Li34Lit4Lia4Lij4Li04Lip4Lix4LiX4LmE4Lit4LiX4Li14LiX4Li1
+4LmI4LiE4Lil4LmJ4Liy4Lii4LiB4Lix4LiZ4LiX4Li14LmI4LiV4LmJ4Lit4LiH4LiB4Liy4Lij
+4LmA4Lij4Li14Lii4LiZ4Lij4Li54LmJ4LmA4LiB4Li14LmI4Lii4Lin4LiB4Lix4Lia4LmC4Lib
+4Lij4LmB4LiB4Lij4Lih4Lie4Liy4Lij4LmM4LiX4LmA4LiZ4Lit4Lij4LmM4LiC4Lit4LiHIE9k
+b28g4LmB4Lil4Liw4LiU4Li54Lin4LmI4Liy4Lie4Lin4LiB4LmA4LiC4Liy4LiI4Liw4LmE4LiU
+4LmJ4Lij4Lix4Lia4Lib4Lij4Liw4LmC4Lii4LiK4LiZ4LmM4LiI4Liy4LiB4LiB4Liy4Lij4LiZ
+4LizIE9kb28gRVJQIOC5hOC4m+C5g+C4iuC5ieC4geC4seC4muC4mOC4uOC4o+C4geC4tOC4iOC5
+g+C4meC4nuC4t+C5ieC4meC4l+C4teC5iOC5hOC4lOC5ieC4reC4ouC5iOC4suC4h+C5hOC4o+C4
+muC5ieC4suC4hw0KDQoNCg0KDQrguITguYnguJnguJ7guJrguIHguLLguKPguYPguIrguYnguIfg
+uLLguJkgT2RvbyDguKrguLPguKvguKPguLHguJrguJjguLjguKPguIHguLTguIjguILguK3guIfg
+uITguLjguJPCoCgxMzozMC0xNzowMCkqDQoNCioNCuC5gOC4i+C4quC4iuC4seC5iOC4meC4meC4
+teC5ieC5gOC4q+C4oeC4suC4sOC4quC4s+C4q+C4o+C4seC4muC4l+C4uOC4geC4mOC4uOC4o+C4
+geC4tOC4iOC5g+C4meC4l+C4uOC4geC4reC4uOC4leC4quC4suC4q+C4geC4o+C4o+C4oSDguYLg
+uJTguKLguYDguInguJ7guLLguLAg4LmA4LiI4LmJ4Liy4LiC4Lit4LiH4LiY4Li44Lij4LiB4Li0
+4LiIIOC4nOC4ueC5ieC4m+C4o+C4sOC4geC4reC4muC4geC4suC4oyDguKvguKPguLfguK3guYPg
+uITguKPguIHguYfguJXguLLguKHguJfguLXguYjguIHguLPguKXguLHguIfguKHguK3guIfguKvg
+uLLguYLguIvguKXguLnguIrguLHguJnguIvguK3guJ/guJXguYzguYHguKfguKPguYzguYDguJ7g
+uLfguYjguK3guKLguIHguKPguLDguJTguLHguJrguIHguLLguKPguYDguJXguLTguJrguYLguJXg
+uILguK3guIfguJjguLjguKPguIHguLTguIgg4LiU4Li54LmC4LiL4Lil4Li54LiK4Lix4LiZ4LiY
+4Li44Lij4LiB4Li04LiI4LiU4Li04LiI4Li04LiX4Lix4Lil4LiX4Li14LmI4LiX4Lix4LiZ4Liq
+4Lih4Lix4Lii4Lic4LmI4Liy4LiZ4LiB4Liy4Lij4Liq4Liy4LiY4Li04LiV4LmD4LiZ4LmA4LiK
+4Li04LiH4LmC4LiV4LmJ4LiV4Lit4Lia4LiB4Lix4Lia4LmA4Lij4LiyIQ0KDQoNCg0KDQoNCuC4
+l+C4teC5iOC4meC4seC5iOC4h+C4oeC4teC4iOC4s+C4meC4p+C4meC4iOC4s+C4geC4seC4lCAt
+IOC5gOC4leC4o+C4teC4ouC4oeC4leC4seC4p+C5geC4peC4sOC4peC4h+C4l+C4sOC5gOC4muC4
+teC4ouC4meC4o+C4seC4muC4muC4seC4leC4o+C5gOC4guC5ieC4suC4h+C4suC4meC5gOC4peC4
+ouC4leC4reC4meC4meC4teC5iSENCg0K4LmA4Lij4Liy4Lir4Lin4Lix4LiH4Lin4LmI4Liy4LiI
+4Liw4LmE4LiU4LmJ4Lie4Lia4LiB4Lix4Lia4LiE4Li44LiT4LiX4Li14LmIIE9kb28gUm9hZHNo
+b3chDQrguILguK3guYHguKrguJTguIfguITguKfguLLguKHguJnguLHguJrguJbguLfguK3guK3g
+uKLguYjguLLguIfguKrguLnguIcNCuC4l+C4teC4oeC4geC4tOC4iOC4geC4o+C4o+C4oSBPZG9v
+IEFQQUMNCg0KDQoNCg0KDQoNCg0KDQoNCg0KDQoNCk9kb28gSEsgTGltaXRlZCoNCg0KVW5zdWJz
+Y3JpYmUgWzNdDQp8IENvbnRhY3QgWzRdDQoNCg0KDQpbNV0NCg0KWzZdDQoNCls3XQ0KDQpbOF0N
+Cg0KWzldDQrCqSAyMDIzIEFsbCBSaWdodHMgUmVzZXJ2ZWQNCg0KDQoNCg0KDQpbMV0gaHR0cHM6
+Ly93d3cub2Rvby5jb20vci9RSXIvbS8xMjc2NTg0MDkNClsyXSBodHRwczovL3d3dy5vZG9vLmNv
+bS9yL1FJci9tLzEyNzY1ODQwOQ0KWzNdIGh0dHBzOi8vd3d3Lm9kb28uY29tL3Vuc3Vic2NyaWJl
+X2Zyb21fbGlzdA0KWzRdIGh0dHBzOi8vd3d3Lm9kb28uY29tL3IvZDF4L20vMTI3NjU4NDA5DQpb
+NV0gaHR0cHM6Ly93d3cub2Rvby5jb20vci8wNzYvbS8xMjc2NTg0MDkNCls2XSBodHRwczovL3d3
+dy5vZG9vLmNvbS9yL1JRS3ovbS8xMjc2NTg0MDkNCls3XSBodHRwczovL3d3dy5vZG9vLmNvbS9y
+L1ZvOS9tLzEyNzY1ODQwOQ0KWzhdIGh0dHBzOi8vd3d3Lm9kb28uY29tL3IvVEpNL20vMTI3NjU4
+NDA5DQpbOV0gaHR0cHM6Ly93d3cub2Rvby5jb20vci9RMVYvbS8xMjc2NTg0MDkNCg==
+
+--===============4792070594089972046==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+
+        <!DOCTYPE html>
+        <html xmlns:o=3D"urn:schemas-microsoft-com:office:office" xmlns=3D"ht=
+tp://www.w3.org/1999/xhtml" xmlns:v=3D"urn:schemas-microsoft-com:vml">
+            <head>
+                <meta http-equiv=3D"Content-Type" content=3D"text/html; chars=
+et=3DUTF-8"/>
+                <meta name=3D"format-detection" content=3D"telephone=3Dno"/>
+                <meta name=3D"viewport" content=3D"width=3Ddevice-width; init=
+ial-scale=3D1.0; maximum-scale=3D1.0; user-scalable=3Dno;"/>
+                <meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3D9; IE=3D=
+8; IE=3D7; IE=3DEDGE"/>
+
+                <style>
+.o_layout * {
+    box-sizing: border-box !important;
+}
+.o_layout :not(.fa) {
+    font-family: Arial,Helvetica Neue,Helvetica,sans-serif;
+}
+/* Remove space around the email design. */
+    html,
+    body {
+        margin: 0 auto !important;
+        padding: 0 !important;
+        height: 100% !important;
+        width: 100% !important;
+    }
+
+    /* Stop Outlook resizing small text. */
+    * {
+        -ms-text-size-adjust: 100%;
+    }
+
+    /* Stop Outlook from adding extra spacing to tables. */
+    table,
+    td {
+        mso-table-lspace: 0pt !important;
+        mso-table-rspace: 0pt !important;
+    }
+
+    /* Use a better rendering method when resizing images in Outlook IE. */
+    img {
+        -ms-interpolation-mode:bicubic;
+    }
+
+    /* Prevent Windows 10 Mail from underlining links. Styles for underlined =
+links should be inline. */
+    a {
+        text-decoration: none;
+    }
+@media screen and (max-width: 768px) {
+    .o_mail_snippet_general .container {
+        width: 100% !important;
+    }
+    .s_header_social table td, .s_header_text_social table td, .s_header_logo=
+ table td,
+    .o_mail_block_footer_social td,
+    .s_showcase td,
+    .s_mail_product_list td,
+    .s_references td {
+        text-align: center !important;
+    }
+}
+@media screen and (max-width: 1135px) {
+    .o_stacking_wrapper {
+        width: 100% !important;
+        height: unset !important;
+    }
+    td {
+        max-width: inherit !important;
+    }
+    img:only-child:not(.img-fluid) {
+        object-fit: cover;
+        min-width: 100% !important;
+    }
+    .o_desktop_h100 {
+        height: unset !important;
+    }
+}
+</style>
+
+               =20
+               =20
+            </head>
+            <body>
+                <table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=
+=3D"100%" align=3D"center" role=3D"presentation" class=3D"o_layout oe_unremov=
+able oe_unmovable bg-200 o_default_theme" data-name=3D"Mailing" style=3D"marg=
+in: 0px; direction: ltr; text-size-adjust: 100%; background-color: #f3f4f6; t=
+ext-align: inherit; color: #111827; line-height: 1.5; font-weight: 400; font-=
+size: 14px; font-family: Inter, &#39;Odoo Unicode Support Noto&#39;, sans-ser=
+if; min-height: 100%; box-sizing: content-box; overflow: initial; width: 100%=
+ !important; border-collapse: collapse;"><tbody style=3D"vertical-align: top;=
+"><tr><td><table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=3D"10=
+0%" align=3D"center" role=3D"presentation" class=3D"o_mail_wrapper o_mail_reg=
+ular oe_unremovable" style=3D"margin: 0px auto; font-family: Arial, &#39;Helv=
+etica Neue&#39;, Helvetica, sans-serif; box-sizing: border-box; max-width: 72=
+0px; padding-left: 15px; padding-right: 15px; width: 100% !important; border-=
+collapse: collapse; text-align: inherit; font-size: unset; line-height: inher=
+it; color: #111827; font-weight: 400;"><tbody style=3D"vertical-align: top;">=
+<tr style=3D"font-family: Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-se=
+rif; box-sizing: border-box; margin-left: -15px; margin-right: -15px; margin-=
+top: 0px;"><td><table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=
+=3D"100%" align=3D"center" role=3D"presentation" style=3D"width: 100% !import=
+ant; border-collapse: collapse; text-align: inherit; font-size: unset; line-h=
+eight: inherit; height: 100%; color: #111827; font-family: Arial, &#39;Helvet=
+ica Neue&#39;, Helvetica, sans-serif; font-weight: 400;"><tbody style=3D"vert=
+ical-align: top;"><tr><td><!--[if mso]>
+                    <table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" r=
+ole=3D"presentation" style=3D"width: 100%;">
+                        <tr>
+                            <td valign=3D"top" style=3D"width: 720px;"><![end=
+if]--><div class=3D"o_stacking_wrapper" style=3D"display: inline-block; verti=
+cal-align: top;"><table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" widt=
+h=3D"100%" align=3D"center" role=3D"presentation" class=3D"o_stacking_wrapper=
+" style=3D"width: 720px; border-collapse: collapse; text-align: inherit; font=
+-size: unset; line-height: inherit; color: #111827; font-family: Arial, &#39;=
+Helvetica Neue&#39;, Helvetica, sans-serif; font-weight: 400;"><tbody style=
+=3D"vertical-align: top;"><tr><!--[if mso]><td colspan=3D"12" class=3D"o_mail=
+_no_options o_mail_wrapper_td bg-white oe_structure o_editable theme_selectio=
+n_done o_converted_col" width=3D"720" style=3D"padding: 0px; text-align: star=
+t; font-family: Arial, &quot;Helvetica Neue&quot;, Helvetica, sans-serif; pos=
+ition: relative; box-sizing: border-box; color: #111827; background-color: #f=
+fffff; margin-top: 0px; width: 100%;width: 720px;"><![endif]--><!--[if !mso]>=
+<!--><td colspan=3D"12" class=3D"o_mail_no_options o_mail_wrapper_td bg-white=
+ oe_structure o_editable theme_selection_done" style=3D"padding: 0px; text-al=
+ign: start; font-family: Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-ser=
+if; position: relative; box-sizing: border-box; color: #111827; background-co=
+lor: #ffffff; margin-top: 0px; max-width: 720px; width: 100%;"><!--<![endif]-=
+->
+        <table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=3D"100%=
+" align=3D"center" role=3D"presentation" class=3D"s_header_logo o_mail_block_=
+header_logo o_mail_snippet_general pt16 pb16" data-name=3D"Centered Logo" sty=
+le=3D"margin: 0px auto; font-family: Arial, &#39;Helvetica Neue&#39;, Helveti=
+ca, sans-serif; box-sizing: border-box; width: 100% !important; border-collap=
+se: collapse; text-align: start; font-size: unset; line-height: inherit; colo=
+r: #111827; font-weight: 400;"><tbody style=3D"vertical-align: top;"><tr><td =
+style=3D"padding: 16px 0px;">
+            <table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=3D"=
+100%" align=3D"center" role=3D"presentation" style=3D"margin: 0px auto; font-=
+family: Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif; border-collap=
+se: separate; box-sizing: border-box; max-width: 1320px; width: 100% !importa=
+nt; text-align: start; font-size: unset; line-height: inherit; color: #111827=
+; font-weight: 400;"><tbody style=3D"vertical-align: top;">
+                <tr style=3D"font-family: Arial, &#39;Helvetica Neue&#39;, He=
+lvetica, sans-serif; box-sizing: border-box; margin-left: 0px; margin-right: =
+0px; margin-top: 0px;"><td style=3D"padding: 0px;"><table cellspacing=3D"0" c=
+ellpadding=3D"0" border=3D"0" width=3D"100%" align=3D"center" role=3D"present=
+ation" style=3D"width: 100% !important; border-collapse: collapse; text-align=
+: start; font-size: unset; line-height: inherit; height: 100%; color: #111827=
+; font-family: Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif; font-w=
+eight: 400;"><tbody style=3D"vertical-align: top;"><tr><td style=3D"padding: =
+0px;"><!--[if mso]>
+                    <table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" r=
+ole=3D"presentation" style=3D"width: 100%;">
+                        <tr>
+                            <td valign=3D"top" style=3D"width: 720px;"><![end=
+if]--><div class=3D"o_stacking_wrapper" style=3D"display: inline-block; verti=
+cal-align: top;"><table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" widt=
+h=3D"100%" align=3D"center" role=3D"presentation" class=3D"o_stacking_wrapper=
+" style=3D"width: 720px; border-collapse: collapse; text-align: start; font-s=
+ize: unset; line-height: inherit; height: 164px; color: #111827; font-family:=
+ Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif; font-weight: 400;"><=
+tbody style=3D"vertical-align: top;"><tr><!--[if mso]><td colspan=3D"12" clas=
+s=3D"o_converted_col" width=3D"720" style=3D"font-family: Arial, &quot;Helvet=
+ica Neue&quot;, Helvetica, sans-serif; align-self: center; box-sizing: border=
+-box; min-height: 24px; margin-top: 0px; padding: 0px 15px; width: 100%; vert=
+ical-align: middle;width: 720px;"><![endif]--><!--[if !mso]><!--><td colspan=
+=3D"12" style=3D"font-family: Arial, &#39;Helvetica Neue&#39;, Helvetica, san=
+s-serif; align-self: center; box-sizing: border-box; min-height: 24px; margin=
+-top: 0px; padding: 0px 15px; max-width: 720px; width: 100%; vertical-align: =
+middle;" class=3D""><!--<![endif]--><a href=3D"https://www.odoo.com/r/QIr/m/1=
+27658409" style=3D"text-decoration:none;border-style:none;padding:0 0px 0 0px=
+;font-weight:bolder;font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, s=
+ans-serif;box-sizing:border-box;color:#017e84;"><!--[if mso]><img src=3D"http=
+s://www.odoo.com/web/image/41812118-57bb4296/Odoo%20RS%20email_ChiangMai.webp=
+?access_token=3Daf303106-b357-43a0-a8ed-c9a83f7e96d8" class=3D"img img-fluid =
+o_we_custom_image" data-mimetype=3D"image/webp" data-original-id=3D"41812071"=
+ data-original-src=3D"/web/image/41812071-eed40e61/Odoo%20RS%20email_ChiangMa=
+i.png" data-mimetype-before-conversion=3D"image/png" data-resize-width=3D"690=
+" loading=3D"" width=3D"690" style=3D"width: 690px;"><![endif]--><!--[if !mso=
+]><!--><img src=3D"https://www.odoo.com/web/image/41812118-57bb4296/Odoo%20RS=
+%20email_ChiangMai.webp?access_token=3Daf303106-b357-43a0-a8ed-c9a83f7e96d8" =
+class=3D"img img-fluid o_we_custom_image" data-mimetype=3D"image/webp" data-o=
+riginal-id=3D"41812071" data-original-src=3D"/web/image/41812071-eed40e61/Odo=
+o%20RS%20email_ChiangMai.png" data-mimetype-before-conversion=3D"image/png" d=
+ata-resize-width=3D"690" loading=3D"" style=3D"display: inline-block; box-siz=
+ing: border-box; height: auto; max-width: 100%; vertical-align: middle; width=
+: 690px;" width=3D"690"/><!--<![endif]--></a></td></tr></tbody></table></div>=
+<!--[if mso]></td></tr></table><![endif]--></td></tr></tbody></table></td></t=
+r></tbody></table></td></tr></tbody></table><table cellspacing=3D"0" cellpadd=
+ing=3D"0" border=3D"0" width=3D"100%" align=3D"center" role=3D"presentation" =
+class=3D"s_text_block o_mail_snippet_general pb0 pt0" style=3D"margin: 0px au=
+to; font-family: Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif; box-=
+sizing: border-box; width: 100% !important; border-collapse: collapse; text-a=
+lign: start; font-size: unset; line-height: inherit; color: #111827; font-wei=
+ght: 400;" data-snippet=3D"s_text_block" data-name=3D"Text"><tbody style=3D"v=
+ertical-align: top;"><tr><td style=3D"padding: 0px 15px;"><table cellspacing=
+=3D"0" cellpadding=3D"0" border=3D"0" width=3D"100%" align=3D"center" role=3D=
+"presentation" style=3D"width: 100% !important; border-collapse: collapse; te=
+xt-align: start; font-size: unset; line-height: inherit; color: #111827; font=
+-family: Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif; font-weight:=
+ 400;"><tbody style=3D"vertical-align: top;"><tr><td style=3D"padding: 0px;">
+            <div class=3D"container s_allow_columns" style=3D"padding:0 0px 0=
+ 0px;margin:0 auto 0 auto;font-family:Arial, &#39;Helvetica Neue&#39;, Helvet=
+ica, sans-serif;border-collapse:separate;box-sizing:border-box;max-width:1320=
+px;width:100%;" width=3D"100%" o-temp-width=3D"690">
+                <h5 style=3D"margin: 0px 0px 14px; box-sizing: border-box; fo=
+nt-size: 17.5px; color: #111827; line-height: 1.2; font-weight: 500; font-fam=
+ily: Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;"><font class=3D"=
+text-o-color-5" style=3D"font-family:Arial, &#39;Helvetica Neue&#39;, Helveti=
+ca, sans-serif;box-sizing:border-box;color:#111827;"><strong style=3D"font-fa=
+mily:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border=
+-box;font-weight:bolder;">Odoo =E0=B8=81=E0=B8=B3=E0=B8=A5=E0=B8=B1=E0=B8=87=
+=E0=B8=88=E0=B8=B0=E0=B8=A1=E0=B8=B2=E0=B9=80=E0=B8=8A=E0=B8=B5=E0=B8=A2=E0=
+=B8=87=E0=B9=83=E0=B8=AB=E0=B8=A1=E0=B9=88=E0=B8=84=E0=B8=A3=E0=B8=B1=E0=B9=
+=89=E0=B8=87=E0=B9=81=E0=B8=A3=E0=B8=81!
+
+</strong></font></h5><p style=3D"margin:0px 0 16px 0;color:#111827;font-famil=
+y:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border-bo=
+x;"><font class=3D"text-o-color-5" style=3D"font-family:Arial, &#39;Helvetica=
+ Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;color:#111827;">
+
+=E0=B9=80=E0=B8=8A=E0=B8=B4=E0=B8=8D=E0=B8=9E=E0=B8=9A=E0=B8=81=E0=B8=B1=E0=
+=B8=9A Odoo 17 =E0=B8=A3=E0=B8=B8=E0=B9=88=E0=B8=99=E0=B8=A5=E0=B9=88=E0=B8=
+=B2=E0=B8=AA=E0=B8=B8=E0=B8=94=E0=B9=81=E0=B8=A5=E0=B8=B0=E0=B8=94=E0=B8=B9=
+=E0=B8=9F=E0=B8=B5=E0=B9=80=E0=B8=88=E0=B8=AD=E0=B8=A3=E0=B9=8C=E0=B9=83=E0=
+=B8=AB=E0=B8=A1=E0=B9=88=E0=B8=97=E0=B8=B1=E0=B9=89=E0=B8=87=E0=B8=AB=E0=B8=
+=A1=E0=B8=94=E0=B9=81=E0=B8=9A=E0=B8=9A=E0=B8=95=E0=B8=B1=E0=B8=A7=E0=B8=95=
+=E0=B9=88=E0=B8=AD=E0=B8=95=E0=B8=B1=E0=B8=A7=E0=B9=83=E0=B8=99=E0=B8=87=E0=
+=B8=B2=E0=B8=99=E0=B8=99=E0=B8=B5=E0=B9=89 =E0=B9=80=E0=B8=A3=E0=B8=B2=E0=B8=
+=88=E0=B8=B0=E0=B8=95=E0=B8=AD=E0=B8=9A=E0=B8=97=E0=B8=B8=E0=B8=81=E0=B8=84=
+=E0=B8=B3=E0=B8=96=E0=B8=B2=E0=B8=A1=E0=B8=82=E0=B8=AD=E0=B8=87=E0=B8=84=E0=
+=B8=B8=E0=B8=93: Odoo =E0=B8=84=E0=B8=B7=E0=B8=AD=E0=B8=AD=E0=B8=B0=E0=B9=84=
+=E0=B8=A3 =E0=B8=8B=E0=B8=AD=E0=B8=9F=E0=B8=95=E0=B9=8C=E0=B9=81=E0=B8=A7=E0=
+=B8=A3=E0=B9=8C=E0=B8=99=E0=B8=B5=E0=B9=89=E0=B8=A1=E0=B8=B5=E0=B8=9B=E0=B8=
+=A3=E0=B8=B0=E0=B9=82=E0=B8=A2=E0=B8=8A=E0=B8=99=E0=B9=8C=E0=B8=95=E0=B9=88=
+=E0=B8=AD=E0=B8=98=E0=B8=B8=E0=B8=A3=E0=B8=81=E0=B8=B4=E0=B8=88=E0=B8=82=E0=
+=B8=AD=E0=B8=87=E0=B8=84=E0=B8=B8=E0=B8=93=E0=B8=AD=E0=B8=A2=E0=B9=88=E0=B8=
+=B2=E0=B8=87=E0=B9=84=E0=B8=A3? =E0=B8=9A=E0=B8=A3=E0=B8=B4=E0=B8=A9=E0=B8=B1=
+=E0=B8=97=E0=B8=97=E0=B8=B5=E0=B9=88=E0=B9=83=E0=B8=8A=E0=B9=89=E0=B8=A3=E0=
+=B8=B0=E0=B8=9A=E0=B8=9A ERP =E0=B9=80=E0=B8=9E=E0=B8=B7=E0=B9=88=E0=B8=AD=E0=
+=B8=A2=E0=B8=81=E0=B8=A3=E0=B8=B0=E0=B8=94=E0=B8=B1=E0=B8=9A=E0=B8=81=E0=B8=
+=B2=E0=B8=A3=E0=B8=97=E0=B8=B3=E0=B8=87=E0=B8=B2=E0=B8=99=E0=B9=81=E0=B8=A5=
+=E0=B8=B0=E0=B8=AA=E0=B8=A3=E0=B9=89=E0=B8=B2=E0=B8=87=E0=B8=81=E0=B8=B2=E0=
+=B8=A3=E0=B9=80=E0=B8=95=E0=B8=B4=E0=B8=9A=E0=B9=82=E0=B8=95=E0=B9=81=E0=B8=
+=9A=E0=B8=9A=E0=B8=81=E0=B9=89=E0=B8=B2=E0=B8=A7=E0=B8=81=E0=B8=A3=E0=B8=B0=
+=E0=B9=82=E0=B8=94=E0=B8=94=E0=B8=82=E0=B8=AD=E0=B8=87=E0=B8=9E=E0=B8=A7=E0=
+=B8=81=E0=B9=80=E0=B8=82=E0=B8=B2=E0=B8=99=E0=B8=B1=E0=B9=89=E0=B8=99=E0=B9=
+=80=E0=B8=9B=E0=B9=87=E0=B8=99=E0=B8=AD=E0=B8=A2=E0=B9=88=E0=B8=B2=E0=B8=87=
+=E0=B9=84=E0=B8=A3? =E0=B9=81=E0=B8=A5=E0=B8=B0=E0=B8=AD=E0=B8=B7=E0=B9=88=E0=
+=B8=99=E0=B9=86=E0=B8=AD=E0=B8=B5=E0=B8=81=E0=B8=A1=E0=B8=B2=E0=B8=81=E0=B8=
+=A1=E0=B8=B2=E0=B8=A2...
+
+=E2=80=8B</font><br style=3D"color:#111827;font-family:Arial, &#39;Helvetica =
+Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;"/></p><ul style=3D"pa=
+dding:0 0 0 28px;margin:0px 0 14px 0;font-family:Arial, &#39;Helvetica Neue&#=
+39;, Helvetica, sans-serif;box-sizing:border-box;list-style-type:disc;"><li s=
+tyle=3D"color:#111827;font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica,=
+ sans-serif;box-sizing:border-box;"><font class=3D"text-o-color-5" style=3D"f=
+ont-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:=
+border-box;color:#111827;">=E0=B8=A7=E0=B8=B1=E0=B8=99=E0=B8=97=E0=B8=B5=E0=
+=B9=88: 1 =E0=B8=81=E0=B8=B8=E0=B8=A1=E0=B8=A0=E0=B8=B2=E0=B8=9E=E0=B8=B1=E0=
+=B8=99=E0=B8=98=E0=B9=8C 2567
+
+</font></li><li style=3D"color:#111827;font-family:Arial, &#39;Helvetica Neue=
+&#39;, Helvetica, sans-serif;box-sizing:border-box;"><font class=3D"text-o-co=
+lor-5" style=3D"font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-=
+serif;box-sizing:border-box;color:#111827;">=E0=B9=80=E0=B8=A7=E0=B8=A5=E0=B8=
+=B2: 9:30 - 5:00 =E0=B8=99.
+
+</font></li><li style=3D"color:#111827;font-family:Arial, &#39;Helvetica Neue=
+&#39;, Helvetica, sans-serif;box-sizing:border-box;"><font class=3D"text-o-co=
+lor-5" style=3D"font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-=
+serif;box-sizing:border-box;color:#111827;">
+=E0=B8=AA=E0=B8=96=E0=B8=B2=E0=B8=99=E0=B8=97=E0=B8=B5=E0=B9=88:=C2=A0Chiang =
+Mai Marriott Hotel</font><br style=3D"color:#111827;font-family:Arial, &#39;H=
+elvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;"/></li></ul>=
+<p style=3D"margin:0px 0 16px 0;color:#111827;font-family:Arial, &#39;Helveti=
+ca Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;"><!--[if mso]><tab=
+le align=3D"center" border=3D"0"
+                    role=3D"presentation" cellpadding=3D"0" cellspacing=3D"0"
+                    style=3D"border-radius: 6px; border-collapse: separate !i=
+mportant;">
+                        <tbody>
+                            <tr>
+                                <td style=3D"text-decoration: none; border-ra=
+dius: 0.25rem; border-style: solid; font-family: Arial, &quot;Helvetica Neue&=
+quot;, Helvetica, sans-serif; box-sizing: border-box; transition: color 0.15s=
+ ease-in-out 0s, background-color 0.15s ease-in-out 0s, border-color 0.15s ea=
+se-in-out 0s, box-shadow 0.15s ease-in-out 0s; font-size: 1rem; border-color:=
+ rgb(53, 151, 156); border-width: 1px; background-color: rgb(53, 151, 156); u=
+ser-select: auto; cursor: pointer; vertical-align: middle; text-align: center=
+; line-height: 1.5; font-weight: 600; display: inline-block; color: rgb(255, =
+255, 255);" bgcolor=3D"#35979c">
+                    <![endif]--><a href=3D"https://www.odoo.com/r/QIr/m/12765=
+8409" class=3D"btn btn-primary" style=3D"text-decoration:none;border-radius:3=
+.5px;border-style:solid;padding:10.5px 21px 10.5px 21px;font-family:Arial, &#=
+39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;transitio=
+n-property:color, background-color, border-color, box-shadow;transition-delay=
+:0s, 0s, 0s, 0s;transition-timing-function:ease-in-out, ease-in-out, ease-in-=
+out, ease-in-out;transition-duration:0.15s, 0.15s, 0.15s, 0.15s;transition-be=
+havior:normal, normal, normal, normal;font-size:14px;border-left-color:#35979=
+c;border-bottom-color:#35979c;border-right-color:#35979c;border-top-color:#35=
+979c;border-left-width:1px;border-bottom-width:1px;border-right-width:1px;bor=
+der-top-width:1px;background-color:#35979c;user-select:auto;cursor:pointer;ve=
+rtical-align:middle;text-align:center;line-height:1.5;font-weight:600;display=
+:inline-block;color:#ffffff;">=E2=80=8B=E2=80=8B=E2=80=8B=E2=80=8B=E0=B8=A5=
+=E0=B8=87=E0=B8=97=E0=B8=B0=E0=B9=80=E0=B8=9A=E0=B8=B5=E0=B8=A2=E0=B8=99=E0=
+=B8=A3=E0=B8=B1=E0=B8=9A=E0=B8=9A=E0=B8=B1=E0=B8=95=E0=B8=A3=E0=B8=9F=E0=B8=
+=A3=E0=B8=B5</a><!--[if mso]></td>
+                        </tr>
+                    </tbody>
+                </table><![endif]--><br style=3D"color:#111827;font-family:Ar=
+ial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;"/=
+></p><h5 style=3D"margin: 0px 0px 14px; box-sizing: border-box; font-size: 17=
+.5px; color: #111827; line-height: 1.2; font-weight: 500; font-family: Arial,=
+ &#39;Helvetica Neue&#39;, Helvetica, sans-serif;"><br style=3D"font-family:A=
+rial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;"=
+/></h5><h5 style=3D"margin: 0px 0px 14px; box-sizing: border-box; font-size: =
+17.5px; color: #111827; line-height: 1.2; font-weight: 500; font-family: Aria=
+l, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;"><strong style=3D"font-fa=
+mily:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border=
+-box;font-weight:bolder;">=E0=B8=84=E0=B8=B8=E0=B8=93=E0=B8=84=E0=B8=A7=E0=B8=
+=A3=E0=B9=80=E0=B8=82=E0=B9=89=E0=B8=B2=E0=B8=A3=E0=B9=88=E0=B8=A7=E0=B8=A1=
+=E0=B9=80=E0=B8=8B=E0=B8=AA=E0=B8=8A=E0=B8=B1=E0=B9=88=E0=B8=99=E0=B9=83=E0=
+=B8=94=E0=B8=9A=E0=B9=89=E0=B8=B2=E0=B8=87? =E0=B8=94=E0=B8=B9=E0=B8=A3=E0=B8=
+=B2=E0=B8=A2=E0=B8=A5=E0=B8=B0=E0=B9=80=E0=B8=AD=E0=B8=B5=E0=B8=A2=E0=B8=94=
+=E0=B8=94=E0=B9=89=E0=B8=B2=E0=B8=99=E0=B8=A5=E0=B9=88=E0=B8=B2=E0=B8=87:
+
+</strong>
+
+<br style=3D"font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-ser=
+if;box-sizing:border-box;"/></h5><p class=3D"o_default_snippet_text" style=3D=
+"margin:0px 0 16px 0;color:#111827;font-family:Arial, &#39;Helvetica Neue&#39=
+;, Helvetica, sans-serif;box-sizing:border-box;">
+
+
+            </p></div>
+        </td></tr></tbody></table></td></tr></tbody></table><table cellspacin=
+g=3D"0" cellpadding=3D"0" border=3D"0" width=3D"100%" align=3D"center" role=
+=3D"presentation" class=3D"s_three_columns o_mail_snippet_general o_cc o_cc2 =
+bg-o-color-4 pt0 pb0" data-snippet=3D"s_three_columns" data-name=3D"Columns" =
+style=3D"margin: 0px auto; font-family: Arial, &#39;Helvetica Neue&#39;, Helv=
+etica, sans-serif; color: #111827; box-sizing: border-box; width: 100% !impor=
+tant; background-color: #ffffff; border-collapse: collapse; text-align: start=
+; font-size: unset; line-height: inherit; font-weight: 400;"><tbody style=3D"=
+vertical-align: top;"><tr><td style=3D"padding: 0px;">
+        <table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=3D"100%=
+" align=3D"center" role=3D"presentation" style=3D"margin: 0px auto; font-fami=
+ly: Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif; border-collapse: =
+separate; box-sizing: border-box; max-width: 1320px; width: 100% !important; =
+text-align: start; font-size: unset; line-height: inherit; color: #111827; fo=
+nt-weight: 400;"><tbody style=3D"vertical-align: top;">
+            <tr class=3D"d-flex align-items-stretch" style=3D"font-family: Ar=
+ial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif; box-sizing: border-box;=
+ align-items: stretch; margin-left: 0px; margin-right: 0px; margin-top: 0px;"=
+><td style=3D"padding: 0px;"><table cellspacing=3D"0" cellpadding=3D"0" borde=
+r=3D"0" width=3D"100%" align=3D"center" role=3D"presentation" style=3D"width:=
+ 100% !important; border-collapse: collapse; text-align: start; font-size: un=
+set; line-height: inherit; height: 100%; color: #111827; font-family: Arial, =
+&#39;Helvetica Neue&#39;, Helvetica, sans-serif; font-weight: 400;"><tbody st=
+yle=3D"vertical-align: top;"><tr><td style=3D"padding: 0px;"><!--[if mso]>
+                    <table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" r=
+ole=3D"presentation" style=3D"width: 100%;">
+                        <tr>
+                            <td valign=3D"top" style=3D"width: 360px;"><![end=
+if]--><div class=3D"o_stacking_wrapper" style=3D"display: inline-block; verti=
+cal-align: top;"><table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" widt=
+h=3D"100%" align=3D"center" role=3D"presentation" class=3D"o_stacking_wrapper=
+" style=3D"width: 360px; border-collapse: collapse; text-align: start; font-s=
+ize: unset; line-height: inherit; color: #111827; font-family: Arial, &#39;He=
+lvetica Neue&#39;, Helvetica, sans-serif; font-weight: 400;"><tbody style=3D"=
+vertical-align: top;"><tr><!--[if mso]><td colspan=3D"6" class=3D"s_col_no_bg=
+color pt16 pb0 o_converted_col" width=3D"360" style=3D"font-family: Arial, &q=
+uot;Helvetica Neue&quot;, Helvetica, sans-serif; box-sizing: border-box; padd=
+ing: 16px 15px 0px; margin-top: 0px; width: 100%; height: 237px;width: 360px;=
+"><![endif]--><!--[if !mso]><!--><td colspan=3D"6" class=3D"s_col_no_bgcolor =
+pt16 pb0" style=3D"font-family: Arial, &#39;Helvetica Neue&#39;, Helvetica, s=
+ans-serif; box-sizing: border-box; padding: 16px 15px 0px; margin-top: 0px; m=
+ax-width: 360px; width: 100%; height: 237px;"><!--<![endif]-->
+                    <table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" w=
+idth=3D"100%" align=3D"center" role=3D"presentation" class=3D"card text-bg-wh=
+ite h-100" style=3D"border-radius: 8.75px; border-style: solid; font-family: =
+Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif; box-sizing: border-bo=
+x; transition: all 0.2s ease-in-out 0s; height: 100%; border-width: 0px; back=
+ground-clip: border-box; background-color: #ffffff; overflow-wrap: break-word=
+; min-width: 0px; position: relative; border-color: #d8dadd; border-collapse:=
+ collapse; text-align: start; font-size: unset; line-height: inherit; width: =
+100% !important; color: #111827; font-weight: 400;"><tbody style=3D"vertical-=
+align: top;"><tr><td style=3D"padding: 0px;"><table cellspacing=3D"0" cellpad=
+ding=3D"0" border=3D"0" width=3D"100%" align=3D"center" role=3D"presentation"=
+ style=3D"width: 100% !important; border-collapse: collapse; text-align: star=
+t; font-size: unset; line-height: inherit; color: #111827; font-family: Arial=
+, &#39;Helvetica Neue&#39;, Helvetica, sans-serif; font-weight: 400;"><tbody =
+style=3D"vertical-align: top;"><tr><td class=3D"card-body" style=3D"border-ra=
+dius:8.75px;padding:21px;font-family:Arial, &#39;Helvetica Neue&#39;, Helveti=
+ca, sans-serif;box-sizing:border-box;color:#111827;background-color: #f9fafb =
+;">
+                            <p style=3D"margin:0px 0 16px 0;color:#111827;fon=
+t-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:bo=
+rder-box;"><strong style=3D"color:#111827;font-family:Arial, &#39;Helvetica N=
+eue&#39;, Helvetica, sans-serif;box-sizing:border-box;font-weight:bolder;">
+=E0=B8=A3=E0=B9=88=E0=B8=A7=E0=B8=A1=E0=B9=80=E0=B8=9B=E0=B9=87=E0=B8=99 Loca=
+l Partner =E0=B8=81=E0=B8=B1=E0=B8=9A Odoo
+(9.30-11.30 =E0=B8=99.)</strong></p><p style=3D"margin:0px 0 16px 0;color:#11=
+1827;font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-s=
+izing:border-box;">
+=E0=B9=80=E0=B8=8B=E0=B8=AA=E0=B8=8A=E0=B8=B1=E0=B9=88=E0=B8=99=E0=B8=99=E0=
+=B8=B5=E0=B9=89=E0=B8=A1=E0=B8=B5=E0=B9=84=E0=B8=A7=E0=B9=89=E0=B8=AA=E0=B8=
+=B3=E0=B8=AB=E0=B8=A3=E0=B8=B1=E0=B8=9A=E0=B8=9C=E0=B8=B9=E0=B9=89=E0=B8=A7=
+=E0=B8=B2=E0=B8=87=E0=B8=A3=E0=B8=B0=E0=B8=9A=E0=B8=9A=E0=B9=84=E0=B8=AD=E0=
+=B8=97=E0=B8=B5 =E0=B8=97=E0=B8=B5=E0=B9=88=E0=B8=9B=E0=B8=A3=E0=B8=B6=E0=B8=
+=81=E0=B8=A9=E0=B8=B2=E0=B8=98=E0=B8=B8=E0=B8=A3=E0=B8=81=E0=B8=B4=E0=B8=88=
+=E0=B8=94=E0=B8=B4=E0=B8=88=E0=B8=B4=E0=B8=97=E0=B8=B1=E0=B8=A5 =E0=B8=AB=E0=
+=B8=A3=E0=B8=B7=E0=B8=AD=E0=B8=9A=E0=B8=A3=E0=B8=B4=E0=B8=A9=E0=B8=B1=E0=B8=
+=97=E0=B9=84=E0=B8=AD=E0=B8=97=E0=B8=B5=E0=B8=97=E0=B8=B5=E0=B9=88=E0=B8=84=
+=E0=B8=A5=E0=B9=89=E0=B8=B2=E0=B8=A2=E0=B8=81=E0=B8=B1=E0=B8=99=E0=B8=97=E0=
+=B8=B5=E0=B9=88=E0=B8=95=E0=B9=89=E0=B8=AD=E0=B8=87=E0=B8=81=E0=B8=B2=E0=B8=
+=A3=E0=B9=80=E0=B8=A3=E0=B8=B5=E0=B8=A2=E0=B8=99=E0=B8=A3=E0=B8=B9=E0=B9=89=
+=E0=B9=80=E0=B8=81=E0=B8=B5=E0=B9=88=E0=B8=A2=E0=B8=A7=E0=B8=81=E0=B8=B1=E0=
+=B8=9A=E0=B9=82=E0=B8=9B=E0=B8=A3=E0=B9=81=E0=B8=81=E0=B8=A3=E0=B8=A1=E0=B8=
+=9E=E0=B8=B2=E0=B8=A3=E0=B9=8C=E0=B8=97=E0=B9=80=E0=B8=99=E0=B8=AD=E0=B8=A3=
+=E0=B9=8C=E0=B8=82=E0=B8=AD=E0=B8=87 Odoo =E0=B9=81=E0=B8=A5=E0=B8=B0=E0=B8=
+=94=E0=B8=B9=E0=B8=A7=E0=B9=88=E0=B8=B2=E0=B8=9E=E0=B8=A7=E0=B8=81=E0=B9=80=
+=E0=B8=82=E0=B8=B2=E0=B8=88=E0=B8=B0=E0=B9=84=E0=B8=94=E0=B9=89=E0=B8=A3=E0=
+=B8=B1=E0=B8=9A=E0=B8=9B=E0=B8=A3=E0=B8=B0=E0=B9=82=E0=B8=A2=E0=B8=8A=E0=B8=
+=99=E0=B9=8C=E0=B8=88=E0=B8=B2=E0=B8=81=E0=B8=81=E0=B8=B2=E0=B8=A3=E0=B8=99=
+=E0=B8=B3 Odoo ERP =E0=B9=84=E0=B8=9B=E0=B9=83=E0=B8=8A=E0=B9=89=E0=B8=81=E0=
+=B8=B1=E0=B8=9A=E0=B8=98=E0=B8=B8=E0=B8=A3=E0=B8=81=E0=B8=B4=E0=B8=88=E0=B9=
+=83=E0=B8=99=E0=B8=9E=E0=B8=B7=E0=B9=89=E0=B8=99=E0=B8=97=E0=B8=B5=E0=B9=88=
+=E0=B9=84=E0=B8=94=E0=B9=89=E0=B8=AD=E0=B8=A2=E0=B9=88=E0=B8=B2=E0=B8=87=E0=
+=B9=84=E0=B8=A3=E0=B8=9A=E0=B9=89=E0=B8=B2=E0=B8=87
+
+=C2=A0<br style=3D"color:#111827;font-family:Arial, &#39;Helvetica Neue&#39;,=
+ Helvetica, sans-serif;box-sizing:border-box;"/></p></td></tr></tbody></table=
+></td></tr></tbody></table>
+                </td></tr></tbody></table></div><!--[if mso]></td><td valign=
+=3D"top" style=3D"width: 360px;"><![endif]--><div class=3D"o_stacking_wrapper=
+" style=3D"display: inline-block; vertical-align: top;"><table cellspacing=3D=
+"0" cellpadding=3D"0" border=3D"0" width=3D"100%" align=3D"center" role=3D"pr=
+esentation" class=3D"o_stacking_wrapper" style=3D"width: 360px; border-collap=
+se: collapse; text-align: start; font-size: unset; line-height: inherit; colo=
+r: #111827; font-family: Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-ser=
+if; font-weight: 400;"><tbody style=3D"vertical-align: top;"><tr><!--[if mso]=
+><td colspan=3D"6" class=3D"s_col_no_bgcolor pt16 pb0 o_converted_col" width=
+=3D"360" style=3D"font-family: Arial, &quot;Helvetica Neue&quot;, Helvetica, =
+sans-serif; box-sizing: border-box; padding: 16px 15px 0px; margin-top: 0px; =
+width: 100%; height: 237px;width: 360px;"><![endif]--><!--[if !mso]><!--><td =
+colspan=3D"6" class=3D"s_col_no_bgcolor pt16 pb0" style=3D"font-family: Arial=
+, &#39;Helvetica Neue&#39;, Helvetica, sans-serif; box-sizing: border-box; pa=
+dding: 16px 15px 0px; margin-top: 0px; max-width: 360px; width: 100%; height:=
+ 237px;"><!--<![endif]-->
+                    <table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" w=
+idth=3D"100%" align=3D"center" role=3D"presentation" class=3D"card text-bg-wh=
+ite h-100" style=3D"border-radius: 8.75px; border-style: solid; font-family: =
+Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif; box-sizing: border-bo=
+x; transition: all 0.2s ease-in-out 0s; height: 100%; border-width: 0px; back=
+ground-clip: border-box; background-color: #ffffff; overflow-wrap: break-word=
+; min-width: 0px; position: relative; border-color: #d8dadd; border-collapse:=
+ collapse; text-align: start; font-size: unset; line-height: inherit; width: =
+100% !important; color: #111827; font-weight: 400;"><tbody style=3D"vertical-=
+align: top;"><tr><td style=3D"padding: 0px;"><table cellspacing=3D"0" cellpad=
+ding=3D"0" border=3D"0" width=3D"100%" align=3D"center" role=3D"presentation"=
+ style=3D"width: 100% !important; border-collapse: collapse; text-align: star=
+t; font-size: unset; line-height: inherit; color: #111827; font-family: Arial=
+, &#39;Helvetica Neue&#39;, Helvetica, sans-serif; font-weight: 400;"><tbody =
+style=3D"vertical-align: top;"><tr><td class=3D"card-body" style=3D"border-ra=
+dius:8.75px;padding:21px;font-family:Arial, &#39;Helvetica Neue&#39;, Helveti=
+ca, sans-serif;box-sizing:border-box;color:#111827;background-color: #f9fafb =
+;">
+                            <p style=3D"margin:0px 0 16px 0;color:#111827;fon=
+t-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:bo=
+rder-box;"><strong style=3D"color:#111827;font-family:Arial, &#39;Helvetica N=
+eue&#39;, Helvetica, sans-serif;box-sizing:border-box;font-weight:bolder;">=
+=E0=B8=84=E0=B9=89=E0=B8=99=E0=B8=9E=E0=B8=9A=E0=B8=81=E0=B8=B2=E0=B8=A3=E0=
+=B9=83=E0=B8=8A=E0=B9=89=E0=B8=87=E0=B8=B2=E0=B8=99 Odoo =E0=B8=AA=E0=B8=B3=
+=E0=B8=AB=E0=B8=A3=E0=B8=B1=E0=B8=9A=E0=B8=98=E0=B8=B8=E0=B8=A3=E0=B8=81=E0=
+=B8=B4=E0=B8=88=E0=B8=82=E0=B8=AD=E0=B8=87=E0=B8=84=E0=B8=B8=E0=B8=93=C2=A0(1=
+3:30-17:00)</strong></p><p style=3D"margin:0px 0 16px 0;color:#111827;font-fa=
+mily:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border=
+-box;"><strong style=3D"color:#111827;font-family:Arial, &#39;Helvetica Neue&=
+#39;, Helvetica, sans-serif;box-sizing:border-box;font-weight:bolder;">
+
+</strong></p><p style=3D"margin:0px 0 16px 0;color:#111827;font-family:Arial,=
+ &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;">=E0=
+=B9=80=E0=B8=8B=E0=B8=AA=E0=B8=8A=E0=B8=B1=E0=B9=88=E0=B8=99=E0=B8=99=E0=B8=
+=B5=E0=B9=89=E0=B9=80=E0=B8=AB=E0=B8=A1=E0=B8=B2=E0=B8=B0=E0=B8=AA=E0=B8=B3=
+=E0=B8=AB=E0=B8=A3=E0=B8=B1=E0=B8=9A=E0=B8=97=E0=B8=B8=E0=B8=81=E0=B8=98=E0=
+=B8=B8=E0=B8=A3=E0=B8=81=E0=B8=B4=E0=B8=88=E0=B9=83=E0=B8=99=E0=B8=97=E0=B8=
+=B8=E0=B8=81=E0=B8=AD=E0=B8=B8=E0=B8=95=E0=B8=AA=E0=B8=B2=E0=B8=AB=E0=B8=81=
+=E0=B8=A3=E0=B8=A3=E0=B8=A1 =E0=B9=82=E0=B8=94=E0=B8=A2=E0=B9=80=E0=B8=89=E0=
+=B8=9E=E0=B8=B2=E0=B8=B0 =E0=B9=80=E0=B8=88=E0=B9=89=E0=B8=B2=E0=B8=82=E0=B8=
+=AD=E0=B8=87=E0=B8=98=E0=B8=B8=E0=B8=A3=E0=B8=81=E0=B8=B4=E0=B8=88 =E0=B8=9C=
+=E0=B8=B9=E0=B9=89=E0=B8=9B=E0=B8=A3=E0=B8=B0=E0=B8=81=E0=B8=AD=E0=B8=9A=E0=
+=B8=81=E0=B8=B2=E0=B8=A3 =E0=B8=AB=E0=B8=A3=E0=B8=B7=E0=B8=AD=E0=B9=83=E0=B8=
+=84=E0=B8=A3=E0=B8=81=E0=B9=87=E0=B8=95=E0=B8=B2=E0=B8=A1=E0=B8=97=E0=B8=B5=
+=E0=B9=88=E0=B8=81=E0=B8=B3=E0=B8=A5=E0=B8=B1=E0=B8=87=E0=B8=A1=E0=B8=AD=E0=
+=B8=87=E0=B8=AB=E0=B8=B2=E0=B9=82=E0=B8=8B=E0=B8=A5=E0=B8=B9=E0=B8=8A=E0=B8=
+=B1=E0=B8=99=E0=B8=8B=E0=B8=AD=E0=B8=9F=E0=B8=95=E0=B9=8C=E0=B9=81=E0=B8=A7=
+=E0=B8=A3=E0=B9=8C=E0=B9=80=E0=B8=9E=E0=B8=B7=E0=B9=88=E0=B8=AD=E0=B8=A2=E0=
+=B8=81=E0=B8=A3=E0=B8=B0=E0=B8=94=E0=B8=B1=E0=B8=9A=E0=B8=81=E0=B8=B2=E0=B8=
+=A3=E0=B9=80=E0=B8=95=E0=B8=B4=E0=B8=9A=E0=B9=82=E0=B8=95=E0=B8=82=E0=B8=AD=
+=E0=B8=87=E0=B8=98=E0=B8=B8=E0=B8=A3=E0=B8=81=E0=B8=B4=E0=B8=88 =E0=B8=94=E0=
+=B8=B9=E0=B9=82=E0=B8=8B=E0=B8=A5=E0=B8=B9=E0=B8=8A=E0=B8=B1=E0=B8=99=E0=B8=
+=98=E0=B8=B8=E0=B8=A3=E0=B8=81=E0=B8=B4=E0=B8=88=E0=B8=94=E0=B8=B4=E0=B8=88=
+=E0=B8=B4=E0=B8=97=E0=B8=B1=E0=B8=A5=E0=B8=97=E0=B8=B5=E0=B9=88=E0=B8=97=E0=
+=B8=B1=E0=B8=99=E0=B8=AA=E0=B8=A1=E0=B8=B1=E0=B8=A2=E0=B8=9C=E0=B9=88=E0=B8=
+=B2=E0=B8=99=E0=B8=81=E0=B8=B2=E0=B8=A3=E0=B8=AA=E0=B8=B2=E0=B8=98=E0=B8=B4=
+=E0=B8=95=E0=B9=83=E0=B8=99=E0=B9=80=E0=B8=8A=E0=B8=B4=E0=B8=87=E0=B9=82=E0=
+=B8=95=E0=B9=89=E0=B8=95=E0=B8=AD=E0=B8=9A=E0=B8=81=E0=B8=B1=E0=B8=9A=E0=B9=
+=80=E0=B8=A3=E0=B8=B2!
+
+<br style=3D"color:#111827;font-family:Arial, &#39;Helvetica Neue&#39;, Helve=
+tica, sans-serif;box-sizing:border-box;"/></p></td></tr></tbody></table></td>=
+</tr></tbody></table>
+                </td></tr></tbody></table></div><!--[if mso]></td></tr></tabl=
+e><![endif]--></td></tr></tbody></table></td></tr>
+        </tbody></table>
+    </td></tr></tbody></table><table cellspacing=3D"0" cellpadding=3D"0" bord=
+er=3D"0" width=3D"100%" align=3D"center" role=3D"presentation" class=3D"s_tex=
+t_block o_mail_snippet_general pb0 pt24" style=3D"margin: 0px auto; font-fami=
+ly: Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif; box-sizing: borde=
+r-box; width: 100% !important; border-collapse: collapse; text-align: start; =
+font-size: unset; line-height: inherit; color: #111827; font-weight: 400;" da=
+ta-snippet=3D"s_text_block" data-name=3D"Text"><tbody style=3D"vertical-align=
+: top;"><tr><td style=3D"padding: 24px 15px 0px;"><table cellspacing=3D"0" ce=
+llpadding=3D"0" border=3D"0" width=3D"100%" align=3D"center" role=3D"presenta=
+tion" style=3D"width: 100% !important; border-collapse: collapse; text-align:=
+ start; font-size: unset; line-height: inherit; color: #111827; font-family: =
+Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif; font-weight: 400;"><t=
+body style=3D"vertical-align: top;"><tr><td style=3D"padding: 0px;">
+            <div class=3D"container s_allow_columns" style=3D"padding:0 0px 0=
+ 0px;margin:0 auto 0 auto;font-family:Arial, &#39;Helvetica Neue&#39;, Helvet=
+ica, sans-serif;border-collapse:separate;box-sizing:border-box;max-width:1320=
+px;width:100%;" width=3D"100%" o-temp-width=3D"690">
+                <p style=3D"margin:0px 0 16px 0;color:#111827;font-family:Ari=
+al, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;">
+=E0=B8=97=E0=B8=B5=E0=B9=88=E0=B8=99=E0=B8=B1=E0=B9=88=E0=B8=87=E0=B8=A1=E0=
+=B8=B5=E0=B8=88=E0=B8=B3=E0=B8=99=E0=B8=A7=E0=B8=99=E0=B8=88=E0=B8=B3=E0=B8=
+=81=E0=B8=B1=E0=B8=94 - =E0=B9=80=E0=B8=95=E0=B8=A3=E0=B8=B5=E0=B8=A2=E0=B8=
+=A1=E0=B8=95=E0=B8=B1=E0=B8=A7=E0=B9=81=E0=B8=A5=E0=B8=B0=E0=B8=A5=E0=B8=87=
+=E0=B8=97=E0=B8=B0=E0=B9=80=E0=B8=9A=E0=B8=B5=E0=B8=A2=E0=B8=99=E0=B8=A3=E0=
+=B8=B1=E0=B8=9A=E0=B8=9A=E0=B8=B1=E0=B8=95=E0=B8=A3=E0=B9=80=E0=B8=82=E0=B9=
+=89=E0=B8=B2=E0=B8=87=E0=B8=B2=E0=B8=99=E0=B9=80=E0=B8=A5=E0=B8=A2=E0=B8=95=
+=E0=B8=AD=E0=B8=99=E0=B8=99=E0=B8=B5=E0=B9=89!
+
+<br style=3D"color:#111827;font-family:Arial, &#39;Helvetica Neue&#39;, Helve=
+tica, sans-serif;box-sizing:border-box;"/></p><p style=3D"margin:0px 0 16px 0=
+;color:#111827;font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-s=
+erif;box-sizing:border-box;">=E0=B9=80=E0=B8=A3=E0=B8=B2=E0=B8=AB=E0=B8=A7=E0=
+=B8=B1=E0=B8=87=E0=B8=A7=E0=B9=88=E0=B8=B2=E0=B8=88=E0=B8=B0=E0=B9=84=E0=B8=
+=94=E0=B9=89=E0=B8=9E=E0=B8=9A=E0=B8=81=E0=B8=B1=E0=B8=9A=E0=B8=84=E0=B8=B8=
+=E0=B8=93=E0=B8=97=E0=B8=B5=E0=B9=88 Odoo Roadshow!</p><p style=3D"margin:0px=
+ 0 16px 0;color:#111827;font-family:Arial, &#39;Helvetica Neue&#39;, Helvetic=
+a, sans-serif;box-sizing:border-box;"><br style=3D"color:#111827;font-family:=
+Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;=
+"/></p><p style=3D"margin:0px 0 16px 0;color:#111827;font-family:Arial, &#39;=
+Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;">=E0=B8=82=
+=E0=B8=AD=E0=B9=81=E0=B8=AA=E0=B8=94=E0=B8=87=E0=B8=84=E0=B8=A7=E0=B8=B2=E0=
+=B8=A1=E0=B8=99=E0=B8=B1=E0=B8=9A=E0=B8=96=E0=B8=B7=E0=B8=AD=E0=B8=AD=E0=B8=
+=A2=E0=B9=88=E0=B8=B2=E0=B8=87=E0=B8=AA=E0=B8=B9=E0=B8=87</p><p style=3D"marg=
+in:0px 0 16px 0;color:#111827;font-family:Arial, &#39;Helvetica Neue&#39;, He=
+lvetica, sans-serif;box-sizing:border-box;">
+=E0=B8=97=E0=B8=B5=E0=B8=A1=E0=B8=81=E0=B8=B4=E0=B8=88=E0=B8=81=E0=B8=A3=E0=
+=B8=A3=E0=B8=A1 Odoo APAC
+
+<br style=3D"color:#111827;font-family:Arial, &#39;Helvetica Neue&#39;, Helve=
+tica, sans-serif;box-sizing:border-box;"/></p><p style=3D"margin:0px 0 16px 0=
+;color:#111827;font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-s=
+erif;box-sizing:border-box;">
+
+<br style=3D"color:#111827;font-family:Arial, &#39;Helvetica Neue&#39;, Helve=
+tica, sans-serif;box-sizing:border-box;"/></p><p class=3D"o_default_snippet_t=
+ext" style=3D"margin:0px 0 16px 0;color:#111827;font-family:Arial, &#39;Helve=
+tica Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;">
+
+
+            </p></div>
+        </td></tr></tbody></table></td></tr></tbody></table><div class=3D"s_h=
+r pt16 pb16" data-snippet=3D"s_hr" data-name=3D"Separator" style=3D"padding:1=
+6px 0 16px 0;font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-ser=
+if;box-sizing:border-box;line-height:0;">
+            <hr class=3D"s_hr_1px s_hr_solid" style=3D"padding: 0px; margin: =
+auto; font-family: Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif; he=
+ight: 1px; width: 100%; box-sizing: border-box; opacity: 1; border-top: 1px s=
+olid #ced4da; border-left-width: 0px; border-bottom-width: 0px; border-right-=
+width: 0px; background-color: transparent; color: #111827;" width=3D"100%"/>
+        </div>
+    <table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=3D"100%" al=
+ign=3D"center" role=3D"presentation" class=3D"s_footer_social o_mail_block_fo=
+oter_social o_mail_footer_social_left o_mail_snippet_general pt16" data-name=
+=3D"Footer Center" style=3D"margin: 0px auto; font-family: Arial, &#39;Helvet=
+ica Neue&#39;, Helvetica, sans-serif; box-sizing: border-box; width: 100% !im=
+portant; border-collapse: collapse; text-align: start; font-size: unset; line=
+-height: inherit; color: #111827; font-weight: 400;"><tbody style=3D"vertical=
+-align: top;"><tr><td style=3D"padding: 16px 0px 0px;">
+        <table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" width=3D"100%=
+" align=3D"center" role=3D"presentation" style=3D"margin: 0px auto; font-fami=
+ly: Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif; border-collapse: =
+separate; box-sizing: border-box; max-width: 1320px; width: 100% !important; =
+text-align: start; font-size: unset; line-height: inherit; color: #111827; fo=
+nt-weight: 400;"><tbody style=3D"vertical-align: top;">
+            <tr style=3D"font-family: Arial, &#39;Helvetica Neue&#39;, Helvet=
+ica, sans-serif; box-sizing: border-box; margin-left: 0px; margin-right: 0px;=
+ margin-top: 0px;"><td style=3D"padding: 0px;"><table cellspacing=3D"0" cellp=
+adding=3D"0" border=3D"0" width=3D"100%" align=3D"center" role=3D"presentatio=
+n" style=3D"width: 100% !important; border-collapse: collapse; text-align: st=
+art; font-size: unset; line-height: inherit; height: 100%; color: #111827; fo=
+nt-family: Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif; font-weigh=
+t: 400;"><tbody style=3D"vertical-align: top;"><tr><td style=3D"padding: 0px;=
+"><!--[if mso]>
+                    <table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" r=
+ole=3D"presentation" style=3D"width: 100%;">
+                        <tr>
+                            <td valign=3D"top" style=3D"width: 360px;"><![end=
+if]--><div class=3D"o_stacking_wrapper" style=3D"display: inline-block; verti=
+cal-align: top;"><table cellspacing=3D"0" cellpadding=3D"0" border=3D"0" widt=
+h=3D"100%" align=3D"center" role=3D"presentation" class=3D"o_stacking_wrapper=
+" style=3D"width: 360px; border-collapse: collapse; text-align: start; font-s=
+ize: unset; line-height: inherit; color: #111827; font-family: Arial, &#39;He=
+lvetica Neue&#39;, Helvetica, sans-serif; font-weight: 400;"><tbody style=3D"=
+vertical-align: top;"><tr><!--[if mso]><td colspan=3D"6" class=3D"o_mail_foot=
+er_description o_converted_col" width=3D"360" style=3D"font-family: Arial, &q=
+uot;Helvetica Neue&quot;, Helvetica, sans-serif; box-sizing: border-box; marg=
+in-top: 0px; padding: 0px 15px; width: 100%;width: 360px;"><![endif]--><!--[i=
+f !mso]><!--><td colspan=3D"6" class=3D"o_mail_footer_description" style=3D"f=
+ont-family: Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif; box-sizin=
+g: border-box; margin-top: 0px; padding: 0px 15px; max-width: 360px; width: 1=
+00%;"><!--<![endif]-->
+                    <p style=3D"margin:0px 0 16px 0;color:#111827;font-family=
+:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border-box=
+;">
+                        <strong style=3D"color:#111827;font-family:Arial, &#3=
+9;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;font-weigh=
+t:bolder;">Odoo HK Limited</strong>
+                    </p>
+                    <div class=3D"o_mail_footer_links" style=3D"font-family:A=
+rial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;">
+                        <a role=3D"button" href=3D"https://www.odoo.com/maili=
+ng/14177/unsubscribe?res_id=3D8857005&email=3Dsn.renauld%40gmail.com&token=3D=
+bd9c4e723229c083ec64a18a238c235c744e6bed129c65a3405d59167e8cefc7d0b9a72693e4a=
+73102736f0a554743f58d43e111947d9b805e5c680e2f380f38" class=3D"btn btn-link" s=
+tyle=3D"text-decoration:none;border-radius:3.5px;border-style:none;padding:0p=
+x;font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif;box-sizi=
+ng:border-box;transition-property:color, background-color, border-color, box-=
+shadow;transition-delay:0s, 0s, 0s, 0s;transition-timing-function:ease-in-out=
+, ease-in-out, ease-in-out, ease-in-out;transition-duration:0.15s, 0.15s, 0.1=
+5s, 0.15s;transition-behavior:normal, normal, normal, normal;font-size:14px;b=
+ackground-color:transparent;user-select:auto;vertical-align:middle;text-align=
+:center;line-height:1.5;font-weight:bolder;display:inline-block;cursor:pointe=
+r;color:#017e84;">Unsubscribe</a>
+         | <a role=3D"button" href=3D"https://www.odoo.com/r/d1x/m/127658409"=
+ class=3D"btn btn-link" style=3D"text-decoration:none;border-radius:3.5px;bor=
+der-style:none;padding:0px;font-family:Arial, &#39;Helvetica Neue&#39;, Helve=
+tica, sans-serif;box-sizing:border-box;transition-property:color, background-=
+color, border-color, box-shadow;transition-delay:0s, 0s, 0s, 0s;transition-ti=
+ming-function:ease-in-out, ease-in-out, ease-in-out, ease-in-out;transition-d=
+uration:0.15s, 0.15s, 0.15s, 0.15s;transition-behavior:normal, normal, normal=
+, normal;font-size:14px;background-color:transparent;user-select:auto;vertica=
+l-align:middle;text-align:center;line-height:1.5;font-weight:bolder;display:i=
+nline-block;cursor:pointer;color:#017e84;">Contact</a>
+                    </div>
+                </td></tr></tbody></table></div><!--[if mso]></td><td valign=
+=3D"top" style=3D"width: 360px;"><![endif]--><div class=3D"o_stacking_wrapper=
+" style=3D"display: inline-block; vertical-align: top;"><table cellspacing=3D=
+"0" cellpadding=3D"0" border=3D"0" width=3D"100%" align=3D"center" role=3D"pr=
+esentation" class=3D"o_stacking_wrapper" style=3D"width: 360px; border-collap=
+se: collapse; text-align: start; font-size: unset; line-height: inherit; colo=
+r: #111827; font-family: Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-ser=
+if; font-weight: 400;"><tbody style=3D"vertical-align: top;"><tr><!--[if mso]=
+><td colspan=3D"6" align=3D"right" class=3D"o_converted_col" width=3D"360" st=
+yle=3D"font-family: Arial, &quot;Helvetica Neue&quot;, Helvetica, sans-serif;=
+ box-sizing: border-box; margin-top: 0px; padding: 0px 15px; width: 100%;widt=
+h: 360px;"><![endif]--><!--[if !mso]><!--><td colspan=3D"6" align=3D"right" s=
+tyle=3D"font-family: Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-serif; =
+box-sizing: border-box; margin-top: 0px; padding: 0px 15px; max-width: 360px;=
+ width: 100%;" class=3D""><!--<![endif]-->
+                    <div class=3D"o_mail_footer_social pb16" style=3D"padding=
+:0 0 16px 0;font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans-seri=
+f;box-sizing:border-box;">
+
+    <a aria-label=3D"Facebook" href=3D"https://www.odoo.com/r/076/m/127658409=
+" data-bs-original-title=3D"Facebook" style=3D"text-decoration:none;border-st=
+yle:none;padding:0 0px 0 0px;font-weight:bolder;font-family:Arial, &#39;Helve=
+tica Neue&#39;, Helvetica, sans-serif;box-sizing:border-box;color:#017e84;">
+        <span style=3D"font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica=
+, sans-serif;box-sizing:border-box;display: inline-block; width: 8px; height:=
+ 14px; vertical-align: text-bottom;" class=3D"oe_unbreakable " width=3D"8"><i=
+mg width=3D"8" height=3D"14" src=3D"https://www.odoo.com/web_editor/font_to_i=
+mg/61594/rgb(1%2C126%2C132)/rgb(255%2C255%2C255)/8x14" data-class=3D"fa fa-fa=
+cebook" data-style=3D"null" style=3D"box-sizing: border-box; line-height: 14p=
+x; width: 8px; height: 14px; vertical-align: unset; margin: 0px;"/></span>
+    </a>=C2=A0=C2=A0
+    <a style=3D"text-decoration:none;border-style:none;padding:0 0px 0 0px;fo=
+nt-weight:bolder;font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans=
+-serif;box-sizing:border-box;color:#017e84;margin-left:10px" aria-label=3D"Li=
+nkedIn" title=3D"LinkedIn" href=3D"https://www.odoo.com/r/RQKz/m/127658409">
+        <span style=3D"font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica=
+, sans-serif;box-sizing:border-box;display: inline-block; width: 12px; height=
+: 14px; vertical-align: text-bottom;" class=3D"oe_unbreakable " width=3D"12">=
+<img width=3D"12" height=3D"14" src=3D"https://www.odoo.com/web_editor/font_t=
+o_img/61665/rgb(1%2C126%2C132)/rgb(255%2C255%2C255)/12x14" data-class=3D"fa f=
+a-linkedin" data-style=3D"null" style=3D"box-sizing: border-box; line-height:=
+ 14px; width: 12px; height: 14px; vertical-align: unset; margin: 0px;"/></spa=
+n>
+    </a>=C2=A0=C2=A0
+    <a style=3D"text-decoration:none;border-style:none;padding:0 0px 0 0px;fo=
+nt-weight:bolder;font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans=
+-serif;box-sizing:border-box;color:#017e84;margin-left:10px" aria-label=3D"Tw=
+itter" href=3D"https://www.odoo.com/r/Vo9/m/127658409" data-bs-original-title=
+=3D"Twitter">
+        <span style=3D"font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica=
+, sans-serif;box-sizing:border-box;display: inline-block; width: 13px; height=
+: 14px; vertical-align: text-bottom;" class=3D"oe_unbreakable " width=3D"13">=
+<img width=3D"13" height=3D"14" src=3D"https://www.odoo.com/web_editor/font_t=
+o_img/61593/rgb(1%2C126%2C132)/rgb(255%2C255%2C255)/13x14" data-class=3D"fa f=
+a-twitter" data-style=3D"null" style=3D"box-sizing: border-box; line-height: =
+14px; width: 13px; height: 14px; vertical-align: unset; margin: 0px;"/></span>
+    </a>=C2=A0=C2=A0
+    <a style=3D"text-decoration:none;border-style:none;padding:0 0px 0 0px;fo=
+nt-weight:bolder;font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans=
+-serif;box-sizing:border-box;color:#017e84;margin-left:10px" aria-label=3D"In=
+stagram" data-bs-original-title=3D"Instagram" href=3D"https://www.odoo.com/r/=
+TJM/m/127658409">
+        <span style=3D"font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica=
+, sans-serif;box-sizing:border-box;display: inline-block; width: 12px; height=
+: 14px; vertical-align: text-bottom;" class=3D"oe_unbreakable " width=3D"12">=
+<img width=3D"12" height=3D"14" src=3D"https://www.odoo.com/web_editor/font_t=
+o_img/61805/rgb(1%2C126%2C132)/rgb(255%2C255%2C255)/12x14" data-class=3D"fa f=
+a-instagram" data-style=3D"null" style=3D"box-sizing: border-box; line-height=
+: 14px; width: 12px; height: 14px; vertical-align: unset; margin: 0px;"/></sp=
+an>
+    </a>=C2=A0=C2=A0
+    <a style=3D"text-decoration:none;border-style:none;padding:0 0px 0 0px;fo=
+nt-weight:bolder;font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, sans=
+-serif;box-sizing:border-box;color:#017e84;margin-left:10px" aria-label=3D"Ti=
+kTok" data-bs-original-title=3D"TikTok" href=3D"https://www.odoo.com/r/Q1V/m/=
+127658409">
+        <span style=3D"font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica=
+, sans-serif;box-sizing:border-box;display: inline-block; width: 12.25px; hei=
+ght: 14px; vertical-align: text-bottom;" class=3D"oe_unbreakable " width=3D"1=
+2.25"><img width=3D"12.25" height=3D"14" src=3D"https://www.odoo.com/web_edit=
+or/font_to_img/57467/rgb(1%2C126%2C132)/rgb(255%2C255%2C255)/12x14" data-clas=
+s=3D"fa fa-tiktok" data-style=3D"null" style=3D"box-sizing: border-box; line-=
+height: 14px; width: 12.25px; height: 14px; vertical-align: unset; margin: 0p=
+x;"/></span>
+    </a></div>
+                    <p class=3D"o_mail_footer_copy" style=3D"margin:0px 0 16p=
+x 0;color:#111827;font-family:Arial, &#39;Helvetica Neue&#39;, Helvetica, san=
+s-serif;box-sizing:border-box;">=C2=A9 2023 All Rights Reserved</p>
+                </td></tr></tbody></table></div><!--[if mso]></td></tr></tabl=
+e><![endif]--></td></tr></tbody></table></td></tr>
+        </tbody></table>
+    </td></tr></tbody></table></td></tr></tbody></table></div><!--[if mso]></=
+td></tr></table><![endif]--></td></tr></tbody></table></td></tr></tbody></tab=
+le></td></tr></tbody></table>
+           =20
+<img src=3D"https://www.odoo.com/mail/track/207783281/defa099c083cac2ffb04090=
+cf02e1edc32d77523dc62d09c26f4afd40d607ce2/blank.gif"/>
+</body>
+        </html>
+
+--===============4792070594089972046==--
+

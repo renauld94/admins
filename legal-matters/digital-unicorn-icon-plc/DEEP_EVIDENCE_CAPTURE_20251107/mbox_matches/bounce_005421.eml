@@ -1,0 +1,910 @@
+X-GM-THRID: 1815486140748320860
+X-Gmail-Labels: Archived,Important,Opened,Category Updates
+Delivered-To: sn.renauld@gmail.com
+Received: by 2002:a17:906:3ca:b0:a99:fa1a:fecf with SMTP id c10csp6888354eja;
+        Mon, 11 Nov 2024 19:35:04 -0800 (PST)
+X-Google-Smtp-Source: 
+ AGHT+IGt8fn9DFm73PoVcuCsjWDXAzsR7kKWbwaTXMZzLjwMuXKhnrPivZlGc7nFLZk03/lsyz4D
+X-Received: by 2002:ac8:5f06:0:b0:45d:6daa:8aaf with SMTP id
+ d75a77b69052e-4634022f9a8mr12651861cf.29.1731382504162;
+        Mon, 11 Nov 2024 19:35:04 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1731382504; cv=none;
+        d=google.com; s=arc-20240605;
+        b=iKpBuCMQtdc7+yKt1PjuScRUrSSatNGtVUUzVroA3BTULossAAhGaIN7CotOcGZgGJ
+         5fzdp8n2xfFv9kWvdZ5sg9REieUa2VQHINwNwvy5khMN4Xc0+FZuc/pnk9UrhvcdCpGQ
+         cGPauiXfqBtqvaNmuQ/wA27N6DNMQTMiWW+scgVSDa9fZCWbNMom1ec3WEpmgcFH8+kl
+         HjciN06ImBLkwBPNo06RxjRA9qQr4hBpIN9Je1JxZf9x5Yy16fzUN7Jip+xRHBP13VOM
+         nkvonN2sLN2K2PjjKawnKgpsOhQNL0GsKn2XQA4iiu/CFlDI0pST+v3+Fb5x1Ur2COj4
+         ZXKA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605;
+        h=list-unsubscribe-post:list-unsubscribe:to:subject:message-id
+         :mime-version:from:date:dkim-signature:dkim-signature;
+        bh=6oZwtM4HslH2zTqukQqhL1VqYBirrz1GkG9PwimrzoQ=;
+        fh=UdbUcDkJKvqffcPeSfMTJ3BaP9WLNp68ZQroZAlxuH8=;
+        b=Jkq+nzlPgVqQIBKmRRi3oZMCk/XwE8fbwwlYVph/56qSTmL03ok1fzUaka9jBjog1/
+         yTE9HcaPZawYtNwDH3SCy+UAj2XgXiaLFcp3vD9NjLH96zOxDmvjqc/hNFWsddYxzhn4
+         EWWye/kINlkL5GQb5Ybrsj/bv7vHdhgCtbjePWXhftxd/TGvezrMvoc9xWKw9Lhnaq2H
+         AUB72Tt7y84U2N/C7DALdpJ7Kq33VMYo+9fwX4ucFq+bFK92bU1/JiFYJ3UMN4g22Btu
+         6tsmWAMVE0pH+cIvt8yGShRIteBctyK1CdNG3+FZXvT/tIn4CMZCMNeZH0Ai88x3PaVy
+         KF+w==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@parsec.app header.s=s1 header.b="E+DO/ZNA";
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=y1u+uwg4;
+       spf=pass (google.com: domain of
+ bounces+14843938-3ea2-sn.renauld=gmail.com@em3104.parsec.app designates
+ 198.21.4.229 as permitted sender)
+ smtp.mailfrom="bounces+14843938-3ea2-sn.renauld=gmail.com@em3104.parsec.app";
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=parsec.app
+Return-Path: <bounces+14843938-3ea2-sn.renauld=gmail.com@em3104.parsec.app>
+Received: from o3.ptr7465.parsec.app (o3.ptr7465.parsec.app. [198.21.4.229])
+        by mx.google.com with ESMTPS id
+ d75a77b69052e-462ff6258cbsi119162541cf.452.2024.11.11.19.35.03
+        for <sn.renauld@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Nov 2024 19:35:04 -0800 (PST)
+Received-SPF: pass (google.com: domain of
+ bounces+14843938-3ea2-sn.renauld=gmail.com@em3104.parsec.app designates
+ 198.21.4.229 as permitted sender) client-ip=198.21.4.229;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@parsec.app header.s=s1 header.b="E+DO/ZNA";
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=y1u+uwg4;
+       spf=pass (google.com: domain of
+ bounces+14843938-3ea2-sn.renauld=gmail.com@em3104.parsec.app designates
+ 198.21.4.229 as permitted sender)
+ smtp.mailfrom="bounces+14843938-3ea2-sn.renauld=gmail.com@em3104.parsec.app";
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=parsec.app
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=parsec.app;
+	h=content-type:from:mime-version:subject:x-feedback-id:to:
+	list-unsubscribe:list-unsubscribe-post:cc:content-type:from:subject:to;
+	s=s1; bh=6oZwtM4HslH2zTqukQqhL1VqYBirrz1GkG9PwimrzoQ=;
+	b=E+DO/ZNAoTAxuH3quNgnUlR0yoCCniAiRq7BUvWUkKiQteoRo4VAN+U/3LFo05prTUpK
+	XqvQOtybKS3vSGjDg0Skr++k4oUwZy8Kqk48xpXoH8fE4Pi3lqEWNM9+gHs4aNFacXyDV3
+	d6YpHgS5HdUsVBjK8dNWOBsYg5CPUhzw9ZLDNOq5msHX6PwDvDeXX2nn2gT3mPO/co/4Fl
+	L4JFMStdeA1FT9UXzWWyJtgtX33pTIWb+sKISWsSJ0mj2Fyharo9nqHuJNH7IPGEn+4gVE
+	lpfsha0BSXGy9tTF7qVHq24Il9e7NucZl5ZHaKRNqwrMEYA9k80XItktuzUmbg4A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendgrid.info;
+	h=content-type:from:mime-version:subject:x-feedback-id:to:
+	list-unsubscribe:list-unsubscribe-post:cc:content-type:from:subject:to;
+	s=smtpapi; bh=6oZwtM4HslH2zTqukQqhL1VqYBirrz1GkG9PwimrzoQ=;
+	b=y1u+uwg4VTf5Fa4ZlXe3IuHSiC8yf7Z2AdmvQis9zFK+AObIZOeMuzDw0024skMPfSYK
+	3L15zo8zToWpoyZBg3HU10R9OhlWd0gqGrONUbS0vuKDMKMn2WQVPNe5U0/6wrqSwE/r+g
+	u+uMMNU0iPSj9Hw5NYiqnXJMslmbPOqbU=
+Received: by recvd-55569ddc85-9qb6k with SMTP id
+ recvd-55569ddc85-9qb6k-1-6732CCE6-5
+	2024-11-12 03:35:02.331752129 +0000 UTC m=+4794312.223045661
+Received: from MTQ4NDM5Mzg (unknown)
+	by geopod-ismtpd-22 (SG) with HTTP
+	id ORJCrDpfQRqlxq9ivrBxWw
+	Tue, 12 Nov 2024 03:35:02.328 +0000 (UTC)
+Content-Type: multipart/alternative;
+ boundary=497ea959e9142f779bfbd16de6a3d65d6b768c2cdd157c25301adcd29a68
+Date: Tue, 12 Nov 2024 03:35:02 +0000 (UTC)
+From: Parsec Team <hello@parsec.app>
+Mime-Version: 1.0
+Message-ID: <ORJCrDpfQRqlxq9ivrBxWw@geopod-ismtpd-22>
+Subject: You're all set! Get started with Parsec.
+X-Entity-Ref-ID: WNCXVWCMT7PG
+X-Feedback-ID: 14843938:SG
+X-SG-EID: 
+ =?us-ascii?Q?u001=2EYO3RPSGtwMIQzMLS1Ei=2FuOAzMLjxuWczP4PY45LNq8IDcrY5Jpa47Ldqx?=
+ =?us-ascii?Q?GExxqKOH4FO5eWrFRmqo6BdOlNWWU3m32SLNRfu?=
+ =?us-ascii?Q?mC0sKLcRFaqbao5iv6IKTlilMpgxOvn1BpUKm1n?=
+ =?us-ascii?Q?+o6rPcSWMP58kJOjIKfUYx7mq7eFNNfhRYggPmE?=
+ =?us-ascii?Q?SP7BV=2FRmOZxi35CjSvPGkRwqP8aLNBD3Du6M9EW?=
+ =?us-ascii?Q?GsrKe2xfHajjbpedkE10ZM=3D?=
+X-SG-ID: 
+ =?us-ascii?Q?u001=2ESdBcvi+Evd=2FbQef8eZF3BpTL9BgbK5wfSJMJGMsmprDsPyUTnMagHRCjb?=
+ =?us-ascii?Q?=2F65GublpnLmzrjgcT1jn2CC9xtCTowk1krzEpYK?=
+ =?us-ascii?Q?ImbWP+eadjGG2yUMpSyeKVs87lxIt+DqbEy204=2F?=
+ =?us-ascii?Q?=2FXVK2ASAMJqBz61QoDJEyO0N7fDgBwFDepWB90p?=
+ =?us-ascii?Q?HKclpZ3XM4ziVI6cpl?=
+To: sn.renauld@gmail.com
+X-Entity-ID: u001.7QtmJWLZ5pVdYTa3H5SSPw==
+List-Unsubscribe: 
+ =?us-ascii?Q?=3Cmailto=3Aunsubscribe=40em3104=2Eparsec=2Eapp=3Fsubject=3D14843938=2EK4RLaHu?=
+ =?us-ascii?Q?bE-uHqF=5F0HYi24OvP0zl23-DjV8WchqU4zRRoMD?=
+ =?us-ascii?Q?AwdTAwMFl90UEW-cgrTfPeDzuI9OQCAalTbWKtB?=
+ =?us-ascii?Q?4ZJLt9vQwlGFPK43we0X66wP-FAjYF5KpZcDzV4?=
+ =?us-ascii?Q?josfKT2hFHz1C-RZa2Pt1EojgxdU2qzbkY8b--r?=
+ =?us-ascii?Q?KKMt7vNrtF9O7PiLWxA=3D=3D=2EWpj5i3gz6ZxUTDEn=5F?=
+ =?us-ascii?Q?NC86HkFUn485KE6JdJ4kxsowspoMDAwdTAwMLz0?=
+ =?us-ascii?Q?PmaHqBHx4=5FxMB=5FsxnCodTauNEzZ3ByFnTJ=5FuZnr?=
+ =?us-ascii?Q?n1p4Pv8pvswbg2xwoeZkac4FDSTQLSX=5FrzsE6fI?=
+ =?us-ascii?Q?10FxisfEk364R1Eg-aWbhvqQihV6y9QPi5HAYRI?=
+ =?us-ascii?Q?29XbW66UnhiW4mvVixcsMjIBRvJ1-X6jFTb7bq0?=
+ =?us-ascii?Q?cTmvG1NvefG6l5silvFNrd7bru2zIW7cbgt5ggA?=
+ =?us-ascii?Q?wFk0blLaV5Np7qICOKF9d73TaLls11IZ5MXf1z9?=
+ =?us-ascii?Q?oKZ9vnBZ6nVmFBniNgXWUZFZceyHR-sNaFBceQ9?=
+ =?us-ascii?Q?eKmqxnAr-EYnAWz=5FG=5FkrJXm=3E=2C=3Chttps=3A=2F=2Furl24?=
+ =?us-ascii?Q?15=2Eparsec=2Eapp=2Flu=2Funsubscribe=3Foc=3Du001=2El1?=
+ =?us-ascii?Q?HcXP0Dt55G3vf7Wbpor6TdzWPDCIyay36fuZ8uJ?=
+ =?us-ascii?Q?YI=5F2ZWT731V3lmfubdkPZrudqWM1N1Cfx40Ga7m?=
+ =?us-ascii?Q?9ifHRVFdiSFkb7iDzUuEV7c2IzzEIl9VeWsmmxW?=
+ =?us-ascii?Q?IV5MwLqKsbs1ySn7d9vvcF-OeBM1YsHZJeUxn7A?=
+ =?us-ascii?Q?EXm-YB4bHYzXzoFnEu9FdhhtlljMzVb9R2=5FYPgk?=
+ =?us-ascii?Q?PT7ibkzIYkjAdb7Qjr9H2NrCuFgZtDNZ8gX7ttM?=
+ =?us-ascii?Q?u2LkIFCYlrCCLk2y-njaqnFLZFZLLCFPWUyRIYu?=
+ =?us-ascii?Q?Ao-5iuaCTyvLwFhCOgueIhEzSHCUX3SoDXBKLdC?=
+ =?us-ascii?Q?MVzIp1RJi0JP0UdT9UlIAGUoApB4MEzEnsQCbmk?=
+ =?us-ascii?Q?dXvkbhsyYdi0lu3rdH5aZFfUkMFSGWG0G3kn9rj?=
+ =?us-ascii?Q?hdbtTJe52Yoko7LTztUvBoqgtv64dBh40roY1Pd?=
+ =?us-ascii?Q?LLilpPqbS6lFf5bKAjfmuJHJivRa62OCW6Z=5FwHR?=
+ =?us-ascii?Q?5hVXia8tgsAP37v3hbYyVXW6bbP1WhYbpcKumj6?=
+ =?us-ascii?Q?1Czt6dPVTKY81urigjD6XRxcycwXnC0B3quKkzS?=
+ =?us-ascii?Q?RbLeSn9arTZGFsPoiKAHHMZnOw8DRGq5zEYzhxJ?=
+ =?us-ascii?Q?EEm6p6-Yn6GdNAGJrIuK0PZJm0gNmk4fni1cllu?=
+ =?us-ascii?Q?SSO5bd-sTHXPQxmbInp-MZ2WUi0q60Xsib1sxEd?=
+ =?us-ascii?Q?ZqWfPn-dhGD9qwMVFO5hBODCOH1QqyPzDgDA5Si?=
+ =?us-ascii?Q?D2mjEvJuKbViNSSQDs1bh99bkQUXLijLjP6b=5FSQ?=
+ =?us-ascii?Q?Hrl2jgKVUPNeSwD81YgFIHmYA8iVXxrFYWaHlZS?=
+ =?us-ascii?Q?j1Qp9ORciOYOkSSQ--GcZGw8SRIYwdRvw7mLgm6?=
+ =?us-ascii?Q?hKT0QksKgQ8=3E?=
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+
+--497ea959e9142f779bfbd16de6a3d65d6b768c2cdd157c25301adcd29a68
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0
+
+Some helpful links to help you get started are right inside
+
+****************
+Start connecting
+****************
+
+You're all set! Thanks for confirming your email. Parsec is great for work,=
+ playing games solo, connecting with friends, and anything in between.
+
+Ready to start? Here are helpful links to get going right now.
+
+( https://support.parsec.app/hc/en-us/articles/4422936497165?welcomeemail )
+
+( https://parsec.app/local-co-op-online?welcomeemail )
+
+( https://blog.parsec.app/parsec-for-art-animation-design?welcomeemail )
+
+( https://parsec.app/teams?welcomeemail )
+
+Glad you're here,
+The Parsec Team
+
+Parsec ( https://parsec.app ) | Privacy Policy ( https://parsec.app/privacy=
+ ) | Support ( https://support.parsec.app ) | Unsubscribe ( https://url2415=
+.parsec.app/asm/unsubscribe/?user_id=3D14843938&data=3DIAttljPbgbg7navOJ2kH=
+ddXjqi3ErJoYmv9ZdyqYsBFoMDAwdTAwMMPkXE5SeqqZ6Qw5yPAh6W5ibyTr245_Y9iyxk-uGFx=
+-WUr2NhOuVVNlDwnZQyrIl72IUs-0gt1wemJ0697-uet53v3f8Wc46bS9wbm0a3o0pM_P6nSYcZ=
+NhrdvjdpIp4WA2rXq1iI_rh1p8XKI-SI92GinjVUP-ejOrtE7GrF7KOUjmNlcQRm7eoyQ6W0FLg=
+wB2lX_SgdfEf7Bq2sQ-zixCAib3UAu7YCFNbVGBFzMp1N1JTMyGQwfzCwMoz1eOehQBCwDgcuWV=
+BHrS1rV9zqczmhPh_HC48G8qguvRIrVZ-PGaWHrFHnuzfbWQfdAwzgRm1DZ3w106N-CbKUyjpyw=
+pyWe4pMyNiGd1L7iHiQVsorQQTbHZdvKoW8A5zBYauYrSlEBbLd3hdhmboz4oIRCEyyV4qJgunV=
+zRMoUpLo6ULGyAWAC2JFud0FSlHIwIRjBXNOnYC8hHhxfI3rcriWg=3D )
+=E2=80=A2
+Unity Technologies, 30 3rd Street, San Francisco, CA 94103, United States
+=C2=A9 2022 Parsec Cloud, Inc.
+--497ea959e9142f779bfbd16de6a3d65d6b768c2cdd157c25301adcd29a68
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=utf-8
+Mime-Version: 1.0
+
+<!doctype html>
+<html xmlns=3D"http://www.w3.org/1999/xhtml" xmlns:v=3D"urn:schemas-microso=
+ft-com:vml" xmlns:o=3D"urn:schemas-microsoft-com:office:office">
+
+<head>
+  <title> You're all set </title>
+  <!--[if !mso]><!-->
+  <meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge">
+  <!--<![endif]-->
+  <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF-8">
+  <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D=
+1">
+  <style type=3D"text/css">
+    #outlook a {
+      padding: 0;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+
+    table,
+    td {
+      border-collapse: collapse;
+      mso-table-lspace: 0pt;
+      mso-table-rspace: 0pt;
+    }
+
+    img {
+      border: 0;
+      height: auto;
+      line-height: 100%;
+      outline: none;
+      text-decoration: none;
+      -ms-interpolation-mode: bicubic;
+    }
+
+    p {
+      display: block;
+      margin: 13px 0;
+    }
+
+  </style>
+  <!--[if mso]>
+    <noscript>
+    <xml>
+    <o:OfficeDocumentSettings>
+      <o:AllowPNG/>
+      <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+    </xml>
+    </noscript>
+    <![endif]-->
+  <!--[if lte mso 11]>
+    <style type=3D"text/css">
+      .mj-outlook-group-fix { width:100% !important; }
+    </style>
+    <![endif]-->
+  <style type=3D"text/css">
+    @media only screen and (min-width:480px) {
+      .mj-column-per-100 {
+        width: 100% !important;
+        max-width: 100%;
+      }
+
+      .mj-column-per-50 {
+        width: 50% !important;
+        max-width: 50%;
+      }
+    }
+
+  </style>
+  <style media=3D"screen and (min-width:480px)">
+    .moz-text-html .mj-column-per-100 {
+      width: 100% !important;
+      max-width: 100%;
+    }
+
+    .moz-text-html .mj-column-per-50 {
+      width: 50% !important;
+      max-width: 50%;
+    }
+
+  </style>
+  <style type=3D"text/css">
+    @media only screen and (max-width:480px) {
+      table.mj-full-width-mobile {
+        width: 100% !important;
+      }
+
+      td.mj-full-width-mobile {
+        width: auto !important;
+      }
+    }
+
+  </style>
+  <style type=3D"text/css">
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    [data-ogsc] body {
+      background-color: #101010 !important;
+      color: #f9fafc !important;
+    }
+
+    h1 {
+      font-family: "Rubik", Helvetica, Arial, sans-serif;
+      font-size: 48px;
+      line-height: 60px;
+      margin: 0;
+      padding-bottom: 16px;
+    }
+
+    h2 {
+      font-family: "Rubik", Helvetica, Arial, sans-serif;
+      font-size: 20px;
+      line-height: 36px;
+      margin: 0;
+    }
+
+    a {
+      color: #25abff;
+      text-decoration: none;
+    }
+
+    p {
+      margin: 0;
+      padding-bottom: 24px;
+    }
+
+    li {
+      font-family: "Rubik", Helvetica, Arial, sans-serif;
+      font-weight: bold;
+    }
+
+    .list-item {
+      font-family: "Source Sans Pro", Helvetica, Arial, sans-serif;
+      font-weight: normal;
+    }
+
+    @media (min-width: 600px) {
+      .content-section {
+        padding-left: 40px;
+        padding-right: 40px;
+      }
+    }
+
+    .footer-link {
+      font-weight: bold;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .footer-link:hover {
+      color: inherit;
+    }
+
+  </style>
+  <!--[if !mso]> -->
+  <style type=3D"text/css">
+    @font-face {
+      font-family: "Source Sans Pro";
+      font-style: normal;
+      font-weight: 400;
+      src: url("https://public.parsec.app/emails/sourcesanspro_regular-23a9=
+77fc083643da7c382ef083b42708.woff2") format("woff2"),
+        url("https://public.parsec.app/emails/sourcesanspro_regular-1dc26bf=
+16de832385d065a31aee0d5b1.woff") format("woff");
+    }
+
+    @font-face {
+      font-family: "Source Sans Pro";
+      font-style: normal;
+      font-weight: 700;
+      src: url("https://public.parsec.app/emails/sourcesanspro_bold-5d70a7d=
+b9f6e1b6961e338141faefc0f.woff2") format("woff2"),
+        url("https://public.parsec.app/emails/sourcesanspro_bold-ab83dd918e=
+f37e7fa860eb65303d98ff.woff") format("woff");
+    }
+
+    @font-face {
+      font-family: "Rubik";
+      font-style: normal;
+      font-weight: 700;
+      src: url("https://public.parsec.app/emails/rubik_bold-9156b4906b6eead=
+34e1bf678712492ea.woff2") format("woff2"),
+        url("https://public.parsec.app/emails/rubik_bold-455c909a7c3f740890=
+154861b42ced39.woff") format("woff");
+    }
+
+  </style>
+  <!--<![endif]-->
+  <!--[if mso]>
+  <style type=3D"text/css">
+    body {
+      font-family: Helvetica, Arial, sans-serif !important;
+    }
+  </style>
+  <![endif] -->
+</head>
+
+<body style=3D"word-spacing:normal;background-color:#101010;">
+  <div style=3D"display:none;font-size:1px;color:#ffffff;line-height:1px;ma=
+x-height:0px;max-width:0px;opacity:0;overflow:hidden;"> Some helpful links =
+to help you get started are right inside </div>
+  <div style=3D"background-color:#101010;">
+    <!--[if mso | IE]><table align=3D"center" border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0" class=3D"" role=3D"presentation" style=3D"width:600px;"=
+ width=3D"600" ><tr><td style=3D"line-height:0px;font-size:0px;mso-line-hei=
+ght-rule:exactly;"><![endif]-->
+    <div style=3D"margin:0px auto;max-width:600px;">
+      <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D=
+"0" role=3D"presentation" style=3D"width:100%;">
+        <tbody>
+          <tr>
+            <td style=3D"direction:ltr;font-size:0px;padding:20px 0;text-al=
+ign:center;">
+              <!--[if mso | IE]><table role=3D"presentation" border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"vertical-ali=
+gn:top;width:600px;" ><![endif]-->
+              <div class=3D"mj-column-per-100 mj-outlook-group-fix" style=
+=3D"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertic=
+al-align:top;width:100%;">
+                <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" rol=
+e=3D"presentation" style=3D"vertical-align:top;" width=3D"100%">
+                  <tbody>
+                    <tr>
+                      <td align=3D"left" style=3D"font-size:0px;padding:10p=
+x 25px;word-break:break-word;">
+                        <table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" style=3D"border-collapse:collapse;border-spaci=
+ng:0px;">
+                          <tbody>
+                            <tr>
+                              <td style=3D"width:92px;">
+                                <img alt=3D"Parsec" height=3D"auto" src=3D"=
+https://public.parsec.app/emails/logo_white-7b84d8ab744b7f13f411e4827986055=
+b.png" style=3D"border:0;display:block;outline:none;text-decoration:none;he=
+ight:auto;width:100%;font-size:16px;" width=3D"92" />
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--[if mso | IE]></td></tr></table><![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table><![endif]-->
+    <!-- hero -->
+    <!--[if mso | IE]><table align=3D"center" border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0" class=3D"" role=3D"presentation" style=3D"width:600px;"=
+ width=3D"600" ><tr><td style=3D"line-height:0px;font-size:0px;mso-line-hei=
+ght-rule:exactly;"><![endif]-->
+    <div style=3D"margin:0px auto;max-width:600px;">
+      <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D=
+"0" role=3D"presentation" style=3D"width:100%;">
+        <tbody>
+          <tr>
+            <td style=3D"direction:ltr;font-size:0px;padding:20px 0;padding=
+-bottom:0;text-align:center;">
+              <!--[if mso | IE]><table role=3D"presentation" border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"vertical-ali=
+gn:top;width:600px;" ><![endif]-->
+              <div class=3D"mj-column-per-100 mj-outlook-group-fix" style=
+=3D"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertic=
+al-align:top;width:100%;">
+                <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" rol=
+e=3D"presentation" style=3D"vertical-align:top;" width=3D"100%">
+                  <tbody>
+                    <tr>
+                      <td align=3D"center" style=3D"font-size:0px;padding:1=
+0px 25px;word-break:break-word;">
+                        <div style=3D"font-family:'Source Sans Pro', Helvet=
+ica, Arial, sans-serif;font-size:16px;line-height:24px;text-align:center;co=
+lor:#f9fafc;">
+                          <h1>Start connecting</h1>
+                          <p> You're all set! Thanks for confirming your em=
+ail. Parsec is great for work, playing games solo, connecting with friends,=
+ and anything in between. </p>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align=3D"center" style=3D"font-size:0px;padding:0=
+;word-break:break-word;">
+                        <table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" style=3D"border-collapse:collapse;border-spaci=
+ng:0px;">
+                          <tbody>
+                            <tr>
+                              <td style=3D"width:412px;">
+                                <img height=3D"auto" src=3D"https://public.=
+parsec.app/emails/hero_welcome-9a5701c1eea3cc91e8826277ef77b6f7.png" style=
+=3D"border:0;display:block;outline:none;text-decoration:none;height:auto;wi=
+dth:100%;font-size:16px;" width=3D"412" />
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--[if mso | IE]></td></tr></table><![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table><![endif]-->
+    <!-- body -->
+    <!--[if mso | IE]><table align=3D"center" border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0" class=3D"content-wrapper-outlook" role=3D"presentation"=
+ style=3D"width:600px;" width=3D"600" bgcolor=3D"#18181A" ><tr><td style=3D=
+"line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div class=3D"content-wrapper" style=3D"background:#18181A;background-c=
+olor:#18181A;margin:0px auto;border-radius:12px;max-width:600px;">
+      <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D=
+"0" role=3D"presentation" style=3D"background:#18181A;background-color:#181=
+81A;width:100%;border-radius:12px;">
+        <tbody>
+          <tr>
+            <td style=3D"direction:ltr;font-size:0px;padding:54px 0;text-al=
+ign:center;">
+              <!--[if mso | IE]><table role=3D"presentation" border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"content-section-outlook=
+" width=3D"600px" ><table align=3D"center" border=3D"0" cellpadding=3D"0" c=
+ellspacing=3D"0" class=3D"content-section-outlook" role=3D"presentation" st=
+yle=3D"width:600px;" width=3D"600" ><tr><td style=3D"line-height:0px;font-s=
+ize:0px;mso-line-height-rule:exactly;"><![endif]-->
+              <div class=3D"content-section" style=3D"margin:0px auto;max-w=
+idth:600px;">
+                <table align=3D"center" border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" style=3D"width:100%;">
+                  <tbody>
+                    <tr>
+                      <td style=3D"direction:ltr;font-size:0px;padding:0 40=
+px;text-align:center;">
+                        <!--[if mso | IE]><table role=3D"presentation" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"ve=
+rtical-align:top;width:520px;" ><![endif]-->
+                        <div class=3D"mj-column-per-100 mj-outlook-group-fi=
+x" style=3D"font-size:0px;text-align:left;direction:ltr;display:inline-bloc=
+k;vertical-align:top;width:100%;">
+                          <table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" style=3D"vertical-align:top;" width=3D"100%">
+                            <tbody>
+                              <tr>
+                                <td align=3D"left" style=3D"font-size:0px;p=
+adding:0;word-break:break-word;">
+                                  <div style=3D"font-family:'Source Sans Pr=
+o', Helvetica, Arial, sans-serif;font-size:16px;line-height:24px;text-align=
+:left;color:#f9fafc;">
+                                    <p>Ready to start? Here are helpful lin=
+ks to get going right now.</p>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <!--[if mso | IE]></td></tr></table><![endif]-->
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--[if mso | IE]></td></tr></table></td></tr><tr><td class=
+=3D"content-section-outlook" width=3D"600px" ><table align=3D"center" borde=
+r=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"content-section-outloo=
+k" role=3D"presentation" style=3D"width:600px;" width=3D"600" ><tr><td styl=
+e=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]=
+-->
+              <div class=3D"content-section" style=3D"margin:0px auto;max-w=
+idth:600px;">
+                <table align=3D"center" border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" style=3D"width:100%;">
+                  <tbody>
+                    <tr>
+                      <td style=3D"direction:ltr;font-size:0px;padding:0 40=
+px;padding-top:24px;text-align:center;">
+                        <!--[if mso | IE]><table role=3D"presentation" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"ve=
+rtical-align:top;width:260px;" ><![endif]-->
+                        <div class=3D"mj-column-per-50 mj-outlook-group-fix=
+" style=3D"font-size:0px;text-align:left;direction:ltr;display:inline-block=
+;vertical-align:top;width:100%;">
+                          <table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" style=3D"vertical-align:top;" width=3D"100%">
+                            <tbody>
+                              <tr>
+                                <td align=3D"center" style=3D"font-size:0px=
+;padding:0 4px 8px;word-break:break-word;">
+                                  <table border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" role=3D"presentation" style=3D"border-collapse:collapse;bord=
+er-spacing:0px;">
+                                    <tbody>
+                                      <tr>
+                                        <td style=3D"width:252px;">
+                                          <a href=3D"https://support.parsec=
+.app/hc/en-us/articles/4422936497165?welcomeemail" target=3D"_blank">
+                                            <img alt=3D"connecting to your =
+computer" height=3D"auto" src=3D"https://public.parsec.app/emails/user_sign=
+up_confirmation_success_connect-6abfd1e46ac3f3f2b66adddf103fe821.png" style=
+=3D"border:0;display:block;outline:none;text-decoration:none;height:auto;wi=
+dth:100%;font-size:16px;" width=3D"252" />
+                                          </a>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <!--[if mso | IE]></td><td class=3D"" style=3D"vert=
+ical-align:top;width:260px;" ><![endif]-->
+                        <div class=3D"mj-column-per-50 mj-outlook-group-fix=
+" style=3D"font-size:0px;text-align:left;direction:ltr;display:inline-block=
+;vertical-align:top;width:100%;">
+                          <table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" style=3D"vertical-align:top;" width=3D"100%">
+                            <tbody>
+                              <tr>
+                                <td align=3D"center" style=3D"font-size:0px=
+;padding:0 4px 8px;word-break:break-word;">
+                                  <table border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" role=3D"presentation" style=3D"border-collapse:collapse;bord=
+er-spacing:0px;">
+                                    <tbody>
+                                      <tr>
+                                        <td style=3D"width:252px;">
+                                          <a href=3D"https://parsec.app/loc=
+al-co-op-online?welcomeemail" target=3D"_blank">
+                                            <img alt=3D"Multiplayer Gaming"=
+ height=3D"auto" src=3D"https://public.parsec.app/emails/user_signup_confir=
+mation_success_play-08c9fb23f004117111b8d2ca61d86499.png" style=3D"border:0=
+;display:block;outline:none;text-decoration:none;height:auto;width:100%;fon=
+t-size:16px;" width=3D"252" />
+                                          </a>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <!--[if mso | IE]></td></tr></table><![endif]-->
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--[if mso | IE]></td></tr></table></td></tr><tr><td class=
+=3D"content-section-outlook" width=3D"600px" ><table align=3D"center" borde=
+r=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"content-section-outloo=
+k" role=3D"presentation" style=3D"width:600px;" width=3D"600" ><tr><td styl=
+e=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]=
+-->
+              <div class=3D"content-section" style=3D"margin:0px auto;max-w=
+idth:600px;">
+                <table align=3D"center" border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" style=3D"width:100%;">
+                  <tbody>
+                    <tr>
+                      <td style=3D"direction:ltr;font-size:0px;padding:0 40=
+px;text-align:center;">
+                        <!--[if mso | IE]><table role=3D"presentation" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"ve=
+rtical-align:top;width:260px;" ><![endif]-->
+                        <div class=3D"mj-column-per-50 mj-outlook-group-fix=
+" style=3D"font-size:0px;text-align:left;direction:ltr;display:inline-block=
+;vertical-align:top;width:100%;">
+                          <table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" style=3D"vertical-align:top;" width=3D"100%">
+                            <tbody>
+                              <tr>
+                                <td align=3D"center" style=3D"font-size:0px=
+;padding:0 4px 8px;word-break:break-word;">
+                                  <table border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" role=3D"presentation" style=3D"border-collapse:collapse;bord=
+er-spacing:0px;">
+                                    <tbody>
+                                      <tr>
+                                        <td style=3D"width:252px;">
+                                          <a href=3D"https://blog.parsec.ap=
+p/parsec-for-art-animation-design?welcomeemail" target=3D"_blank">
+                                            <img alt=3D"Art animation and d=
+esign" height=3D"auto" src=3D"https://public.parsec.app/emails/user_signup_=
+confirmation_success_configure-82b7ef7c01ec6ada8a6a0704c3e12618.png" style=
+=3D"border:0;display:block;outline:none;text-decoration:none;height:auto;wi=
+dth:100%;font-size:16px;" width=3D"252" />
+                                          </a>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <!--[if mso | IE]></td><td class=3D"" style=3D"vert=
+ical-align:top;width:260px;" ><![endif]-->
+                        <div class=3D"mj-column-per-50 mj-outlook-group-fix=
+" style=3D"font-size:0px;text-align:left;direction:ltr;display:inline-block=
+;vertical-align:top;width:100%;">
+                          <table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" style=3D"vertical-align:top;" width=3D"100%">
+                            <tbody>
+                              <tr>
+                                <td align=3D"center" style=3D"font-size:0px=
+;padding:0 4px 8px;word-break:break-word;">
+                                  <table border=3D"0" cellpadding=3D"0" cel=
+lspacing=3D"0" role=3D"presentation" style=3D"border-collapse:collapse;bord=
+er-spacing:0px;">
+                                    <tbody>
+                                      <tr>
+                                        <td style=3D"width:252px;">
+                                          <a href=3D"https://parsec.app/tea=
+ms?welcomeemail" target=3D"_blank">
+                                            <img alt=3D"Parsec at your comp=
+any" height=3D"auto" src=3D"https://public.parsec.app/emails/user_signup_co=
+nfirmation_success_try-778c2de09d42f31c4c80c9c4e726131d.png" style=3D"borde=
+r:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;=
+font-size:16px;" width=3D"252" />
+                                          </a>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <!--[if mso | IE]></td></tr></table><![endif]-->
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--[if mso | IE]></td></tr></table></td></tr><tr><td class=
+=3D"content-section-outlook" width=3D"600px" ><table align=3D"center" borde=
+r=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"content-section-outloo=
+k" role=3D"presentation" style=3D"width:600px;" width=3D"600" ><tr><td styl=
+e=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]=
+-->
+              <div class=3D"content-section" style=3D"margin:0px auto;max-w=
+idth:600px;">
+                <table align=3D"center" border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" style=3D"width:100%;">
+                  <tbody>
+                    <tr>
+                      <td style=3D"direction:ltr;font-size:0px;padding:0 40=
+px;padding-bottom:24px;text-align:center;">
+                        <!--[if mso | IE]><table role=3D"presentation" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr></tr></table><![endif]-->
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--[if mso | IE]></td></tr></table></td></tr><tr><td class=
+=3D"content-section-outlook" width=3D"600px" ><table align=3D"center" borde=
+r=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"content-section-outloo=
+k" role=3D"presentation" style=3D"width:600px;" width=3D"600" ><tr><td styl=
+e=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]=
+-->
+              <div class=3D"content-section" style=3D"margin:0px auto;max-w=
+idth:600px;">
+                <table align=3D"center" border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" style=3D"width:100%;">
+                  <tbody>
+                    <tr>
+                      <td style=3D"direction:ltr;font-size:0px;padding:0 40=
+px;text-align:center;">
+                        <!--[if mso | IE]><table role=3D"presentation" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"ve=
+rtical-align:top;width:520px;" ><![endif]-->
+                        <div class=3D"mj-column-per-100 mj-outlook-group-fi=
+x" style=3D"font-size:0px;text-align:left;direction:ltr;display:inline-bloc=
+k;vertical-align:top;width:100%;">
+                          <table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" style=3D"vertical-align:top;" width=3D"100%">
+                            <tbody>
+                              <tr>
+                                <td align=3D"left" style=3D"font-size:0px;p=
+adding:0;word-break:break-word;">
+                                  <div style=3D"font-family:'Source Sans Pr=
+o', Helvetica, Arial, sans-serif;font-size:16px;line-height:24px;text-align=
+:left;color:#f9fafc;">
+                                    <p> Glad you're here, <br />The Parsec =
+Team </p>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <!--[if mso | IE]></td></tr></table><![endif]-->
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--[if mso | IE]></td></tr></table></td></tr></table><![endi=
+f]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table><table align=3D"center" border=3D"0=
+" cellpadding=3D"0" cellspacing=3D"0" class=3D"" role=3D"presentation" styl=
+e=3D"width:600px;" width=3D"600" ><tr><td style=3D"line-height:0px;font-siz=
+e:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style=3D"margin:0px auto;max-width:600px;">
+      <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D=
+"0" role=3D"presentation" style=3D"width:100%;">
+        <tbody>
+          <tr>
+            <td style=3D"direction:ltr;font-size:0px;padding:20px 0;text-al=
+ign:center;">
+              <!--[if mso | IE]><table role=3D"presentation" border=3D"0" c=
+ellpadding=3D"0" cellspacing=3D"0"><tr><td class=3D"" style=3D"vertical-ali=
+gn:top;width:600px;" ><![endif]-->
+              <div class=3D"mj-column-per-100 mj-outlook-group-fix" style=
+=3D"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertic=
+al-align:top;width:100%;">
+                <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" rol=
+e=3D"presentation" style=3D"vertical-align:top;" width=3D"100%">
+                  <tbody>
+                    <tr>
+                      <td align=3D"center" style=3D"font-size:0px;padding:0=
+;word-break:break-word;">
+                        <div style=3D"font-family:'Source Sans Pro', Helvet=
+ica, Arial, sans-serif;font-size:12px;line-height:24px;text-align:center;co=
+lor:#f9fafc;"><a class=3D"footer-link" href=3D"https://parsec.app">Parsec</=
+a> | <a class=3D"footer-link" href=3D"https://parsec.app/privacy"> Privacy =
+Policy </a> | <a class=3D"footer-link" href=3D"https://support.parsec.app">=
+Support</a> | <a class=3D"footer-link" href=3D"https://url2415.parsec.app/a=
+sm/unsubscribe/?user_id=3D14843938&amp;data=3DIAttljPbgbg7navOJ2kHddXjqi3Er=
+JoYmv9ZdyqYsBFoMDAwdTAwMMPkXE5SeqqZ6Qw5yPAh6W5ibyTr245_Y9iyxk-uGFx-WUr2NhOu=
+VVNlDwnZQyrIl72IUs-0gt1wemJ0697-uet53v3f8Wc46bS9wbm0a3o0pM_P6nSYcZNhrdvjdpI=
+p4WA2rXq1iI_rh1p8XKI-SI92GinjVUP-ejOrtE7GrF7KOUjmNlcQRm7eoyQ6W0FLgwB2lX_Sgd=
+fEf7Bq2sQ-zixCAib3UAu7YCFNbVGBFzMp1N1JTMyGQwfzCwMoz1eOehQBCwDgcuWVBHrS1rV9z=
+qczmhPh_HC48G8qguvRIrVZ-PGaWHrFHnuzfbWQfdAwzgRm1DZ3w106N-CbKUyjpywpyWe4pMyN=
+iGd1L7iHiQVsorQQTbHZdvKoW8A5zBYauYrSlEBbLd3hdhmboz4oIRCEyyV4qJgunVzRMoUpLo6=
+ULGyAWAC2JFud0FSlHIwIRjBXNOnYC8hHhxfI3rcriWg=3D">Unsubscribe</a></div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align=3D"center" style=3D"font-size:0px;padding:1=
+0px 25px;word-break:break-word;">
+                        <div style=3D"font-family:'Source Sans Pro', Helvet=
+ica, Arial, sans-serif;font-size:12px;line-height:24px;text-align:center;co=
+lor:#f9fafc;">=E2=80=A2</div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align=3D"center" style=3D"font-size:0px;padding:0=
+;word-break:break-word;">
+                        <div style=3D"font-family:'Source Sans Pro', Helvet=
+ica, Arial, sans-serif;font-size:12px;line-height:24px;text-align:center;co=
+lor:#f9fafc;">Unity Technologies, 30 3rd Street, San Francisco, CA 94103, U=
+nited States</div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align=3D"center" style=3D"font-size:0px;padding:0=
+;word-break:break-word;">
+                        <div style=3D"font-family:'Source Sans Pro', Helvet=
+ica, Arial, sans-serif;font-size:12px;line-height:24px;text-align:center;co=
+lor:#f9fafc;">=C2=A9 2022 Parsec Cloud, Inc.</div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!--[if mso | IE]></td></tr></table><![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table><![endif]-->
+  </div>
+<img src=3D"https://url2415.parsec.app/wf/open?upn=3Du001.wJ4wQoWqpttL0LnWj=
+9yCngQD-2BPKOSnIWwGo2A-2BWj6XhA1lehcmIJUsC-2Fyroe7hWxQe3AeMFqrPIDVX8yAWukW4=
+AX1drc-2B3w9j-2FMVx998r-2BgeKyKl86p-2Bee0bqj7U6K2hgxOGsEQEDktLt4z11dIUBgaEy=
+8rJCO6TdWELQlZSTau3INd6KUnN90wG5bh825eBOOnUazy00GZifV50ENNDdpPfWj7z8-2B2jxI=
+syFajKarMhJqiDEz8GNIK84ulRDHScK-2BZoDinHkXFtHMH9BijnVATwFFi4T14IY62ILr5aXGH=
+IrZ49mUEcjYAgfujdGmSIjVs5Tl64mPbW9mkUPuGFLCGa7X-2B43yI-2FkKaAhvEucLF5L0kqqA=
+9MiwS1Vqzql8ec" alt=3D"" width=3D"1" height=3D"1" border=3D"0" style=3D"hei=
+ght:1px !important;width:1px !important;border-width:0 !important;margin-to=
+p:0 !important;margin-bottom:0 !important;margin-right:0 !important;margin-=
+left:0 !important;padding-top:0 !important;padding-bottom:0 !important;padd=
+ing-right:0 !important;padding-left:0 !important;"/></body>
+
+</html>
+
+--497ea959e9142f779bfbd16de6a3d65d6b768c2cdd157c25301adcd29a68--
+

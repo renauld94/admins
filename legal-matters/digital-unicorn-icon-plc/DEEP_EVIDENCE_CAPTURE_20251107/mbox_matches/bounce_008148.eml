@@ -1,0 +1,937 @@
+X-GM-THRID: 1803343962255766771
+X-Gmail-Labels: Inbox,Category Promotions,Unread
+Delivered-To: sn.renauld@gmail.com
+Received: by 2002:a17:907:681:b0:a75:112f:767c with SMTP id wn1csp978447ejb;
+        Sun, 30 Jun 2024 20:00:20 -0700 (PDT)
+X-Google-Smtp-Source: 
+ AGHT+IFj4VGrjVEvghP9fhH+aaVW/zGYlOsr6dU1zq/18WQvl+PL51OM5RuEieNaOeIzOhDX/ase
+X-Received: by 2002:a05:6214:5093:b0:6b1:e371:99d3 with SMTP id
+ 6a1803df08f44-6b5b6f57f51mr52691096d6.0.1719802820461;
+        Sun, 30 Jun 2024 20:00:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1719802820; cv=none;
+        d=google.com; s=arc-20160816;
+        b=ZzzrKWK9ayjsXaTBYauiBSXSCvNYli0/qIZFccfCpXhZC48iEKM8c+VioSqo6RyzkN
+         AJAVp8N/EMnrLAD93DwpSrgOGT58rO8+IlkYbIQMERJ2OZujtMacRZDgHZ2mKOAIkeHP
+         mtffybSJjM4TU37TihrCE+HJTAtsuCtGITLe2rjbVYYzA4fqbvOYcToR3f1Y2vs+RELs
+         Wqwom5fLpN3H9QR1iW5xY82ihBIhdB+mR1mdKoLcJOVajEkSJ8NuXhnw2375OskHmDXE
+         CHPB5IfoUI2IjKsi7o7aThPg+RwSrPSXJrxQmmeiZQHmfoE4E8PKz5CebG7WM+D2F/le
+         UHkA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20160816;
+        h=to:list-unsubscribe-post:list-unsubscribe:reply-to:subject
+         :message-id:mime-version:from:date:dkim-signature:dkim-signature;
+        bh=YtDFM/kdKsaIQzWuRpihtoxUY8BAyGXICbBWdNZsC+4=;
+        fh=UdbUcDkJKvqffcPeSfMTJ3BaP9WLNp68ZQroZAlxuH8=;
+        b=eOKlyUahhgB5dWfmsgHG8vlWRciM/lEKXsHUNL3ksQLPSl7U6fNoSh0ouhJ3ezsiM2
+         zNPnPUBYFnO28a2VTaWePH/Qjlv6ebMLrhWho77yBdUDrrpoZRNl6QrvPdqjEJfs+b6U
+         F0nKC9l+ZQZMtSVITa0JN9kWsswYMbeu0GICRnnCZacjyuHXDCItDFbR0QjAr4QMqFOt
+         G42u6M4I/X/0QrnVZ70/8kXOhVgSswC39OkuJHi3LU+ynlVW/sfWo7OA4Gqpmsc4zrij
+         JIHPCqwR5oWVGNASYECJhXcjHq73XDK0VzFuwRlG8LDkDNoW9AsdyG/WLCUia0LAIyD2
+         7UTQ==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@mail.anthropic.com header.s=s1 header.b=E4htnI6t;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=gXOm2iJq;
+       spf=pass (google.com: domain of
+ bounces+31859940-b458-sn.renauld=gmail.com@em9672.mail.anthropic.com
+ designates 168.245.4.162 as permitted sender)
+ smtp.mailfrom="bounces+31859940-b458-sn.renauld=gmail.com@em9672.mail.anthropic.com";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=anthropic.com
+Return-Path: 
+ <bounces+31859940-b458-sn.renauld=gmail.com@em9672.mail.anthropic.com>
+Received: from o4.mail.anthropic.com (o4.mail.anthropic.com. [168.245.4.162])
+        by mx.google.com with ESMTPS id
+ 6a1803df08f44-6b59e5acf04si73327466d6.311.2024.06.30.20.00.20
+        for <sn.renauld@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 30 Jun 2024 20:00:20 -0700 (PDT)
+Received-SPF: pass (google.com: domain of
+ bounces+31859940-b458-sn.renauld=gmail.com@em9672.mail.anthropic.com
+ designates 168.245.4.162 as permitted sender) client-ip=168.245.4.162;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@mail.anthropic.com header.s=s1 header.b=E4htnI6t;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=gXOm2iJq;
+       spf=pass (google.com: domain of
+ bounces+31859940-b458-sn.renauld=gmail.com@em9672.mail.anthropic.com
+ designates 168.245.4.162 as permitted sender)
+ smtp.mailfrom="bounces+31859940-b458-sn.renauld=gmail.com@em9672.mail.anthropic.com";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=anthropic.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mail.anthropic.com;
+	h=content-type:from:mime-version:subject:reply-to:list-unsubscribe:
+	list-unsubscribe-post:x-feedback-id:to:cc:content-type:from:subject:to;
+	s=s1; bh=YtDFM/kdKsaIQzWuRpihtoxUY8BAyGXICbBWdNZsC+4=;
+	b=E4htnI6t5PYDxxuJ7LjuilhJ9P503almwCjtWMNfpd8iQOvlIRmNIljXw06S4hcltbaB
+	GLSit6Gb9bMDoL4DAczcPuTqwYj3TlGL27tQaUREutjd5LZN/Uc3ia5ZEbm0NVw3ZaZSQh
+	ZYXBaZjJd934Qa0tQ6iHuQ1bZzt2o1MdKq34IHaG+iDW2EbjB/Et4Xi69D8bdsSWAEzSAF
+	dg34J9JYLuVXOWxcJXP2Il0mPynas3ggsyP8juCuDbNCKu34M5BWfMYIa0izi3nxH7zeZs
+	SdSv+344S9AEZ8Q2+YyzI4u6lICwYQETv0mQEzptyT8PSL6U+zuriiEGf/J6Ss8Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendgrid.info;
+	h=content-type:from:mime-version:subject:reply-to:list-unsubscribe:
+	list-unsubscribe-post:x-feedback-id:to:cc:content-type:from:subject:to;
+	s=smtpapi; bh=YtDFM/kdKsaIQzWuRpihtoxUY8BAyGXICbBWdNZsC+4=;
+	b=gXOm2iJqmvDeYxE5WkXcms7U8BeGRmYmBXzK/ulidV5lkePqw6Mv2nNdLQppXzklkMEu
+	R5Vb7I+HG19x3KZ9kycosm+tBHwW3BGnPo5Ef9BDky0aoCnxkCEOaY41u7K5mOxvlG6xUh
+	UsVpdkKxP64CaYHDw93jVoZKLrH3FT9Bc=
+Received: by filterdrecv-7d9cdcb8b7-s8vkk with SMTP id
+ filterdrecv-7d9cdcb8b7-s8vkk-1-66821BC3-13
+        2024-07-01 03:00:19.054102198 +0000 UTC m=+1432508.814564981
+Received: from MzE4NTk5NDA (unknown)
+	by geopod-ismtpd-18 (SG) with HTTP
+	id 4rCwo8AxT9av31pnKtRMmQ
+	Mon, 01 Jul 2024 03:00:19.027 +0000 (UTC)
+Content-Type: multipart/alternative;
+ boundary=3e9b36b06b29480eeae32b6e6ad898ca668fd315e11a2fbe8cdf74e186b5
+Date: Mon, 01 Jul 2024 03:00:19 +0000 (UTC)
+From: Anthropic <support+news@mail.anthropic.com>
+Mime-Version: 1.0
+Message-ID: <4rCwo8AxT9av31pnKtRMmQ@geopod-ismtpd-18>
+Subject: [Claude.ai] =?UTF-8?B?UHJvamVjdHPigJRub3c=?= available for Pro and
+ Team users
+Reply-To: support+news@mail.anthropic.com
+List-Unsubscribe: 
+ =?us-ascii?Q?=3Cmailto=3Aunsubscribe=40em9672=2Email=2Eanthropic=2Ecom=3Fsubject=3Dhttps=3A=2F=2F?=
+ =?us-ascii?Q?url8792=2Email=2Eanthropic=2Ecom=2Fwf=2Funsubscri?=
+ =?us-ascii?Q?be*q*upn=3DwzqEHQSn045tRvE-2FnMN1Hk3pIyiQ?=
+ =?us-ascii?Q?CrrmqbFFROZ7VJY4uGXxRTINvolxYcyAmFeBGq9?=
+ =?us-ascii?Q?XDfP4Nm1b1RUuB46PrTPp7Du6KWhbH95MVU-2FC?=
+ =?us-ascii?Q?2sEE4ihV0RvzRL71ar-2B3i4ZjkmJbkQFEPi2aA?=
+ =?us-ascii?Q?UiFvuSTGPh-2FJZhT3vTgAdVnbc4cJatJ1t8wic?=
+ =?us-ascii?Q?ORSzKKL9btg7raLzeFkXUqyuU2042M6foRoBbMQ?=
+ =?us-ascii?Q?-2FCyLxbEWtihhPd7lSKwBnmCGfwqLR-2FAVM-2?=
+ =?us-ascii?Q?BGs1zDo-2BYvw1-2FZjrA0-2Bps7V4Y3CA1MVYj?=
+ =?us-ascii?Q?J2cWt22wjBRjaSLVT7Pq620ANJ4u-2FqXhsML8B?=
+ =?us-ascii?Q?HUmE9EtyR3JfTJbQiYYmwLbCFUY3MBtMGxX4Xeg?=
+ =?us-ascii?Q?DouduPCsTNWtm10kWL1GWQedK-2BpIGymmhv2VJ?=
+ =?us-ascii?Q?Guq83Qs7CTyJQts6Jr4gUfF03BD8S7smojdg4tI?=
+ =?us-ascii?Q?HmtC0cSCnqU35QA5ayMFkR8o7-2BTTfbIZqwbzR?=
+ =?us-ascii?Q?QgwtP6IWxkZv1qm8Fp9P6hOw0v2r9okCh-2FAoA?=
+ =?us-ascii?Q?7bCUbTCmiEXyF1dHLhnR6-2FFaXMfGUCqytRNPO?=
+ =?us-ascii?Q?lBWIphrMMjWesIYX9-2FIeLU8maNqs7CMThKDCz?=
+ =?us-ascii?Q?BxuKudr-2FYGNE2FLvNBRl3Fx-2FuZw6-2FUFIG?=
+ =?us-ascii?Q?QCk6MasvmMHMnG7tatgQ3NqDy2Ybt-2BBcf3BLD?=
+ =?us-ascii?Q?l1nk68LtTGykwmsfuwhhLKZ8ibDx0gdtH670WKc?=
+ =?us-ascii?Q?8a9rrDltXaWmx9nvHEYhX-2FT3b4kqVt2XAz-2F?=
+ =?us-ascii?Q?8ZfbUulUNKZ1mZGYf2LM-2F5TJ9Jf3LGfzE8L7-?=
+ =?us-ascii?Q?2Bxd-2FnrT6hZwmwinRbCtNNoBVl1jLr5R1HQmt?=
+ =?us-ascii?Q?XgWao5-2FG6-2BP4f8jS1dZZMYKxeaW8P63EEcm?=
+ =?us-ascii?Q?TFTpMlvYBycWRZEy4tUnXz8W-2BG8n-2BG4wtvB?=
+ =?us-ascii?Q?UJG8QMtjxSK1R7tMMzx00mxWBD9DduD25qMO4mA?=
+ =?us-ascii?Q?WR7edp9z8qtRjTSVPfo-2FPFvZUDu-2FB8CQz2l?=
+ =?us-ascii?Q?ruDdeAtPvNfRprEKteZa-2FCtHTG2MgoY2DB5Hs?=
+ =?us-ascii?Q?DmABLzwCFjTdqRu-2BXFO0gKrLoEFl1dx4x32xd?=
+ =?us-ascii?Q?ocKX4xX=3E=2C=3Chttps=3A=2F=2Furl8792=2Email=2Eanthropi?=
+ =?us-ascii?Q?c=2Ecom=2Flu=2Funsubscribe=3Foc=3Du001=2E=5Fp3fbfnmU0?=
+ =?us-ascii?Q?8W6nAPyRv2WoPBg6OWi7jd53kT9hc3MVTvij8Mm?=
+ =?us-ascii?Q?6EF-PkHtglyFXi-k3HNVWx6QHFOrlR=5F4VdZmy0N?=
+ =?us-ascii?Q?z4urvI9HvvpT2Z=5Fia5UMMLMKskp5j1n5It5EHGN?=
+ =?us-ascii?Q?S00j8sdhewiYBNUbp5foF0cOPeJlgE=5Fzf36ArGz?=
+ =?us-ascii?Q?eZk-ppT7nk0DEfnLk6KhNNWDYGp6BxoQv4cKMBA?=
+ =?us-ascii?Q?tXZ2IS56oJTVx-wO2fgV9qAZ3z2W-W2eL7lJjJK?=
+ =?us-ascii?Q?yF819mO67UqIbLUn3tS1tMRpxQzVGdIsedZjWd5?=
+ =?us-ascii?Q?x3qQCxmD-S7NW2iSTObeJuZ0TCTeu=5Fx3BCP-Ba9?=
+ =?us-ascii?Q?XCR7oip=5FvAnwxzJWUs754iVjF9RVo=5F5Asb5AiEZ?=
+ =?us-ascii?Q?u8-nitpv6Gx318yzg6VXhx4kKcqW=5FUh6CyME17Q?=
+ =?us-ascii?Q?WMrr5wZMZnu2-JDWB6E5Ok17pfSjdTn2IDAZY9D?=
+ =?us-ascii?Q?ArhVhbmELNXB9tSqFEvy2p1uCO726PWVDXXsQGB?=
+ =?us-ascii?Q?rxb08xe-xkweJMMxnmm7N-gHs3-Sf9odzCxFiWM?=
+ =?us-ascii?Q?rWmu71lcTc0u5Fj9WdSDPsA8E5j3fJzFdBasD=5Fc?=
+ =?us-ascii?Q?JTYkHzi6KKBxLMyIg19NL-G6t6t=5Frp3O-QjIyZJ?=
+ =?us-ascii?Q?ho=5Fski21R0dUCsH6t0LRpXEO5NGn-yaCqFDpIJT?=
+ =?us-ascii?Q?PzsOwiiDEEqNr7bHgwpjt8YXcsMjZhsTfSRp7QR?=
+ =?us-ascii?Q?TMx-vo02Y8AZxkI=5FiRUVIFrlfHMn-mL-xWTXP8Y?=
+ =?us-ascii?Q?tSZoWtan44Puztgo6CgPWCtdvDvQEKXBD7aS4-V?=
+ =?us-ascii?Q?pkyVAvMWVxszs8DIezHsFkjVf3tlpH3iKl6BBqO?=
+ =?us-ascii?Q?wVuzkw1mxHqg3JjHg=5F2q5MRCduEbe87EsaGnhXC?=
+ =?us-ascii?Q?h96DMLkRCNs6ruxj0FIGIHzGg31GcLF6BWOJesz?=
+ =?us-ascii?Q?CtRJN63SmQ=5F-cOYLVXrq-1PZL4JyxpsVoAqQCeU?=
+ =?us-ascii?Q?pV=5FO9BST0IySeDs8QKLTvJLp50kTEL8UjAVlXOU?=
+ =?us-ascii?Q?4pL4JzSqNlUsXEXsf8uPrzY=5Fi2f8M609zXFu1wC?=
+ =?us-ascii?Q?1v6ixeiZy-I3uZV5GTjZNfvEd1xJcS36R3Klspn?=
+ =?us-ascii?Q?3icDhJvy0Xr94o-dOjKKeiXkuoWaYZhUTt4t6=5FY?=
+ =?us-ascii?Q?fDCbE2=5FluKe7bP3qs-A-Y864-4iyi7X5tSZpgHp?=
+ =?us-ascii?Q?DIVbCS8PUWWOdNcWYbn=5Fwr59coI8BGNcT8lEEAE?=
+ =?us-ascii?Q?qnfUrihpZlb-rpWfG9cGp0fXXpQGGHNpq3zugVi?=
+ =?us-ascii?Q?FkXXGhng12z=5Fesys4PkaKs2mQqD9Gl-NUazBO30?=
+ =?us-ascii?Q?n=5FalIf0cq1I8Gq1Ut8WGU4lSUFg6M1hbtfA7MzZ?=
+ =?us-ascii?Q?mRDSYSezS5XaU-NocRD3BTNfeGk79q8LzsYzA6Z?=
+ =?us-ascii?Q?yJ=5FJEWBZ9kUqdr8ZnUBjsY8qzO54BS=5FA6pmW1Oi?=
+ =?us-ascii?Q?YL8cvQDEimuZT6rHqpiuzrNerGDpj1R2=5FRQDAAK?=
+ =?us-ascii?Q?3X9FtHN1OOnEYAucIYET9Ohyk4x7Y8Z0urswR3I?=
+ =?us-ascii?Q?WRW0GGUUYfPncIk0dAoqKeId5C-beisB1siuKTO?=
+ =?us-ascii?Q?1pdJ4wz6uI9CqDSCrndLhxUNoUX4SU9ts-te8Al?=
+ =?us-ascii?Q?Z0ejPe6P1OIVBfcBZJmWKmSPJBy1XBSZ6-syhs-?=
+ =?us-ascii?Q?gXIKR3cQ7nzxMPC7pGObELdrtdQ=3E?=
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+X-Feedback-ID: 31859940:SG
+X-SG-EID: 
+ =?us-ascii?Q?u001=2ER8FFSRQkMo5zcpY7gjGOtwXGbvIYgVm6CFq3nMjZaaR3mzm5oazaW4IK8?=
+ =?us-ascii?Q?PdCL4cBM=2FSLaMYqRes8r45X+8H6KwdK3xtWC3H1?=
+ =?us-ascii?Q?Yoay2XytKmT=2FJMQWQXy5NGer01yoFO=2F3DZZ0oKu?=
+ =?us-ascii?Q?UDTma117hys1jADW1a6KZTZ3tbrPeoghwtePe1l?=
+ =?us-ascii?Q?O6lQMWW3ALdd2fue1XaRpe1C9W01KVEFOUEAz1W?=
+ =?us-ascii?Q?ncY7N67z3C0us=2FxpHqCpAb=2F4QwP1odZWpQAhsDa?=
+ =?us-ascii?Q?1A9zyLUYWaqLn94XqxG=2FPLGEzw=3D=3D?=
+X-SG-ID: 
+ =?us-ascii?Q?u001=2EXwhBPNhCejkv4+fVosb2QVfR16Qxp9CrA7PjDe5zzeI=2F0IZCBsPXtgHbA?=
+ =?us-ascii?Q?oGIj+Rs6OlRm=2FcaEsw=2FcuQFYvtovQxG2Eq1SU7B?=
+ =?us-ascii?Q?65rZKu5ZeoNq8Ti1S9MX+R5OO9Fx46CNOtE1w3o?=
+ =?us-ascii?Q?J+sCaqorG1MNyUUaGWUBuy9LBcPu2cowrAyYIsN?=
+ =?us-ascii?Q?7Vl4A8Y2O+QXMFg=2FlC1iEykWots7NfLCO0CYSY9?=
+ =?us-ascii?Q?MwN0pi=2FrPPMhmHAJ7BElAmP1ZOqP6Z1YZWBd4+q?=
+ =?us-ascii?Q?EhDlNCZfcD52R8nheUhpzK0NUZM3EVV15ZCXMRH?=
+ =?us-ascii?Q?1PITVexoH5XOhzTXjLffpGRaxXLNaZYvcugTF1+?=
+ =?us-ascii?Q?x+KSYorckpuYjEGKQ27ekqdhDLT8zfvOGhURNp=2F?=
+ =?us-ascii?Q?ttFuBHrXZmM3YPG8fmPnifiziFbF3d0oWeimpqX?=
+ =?us-ascii?Q?13x=2Fw7EiTMbFUSnjkO2dOkrQRHo5wOOMjvQmvzv?=
+ =?us-ascii?Q?26qZnjHjwigQzyfCNnXf5J0O1PpeGfXwf90sAeA?=
+ =?us-ascii?Q?std2M93QLV5BfHE7CWgFau4TAoS=2FUCjT97Te6K+?=
+ =?us-ascii?Q?6QVM9IXQ7GhmFKQ+F3PJozbroXovHtn5PIJATNh?=
+ =?us-ascii?Q?fW66FNtKK+8ivR3b7RyIwNNsX3mCnlIJXxnyxBk?=
+ =?us-ascii?Q?G6u9U3P=2Fb890sgW7O34afkcyPYHAQEFLqP+PRRM?=
+ =?us-ascii?Q?C3qTFJEUNMQJ7JB766wwZUp9z3B+TwymFIFNeOy?=
+ =?us-ascii?Q?RprFTPMPIPqMe2+qMQugovQ9uPX2trDVgYOkMLD?=
+ =?us-ascii?Q?u+M4CTlsNVB3xoIP7nQuhBWEv=2FncDkyC3JLnkHw?=
+ =?us-ascii?Q?31UXpIjZqxluZx1fLMSYKrI=2FBN=2FOjFpedbVQ8Tg?=
+ =?us-ascii?Q?oPb11LgGS=2FVSg=3D?=
+To: sn.renauld@gmail.com
+X-Entity-ID: u001.+hTscy7rO4MXV2fUis5gmA==
+
+--3e9b36b06b29480eeae32b6e6ad898ca668fd315e11a2fbe8cdf74e186b5
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0
+
+Work on Projects with Claude
+
+( https://www.anthropic.com/news/projects )
+
+Read the blog post ( https://www.anthropic.com/news/projects )
+
+Hello,
+
+Claude Pro and Team users can now organize chats into Projects. Projects br=
+ing together internal knowledge and chat activity in one place so Claude ca=
+n help you generate ideas, make strategic decisions, and deliver exceptiona=
+l results.
+
+With Projects, you can:
+
+* Upload docs and code=E2=80=94like style guides, codebases, or user feedba=
+ck=E2=80=94so that every response you get from Claude is grounded in expert=
+ise about your Project.
+* Generate new content like code snippets or diagrams with Claude and see a=
+ preview of your Artifacts in a dedicated panel.
+* Share your most insightful Claude chats and the Artifacts you create on t=
+he Project activity feed, allowing your teammates to learn, explore, and bu=
+ild on shared content.
+
+To get started, upgrade ( https://www.anthropic.com/pricing ) to the Pro pl=
+an or create a Team plan to collaborate with colleagues. To learn more, che=
+ck out our blog post ( https://www.anthropic.com/news/projects ).
+=E2=80=94The Anthropic team
+
+( https://x.com/anthropicai ) ( https://www.linkedin.com/company/anthropicr=
+esearch/ )
+
+Unsubscribe ( https://url8792.mail.anthropic.com/wf/unsubscribe?upn=3DwzqEH=
+QSn045tRvE-2FnMN1Hk3pIyiQCrrmqbFFROZ7VJY4uGXxRTINvolxYcyAmFeBGq9XDfP4Nm1b1R=
+UuB46PrTPp7Du6KWhbH95MVU-2FC2sEE4ihV0RvzRL71ar-2B3i4ZjkmJbkQFEPi2aAUiFvuSTG=
+Ph-2FJZhT3vTgAdVnbc4cJatJ1t8wicORSzKKL9btg7raLzeFkXUqyuU2042M6foRoBbMQ-2FCy=
+LxbEWtihhPd7lSKwBnmCGfwqLR-2FAVM-2BGs1zDo-2BYvw1-2FZjrA0-2Bps7V4Y3CA1MVYjJ2=
+cWt22wjBRjaSLVT7Pq620ANJ4u-2FqXhsML8BHUmE9EtyR3JfTJbQiYYmwLbCFUY3MBtMGxX4Xe=
+gDouduPCsTNWtm10kWL1GWQedK-2BpIGymmhv2VJGuq83Qs7CTyJQts6Jr4gUfF03BD8S7smojd=
+g4tIHmtC0cSCnqU35QA5ayMFkR8o7-2BTTfbIZqwbzRQgwtP6IWxkZv1qm8Fp9P6hOw0v2r9okC=
+h-2FAoA7bCUbTCmiEXyF1dHLhnR6-2FFaXMfGUCqytRNPOlBWIphrMMjWesIYX9-2FIeLU8maNq=
+s7CMThKDCzBxuKudr-2FYGNE2FLvNBRl3Fx-2FuZw6-2FUFIGQCk6MasvmMHMnG7tatgQ3NqDy2=
+Ybt-2BBcf3BLDl1nk68LtTGykwmsfuwhhLKZ8ibDx0gdtH670WKc8a9rrDltXaWmx9nvHEYhX-2=
+FT3b4kqVt2XAz-2F8ZfbUulUNKZ1mZGYf2LM-2F5TJ9Jf3LGfzE8L7-2Bxd-2FnrT6hZwmwinRb=
+CtNNoBVl1jLr5R1HQmtXgWao5-2FG6-2BP4f8jS1dZZMYKxeaW8P63EEcmTFTpMlvYBycWRZEy4=
+tUveMOYzXWCj-2Fn0iM7b-2BY8igDoiRgf25-2FgyUfxL38aWVjjdgviYFcZ9pbet7MjlZS50XG=
+7SeR73qniSAhlB5KMcXOFRcsEgIyOPW4uoQHAEZm-2BIHifkhvrgWx6HHWVQLtYM-2FFGAmsLP6=
+Ra0awCHq-2BCuLFqimLt8WzeVSyj5XH4DHT )
+--3e9b36b06b29480eeae32b6e6ad898ca668fd315e11a2fbe8cdf74e186b5
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=utf-8
+Mime-Version: 1.0
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org=
+/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html data-editor-version=3D"2" class=3D"sg-campaigns" xmlns=3D"http://www.=
+w3.org/1999/xhtml">
+    <head>
+      <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf=
+-8">
+      <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scal=
+e=3D1, minimum-scale=3D1, maximum-scale=3D1">
+      <!--[if !mso]><!-->
+      <meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3DEdge">
+      <!--<![endif]-->
+      <!--[if (gte mso 9)|(IE)]>
+      <xml>
+        <o:OfficeDocumentSettings>
+          <o:AllowPNG/>
+          <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+      </xml>
+      <![endif]-->
+      <!--[if (gte mso 9)|(IE)]>
+  <style type=3D"text/css">
+    body {width: 600px;margin: 0 auto;}
+    table {border-collapse: collapse;}
+    table, td {mso-table-lspace: 0pt;mso-table-rspace: 0pt;}
+    img {-ms-interpolation-mode: bicubic;}
+  </style>
+<![endif]-->
+      <style type=3D"text/css">
+    body, p, div {
+      font-family: arial,helvetica,sans-serif;
+      font-size: 14px;
+    }
+    body {
+      color: #000000;
+    }
+    body a {
+      color: #1188E6;
+      text-decoration: none;
+    }
+    p { margin: 0; padding: 0; }
+    table.wrapper {
+      width:100% !important;
+      table-layout: fixed;
+      -webkit-font-smoothing: antialiased;
+      -webkit-text-size-adjust: 100%;
+      -moz-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+    img.max-width {
+      max-width: 100% !important;
+    }
+    .column.of-2 {
+      width: 50%;
+    }
+    .column.of-3 {
+      width: 33.333%;
+    }
+    .column.of-4 {
+      width: 25%;
+    }
+    ul ul ul ul  {
+      list-style-type: disc !important;
+    }
+    ol ol {
+      list-style-type: lower-roman !important;
+    }
+    ol ol ol {
+      list-style-type: lower-latin !important;
+    }
+    ol ol ol ol {
+      list-style-type: decimal !important;
+    }
+    @media screen and (max-width:480px) {
+      .preheader .rightColumnContent,
+      .footer .rightColumnContent {
+        text-align: left !important;
+      }
+      .preheader .rightColumnContent div,
+      .preheader .rightColumnContent span,
+      .footer .rightColumnContent div,
+      .footer .rightColumnContent span {
+        text-align: left !important;
+      }
+      .preheader .rightColumnContent,
+      .preheader .leftColumnContent {
+        font-size: 80% !important;
+        padding: 5px 0;
+      }
+      table.wrapper-mobile {
+        width: 100% !important;
+        table-layout: fixed;
+      }
+      img.max-width {
+        height: auto !important;
+        max-width: 100% !important;
+      }
+      a.bulletproof-button {
+        display: block !important;
+        width: auto !important;
+        font-size: 80%;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      .columns {
+        width: 100% !important;
+      }
+      .column {
+        display: block !important;
+        width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+      .social-icon-column {
+        display: inline-block !important;
+      }
+    }
+  </style>
+      <!--user entered Head Start--><!--End Head user entered-->
+    </head>
+    <body>
+      <center class=3D"wrapper" data-link-color=3D"#1188E6" data-body-style=
+=3D"font-size:14px; font-family:arial,helvetica,sans-serif; color:#000000; =
+background-color:#FFFFFF;">
+        <div class=3D"webkit">
+          <table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"=
+100%" class=3D"wrapper" bgcolor=3D"#FFFFFF">
+            <tr>
+              <td valign=3D"top" bgcolor=3D"#FFFFFF" width=3D"100%">
+                <table width=3D"100%" role=3D"content-container" class=3D"o=
+uter" align=3D"center" cellpadding=3D"0" cellspacing=3D"0" border=3D"0">
+                  <tr>
+                    <td width=3D"100%">
+                      <table width=3D"100%" cellpadding=3D"0" cellspacing=
+=3D"0" border=3D"0">
+                        <tr>
+                          <td>
+                            <!--[if mso]>
+    <center>
+    <table><tr><td width=3D"600">
+  <![endif]-->
+                                    <table width=3D"100%" cellpadding=3D"0"=
+ cellspacing=3D"0" border=3D"0" style=3D"width:100%; max-width:600px;" alig=
+n=3D"center">
+                                      <tr>
+                                        <td role=3D"modules-container" styl=
+e=3D"padding:0px 0px 0px 0px; color:#000000; text-align:left;" bgcolor=3D"#=
+FAFAF7" width=3D"100%" align=3D"left"><table class=3D"module preheader preh=
+eader-hide" role=3D"module" data-type=3D"preheader" border=3D"0" cellpaddin=
+g=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"display: none !important;=
+ mso-hide: all; visibility: hidden; opacity: 0; color: transparent; height:=
+ 0; width: 0;">
+    <tr>
+      <td role=3D"module-content">
+        <p></p>
+      </td>
+    </tr>
+  </table><table class=3D"wrapper" role=3D"module" data-type=3D"image" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-=
+layout: fixed;" data-muid=3D"e734375b-ce70-409d-a486-9b79407a11a7">
+    <tbody>
+      <tr>
+        <td style=3D"font-size:6px; line-height:10px; padding:0px 0px 0px 0=
+px;" valign=3D"top" align=3D"center">
+          <img class=3D"max-width" border=3D"0" style=3D"display:block; col=
+or:#000000; text-decoration:none; font-family:Helvetica, arial, sans-serif;=
+ font-size:16px; max-width:100% !important; width:100%; height:auto !import=
+ant;" width=3D"600" alt=3D"" data-proportionally-constrained=3D"true" data-=
+responsive=3D"true" src=3D"http://cdn.mcauto-images-production.sendgrid.net=
+/2c7496d350bc5243/28b56263-1eec-48ea-835f-289fa29c1714/1200x200.png">
+        </td>
+      </tr>
+    </tbody>
+  </table><table class=3D"module" role=3D"module" data-type=3D"text" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-la=
+yout: fixed;" data-muid=3D"014982b1-3cc2-4d78-b133-e578e909701a" data-mc-mo=
+dule-version=3D"2019-10-22">
+    <tbody>
+      <tr>
+        <td style=3D"padding:40px 10px 0px 10px; line-height:NaNpx; text-al=
+ign:inherit;" height=3D"100%" valign=3D"top" bgcolor=3D"" role=3D"module-co=
+ntent"><div><div style=3D"font-family: inherit; text-align: center"><span s=
+tyle=3D"color: #000000; font-family: helvetica, sans-serif; font-style: nor=
+mal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight=
+: 700; letter-spacing: normal; orphans: 2; text-align: center; text-indent:=
+ 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stro=
+ke-width: 0px; white-space-collapse: preserve; text-wrap: wrap; background-=
+color: rgb(250, 250, 247); text-decoration-thickness: initial; text-decorat=
+ion-style: initial; text-decoration-color: initial; float: none; display: i=
+nline; font-size: 38px">Work on Projects with Claude</span></div><div></div=
+></div></td>
+      </tr>
+    </tbody>
+  </table><table class=3D"wrapper" role=3D"module" data-type=3D"image" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-=
+layout: fixed;" data-muid=3D"dc553b4d-c6d2-4a9b-b77b-288dd3e74f4d.1">
+    <tbody>
+      <tr>
+        <td style=3D"font-size:6px; line-height:10px; padding:40px 0px 40px=
+ 0px;" valign=3D"top" align=3D"center">
+         =20
+        <a href=3D"https://url8792.mail.anthropic.com/ls/click?upn=3Du001.r=
+FcAmKXLOm9u6wLRWHIUYb57odYuMXptiIvSnUIhs1ORiIOs6oAgh3Dc9BWKUjapw1DWUtWTurFm=
+fN18juftew-3D-3D4HUU_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwUoS9Gpbl6Q=
+X1AUICtpGgmLDb6y-2F9BoMWQdxQFG7iaQE5WYQIENYHWW99UaxK9-2BiDd6cE10IzOFA51xkqB=
+OgfCGyUWhoSDKdNVFlrlP9oP0Sn1rA5-2BsJvrEhwDxjFUG78-2BinwQthq6Vupoz63n2D-2FN4=
+H-2BQuWiolTOzd1-2F1u57kslcXxRAAHqIXd9NdZgjBzQDaoKgmSg8tY8Ai5vW5ppUEDqcx5-2F=
+35rSYBtqJhbeyLfVpEYn69khtmX0aIl5aOr-2FBu0LsyjFMplEfabrW3ZdyOywE09gj0GoZH58J=
+E3R5W9DUMNoOGrJFR-2BOyD9Cc5jqjvXIsyEx1bxB9t6RUHzSJ8Kczju85M3tpX00z2WwvMlukh=
+gXwhngjwREcK0zcBQWvCv9EVED4hVG-2FbaIKMm-2B9jMe9dGPLf9XdDswSl-2BoB57XdyF1-2F=
+OPskypHHqrFM3WwJxb9CToMEJnZi4smL-2F0I-2BoQCpb3E4LMSsqGuPKv4zr8CD1HEkE3TtmRP=
+J0vuiQQIZYentP-2FmcTvkmDodDnlrCKDF-2FsFCdOUABe1y-2BB91-2BpfMkh2XvMdFHKTjKgi=
+rwJj1LC9l-2B1KtQYlZj52HPww2q4RQZ34jnIkuxqCVS5T2gYWVnTmcZ9ka6lCfXHomNprNqLSu=
+fcPvXEgzKGOUsEXdnhuIhrJnyzIQmqeLkvqLCZ34DmtgVnqGxXj5Rz-2BOM7LduLGHsa-2FVGzv=
+dr7fncGKTdKuB5Yxn32llI1j4H0W0G6FiK5YO-2Fcc0bdCb-2BQoFlYmPRoNJQy02rRFZiNVhXa=
+pnPTMhkum1Qvt9ZCxz06JX-2BIEKbK5Wvwp8FHL5wCoN6FAwRW-2BfM2AVE-2BV2L1A27AGMP0n=
+TNe-2FmuLPpvLlEh4ZshSj0HP5vw4Yx8-2BVAMrmFmuJdo3Ryc4Ym9qxcF3zLQi0idCv5Pwqi-2=
+F-2BI5F1z-2BkqGRXvbcNFV18UHPvtgMf3CBsg86uM-3D"><img class=3D"max-width" bor=
+der=3D"0" style=3D"display:block; color:#000000; text-decoration:none; font=
+-family:Helvetica, arial, sans-serif; font-size:16px; max-width:100% !impor=
+tant; width:100%; height:auto !important;" width=3D"600" alt=3D"" data-prop=
+ortionally-constrained=3D"true" data-responsive=3D"true" src=3D"http://cdn.=
+mcauto-images-production.sendgrid.net/2c7496d350bc5243/6b0d41d4-6bfc-40d2-a=
+ff0-53d4c0961a25/2880x1620.jpg"></a></td>
+      </tr>
+    </tbody>
+  </table><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"=
+module" data-role=3D"module-button" data-type=3D"button" role=3D"module" st=
+yle=3D"table-layout:fixed;" width=3D"100%" data-muid=3D"96bbcc24-02f6-402c-=
+b18f-8565f685260e.1">
+      <tbody>
+        <tr>
+          <td align=3D"center" bgcolor=3D"" class=3D"outer-td" style=3D"pad=
+ding:0px 0px 0px 0px;">
+            <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=
+=3D"wrapper-mobile" style=3D"text-align:center;">
+              <tbody>
+                <tr>
+                <td align=3D"center" bgcolor=3D"#333333" class=3D"inner-td"=
+ style=3D"border-radius:6px; font-size:16px; text-align:center; background-=
+color:inherit;">
+                  <a href=3D"https://url8792.mail.anthropic.com/ls/click?up=
+n=3Du001.rFcAmKXLOm9u6wLRWHIUYb57odYuMXptiIvSnUIhs1ORiIOs6oAgh3Dc9BWKUjapw1=
+DWUtWTurFmfN18juftew-3D-3DAreO_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09Bw=
+UoS9Gpbl6QX1AUICtpGgmLDb6y-2F9BoMWQdxQFG7iaQE5WYQIENYHWW99UaxK9-2BiDd6cE10I=
+zOFA51xkqBOgfCGyUWhoSDKdNVFlrlP9oP0Sn1rA5-2BsJvrEhwDxjFUG78-2BinwQthq6Vupoz=
+63n2D-2FN4H-2BQuWiolTOzd1-2F1u57kslcXxRAAHqIXd9NdZgjBzQDaoKgmSg8tY8Ai5vW5pp=
+UEDqcx5-2F35rSYBtqJhbeyLfVpEYn69khtmX0aIl5aOr-2FBu0LsyjFMplEfabrW3ZdyOywE09=
+gj0GoZH58JE3R5W9DUMNoOGrJFR-2BOyD9Cc5jqjvXIsyEx1bxB9t6RUHzSJ8Kczju85M3tpX00=
+z2WwvMlukhgXwhngjwREcK0zcBQWvCv9EVED4hVG-2FbaIKMm-2B9jMe9dGPLf9XdDswSl-2BoB=
+57XdyF1-2FOPskypHHqrFM3WwJxb9CToMEJnZi4smL-2F0I-2BoQCpb3E4LMSsqGuPKv4zr8CD1=
+HEkE3TtmRPJ0vuiQQIZYentP-2FmcTvkmDodDnlrCKDF-2FsFCdOUABe1y-2BB91-2BpfMkh2Xv=
+MdFHKTjKgirwJj1LC9l-2B1KtQYlZj52HPww2q4RQZ34jnIkuxqCVS5T2gYWVnTmcZ9ka6lCfXH=
+omNprNqLSufcPvXEgzKGOUsEXdnhuIhrJnyzIQmqeLkvqLCZ34DmtgVnqGxXj5Rz-2BOM7LduLG=
+Hsa-2FVGzvdr7fncGKTdKuB5Yxn32llI1j4H0W0G6FiK5YO-2Fcc0bdCb-2BQoFlYmPRoNJQy02=
+rRFZiNVhXapnPTMhkum1Qvt9ZCxz06JX-2BIEKUYY9DWrypq3ECqg8Xzc82VjnW4bnsOsDFVLLM=
+uZ0-2BidCk5nGJZXZT8m7lj4bwuJV2P3ME6wmFUYn0waxDAkdm2h1rlkESdv-2FenayfVTPydtA=
+Nb5-2B38t-2BZnCKvnXIuib7KSRX9Cs9DUQHcdVLZV3jD8-3D" style=3D"background-colo=
+r:#333333; border:1px solid #333333; border-color:#333333; border-radius:15=
+px; border-width:1px; color:#ffffff; display:inline-block; font-size:14px; =
+font-weight:normal; letter-spacing:0px; line-height:normal; padding:12px 18=
+px 12px 18px; text-align:center; text-decoration:none; border-style:solid;"=
+ target=3D"_blank">Read the blog post</a>
+                </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table><table class=3D"module" role=3D"module" data-type=3D"text" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-=
+layout: fixed;" data-muid=3D"014982b1-3cc2-4d78-b133-e578e909701a.2" data-m=
+c-module-version=3D"2019-10-22">
+    <tbody>
+      <tr>
+        <td style=3D"padding:40px 40px 40px 40px; line-height:23px; text-al=
+ign:inherit;" height=3D"100%" valign=3D"top" bgcolor=3D"" role=3D"module-co=
+ntent"><div><div style=3D"font-family: inherit; text-align: inherit"><span =
+style=3D"box-sizing: border-box; padding-top: 0px; padding-right: 0px; padd=
+ing-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0px; mar=
+gin-bottom: 0px; margin-left: 0px; font-style: inherit; font-variant-ligatu=
+res: inherit; font-variant-caps: inherit; font-variant-numeric: inherit; fo=
+nt-variant-east-asian: inherit; font-variant-alternates: inherit; font-vari=
+ant-position: inherit; font-weight: inherit; font-stretch: inherit; line-he=
+ight: inherit; font-family: helvetica, sans-serif; font-optical-sizing: inh=
+erit; font-kerning: inherit; font-feature-settings: inherit; font-variation=
+-settings: inherit; font-size: 18px; vertical-align: baseline; border-top-w=
+idth: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-w=
+idth: 0px; border-top-style: initial; border-right-style: initial; border-b=
+ottom-style: initial; border-left-style: initial; border-top-color: initial=
+; border-right-color: initial; border-bottom-color: initial; border-left-co=
+lor: initial; border-image-source: initial; border-image-slice: initial; bo=
+rder-image-width: initial; border-image-outset: initial; border-image-repea=
+t: initial; color: #000000; letter-spacing: normal; orphans: 2; text-align:=
+ start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0p=
+x; -webkit-text-stroke-width: 0px; white-space-collapse: preserve; text-wra=
+p: wrap; background-color: rgb(250, 250, 247); text-decoration-thickness: i=
+nitial; text-decoration-style: initial; text-decoration-color: initial">Hel=
+lo,</span></div>
+<div style=3D"font-family: inherit; text-align: inherit"><br></div>
+<div style=3D"font-family: inherit; text-align: inherit"><span style=3D"box=
+-sizing: border-box; padding-top: 0px; padding-right: 0px; padding-bottom: =
+0px; padding-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: =
+0px; margin-left: 0px; font-style: inherit; font-variant-ligatures: inherit=
+; font-variant-caps: inherit; font-variant-numeric: inherit; font-variant-e=
+ast-asian: inherit; font-variant-alternates: inherit; font-variant-position=
+: inherit; font-weight: inherit; font-stretch: inherit; line-height: inheri=
+t; font-family: helvetica, sans-serif; font-optical-sizing: inherit; font-k=
+erning: inherit; font-feature-settings: inherit; font-variation-settings: i=
+nherit; font-size: 18px; vertical-align: baseline; border-top-width: 0px; b=
+order-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; b=
+order-top-style: initial; border-right-style: initial; border-bottom-style:=
+ initial; border-left-style: initial; border-top-color: initial; border-rig=
+ht-color: initial; border-bottom-color: initial; border-left-color: initial=
+; border-image-source: initial; border-image-slice: initial; border-image-w=
+idth: initial; border-image-outset: initial; border-image-repeat: initial; =
+color: #000000; letter-spacing: normal; orphans: 2; text-align: start; text=
+-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-t=
+ext-stroke-width: 0px; white-space-collapse: preserve; text-wrap: wrap; bac=
+kground-color: rgb(250, 250, 247); text-decoration-thickness: initial; text=
+-decoration-style: initial; text-decoration-color: initial">Claude Pro and =
+Team users can now organize chats into Projects. Projects bring together in=
+ternal knowledge and chat activity in one place so Claude can help you gene=
+rate ideas, make strategic decisions, and deliver exceptional results.</spa=
+n></div>
+<div style=3D"font-family: inherit; text-align: inherit"><br></div>
+<div style=3D"font-family: inherit; text-align: inherit"><span style=3D"col=
+or: #000000; font-family: helvetica, sans-serif; font-size: 18px; font-styl=
+e: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-=
+weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-in=
+dent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text=
+-stroke-width: 0px; white-space-collapse: preserve; text-wrap: wrap; backgr=
+ound-color: rgb(250, 250, 247); text-decoration-thickness: initial; text-de=
+coration-style: initial; text-decoration-color: initial; float: none; displ=
+ay: inline">With Projects, you can:</span></div>
+<ul>
+  <li color=3D"rgb(0, 0, 0)" style=3D"text-align: inherit; font-family: hel=
+vetica, sans-serif; color: rgb(0, 0, 0); font-size: 18px; font-size: 18px">=
+<span style=3D"box-sizing: border-box; padding-top: 0px; padding-right: 0px=
+; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0p=
+x; margin-bottom: 0px; margin-left: 0px; font-style: inherit; font-variant-=
+ligatures: inherit; font-variant-caps: inherit; font-variant-numeric: inher=
+it; font-variant-east-asian: inherit; font-variant-alternates: inherit; fon=
+t-variant-position: inherit; font-weight: inherit; font-stretch: inherit; l=
+ine-height: inherit; font-family: helvetica, sans-serif; font-optical-sizin=
+g: inherit; font-kerning: inherit; font-feature-settings: inherit; font-var=
+iation-settings: inherit; font-size: 18px; vertical-align: baseline; border=
+-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-=
+left-width: 0px; border-top-style: initial; border-right-style: initial; bo=
+rder-bottom-style: initial; border-left-style: initial; border-top-color: i=
+nitial; border-right-color: initial; border-bottom-color: initial; border-l=
+eft-color: initial; border-image-source: initial; border-image-slice: initi=
+al; border-image-width: initial; border-image-outset: initial; border-image=
+-repeat: initial; color: #000000; letter-spacing: normal; orphans: 2; text-=
+align: start; text-indent: 0px; text-transform: none; widows: 2; word-spaci=
+ng: 0px; -webkit-text-stroke-width: 0px; white-space-collapse: preserve; te=
+xt-wrap: wrap; background-color: rgb(250, 250, 247); text-decoration-thickn=
+ess: initial; text-decoration-style: initial; text-decoration-color: initia=
+l">Upload docs and code=E2=80=94like style guides, codebases, or user feedb=
+ack=E2=80=94so that every response you get from Claude is grounded in exper=
+tise about your Project.</span></li>
+  <li color=3D"rgb(0, 0, 0)" style=3D"text-align: inherit; font-family: hel=
+vetica, sans-serif; color: rgb(0, 0, 0); font-size: 18px; font-size: 18px">=
+<span style=3D"box-sizing: border-box; padding-top: 0px; padding-right: 0px=
+; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0p=
+x; margin-bottom: 0px; margin-left: 0px; font-style: inherit; font-variant-=
+ligatures: inherit; font-variant-caps: inherit; font-variant-numeric: inher=
+it; font-variant-east-asian: inherit; font-variant-alternates: inherit; fon=
+t-variant-position: inherit; font-weight: inherit; font-stretch: inherit; l=
+ine-height: inherit; font-family: helvetica, sans-serif; font-optical-sizin=
+g: inherit; font-kerning: inherit; font-feature-settings: inherit; font-var=
+iation-settings: inherit; font-size: 18px; vertical-align: baseline; border=
+-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-=
+left-width: 0px; border-top-style: initial; border-right-style: initial; bo=
+rder-bottom-style: initial; border-left-style: initial; border-top-color: i=
+nitial; border-right-color: initial; border-bottom-color: initial; border-l=
+eft-color: initial; border-image-source: initial; border-image-slice: initi=
+al; border-image-width: initial; border-image-outset: initial; border-image=
+-repeat: initial; color: #000000; letter-spacing: normal; orphans: 2; text-=
+align: start; text-indent: 0px; text-transform: none; widows: 2; word-spaci=
+ng: 0px; -webkit-text-stroke-width: 0px; white-space-collapse: preserve; te=
+xt-wrap: wrap; background-color: rgb(250, 250, 247); text-decoration-thickn=
+ess: initial; text-decoration-style: initial; text-decoration-color: initia=
+l">Generate new content like code snippets or diagrams with Claude and see =
+a preview of your Artifacts in a dedicated panel.</span></li>
+  <li color=3D"rgb(0, 0, 0)" style=3D"text-align: inherit; font-family: hel=
+vetica, sans-serif; color: rgb(0, 0, 0); font-size: 18px; font-size: 18px">=
+<span style=3D"box-sizing: border-box; padding-top: 0px; padding-right: 0px=
+; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0p=
+x; margin-bottom: 0px; margin-left: 0px; font-style: inherit; font-variant-=
+ligatures: inherit; font-variant-caps: inherit; font-variant-numeric: inher=
+it; font-variant-east-asian: inherit; font-variant-alternates: inherit; fon=
+t-variant-position: inherit; font-weight: inherit; font-stretch: inherit; l=
+ine-height: inherit; font-family: helvetica, sans-serif; font-optical-sizin=
+g: inherit; font-kerning: inherit; font-feature-settings: inherit; font-var=
+iation-settings: inherit; font-size: 18px; vertical-align: baseline; border=
+-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-=
+left-width: 0px; border-top-style: initial; border-right-style: initial; bo=
+rder-bottom-style: initial; border-left-style: initial; border-top-color: i=
+nitial; border-right-color: initial; border-bottom-color: initial; border-l=
+eft-color: initial; border-image-source: initial; border-image-slice: initi=
+al; border-image-width: initial; border-image-outset: initial; border-image=
+-repeat: initial; color: #000000; letter-spacing: normal; orphans: 2; text-=
+align: start; text-indent: 0px; text-transform: none; widows: 2; word-spaci=
+ng: 0px; -webkit-text-stroke-width: 0px; white-space-collapse: preserve; te=
+xt-wrap: wrap; background-color: rgb(250, 250, 247); text-decoration-thickn=
+ess: initial; text-decoration-style: initial; text-decoration-color: initia=
+l">Share your most insightful Claude chats and the Artifacts you create on =
+the Project activity feed, allowing your teammates to learn, explore, and b=
+uild on shared content.</span></li>
+</ul>
+<div style=3D"font-family: inherit; text-align: inherit"><span style=3D"box=
+-sizing: border-box; padding-top: 0px; padding-right: 0px; padding-bottom: =
+0px; padding-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: =
+0px; margin-left: 0px; font-style: inherit; font-variant-ligatures: inherit=
+; font-variant-caps: inherit; font-variant-numeric: inherit; font-variant-e=
+ast-asian: inherit; font-variant-alternates: inherit; font-variant-position=
+: inherit; font-weight: inherit; font-stretch: inherit; line-height: inheri=
+t; font-family: helvetica, sans-serif; font-optical-sizing: inherit; font-k=
+erning: inherit; font-feature-settings: inherit; font-variation-settings: i=
+nherit; font-size: 18px; vertical-align: baseline; border-top-width: 0px; b=
+order-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; b=
+order-top-style: initial; border-right-style: initial; border-bottom-style:=
+ initial; border-left-style: initial; border-top-color: initial; border-rig=
+ht-color: initial; border-bottom-color: initial; border-left-color: initial=
+; border-image-source: initial; border-image-slice: initial; border-image-w=
+idth: initial; border-image-outset: initial; border-image-repeat: initial; =
+color: #000000; letter-spacing: normal; orphans: 2; text-align: start; text=
+-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-t=
+ext-stroke-width: 0px; white-space-collapse: preserve; text-wrap: wrap; bac=
+kground-color: rgb(250, 250, 247); text-decoration-thickness: initial; text=
+-decoration-style: initial; text-decoration-color: initial">To get started,=
+ </span><a href=3D"https://url8792.mail.anthropic.com/ls/click?upn=3Du001.r=
+FcAmKXLOm9u6wLRWHIUYb57odYuMXptiIvSnUIhs1OFjMJaRNn1gJtLEptfBJo8EjUl_rO1JRqZ=
+rx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwUoS9Gpbl6QX1AUICtpGgmLDb6y-2F9BoMWQdxQ=
+FG7iaQE5WYQIENYHWW99UaxK9-2BiDd6cE10IzOFA51xkqBOgfCGyUWhoSDKdNVFlrlP9oP0Sn1=
+rA5-2BsJvrEhwDxjFUG78-2BinwQthq6Vupoz63n2D-2FN4H-2BQuWiolTOzd1-2F1u57kslcXx=
+RAAHqIXd9NdZgjBzQDaoKgmSg8tY8Ai5vW5ppUEDqcx5-2F35rSYBtqJhbeyLfVpEYn69khtmX0=
+aIl5aOr-2FBu0LsyjFMplEfabrW3ZdyOywE09gj0GoZH58JE3R5W9DUMNoOGrJFR-2BOyD9Cc5j=
+qjvXIsyEx1bxB9t6RUHzSJ8Kczju85M3tpX00z2WwvMlukhgXwhngjwREcK0zcBQWvCv9EVED4h=
+VG-2FbaIKMm-2B9jMe9dGPLf9XdDswSl-2BoB57XdyF1-2FOPskypHHqrFM3WwJxb9CToMEJnZi=
+4smL-2F0I-2BoQCpb3E4LMSsqGuPKv4zr8CD1HEkE3TtmRPJ0vuiQQIZYentP-2FmcTvkmDodDn=
+lrCKDF-2FsFCdOUABe1y-2BB91-2BpfMkh2XvMdFHKTjKgirwJj1LC9l-2B1KtQYlZj52HPww2q=
+4RQZ34jnIkuxqCVS5T2gYWVnTmcZ9ka6lCfXHomNprNqLSufcPvXEgzKGOUsEXdnhuIhrJnyzIQ=
+mqeLkvqLCZ34DmtgVnqGxXj5Rz-2BOM7LduLGHsa-2FVGzvdr7fncGKTdKuB5Yxn32llI1j4H0W=
+0G6FiK5YO-2Fcc0bdCb-2BQoFlYmPRoNJQy02rRFZiNVhXapnPTMhkum1Qvt9ZCxz06JX-2BIEK=
+TNBCk-2FyIfCL2LOdqdaMsYftEk5Ms0GFpOFIr5PbLenMHV1ZyCiavuKjgmkS5eHXlYdZrmuFll=
+FQ3h7CyQHdIWx-2BCCrDAA6mAmlI7b7X9QEZ-2BRuHiMZHeF5RL7I00IspuBkL51DCZUrEbFuaz=
+FfIdEU-3D"><span style=3D"box-sizing: border-box; padding-top: 0px; padding=
+-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margi=
+n-right: 0px; margin-bottom: 0px; margin-left: 0px; font-style: inherit; fo=
+nt-variant-ligatures: inherit; font-variant-caps: inherit; font-variant-num=
+eric: inherit; font-variant-east-asian: inherit; font-variant-alternates: i=
+nherit; font-variant-position: inherit; font-weight: inherit; font-stretch:=
+ inherit; line-height: inherit; font-family: helvetica, sans-serif; font-op=
+tical-sizing: inherit; font-kerning: inherit; font-feature-settings: inheri=
+t; font-variation-settings: inherit; font-size: 18px; vertical-align: basel=
+ine; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0=
+px; border-left-width: 0px; border-top-style: initial; border-right-style: =
+initial; border-bottom-style: initial; border-left-style: initial; border-t=
+op-color: initial; border-right-color: initial; border-bottom-color: initia=
+l; border-left-color: initial; border-image-source: initial; border-image-s=
+lice: initial; border-image-width: initial; border-image-outset: initial; b=
+order-image-repeat: initial; letter-spacing: normal; orphans: 2; text-align=
+: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0=
+px; -webkit-text-stroke-width: 0px; white-space-collapse: preserve; text-wr=
+ap: wrap; background-color: rgb(250, 250, 247); text-decoration-thickness: =
+initial; text-decoration-style: initial; text-decoration-color: initial; co=
+lor: #1188e6">upgrade</span></a><span style=3D"box-sizing: border-box; padd=
+ing-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; m=
+argin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; fo=
+nt-style: inherit; font-variant-ligatures: inherit; font-variant-caps: inhe=
+rit; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-=
+variant-alternates: inherit; font-variant-position: inherit; font-weight: i=
+nherit; font-stretch: inherit; line-height: inherit; font-family: helvetica=
+, sans-serif; font-optical-sizing: inherit; font-kerning: inherit; font-fea=
+ture-settings: inherit; font-variation-settings: inherit; font-size: 18px; =
+vertical-align: baseline; border-top-width: 0px; border-right-width: 0px; b=
+order-bottom-width: 0px; border-left-width: 0px; border-top-style: initial;=
+ border-right-style: initial; border-bottom-style: initial; border-left-sty=
+le: initial; border-top-color: initial; border-right-color: initial; border=
+-bottom-color: initial; border-left-color: initial; border-image-source: in=
+itial; border-image-slice: initial; border-image-width: initial; border-ima=
+ge-outset: initial; border-image-repeat: initial; color: #000000; letter-sp=
+acing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transf=
+orm: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; wh=
+ite-space-collapse: preserve; text-wrap: wrap; background-color: rgb(250, 2=
+50, 247); text-decoration-thickness: initial; text-decoration-style: initia=
+l; text-decoration-color: initial"> to the Pro plan or create a Team plan t=
+o collaborate with colleagues. To learn more, check out our </span><a href=
+=3D"https://url8792.mail.anthropic.com/ls/click?upn=3Du001.rFcAmKXLOm9u6wLR=
+WHIUYb57odYuMXptiIvSnUIhs1ORiIOs6oAgh3Dc9BWKUjapw1DWUtWTurFmfN18juftew-3D-3=
+DxF45_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwUoS9Gpbl6QX1AUICtpGgmLDb6=
+y-2F9BoMWQdxQFG7iaQE5WYQIENYHWW99UaxK9-2BiDd6cE10IzOFA51xkqBOgfCGyUWhoSDKdN=
+VFlrlP9oP0Sn1rA5-2BsJvrEhwDxjFUG78-2BinwQthq6Vupoz63n2D-2FN4H-2BQuWiolTOzd1=
+-2F1u57kslcXxRAAHqIXd9NdZgjBzQDaoKgmSg8tY8Ai5vW5ppUEDqcx5-2F35rSYBtqJhbeyLf=
+VpEYn69khtmX0aIl5aOr-2FBu0LsyjFMplEfabrW3ZdyOywE09gj0GoZH58JE3R5W9DUMNoOGrJ=
+FR-2BOyD9Cc5jqjvXIsyEx1bxB9t6RUHzSJ8Kczju85M3tpX00z2WwvMlukhgXwhngjwREcK0zc=
+BQWvCv9EVED4hVG-2FbaIKMm-2B9jMe9dGPLf9XdDswSl-2BoB57XdyF1-2FOPskypHHqrFM3Ww=
+Jxb9CToMEJnZi4smL-2F0I-2BoQCpb3E4LMSsqGuPKv4zr8CD1HEkE3TtmRPJ0vuiQQIZYentP-=
+2FmcTvkmDodDnlrCKDF-2FsFCdOUABe1y-2BB91-2BpfMkh2XvMdFHKTjKgirwJj1LC9l-2B1Kt=
+QYlZj52HPww2q4RQZ34jnIkuxqCVS5T2gYWVnTmcZ9ka6lCfXHomNprNqLSufcPvXEgzKGOUsEX=
+dnhuIhrJnyzIQmqeLkvqLCZ34DmtgVnqGxXj5Rz-2BOM7LduLGHsa-2FVGzvdr7fncGKTdKuB5Y=
+xn32llI1j4H0W0G6FiK5YO-2Fcc0bdCb-2BQoFlYmPRoNJQy02rRFZiNVhXapnPTMhkum1Qvt9Z=
+Cxz06JX-2BIEKRCm1ldjTfD4jTeZKwvKTC02R-2F0LjUG-2FNlqE8KVlDudphsQfVe8SYrDo-2B=
+hxF59bIgwZX0mLiJKHVwCSmvc7kCCn6gScnO6usBQH0R2NpY8AIj1OEv-2B9WMPAxb8LsewtBPh=
+LzX6axyUkZ3kUNctkl7gQ-3D"><span style=3D"box-sizing: border-box; padding-to=
+p: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-=
+top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-sty=
+le: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit; f=
+ont-variant-numeric: inherit; font-variant-east-asian: inherit; font-varian=
+t-alternates: inherit; font-variant-position: inherit; font-weight: inherit=
+; font-stretch: inherit; line-height: inherit; font-family: helvetica, sans=
+-serif; font-optical-sizing: inherit; font-kerning: inherit; font-feature-s=
+ettings: inherit; font-variation-settings: inherit; font-size: 18px; vertic=
+al-align: baseline; border-top-width: 0px; border-right-width: 0px; border-=
+bottom-width: 0px; border-left-width: 0px; border-top-style: initial; borde=
+r-right-style: initial; border-bottom-style: initial; border-left-style: in=
+itial; border-top-color: initial; border-right-color: initial; border-botto=
+m-color: initial; border-left-color: initial; border-image-source: initial;=
+ border-image-slice: initial; border-image-width: initial; border-image-out=
+set: initial; border-image-repeat: initial; letter-spacing: normal; orphans=
+: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space-collapse: pr=
+eserve; text-wrap: wrap; background-color: rgb(250, 250, 247); text-decorat=
+ion-thickness: initial; text-decoration-style: initial; text-decoration-col=
+or: initial; color: #1188e6">blog post</span></a><span style=3D"box-sizing:=
+ border-box; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; pad=
+ding-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; mar=
+gin-left: 0px; font-style: inherit; font-variant-ligatures: inherit; font-v=
+ariant-caps: inherit; font-variant-numeric: inherit; font-variant-east-asia=
+n: inherit; font-variant-alternates: inherit; font-variant-position: inheri=
+t; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-=
+family: helvetica, sans-serif; font-optical-sizing: inherit; font-kerning: =
+inherit; font-feature-settings: inherit; font-variation-settings: inherit; =
+font-size: 18px; vertical-align: baseline; border-top-width: 0px; border-ri=
+ght-width: 0px; border-bottom-width: 0px; border-left-width: 0px; border-to=
+p-style: initial; border-right-style: initial; border-bottom-style: initial=
+; border-left-style: initial; border-top-color: initial; border-right-color=
+: initial; border-bottom-color: initial; border-left-color: initial; border=
+-image-source: initial; border-image-slice: initial; border-image-width: in=
+itial; border-image-outset: initial; border-image-repeat: initial; color: #=
+000000; letter-spacing: normal; orphans: 2; text-align: start; text-indent:=
+ 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stro=
+ke-width: 0px; white-space-collapse: preserve; text-wrap: wrap; background-=
+color: rgb(250, 250, 247); text-decoration-thickness: initial; text-decorat=
+ion-style: initial; text-decoration-color: initial">.<br>
+=E2=80=94The Anthropic team</span></div><div></div></div></td>
+      </tr>
+    </tbody>
+  </table><table class=3D"module" role=3D"module" data-type=3D"social" alig=
+n=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%=
+" style=3D"table-layout: fixed;" data-muid=3D"f4569f76-5401-4d05-b706-32502=
+f6e9cd4">
+    <tbody>
+      <tr>
+        <td valign=3D"top" style=3D"padding:0px 0px 0px 0px; font-size:6px;=
+ line-height:10px;" align=3D"center">
+          <table align=3D"center" style=3D"-webkit-margin-start:auto;-webki=
+t-margin-end:auto;">
+            <tbody><tr align=3D"center"><td style=3D"padding: 0px 5px;" cla=
+ss=3D"social-icon-column">
+      <a role=3D"social-icon-link" href=3D"https://url8792.mail.anthropic.c=
+om/ls/click?upn=3Du001.rFcAmKXLOm9u6wLRWHIUYfw6YEn6S7SZHsYwi-2Bdxy7gWNonWz4=
+HUpGN07CsdA5MWVNto_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwUoS9Gpbl6QX1=
+AUICtpGgmLDb6y-2F9BoMWQdxQFG7iaQE5WYQIENYHWW99UaxK9-2BiDd6cE10IzOFA51xkqBOg=
+fCGyUWhoSDKdNVFlrlP9oP0Sn1rA5-2BsJvrEhwDxjFUG78-2BinwQthq6Vupoz63n2D-2FN4H-=
+2BQuWiolTOzd1-2F1u57kslcXxRAAHqIXd9NdZgjBzQDaoKgmSg8tY8Ai5vW5ppUEDqcx5-2F35=
+rSYBtqJhbeyLfVpEYn69khtmX0aIl5aOr-2FBu0LsyjFMplEfabrW3ZdyOywE09gj0GoZH58JE3=
+R5W9DUMNoOGrJFR-2BOyD9Cc5jqjvXIsyEx1bxB9t6RUHzSJ8Kczju85M3tpX00z2WwvMlukhgX=
+whngjwREcK0zcBQWvCv9EVED4hVG-2FbaIKMm-2B9jMe9dGPLf9XdDswSl-2BoB57XdyF1-2FOP=
+skypHHqrFM3WwJxb9CToMEJnZi4smL-2F0I-2BoQCpb3E4LMSsqGuPKv4zr8CD1HEkE3TtmRPJ0=
+vuiQQIZYentP-2FmcTvkmDodDnlrCKDF-2FsFCdOUABe1y-2BB91-2BpfMkh2XvMdFHKTjKgirw=
+Jj1LC9l-2B1KtQYlZj52HPww2q4RQZ34jnIkuxqCVS5T2gYWVnTmcZ9ka6lCfXHomNprNqLSufc=
+PvXEgzKGOUsEXdnhuIhrJnyzIQmqeLkvqLCZ34DmtgVnqGxXj5Rz-2BOM7LduLGHsa-2FVGzvdr=
+7fncGKTdKuB5Yxn32llI1j4H0W0G6FiK5YO-2Fcc0bdCb-2BQoFlYmPRoNJQy02rRFZiNVhXapn=
+PTMhkum1Qvt9ZCxz06JX-2BIEKZ42LZQGg-2BKXx0jlanYRTwdkv8NpJQlVaCSNF7fau20oEmOp=
+UCae05ri76XHq6XF6upxVRKgO6liESbzhy3xv8j2RVnLc44Yngvpdgx1oze8maftSGbplXbvIa1=
+jF9QjQKvu1EooC-2FN-2FzAx0Nsjqe1w-3D" target=3D"_blank" alt=3D"X" title=3D"X=
+" style=3D"display:inline-block; background-color:#000000; height:21px; wid=
+th:21px;">
+        <img role=3D"social-icon" alt=3D"X" title=3D"X" src=3D"https://mc.s=
+endgrid.com/assets/social/white/x.png" style=3D"height:21px; width:21px;" h=
+eight=3D"21" width=3D"21">
+      </a>
+    </td><td style=3D"padding: 0px 5px;" class=3D"social-icon-column">
+      <a role=3D"social-icon-link" href=3D"https://url8792.mail.anthropic.c=
+om/ls/click?upn=3Du001.rFcAmKXLOm9u6wLRWHIUYa6GzH-2BFtbEVfexYT4qRVAWazJ7g4O=
+eUD3adJ2mUpFcICy16n2hGL01Q-2BzfxCliP7w-3D-3DbWRD_rO1JRqZrx5Oo25BATZItEvIKK9=
+wiuA6UN-2BXngf09BwUoS9Gpbl6QX1AUICtpGgmLDb6y-2F9BoMWQdxQFG7iaQE5WYQIENYHWW9=
+9UaxK9-2BiDd6cE10IzOFA51xkqBOgfCGyUWhoSDKdNVFlrlP9oP0Sn1rA5-2BsJvrEhwDxjFUG=
+78-2BinwQthq6Vupoz63n2D-2FN4H-2BQuWiolTOzd1-2F1u57kslcXxRAAHqIXd9NdZgjBzQDa=
+oKgmSg8tY8Ai5vW5ppUEDqcx5-2F35rSYBtqJhbeyLfVpEYn69khtmX0aIl5aOr-2FBu0LsyjFM=
+plEfabrW3ZdyOywE09gj0GoZH58JE3R5W9DUMNoOGrJFR-2BOyD9Cc5jqjvXIsyEx1bxB9t6RUH=
+zSJ8Kczju85M3tpX00z2WwvMlukhgXwhngjwREcK0zcBQWvCv9EVED4hVG-2FbaIKMm-2B9jMe9=
+dGPLf9XdDswSl-2BoB57XdyF1-2FOPskypHHqrFM3WwJxb9CToMEJnZi4smL-2F0I-2BoQCpb3E=
+4LMSsqGuPKv4zr8CD1HEkE3TtmRPJ0vuiQQIZYentP-2FmcTvkmDodDnlrCKDF-2FsFCdOUABe1=
+y-2BB91-2BpfMkh2XvMdFHKTjKgirwJj1LC9l-2B1KtQYlZj52HPww2q4RQZ34jnIkuxqCVS5T2=
+gYWVnTmcZ9ka6lCfXHomNprNqLSufcPvXEgzKGOUsEXdnhuIhrJnyzIQmqeLkvqLCZ34DmtgVnq=
+GxXj5Rz-2BOM7LduLGHsa-2FVGzvdr7fncGKTdKuB5Yxn32llI1j4H0W0G6FiK5YO-2Fcc0bdCb=
+-2BQoFlYmPRoNJQy02rRFZiNVhXapnPTMhkum1Qvt9ZCxz06JX-2BIEKbjD-2FQkmRYGGA-2Fk6=
+w8Pyl1EC9BOfxkbm0vBXc6q-2FhGC6WicoZSSt1Ljf8MJ-2FcPQU3Fu28tMvzXUF82F6Wx9c-2F=
+znYjY6X0Vi81O8fjPZtH66MRDAiG6H4n6WAQRTpOBZDdihCubO1zkCKe9zlKGwDEkM-3D" targ=
+et=3D"_blank" alt=3D"LinkedIn" title=3D"LinkedIn" style=3D"display:inline-b=
+lock; background-color:#0077B5; height:21px; width:21px;">
+        <img role=3D"social-icon" alt=3D"LinkedIn" title=3D"LinkedIn" src=
+=3D"https://mc.sendgrid.com/assets/social/white/linkedin.png" style=3D"heig=
+ht:21px; width:21px;" height=3D"21" width=3D"21">
+      </a>
+    </td></tr></tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table><div data-role=3D"module-unsubscribe" class=3D"module" role=3D"mo=
+dule" data-type=3D"unsubscribe" style=3D"color:#444444; font-size:12px; lin=
+e-height:20px; padding:16px 16px 16px 16px; text-align:center;" data-muid=
+=3D"27ea0023-57b7-4254-875b-bf22d38c5a01"><div class=3D"Unsubscribe--addres=
+sLine"></div><p style=3D"font-size:12px; line-height:20px;"><a class=3D"Uns=
+ubscribe--unsubscribeLink" href=3D"https://url8792.mail.anthropic.com/wf/un=
+subscribe?upn=3DwzqEHQSn045tRvE-2FnMN1Hk3pIyiQCrrmqbFFROZ7VJY4uGXxRTINvolxY=
+cyAmFeBGq9XDfP4Nm1b1RUuB46PrTPp7Du6KWhbH95MVU-2FC2sEE4ihV0RvzRL71ar-2B3i4Zj=
+kmJbkQFEPi2aAUiFvuSTGPh-2FJZhT3vTgAdVnbc4cJatJ1t8wicORSzKKL9btg7raLzeFkXUqy=
+uU2042M6foRoBbMQ-2FCyLxbEWtihhPd7lSKwBnmCGfwqLR-2FAVM-2BGs1zDo-2BYvw1-2FZjr=
+A0-2Bps7V4Y3CA1MVYjJ2cWt22wjBRjaSLVT7Pq620ANJ4u-2FqXhsML8BHUmE9EtyR3JfTJbQi=
+YYmwLbCFUY3MBtMGxX4XegDouduPCsTNWtm10kWL1GWQedK-2BpIGymmhv2VJGuq83Qs7CTyJQt=
+s6Jr4gUfF03BD8S7smojdg4tIHmtC0cSCnqU35QA5ayMFkR8o7-2BTTfbIZqwbzRQgwtP6IWxkZ=
+v1qm8Fp9P6hOw0v2r9okCh-2FAoA7bCUbTCmiEXyF1dHLhnR6-2FFaXMfGUCqytRNPOlBWIphrM=
+MjWesIYX9-2FIeLU8maNqs7CMThKDCzBxuKudr-2FYGNE2FLvNBRl3Fx-2FuZw6-2FUFIGQCk6M=
+asvmMHMnG7tatgQ3NqDy2Ybt-2BBcf3BLDl1nk68LtTGykwmsfuwhhLKZ8ibDx0gdtH670WKc8a=
+9rrDltXaWmx9nvHEYhX-2FT3b4kqVt2XAz-2F8ZfbUulUNKZ1mZGYf2LM-2F5TJ9Jf3LGfzE8L7=
+-2Bxd-2FnrT6hZwmwinRbCtNNoBVl1jLr5R1HQmtXgWao5-2FG6-2BP4f8jS1dZZMYKxeaW8P63=
+EEcmTFTpMlvYBycWRZEy4tUhV-2BSxHs-2F3O3FK1CdLjfftLCFqLK168Z5fSKKcuREj0BWbmlF=
+40vPhXoL-2Fo634JLFbghaC15gNFs4E6ZP7mcGDxJtUW46QkJnKPfhnwQiMhOhFu67Om5xwMgCY=
+Pfte5fSY0wcpRrDbx2BWsyxqs4vge8e6pXHbuNxKrfOOOsUkbk" target=3D"_blank" style=
+=3D"">Unsubscribe</a></p></div></td>
+                                      </tr>
+                                    </table>
+                                    <!--[if mso]>
+                                  </td>
+                                </tr>
+                              </table>
+                            </center>
+                            <![endif]-->
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </center>
+    <img src=3D"https://url8792.mail.anthropic.com/wf/open?upn=3Du001.wJ4wQ=
+oWqpttL0LnWj9yCngQD-2BPKOSnIWwGo2A-2BWj6Xi6FgHnN-2B9bhefwKVGNvqLcGhrbYgefP-=
+2FXEugaciFYlgmLHP1man5IWhC1LkqTfxjh9F7zMduMnNKqVt4Xu0DWqZns0Q491N-2B3QdjZBO=
+d-2BRNjJxnvCC8p9I99CLMeDBs2dHufjWWDdk-2BLDRZVzOJHGUGho5Rk-2BnyZf0tWii-2Fbdx=
+zqve08XUFlldDgxp0xoJMtjr4muiW2loZw2OxuVWpCt2ZM7z1stOxAkF1MA6K09aUC3ES6aupv0=
+nM9cqkvJ8HJcPPw-2BAKZ-2Blr1oPMoHfHz3SqRD431irh5mBkMVJ9kVRElziE2kCAgoGyrvpqA=
+udwZTT714j0n9UJ4o3neplyLrCIs0eyKFdTs-2F4YSmjpwp12zmSQz8gF-2BuEk3JybJQIg-2BE=
+D7WXJy-2B05PzofPIbpcAVpIwAiEJSMYqZwQEBBzkQGL1NrtXBq8H6wqfLcyc3GfTWcr0xi6j24=
+-2BfWGpuFtvD1PC6LyugPvRZoZYfin3xqSTv2MaBAaNezO9l71yjBeiUN2zOZiqnN4dvAkgm6c3=
+eVK6w6CzKgucmVqfI09Aj-2B2uptnGz1G2mnHK5VGjE27DRyPuNLaL9VyjlsE-2B3XsVt-2BdMd=
+l7Au9-2FOaw7GVxGfILMprXMYmfRDJkj8iJlGCaEX4aavm-2Frz34ueuX-2BhCOuu7RAWLzic2z=
+TgTwfCA7jHgZC9I1cOi1FvEj35ZXBFjZvxfbF5LN4hdr53UWof5S9RWWNdnvZyttla2KHGfXfzN=
+SxWmZpzNGXD16MA-2FPcsRDDiWScJHMIjuzwJa9HvTsTuErfAbTSeFTkqPrYKobR-2Bto2Enm2q=
+YBuWgzsuBPx-2BgvDf7o8XxNpktHSoAfHZ1MrNl1NmAInES2W7Fo1heqtaTJkdX2DzXP1RsQkzC=
+Lt-2BzVLwsjBivuO2s6tMXVHUO6d2mna4KO-2FPV10-2BMBI2FxKVDrXEOp80yAlDyIzy-2BLLW=
+tYeWoc-3D" alt=3D"" width=3D"1" height=3D"1" border=3D"0" style=3D"height:1=
+px !important;width:1px !important;border-width:0 !important;margin-top:0 !=
+important;margin-bottom:0 !important;margin-right:0 !important;margin-left:=
+0 !important;padding-top:0 !important;padding-bottom:0 !important;padding-r=
+ight:0 !important;padding-left:0 !important;"/></body>
+  </html>
+--3e9b36b06b29480eeae32b6e6ad898ca668fd315e11a2fbe8cdf74e186b5--
+

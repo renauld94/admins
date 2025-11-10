@@ -1,0 +1,1330 @@
+X-GM-THRID: 1823656601001661453
+X-Gmail-Labels: Inbox,Category Updates,Unread
+Delivered-To: sn.renauld@gmail.com
+Received: by 2002:a17:907:1c0b:b0:ab7:748f:3298 with SMTP id
+ nc11csp1736373ejc;
+        Mon, 10 Feb 2025 00:01:02 -0800 (PST)
+X-Forwarded-Encrypted: i=2;
+ AJvYcCXRR0NYfiSst1viEdLybzkv6Iw/jErY/Ycx6LJDxS1ln4xqqkTU/yvrNgq5V1WTjuJUKIDXZP0Ou5y8@gmail.com
+X-Google-Smtp-Source: 
+ AGHT+IHqbZKVJq0pKo8AOvVWyzmxYSYVTRPXRvfn2D0Pu6mwu9vY+cR2lQFeimfmwtk3ai3T45Yp
+X-Received: by 2002:a05:620a:1aa4:b0:7c0:610e:f083 with SMTP id
+ af79cd13be357-7c0610ef501mr199409585a.39.1739174462049;
+        Mon, 10 Feb 2025 00:01:02 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1739174462; cv=none;
+        d=google.com; s=arc-20240605;
+        b=LhP97Rl8iim4IKUUOIoN+TXVfpz40Rwpq6n4u1sZuKNpjgV1QPEui1ELfK4jzopt7n
+         TqITTrNEs21rPJh4VsAr8r8dpSdvPvtzvNc1+6J1Nx1hU7gtTpnylcAdqiVpPt1BJj0J
+         pJfYuJGwfHUQ8g113+rH+ce4BhwUsgSQJ3RVwVuN0nYZ2vUcmB4NU3tvvB2OLv9eiu8l
+         5JsT0FER/S2PE+CzjUestGBrztFz6IZ+MLN18MuMsjjqsSBjji7kXFxtDt+2qMjcynQ5
+         ECYdH/ypUHStSUhWLaLB48tiso3xKlZ6wFSbbZuJBLK+7GKVpEFnKpoLSeZ6pBU1dPwP
+         zywg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605;
+        h=mime-version:feedback-id:auto-submitted:precedence:to:reply-to
+         :message-id:subject:date:from:dkim-signature:dkim-signature
+         :delivered-to;
+        bh=0V8LH0uW+4ZQDosZ2CCHCfbsHhBb86WoaQOk4ZrpWIw=;
+        fh=PtvM+3MFXUjY4IoQonFu3/PZGaDPHwj8XoabnUc3IG8=;
+        b=OY3z8m8Y4+UtvhpEkZJRG2ICtpa04frk7fI1oFujtPqZ7Wg1DueGwfBx8OL0oP+oU+
+         Fi9jbJIoyQ341BAKsqo+t4/V5NlXWKi663+rAkVOsXBudWIct+Dvk3D0MVPLYWn65s8O
+         iaYWcAG5urmO/OZy1MNSD76diwKGCL38UcsO8Od8BgpDatNjh01Tf420Y1XNLgoXogTL
+         YdLQlmW3OsCxCdDL8tnKqsuG+igFRRdW9KtIPnph3zzUGndp7miWB3RSe+nXdvkDIeiW
+         WkFmxM2YFfEVm52ppxPvD9GVmbf2gpA1ap9jkVDZVnH6k8rdjQh78mbslU4+cgSApH3D
+         fDxw==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@pm.mtasv.net header.s=pm20241021 header.b=AqcoJKAb;
+       dkim=pass header.i=@openproject.com header.s=20180928205116pm
+ header.b=d89nm5jr;
+       spf=fail (google.com: domain of pm_bounces@email.openproject.com does
+ not designate 178.33.45.209 as permitted sender)
+ smtp.mailfrom=pm_bounces@email.openproject.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=openproject.com
+Return-Path: <pm_bounces@email.openproject.com>
+Received: from 8.mo558.mail-out.ovh.net (8.mo558.mail-out.ovh.net.
+ [178.33.45.209])
+        by mx.google.com with ESMTPS id
+ af79cd13be357-7c041e0a081si919834585a.176.2025.02.10.00.01.01
+        for <sn.renauld@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 Feb 2025 00:01:02 -0800 (PST)
+Received-SPF: fail (google.com: domain of pm_bounces@email.openproject.com
+ does not designate 178.33.45.209 as permitted sender)
+ client-ip=178.33.45.209;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@pm.mtasv.net header.s=pm20241021 header.b=AqcoJKAb;
+       dkim=pass header.i=@openproject.com header.s=20180928205116pm
+ header.b=d89nm5jr;
+       spf=fail (google.com: domain of pm_bounces@email.openproject.com does
+ not designate 178.33.45.209 as permitted sender)
+ smtp.mailfrom=pm_bounces@email.openproject.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=openproject.com
+Received: from mx1.ovh.net (unknown [10.110.101.92])
+	by mo558.mail-out.ovh.net (Postfix) with SMTP id 4Yrxph5r7kz15wf
+	for <sn.renauld@gmail.com>; Mon, 10 Feb 2025 08:01:00 +0000 (UTC)
+Received: from localhost (HELO queueout) (127.0.0.1)
+	by localhost with SMTP; 10 Feb 2025 10:01:00 +0200
+Delivered-To: digitalunicorn.fr-simon.renauld@digitalunicorn.fr
+Received: from localhost (HELO queue) (127.0.0.1)
+	by localhost with SMTP; 10 Feb 2025 10:01:00 +0200
+Received: from unknown (HELO output33.mail.ovh.net) (192.168.13.148)
+  by 192.168.9.31 with AES256-GCM-SHA384 encrypted SMTP;
+ 10 Feb 2025 10:01:00 +0200
+Received: from vr34.mail.ovh.net (unknown [10.101.8.34])
+	by out33.mail.ovh.net (Postfix) with ESMTP id 4Yrxph19Txz2MWWS
+	for <simon.renauld@digitalunicorn.fr>; Mon, 10 Feb 2025 08:01:00 +0000 (UTC)
+Received: from in75.mail.ovh.net (unknown [10.101.4.75])
+	by vr34.mail.ovh.net (Postfix) with ESMTP id 4Yrxpg6nS9z4fZcHh
+	for <simon.renauld@digitalunicorn.fr>; Mon, 10 Feb 2025 08:00:59 +0000 (UTC)
+Received: from sc-ord-mta120.mtasv.net (sc-ord-mta120.mtasv.net
+ [50.31.156.120])
+	by in75.mail.ovh.net (Postfix) with ESMTPS id 4Yrxpg2MpGz2HYp7
+	for <simon.renauld@digitalunicorn.fr>; Mon, 10 Feb 2025 08:00:59 +0000 (UTC)
+Authentication-Results: in75.mail.ovh.net;
+    dkim=pass (1024-bit rsa key sha256) header.d=openproject.com
+ header.i=notifications@openproject.com header.b=d89nm5jr header.a=rsa-sha256
+ header.s=20180928205116pm;
+    dkim=pass (2048-bit rsa key sha256) header.d=pm.mtasv.net
+ header.i=@pm.mtasv.net header.b=AqcoJKAb header.a=rsa-sha256
+ header.s=pm20241021;
+    dmarc=pass policy.published-domain-policy=reject
+ policy.published-subdomain-policy=reject policy.applied-disposition=none
+ policy.evaluated-disposition=none (p=reject,sp=reject,d=none,d.eval=none)
+ policy.policy-from=p header.from=openproject.com;
+    spf=pass smtp.mailfrom=pm_bounces@email.openproject.com
+ smtp.helo=sc-ord-mta120.mtasv.net;
+    x-tls=pass smtp.version=TLSv1.3 smtp.cipher=TLS_AES_256_GCM_SHA384
+ smtp.bits=256
+Received-SPF: pass
+    (email.openproject.com: Sender is authorized to use
+ 'pm_bounces@email.openproject.com' in 'mfrom' identity (mechanism
+ 'include:spf.mtasv.net' matched))
+    receiver=in75.mail.ovh.net;
+    identity=mailfrom;
+    envelope-from="pm_bounces@email.openproject.com";
+    helo=sc-ord-mta120.mtasv.net;
+    client-ip=50.31.156.120
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=pm20241021;
+ d=pm.mtasv.net;
+ h=From:Date:Subject:Message-Id:Reply-To:To:MIME-Version:Content-Type:Date:
+ From:Message-ID:Reply-To:Sender:Subject:To:CC; t=1739174459; x=1739260859;
+ bh=0V8LH0uW+4ZQDosZ2CCHCfbsHhBb86WoaQOk4ZrpWIw=;
+ b=AqcoJKAb5Yzb8n9lbFUpKD3ZHvHS5XCOPPgpJcnZ2BNlRK1JKFToNOcYfHusmiI4xgvHMUKP/5HA
+   YGq0VyXCeZiefCKnQJR4QD2AJ5R9sFffFCOPwIlbb4pN/BMA/RpvFqG+Lgso2b/JmxZ8GBG/XW67
+   kkFam+bT4f1jkDSEPQhlJLIigaFyIfJ2k/6upjx0cAhNRZU3JORmtOk/F3TfgB/KRWRJk+gw6VJf
+   IQhSMRKgL3l1f+lH4eUDlJghwshjFERW4qqb7inoYmTesL3m5fJ2C8EWGFTibl9bjMjtu4q9KkXT
+   7QpdzMpc/Od6Bk3xwY8x69UlHVXwGi7FxNLD1w==
+Received: by sc-ord-mta120.mtasv.net id hl6p3k3864ot for
+ <simon.renauld@digitalunicorn.fr>;
+ Mon,
+ 10 Feb 2025 03:00:58 -0500 (envelope-from <pm_bounces@email.openproject.com>)
+X-PM-IP: 50.31.156.120
+X-IADB-IP: 50.31.156.120
+X-IADB-IP-REVERSE: 120.156.31.50
+DKIM-Signature: v=1; a=rsa-sha256; d=openproject.com; s=20180928205116pm;
+	c=relaxed/relaxed; i=notifications@openproject.com; t=1739174457;
+	x=1739347257;
+	h=date:date:from:from:message-id:reply-to:reply-to:sender:subject:subject:to:
+	to:cc:feedback-id:mime-version:content-type;
+	bh=0V8LH0uW+4ZQDosZ2CCHCfbsHhBb86WoaQOk4ZrpWIw=;
+	b=d89nm5jr0MsY7Cs02yDpPy9dvcY0005zA6wA8XmuLQ5Bc2b8avLYS92mNv1qv9rBfmlBlomEMX3
+	DMtjBD+ERfs6VrdkfCE8TaLsnRAJO9tRB/N3gSwlZ/giMPEq0IR9xzRWj5Z2d4cb1w9sTZ4ul3xsd
+	paBXN/U+QXydP/8IdwI=
+From: notifications@openproject.com
+Date: Mon, 10 Feb 2025 08:00:47 +0000
+Subject: digitalunicorn.openproject.com - 6 unread notifications
+Message-Id: <a318c377-0fba-4248-bd1c-a363a2e48352@mtasv.net>
+Reply-To: digitalunicorn
+	<notifications+o2xtbezv@digitalunicorn.openproject.com>
+To: simon.renauld@digitalunicorn.fr
+X-OpenProject-User: Simon renauld
+X-Mailer: OpenProject
+X-OpenProject-Host: digitalunicorn.openproject.com
+X-OpenProject-Site: digitalunicorn.openproject.com
+Precedence: bulk
+Auto-Submitted: auto-generated
+Feedback-ID: s4281513-_:s4281513:a160591:postmark
+X-Complaints-To: abuse@postmarkapp.com
+X-PM-Message-Id: a318c377-0fba-4248-bd1c-a363a2e48352
+X-PM-RCPT: 
+ |bTB8MTYwNTkxfDQyODE1MTN8c2ltb24ucmVuYXVsZEBkaWdpdGFsdW5pY29ybi5mcg==|
+X-PM-Message-Options: 
+ v1;1.9VRKN1Uxar1wcgqX40hP3Q.OdesVAPLNuwVpC3TPC36F1e4J_9i5lgBILiMAG6UfXASyVBH8Q_0I0Rph5xLW5xGtdBigmaAZDM5uoA96NfoksYN9ryNzTZ2pJC_owxzxykHLpFF3u06HXRYBhlXFlAJyqOxQrAd71vRkjA7ErkBs172fm2NIoCwUzsE9lnf9-9OqsgEVAw1-ZZOcUJlVnH-
+MIME-Version: 1.0
+X-PM-MTA-Pool: transactional-1
+Content-Type: multipart/alternative;
+	boundary=mk3-55e44bf4f9ac4505be98de8586b8eab5; charset=UTF-8
+X-OVH-Remote: 50.31.156.120 (sc-ord-mta120.mtasv.net)
+X-Ovh-Tracer-Id: 12842858765065960099
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: 
+ gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefjeehfecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecunecujfgurhephfffuffkrhfvofhpgggtsegrtderreertdejnecuhfhrohhmpehnohhtihhfihgtrghtihhonhhssehophgvnhhprhhojhgvtghtrdgtohhmnecuggftrfgrthhtvghrnhepfeegkeeftefguedvffefvdffkeevfeekueevfedufeejfeffhfetfeegvdfgveejnecuffhomhgrihhnpehophgvnhhprhhojhgvtghtrdgtohhmnecukfhppeehtddrfedurdduheeirdduvddtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthephedtrdefuddrudehiedruddvtddphhgvlhhopehstgdqohhrugdqmhhtrgduvddtrdhmthgrshhvrdhnvghtpdhmrghilhhfrhhomhepphhmpggsohhunhgtvghssegvmhgrihhlrdhophgvnhhprhhojhgvtghtrdgtohhmpdhnsggprhgtphhtthhopedupdhrtghpthhtohepshhimhhonhdrrhgvnhgruhhlugesughighhithgrlhhunhhitghorhhnrdhfrhdpoffvtefjohhsthepvhhrfeegmgdpughkihhmpehprghsshgmpdhsphhfpehprghsshgmpdhrvghvkffrpehstgdqohhrugdqmhhtrgduvddtrdhmthgrshhvrdhnvghtmgdpghgvohfkrfepfgfu
+X-Ovh-Spam-Status: OK
+X-Ovh-Spam-Reason: vr: OK; dkim: disabled; spf: disabled
+X-Ovh-Message-Type: OK
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: 
+ gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefjeehfecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecunecujfgurhephfffuffkrhfvofhpgggtsegrtderreertdejnecuhfhrohhmpehnohhtihhfihgtrghtihhonhhssehophgvnhhprhhojhgvtghtrdgtohhmnecuggftrfgrthhtvghrnhepfeegkeeftefguedvffefvdffkeevfeekueevfedufeejfeffhfetfeegvdfgveejnecuffhomhgrihhnpehophgvnhhprhhojhgvtghtrdgtohhmnecukfhppeduvdejrddtrddtrddupdehtddrfedurdduheeirdduvddtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpehpmhgpsghouhhntggvshesvghmrghilhdrohhpvghnphhrohhjvggtthdrtghomhdpnhgspghrtghpthhtohepuddprhgtphhtthhopehsnhdrrhgvnhgruhhlugesghhmrghilhdrtghomhdpoffvtefjohhsthepmhhoheehkegmpdhmohguvgepshhmthhpohhuth
+
+--mk3-55e44bf4f9ac4505be98de8586b8eab5
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+
+
+
+Hello Simon
+You have 6 unread notifications
+---------------------------------------------------------------------------=
+-------------------------
+
+
+  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+  =3D #9 Conference =3D
+  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+ =20
+  Date alert, Date alert:=20
+    Milestone date is in 1 day.
+ =20
+
+
+  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+  =3D #42 4. UX_UI Design =3D
+  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+ =20
+  Date alert:=20
+    Start date is in 1 day.
+ =20
+
+
+  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D
+  =3D #8 Setup conference website =3D
+  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D
+ =20
+  Date alert:=20
+    Finish date is today.
+ =20
+
+
+  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+  =3D #2 Organize open source conference =3D
+  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+ =20
+  Date alert:=20
+    Finish date is today.
+ =20
+
+
+  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+  =3D #31 Develop v1.0 =3D
+  =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+ =20
+  Date alert:=20
+    Start date is today.
+ =20
+
+
+---------------------------------------------------------------------------=
+-------------------------
+
+
+
+--
+
+
+--mk3-55e44bf4f9ac4505be98de8586b8eab5
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+  <head>
+    <style>
+      :root {
+        color-scheme: light;
+        supported-color-schemes: light;
+      }
+
+      body {
+        font-family: Verdana, sans-serif;
+        font-size: 0.8em;
+        color: #484848;
+        background: #FFFFFF;
+      }
+
+      /* Enforcing the white background */
+      @media (prefers-color-scheme: dark) {
+        body {
+          color: #484848 !important;
+          background: #FFFFFF !important;
+        }
+      }
+
+      h1, h2, h3 { font-family: "Trebuchet MS", Verdana, sans-serif; margin=
+: 0px; }
+      h1 { font-size: 1.2em; }
+      h2, h3 { font-size: 1.1em; }
+      h2.emailTitle { color: #1a67a3; font-size: 2em; }
+      a, a:link, a:visited { color: #2A5685;}
+      a:hover, a:active { color: #c61a1a; }
+      a.op-uc-link_permalink { display: none; }
+      hr {
+        width: 100%;
+        height: 1px;
+        background: #ccc;
+        border: 0;
+      }
+      blockquote {
+        border-left: 3px solid #E0E0E0;
+        font-style: italic;
+        margin-left: 2.4em;
+        padding-left: 0.6em;
+      }
+      pre {
+        white-space: normal;
+      }
+      img {
+        width: 100%;
+      }
+      .footer {
+        font-size: 0.8em;
+        font-style: italic;
+        border-top-width: 1px;
+        border-top-color: #ccc;
+        border-top-style: solid;
+      }
+      .header,
+      .body,
+      .footer {
+        max-width: 700px;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      a.user-mention:before {
+        content: '@';
+        color: #878787;
+      }
+    </style>
+
+    <meta name=3D"x-apple-disable-message-reformatting">
+    <meta name=3D"viewport" content=3D"initial-scale=3D1.0">
+  </head>
+  <body style=3D"padding: 0">
+      <table class=3D"header">
+        <tr>
+          <td>
+           =20
+          </td>
+        </tr>
+      </table>
+     =20
+      <table class=3D"body">
+        <tr>
+          <td>
+            <table style=3Dtable-layout:fixed;border-collapse:separate;bord=
+er-spacing:0;font-family:Helvetica; cellspacing=3D0 cellpadding=3D0>
+  <tr>
+    <td style=3D"line-height:20px; max-width:0; min-width:0; height:20px; w=
+idth:0; font-size:20px">&nbsp;</td>
+  </tr>
+</table>
+
+<table style=3Dtable-layout:fixed;border-collapse:separate;border-spacing:0=
+;font-family:Helvetica;width:100%;max-width:700px; cellspacing=3D0 cellpadd=
+ing=3D0 width=3D100%>
+  <tr>
+    <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;</td>
+    <td>
+      <table style=3Dtable-layout:fixed;border-collapse:separate;border-spa=
+cing:0;font-family:Helvetica;width:100%;min-width:100% cellspacing=3D0 cell=
+padding=3D0 width=3D100%>
+  <tr>
+    <td>
+      <table style=3Dtable-layout:fixed;border-collapse:separate;border-spa=
+cing:0;font-family:Helvetica; cellspacing=3D0 cellpadding=3D0>
+        <tr>
+          <td>
+            <table style=3Dtable-layout:fixed;border-collapse:separate;bord=
+er-spacing:0;font-family:Helvetica;width:100% cellspacing=3D0 cellpadding=3D=
+0 width=3D100%>
+              <tr>
+                <td>
+                  <span style=3D"font-size: 24px; color: #333333;">
+                    Hello Simon
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td style=3D"line-height:8px; max-width:0; min-width:0; hei=
+ght:8px; width:0; font-size:8px">&nbsp;</td>
+              </tr>
+              <tr>
+                <td>
+                  <span style=3D"font-size:16px; color: #1A67A3; font-weigh=
+t: 600;">
+                     You have 6 unread notifications
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td style=3D"line-height:24px; max-width:0; min-width:0; he=
+ight:24px; width:0; font-size:24px">&nbsp;</td>
+              </tr>
+                <tr>
+                  <td>
+                    <table style=3Dtable-layout:fixed;border-collapse:separ=
+ate;border-spacing:0;font-family:Helvetica; cellspacing=3D0 cellpadding=3D0=
+>
+                      <tr>
+                        <td style=3D"background: #D1E5F5; padding: 8px 12px=
+; border: 1px solid #1A67A3; border-radius: 16px; overflow: hidden; text-ov=
+erflow: ellipsis;">
+                          <a href=3D"https://digitalunicorn.openproject.com=
+/notifications"
+                             target=3D"_blank"
+                             style=3D"color: #1A67A3; text-decoration: none=
+; font-size: 14px;">
+                            To notification center
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              <tr>
+                <td style=3D"line-height:16px; max-width:0; min-width:0; he=
+ight:16px; width:0; font-size:16px">&nbsp;</td>
+              </tr>
+            </table>
+          </td>
+          <td style=3D"max-width:16px; min-width:16px; width:16px">&nbsp;</=
+td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+
+        <a style=3D"text-decoration: none;display: block;"
+   href=3D"https://digitalunicorn.openproject.com/notifications/details/9/a=
+ctivity"
+   target=3D"_blank">
+  <table style=3Dtable-layout:fixed;border-collapse:separate;border-spacing=
+:0;font-family:Helvetica;width:100%;border-width:1px;border-color:#E0E0E0;b=
+order-style:solid;border-radius:10px cellspacing=3D0 cellpadding=3D0 width=3D=
+100%>
+  <tr>
+    <td style=3D"line-height:12px; max-width:0; min-width:0; height:12px; w=
+idth:0; font-size:12px">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>
+      <table style=3Dtable-layout:fixed;border-collapse:separate;border-spa=
+cing:0;font-family:Helvetica;width:100%;font-size:14px; cellspacing=3D0 cel=
+lpadding=3D0 width=3D100%>
+       =20
+    <tr>
+      <td>
+        <table style=3Dtable-layout:fixed;border-collapse:separate;border-s=
+pacing:0;font-family:Helvetica;width:100%;font-size:14px; cellspacing=3D0 c=
+ellpadding=3D0 width=3D100%>
+          <tr>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+            <td>
+              <table style=3Dtable-layout:fixed;border-collapse:separate;bo=
+rder-spacing:0;font-family:Helvetica; cellspacing=3D0 cellpadding=3D0>
+                <tr>
+                  <td>
+                    <table style=3Dtable-layout:fixed;border-collapse:separ=
+ate;border-spacing:0;font-family:Helvetica; cellspacing=3D0 cellpadding=3D0=
+>
+                      <tr>
+                        <td style=3D"color: #333333;
+                          background-color: #FFFFFF;
+                          color:#333333; background-color:#D8F5A2;
+                          white-space: nowrap;
+                          padding: 2px 12px;
+                          height: 18px;
+                          border-radius:2px;">
+                          Scheduled
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td style=3D"max-width:8px; min-width:8px; width:8px">&nb=
+sp;</td>
+                  <td width=3D"100%" style=3D"color: #878787;">
+                    #9 - Demo project
+                     -=20
+                      Date alert,=20
+                      Date alert
+                  </td>
+                  <td>
+                    <table style=3Dtable-layout:fixed;border-collapse:separ=
+ate;border-spacing:0;font-family:Helvetica; cellspacing=3D0 cellpadding=3D0=
+>
+                      <tr>
+                          <td style=3D"background-color: #00A3FF;
+                            color: white;
+                            border-radius: 10px;
+                            padding: 2px 8px;
+                            font-size: 14px;
+                            height: 18px;
+                            line-height: 18px;">
+                            2
+                          </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+          </tr>
+          <tr>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+            <td style=3D"line-height:16px; max-width:0; min-width:0; height=
+:16px; width:0; font-size:16px">&nbsp;</td>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+          </tr>
+          <tr>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+            <td>
+              <table style=3Dtable-layout:fixed;border-collapse:separate;bo=
+rder-spacing:0;font-family:Helvetica;font-size:16px;font-weight:bold cellsp=
+acing=3D0 cellpadding=3D0>
+                <tr>
+                  <td width=3D"100%" style=3D"color: #333333;">
+                    <span style=3D"color: #35C53F;white-space: nowrap;">
+                      MILESTONE
+                    </span>
+                    Conference
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+          </tr>
+          <tr>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+            <td style=3D"line-height:12px; max-width:0; min-width:0; height=
+:12px; width:0; font-size:12px">&nbsp;</td>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+          </tr>
+          <tr>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+            <td>
+          <table style=3Dtable-layout:fixed;border-collapse:separate;border=
+-spacing:0;font-family:Helvetica; cellspacing=3D0 cellpadding=3D0>
+            <tr>
+              <td style=3D"color: #878787; line-height: 24px; font-size: 14=
+px; white-space: normal;">
+                  Milestone date is in 1 day.
+               =20
+              </td>
+            </tr>
+          </table>
+</td>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td style=3D"line-height:12px; max-width:0; min-width:0; height:12px;=
+ width:0; font-size:12px">&nbsp;</td>
+    </tr>
+
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td style=3D"line-height:12px; max-width:0; min-width:0; height:12px; w=
+idth:0; font-size:12px">&nbsp;</td>
+  </tr>
+</table>
+</a>
+
+<table>
+  <tr>
+    <td style=3D"line-height:0px; max-width:0; min-width:0; height:0px; wid=
+th:0; font-size:0px">&nbsp;</td>
+  </tr>
+</table>
+
+<a style=3D"margin-left: 12px;"
+   href=3D"https://digitalunicorn.openproject.com/notifications/details/9/a=
+ctivity"
+   target=3D"_blank"
+   rel=3D"noopener noreferrer">
+  Open in browser
+</a>
+
+<table>
+  <tr>
+    <td style=3D"line-height:20px; max-width:0; min-width:0; height:20px; w=
+idth:0; font-size:20px">&nbsp;</td>
+  </tr>
+</table>
+        <a style=3D"text-decoration: none;display: block;"
+   href=3D"https://digitalunicorn.openproject.com/notifications/details/42/=
+activity"
+   target=3D"_blank">
+  <table style=3Dtable-layout:fixed;border-collapse:separate;border-spacing=
+:0;font-family:Helvetica;width:100%;border-width:1px;border-color:#E0E0E0;b=
+order-style:solid;border-radius:10px cellspacing=3D0 cellpadding=3D0 width=3D=
+100%>
+  <tr>
+    <td style=3D"line-height:12px; max-width:0; min-width:0; height:12px; w=
+idth:0; font-size:12px">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>
+      <table style=3Dtable-layout:fixed;border-collapse:separate;border-spa=
+cing:0;font-family:Helvetica;width:100%;font-size:14px; cellspacing=3D0 cel=
+lpadding=3D0 width=3D100%>
+       =20
+    <tr>
+      <td>
+        <table style=3Dtable-layout:fixed;border-collapse:separate;border-s=
+pacing:0;font-family:Helvetica;width:100%;font-size:14px; cellspacing=3D0 c=
+ellpadding=3D0 width=3D100%>
+          <tr>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+            <td>
+              <table style=3Dtable-layout:fixed;border-collapse:separate;bo=
+rder-spacing:0;font-family:Helvetica; cellspacing=3D0 cellpadding=3D0>
+                <tr>
+                  <td>
+                    <table style=3Dtable-layout:fixed;border-collapse:separ=
+ate;border-spacing:0;font-family:Helvetica; cellspacing=3D0 cellpadding=3D0=
+>
+                      <tr>
+                        <td style=3D"color: #333333;
+                          background-color: #FFFFFF;
+                          color:#FFFFFF; background-color:#CC5DE8;
+                          white-space: nowrap;
+                          padding: 2px 12px;
+                          height: 18px;
+                          border-radius:2px;">
+                          In progress
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td style=3D"max-width:8px; min-width:8px; width:8px">&nb=
+sp;</td>
+                  <td width=3D"100%" style=3D"color: #878787;">
+                    #42 - project-0199-h2food
+                     -=20
+                      Date alert
+                  </td>
+                  <td>
+                    <table style=3Dtable-layout:fixed;border-collapse:separ=
+ate;border-spacing:0;font-family:Helvetica; cellspacing=3D0 cellpadding=3D0=
+>
+                      <tr>
+                          <td style=3D"background-color: #00A3FF;
+                            color: white;
+                            border-radius: 10px;
+                            padding: 2px 8px;
+                            font-size: 14px;
+                            height: 18px;
+                            line-height: 18px;">
+                            1
+                          </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+          </tr>
+          <tr>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+            <td style=3D"line-height:16px; max-width:0; min-width:0; height=
+:16px; width:0; font-size:16px">&nbsp;</td>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+          </tr>
+          <tr>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+            <td>
+              <table style=3Dtable-layout:fixed;border-collapse:separate;bo=
+rder-spacing:0;font-family:Helvetica;font-size:16px;font-weight:bold cellsp=
+acing=3D0 cellpadding=3D0>
+                <tr>
+                  <td width=3D"100%" style=3D"color: #333333;">
+                    <span style=3D"color: #845EF7;white-space: nowrap;">
+                      EPIC
+                    </span>
+                    4. UX_UI Design
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+          </tr>
+          <tr>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+            <td style=3D"line-height:12px; max-width:0; min-width:0; height=
+:12px; width:0; font-size:12px">&nbsp;</td>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+          </tr>
+          <tr>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+            <td>
+          <table style=3Dtable-layout:fixed;border-collapse:separate;border=
+-spacing:0;font-family:Helvetica; cellspacing=3D0 cellpadding=3D0>
+            <tr>
+              <td style=3D"color: #878787; line-height: 24px; font-size: 14=
+px; white-space: normal;">
+                  Start date is in 1 day.
+               =20
+              </td>
+            </tr>
+          </table>
+</td>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td style=3D"line-height:12px; max-width:0; min-width:0; height:12px;=
+ width:0; font-size:12px">&nbsp;</td>
+    </tr>
+
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td style=3D"line-height:12px; max-width:0; min-width:0; height:12px; w=
+idth:0; font-size:12px">&nbsp;</td>
+  </tr>
+</table>
+</a>
+
+<table>
+  <tr>
+    <td style=3D"line-height:0px; max-width:0; min-width:0; height:0px; wid=
+th:0; font-size:0px">&nbsp;</td>
+  </tr>
+</table>
+
+<a style=3D"margin-left: 12px;"
+   href=3D"https://digitalunicorn.openproject.com/notifications/details/42/=
+activity"
+   target=3D"_blank"
+   rel=3D"noopener noreferrer">
+  Open in browser
+</a>
+
+<table>
+  <tr>
+    <td style=3D"line-height:20px; max-width:0; min-width:0; height:20px; w=
+idth:0; font-size:20px">&nbsp;</td>
+  </tr>
+</table>
+        <a style=3D"text-decoration: none;display: block;"
+   href=3D"https://digitalunicorn.openproject.com/notifications/details/8/a=
+ctivity"
+   target=3D"_blank">
+  <table style=3Dtable-layout:fixed;border-collapse:separate;border-spacing=
+:0;font-family:Helvetica;width:100%;border-width:1px;border-color:#E0E0E0;b=
+order-style:solid;border-radius:10px cellspacing=3D0 cellpadding=3D0 width=3D=
+100%>
+  <tr>
+    <td style=3D"line-height:12px; max-width:0; min-width:0; height:12px; w=
+idth:0; font-size:12px">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>
+      <table style=3Dtable-layout:fixed;border-collapse:separate;border-spa=
+cing:0;font-family:Helvetica;width:100%;font-size:14px; cellspacing=3D0 cel=
+lpadding=3D0 width=3D100%>
+       =20
+    <tr>
+      <td>
+        <table style=3Dtable-layout:fixed;border-collapse:separate;border-s=
+pacing:0;font-family:Helvetica;width:100%;font-size:14px; cellspacing=3D0 c=
+ellpadding=3D0 width=3D100%>
+          <tr>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+            <td>
+              <table style=3Dtable-layout:fixed;border-collapse:separate;bo=
+rder-spacing:0;font-family:Helvetica; cellspacing=3D0 cellpadding=3D0>
+                <tr>
+                  <td>
+                    <table style=3Dtable-layout:fixed;border-collapse:separ=
+ate;border-spacing:0;font-family:Helvetica; cellspacing=3D0 cellpadding=3D0=
+>
+                      <tr>
+                        <td style=3D"color: #333333;
+                          background-color: #FFFFFF;
+                          color:#FFFFFF; background-color:#1098AD;
+                          white-space: nowrap;
+                          padding: 2px 12px;
+                          height: 18px;
+                          border-radius:2px;">
+                          New
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td style=3D"max-width:8px; min-width:8px; width:8px">&nb=
+sp;</td>
+                  <td width=3D"100%" style=3D"color: #878787;">
+                    #8 - Demo project
+                     -=20
+                      Date alert
+                  </td>
+                  <td>
+                    <table style=3Dtable-layout:fixed;border-collapse:separ=
+ate;border-spacing:0;font-family:Helvetica; cellspacing=3D0 cellpadding=3D0=
+>
+                      <tr>
+                          <td style=3D"background-color: #00A3FF;
+                            color: white;
+                            border-radius: 10px;
+                            padding: 2px 8px;
+                            font-size: 14px;
+                            height: 18px;
+                            line-height: 18px;">
+                            1
+                          </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+          </tr>
+          <tr>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+            <td style=3D"line-height:16px; max-width:0; min-width:0; height=
+:16px; width:0; font-size:16px">&nbsp;</td>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+          </tr>
+          <tr>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+            <td>
+              <table style=3Dtable-layout:fixed;border-collapse:separate;bo=
+rder-spacing:0;font-family:Helvetica;font-size:16px;font-weight:bold cellsp=
+acing=3D0 cellpadding=3D0>
+                <tr>
+                  <td width=3D"100%" style=3D"color: #333333;">
+                    <span style=3D"color: #1A67A3;white-space: nowrap;">
+                      TASK
+                    </span>
+                    Setup conference website
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+          </tr>
+          <tr>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+            <td style=3D"line-height:12px; max-width:0; min-width:0; height=
+:12px; width:0; font-size:12px">&nbsp;</td>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+          </tr>
+          <tr>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+            <td>
+          <table style=3Dtable-layout:fixed;border-collapse:separate;border=
+-spacing:0;font-family:Helvetica; cellspacing=3D0 cellpadding=3D0>
+            <tr>
+              <td style=3D"color: #878787; line-height: 24px; font-size: 14=
+px; white-space: normal;">
+                  Finish date is today.
+               =20
+              </td>
+            </tr>
+          </table>
+</td>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td style=3D"line-height:12px; max-width:0; min-width:0; height:12px;=
+ width:0; font-size:12px">&nbsp;</td>
+    </tr>
+
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td style=3D"line-height:12px; max-width:0; min-width:0; height:12px; w=
+idth:0; font-size:12px">&nbsp;</td>
+  </tr>
+</table>
+</a>
+
+<table>
+  <tr>
+    <td style=3D"line-height:0px; max-width:0; min-width:0; height:0px; wid=
+th:0; font-size:0px">&nbsp;</td>
+  </tr>
+</table>
+
+<a style=3D"margin-left: 12px;"
+   href=3D"https://digitalunicorn.openproject.com/notifications/details/8/a=
+ctivity"
+   target=3D"_blank"
+   rel=3D"noopener noreferrer">
+  Open in browser
+</a>
+
+<table>
+  <tr>
+    <td style=3D"line-height:20px; max-width:0; min-width:0; height:20px; w=
+idth:0; font-size:20px">&nbsp;</td>
+  </tr>
+</table>
+        <a style=3D"text-decoration: none;display: block;"
+   href=3D"https://digitalunicorn.openproject.com/notifications/details/2/a=
+ctivity"
+   target=3D"_blank">
+  <table style=3Dtable-layout:fixed;border-collapse:separate;border-spacing=
+:0;font-family:Helvetica;width:100%;border-width:1px;border-color:#E0E0E0;b=
+order-style:solid;border-radius:10px cellspacing=3D0 cellpadding=3D0 width=3D=
+100%>
+  <tr>
+    <td style=3D"line-height:12px; max-width:0; min-width:0; height:12px; w=
+idth:0; font-size:12px">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>
+      <table style=3Dtable-layout:fixed;border-collapse:separate;border-spa=
+cing:0;font-family:Helvetica;width:100%;font-size:14px; cellspacing=3D0 cel=
+lpadding=3D0 width=3D100%>
+       =20
+    <tr>
+      <td>
+        <table style=3Dtable-layout:fixed;border-collapse:separate;border-s=
+pacing:0;font-family:Helvetica;width:100%;font-size:14px; cellspacing=3D0 c=
+ellpadding=3D0 width=3D100%>
+          <tr>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+            <td>
+              <table style=3Dtable-layout:fixed;border-collapse:separate;bo=
+rder-spacing:0;font-family:Helvetica; cellspacing=3D0 cellpadding=3D0>
+                <tr>
+                  <td>
+                    <table style=3Dtable-layout:fixed;border-collapse:separ=
+ate;border-spacing:0;font-family:Helvetica; cellspacing=3D0 cellpadding=3D0=
+>
+                      <tr>
+                        <td style=3D"color: #333333;
+                          background-color: #FFFFFF;
+                          color:#FFFFFF; background-color:#CC5DE8;
+                          white-space: nowrap;
+                          padding: 2px 12px;
+                          height: 18px;
+                          border-radius:2px;">
+                          In progress
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td style=3D"max-width:8px; min-width:8px; width:8px">&nb=
+sp;</td>
+                  <td width=3D"100%" style=3D"color: #878787;">
+                    #2 - Demo project
+                     -=20
+                      Date alert
+                  </td>
+                  <td>
+                    <table style=3Dtable-layout:fixed;border-collapse:separ=
+ate;border-spacing:0;font-family:Helvetica; cellspacing=3D0 cellpadding=3D0=
+>
+                      <tr>
+                          <td style=3D"background-color: #00A3FF;
+                            color: white;
+                            border-radius: 10px;
+                            padding: 2px 8px;
+                            font-size: 14px;
+                            height: 18px;
+                            line-height: 18px;">
+                            1
+                          </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+          </tr>
+          <tr>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+            <td style=3D"line-height:16px; max-width:0; min-width:0; height=
+:16px; width:0; font-size:16px">&nbsp;</td>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+          </tr>
+          <tr>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+            <td>
+              <table style=3Dtable-layout:fixed;border-collapse:separate;bo=
+rder-spacing:0;font-family:Helvetica;font-size:16px;font-weight:bold cellsp=
+acing=3D0 cellpadding=3D0>
+                <tr>
+                  <td width=3D"100%" style=3D"color: #333333;">
+                    <span style=3D"color: #FF922B;white-space: nowrap;">
+                      PHASE
+                    </span>
+                    Organize open source conference
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+          </tr>
+          <tr>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+            <td style=3D"line-height:12px; max-width:0; min-width:0; height=
+:12px; width:0; font-size:12px">&nbsp;</td>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+          </tr>
+          <tr>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+            <td>
+          <table style=3Dtable-layout:fixed;border-collapse:separate;border=
+-spacing:0;font-family:Helvetica; cellspacing=3D0 cellpadding=3D0>
+            <tr>
+              <td style=3D"color: #878787; line-height: 24px; font-size: 14=
+px; white-space: normal;">
+                  Finish date is today.
+               =20
+              </td>
+            </tr>
+          </table>
+</td>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td style=3D"line-height:12px; max-width:0; min-width:0; height:12px;=
+ width:0; font-size:12px">&nbsp;</td>
+    </tr>
+
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td style=3D"line-height:12px; max-width:0; min-width:0; height:12px; w=
+idth:0; font-size:12px">&nbsp;</td>
+  </tr>
+</table>
+</a>
+
+<table>
+  <tr>
+    <td style=3D"line-height:0px; max-width:0; min-width:0; height:0px; wid=
+th:0; font-size:0px">&nbsp;</td>
+  </tr>
+</table>
+
+<a style=3D"margin-left: 12px;"
+   href=3D"https://digitalunicorn.openproject.com/notifications/details/2/a=
+ctivity"
+   target=3D"_blank"
+   rel=3D"noopener noreferrer">
+  Open in browser
+</a>
+
+<table>
+  <tr>
+    <td style=3D"line-height:20px; max-width:0; min-width:0; height:20px; w=
+idth:0; font-size:20px">&nbsp;</td>
+  </tr>
+</table>
+        <a style=3D"text-decoration: none;display: block;"
+   href=3D"https://digitalunicorn.openproject.com/notifications/details/31/=
+activity"
+   target=3D"_blank">
+  <table style=3Dtable-layout:fixed;border-collapse:separate;border-spacing=
+:0;font-family:Helvetica;width:100%;border-width:1px;border-color:#E0E0E0;b=
+order-style:solid;border-radius:10px cellspacing=3D0 cellpadding=3D0 width=3D=
+100%>
+  <tr>
+    <td style=3D"line-height:12px; max-width:0; min-width:0; height:12px; w=
+idth:0; font-size:12px">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>
+      <table style=3Dtable-layout:fixed;border-collapse:separate;border-spa=
+cing:0;font-family:Helvetica;width:100%;font-size:14px; cellspacing=3D0 cel=
+lpadding=3D0 width=3D100%>
+       =20
+    <tr>
+      <td>
+        <table style=3Dtable-layout:fixed;border-collapse:separate;border-s=
+pacing:0;font-family:Helvetica;width:100%;font-size:14px; cellspacing=3D0 c=
+ellpadding=3D0 width=3D100%>
+          <tr>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+            <td>
+              <table style=3Dtable-layout:fixed;border-collapse:separate;bo=
+rder-spacing:0;font-family:Helvetica; cellspacing=3D0 cellpadding=3D0>
+                <tr>
+                  <td>
+                    <table style=3Dtable-layout:fixed;border-collapse:separ=
+ate;border-spacing:0;font-family:Helvetica; cellspacing=3D0 cellpadding=3D0=
+>
+                      <tr>
+                        <td style=3D"color: #333333;
+                          background-color: #FFFFFF;
+                          color:#FFFFFF; background-color:#CC5DE8;
+                          white-space: nowrap;
+                          padding: 2px 12px;
+                          height: 18px;
+                          border-radius:2px;">
+                          In progress
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td style=3D"max-width:8px; min-width:8px; width:8px">&nb=
+sp;</td>
+                  <td width=3D"100%" style=3D"color: #878787;">
+                    #31 - Scrum project
+                     -=20
+                      Date alert
+                  </td>
+                  <td>
+                    <table style=3Dtable-layout:fixed;border-collapse:separ=
+ate;border-spacing:0;font-family:Helvetica; cellspacing=3D0 cellpadding=3D0=
+>
+                      <tr>
+                          <td style=3D"background-color: #00A3FF;
+                            color: white;
+                            border-radius: 10px;
+                            padding: 2px 8px;
+                            font-size: 14px;
+                            height: 18px;
+                            line-height: 18px;">
+                            1
+                          </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+          </tr>
+          <tr>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+            <td style=3D"line-height:16px; max-width:0; min-width:0; height=
+:16px; width:0; font-size:16px">&nbsp;</td>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+          </tr>
+          <tr>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+            <td>
+              <table style=3Dtable-layout:fixed;border-collapse:separate;bo=
+rder-spacing:0;font-family:Helvetica;font-size:16px;font-weight:bold cellsp=
+acing=3D0 cellpadding=3D0>
+                <tr>
+                  <td width=3D"100%" style=3D"color: #333333;">
+                    <span style=3D"color: #FF922B;white-space: nowrap;">
+                      PHASE
+                    </span>
+                    Develop v1.0
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+          </tr>
+          <tr>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+            <td style=3D"line-height:12px; max-width:0; min-width:0; height=
+:12px; width:0; font-size:12px">&nbsp;</td>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+          </tr>
+          <tr>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+            <td>
+          <table style=3Dtable-layout:fixed;border-collapse:separate;border=
+-spacing:0;font-family:Helvetica; cellspacing=3D0 cellpadding=3D0>
+            <tr>
+              <td style=3D"color: #878787; line-height: 24px; font-size: 14=
+px; white-space: normal;">
+                  Start date is today.
+               =20
+              </td>
+            </tr>
+          </table>
+</td>
+            <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;=
+</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td style=3D"line-height:12px; max-width:0; min-width:0; height:12px;=
+ width:0; font-size:12px">&nbsp;</td>
+    </tr>
+
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td style=3D"line-height:12px; max-width:0; min-width:0; height:12px; w=
+idth:0; font-size:12px">&nbsp;</td>
+  </tr>
+</table>
+</a>
+
+<table>
+  <tr>
+    <td style=3D"line-height:0px; max-width:0; min-width:0; height:0px; wid=
+th:0; font-size:0px">&nbsp;</td>
+  </tr>
+</table>
+
+<a style=3D"margin-left: 12px;"
+   href=3D"https://digitalunicorn.openproject.com/notifications/details/31/=
+activity"
+   target=3D"_blank"
+   rel=3D"noopener noreferrer">
+  Open in browser
+</a>
+
+<table>
+  <tr>
+    <td style=3D"line-height:20px; max-width:0; min-width:0; height:20px; w=
+idth:0; font-size:20px">&nbsp;</td>
+  </tr>
+</table>
+
+      <table style=3Dtable-layout:fixed;border-collapse:separate;border-spa=
+cing:0;font-family:Helvetica;font-size:14px; cellspacing=3D0 cellpadding=3D=
+0>
+  <tr>
+    <td>
+      <table style=3Dtable-layout:fixed;border-collapse:separate;border-spa=
+cing:0;font-family:Helvetica;width:100%; cellspacing=3D0 cellpadding=3D0 wi=
+dth=3D100%>
+        <tr>
+          <td>
+           =20
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td style=3D"max-width:10px; min-width:10px; width:10px">&nbsp;</td>
+    <td>
+      <table style=3Dtable-layout:fixed;border-collapse:separate;border-spa=
+cing:0;font-family:Helvetica; cellspacing=3D0 cellpadding=3D0>
+  <tr>
+    <td style=3D"padding: 8px 12px; border: 1px solid #878787; border-radiu=
+s: 16px; overflow: hidden; text-overflow: ellipsis;white-space: nowrap;">
+      <a href=3D"https://digitalunicorn.openproject.com/my/reminders"
+         target=3D"_blank"
+         style=3D"color: #333333; text-decoration: none; font-size: 14px;wh=
+ite-space: nowrap;">
+        Change email settings
+      </a>
+    </td>
+  </tr>
+</table>
+
+    </td>
+  </tr>
+</table>
+
+      <table>
+        <tr>
+          <td style=3D"line-height:40px; max-width:0; min-width:0; height:4=
+0px; width:0; font-size:40px">&nbsp;</td>
+        </tr>
+      </table>
+    </td>
+    <td style=3D"max-width:12px; min-width:12px; width:12px">&nbsp;</td>
+  </tr>
+</table>
+
+          </td>
+        </tr>
+      </table>
+     =20
+      <table class=3D"footer">
+        <tr>
+          <td>
+           =20
+          </td>
+        </tr>
+      </table>
+  </body>
+</html>
+
+--mk3-55e44bf4f9ac4505be98de8586b8eab5--
+

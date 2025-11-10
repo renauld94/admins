@@ -1,0 +1,603 @@
+X-GM-THRID: 1819817546205410983
+X-Gmail-Labels: Inbox,Important,Category Updates,Unread
+Delivered-To: sn.renauld@gmail.com
+Received: by 2002:a17:907:7212:b0:aab:de38:9884 with SMTP id
+ dr18csp7883680ejc;
+        Sun, 29 Dec 2024 15:00:54 -0800 (PST)
+X-Forwarded-Encrypted: i=2;
+ AJvYcCWpN9n19/u5MOriSTc4/HEoKpwXYnJwZElI+w/ZShuoabxKlEtoISYaWPov7Ki1tNpFsniMW+hSkgMj@gmail.com
+X-Google-Smtp-Source: 
+ AGHT+IEy/adh/4uhU0hLVfJCA9N8+KrkdsJAxdqL9mxaiwg3Eu1Jxh4eR8Wy0EfUtFRzpP7BvwO3
+X-Received: by 2002:a05:600c:154b:b0:434:a734:d279 with SMTP id
+ 5b1f17b1804b1-43668644104mr301132405e9.16.1735513254081;
+        Sun, 29 Dec 2024 15:00:54 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1735513254; cv=none;
+        d=google.com; s=arc-20240605;
+        b=L5BRWcCv+xQh3XAFWFOCxuPhcvkZz+OV4plvPqdXVGktZYAiW6UC7riAMP9bjYL6TK
+         3BQllmjz3rMeJM5S5KUN+FaXyN+fMnERAey3rC34bJC6wzCP6IhmfvkjgUE51JvgzMH3
+         +XKvJ4xEtl2MO4RleHffdhH4utl6lgBlkch59CjWRUQcA/tVcM9ZlnrhzbLN+CJCUe0P
+         dM1YptzhRpsPoSZadzrlBAHPDG3nxQIieL85dbZunaFmdE7ey9BGiV8cW65Gb7Rn0Jnp
+         mrfRuRXeyg26x25vSTQ4QaS2GhqTSI4cYIjyNPHxzKjca5AxfjygSKWI8R98UNLyRaZu
+         0BBQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605;
+        h=to:subject:message-id:mime-version:from:date
+         :content-transfer-encoding:dkim-signature:delivered-to;
+        bh=jxlUlHb1EETJRu3H/xkHFxyi3/60mZvlulaoKqqlYYU=;
+        fh=PtvM+3MFXUjY4IoQonFu3/PZGaDPHwj8XoabnUc3IG8=;
+        b=U6uVupS/WtpCq9kHIBaqI7simlB5vp9o1snMPrcYAVts186AZ3rUcNbN2UxlwbK6zF
+         hJe1RVN/CA6lTytG62eO4c8cpwDVAcY6dsqa/sGtvo1sIgBCyOS0Gf3FfF3vIPOUrnrQ
+         hSvFYb6ZwDkwdZcxBklL5/oa1VUK1BajcwIDPJ6RmyA97nRNx25WgrSxWGi+8HCMjhG4
+         L5YYRZ2cyt1pOMzNZZC5htbvYCK8QP8h1cx5oxBu7+UyY6anCcyCeXF2WgELN0IcpRdx
+         cd/fQyCUwuhkG2pDmVLNhj3yOJ6gtUI7LCRExc96XyqJRpi75idYpv9BQwPvKp7+BO/e
+         KD1g==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@kinsta.com header.s=m1 header.b=uS0f+xQH;
+       spf=softfail (google.com: domain of transitioning
+ bounces+9019290-5d8b-simon.renauld=digitalunicorn.fr@em288.kinsta.com does
+ not designate 46.105.72.119 as permitted sender)
+ smtp.mailfrom="bounces+9019290-5d8b-simon.renauld=digitalunicorn.fr@em288.kinsta.com";
+       dmarc=pass (p=REJECT sp=QUARANTINE dis=NONE) header.from=kinsta.com
+Return-Path: 
+ <bounces+9019290-5d8b-simon.renauld=digitalunicorn.fr@em288.kinsta.com>
+Received: from 16.mo558.mail-out.ovh.net (16.mo558.mail-out.ovh.net.
+ [46.105.72.119])
+        by mx.google.com with ESMTPS id
+ ffacd0b85a97d-38a1c8c8ad5si14411983f8f.543.2024.12.29.15.00.53
+        for <sn.renauld@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 29 Dec 2024 15:00:54 -0800 (PST)
+Received-SPF: softfail (google.com: domain of transitioning
+ bounces+9019290-5d8b-simon.renauld=digitalunicorn.fr@em288.kinsta.com does
+ not designate 46.105.72.119 as permitted sender) client-ip=46.105.72.119;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@kinsta.com header.s=m1 header.b=uS0f+xQH;
+       spf=softfail (google.com: domain of transitioning
+ bounces+9019290-5d8b-simon.renauld=digitalunicorn.fr@em288.kinsta.com does
+ not designate 46.105.72.119 as permitted sender)
+ smtp.mailfrom="bounces+9019290-5d8b-simon.renauld=digitalunicorn.fr@em288.kinsta.com";
+       dmarc=pass (p=REJECT sp=QUARANTINE dis=NONE) header.from=kinsta.com
+Received: from mx1.ovh.net (unknown [10.110.118.103])
+	by mo558.mail-out.ovh.net (Postfix) with SMTP id 4YLvps5BfZz14qv
+	for <sn.renauld@gmail.com>; Sun, 29 Dec 2024 23:00:53 +0000 (UTC)
+Received: from localhost (HELO queueout) (127.0.0.1)
+	by localhost with SMTP; 30 Dec 2024 01:00:53 +0200
+Delivered-To: digitalunicorn.fr-simon.renauld@digitalunicorn.fr
+Received: from localhost (HELO queue) (127.0.0.1)
+	by localhost with SMTP; 30 Dec 2024 01:00:53 +0200
+Received: from unknown (HELO output28.mail.ovh.net) (192.168.13.167)
+  by 192.168.9.23 with AES256-GCM-SHA384 encrypted SMTP;
+ 30 Dec 2024 01:00:53 +0200
+Received: from vr32.mail.ovh.net (unknown [10.101.8.32])
+	by out28.mail.ovh.net (Postfix) with ESMTP id 4YLvps1LxnzZ71lBM
+	for <simon.renauld@digitalunicorn.fr>; Sun, 29 Dec 2024 23:00:53 +0000 (UTC)
+Received: from in70.mail.ovh.net (unknown [10.101.4.70])
+	by vr32.mail.ovh.net (Postfix) with ESMTP id 4YLvpr6PNhz4XktwH
+	for <simon.renauld@digitalunicorn.fr>; Sun, 29 Dec 2024 23:00:52 +0000 (UTC)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=168.245.116.175;
+ helo=o1.email.kinsta.com;
+ envelope-from=bounces+9019290-5d8b-simon.renauld=digitalunicorn.fr@em288.kinsta.com;
+ receiver=simon.renauld@digitalunicorn.fr 
+Authentication-Results: in70.mail.ovh.net;
+	dkim=pass (1024-bit key;
+ unprotected) header.d=kinsta.com header.i=@kinsta.com header.b="uS0f+xQH";
+	dkim-atps=neutral
+Received: from o1.email.kinsta.com (o1.email.kinsta.com [168.245.116.175])
+	by in70.mail.ovh.net (Postfix) with ESMTPS id 4YLvpr2lJYz35WqFJ
+	for <simon.renauld@digitalunicorn.fr>; Sun, 29 Dec 2024 23:00:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kinsta.com;
+	h=content-transfer-encoding:content-type:from:mime-version:subject:to:
+	cc:content-type:from:subject:to;
+	s=m1; bh=jxlUlHb1EETJRu3H/xkHFxyi3/60mZvlulaoKqqlYYU=;
+	b=uS0f+xQHSTO8aUzBXsnJznFtADE5Rf9/DmdVOWM49yrxeijPtpwjYqi+xZ2TzfiOEOly
+	rNqxWqPrSejXnhXLRPz0glJSMUwywM23uWOz4g/t1PlJOXIG4QpoFMkSTU/VG7e7ypZGFd
+	6miOxrlOCGYRHh5sRM0Ru8XjYK3NPNc1M=
+Received: by recvd-56545945fc-5qg6v with SMTP id
+ recvd-56545945fc-5qg6v-1-6771D49C-43
+	2024-12-29 23:00:44.584022607 +0000 UTC m=+3893731.428577989
+Received: from OTAxOTI5MA (unknown)
+	by geopod-ismtpd-14 (SG) with HTTP
+	id oUuPqZnmSfaMHbyRHp-IMQ
+	Sun, 29 Dec 2024 23:00:44.527 +0000 (UTC)
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=utf-8
+Date: Sun, 29 Dec 2024 23:00:44 +0000 (UTC)
+From: Kinsta <service@kinsta.com>
+Mime-Version: 1.0
+Message-ID: <oUuPqZnmSfaMHbyRHp-IMQ@geopod-ismtpd-14>
+Subject: SSL Handshake error detected on site Avis
+ =?UTF-8?B?VsOpcmlmacOpcw==?= - Staging (Live) (Dec 29, 2024, 10:58 PM, UTC)
+X-SG-EID: 
+ =?us-ascii?Q?u001=2E8Q9cJsN08U6hAQgdm5xpXnAvFRONg3wVgzGETnrLDrFrkkRiSzk0GSI2o?=
+ =?us-ascii?Q?li5e8fAtfWaUUoyJ0isJjYjdXFuPYh1036yjwVg?=
+ =?us-ascii?Q?4=2Fm25hOJxE3OfbyYaL9w8S3=2FxADUy=2FH5XY2YlxR?=
+ =?us-ascii?Q?HNKEU84IvibBl+qvY5VRKAXRSfhrRu2cgc0Jttl?=
+ =?us-ascii?Q?6FpWwGC1kXm5AiYakvGpJpIZL10juSGH0Oa0W+c?=
+ =?us-ascii?Q?aUS0GKfb4CKo=2Fy3UjOTO2ygWh1+DJ9dPZFzIP7s?=
+ =?us-ascii?Q?a=2FLj?=
+X-SG-ID: 
+ =?us-ascii?Q?u001=2ESdBcvi+Evd=2FbQef8eZF3BmA3IdpsA4GNBYbobEh4UG3ZqqzQv2aH4Rjmn?=
+ =?us-ascii?Q?f=2FMHf5ip0SC1nXCwWnxNyLxa9JfIA=3D=3D?=
+To: simon.renauld@digitalunicorn.fr
+X-Entity-ID: u001.WhS6DlOX/dRA6fg8tkkqbA==
+X-OVH-Remote: 168.245.116.175 (o1.email.kinsta.com)
+X-Ovh-Tracer-Id: 15322371836423785891
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 21
+X-VR-SPAMCAUSE: 
+ gggruggvucftvghtrhhoucdtuddrgeefuddruddvhedgtdeiucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucfttghvugcuffgrthgvucgrnhhomhgrlhihucdlvddumdenucfjughrpefgtgffhfggkffuvfeshhhqtddttddtjeenucfhrhhomhepmfhinhhsthgruceoshgvrhhvihgtvgeskhhinhhsthgrrdgtohhmqeenucggtffrrghtthgvrhhnpeeivdefffffhfehleeuteeguedvhefgieekgeffuefgtedugeeggefgfeehfedvgfenucffohhmrghinhepshgvnhgughhrihgurdhnvghtpdhhthhtphhsvghrrhhorhhsughishhplhgrhigvughonhihohhurhhsihhtvgdrhihouhenucfkphepudeikedrvdeghedrudduiedrudejheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduieekrddvgeehrdduudeirddujeehpdhhvghlohepohdurdgvmhgrihhlrdhkihhnshhtrgdrtghomhdpmhgrihhlfhhrohhmpegsohhunhgtvghsodeltdduledvledtqdehugeksgdqshhimhhonhdrrhgvnhgruhhlugepughighhithgrlhhunhhitghorhhnrdhfrhesvghmvdekkedrkhhinhhsthgrrdgtohhmpdhnsggprhgtphhtthhopedupdhrtghpthhtohepshhimhhonhdrrhgvnhgruhhlugesughighhithgrlhhunhhitghorhhnrdhfrhdpoffvtefjohhsthepvhhrfedvmgdpughkihhmpehprg
+ hsshgmpdhsphhfpehprghsshgmpdhrvghvkffrpehouddrvghmrghilhdrkhhinhhsthgrrdgtohhmmgdpghgvohfkrfepfgfu
+X-Ovh-Spam-Status: OK
+X-Ovh-Spam-Reason: vr: OK; dkim: disabled; spf: disabled
+X-Ovh-Message-Type: OK
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 21
+X-VR-SPAMCAUSE: 
+ gggruggvucftvghtrhhoucdtuddrgeefuddruddvhedgtdeiucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucfttghvugcuffgrthgvucgrnhhomhgrlhihucdlvddumdenucfjughrpefgtgffhfggkffuvfeshhhqtddttddtjeenucfhrhhomhepmfhinhhsthgruceoshgvrhhvihgtvgeskhhinhhsthgrrdgtohhmqeenucggtffrrghtthgvrhhnpeeivdefffffhfehleeuteeguedvhefgieekgeffuefgtedugeeggefgfeehfedvgfenucffohhmrghinhepshgvnhgughhrihgurdhnvghtpdhhthhtphhsvghrrhhorhhsughishhplhgrhigvughonhihohhurhhsihhtvgdrhihouhenucfkphepuddvjedrtddrtddruddpudeikedrvdeghedrudduiedrudejheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepsghouhhntggvshdoledtudelvdeltddqhegukegsqdhsihhmohhnrdhrvghnrghulhgupeguihhgihhtrghluhhnihgtohhrnhdrfhhrsegvmhdvkeekrdhkihhnshhtrgdrtghomhdpnhgspghrtghpthhtohepuddprhgtphhtthhopehsnhdrrhgvnhgruhhlugesghhmrghilhdrtghomhdpoffvtefjohhsthepmhhoheehkegmpdhmohguvgepshhmthhpohhuth
+
+<div>
+  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://ww=
+w.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns=3D"http://www.w3.org/1999/xhtml" lang=3D"en" xml:lang=3D"en">
+  <head>
+      <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf=
+-8">
+      <meta name=3D"viewport" content=3D"width=3Ddevice-width">
+      <title>SSL Handshake error detected on site Avis V=C3=A9rifi=C3=A9s -=
+ Staging (Live) (Dec 29, 2024, 10:58 PM, UTC)</title>
+      <style>
+          @media only screen {
+              html {
+                  min-height: 100%;
+                  background: #F5EDE9
+              }
+          }
+
+          @media only screen and (max-width:696px) {
+              table.body img {
+                  width: auto;
+                  height: auto
+              }
+              table.body center {
+                  min-width: 0!important
+              }
+              table.body .container, div .container {
+                  width: 95%!important
+              }
+              table.body .columns {
+                  height: auto!important;
+                  -moz-box-sizing: border-box;
+                  -webkit-box-sizing: border-box;
+                  box-sizing: border-box;
+                  padding-left: 16px!important;
+                  padding-right: 16px!important
+              }
+              table.body .columns .columns {
+                  padding-left: 0!important;
+                  padding-right: 0!important
+              }
+              table.body .collapse .columns {
+                  padding-left: 0!important;
+                  padding-right: 0!important
+              }
+              th.small-6 {
+                  display: inline-block!important;
+                  width: 50%!important
+              }
+              th.small-12 {
+                  display: inline-block!important;
+                  width: 100%!important
+              }
+              .columns th.small-12 {
+                  display: block!important;
+                  width: 100%!important
+              }
+              table.menu {
+                  width: 100%!important
+              }
+              table.menu td,
+              table.menu th {
+                  width: auto!important;
+                  display: inline-block!important
+              }
+              table.menu.vertical td,
+              table.menu.vertical th {
+                  display: block!important
+              }
+              table.menu[align=3Dcenter] {
+                  width: auto!important
+              }
+          }
+
+          @media screen and (min-width:680px) {
+            .content {
+              padding: 10px 32px;
+            }
+          }
+
+          @media screen and (max-width:679px) {
+            .content {
+              padding: 5px 20px;
+            }
+          }
+
+          a, a:visited {
+              color: #4c4243!important;
+              text-decoration: underline!important;
+          }
+          a:active {
+              color: #363132;
+          }
+          a:hover {
+              color: #635353;
+          }
+      </style>
+  </head>
+
+  <body style=3D"-moz-box-sizing:border-box;-ms-text-size-adjust:100%;-webk=
+it-box-sizing:border-box;-webkit-text-size-adjust:100%;background:#F5EDE9!i=
+mportant;box-sizing:border-box;color:#4C4243;font-family:'Open Sans',Helvet=
+ica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.4;margin:=
+0;min-width:100%;padding:0;text-align:left;width:100%!important">
+  <span class=3D"preheader" style=3D"color:#f3f3f3;display:none!important;f=
+ont-size:1px;line-height:1px;max-height:0;max-width:0;mso-hide:all!importan=
+t;opacity:0;overflow:hidden;visibility:hidden"></span>
+      <table class=3D"body" style=3D"background:#fefefe!important;border-co=
+llapse:collapse;border-spacing:0;color:#4C4243;font-family:'Open Sans',Helv=
+etica,Arial,sans-serif;font-size:16px;font-weight:400;height:100%;line-heig=
+ht:1.4;margin:0;padding:0;text-align:left;vertical-align:top;width:100%">
+          <tr style=3D"padding:0;text-align:left;vertical-align:top">
+              <td class=3D"center" align=3D"center" valign=3D"top" style=3D=
+"border-collapse:collapse!important;color:#4C4243;font-family:'Open Sans',H=
+elvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.4;ma=
+rgin:0;padding:0;text-align:left;vertical-align:top;word-wrap:break-word">
+                  <div style=3D"width:100%; text-align: center;">
+                      <table align=3D"center" class=3D"wrapper header float=
+-center" style=3D"background:#1E1818;border-collapse:collapse;border-spacin=
+g:0;float:none;margin:0 auto;padding:0;text-align:center;vertical-align:top=
+;width:100%">
+                          <tr style=3D"padding:0;text-align:left;vertical-a=
+lign:top">
+                              <td class=3D"wrapper-inner" style=3D"border-c=
+ollapse:collapse!important;color:#4C4243;font-family:'Open Sans',Helvetica,=
+Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.4;margin:0;pa=
+dding:50px 20px 40px 20px;text-align:left;vertical-align:top;word-wrap:brea=
+k-word">
+                                  <table align=3D"center" class=3D"containe=
+r" style=3D"background:0 0;border-collapse:collapse;border-spacing:0;margin=
+:0 auto;padding:0;text-align:inherit;vertical-align:top;width:680px">
+                                      <tbody>
+                                          <tr style=3D"padding:0;text-align=
+:left;vertical-align:top">
+                                              <td style=3D"border-collapse:=
+collapse!important;color:#4C4243;font-family:'Open Sans',Helvetica,Arial,sa=
+ns-serif;font-size:16px;font-weight:400;line-height:1.4;margin:0;padding:0;=
+text-align:left;vertical-align:top;word-wrap:break-word">
+                                                  <table class=3D"row colla=
+pse" style=3D"border-collapse:collapse;border-spacing:0;display:table;paddi=
+ng:0;position:relative;text-align:left;vertical-align:top;width:100%">
+                                                      <tbody>
+                                                          <tr style=3D"padd=
+ing:0;text-align:left;vertical-align:top">
+                                                              <th class=3D"=
+small-12 large-12 columns first last" style=3D"color:#4C4243;font-family:'O=
+pen Sans',Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-he=
+ight:1.4;margin:0 auto;padding:0;padding-left:0;padding-right:0;text-align:=
+left;width:688px">
+                                                                <table styl=
+e=3D"border-collapse:collapse;border-spacing:0;padding:0;text-align:left;ve=
+rtical-align:top;width:100% !important;height:32px;">
+                                                                    <tr sty=
+le=3D"padding:0;text-align:left;">
+                                                                        <th=
+ style=3D"margin:0;color:#4C4243;font-family:Helvetica, Arial, sans-serif;f=
+ont-size:16px;font-weight:400;line-height:1.4;padding:0;text-align:left;wid=
+th:82px;">
+                                                                        <di=
+v style=3D"padding-right:20px;">
+                                                                        <im=
+g style=3D"-ms-interpolation-mode:bicubic;clear:both;display:block;max-heig=
+ht:32px;max-width:81px;outline:0;text-decoration:none;width:auto" width=3D"=
+81" height=3D"32" src=3D"https://cdn.kinsta.com/email-template/kinsta-logo-=
+162x64.png" alt=3D"Kinsta Logo">
+
+                                                                        </d=
+iv>
+                                                                        </t=
+h>
+                                                                        <th=
+ style=3D"margin:0;color:#ffffff !important;font-family:Helvetica, Arial, s=
+ans-serif;font-size:14px;font-weight:400;line-height:1.4;padding:0;text-ali=
+gn:right;">
+                                                                        <di=
+v style=3D"margin-right:0 !important;">The best home for modern WordPress s=
+ites</div>
+                                                                        </t=
+h>
+                                                                        <th=
+ class=3D"expander" style=3D"margin:0;color:#4C4243;font-family:Helvetica, =
+Arial, sans-serif;font-size:16px;font-weight:400;line-height:1.4;padding:0 =
+!important;text-align:left;visibility:hidden;width:0;"></th>
+                                                                    </tr>
+                                                                </table>
+                                                              </th>
+                                                          </tr>
+                                                      </tbody>
+                                                  </table>
+                                              </td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                              </td>
+                          </tr>
+                      </table>
+                      <table align=3D"center" class=3D"wrapper faux-box flo=
+at-center" style=3D"background:#1E1818;border-collapse:collapse;border-spac=
+ing:0;float:none;margin:0 auto;padding:0;text-align:center;vertical-align:t=
+op;width:100%;">
+                          <tr style=3D"padding:0;text-align:left;vertical-a=
+lign:top">
+                              <td class=3D"wrapper-inner" style=3D"border-c=
+ollapse:collapse!important;color:#4C4243;font-family:'Open Sans',Helvetica,=
+Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.4;margin:0;pa=
+dding:0;text-align:left;vertical-align:top;word-wrap:break-word">
+                                  <table style=3D"background:#fefefe;border=
+-bottom:0;border-collapse:collapse;border-spacing:0;margin:0 auto;padding:0=
+;text-align:inherit;vertical-align:top;max-width:680px;width: 100%;border-t=
+op-left-radius:8px;border-top-right-radius:8px;border-style:hidden" align=
+=3D"center" class=3D"container" >
+                                      <tbody>
+                                          <tr style=3D"padding:0;text-align=
+:left;vertical-align:top">
+                                              <td style=3D"border-collapse:=
+collapse!important;color:#4C4243;font-family:'Open Sans',Helvetica,Arial,sa=
+ns-serif;font-size:16px;font-weight:400;line-height:1.4;margin:0;padding:0;=
+text-align:left;vertical-align:top;word-wrap:break-word">
+                                                  <table class=3D"spacer" s=
+tyle=3D"border-collapse:collapse;border-spacing:0;padding:0;text-align:left=
+;vertical-align:top;width:100%">
+                                                      <tbody>
+                                                          <tr style=3D"padd=
+ing:0;text-align:left;vertical-align:top">
+                                                              <td height=3D=
+"40px" style=3D"border-collapse:collapse!important;color:#4C4243;font-famil=
+y:'Open Sans',Helvetica,Arial,sans-serif;font-size:40px;font-weight:400;lin=
+e-height:40px;margin:0;mso-line-height-rule:exactly;padding:0;text-align:le=
+ft;vertical-align:top;word-wrap:break-word">&#xA0;</td>
+                                                          </tr>
+                                                      </tbody>
+                                                  </table>
+                                              </td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                              </td>
+                          </tr>
+                      </table>
+                      <table align=3D"center" class=3D"wrapper float-center=
+" style=3D"background:#F5EDE9;border-collapse:collapse;border-spacing:0;flo=
+at:none;margin:0 auto;padding:0;text-align:center;vertical-align:top;width:=
+100%">
+                          <tbody>
+                              <tr style=3D"padding:0;text-align:left;vertic=
+al-align:top">
+                                  <td style=3D"border-collapse:collapse!imp=
+ortant;color:#4C4243;font-family:'Open Sans',Helvetica,Arial,sans-serif;fon=
+t-size:16px;font-weight:400;line-height:1.4;margin:0;padding:0;text-align:l=
+eft;vertical-align:top;word-wrap:break-word">
+                                      <table align=3D"center" class=3D"cont=
+ainer" style=3D"background:#fefefe;border-collapse:collapse;border-spacing:=
+0;display:table;padding:0;position:relative;text-align:left;vertical-align:=
+top;max-width:680px;width: 100%;border-bottom-left-radius:8px;border-bottom=
+-right-radius:8px;border-style:hidden">
+                                          <tbody>
+                                              <tr style=3D"padding:0;text-a=
+lign:left;vertical-align:top">
+                                                  <th class=3D"bordered bor=
+der-no-top small-12 large-12 columns first last" style=3D"border-top:0;colo=
+r:#4C4243;font-family:'Open Sans',Helvetica,Arial,sans-serif;font-size:16px=
+;font-weight:400;line-height:1.4;margin:0 auto;padding: 0 16px 40px;text-al=
+ign:left;width:664px">
+                                                      <table style=3D"borde=
+r-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-ali=
+gn:top;width:100%">
+                                                          <tr style=3D"padd=
+ing:0;text-align:left;vertical-align:top">
+                                                              <th style=3D"=
+color:#4C4243;font-family:'Arial Black','Open Sans',Helvetica,Arial,sans-se=
+rif;font-size:16px;font-weight:400;line-height:1.4;margin:0;padding:0;text-=
+align:left">
+                                                                  <div clas=
+s=3D"content">
+                                                                    <h1 sty=
+le=3D'margin:0; font-family: "Georgia"'>Hi Simon,</h1>
+                                                                  </div>
+                                                                </th>
+                                                              <th class=3D"=
+expander" style=3D"color:#4C4243;font-family:'Open Sans',Helvetica,Arial,sa=
+ns-serif;font-size:16px;font-weight:400;line-height:1.4;margin:0;padding:0!=
+important;text-align:left;visibility:hidden;width:0"></th>
+                                                          </tr>
+
+                <tr style=3D"padding:0;text-align:left;vertical-align:top">
+                    <td height=3D"20px" style=3D"margin:0;border-collapse:c=
+ollapse!important;color:#4C4243;font-family:'Open Sans',Helvetica,Arial,san=
+s-serif;font-size:16px;font-weight:400;line-height:20px;mso-line-height-rul=
+e:exactly;padding:0;text-align:left;vertical-align:top;word-wrap:break-word=
+">
+                        <div class=3D"content">
+                            <div style=3D"margin-bottom:16px">Our monitorin=
+g systems detected that your site <strong>Avis V=C3=A9rifi=C3=A9s - Staging=
+ (Live), is showing an error (SSL Handshake) related to its SSL certificate=
+.</strong></div><p style=3D"text-align:center"><a href=3D"https://u9019290.=
+ct.sendgrid.net/ls/click?upn=3Du001.6QPP-2FqJt5LKc0sK5s9FWuu1hzQXclRcLI-2Fu=
+CPVgq06sK7m3bANicrhODwiJqUNsNeebI3O-2BULU49tWyG0XGy03zZe54v7tQ38wYXxy6j-2F7=
+sW1hAnYETZagCwjuFaWBMulGNYnjIyZm3UJSmAC1opN4gzfXejhswksF8X57-2BytSmFCawxv-2=
+B8RUSQCiHFkflWMwQmO6I0IfjhJpquNXJwGBrMDV9UBSDqogYVhMoiefy4-3Dy1rC_z7txIHmiM=
+xMYlag5G1si6sckGg5fuDNNEIgGP1gdwIlqie1GR8GQIlH8y1bBoa8bb0BEhwE8O6swP2YRK5jY=
+nr1dXJ71gwugxuCKtXgTLUcTTULENi6lQTZP14lGqdoE5Ti6NdTa3a3xlS-2Bw6dIamXyHq49mG=
+Edvk9r8zBj5UDgff6IcWmnsadKb2MN4Yd8qP494gzuPrZO94ImAJPQohtNwqD7mCzguzPLzN4Lh=
+tqONcVzmIAaPrhxNUb3Jwyq0" target=3D"_blank" rel=3D"noreferrer">Open site in=
+ MyKinsta</a></p><div style=3D"margin-bottom:16px">You may want to double-c=
+heck and fix the certificate to avoid any HTTPS errors displayed on your si=
+te.</div><div style=3D"margin-bottom:16px">You can read all about installin=
+g and troubleshooting SSL in our Documentation: <br><a href=3D"https://u901=
+9290.ct.sendgrid.net/ls/click?upn=3Du001.6QPP-2FqJt5LKc0sK5s9FWujz-2FxpBIDs=
+lnNAptXVUiqXFb-2FPLcTy1DoDfTLLjGY-2FH-2FJhWlmyGtcaxEjI3z-2FgGVOq7p-2FGJ3iuC=
+2VBfk54cJbm7x8a-2Femhrks57pMi2h-2Bymx-2BrtkHcbbiCadSDl2SzE9-2Fch4UFZhLuSBhm=
+nzA7w7-2FraRD4Med4d9YbIk7V5jVUwxe_wV_z7txIHmiMxMYlag5G1si6sckGg5fuDNNEIgGP1=
+gdwIlqie1GR8GQIlH8y1bBoa8bb0BEhwE8O6swP2YRK5jYngjLBso1UOgilBo1vH7vzQzE-2Bad=
+KpX9qY8-2FrhWqdrv-2BW6sswRYJTFUFCgrGeGqyHS8p6olzvK3KfCmjTh6XP1-2BgbCJqcGC0F=
+p-2BhGfikCxcouwnSIz16BKuLAU5hVOY0qunW2IGq3Fnv5H-2B8IaqS0HhyFk59-2Bdodcddj0V=
+83lHsGU">How to Install SSL Certificate on Your WordPress Site</a></div><di=
+v style=3D"margin-bottom:16px">If you are actively working on the site you =
+may ignore this message. In any case, we=E2=80=99ll keep monitoring this is=
+sue but only notify you again if the problem persists after 72 hours.</div>=
+<div style=3D"margin-bottom:16px">If you have any questions feel free to re=
+ach out to our support team by responding to this email or by opening a con=
+versation within MyKinsta. We are available 24/7 to assist you!</div>
+                        </div>
+                    </td>
+                </tr>
+                </table>
+            </th>
+        </tr>
+    </tbody>
+</table>
+
+                            <table class=3D"row" style=3D"background:#F5EDE=
+9;border-collapse:collapse;border-spacing:0;display:table;padding:0;positio=
+n:relative;text-align:left;vertical-align:top;width:100%">
+                              <tbody>
+                                <tr style=3D"padding:0;text-align:left;vert=
+ical-align:top">
+                                  <th class=3D"small-12 large-12 columns fi=
+rst last" style=3D"color:#4C4243;font-family:'Open Sans',Helvetica,Arial,sa=
+ns-serif;font-size:16px;font-weight:400;line-height:1.4;margin:0 auto;paddi=
+ng:0;padding-left:16px;padding-right:16px;text-align:left;width:664px">
+                                      <table style=3D"border-collapse:colla=
+pse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100=
+%">
+                                          <tr style=3D"padding:0;text-align=
+:left;vertical-align:top">
+                                              <th style=3D"margin:0;color:#=
+4C4243;font-family:'Open Sans',Helvetica,Arial,sans-serif;font-size:16px;fo=
+nt-weight:400;line-height:1.4;padding:0;text-align:left">
+                                                  <table align=3D"center" c=
+lass=3D"container" style=3D"border-collapse:collapse;border-spacing:0;paddi=
+ng:0;text-align:left;vertical-align:top;width:680px">
+                                                      <tr>
+                                                          <td style=3D"heig=
+ht: 25px"></td>
+                                                      </tr>
+                                                      <tr style=3D"padding:=
+0;text-align:left;vertical-align:top">
+                                                          <td style=3D"bord=
+er-collapse:collapse!important;color:#4C4243;font-family:'Open Sans',Helvet=
+ica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:1.4;margin:=
+0;padding:0;text-align:left;vertical-align:middle;width:45px;word-wrap:brea=
+k-word">
+                                                          <img style=3D"-ms=
+-interpolation-mode:bicubic;clear:both;display:block;max-height:40px;max-wi=
+dth:40px;outline:0;text-decoration:none;width:auto" width=3D"60" height=3D"=
+60" src=3D"https://cdn.kinsta.com/email-template/kinsta-team-avatar-120x120=
+.png" alt=3D"Kinsta team avatar">
+                                                          </td>
+                                                          <td style=3D"bord=
+er-collapse:collapse!important;color:#1C1819;font-family:'Open Sans',Helvet=
+ica,Arial,sans-serif;font-size:16px;font-weight:600;line-height:1;margin:0;=
+padding:16px;padding-left:8px;text-align:left;vertical-align:middle;word-wr=
+ap:break-word;">
+                                                              The Kinsta Te=
+am
+                                                          </td>
+                                                      </tr>
+                                                      <tr>
+                                                          <td style=3D"heig=
+ht: 30px"></td>
+                                                      </tr>
+                                                  </table>
+                                              </th>
+                                              <th class=3D"expander" style=
+=3D"color:#4C4243;font-family:'Open Sans',Helvetica,Arial,sans-serif;font-s=
+ize:16px;font-weight:400;line-height:1.4;margin:0;padding:0!important;text-=
+align:left;visibility:hidden;width:0"></th>
+                                            </tr>
+                                      </table>
+                                    </th>
+                                  </tr>
+                              </tbody>
+                            </table>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <table style=3D"background: #1C1819; width: 100%; text-=
+align: center">
+                        <tr>
+                            <td style=3D"padding: 40px 20px; color: #FFFFFF=
+;">
+                                <table style=3D"margin: 0 auto; max-width: =
+680px; width: 100%; text-align: left">
+                                    <tr style=3D"font-size: 10px">
+                                        <td style=3D"vertical-align: top">
+                                        <img style=3D"-ms-interpolation-mod=
+e:bicubic;clear:both;display:block;max-height:32px;max-width:81px;outline:0=
+;text-decoration:none;width:auto" width=3D"81" height=3D"32" src=3D"https:/=
+/cdn.kinsta.com/email-template/kinsta-logo-162x64.png" alt=3D"Kinsta Logo">
+
+                                        </td>
+                                        <td style=3D"width: 40px">
+                                        </td>
+                                        <td style=3D"color:#AD928C;font-fam=
+ily:'Open Sans',Helvetica,Arial,sans-serif;line-height: 17px;">
+                                            <div>Copyright =C2=A9 2024 Kins=
+ta Inc. All rights reserved.</div>
+                                            <div>You are receiving this ema=
+il because you have a Kinsta plan. <a style=3D"color: #AD928C!important; te=
+xt-decoration: underline;" href=3D"https://u9019290.ct.sendgrid.net/ls/clic=
+k?upn=3Du001.6QPP-2FqJt5LKc0sK5s9FWuiKY-2Fax9Ct8CCQtx7qQWSv7-2FWuxg29iscpiY=
+776hbR862iDhxdFhnmZIxZEgYLJR8g-3D-3D5J8d_z7txIHmiMxMYlag5G1si6sckGg5fuDNNEI=
+gGP1gdwIlqie1GR8GQIlH8y1bBoa8bb0BEhwE8O6swP2YRK5jYnpe0zq8xnaxyztnFNGhXpaba-=
+2FeEd6aFLCxN1YHta7Q7MOHrYGW40TNscS-2FPTmSMIuhXtdhgqwQq4zeu6iKVG4WG44sktxld6=
+YQSEuSfwhCHv-2BWKQ-2BXRHhJFUNCWbSUkI8UrgF3pAq-2B0Rb9aCQosrpettd2Yge7DQql-2B=
+lROLsa6rF">Update preferences</a></div>
+
+                                           =20
+                                            <div style=3D"margin-top: 16px"=
+>Kinsta Inc.</div>
+                                            <div>8605 Santa Monica Blvd #92=
+581</div>
+                                            <div> West Hollywood,  CA 90069=
+</div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <!-- prevent Gmail on iOS font size manipulation -->
+    <div style=3D"display:none;white-space:nowrap;font:15px courier;line-he=
+ight:0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbs=
+p; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &n=
+bsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    </div>
+<img src=3D"https://u9019290.ct.sendgrid.net/wf/open?upn=3Du001.Dt8cg2KFlHe=
+01-2B4M1QEwLYIdNfeWc7kKIiFTFCRGGd8DMFQVpV7TANYNVnxx6u8058eB6c3t05-2B5mG80rX=
+MPajWJCAJ2eMZvP1Lj7vLd8bP4Y8L-2B2rOC927xD7zceyP7-2BB9QZJ1f5xMfxBQfOS3EJDXY0=
+CaHk-2B2dfFbk2tq9VO-2Br-2BPFUOn7TOumvj9cs7-2BWhejziQZTeWdBhOFu6Go0zJqwnZqUc=
+-2BohlseKaVpq9MTAy54wwVvakwF2P-2Fl9xWbDHVhmcR4dhOdwCgIQgKeN1tw-3D-3D" alt=
+=3D"" width=3D"1" height=3D"1" border=3D"0" style=3D"height:1px !important;=
+width:1px !important;border-width:0 !important;margin-top:0 !important;marg=
+in-bottom:0 !important;margin-right:0 !important;margin-left:0 !important;p=
+adding-top:0 !important;padding-bottom:0 !important;padding-right:0 !import=
+ant;padding-left:0 !important;"/></body>
+
+</html>
+</div>
+

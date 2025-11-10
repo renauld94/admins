@@ -1,0 +1,46 @@
+{
+  "deployment_timestamp": "20251109_115650",
+  "css_file": "/home/simon/Learning-Management-System-Academy/staging/moodle_visual_style.css",
+  "production_path": "/var/www/moodle/theme/boost/css/vietnamese_course.css",
+  "theme_path": "/var/www/moodle/theme/boost/css",
+  "deployment_steps": [
+    {
+      "step": "validate_staging_css",
+      "status": "pass",
+      "file": "/home/simon/Learning-Management-System-Academy/staging/moodle_visual_style.css",
+      "size_kb": 10.8740234375,
+      "rules": 77
+    },
+    {
+      "step": "prepare_deployment",
+      "status": "skipped_no_moodle",
+      "reason": "Moodle not installed locally (development environment)",
+      "production_path": "/var/www/moodle/theme/boost/css/vietnamese_course.css"
+    },
+    {
+      "step": "deploy_css",
+      "status": "pending_manual",
+      "instruction": "cp /home/simon/Learning-Management-System-Academy/staging/moodle_visual_style.css /var/www/moodle/theme/boost/css/vietnamese_course.css"
+    },
+    {
+      "step": "update_moodle_config",
+      "status": "pending_manual",
+      "instruction": "Add $THEME->sheets = array('vietnamese_course'); to config.php"
+    }
+  ],
+  "status": "STAGED FOR DEPLOYMENT",
+  "next_actions": [
+    "1. DBA: Review CSS file and config changes",
+    "2. DBA: Update Moodle theme config if approved",
+    "3. DBA: Copy CSS to production",
+    "4. DBA: Clear Moodle cache: php admin/cli/purge_caches.php",
+    "5. QA: Verify visual rendering on staging/production",
+    "6. QA: Cross-browser testing (Chrome, Firefox, Safari, Edge)"
+  ],
+  "rollback_procedure": [
+    "If CSS breaks rendering:",
+    "1. Restore backup: cp /var/www/moodle/theme/boost/css/vietnamese_course_backup_20251109_115650.css /var/www/moodle/theme/boost/css/vietnamese_course.css",
+    "2. Clear cache: php admin/cli/purge_caches.php",
+    "3. Verify in browser"
+  ]
+}

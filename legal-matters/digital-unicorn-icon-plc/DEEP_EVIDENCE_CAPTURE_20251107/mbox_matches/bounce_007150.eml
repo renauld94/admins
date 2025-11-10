@@ -1,0 +1,1554 @@
+X-GM-THRID: 1806548589713106737
+X-Gmail-Labels: Archived,Opened,Category Updates
+Delivered-To: sn.renauld@gmail.com
+Received: by 2002:a17:907:9724:b0:a77:e52c:a9e5 with SMTP id
+ jg36csp1415565ejc;
+        Mon, 5 Aug 2024 04:56:31 -0700 (PDT)
+X-Google-Smtp-Source: 
+ AGHT+IFEMoKgJyEtnlHljrT8A2SXN6VMmY59MjXRE7w+M6Bv0AlROYkM/K182ctHIO7YkpO0WdY5
+X-Received: by 2002:a05:6214:5bc9:b0:6b7:a248:3961 with SMTP id
+ 6a1803df08f44-6bb98417c71mr128665636d6.41.1722858991314;
+        Mon, 05 Aug 2024 04:56:31 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1722858991; cv=none;
+        d=google.com; s=arc-20160816;
+        b=OjOgG88Rj+REnP59VsrOUIxteJc/ennWrMd7Qa121vCp+102fSth7BuSgVe6gk22U+
+         uh/pNLklz4if88dAVG9GRv5lXQYNklw62OdsKOXZLV3va146LJIUn0ZNik3CFbAgrFZE
+         D1C23IrTGxJaajPz+4qMMVzcFFiunh+U4tX9GJjUtaD3S1yd9RgdyHOiNzQNPpjpm+aw
+         Y2v6IJJG8nXdw8nwTEwDLxvBnZexkPR1sMxmaEqWSsvnZpXpKAgApafddPe6gidZU4am
+         qqIiIHm/DC6N9NAPl5MGIxHrpqCtFZHv9wxZ3ya+CsiT2zpfGk7y+VDUjz3klHiL8p/4
+         T+hA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20160816;
+        h=to:reply-to:subject:message-id:mime-version:from:date
+         :dkim-signature:dkim-signature;
+        bh=AQr6iy/qnS4En4c3EXXYrRazxTK6EBV0akXgc6mnaDg=;
+        fh=PS+1PpKbugN1TpmcDEkdQ0Zps38F1SzOC+DqdLOHqOY=;
+        b=c+UBrzxlUOQmUv+tOeHZ0wI4e6kkd9eM7gwbnoz6v72ifrBqMa6vnPgumnTj7GULsd
+         xM0uxZATM4Z5ZuYujL9xBvtjaWZ2tmYBtZOtMsaryI2u/qBhzKrU/k9fF8GZSeKlV8Jm
+         5lEgB1fXVhdq/+JaOEeh6Xg5GW//yuAI5IQwwnR5FNBjvAU75/Qv5f91MSgSjmR0Xw+R
+         tQp0mC9UtRoj3BjNgkgjpbLuOEAmtrWasHmyhUhu8B7NYm7VdTLKT7fwCinSWR5ULQk4
+         BtfCbywazu5v255Z93JfUCMi0yrK+wNQ6fRQvfiVW+O2z1r2nYo1Q+FrbgrFEJvij65J
+         /iuw==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@alerts.jobot.com header.s=s1 header.b=Vw6gOZYT;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b="RV7uRF/T";
+       spf=pass (google.com: domain of
+ bounces+28616192-45f6-sn.renauld=gmail.com@em3911.alerts.jobot.com designates
+ 149.72.133.185 as permitted sender)
+ smtp.mailfrom="bounces+28616192-45f6-sn.renauld=gmail.com@em3911.alerts.jobot.com";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=jobot.com
+Return-Path: 
+ <bounces+28616192-45f6-sn.renauld=gmail.com@em3911.alerts.jobot.com>
+Received: from o42.ptr6053.alerts.jobot.com (o42.ptr6053.alerts.jobot.com.
+ [149.72.133.185])
+        by mx.google.com with ESMTPS id
+ 6a1803df08f44-6bb9c88f6easi88688226d6.415.2024.08.05.04.56.30
+        for <sn.renauld@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 05 Aug 2024 04:56:31 -0700 (PDT)
+Received-SPF: pass (google.com: domain of
+ bounces+28616192-45f6-sn.renauld=gmail.com@em3911.alerts.jobot.com designates
+ 149.72.133.185 as permitted sender) client-ip=149.72.133.185;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@alerts.jobot.com header.s=s1 header.b=Vw6gOZYT;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b="RV7uRF/T";
+       spf=pass (google.com: domain of
+ bounces+28616192-45f6-sn.renauld=gmail.com@em3911.alerts.jobot.com designates
+ 149.72.133.185 as permitted sender)
+ smtp.mailfrom="bounces+28616192-45f6-sn.renauld=gmail.com@em3911.alerts.jobot.com";
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=jobot.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alerts.jobot.com;
+	h=content-type:from:mime-version:subject:reply-to:x-feedback-id:to:cc:
+	content-type:from:subject:to;
+	s=s1; bh=AQr6iy/qnS4En4c3EXXYrRazxTK6EBV0akXgc6mnaDg=;
+	b=Vw6gOZYTVVYgPPSg3rFFn/v7joJAbJbZpgqfUC4KEvyHjnoIR0hEJZzBAT+opeOUy2kM
+	r+gq1EBbQXQyw6Mvvejyna2KVPKUuaT3mavBx7nyIejEFZvB0TVC+XgXIREJXxB8VNmgAQ
+	bDBeAjMZXLu/7TqhOdwFvgBilpkM3ni71jRYS0+IIqJmBZczsx0hrTzSgfrV0Uc8Vl9qE6
+	cqck6CrVotNXzYBqTsiHwQ2MRFQyUQd59V9H0+nA9LRELv0OVXrYNUE/eo/fZVTBIZmqGy
+	uW0u5yGGLzXf2DBRumJmYiG6s67n7ou3rjkao9up6v+s+Gl0+MfdXXjsBtMK/DrA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendgrid.info;
+	h=content-type:from:mime-version:subject:reply-to:x-feedback-id:to:cc:
+	content-type:from:subject:to;
+	s=smtpapi; bh=AQr6iy/qnS4En4c3EXXYrRazxTK6EBV0akXgc6mnaDg=;
+	b=RV7uRF/TY3tBNIZkE/cFAnyg5tLpGOXjfsIPvNgmW7P0zR9Qu5u1ndq75QCKLwFYxVez
+	CmEzuNfeV5j8bM7gaJwwlk4wQHsZV0IVnATl6mfp7cTLOmaP479Y4MSZYSwQRVqcLJSx1h
+	OrnDMs7Gt8a2hLqqsBNFrOYxQ100aNCDQ=
+Received: by recvd-657475499b-flw9q with SMTP id
+ recvd-657475499b-flw9q-1-66B0BDEC-14
+	2024-08-05 11:56:28.515334718 +0000 UTC m=+571023.116292489
+Received: from Mjg2MTYxOTI (unknown)
+	by geopod-ismtpd-34 (SG) with HTTP
+	id KjKGODpGSZG7blsErmmCbg
+	Mon, 05 Aug 2024 11:56:28.454 +0000 (UTC)
+Content-Type: multipart/alternative;
+ boundary=756455647e34a5108ae21cb45c0ff68f9e5562ceacb45b43d2948f76254f
+Date: Mon, 05 Aug 2024 11:56:28 +0000 (UTC)
+From: Jobot Alerts <jobs@alerts.jobot.com>
+Mime-Version: 1.0
+Message-ID: <KjKGODpGSZG7blsErmmCbg@geopod-ismtpd-34>
+Subject: New Data Engineer opportunity
+Reply-To: JobAlerts@jobot.com
+X-Entity-Ref-ID: job-alerts-8c738041a118
+X-Feedback-ID: 28616192:SG
+X-SG-EID: 
+ =?us-ascii?Q?u001=2E22hWPKzRaCQ3QmZYepm83s7qzEQRmjr8ox9hlC++O669tRdRG9t4wFZ7e?=
+ =?us-ascii?Q?PeYNLtPu4h4ggRN9LWqj4WFMN6jNgpM6d0BqcNk?=
+ =?us-ascii?Q?RMf2QKdn8WS78LXUFFLN0vlGHfG3Qxdu+wHsbbo?=
+ =?us-ascii?Q?X1r=2F7yc6c=2FfXs74C06hyAPtwQV4lEuFcUwfIRAp?=
+ =?us-ascii?Q?MvYH8oz7eiQGJ8ZFGh6QSkdoUEvFCd=2F7qbUofjY?=
+ =?us-ascii?Q?LdLCccp9vh=2F7B2=2F7RdQifFMIKWnrLgnQL3XxtlD?=
+ =?us-ascii?Q?6yOa?=
+X-SG-ID: 
+ =?us-ascii?Q?u001=2ESdBcvi+Evd=2FbQef8eZF3Br+FkGDNwHelEDiTju02HuNRFXceG3qPFisWY?=
+ =?us-ascii?Q?zd1m9y38BNFUyUDTKXhdbzNZgluGnJkxqbAI887?=
+ =?us-ascii?Q?50jCqt=2Fla38=3D?=
+To: Simon Renauld <sn.renauld@gmail.com>
+X-Entity-ID: u001.LvsZ2prQ477DIYnBM3MvBA==
+
+--756455647e34a5108ae21cb45c0ff68f9e5562ceacb45b43d2948f76254f
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0
+
+Apply Now, Duran and Chris are hiring for Data Engineer and Technical Analy=
+st-
+Postal Affairs
+roles!=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=80=8C=C2=A0=E2=
+=80=8C
+
+[Jobot logo]
+
+Simon Renauld
+
+
+
+12 New Jobs for your Job Search
+
+Recommended Apply -- Based on your resume
+
+Data Engineer
+[https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpLmDLJUw5zsWrRP9ba15kqpslcT3OmOYlMfoM0A4Xh52mzeV48vQQMXUf3FS-2F-2FAuRNo7d6=
+A66jhKyYASf-2BDPk-2Fcme0zyWiIcAEUMU92qo8tn2cqzKx2Le3xC8NEiAXHxv2Lo7UIhLDZ6r=
+lICAVp39EiTRZ7O-2BnxvEOFCyJaNK3KzSAmT_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BX=
+ngf09BwXHLgXw1UsnYnOWyT8iTUJhejB3hzEcW8MeqHc7-2Bz-2B71zn7E9wT5zQtsb-2B5xoGT=
+KOHZIgUhe711ixTCfhSQwFhA6A2VzL1A0eh6qpfd2cJSWMck1qgbY34ETBYxfjgKT7BeUPSg-2B=
+PTgoBZc6sPY1JBgRXc-2F-2Bzpjf8YlLuu-2F1CFm-2BiN2HcTLj0KKfmtYOJvQaLnSpUNeULAE=
+nrVp5LcdWIEJIY8AcATgT2FzkEQ-2BtIk3TQ-3D-3D]
+
+100% Remote, Silicon Valley Health & Wellness start-up, Salary + Equity
+
+[=F0=9F=8F=A1]=C2=A0REMOTE =C2=A0=C2=A0=C2=A0 [=F0=9F=93=8D] Houston,=C2=A0=
+TX =C2=A0=C2=A0=C2=A0 [=F0=9F=92=B5]=C2=A0$70,000=C2=A0-=C2=A0$85,000 =C2=
+=A0=C2=A0=C2=A0
+1-Click Apply
+[https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpGg733glLFowWEMvwvyCDryhN3bB6wT1LxGo-2BElQYYt0TmGcb7OiJuRVspZcBm5mnpTChlNl=
+SLTK5Gv1qPKa3Il817-2ByKZea8-2Bep01nLewNPbMaGaZK7GzUKrYK-2Fod-2FtekNk-2B8OOM=
+mYAhLaBVxjUGsGUPswXEd-2BtETrfRCp5gHrE7IxA0MaYcSCSnBWIyvjIa8R5gYsUDFxgE-2FFB=
+OqlFdEPeKUWHIDcDFyUUuV2M1M8ineXn_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09=
+BwXHLgXw1UsnYnOWyT8iTUJhGKpcYmZB5iRTGNZfv6KJif-2FiYAk5wl4nGDHUa5izFAKOk43Qh=
+WEbyt6Y09pxlaopHeGEgSjW5zoaSH0szno1W19-2BEGY6lvO21yeP0g1Dn7aiKed0Mv6APEnNCe=
+1zsz3wCp41F4W6-2FIFJs5AkxQIrWQ-2F9PDUyY9GFtLnIM5yfOxTwKYxtSlvkerxQgFHJBFOcD=
+-2FNtGPkPzfzfzN1FKLOkmw-3D-3D]
+
+[Duran Workman]
+Duran
+
+Also Consider -- Based on your resume
+
+Technical Analyst- Postal Affairs
+[https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpLmDLJUw5zsWrRP9ba15kqq6Pr-2BIw912GnO27VWl-2BYCJZuqlFSP32-2BiFtu3MDK0uoWhw=
+EFf1zmiiMOyCj-2B2G0f7V5UmjBI1asqc-2FK9CRPR61fABLIQPyOzuZWX1cHlnNR5-2BUVMoBv=
+IYiQXlogmSJph-2FVihabDQSdiiK4M7HVpa4-2FEfAmWCA4WF8-2Bd-2BWo0UgVeQ-3D-3Dmj1S=
+_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJhAXCZweCv=
+om7GoqsyUj3q5v6sM4ceWeKRyjH37jsq1EM6eIjZnAeoEN-2F8-2B1iGg-2BpY01AXS5etu7HPk=
+-2F95Q-2Fl2ctCMpGPHVdaQNgKU6lVIPuMuX45przWRtFqP4HS9BGA-2BplsW52YhS4GMIZ31h0=
+rsfXv5fG6cw2PjaLzq1FqBvNe0Xvm524hlBNCSrGvSffuPT-2FxuHmlI-2BN-2BHKgrE7YTIKQ-=
+3D-3D]
+
+One of the nation's largest full-service production companies is searching =
+for a
+Technical Analyst- Postal Affairs as they continue to grow. They are family
+owned, financially strong company that has been in business for over 40 yea=
+rs.
+
+[=F0=9F=8F=A1]=C2=A0REMOTE =C2=A0=C2=A0=C2=A0 [=F0=9F=93=8D] Newington,=C2=
+=A0CT =C2=A0=C2=A0=C2=A0 [=F0=9F=92=B5]=C2=A0$90,000=C2=A0-=C2=A0$120,000 =
+=C2=A0=C2=A0=C2=A0
+1-Click Apply
+[https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpGg733glLFowWEMvwvyCDrzTLqSwG-2BhoRaswGzMasRJ3ar0airlLpdOweTgdpB7QnfAZR8lv=
+H2elOaQgNcVn3Rq7vh8eY5yvf7lcJPWkQ810MebRUgu-2BsQKbY73egYDTujQMk9kUsPmeLYtKU=
+-2Btq3rSxFkOSi13-2ByVPRMBJbSZo20aiuUAv9TrmUzZucDrwN6QdmVU2PcOtltwRoO3-2BzdC=
+rA3eZbh7V3xV0XgZ5ugV1euRueR-2FDsoCVRe4pj-2FSnx8g-3D-3DQovP_rO1JRqZrx5Oo25BA=
+TZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJhuxoOdLQQF9DPq7a-2BsysLi0f=
+k1E1h3cCT0i2s5dJ1z6DUjsnAFO-2FVV9zQ1D6LvP9PtECXtNnsOBruoKPp-2FIoFJG-2FT6qXq=
+P9rpxmyGJxy4dGIzUE-2FYxx-2FBZKY48vgsFWPLMBqxDwAXJMPIZlJMxd5dH-2B95PiGGY0QJM=
+mRlxVqya4Bbb-2BkC-2B-2FbNv5tLKjo292sO1sSYJcP8eJ4wLv48T-2Fpaog-3D-3D]
+
+[Chris Smouse]
+Chris
+
+Also Consider -- Based on your resume
+
+Data Scientist -- Azure and ML!
+[https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpLmDLJUw5zsWrRP9ba15kqpaK8lPFXg8t2PxTrxo1s3dfYX8-2FfspAX-2BXGGYqVINXnC7q95=
+J23FBTltnA3b4-2Bgyzhe69mLsG3AykHntpoEIMJxA5BWZikCivyCyzvsekxh98-2BB0hYPYsoF=
+4VIIq7nrTLrAxkvXs0Umh3swkK7xLnhTcLdRym8buqoaRk2wXuQyw-3D-3D4I75_rO1JRqZrx5O=
+o25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJhJkVusifiRJKjRK3mUbUO=
+hD-2BBakDub-2Bj0Mi-2FVwi264lD0d3PW5O-2F-2B4bC3delqLSiQ5TdyUvqH-2FnpoqmBGf5q=
+O-2B-2BM-2FmvOWyzrHcGMwAh-2BK96vstRIzS-2BnT8kE-2FZaNI1N-2BnkAgWloT2zcv8NRyn=
+OZlUr6c-2F91Z9biDzKViUrMZT4WbiPyy7ChiUTJGRdAVxcRX7uGGyT3N23zhReCm5KeXm8w-3D=
+-3D]
+
+My client is an innovative Healthcare techonlogy company growing their Data
+Science team. Greenfield development on a few new features and integrations=
+!
+Remote work culture on EST and Central!
+
+[=F0=9F=8F=A1]=C2=A0REMOTE =C2=A0=C2=A0=C2=A0 [=F0=9F=93=8D] Philadelphia,=
+=C2=A0PA =C2=A0=C2=A0=C2=A0 [=F0=9F=92=B5]=C2=A0$110,000=C2=A0-=C2=A0$160,0=
+00 =C2=A0=C2=A0=C2=A0
+1-Click Apply
+[https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpGg733glLFowWEMvwvyCDrwiVnlt-2FM8w2vTAxi-2BKp23uHcsBm7hz-2BM-2BTKEcUDpfkjT=
+4-2BC2hThsKzjQEmlivJzrUqxM1jfeQGwp2pSz7p-2FXFfA6uKy85uxjW96zAeNYrhwfyJZ-2F-=
+2BG-2BHujI6bmRZWmX3h8-2Ff14BmWPPBmlvYjSYsjtZ46-2BKV1qjlsHhqkpK1pAUOEZSIZdEO=
+PSVIoTMtvV3Zuot-2Fqf0zaoP8pE3HpWYwfAHyTXRbMaK7tf6k6pkB9uoQ-3D-3DW8YY_rO1JRq=
+Zrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJhrSw8p4yYzHmnhMD=
+C30Hc1RbCc6x9TkXkTy58SYW7tYk0WMQkMGQbuhAF4FpKIBdLC-2BE7Y5ogl1kHK2R5NOBhscoN=
+RctEAm987Yi2WFJvjgLm1ppT97ZYwA4ba160Tcc3O8m30IwnU5kxkvI7ojQ1BvfFlYYiz4jUd4k=
+BLlB7nVYDtdbSau19Yzsi3nd8uMOtrqGECc52-2F0FN8s6LS-2Fa1ww-3D-3D]
+
+[Alex Dickinson]
+Alex
+
+Also Consider -- Based on your resume
+
+Associate Director, Marketing Analytics
+[https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpLmDLJUw5zsWrRP9ba15kqp1NhqxBd3lWVM9lStFdWGSCSn11O5pJqN63OLRQru440CQABU9Re=
+XJubikYa-2FGcbg-2B04L6wb8B1XDgDSSUoRHL5j75D1k6l-2BUvBQEgXQ-2BcsdGIi-2F4GYVX=
+7Pr4x7R7sYBFIYzFLuMRi-2BTiuCo6Wk69BfOji1H7a03XzmTWk9lSDow-3D-3DqO8K_rO1JRqZ=
+rx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJhl7LL8JisweSdZOzd=
+F-2BS2rdwOs4rRGd1hlv8mqkKXGMyFz7fCxeu7KeZ4oZQqTh2CoeoABi7gfRDxen8glkRno04ya=
+1GRiild2iUM2Tf7gX9tIa1eS1HQVNKQdijZStJBWd9tRRpofvSM5CyG-2B7BntXWpF-2BEYza0u=
+jDITSddP5MvoEldCaFt7zXUhWTGtbVT1d2HFIt0xt-2FAZEOdBvzB7WA-3D-3D]
+
+REmote!
+
+[=F0=9F=8F=A1]=C2=A0REMOTE =C2=A0=C2=A0=C2=A0 [=F0=9F=93=8D] Chicago,=C2=A0=
+IL=C2=A0+2 =C2=A0=C2=A0=C2=A0 [=F0=9F=92=B5]=C2=A0$45=C2=A0-=C2=A0$60 =C2=
+=A0=C2=A0=C2=A0
+1-Click Apply
+[https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpGg733glLFowWEMvwvyCDryvzXSoRl0OH-2FE50cbMazroY565uI7suAd4mpenqhqJQs8poV6d=
+65PJUsT7dhUtinvZNodb5nRLIzA7KJwfpEChxGpnApwy25HFSW9VRTHK80euxiGO4vVUWoFcpky=
+GcItijH4ui1dDOrxN8Dkrm4vbWQzE5c8J5J2ULJ7p-2FYrCRI-2Bb2PHcU8z3bEdcMtQzOjuJ-2=
+FdHRIuC3UwPZ79b4RwNoIa3XvgaIiEG0O5MtPzfTBtTZLOdWxpwzYXhY1at7WtM-3DcP61_rO1J=
+RqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJhxpTUy9bUOFgi5=
+UIPqmTNZOGPSa-2FRICeAqmn7l5meDz73-2F5Rd-2Fnu-2FCw6IfIoO8t8Lmg2rr8fBquY6Iib1=
+sKMyVr1U5qTnRy-2F2n-2FnCXsVmysPti8CmY-2FKw8G-2FgJfTSHJGY-2BDXkqohocIxBV9KME=
+3rtlPSXRjexKsKUHrVTjwe8t5PBwA570CN5KmCOSX-2FhW-2FA2bZgFA40WtmD0fuuKvpFlAw-3=
+D-3D]
+
+[Brian Raffle]
+Brian
+
+Also Consider -- Based on your resume
+
+Principal Data Scientist
+[https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpLmDLJUw5zsWrRP9ba15kqqbC6h7Jq3FnAXNleH1Y-2BlMTX7h0uQiawKmSMjKTud7ut7HOPnn=
+4wLxVqH-2BqdJVGpUUFOE-2Ftvi2aJ8eQ1ymxk-2BGYYREYgovwiWfLg0NYYRFYsnJHUX-2FRlJ=
+A7NrQqj98zLJKWVY5hevKSF-2BCNSYAiFkgvJnJ0QPJfu-2B29lvvY98kyQ-3D-3DZ0uw_rO1JR=
+qZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJhYvXANimuTFvCnj=
+5QPGfTVcMb0iuVid-2FND50HwyQ-2Bkzq5lIol-2BNQNec9SGxaxDv9VV-2BX7Jv-2BqR71h1of=
+-2FxHiBFM-2FiTnR3Hp6kbpxbQ3mZM79vAeL-2FyJBNo4ymDOLsYkLHu3X-2FaPLs0uLaLiDyJY=
+3eop2ereTVoSxw0vpL4ljE1qF7ZdIJFTkyxmylqoa-2FQPbpO7fFf1TgxpiF-2BCkSUt1V1g-3D=
+-3D]
+
+100% Remote Principal Data Scientist - up to $220k base salary - AWS, SageM=
+aker,
+Athena, Glue - Innovation focused role
+
+[=F0=9F=8F=A1]=C2=A0REMOTE =C2=A0=C2=A0=C2=A0 [=F0=9F=93=8D] Houston,=C2=A0=
+TX=C2=A0+2 =C2=A0=C2=A0=C2=A0 [=F0=9F=92=B5]=C2=A0$180,000=C2=A0-=C2=A0$250=
+,000 =C2=A0=C2=A0=C2=A0
+1-Click Apply
+[https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpGg733glLFowWEMvwvyCDrwfCJt6IlKrMpAJ-2BRAJbuxewLL9QedRTwMMUpyTLB5PRrzQ-2F7=
+a6PhEumwP4-2F35dk9e97ea3Bwn3YbOX6nD-2FVpDYp0ThQogqxOa8AV-2FdMYlRlsmfBbgf07h=
+qMPAQ-2BY7PtSR8HuHpOLi7rpl-2FQRnDS4bAczXyPhjaF7STNP4TynjZpUONzDSV1mr3d27Rbh=
+v-2FWeunQn1CQAeLWDmmTlvY-2BJ8jcdF-2B6v2EQuiDw6tjup3iZA-3D-3DKhBF_rO1JRqZrx5=
+Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJhuPY9fO62s9q5boi24hh=
+g95A2-2B67aPFQ85cqvfq1hDaVRDdg11YR4Sdm-2FVPu-2BZVE2QNcOL5jjCfhobC6QNN4SHZT7=
+dNP6s7rZepiQKLwFyMN31c8hnBfk-2B7UHoSrEsUd4JQcivONdMtgVb1e43UnFyf5kopLutUePh=
+mNrnZATeyuNjszn-2FzZ5ZIyMKcP5OfvFBfFcOAvvESNoGfhyM2tA5w-3D-3D]
+
+[Lucas Watson]
+Lucas
+
+Also Consider -- Based on your resume
+
+Remote Finance Project Associate Consultant
+[https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpLmDLJUw5zsWrRP9ba15kqpSJpY-2F6qOY-2Fj-2FLCTIvA0ErLSJGXBiVdnSUZVX0meT3Ej1j=
+J4an2R891E6R-2BCxkXNTCV4vQtcSQNjJNzfkTkJ3i6QuYAdy-2BtWakH7oMFGruBhJhT09vETk=
+ZtscSp-2FTZwN-2BLytyXAMpcs0ZtNgjzEVz2ZrC6jHt8eJsUA5KNkx5SU-2BDwNpMl8Psf4MiW=
+sHHvwEI-3Du0Hc_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT=
+8iTUJhWgM05-2BpQ1uVWkrT8-2FBEXAiNlfXUg-2F753kpsn63mh24qvRD2SDsPKmagIhPnhk-2=
+FpC0npnp0LR9ueCt9gUu80WYeS4ffnRRpH1qi-2BYyvpSBZ1ywk-2Fpo53AJgKxAOwM10Z9itCI=
+-2FaMJ0lF1Hv3obGopayOm1rCYvN7TgLAnEQYj6ZPOBmVcqyzMhVeY6I9f9GR-2FEvoqHebYkC-=
+2BrsCYW8XVj8g-3D-3D]
+
+Remote Finance Project Associate Consultant on the EAST Coast / Paid Benefi=
+ts/
+401K
+
+[=F0=9F=8F=A1]=C2=A0REMOTE =C2=A0=C2=A0=C2=A0 [=F0=9F=93=8D] Vienna,=C2=A0V=
+A =C2=A0=C2=A0=C2=A0 [=F0=9F=92=B5]=C2=A0$30=C2=A0-=C2=A0$35 =C2=A0=C2=A0=
+=C2=A0
+1-Click Apply
+[https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpGg733glLFowWEMvwvyCDrxNmHXrMkhwYIVlHtXXpAGleNpTF0YRufjZ7KAMmeI8FDmzlcMFsM=
+rYqLEOZ5pCUwzHPKnXLsc0gYROywoimBzFDjwHDyoF7c-2FaIL-2F8gMNNUEB8QFV-2FhbZqzn4=
+w7Mm-2B5FwgiN4rPyWWgNPRwGbQWOxcFF5wmlVEwrjUq891kGhvMn715SuetJzlVhUxzMwdA-2B=
+IV32zC-2FgqoU81jq395UntrAo4AsrjyBu96qfTzO74WwKv-2BCApTnTPFsTDz0i8CJyI-3D0bV=
+K_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJhUWdV8bp=
+VY5MyW5ZRHcMlxX5Bj5qC9QRnbqu-2Bu5JbJR0o4JM3aZfiR1p8sY0RIn8crW-2FpXs7MSNNJiw=
+IqhHnlhsKoNpsl770VKP8iWlW09fcDawRDQI3GzWO-2F7XZXA9NDvjEGugnkj8WnA4h8CmzDamE=
+7kKKDB3-2F8CSuaH6xK-2BSPxUx0KfYPYkaD9wOfUUh73l3eWIEViKxkXZprE1kAD3A-3D-3D]
+
+[Haley Lucas]
+Haley
+
+Also Consider -- Based on your resume
+
+Director, Data Science and AI
+[https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpLmDLJUw5zsWrRP9ba15kqoflw-2BtTr4cu3kaBZdraIDAs9fJ1VsIEQw6b4aWxSA8XtE2E5-2=
+BXfiVZ0P7mC0gNe2v-2Bve-2Bv05wqzAalC-2FTD-2BFZi-2FYewqnptKCDFAouMF2MMaZELcRV=
+mNfRFvXupPO8qhw-2FfLo2JgXcKnekmYTsCq6XE7xImBQYSDxE3LWjIsHiHmg-3D-3DugqB_rO1=
+JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJhGnbfmacj27kc=
+PWiQd5Mty5R0nlK-2FryZpFANUMBlFZBw0vrZRyDvEClIteO-2BQNWsWAjuqu1t0sMmaQUHuLcv=
+M-2BdpysomuKkIMuXFhCoMTlYkm-2Ft71MPIFsJGL-2F7wURkaTe0g8mQKdN6ljSn3BcyYuY09C=
+Is0p1EXDFuDfdQHIhjatOECukJtSYJFUfvnVnPG6zHOf-2Fa5-2BXGXoYEPl17-2BTLg-3D-3D]
+
+The Director oversees a team of data scientists, engineers, and analysts wh=
+o
+leverage advanced analytics, machine learning, natural language processing,
+computer vision, and other AI techniques to create innovative applications =
+and
+tools for clin/ops/resea
+
+[=F0=9F=8F=A1]=C2=A0REMOTE =C2=A0=C2=A0=C2=A0 [=F0=9F=93=8D] Los=C2=A0Angel=
+es,=C2=A0CA =C2=A0=C2=A0=C2=A0 [=F0=9F=92=B5]=C2=A0$190,000=C2=A0-=C2=A0$21=
+8,000 =C2=A0=C2=A0=C2=A0
+1-Click Apply
+[https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpGg733glLFowWEMvwvyCDrwQZB6FH-2FQHMTj-2BAi3-2FS6SRgJYE3n4goMntQ6GxAGDLZ7Bs=
+nouHuZu4KzT2W2gBzNZdGoPemSXTHd4ziRph8qdP3puOoiSUOYRPbBsQk4mzwgibOYHkOaKOTDd=
+V3uDezhiaM4Oks-2F66WD-2BMmRfiIkp5QJsHqXr0-2FOWIRWCusBBC9bXAZfmyL6939SA-2F-2=
+BmbzxnohLiNjh6Kxdnec5S3WR0qeoNVJgk6tfb9jaZB-2BL1yYNQ-3D-3D5tQe_rO1JRqZrx5Oo=
+25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJh1Z44FbuAfyUKbygJ2ggZe=
+N1D8h2kbSndn-2BzgWMvx8NgR7W-2FrwmTTfOzBrXG5IKv7FzstAae3AgYAPBCgdJB7cFqsORjU=
+5VbwImYAcDw2yiOMRoGvZlY7DbYDbzes4BfapFOlv-2FX53u2WNt3sqAI70CEUZ-2BGPWmteqIb=
+Bijcy6Y-2BxllrdaK15F5wqG2NczNrfSN-2BAQbaXaJHED1NIxcDArA-3D-3D]
+
+[Brett Walker]
+Brett
+
+Also Consider -- Based on your resume
+
+Founding Engineer (100% Remote)
+[https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpLmDLJUw5zsWrRP9ba15kqpFYg0X5tuaMxsvWI-2FMhbisD4JcFsCOf4WF10oIOf4nV4nf4HLK=
+7xHQk48KDna-2BpMSL5c5-2B9TpNmDSSlZfN8AzDuUEP-2FLCun79-2BFNDiLFEwAu-2BmLbqa2=
+gFDaaP4OHJU0C054cLTbENeW7Rvwi5B2mCN7TxQuwiKykZjeKffGjp7-2FQ-3D-3DwvuR_rO1JR=
+qZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJhW4g8P93-2Fl8LD=
+cYhphZ6RwE-2BOycjX3HlHO9RO5jmufoGeE4D4p-2BsQOz1L20BFalQR1hPOrpXFwIuApR8NR86=
+9Pp3uGsB5So3OhRqCMrgzT8PJd22yXVCp7LgLzvJHQENXC-2FaMV6pw0EieP-2B0P85FYUFVL5n=
+Hz92P4WljPGQcON9ZGIY0jzw6QnQimwhP0UjPHq1RRBwiT-2FQYo012iXO1roA-3D-3D]
+
+Seed stage startup offering salary and generous equity! Must have shipped a=
+pps
+from end to end with a passion for AI.
+
+[=F0=9F=8F=A1]=C2=A0REMOTE =C2=A0=C2=A0=C2=A0 [=F0=9F=93=8D] San=C2=A0Franc=
+isco,=C2=A0CA =C2=A0=C2=A0=C2=A0 [=F0=9F=92=B5]=C2=A0$150,000=C2=A0-=C2=A0$=
+200,000 =C2=A0=C2=A0=C2=A0
+1-Click Apply
+[https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpGg733glLFowWEMvwvyCDrypz3f-2Bvy34RSF6GMy9GiHzMLGlMLnFmxRIVqGgEsSOu4O5Kkmz=
+TQYzGVAC1B0QOSiVPtciMy3spJYu3X1YOi4pfkg0n-2B1OhO1Cb5rd9UDFwOWfhDnujnNmWdHTQ=
+QczO-2FvKl3Pi5YEhOcALgkJD-2FQnt-2Bl0nq0h0AJ-2Ffy3i-2Fh2MUFtyPhMDS3H2Q7b9Eh-=
+2BCv-2BxuJSwzQQ1ppYr7YioPBewiDaEdWQGZcaBJAKYdlZZ8Ojg-3D-3DtHx5_rO1JRqZrx5Oo=
+25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJh-2BOvxgmXs5cYR8nL9dxr=
+w2CLHJZqJDu5qsR9RDmE3n5nlPmvqiYG8gUn2WMOkH3RwvVoRqcXBGCrnUdb9yXCPqkyTnvJ2Lj=
+yS6v4zJe3V-2F-2BzQQ2khIabBDJu04h72J4t8UCOvEgbjuBWOIw62LrL1I3OSq9BnOmQ0VViPS=
+VL3407Ed3pEzKmpnWxr51LFyxX1AF0qJM-2BvGD7hwnJpSPYu2w-3D-3D]
+
+[Karyn Spies]
+Karyn
+
+Also Consider -- Based on your resume
+
+Senior Data Scientist
+[https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpLmDLJUw5zsWrRP9ba15kqoAU6psKz-2FlJBnkMQrOiiMVg08m6kFbIZ19caiRbWZkGsw1EfX3=
+CcC0rOGlFHKVkz-2BmM3-2F7xWGEYe6D-2Bzt4jc0PfGQMpS3mIcHAslJVpp6AkqmGipJjw7zBg=
+R0rMlurEWm6H4vkwypDy7DWIPqjuGJK-FG5_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXng=
+f09BwXHLgXw1UsnYnOWyT8iTUJhX0ZofFWsgtMSvOjGWnp6oBCC5-2BBVYB9EB3wzyAss0mFuJG=
+Ge7Aqzw8lIg6JzbMj6QHJbty9WWJtcIc0ixRO2qhh9FJQpV9KtoB0iP7VYI1tIgGcEKV1CWmXVV=
+p6mQbDbT1knFirQOeUHSiPa8cf4JPAm6FqXFwxlJfC66dtL153ZPHJPA16p1CzHvvQBFWqP2RSK=
+W-2BmeDjdsLMwKwv1duQ-3D-3D]
+
+100% Remote Role, Innovative AI Company
+
+[=F0=9F=8F=A1]=C2=A0REMOTE =C2=A0=C2=A0=C2=A0 [=F0=9F=93=8D] Houston,=C2=A0=
+TX =C2=A0=C2=A0=C2=A0 [=F0=9F=92=B5]=C2=A0$130,000=C2=A0-=C2=A0$160,000 =C2=
+=A0=C2=A0=C2=A0
+1-Click Apply
+[https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpGg733glLFowWEMvwvyCDrxTjhCNpcokMcS182DMSx9498ea3wupy-2FaL9-2BBVFfRvzQ3Jfs=
+zhV2-2FxvUF7H0K3kd-2BBo2CrsXn5aK7JwOrjEaTIbr8o0JOVpXo3-2F3mSjOo-2Bvso8tYrzk=
+90RHtRYJmAZ6xwwSWp2SPH-2FEivNO9r2tbbUaqeX7lWsHIcu4CzvKpA603za-2FNQ-2BkL8KW2=
+B4CxlV1XVVD3u3Pf0KlOPLj5ehUcrLtrT3Oux1QoaGI-2Bdp16XUSw-3D-3Dntiq_rO1JRqZrx5=
+Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJhQf1cXWslPKZ-2BtiLT1=
+bjGOevH39iTHCUC95-2F0qhmuQxY-2FOhxJTy67PbCLSZteTkgFPu1nlDYAzXQYq9iyfoXlx0IZ=
+1O9PbGo1Ivar-2F1GYXblzdKl74EnmcqL2U5HRSAm9f0AOUaRLPiRQjoy4wZHtgDm-2BCK-2B2R=
+XLm2IIm7hP5nnENjJMG2yAvieOJ5-2FdeCe0cND6F7jYtmT2yGpRI0Nz7-2Fg-3D-3D]
+
+[Duran Workman]
+Duran
+
+Also Consider -- Based on your resume
+
+Senior Data Engineer
+[https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpLmDLJUw5zsWrRP9ba15kqquOcBiUenmhyz-2BD2d2gK1XCCTwF-2Bwtmz114ylRGT93tka1Hi=
+GDheLARwxBODmCyPzMY0ECrp6cWicynpv0wXa8DlEO5H-2FI3w9qiRGX9UkntzNryO6LCn-2Bsw=
+hS3EUsMH90Ax7-2BEZD2E4TsDgUpfyF1K6M18_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BX=
+ngf09BwXHLgXw1UsnYnOWyT8iTUJhsZC9X3PI63M8EcpH5rlm1IHHGjGM2ILHixv7esWwXL3A4e=
+8Sc3lPRmlvBcnMgC1iEPv5CdWZQEX-2B1zPvRK6v211AAkg-2Bu1u3eFa7aoQQLj-2BrUiqNht9=
+XkJOuQ9YY-2FtBnDYeZV8WL7s8a94ERNg99ljTlGfl0pA2ROheFVIWfUw1CZFLtipIXC8nyknfZ=
+CRuiRViM-2Fmr7kFkwKHLXLCKpZw-3D-3D]
+
+100% REMOTE Senior Data Engineer / Lead Data Engineer Needed for Growing
+Subsidiary of a Large Public Company!
+
+[=F0=9F=8F=A1]=C2=A0REMOTE =C2=A0=C2=A0=C2=A0 [=F0=9F=93=8D] Charlotte,=C2=
+=A0NC =C2=A0=C2=A0=C2=A0 [=F0=9F=92=B5]=C2=A0$145,000=C2=A0-=C2=A0$235,000 =
+=C2=A0=C2=A0=C2=A0
+1-Click Apply
+[https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpGg733glLFowWEMvwvyCDrwX4XdIbNjDN5m1TCf706MouQtJ1uJELtGKZREH6LpkFIKWK1JDsA=
+2tB36kTL0Dfqd0Dlw7ir0PT9lUOK1lQOakjd5NrU542jaoLaYRS4wOa3oLq8Y679vzFCstkKZD2=
+SzAEtkFNJPRa8O2l77jBeQd0FyCyOK9OCQJ3U8Ux2wm9BgYQy6Z74JY4uaN90MA-2B-2Bfw4Gio=
+GS45j4LCpWvBwvQUqW5F_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1Usn=
+YnOWyT8iTUJhhbQWDgAS0LdGAiA2iSWqf0sN2EOHRlj6T0beYZySav4tKLOFjEW61wuQrV7w-2F=
+spwRTtna29gC6N7-2BWaML1TSdGDDkBV-2FJJQNc8JP-2FUxqYsrRibIFrYVNoCehoPZzQUS3xv=
+7vYzekiNctzyVAJhPCC7AHF43rB1NmDv-2Bqw-2B175YseET02Upso9huuN2dghh0IYiurR7yed=
+EN95PHuFkzJtA-3D-3D]
+
+[Reed Kellick]
+Reed
+
+Also Consider -- Based on your resume
+
+Senior Data Engineer
+[https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpLmDLJUw5zsWrRP9ba15kqquOcBiUenmhyz-2BD2d2gK1XH2wh1uSAhQYS1KSMSDf7AUo2Hfv2=
+6k15F9CqHbpFRT2EISmWlVO8FEVrIJToDhzmFpqxNUuhtVdmq4PXUD4bHwZzSA6ALOfJoLtlvM2=
+vnGjiKUWYGHWpFmiG-2BJIRenHZfk6D_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09B=
+wXHLgXw1UsnYnOWyT8iTUJh-2BEKaLdgn3V48D1e7dxn-2FxEg60ShKDV0diDI9Z2PPCc7Y7yji=
+wRAbVelbmtW-2BhkDctP4vNo3dg5iUEZhIkftAg5ozyJA-2F5vGucRwL4XZZBBJLBzeqes8qmYu=
+3qKN3BEY3hI6EDhfAi18GUa5-2Fe63-2B-2BOm-2F3QHs-2Bd2Fj7jmWBycFOqJqOuc1GQFQkdE=
+9vuIOuqFvQYkkoiUT4CiYbPWbzuphw-3D-3D]
+
+100% REMOTE Senior Data Engineer / Lead Data Engineer Needed for Growing
+Subsidiary of a Large Public Company!
+
+[=F0=9F=8F=A1]=C2=A0REMOTE =C2=A0=C2=A0=C2=A0 [=F0=9F=93=8D] San=C2=A0Franc=
+isco,=C2=A0CA =C2=A0=C2=A0=C2=A0 [=F0=9F=92=B5]=C2=A0$145,000=C2=A0-=C2=A0$=
+235,000 =C2=A0=C2=A0=C2=A0
+1-Click Apply
+[https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpGg733glLFowWEMvwvyCDrwX4XdIbNjDN5m1TCf706Moa3tHIG7d-2FhyM4dpJBeWDkB9AbLrv=
+Tr0-2BPXZgvi0RkGIomd2o0BseV0v1xbVHRQ1ghJshCKUrnNgXFyrxctlqjna-2BEw5wgpRdWok=
+1QrLoEKOwXSVPdz1C1vKJeqVqOu7FemP5OMSl-2FLXZ6KLDiRIUkq0-2FjmHE0GXZC1YLMoYFiu=
+wOpkCZChP13KWadzlQNd9oIr-s_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLg=
+Xw1UsnYnOWyT8iTUJhz-2BK06lsR0yNmMJQyFzTBX8M9hv4Rgym-2Bd4ilhq0a47JAv-2Bib7Uu=
+vui-2FDt4u-2BmYNk-2B79bPLRornrz1bAINDE8r6lRmPUc477vvUQL-2Fi8anVGDhww5PcDLcE=
+QX-2Bo4Qps83Hjp-2Baro6CVrmOlAMta9nRRQt2uDZL3Z-2F-2BmBqR9S7X-2FGcFmU7lu1XTmY=
+TmYdbG-2FH3yMD3RMtnvPH-2FsjAp0-2FHKaQ-3D-3D]
+
+[Reed Kellick]
+Reed
+
+Also Consider -- Based on your resume
+
+Senior Data Engineer
+[https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpLmDLJUw5zsWrRP9ba15kqquOcBiUenmhyz-2BD2d2gK1XKFok4FfR2MxsPfZKDUrIPWHsoumD=
+7kBedAQMM9qTHDa8YGqTcdkwazJ9hm-2FNEIwiWrMYN3iUUQSyoQ17ZEtgaQKsLuidy5nrralT7=
+RRx4p6xxZlgYYNaLe-2B6TFZuo05PKgDI_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf0=
+9BwXHLgXw1UsnYnOWyT8iTUJh6MUwdlusBgSpdiX9LvvTfgHsDm3RE1IRUNp3VnzvANI47BDxi7=
+VSW-2BbniYtJRIx-2FipTnHx-2FmYnGIGBrHOmFOtKO1OBFBQKPtzmHVm-2B3o00LHxutN1fmTR=
+SJx-2FUaP3tyu-2Fdi9KO48zTc61gr-2FmUc4BXiq-2FOvAVyw7uVwTzeQbWmqDvpppUDkimF-2=
+FN6lPCtUFPTwS0igdXgpsm5-2FYnT8kjqA-3D-3D]
+
+100% REMOTE Senior Data Engineer / Lead Data Engineer Needed for Growing
+Subsidiary of a Large Public Company!
+
+[=F0=9F=8F=A1]=C2=A0REMOTE =C2=A0=C2=A0=C2=A0 [=F0=9F=93=8D] San=C2=A0Jose,=
+=C2=A0CA =C2=A0=C2=A0=C2=A0 [=F0=9F=92=B5]=C2=A0$145,000=C2=A0-=C2=A0$235,0=
+00 =C2=A0=C2=A0=C2=A0
+1-Click Apply
+[https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpGg733glLFowWEMvwvyCDrwX4XdIbNjDN5m1TCf706MoOkq8eZVfsx9u4xijCdpp-2BKblgGBB=
+I6LxLV6disjTux-2FH195GnDlus88yz7qaFuAdh4wPlKoVdUV-2BMkx-2FIwSxMf-2FCjgPlRlf=
+Ixzn03hRQdvlyJuB9ymsVeUJ0JanAc4T7EztUxDh45HlegF2qG3crWOZPJRaWkatWcTxUA78hYB=
+AKfxrlg6Pw1lGC5PTUdOXQ_0GI_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLg=
+Xw1UsnYnOWyT8iTUJhelxzBU-2F6IOWkZT8E8FWIv3BVsp9Mr-2B51iUCAyw2vfVxJjOhZi8jBH=
+cos-2BxVHTolYRK51F-2FX8A5cozi-2BkjGYxWSLvo-2BnVokDUkXtKzIic4fnSymZBXFoqUPEH=
+EgVsImKMWEq0ve-2Bt5fzUZumdKlEAvGUJlhpvXoVNBzvE-2BUQz5MWGDcF0kII1kKnQTgOHq-2=
+BTIUXPRUolopULgOQCAj4488Q-3D-3D]
+
+[Reed Kellick]
+Reed
+
+[LinkedIn logo] [https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSn=
+I8Q0Y9UfX4wWW5-2BpPRkN-2BkxGSEONcuBgJ9KfzQuHtzbdyCAfwnDxDhCBP1hUMnVCqqRugnI=
+M02JmQ8S1A-3D-3D6TAW_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1Usn=
+YnOWyT8iTUJh3ebBGJaG7mWzMG1Fgprpk8-2BEKNN39AWhYCffc-2BYshafxvYCPHwXgSRhieI8=
+xhZmRiXMInBDhH-2FGwiVr7RQOVuNpEyVk3PHt8v4A1YRdlROEX-2F4V9Tf7t9Lv7CaVggj2ter=
+3mAtWbAlcf1mVZlikP-2F-2BD1Ysbrg-2FpEyJzr9DSDv3ZlF0is283izzHeVUfARvBKmrp3xrE=
+rkx7D9JTtq4cTgg-3D-3D][Instagram logo]
+[https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2=
+BpI-2FOr7Lrd9uCqO1yAKFz8I2MZ0VL82sMkML8tuAT6EsOyche_rO1JRqZrx5Oo25BATZItEvI=
+KK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJh77xuOAAgZY-2BAYpvi-2F3k2Vk8GScuY=
+sHlZh6xQeMVhMC7uTzJB1SPST1Jn-2FknEoULkjFdjHB0DPVYc53KSdJaDigGBkcHEziEhV8nPP=
+eM0CPp6AsFUpVc-2BqkimA4I6IbI9Axe0bWHvZkqW2EltxabA9bKB-2F7K4JIVXRoyaf69v0H3O=
+REnEuoc51Zm3LGI-2BCDpHxtOFj4meAqAEAhyjT-2FfCHw-3D-3D]
+
+Jobot.com [https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9=
+UfX4wWW5-2BpICm9ELzN335UUJHag9HugisWnzX3Utw1mDppr4YysBut2Sbe3O4EzyP99HDbAWc=
+mEYuB1o-2BGt0PYjJzdjC1jcc-3D6S0C_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09=
+BwXHLgXw1UsnYnOWyT8iTUJhHcFQvtuCmZiWHeSnxVnbSCLL6a3lto9ukJjMgGkkSqKwN5bBYsK=
+mtNwPuRbTakGajgAbIKgGJ-2F-2BW0EqZKUG-2FOJGuoZyVfla3xEzW7FQWpWiGkbrJ9I5NGn80=
+053X1RahDf7CrI-2B3O-2FzBSnIcfBCbaWn85CsuzYleFBxhwL4s84pnmf129iKfwD4LZup0Vvq=
+1vF2OQ2YyNDyIWq5JNWaz2w-3D-3D] |
+Unsubscribe [https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0=
+Y9UfX4wWW5-2BpA2bCbg4puiQAdqk26y-2Fa5ugpA2pYNUNge4Bg9DytIZ-2BVHDoguV9P6ZU2I=
+-2B4zA2q54PpPM1HDf9voAzj8yfTRuQ6igdRnSO8sFe1y5wp3ld0G1RS2gXsjT2EqZ58v45yh-2=
+Fnu1ogUBdBGn7zmIppfvCgTwNJYO-2BH9UELWbDBQW79PcB2Z_rO1JRqZrx5Oo25BATZItEvIKK=
+9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJheierP7-2FVRWqDF4hkguEuZH7pFbrRyIvf=
+7bWbYXg6HSZttYApY3BXhBEuhfgRdHHy8-2FV2ojahu0AF4MYtPzQfeR9yFcD-2BEll0E9q2F0Z=
+cltQ8P99bcRNWt2mcjNQPN7jAR-2BR6bwo0-2BbfINd7F-2Bo52Gm5ABRYXKrD8JFZ-2F-2FO4c=
+xpBHwA1BKwO9n3YgBN3D9s9Bi6HjnShNJO2oo8B5fQiNTw-3D-3D]
+Copyright =C2=A9 Jobot, LLC, All rights reserved.
+3101 West Pacific Coast Hwy, Newport Beach, CA 92663
+--756455647e34a5108ae21cb45c0ff68f9e5562ceacb45b43d2948f76254f
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=utf-8
+Mime-Version: 1.0
+
+<!DOCTYPE html><html><head>
+     =20
+      <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF=
+-8">
+      <meta name=3D"x-apple-disable-message-reformatting">
+      <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scal=
+e=3D1.0">
+    <style>.EmailJobFlair .step{display:inline-block;white-space:nowrap}.Em=
+ailJobFlair .icon{vertical-align:text-bottom}@media screen{@font-face{font-=
+family:"Roboto";font-style:normal;font-weight:400;src:local("Roboto"),local=
+("Roboto-Regular"),url(https://fonts.gstatic.com/s/roboto/v18/KFOmCnqEu92Fr=
+1Mu7GxKOzY.woff2) format("woff2");unicode-range:U+0100-024F,U+0259,U+1E00-1=
+EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-fac=
+e{font-family:"Roboto";font-style:normal;font-weight:400;src:local("Roboto"=
+),local("Roboto-Regular"),url(https://fonts.gstatic.com/s/roboto/v18/KFOmCn=
+qEu92Fr1Mu4mxK.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+01=
+52-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U=
++2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:"Roboto";fo=
+nt-style:normal;font-weight:700;src:local("Roboto Bold"),local("Roboto-Bold=
+"),url(https://fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1MmWUlfChc4EsA.w=
+off2) format("woff2");unicode-range:U+0100-024F,U+0259,U+1E00-1EFF,U+2020,U=
++20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-famil=
+y:"Roboto";font-style:normal;font-weight:700;src:local("Roboto Bold"),local=
+("Roboto-Bold"),url(https://fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1Mm=
+WUlfBBc4.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-015=
+3,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,=
+U+2193,U+2212,U+2215,U+FEFF,U+FFFD}}@media screen{@font-face{font-family:"R=
+oboto";font-style:normal;font-weight:400;src:local("Roboto"),local("Roboto-=
+Regular"),url(https://fonts.gstatic.com/s/roboto/v18/KFOmCnqEu92Fr1Mu7GxKOz=
+Y.woff2) format("woff2");unicode-range:U+0100-024F,U+0259,U+1E00-1EFF,U+202=
+0,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-fa=
+mily:"Roboto";font-style:normal;font-weight:400;src:local("Roboto"),local("=
+Roboto-Regular"),url(https://fonts.gstatic.com/s/roboto/v18/KFOmCnqEu92Fr1M=
+u4mxK.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U=
++02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2=
+193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:"Roboto";font-style:=
+normal;font-weight:700;src:local("Roboto Bold"),local("Roboto-Bold"),url(ht=
+tps://fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1MmWUlfChc4EsA.woff2) for=
+mat("woff2");unicode-range:U+0100-024F,U+0259,U+1E00-1EFF,U+2020,U+20A0-20A=
+B,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:"Roboto=
+";font-style:normal;font-weight:700;src:local("Roboto Bold"),local("Roboto-=
+Bold"),url(https://fonts.gstatic.com/s/roboto/v18/KFOlCnqEu92Fr1MmWUlfBBc4.=
+woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-=
+02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+=
+2212,U+2215,U+FEFF,U+FFFD}}
+/* Google font import Lato */
+/* hotmail background + line height fixes */.ExternalClass,.ExternalClass p=
+,.ExternalClass span,.ExternalClass font,
+                                            /* image borders + formatting *=
+/
+                                        img {outline: none; text-decoration=
+: none; -ms-interpolation-mode: bicubic;}
+a img {border: none;}
+/* re-style iPhone automatic links */
+body {padding:0; margin:0; -webkit-text-size-adjust:none; -ms-text-size-adj=
+ust:100%; font-family: 'Lato', sans-serif;}
+/* button */
+@media screen and (max-width:640px) {
+.full { width: 100% !important; height: auto !important;}
+.inner { width: 90% !important; height: auto !important;}
+}
+.JobAlertsChat{}@media screen and (max-width: 640px){.JobAlertsChat .full{w=
+idth:100% !important;height:auto !important}.JobAlertsChat .inner{width:90%=
+ !important;height:auto !important}.JobAlertsChat .column{display:inline-bl=
+ock !important}}.JobAlertsChat .ExternalClass,.JobAlertsChat .ExternalClass=
+ p,.JobAlertsChat .ExternalClass span,.JobAlertsChat .ExternalClass font,.J=
+obAlertsChat img{outline:none;text-decoration:none;-ms-interpolation-mode:b=
+icubic}.JobAlertsChat a img{border:none}</style></head>
+    <body><div class=3D"preview_text" style=3D"display: none; max-height: 0=
+px; overflow: hidden;">Apply Now, Duran and Chris are hiring for Data Engin=
+eer and Technical Analyst- Postal Affairs roles!&nbsp;=E2=80=8C&nbsp;=E2=80=
+=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=
+=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=
+=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=
+=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=
+=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=
+=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=
+=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=
+=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=
+=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=
+=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=
+=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=
+=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=
+=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=
+=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=
+=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=
+=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=
+=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=
+=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=
+=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=
+=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=
+=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=
+=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C</div>
+      <div data-server-rendered=3D"true" class=3D"JobAlertsChat"><table wid=
+th=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tbody><tr><td=
+ align=3D"center" bgcolor=3D"#FFFFFF" style=3D"padding:30px 0 15px;"><table=
+ width=3D"600" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" class=3D"in=
+ner" style=3D"max-width:600px;"><tbody><tr><td width=3D"100"><table border=
+=3D"0" align=3D"left" cellpadding=3D"0" cellspacing=3D"0" class=3D"full"><t=
+body><tr><td align=3D"center"><img width=3D"100" src=3D"https://media.jobot=
+.com/email/logo-email-header.png" alt=3D"Jobot logo" style=3D"width:100px;"=
+></td></tr></tbody></table></td><td width=3D"10" height=3D"15"></td><td wid=
+th=3D"490"><table border=3D"0" align=3D"right" cellpadding=3D"0" cellspacin=
+g=3D"0" class=3D"full"><tbody><tr><td align=3D"center" style=3D"font-family=
+:'Lato', arial, sans-serif;font-size:14px;color:#4A4A4A;font-weight:bold;pa=
+dding-left:10px;"> Simon Renauld </td></tr></tbody></table></td></tr></tbod=
+y></table></td></tr></tbody></table><table width=3D"100%" border=3D"0" cell=
+padding=3D"0" cellspacing=3D"0"><tbody><tr><td align=3D"center" bgcolor=3D"=
+#FFFFFF" style=3D"padding:15px 0 1px;"><table width=3D"600" border=3D"0" ce=
+llspacing=3D"0" cellpadding=3D"0" class=3D"inner" style=3D"max-width:600px;=
+"><tbody><tr><td style=3D"font-family:'Lato', arial, sans-serif;font-size:1=
+rem;color:#4A4A4A;line-height:1.3rem;">  </td></tr></tbody></table></td></t=
+r></tbody></table><!----><table width=3D"100%" border=3D"0" cellpadding=3D"=
+0" cellspacing=3D"0"><tbody><tr><td align=3D"center" bgcolor=3D"#FFFFFF" st=
+yle=3D"padding:15px 0 1px;"><table width=3D"600" border=3D"0" cellspacing=
+=3D"0" cellpadding=3D"0" class=3D"inner" style=3D"max-width:600px;"><tbody>=
+<tr><td style=3D"font-family:'Lato', arial, sans-serif;font-size:18px;color=
+:#000000;line-height:28px;padding:0 0 10px;font-weight:bold;"> 12 New Jobs =
+for your Job Search </td></tr></tbody></table></td></tr></tbody></table><di=
+v set=3D"0"><table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacin=
+g=3D"0"><tbody><tr><td dir=3D"ltr" align=3D"center" bgcolor=3D"#FFFFFF" sty=
+le=3D"padding:15px 0;"><table width=3D"600" border=3D"0" cellspacing=3D"0" =
+cellpadding=3D"0" class=3D"inner" style=3D"max-width:600px;"><tbody><tr><td=
+ width=3D"520"><table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspa=
+cing=3D"0"><tbody><tr><td dir=3D"ltr" bgcolor=3D"#37ca5d" style=3D"padding:=
+10px 20px;border-radius:30px 30px 5px 30px;"><table width=3D"100%" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tbody><tr><td dir=3D"ltr" valig=
+n=3D"top"><table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0"><tbody><tr><td><table width=3D"100%" border=3D"0" cellpadding=3D"0" =
+cellspacing=3D"0" style=3D"color:white;font-family:'Lato', arial, sans-seri=
+f;"><tbody><tr><td style=3D"font-weight:bold;color:#f0f0f0;font-size:.7rem;=
+"> Recommended Apply -- Based on your resume </td></tr></tbody></table><tab=
+le width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tbody><=
+tr><td style=3D"padding-bottom:.5rem;padding-top:.5rem;font-weight:700;font=
+-size:1.2rem;"><a href=3D"https://url9751.alerts.jobot.com/ls/click?upn=3Du=
+001.nzDSnI8Q0Y9UfX4wWW5-2BpLmDLJUw5zsWrRP9ba15kqpslcT3OmOYlMfoM0A4Xh52mzeV4=
+8vQQMXUf3FS-2F-2FAuRNo7d6A66jhKyYASf-2BDPk-2Fcme0zyWiIcAEUMU92qo8tn2cqzKx2L=
+e3xC8NEiAXHxv2Lo7UIhLDZ6rlICAVp39EiTRZ7O-2BnxvEOFCyJaNK3KzFOGv_rO1JRqZrx5Oo=
+25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJhTAp6P8RuBdl8dwL7kaXIJ=
+5rsjOAwPvqLzBYdNWAqc2Ew0ReN-2BqNzITWi56qSu7rgKpk5r4IICWHr2-2FIxgcmsWYii-2Bb=
+tGEAdQOH3NbvqHUZrEfeAiVA3XQLOSc1CNh6RQyfBz-2BKUeTyVLNugNmbhGtB2FuInd3SSu-2B=
+SKPS-2Fh0FVEfOjv0cUl3SXqrlZBGoxp2RKzQ6AtOepRR99J1RTPWZA-3D-3D" style=3D"col=
+or:#ffffff!important;"> Data Engineer </a></td></tr></tbody></table><table =
+width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"fo=
+nt-family:'Lato', arial, sans-serif;font-size:15px;color:#fff;line-height:2=
+8px;"><tbody><tr><td> 100% Remote, Silicon Valley Health &amp; Wellness sta=
+rt-up, Salary + Equity </td></tr></tbody></table><table width=3D"100%" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"color:white;font-fami=
+ly:'Lato', arial, sans-serif;"><tbody><tr><td width=3D"66%" class=3D"column=
+ full" style=3D"color:white;font-family:'Lato', arial, sans-serif;"><span c=
+lass=3D"EmailJobFlair"><span><span class=3D"step"><strong><img src=3D"https=
+://media.jobot.com/email/icons/16px/white_fas_fa-house-signal.png" alt=3D"=
+=F0=9F=8F=A1" class=3D"icon">&nbsp;REMOTE</strong> &nbsp;&nbsp;&nbsp; </spa=
+n><!----><!----><!----><!----><!----><!----></span><span><!----><span class=
+=3D"step"><img src=3D"https://media.jobot.com/email/icons/16px/white_fas_fa=
+-location-dot.png" alt=3D"=F0=9F=93=8D" class=3D"icon"> Houston,&nbsp;TX &n=
+bsp;&nbsp;&nbsp; </span><!----><!----><!----><!----><!----></span><span><!-=
+---><!----><span class=3D"step"><img src=3D"https://media.jobot.com/email/i=
+cons/16px/white_fas_fa-square-dollar.png" alt=3D"=F0=9F=92=B5" class=3D"ico=
+n">&nbsp;$70,000&nbsp;-&nbsp;$85,000 &nbsp;&nbsp;&nbsp; </span><!----><!---=
+-><!----><!----></span><span><!----><!----><!----><!----><!----><!----><!--=
+--></span></span></td><td width=3D"10" height=3D"10" class=3D"column"></td>=
+<td width=3D"33%" class=3D"column full"><div style=3D"text-align:center;bac=
+kground-color:white;font-family:'Lato', arial, sans-serif;font-size:.9rem;c=
+olor:#23b3e7;line-height:1rem;font-weight:bold;mso-padding-alt:6px 10px;bor=
+der-radius:10px;"><a href=3D"https://url9751.alerts.jobot.com/ls/click?upn=
+=3Du001.nzDSnI8Q0Y9UfX4wWW5-2BpGg733glLFowWEMvwvyCDryhN3bB6wT1LxGo-2BElQYYt=
+0TmGcb7OiJuRVspZcBm5mnpTChlNlSLTK5Gv1qPKa3Il817-2ByKZea8-2Bep01nLewNPbMaGaZ=
+K7GzUKrYK-2Fod-2FtekNk-2B8OOMmYAhLaBVxjUGsGUPswXEd-2BtETrfRCp5gHrE7IxA0MaYc=
+SCSnBWIyvjIa8R5gYsUDFxgE-2FFBOqlFdEPeKUWHIDcDFyUUuV2M1M8izw5O_rO1JRqZrx5Oo2=
+5BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJh0PnJpqvtfKc7VVYElidoWw=
+bGtffbXwOhe3BWuPV-2BCg588ImshHvt2F5RhrP0zKPerFUNmtnOYvrzYUOjFYzRyeIpY75-2B9=
+upshgU3BdXq-2BN-2BysJrzgAuxvifjL8EkZaF8yTNAsH2jsyVjEYJSesQ2DUmEgD2iLlkBkuWk=
+b7aVTjPmqKtH8BW3MI54SS5VoEz0SLogAzcu5ZxX6cdUYR9JXw-3D-3D" style=3D"padding:=
+6px 10px !important;color:#23b3e7 !important;display:block;"><span style=3D=
+"color:#23b3e7 !important;"> 1-Click Apply </span></a></div></td></tr></tbo=
+dy></table></td></tr></tbody></table></td></tr></tbody></table></td></tr></=
+tbody></table></td><td width=3D"10" height=3D"10"></td><td dir=3D"ltr" alig=
+n=3D"right" width=3D"50" valign=3D"bottom"><img src=3D"https://jobot.imgix.=
+net/pro/13ef806471221bcbc6aa316110195b61ab41023a82bde7965a672c42c52838f4.jp=
+eg?w=3D175&amp;h=3D175&amp;fit=3Dcrop&amp;mask=3Dellipse&amp;fm=3Dpng" alt=
+=3D"Duran Workman" width=3D"50" style=3D"border-radius:50%;"><br><small sty=
+le=3D"color:#777;font-size:.7rem;display:block;text-align:center;max-width:=
+50px;"> Duran </small></td></tr></tbody></table></td></tr></tbody></table><=
+/div><div set=3D"1"><table width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0"><tbody><tr><td dir=3D"rtl" align=3D"center" bgcolor=3D"#FFF=
+FFF" style=3D"padding:15px 0;"><table width=3D"600" border=3D"0" cellspacin=
+g=3D"0" cellpadding=3D"0" class=3D"inner" style=3D"max-width:600px;"><tbody=
+><tr><td width=3D"520"><table width=3D"100%" border=3D"0" cellpadding=3D"0"=
+ cellspacing=3D"0"><tbody><tr><td dir=3D"ltr" bgcolor=3D"#3190f8" style=3D"=
+padding:10px 20px;border-radius:30px 30px 30px 5px;"><table width=3D"100%" =
+border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tbody><tr><td dir=3D"ltr"=
+ valign=3D"top"><table width=3D"100%" border=3D"0" cellpadding=3D"0" cellsp=
+acing=3D"0"><tbody><tr><td><table width=3D"100%" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" style=3D"color:white;font-family:'Lato', arial, sa=
+ns-serif;"><tbody><tr><td style=3D"font-weight:bold;color:#f0f0f0;font-size=
+:.7rem;"> Also Consider -- Based on your resume </td></tr></tbody></table><=
+table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tbod=
+y><tr><td style=3D"padding-bottom:.5rem;padding-top:.5rem;font-weight:700;f=
+ont-size:1.2rem;"><a href=3D"https://url9751.alerts.jobot.com/ls/click?upn=
+=3Du001.nzDSnI8Q0Y9UfX4wWW5-2BpLmDLJUw5zsWrRP9ba15kqq6Pr-2BIw912GnO27VWl-2B=
+YCJZuqlFSP32-2BiFtu3MDK0uoWhwEFf1zmiiMOyCj-2B2G0f7V5UmjBI1asqc-2FK9CRPR61fA=
+BLIQPyOzuZWX1cHlnNR5-2BUVMoBvIYiQXlogmSJph-2FVihabDQSdiiK4M7HVpa4-2FEfAmWCA=
+4WF8-2Bd-2BWo0UgVeQ-3D-3DI6aa_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwX=
+HLgXw1UsnYnOWyT8iTUJhcxROPagmWVJY6mLBsbUvPhdR2WISZCR3VTopl-2BC64BFWJt9hwH7k=
+Ffc2HrLTItdWRBZWH13cIdQG1DyaEVhD-2BYaErGhVYLquizcGAD2-2Bn4CQ77byCPysKffn5FT=
+P6re-2BM6t2d8xtiK11ORelUPYGABYv7SuEmdZmDW-2BmFqfyU-2F9o4zqw15UuYILLO4qDpk1o=
+o3sni1BmMvms9EAqTz0zBg-3D-3D" style=3D"color:#ffffff!important;"> Technical=
+ Analyst- Postal Affairs </a></td></tr></tbody></table><table width=3D"100%=
+" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"font-family:'La=
+to', arial, sans-serif;font-size:15px;color:#fff;line-height:28px;"><tbody>=
+<tr><td> One of the nation's largest full-service production companies is s=
+earching for a  Technical Analyst- Postal Affairs as they continue to grow.=
+  They are family owned, financially strong company that has been in busine=
+ss for over 40 years. </td></tr></tbody></table><table width=3D"100%" borde=
+r=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"color:white;font-famil=
+y:'Lato', arial, sans-serif;"><tbody><tr><td width=3D"66%" class=3D"column =
+full" style=3D"color:white;font-family:'Lato', arial, sans-serif;"><span cl=
+ass=3D"EmailJobFlair"><span><span class=3D"step"><strong><img src=3D"https:=
+//media.jobot.com/email/icons/16px/white_fas_fa-house-signal.png" alt=3D"=
+=F0=9F=8F=A1" class=3D"icon">&nbsp;REMOTE</strong> &nbsp;&nbsp;&nbsp; </spa=
+n><!----><!----><!----><!----><!----><!----></span><span><!----><span class=
+=3D"step"><img src=3D"https://media.jobot.com/email/icons/16px/white_fas_fa=
+-location-dot.png" alt=3D"=F0=9F=93=8D" class=3D"icon"> Newington,&nbsp;CT =
+&nbsp;&nbsp;&nbsp; </span><!----><!----><!----><!----><!----></span><span><=
+!----><!----><span class=3D"step"><img src=3D"https://media.jobot.com/email=
+/icons/16px/white_fas_fa-square-dollar.png" alt=3D"=F0=9F=92=B5" class=3D"i=
+con">&nbsp;$90,000&nbsp;-&nbsp;$120,000 &nbsp;&nbsp;&nbsp; </span><!----><!=
+----><!----><!----></span><span><!----><!----><!----><!----><!----><!----><=
+!----></span></span></td><td width=3D"10" height=3D"10" class=3D"column"></=
+td><td width=3D"33%" class=3D"column full"><div style=3D"text-align:center;=
+background-color:white;font-family:'Lato', arial, sans-serif;font-size:.9re=
+m;color:#23b3e7;line-height:1rem;font-weight:bold;mso-padding-alt:6px 10px;=
+border-radius:10px;"><a href=3D"https://url9751.alerts.jobot.com/ls/click?u=
+pn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2BpGg733glLFowWEMvwvyCDrzTLqSwG-2BhoRaswGzMas=
+RJ3ar0airlLpdOweTgdpB7QnfAZR8lvH2elOaQgNcVn3Rq7vh8eY5yvf7lcJPWkQ810MebRUgu-=
+2BsQKbY73egYDTujQMk9kUsPmeLYtKU-2Btq3rSxFkOSi13-2ByVPRMBJbSZo20aiuUAv9TrmUz=
+ZucDrwN6QdmVU2PcOtltwRoO3-2BzdCrA3eZbh7V3xV0XgZ5ugV1euRueR-2FDsoCVRe4pj-2FS=
+nx8g-3D-3DAtag_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT=
+8iTUJhTNpmDH1P2U0ZxCLr-2BgS6-2FAo5kIcQ949pAiJ3Y2AqKYd4hCCCxZS7YSvXjcHy-2Fmi=
+koneteSuioP8kWkdlpkzMYoDXIzDRheDVNqJ8LelkV0ikL-2Fvj2wD8i-2FKNMHaOxACiWAgWXV=
+hi7YFJKwXXTLAnoVpnpLeHJYo5PpU63NiMfNEYAUCdRLWN5WwKgkZi8DOM-2Bia1NgW-2F7u2Ve=
+Yt4XY7wlg-3D-3D" style=3D"padding:6px 10px !important;color:#23b3e7 !import=
+ant;display:block;"><span style=3D"color:#23b3e7 !important;"> 1-Click Appl=
+y </span></a></div></td></tr></tbody></table></td></tr></tbody></table></td=
+></tr></tbody></table></td></tr></tbody></table></td><td width=3D"10" heigh=
+t=3D"10"></td><td dir=3D"ltr" align=3D"left" width=3D"50" valign=3D"bottom"=
+><img src=3D"https://jobot.imgix.net/pro/cf37fc750e65fa4a98b2387e0a02d8d47d=
+21b1c830305dde115734adc830de40.jpeg?w=3D175&amp;h=3D175&amp;fit=3Dcrop&amp;=
+mask=3Dellipse&amp;fm=3Dpng" alt=3D"Chris Smouse" width=3D"50" style=3D"bor=
+der-radius:50%;"><br><small style=3D"color:#777;font-size:.7rem;display:blo=
+ck;text-align:center;max-width:50px;"> Chris </small></td></tr></tbody></ta=
+ble></td></tr></tbody></table></div><div set=3D"0"><table width=3D"100%" bo=
+rder=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tbody><tr><td dir=3D"ltr" a=
+lign=3D"center" bgcolor=3D"#FFFFFF" style=3D"padding:15px 0;"><table width=
+=3D"600" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" class=3D"inner" s=
+tyle=3D"max-width:600px;"><tbody><tr><td width=3D"520"><table width=3D"100%=
+" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tbody><tr><td dir=3D"lt=
+r" bgcolor=3D"#37ca5d" style=3D"padding:10px 20px;border-radius:30px 30px 5=
+px 30px;"><table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0"><tbody><tr><td dir=3D"ltr" valign=3D"top"><table width=3D"100%" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tbody><tr><td><table width=3D=
+"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"color:whit=
+e;font-family:'Lato', arial, sans-serif;"><tbody><tr><td style=3D"font-weig=
+ht:bold;color:#f0f0f0;font-size:.7rem;"> Also Consider -- Based on your res=
+ume </td></tr></tbody></table><table width=3D"100%" border=3D"0" cellpaddin=
+g=3D"0" cellspacing=3D"0"><tbody><tr><td style=3D"padding-bottom:.5rem;padd=
+ing-top:.5rem;font-weight:700;font-size:1.2rem;"><a href=3D"https://url9751=
+.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2BpLmDLJUw5zsWrRP=
+9ba15kqpaK8lPFXg8t2PxTrxo1s3dfYX8-2FfspAX-2BXGGYqVINXnC7q95J23FBTltnA3b4-2B=
+gyzhe69mLsG3AykHntpoEIMJxA5BWZikCivyCyzvsekxh98-2BB0hYPYsoF4VIIq7nrTLrAxkvX=
+s0Umh3swkK7xLnhTcLdRym8buqoaRk2wXuQyw-3D-3D2Mbi_rO1JRqZrx5Oo25BATZItEvIKK9w=
+iuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJhmhHOrmJYKP3sydnaeaAcAy7dusO5jibFQYAf=
+W47mafKWFanp2sDubFgqbEseU-2Fg1ZoSjte-2BrGnlnQcIaIFftpNaTF9SCdbz0geXgJkP8X5o=
+yRXh-2BnyicdbgbcW0-2BF6-2BuxhDPxYvKaj64QKqQISSaMxMZjqkr87QVK2roxBcnYl-2B0Ai=
+SKgxnCKsQODLru9PqzMQoqfbX2M4nlF-2Buo6VggJA-3D-3D" style=3D"color:#ffffff!im=
+portant;"> Data Scientist -- Azure and ML! </a></td></tr></tbody></table><t=
+able width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=
+=3D"font-family:'Lato', arial, sans-serif;font-size:15px;color:#fff;line-he=
+ight:28px;"><tbody><tr><td> My client is an innovative Healthcare techonlog=
+y company growing their Data Science team. Greenfield development on a few =
+new features and integrations! Remote work culture on EST and Central! </td=
+></tr></tbody></table><table width=3D"100%" border=3D"0" cellpadding=3D"0" =
+cellspacing=3D"0" style=3D"color:white;font-family:'Lato', arial, sans-seri=
+f;"><tbody><tr><td width=3D"66%" class=3D"column full" style=3D"color:white=
+;font-family:'Lato', arial, sans-serif;"><span class=3D"EmailJobFlair"><spa=
+n><span class=3D"step"><strong><img src=3D"https://media.jobot.com/email/ic=
+ons/16px/white_fas_fa-house-signal.png" alt=3D"=F0=9F=8F=A1" class=3D"icon"=
+>&nbsp;REMOTE</strong> &nbsp;&nbsp;&nbsp; </span><!----><!----><!----><!---=
+-><!----><!----></span><span><!----><span class=3D"step"><img src=3D"https:=
+//media.jobot.com/email/icons/16px/white_fas_fa-location-dot.png" alt=3D"=
+=F0=9F=93=8D" class=3D"icon"> Philadelphia,&nbsp;PA &nbsp;&nbsp;&nbsp; </sp=
+an><!----><!----><!----><!----><!----></span><span><!----><!----><span clas=
+s=3D"step"><img src=3D"https://media.jobot.com/email/icons/16px/white_fas_f=
+a-square-dollar.png" alt=3D"=F0=9F=92=B5" class=3D"icon">&nbsp;$110,000&nbs=
+p;-&nbsp;$160,000 &nbsp;&nbsp;&nbsp; </span><!----><!----><!----><!----></s=
+pan><span><!----><!----><!----><!----><!----><!----><!----></span></span></=
+td><td width=3D"10" height=3D"10" class=3D"column"></td><td width=3D"33%" c=
+lass=3D"column full"><div style=3D"text-align:center;background-color:white=
+;font-family:'Lato', arial, sans-serif;font-size:.9rem;color:#23b3e7;line-h=
+eight:1rem;font-weight:bold;mso-padding-alt:6px 10px;border-radius:10px;"><=
+a href=3D"https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9U=
+fX4wWW5-2BpGg733glLFowWEMvwvyCDrwiVnlt-2FM8w2vTAxi-2BKp23uHcsBm7hz-2BM-2BTK=
+EcUDpfkjT4-2BC2hThsKzjQEmlivJzrUqxM1jfeQGwp2pSz7p-2FXFfA6uKy85uxjW96zAeNYrh=
+wfyJZ-2F-2BG-2BHujI6bmRZWmX3h8-2Ff14BmWPPBmlvYjSYsjtZ46-2BKV1qjlsHhqkpK1pAU=
+OEZSIZdEOPSVIoTMtvV3Zuot-2Fqf0zaoP8pE3HpWYwfAHyTXRbMaK7tf6k6pkB9uoQ-3D-3Da6=
+k2_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJhckPlNi=
+ImAK90oWr5WFohbHktY5LhUmJ-2FNSgpGDb08jPxP5mfufRRhDC-2BgPF9MgBbrdG-2BK9B9Koa=
+qB3PqZakvcalvH4-2BtYyJ2cnDCwdRKQygb-2FpCfFCshGNpGE-2FNQrtTupzavD-2BUwwOyill=
+9oPQdF0IHH4DiAY7Y4iJK7U0rK9QkCQuyfdmeEWxEmT0FKLe8tqsEFdCXTtiYG0fncUUeXfA-3D=
+-3D" style=3D"padding:6px 10px !important;color:#23b3e7 !important;display:=
+block;"><span style=3D"color:#23b3e7 !important;"> 1-Click Apply </span></a=
+></div></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbod=
+y></table></td></tr></tbody></table></td><td width=3D"10" height=3D"10"></t=
+d><td dir=3D"ltr" align=3D"right" width=3D"50" valign=3D"bottom"><img src=
+=3D"https://jobot.imgix.net/pro/6d780b24e80133819b9ddc9f97fa15717b2b2e20146=
+4d809cfa0ae50496ba3ec.jpeg?w=3D175&amp;h=3D175&amp;fit=3Dcrop&amp;mask=3Del=
+lipse&amp;fm=3Dpng" alt=3D"Alex Dickinson" width=3D"50" style=3D"border-rad=
+ius:50%;"><br><small style=3D"color:#777;font-size:.7rem;display:block;text=
+-align:center;max-width:50px;"> Alex </small></td></tr></tbody></table></td=
+></tr></tbody></table></div><div set=3D"1"><table width=3D"100%" border=3D"=
+0" cellpadding=3D"0" cellspacing=3D"0"><tbody><tr><td dir=3D"rtl" align=3D"=
+center" bgcolor=3D"#FFFFFF" style=3D"padding:15px 0;"><table width=3D"600" =
+border=3D"0" cellspacing=3D"0" cellpadding=3D"0" class=3D"inner" style=3D"m=
+ax-width:600px;"><tbody><tr><td width=3D"520"><table width=3D"100%" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tbody><tr><td dir=3D"ltr" bgcol=
+or=3D"#3190f8" style=3D"padding:10px 20px;border-radius:30px 30px 30px 5px;=
+"><table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><t=
+body><tr><td dir=3D"ltr" valign=3D"top"><table width=3D"100%" border=3D"0" =
+cellpadding=3D"0" cellspacing=3D"0"><tbody><tr><td><table width=3D"100%" bo=
+rder=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"color:white;font-fa=
+mily:'Lato', arial, sans-serif;"><tbody><tr><td style=3D"font-weight:bold;c=
+olor:#f0f0f0;font-size:.7rem;"> Also Consider -- Based on your resume </td>=
+</tr></tbody></table><table width=3D"100%" border=3D"0" cellpadding=3D"0" c=
+ellspacing=3D"0"><tbody><tr><td style=3D"padding-bottom:.5rem;padding-top:.=
+5rem;font-weight:700;font-size:1.2rem;"><a href=3D"https://url9751.alerts.j=
+obot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2BpLmDLJUw5zsWrRP9ba15kqp1=
+NhqxBd3lWVM9lStFdWGSCSn11O5pJqN63OLRQru440CQABU9ReXJubikYa-2FGcbg-2B04L6wb8=
+B1XDgDSSUoRHL5j75D1k6l-2BUvBQEgXQ-2BcsdGIi-2F4GYVX7Pr4x7R7sYBFIYzFLuMRi-2BT=
+iuCo6Wk69BfOji1H7a03XzmTWk9lSDow-3D-3Daklp_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6U=
+N-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJhG7TBFYWvpBdMKQQdKhPJ07KngSgdHyGPo-2FHjWw3=
+KQz4EGCSFunYA1-2FdwIwGQj82bppkKg2CLtEaw8o8k2IdjysJqB5g64bxjpYCnofq5C0vNRRDQ=
+G7QAzMi9zDC6-2FjUWojG3rhlTO-2FslW4Q8cd2hhJ8n-2F0DGwap3HtIQoa-2B5CyN-2BNDJYd=
+GiSq7dJTobKkKR5Wt-2FJkX02LMDI-2BU7sKVxwrA-3D-3D" style=3D"color:#ffffff!imp=
+ortant;"> Associate Director, Marketing Analytics </a></td></tr></tbody></t=
+able><table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"=
+ style=3D"font-family:'Lato', arial, sans-serif;font-size:15px;color:#fff;l=
+ine-height:28px;"><tbody><tr><td> REmote! </td></tr></tbody></table><table =
+width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"co=
+lor:white;font-family:'Lato', arial, sans-serif;"><tbody><tr><td width=3D"6=
+6%" class=3D"column full" style=3D"color:white;font-family:'Lato', arial, s=
+ans-serif;"><span class=3D"EmailJobFlair"><span><span class=3D"step"><stron=
+g><img src=3D"https://media.jobot.com/email/icons/16px/white_fas_fa-house-s=
+ignal.png" alt=3D"=F0=9F=8F=A1" class=3D"icon">&nbsp;REMOTE</strong> &nbsp;=
+&nbsp;&nbsp; </span><!----><!----><!----><!----><!----><!----></span><span>=
+<!----><span class=3D"step"><img src=3D"https://media.jobot.com/email/icons=
+/16px/white_fas_fa-location-dot.png" alt=3D"=F0=9F=93=8D" class=3D"icon"> C=
+hicago,&nbsp;IL&nbsp;+2 &nbsp;&nbsp;&nbsp; </span><!----><!----><!----><!--=
+--><!----></span><span><!----><!----><span class=3D"step"><img src=3D"https=
+://media.jobot.com/email/icons/16px/white_fas_fa-square-dollar.png" alt=3D"=
+=F0=9F=92=B5" class=3D"icon">&nbsp;$45&nbsp;-&nbsp;$60 &nbsp;&nbsp;&nbsp; <=
+/span><!----><!----><!----><!----></span><span><!----><!----><!----><!---->=
+<!----><!----><!----></span></span></td><td width=3D"10" height=3D"10" clas=
+s=3D"column"></td><td width=3D"33%" class=3D"column full"><div style=3D"tex=
+t-align:center;background-color:white;font-family:'Lato', arial, sans-serif=
+;font-size:.9rem;color:#23b3e7;line-height:1rem;font-weight:bold;mso-paddin=
+g-alt:6px 10px;border-radius:10px;"><a href=3D"https://url9751.alerts.jobot=
+.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2BpGg733glLFowWEMvwvyCDryvzXSo=
+Rl0OH-2FE50cbMazroY565uI7suAd4mpenqhqJQs8poV6d65PJUsT7dhUtinvZNodb5nRLIzA7K=
+JwfpEChxGpnApwy25HFSW9VRTHK80euxiGO4vVUWoFcpkyGcItijH4ui1dDOrxN8Dkrm4vbWQzE=
+5c8J5J2ULJ7p-2FYrCRI-2Bb2PHcU8z3bEdcMtQzOjuJ-2FdHRIuC3UwPZ79b4RwNoIa3XvgaIi=
+EG0O5MtPzfTBtTZLOdWxpwzYXhY1at7WtM-3DAWzJ_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN=
+-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJhkM8enYy4nkjZT2yp-2BZyvxCIhHEKDjrSSyCaezJQZ=
+93YqoyYa0NEInyixOPNuTm8N99q-2BC0V6KA6c5GtoqMTrzTXZGBvGiV49g2L8cAXhjTb-2BTGj=
+gDR9w3QvYy8-2Fpmq9DWTz5pthq2P5LbnRATo5bRi8rXevob8BXgP3DnMHfyodWFLtUKuwYdYm7=
+TPRoOgTt27Zdz8StyRUOGppdsUG9WA-3D-3D" style=3D"padding:6px 10px !important;=
+color:#23b3e7 !important;display:block;"><span style=3D"color:#23b3e7 !impo=
+rtant;"> 1-Click Apply </span></a></div></td></tr></tbody></table></td></tr=
+></tbody></table></td></tr></tbody></table></td></tr></tbody></table></td><=
+td width=3D"10" height=3D"10"></td><td dir=3D"ltr" align=3D"left" width=3D"=
+50" valign=3D"bottom"><img src=3D"https://jobot.imgix.net/pro/624bfceff6c88=
+78b93041e12335ac07a3ba50766c413f1f002d805afb74c7111.jpeg?w=3D175&amp;h=3D17=
+5&amp;fit=3Dcrop&amp;mask=3Dellipse&amp;fm=3Dpng" alt=3D"Brian Raffle" widt=
+h=3D"50" style=3D"border-radius:50%;"><br><small style=3D"color:#777;font-s=
+ize:.7rem;display:block;text-align:center;max-width:50px;"> Brian </small><=
+/td></tr></tbody></table></td></tr></tbody></table></div><div set=3D"0"><ta=
+ble width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tbody>=
+<tr><td dir=3D"ltr" align=3D"center" bgcolor=3D"#FFFFFF" style=3D"padding:1=
+5px 0;"><table width=3D"600" border=3D"0" cellspacing=3D"0" cellpadding=3D"=
+0" class=3D"inner" style=3D"max-width:600px;"><tbody><tr><td width=3D"520">=
+<table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tbo=
+dy><tr><td dir=3D"ltr" bgcolor=3D"#37ca5d" style=3D"padding:10px 20px;borde=
+r-radius:30px 30px 5px 30px;"><table width=3D"100%" border=3D"0" cellpaddin=
+g=3D"0" cellspacing=3D"0"><tbody><tr><td dir=3D"ltr" valign=3D"top"><table =
+width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tbody><tr>=
+<td><table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" =
+style=3D"color:white;font-family:'Lato', arial, sans-serif;"><tbody><tr><td=
+ style=3D"font-weight:bold;color:#f0f0f0;font-size:.7rem;"> Also Consider -=
+- Based on your resume </td></tr></tbody></table><table width=3D"100%" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tbody><tr><td style=3D"paddin=
+g-bottom:.5rem;padding-top:.5rem;font-weight:700;font-size:1.2rem;"><a href=
+=3D"https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW=
+5-2BpLmDLJUw5zsWrRP9ba15kqqbC6h7Jq3FnAXNleH1Y-2BlMTX7h0uQiawKmSMjKTud7ut7HO=
+Pnn4wLxVqH-2BqdJVGpUUFOE-2Ftvi2aJ8eQ1ymxk-2BGYYREYgovwiWfLg0NYYRFYsnJHUX-2F=
+RlJA7NrQqj98zLJKWVY5hevKSF-2BCNSYAiFkgvJnJ0QPJfu-2B29lvvY98kyQ-3D-3D3Ohl_rO=
+1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJhyJiRe-2FDBc=
+HCnrS6CA3R8uLOQDkWdSs-2BS2VA0OL7O6QLKh-2FkQA5MJKG-2BQrkBr-2BstA2sXJtct29Vua=
+aYdxaxcOHSYvearLTMb7aWG-2FcJ7ucVFGk28MAhQoKrV1YhR-2BTs5-2BBUY0k5t-2BDWLNBAn=
+3ct2wcblYT8b3uP6yQr2SW55mKf0FUPHvNpo1gl-2FsUSd2lVo8ID01A1oEvx5kqpRyAuW-2BGg=
+-3D-3D" style=3D"color:#ffffff!important;"> Principal Data Scientist </a></=
+td></tr></tbody></table><table width=3D"100%" border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0" style=3D"font-family:'Lato', arial, sans-serif;font-siz=
+e:15px;color:#fff;line-height:28px;"><tbody><tr><td> 100% Remote Principal =
+Data Scientist - up to $220k base salary - AWS, SageMaker, Athena, Glue - I=
+nnovation focused role </td></tr></tbody></table><table width=3D"100%" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"color:white;font-fami=
+ly:'Lato', arial, sans-serif;"><tbody><tr><td width=3D"66%" class=3D"column=
+ full" style=3D"color:white;font-family:'Lato', arial, sans-serif;"><span c=
+lass=3D"EmailJobFlair"><span><span class=3D"step"><strong><img src=3D"https=
+://media.jobot.com/email/icons/16px/white_fas_fa-house-signal.png" alt=3D"=
+=F0=9F=8F=A1" class=3D"icon">&nbsp;REMOTE</strong> &nbsp;&nbsp;&nbsp; </spa=
+n><!----><!----><!----><!----><!----><!----></span><span><!----><span class=
+=3D"step"><img src=3D"https://media.jobot.com/email/icons/16px/white_fas_fa=
+-location-dot.png" alt=3D"=F0=9F=93=8D" class=3D"icon"> Houston,&nbsp;TX&nb=
+sp;+2 &nbsp;&nbsp;&nbsp; </span><!----><!----><!----><!----><!----></span><=
+span><!----><!----><span class=3D"step"><img src=3D"https://media.jobot.com=
+/email/icons/16px/white_fas_fa-square-dollar.png" alt=3D"=F0=9F=92=B5" clas=
+s=3D"icon">&nbsp;$180,000&nbsp;-&nbsp;$250,000 &nbsp;&nbsp;&nbsp; </span><!=
+----><!----><!----><!----></span><span><!----><!----><!----><!----><!----><=
+!----><!----></span></span></td><td width=3D"10" height=3D"10" class=3D"col=
+umn"></td><td width=3D"33%" class=3D"column full"><div style=3D"text-align:=
+center;background-color:white;font-family:'Lato', arial, sans-serif;font-si=
+ze:.9rem;color:#23b3e7;line-height:1rem;font-weight:bold;mso-padding-alt:6p=
+x 10px;border-radius:10px;"><a href=3D"https://url9751.alerts.jobot.com/ls/=
+click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2BpGg733glLFowWEMvwvyCDrwfCJt6IlKrMpAJ=
+-2BRAJbuxewLL9QedRTwMMUpyTLB5PRrzQ-2F7a6PhEumwP4-2F35dk9e97ea3Bwn3YbOX6nD-2=
+FVpDYp0ThQogqxOa8AV-2FdMYlRlsmfBbgf07hqMPAQ-2BY7PtSR8HuHpOLi7rpl-2FQRnDS4bA=
+czXyPhjaF7STNP4TynjZpUONzDSV1mr3d27Rbhv-2FWeunQn1CQAeLWDmmTlvY-2BJ8jcdF-2B6=
+v2EQuiDw6tjup3iZA-3D-3DnFtb_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXHL=
+gXw1UsnYnOWyT8iTUJh6b-2F-2BlidB0nPbBIKIpQo2GHRO-2BNG2kEpqtB0HNgHhAR5d4kPxqQ=
+CUKHTOjdtXUKh-2BIJVmDncJz-2Fx392n9KNtd-2FdsyUBtWqepmrGtzlDpgCywbi99itSubG9y=
+vtNPHklDIUxuOO5sRY48pSuFr8iaZS3iy8-2BsYTSPd1jT46lFGA9iVHiP8V0t7SVDUBOM7cnZP=
+haYh7vx8lfNxwO-2FXJvL47w-3D-3D" style=3D"padding:6px 10px !important;color:=
+#23b3e7 !important;display:block;"><span style=3D"color:#23b3e7 !important;=
+"> 1-Click Apply </span></a></div></td></tr></tbody></table></td></tr></tbo=
+dy></table></td></tr></tbody></table></td></tr></tbody></table></td><td wid=
+th=3D"10" height=3D"10"></td><td dir=3D"ltr" align=3D"right" width=3D"50" v=
+align=3D"bottom"><img src=3D"https://jobot.imgix.net/pro/c8cc378501a2a53f72=
+a922e85313468f256a3c017e3a75b29afc760f7c024d50.jpeg?w=3D175&amp;h=3D175&amp=
+;fit=3Dcrop&amp;mask=3Dellipse&amp;fm=3Dpng" alt=3D"Lucas Watson" width=3D"=
+50" style=3D"border-radius:50%;"><br><small style=3D"color:#777;font-size:.=
+7rem;display:block;text-align:center;max-width:50px;"> Lucas </small></td><=
+/tr></tbody></table></td></tr></tbody></table></div><div set=3D"1"><table w=
+idth=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tbody><tr><=
+td dir=3D"rtl" align=3D"center" bgcolor=3D"#FFFFFF" style=3D"padding:15px 0=
+;"><table width=3D"600" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" cl=
+ass=3D"inner" style=3D"max-width:600px;"><tbody><tr><td width=3D"520"><tabl=
+e width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tbody><t=
+r><td dir=3D"ltr" bgcolor=3D"#3190f8" style=3D"padding:10px 20px;border-rad=
+ius:30px 30px 30px 5px;"><table width=3D"100%" border=3D"0" cellpadding=3D"=
+0" cellspacing=3D"0"><tbody><tr><td dir=3D"ltr" valign=3D"top"><table width=
+=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tbody><tr><td><=
+table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=
+=3D"color:white;font-family:'Lato', arial, sans-serif;"><tbody><tr><td styl=
+e=3D"font-weight:bold;color:#f0f0f0;font-size:.7rem;"> Also Consider -- Bas=
+ed on your resume </td></tr></tbody></table><table width=3D"100%" border=3D=
+"0" cellpadding=3D"0" cellspacing=3D"0"><tbody><tr><td style=3D"padding-bot=
+tom:.5rem;padding-top:.5rem;font-weight:700;font-size:1.2rem;"><a href=3D"h=
+ttps://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2Bp=
+LmDLJUw5zsWrRP9ba15kqpSJpY-2F6qOY-2Fj-2FLCTIvA0ErLSJGXBiVdnSUZVX0meT3Ej1jJ4=
+an2R891E6R-2BCxkXNTCV4vQtcSQNjJNzfkTkJ3i6QuYAdy-2BtWakH7oMFGruBhJhT09vETkZt=
+scSp-2FTZwN-2BLytyXAMpcs0ZtNgjzEVz2ZrC6jHt8eJsUA5KNkx5SU-2BDwNpMl8Psf4MiWsH=
+HvwEI-3D9mDs_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8i=
+TUJhAnS2RRlpBhUAeBTKh0NIszCU4ne6ee9TRjvaN92fVe8-2B5GmZVw1RytAMN8zF99PfFcSc4=
+2OmqjUW0Prcy4J-2B109r4lz5hcvH5zG7Ci-2FTTa-2B70sm0uTIjkwPgUe5vK4Hmom2WHRrSwH=
+fTTKMKW2m9rhkbYd6Qq5AQz-2FxUpxNsi-2B7n85UWpUCVLwZsTAUq-2FKSWkI9EwJh0wVXQwNT=
+9W1bkrg-3D-3D" style=3D"color:#ffffff!important;"> Remote Finance Project  =
+Associate Consultant </a></td></tr></tbody></table><table width=3D"100%" bo=
+rder=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"font-family:'Lato',=
+ arial, sans-serif;font-size:15px;color:#fff;line-height:28px;"><tbody><tr>=
+<td> Remote Finance Project Associate  Consultant on the EAST Coast / Paid =
+Benefits/ 401K </td></tr></tbody></table><table width=3D"100%" border=3D"0"=
+ cellpadding=3D"0" cellspacing=3D"0" style=3D"color:white;font-family:'Lato=
+', arial, sans-serif;"><tbody><tr><td width=3D"66%" class=3D"column full" s=
+tyle=3D"color:white;font-family:'Lato', arial, sans-serif;"><span class=3D"=
+EmailJobFlair"><span><span class=3D"step"><strong><img src=3D"https://media=
+.jobot.com/email/icons/16px/white_fas_fa-house-signal.png" alt=3D"=F0=9F=8F=
+=A1" class=3D"icon">&nbsp;REMOTE</strong> &nbsp;&nbsp;&nbsp; </span><!---->=
+<!----><!----><!----><!----><!----></span><span><!----><span class=3D"step"=
+><img src=3D"https://media.jobot.com/email/icons/16px/white_fas_fa-location=
+-dot.png" alt=3D"=F0=9F=93=8D" class=3D"icon"> Vienna,&nbsp;VA &nbsp;&nbsp;=
+&nbsp; </span><!----><!----><!----><!----><!----></span><span><!----><!----=
+><span class=3D"step"><img src=3D"https://media.jobot.com/email/icons/16px/=
+white_fas_fa-square-dollar.png" alt=3D"=F0=9F=92=B5" class=3D"icon">&nbsp;$=
+30&nbsp;-&nbsp;$35 &nbsp;&nbsp;&nbsp; </span><!----><!----><!----><!----></=
+span><span><!----><!----><!----><!----><!----><!----><!----></span></span><=
+/td><td width=3D"10" height=3D"10" class=3D"column"></td><td width=3D"33%" =
+class=3D"column full"><div style=3D"text-align:center;background-color:whit=
+e;font-family:'Lato', arial, sans-serif;font-size:.9rem;color:#23b3e7;line-=
+height:1rem;font-weight:bold;mso-padding-alt:6px 10px;border-radius:10px;">=
+<a href=3D"https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9=
+UfX4wWW5-2BpGg733glLFowWEMvwvyCDrxNmHXrMkhwYIVlHtXXpAGleNpTF0YRufjZ7KAMmeI8=
+FDmzlcMFsMrYqLEOZ5pCUwzHPKnXLsc0gYROywoimBzFDjwHDyoF7c-2FaIL-2F8gMNNUEB8QFV=
+-2FhbZqzn4w7Mm-2B5FwgiN4rPyWWgNPRwGbQWOxcFF5wmlVEwrjUq891kGhvMn715SuetJzlVh=
+UxzMwdA-2BIV32zC-2FgqoU81jq395UntrAo4AsrjyBu96qfTzO74WwKv-2BCApTnTPFsTDz0i8=
+CJyI-3DUZb6_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iT=
+UJhaIxIe-2BqUB0vZrDL99ByFQ4uWrQFCuMO0pB8DQaM4xvcUimW5orqBBHIRqLpeL7bJ7JWrrQ=
+AyDExirgoMm8uLqhi1k0YuQqLy5dsK-2BMMW6fT0-2F-2FIYPavgaOTfXUK-2F9Ll-2FoUhUqkk=
+aPUD6bJ-2BmzDvsZJlCvuAQ82c7wv8X7eYt6G7N7TP0ZTz0BcITmmTILQzWMrExk0SF2hHzlG-2=
+F9ybBT5g-3D-3D" style=3D"padding:6px 10px !important;color:#23b3e7 !importa=
+nt;display:block;"><span style=3D"color:#23b3e7 !important;"> 1-Click Apply=
+ </span></a></div></td></tr></tbody></table></td></tr></tbody></table></td>=
+</tr></tbody></table></td></tr></tbody></table></td><td width=3D"10" height=
+=3D"10"></td><td dir=3D"ltr" align=3D"left" width=3D"50" valign=3D"bottom">=
+<img src=3D"https://jobot.imgix.net/pro/005da86fef680e4edf250fb09900b12ced3=
+b6f8d46d5b8f27a532a19f51446a5.jpeg?w=3D175&amp;h=3D175&amp;fit=3Dcrop&amp;m=
+ask=3Dellipse&amp;fm=3Dpng" alt=3D"Haley Lucas" width=3D"50" style=3D"borde=
+r-radius:50%;"><br><small style=3D"color:#777;font-size:.7rem;display:block=
+;text-align:center;max-width:50px;"> Haley </small></td></tr></tbody></tabl=
+e></td></tr></tbody></table></div><div set=3D"0"><table width=3D"100%" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tbody><tr><td dir=3D"ltr" ali=
+gn=3D"center" bgcolor=3D"#FFFFFF" style=3D"padding:15px 0;"><table width=3D=
+"600" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" class=3D"inner" styl=
+e=3D"max-width:600px;"><tbody><tr><td width=3D"520"><table width=3D"100%" b=
+order=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tbody><tr><td dir=3D"ltr" =
+bgcolor=3D"#37ca5d" style=3D"padding:10px 20px;border-radius:30px 30px 5px =
+30px;"><table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"=
+0"><tbody><tr><td dir=3D"ltr" valign=3D"top"><table width=3D"100%" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tbody><tr><td><table width=3D"1=
+00%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"color:white;=
+font-family:'Lato', arial, sans-serif;"><tbody><tr><td style=3D"font-weight=
+:bold;color:#f0f0f0;font-size:.7rem;"> Also Consider -- Based on your resum=
+e </td></tr></tbody></table><table width=3D"100%" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0"><tbody><tr><td style=3D"padding-bottom:.5rem;paddi=
+ng-top:.5rem;font-weight:700;font-size:1.2rem;"><a href=3D"https://url9751.=
+alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2BpLmDLJUw5zsWrRP9=
+ba15kqoflw-2BtTr4cu3kaBZdraIDAs9fJ1VsIEQw6b4aWxSA8XtE2E5-2BXfiVZ0P7mC0gNe2v=
+-2Bve-2Bv05wqzAalC-2FTD-2BFZi-2FYewqnptKCDFAouMF2MMaZELcRVmNfRFvXupPO8qhw-2=
+FfLo2JgXcKnekmYTsCq6XE7xImBQYSDxE3LWjIsHiHmg-3D-3Deq3x_rO1JRqZrx5Oo25BATZIt=
+EvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJhpVAWDaANqV96H0IEnaXrXdz9y3NB7=
+kUUXkmwE7Ptr4vMBm-2FUF-2Btyb4jCI3ooLJ4F7Qn5h-2FqaIZq27M8KmaL-2Fmtf5tEEvafOA=
+0DuDi43wr911SutozNaRMqnHkfO7B0WaQT5Cve38PvoW2QKZwMaI2t2w4dw55lXWVO-2FFNygKt=
+gmKPWAi24gN5WQr2EvOmZDsqRjF3Gp-2BiB3gnTG1Zs92Eg-3D-3D" style=3D"color:#ffff=
+ff!important;"> Director, Data Science and AI </a></td></tr></tbody></table=
+><table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" sty=
+le=3D"font-family:'Lato', arial, sans-serif;font-size:15px;color:#fff;line-=
+height:28px;"><tbody><tr><td> The Director oversees a team of data scientis=
+ts, engineers, and analysts who leverage advanced analytics, machine learni=
+ng, natural language processing, computer vision, and other AI techniques t=
+o create innovative applications and tools for clin/ops/resea </td></tr></t=
+body></table><table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspaci=
+ng=3D"0" style=3D"color:white;font-family:'Lato', arial, sans-serif;"><tbod=
+y><tr><td width=3D"66%" class=3D"column full" style=3D"color:white;font-fam=
+ily:'Lato', arial, sans-serif;"><span class=3D"EmailJobFlair"><span><span c=
+lass=3D"step"><strong><img src=3D"https://media.jobot.com/email/icons/16px/=
+white_fas_fa-house-signal.png" alt=3D"=F0=9F=8F=A1" class=3D"icon">&nbsp;RE=
+MOTE</strong> &nbsp;&nbsp;&nbsp; </span><!----><!----><!----><!----><!---->=
+<!----></span><span><!----><span class=3D"step"><img src=3D"https://media.j=
+obot.com/email/icons/16px/white_fas_fa-location-dot.png" alt=3D"=F0=9F=93=
+=8D" class=3D"icon"> Los&nbsp;Angeles,&nbsp;CA &nbsp;&nbsp;&nbsp; </span><!=
+----><!----><!----><!----><!----></span><span><!----><!----><span class=3D"=
+step"><img src=3D"https://media.jobot.com/email/icons/16px/white_fas_fa-squ=
+are-dollar.png" alt=3D"=F0=9F=92=B5" class=3D"icon">&nbsp;$190,000&nbsp;-&n=
+bsp;$218,000 &nbsp;&nbsp;&nbsp; </span><!----><!----><!----><!----></span><=
+span><!----><!----><!----><!----><!----><!----><!----></span></span></td><t=
+d width=3D"10" height=3D"10" class=3D"column"></td><td width=3D"33%" class=
+=3D"column full"><div style=3D"text-align:center;background-color:white;fon=
+t-family:'Lato', arial, sans-serif;font-size:.9rem;color:#23b3e7;line-heigh=
+t:1rem;font-weight:bold;mso-padding-alt:6px 10px;border-radius:10px;"><a hr=
+ef=3D"https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4w=
+WW5-2BpGg733glLFowWEMvwvyCDrwQZB6FH-2FQHMTj-2BAi3-2FS6SRgJYE3n4goMntQ6GxAGD=
+LZ7BsnouHuZu4KzT2W2gBzNZdGoPemSXTHd4ziRph8qdP3puOoiSUOYRPbBsQk4mzwgibOYHkOa=
+KOTDdV3uDezhiaM4Oks-2F66WD-2BMmRfiIkp5QJsHqXr0-2FOWIRWCusBBC9bXAZfmyL6939SA=
+-2F-2BmbzxnohLiNjh6Kxdnec5S3WR0qeoNVJgk6tfb9jaZB-2BL1yYNQ-3D-3D8sKj_rO1JRqZ=
+rx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJhG2VFcAy-2BR1a7Pl=
+vOY4ikp23EIsFVbuu3SGiIfQoZLdf9HdXb9MSJckkH8GLQp771XTRM6io1Krh0CnoxuHisOhnut=
+oJYTL9OZLkOC0jh1TKmfcHYN6LonXt-2FB8S61GDtRuKvuj1-2F8oU1Mn54OGGPnitCgnUQ6Abp=
+-2F4grJ5IvjMUwr1eLmDG1-2F8KElv1d-2BulGT3rgkDN2tutMrHIvy-2FA21g-3D-3D" style=
+=3D"padding:6px 10px !important;color:#23b3e7 !important;display:block;"><s=
+pan style=3D"color:#23b3e7 !important;"> 1-Click Apply </span></a></div></t=
+d></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table>=
+</td></tr></tbody></table></td><td width=3D"10" height=3D"10"></td><td dir=
+=3D"ltr" align=3D"right" width=3D"50" valign=3D"bottom"><img src=3D"https:/=
+/jobot.imgix.net/pro/53af9609ec4b9522932bb396ba5010091518055dfa3e5f90cbd130=
+06c8978821.jpeg?w=3D175&amp;h=3D175&amp;fit=3Dcrop&amp;mask=3Dellipse&amp;f=
+m=3Dpng" alt=3D"Brett Walker" width=3D"50" style=3D"border-radius:50%;"><br=
+><small style=3D"color:#777;font-size:.7rem;display:block;text-align:center=
+;max-width:50px;"> Brett </small></td></tr></tbody></table></td></tr></tbod=
+y></table></div><div set=3D"1"><table width=3D"100%" border=3D"0" cellpaddi=
+ng=3D"0" cellspacing=3D"0"><tbody><tr><td dir=3D"rtl" align=3D"center" bgco=
+lor=3D"#FFFFFF" style=3D"padding:15px 0;"><table width=3D"600" border=3D"0"=
+ cellspacing=3D"0" cellpadding=3D"0" class=3D"inner" style=3D"max-width:600=
+px;"><tbody><tr><td width=3D"520"><table width=3D"100%" border=3D"0" cellpa=
+dding=3D"0" cellspacing=3D"0"><tbody><tr><td dir=3D"ltr" bgcolor=3D"#3190f8=
+" style=3D"padding:10px 20px;border-radius:30px 30px 30px 5px;"><table widt=
+h=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tbody><tr><td =
+dir=3D"ltr" valign=3D"top"><table width=3D"100%" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0"><tbody><tr><td><table width=3D"100%" border=3D"0" =
+cellpadding=3D"0" cellspacing=3D"0" style=3D"color:white;font-family:'Lato'=
+, arial, sans-serif;"><tbody><tr><td style=3D"font-weight:bold;color:#f0f0f=
+0;font-size:.7rem;"> Also Consider -- Based on your resume </td></tr></tbod=
+y></table><table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0"><tbody><tr><td style=3D"padding-bottom:.5rem;padding-top:.5rem;font-=
+weight:700;font-size:1.2rem;"><a href=3D"https://url9751.alerts.jobot.com/l=
+s/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2BpLmDLJUw5zsWrRP9ba15kqpFYg0X5tuaMx=
+svWI-2FMhbisD4JcFsCOf4WF10oIOf4nV4nf4HLK7xHQk48KDna-2BpMSL5c5-2B9TpNmDSSlZf=
+N8AzDuUEP-2FLCun79-2BFNDiLFEwAu-2BmLbqa2gFDaaP4OHJU0C054cLTbENeW7Rvwi5B2mCN=
+7TxQuwiKykZjeKffGjp7-2FQ-3D-3DOwQ0_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf=
+09BwXHLgXw1UsnYnOWyT8iTUJhCvVYR59sqc8Wi2Jt1eHAi5J-2FOOZWYD1sVlQFxBNdXgnqrU0=
+aZRBrEfyXxIULjN-2Fj-2BSyFOGasqrj-2FRQq-2Fvic5NUyfTPuhUGV-2FYOAbEntiRRrgJ9Sr=
+b98Vb-2FW0iE6rM-2BYt7arZX36beBMftXiIY2tDgRTo1Q0XJ-2BgWTl4nDU5v-2BI4BbFxn4S3=
+Yc9pleoyDAHXup1KGH-2Bi0Wv2xFeN-2BSKuWNQ-3D-3D" style=3D"color:#ffffff!impor=
+tant;"> Founding Engineer (100% Remote) </a></td></tr></tbody></table><tabl=
+e width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"=
+font-family:'Lato', arial, sans-serif;font-size:15px;color:#fff;line-height=
+:28px;"><tbody><tr><td> Seed stage startup offering salary and generous equ=
+ity! Must have shipped apps from end to end with a passion for AI. </td></t=
+r></tbody></table><table width=3D"100%" border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0" style=3D"color:white;font-family:'Lato', arial, sans-serif;">=
+<tbody><tr><td width=3D"66%" class=3D"column full" style=3D"color:white;fon=
+t-family:'Lato', arial, sans-serif;"><span class=3D"EmailJobFlair"><span><s=
+pan class=3D"step"><strong><img src=3D"https://media.jobot.com/email/icons/=
+16px/white_fas_fa-house-signal.png" alt=3D"=F0=9F=8F=A1" class=3D"icon">&nb=
+sp;REMOTE</strong> &nbsp;&nbsp;&nbsp; </span><!----><!----><!----><!----><!=
+----><!----></span><span><!----><span class=3D"step"><img src=3D"https://me=
+dia.jobot.com/email/icons/16px/white_fas_fa-location-dot.png" alt=3D"=F0=9F=
+=93=8D" class=3D"icon"> San&nbsp;Francisco,&nbsp;CA &nbsp;&nbsp;&nbsp; </sp=
+an><!----><!----><!----><!----><!----></span><span><!----><!----><span clas=
+s=3D"step"><img src=3D"https://media.jobot.com/email/icons/16px/white_fas_f=
+a-square-dollar.png" alt=3D"=F0=9F=92=B5" class=3D"icon">&nbsp;$150,000&nbs=
+p;-&nbsp;$200,000 &nbsp;&nbsp;&nbsp; </span><!----><!----><!----><!----></s=
+pan><span><!----><!----><!----><!----><!----><!----><!----></span></span></=
+td><td width=3D"10" height=3D"10" class=3D"column"></td><td width=3D"33%" c=
+lass=3D"column full"><div style=3D"text-align:center;background-color:white=
+;font-family:'Lato', arial, sans-serif;font-size:.9rem;color:#23b3e7;line-h=
+eight:1rem;font-weight:bold;mso-padding-alt:6px 10px;border-radius:10px;"><=
+a href=3D"https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9U=
+fX4wWW5-2BpGg733glLFowWEMvwvyCDrypz3f-2Bvy34RSF6GMy9GiHzMLGlMLnFmxRIVqGgEsS=
+Ou4O5KkmzTQYzGVAC1B0QOSiVPtciMy3spJYu3X1YOi4pfkg0n-2B1OhO1Cb5rd9UDFwOWfhDnu=
+jnNmWdHTQQczO-2FvKl3Pi5YEhOcALgkJD-2FQnt-2Bl0nq0h0AJ-2Ffy3i-2Fh2MUFtyPhMDS3=
+H2Q7b9Eh-2BCv-2BxuJSwzQQ1ppYr7YioPBewiDaEdWQGZcaBJAKYdlZZ8Ojg-3D-3DfRmA_rO1=
+JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJhbkMR-2BQt2uy=
+Zg3nPjMe7Bq1uauLEG1-2FiVcfq9kB7qcvf7tQ0TK0lWZJudU1tB11ZemjZSgbs-2FOpc6eYs7W=
+f1baZU1qkX154uVBZqIjuPYoRf4HRM4QsG3b74GOWbbOsc-2F9aZg-2BRKXEUiaa7FzlshqMD0d=
+KCgd8GI2y-2BHlZXTZoB9eavtLJwtkHKiw4KRZYrIcxXSaYoleOTHD0gRQAG6bKQ-3D-3D" sty=
+le=3D"padding:6px 10px !important;color:#23b3e7 !important;display:block;">=
+<span style=3D"color:#23b3e7 !important;"> 1-Click Apply </span></a></div><=
+/td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></tabl=
+e></td></tr></tbody></table></td><td width=3D"10" height=3D"10"></td><td di=
+r=3D"ltr" align=3D"left" width=3D"50" valign=3D"bottom"><img src=3D"https:/=
+/jobot.imgix.net/pro/c6bcafde594bbed14246b06e5a38aa20f03f678ae52bee2de8db17=
+eaa6c68246.jpeg?w=3D175&amp;h=3D175&amp;fit=3Dcrop&amp;mask=3Dellipse&amp;f=
+m=3Dpng" alt=3D"Karyn Spies" width=3D"50" style=3D"border-radius:50%;"><br>=
+<small style=3D"color:#777;font-size:.7rem;display:block;text-align:center;=
+max-width:50px;"> Karyn </small></td></tr></tbody></table></td></tr></tbody=
+></table></div><div set=3D"0"><table width=3D"100%" border=3D"0" cellpaddin=
+g=3D"0" cellspacing=3D"0"><tbody><tr><td dir=3D"ltr" align=3D"center" bgcol=
+or=3D"#FFFFFF" style=3D"padding:15px 0;"><table width=3D"600" border=3D"0" =
+cellspacing=3D"0" cellpadding=3D"0" class=3D"inner" style=3D"max-width:600p=
+x;"><tbody><tr><td width=3D"520"><table width=3D"100%" border=3D"0" cellpad=
+ding=3D"0" cellspacing=3D"0"><tbody><tr><td dir=3D"ltr" bgcolor=3D"#37ca5d"=
+ style=3D"padding:10px 20px;border-radius:30px 30px 5px 30px;"><table width=
+=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tbody><tr><td d=
+ir=3D"ltr" valign=3D"top"><table width=3D"100%" border=3D"0" cellpadding=3D=
+"0" cellspacing=3D"0"><tbody><tr><td><table width=3D"100%" border=3D"0" cel=
+lpadding=3D"0" cellspacing=3D"0" style=3D"color:white;font-family:'Lato', a=
+rial, sans-serif;"><tbody><tr><td style=3D"font-weight:bold;color:#f0f0f0;f=
+ont-size:.7rem;"> Also Consider -- Based on your resume </td></tr></tbody><=
+/table><table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"=
+0"><tbody><tr><td style=3D"padding-bottom:.5rem;padding-top:.5rem;font-weig=
+ht:700;font-size:1.2rem;"><a href=3D"https://url9751.alerts.jobot.com/ls/cl=
+ick?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2BpLmDLJUw5zsWrRP9ba15kqoAU6psKz-2FlJBnk=
+MQrOiiMVg08m6kFbIZ19caiRbWZkGsw1EfX3CcC0rOGlFHKVkz-2BmM3-2F7xWGEYe6D-2Bzt4j=
+c0PfGQMpS3mIcHAslJVpp6AkqmGipJjw7zBgR0rMlurEWm6H4vkwypDy7DWIPqjuGJK4qyZ_rO1=
+JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJhrr4sBTL37h5q=
+FpfzvW0-2Frq7SQAHnVnwRxzR2YqN0CGTBYcnHXkNlYlkOK-2BNuSDyZxMvzVqO2gm0yKCpSl1S=
+ZbwjiNRqPURxPuN5l7A1iiJYrhuIFC8vbT8MucDu3PrJ7TGGMyp5yH5Vtv3NPPSRCTlq28t5HvR=
+mdqq4iQY0Qi9kajd4poxno1WJsCdcpHZMyquYEz1PzW4Qo5R5hL-2F5fSQ-3D-3D" style=3D"=
+color:#ffffff!important;"> Senior Data Scientist </a></td></tr></tbody></ta=
+ble><table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" =
+style=3D"font-family:'Lato', arial, sans-serif;font-size:15px;color:#fff;li=
+ne-height:28px;"><tbody><tr><td> 100% Remote Role, Innovative AI Company </=
+td></tr></tbody></table><table width=3D"100%" border=3D"0" cellpadding=3D"0=
+" cellspacing=3D"0" style=3D"color:white;font-family:'Lato', arial, sans-se=
+rif;"><tbody><tr><td width=3D"66%" class=3D"column full" style=3D"color:whi=
+te;font-family:'Lato', arial, sans-serif;"><span class=3D"EmailJobFlair"><s=
+pan><span class=3D"step"><strong><img src=3D"https://media.jobot.com/email/=
+icons/16px/white_fas_fa-house-signal.png" alt=3D"=F0=9F=8F=A1" class=3D"ico=
+n">&nbsp;REMOTE</strong> &nbsp;&nbsp;&nbsp; </span><!----><!----><!----><!-=
+---><!----><!----></span><span><!----><span class=3D"step"><img src=3D"http=
+s://media.jobot.com/email/icons/16px/white_fas_fa-location-dot.png" alt=3D"=
+=F0=9F=93=8D" class=3D"icon"> Houston,&nbsp;TX &nbsp;&nbsp;&nbsp; </span><!=
+----><!----><!----><!----><!----></span><span><!----><!----><span class=3D"=
+step"><img src=3D"https://media.jobot.com/email/icons/16px/white_fas_fa-squ=
+are-dollar.png" alt=3D"=F0=9F=92=B5" class=3D"icon">&nbsp;$130,000&nbsp;-&n=
+bsp;$160,000 &nbsp;&nbsp;&nbsp; </span><!----><!----><!----><!----></span><=
+span><!----><!----><!----><!----><!----><!----><!----></span></span></td><t=
+d width=3D"10" height=3D"10" class=3D"column"></td><td width=3D"33%" class=
+=3D"column full"><div style=3D"text-align:center;background-color:white;fon=
+t-family:'Lato', arial, sans-serif;font-size:.9rem;color:#23b3e7;line-heigh=
+t:1rem;font-weight:bold;mso-padding-alt:6px 10px;border-radius:10px;"><a hr=
+ef=3D"https://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4w=
+WW5-2BpGg733glLFowWEMvwvyCDrxTjhCNpcokMcS182DMSx9498ea3wupy-2FaL9-2BBVFfRvz=
+Q3JfszhV2-2FxvUF7H0K3kd-2BBo2CrsXn5aK7JwOrjEaTIbr8o0JOVpXo3-2F3mSjOo-2Bvso8=
+tYrzk90RHtRYJmAZ6xwwSWp2SPH-2FEivNO9r2tbbUaqeX7lWsHIcu4CzvKpA603za-2FNQ-2Bk=
+L8KW2B4CxlV1XVVD3u3Pf0KlOPLj5ehUcrLtrT3Oux1QoaGI-2Bdp16XUSw-3D-3DOmIf_rO1JR=
+qZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJhH2rt7GUn1t8uEt=
+HZ1C62VUX2TG5nJKYoV8S6zx2wHd5oA3rDHivuM7v3q13sRu1ZYEJ-2FqBC7kfo209U1qOJRDRK=
+LTzwe-2FUyIDUR1cG3h3L1jmEWYCMzWgr5qNKCD0A-2FwAWpblAve-2B-2FZnj58rFojMY-2F9p=
+-2BLrKy-2BJLwJrLjfeMA5FeB0gpJEwYfT7vMlw6oY-2BuL-2Fc8vL8B3-2FnyqMhZG284wQ-3D=
+-3D" style=3D"padding:6px 10px !important;color:#23b3e7 !important;display:=
+block;"><span style=3D"color:#23b3e7 !important;"> 1-Click Apply </span></a=
+></div></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbod=
+y></table></td></tr></tbody></table></td><td width=3D"10" height=3D"10"></t=
+d><td dir=3D"ltr" align=3D"right" width=3D"50" valign=3D"bottom"><img src=
+=3D"https://jobot.imgix.net/pro/13ef806471221bcbc6aa316110195b61ab41023a82b=
+de7965a672c42c52838f4.jpeg?w=3D175&amp;h=3D175&amp;fit=3Dcrop&amp;mask=3Del=
+lipse&amp;fm=3Dpng" alt=3D"Duran Workman" width=3D"50" style=3D"border-radi=
+us:50%;"><br><small style=3D"color:#777;font-size:.7rem;display:block;text-=
+align:center;max-width:50px;"> Duran </small></td></tr></tbody></table></td=
+></tr></tbody></table></div><div set=3D"1"><table width=3D"100%" border=3D"=
+0" cellpadding=3D"0" cellspacing=3D"0"><tbody><tr><td dir=3D"rtl" align=3D"=
+center" bgcolor=3D"#FFFFFF" style=3D"padding:15px 0;"><table width=3D"600" =
+border=3D"0" cellspacing=3D"0" cellpadding=3D"0" class=3D"inner" style=3D"m=
+ax-width:600px;"><tbody><tr><td width=3D"520"><table width=3D"100%" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tbody><tr><td dir=3D"ltr" bgcol=
+or=3D"#3190f8" style=3D"padding:10px 20px;border-radius:30px 30px 30px 5px;=
+"><table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><t=
+body><tr><td dir=3D"ltr" valign=3D"top"><table width=3D"100%" border=3D"0" =
+cellpadding=3D"0" cellspacing=3D"0"><tbody><tr><td><table width=3D"100%" bo=
+rder=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"color:white;font-fa=
+mily:'Lato', arial, sans-serif;"><tbody><tr><td style=3D"font-weight:bold;c=
+olor:#f0f0f0;font-size:.7rem;"> Also Consider -- Based on your resume </td>=
+</tr></tbody></table><table width=3D"100%" border=3D"0" cellpadding=3D"0" c=
+ellspacing=3D"0"><tbody><tr><td style=3D"padding-bottom:.5rem;padding-top:.=
+5rem;font-weight:700;font-size:1.2rem;"><a href=3D"https://url9751.alerts.j=
+obot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2BpLmDLJUw5zsWrRP9ba15kqqu=
+OcBiUenmhyz-2BD2d2gK1XCCTwF-2Bwtmz114ylRGT93tka1HiGDheLARwxBODmCyPzMY0ECrp6=
+cWicynpv0wXa8DlEO5H-2FI3w9qiRGX9UkntzNryO6LCn-2BswhS3EUsMH90Ax7-2BEZD2E4TsD=
+gUpfyF1Kk-We_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8i=
+TUJh7Q2lk54jJgm0yxt4zE9pJStMiT8qg-2BNwKtD6S6ZToYzyRMDV-2Bk5pMukeKhpGAZE5duy=
+EE7FFlXeLtxOAxCmGxsHt-2BPd1qks8zbTGvbQ7-2F1VtgrZ02L-2Bmu7DnXlq2ZmNjTXWM5GEq=
+V2FNcbp5nOP6X4Qc-2Fdbz50eyLSHa-2FeeWVh6AVE2-2BthGS3QgP7idVxn1fBq-2Fm11aODrZ=
+p-2BUUxM4UHdA-3D-3D" style=3D"color:#ffffff!important;"> Senior Data Engine=
+er </a></td></tr></tbody></table><table width=3D"100%" border=3D"0" cellpad=
+ding=3D"0" cellspacing=3D"0" style=3D"font-family:'Lato', arial, sans-serif=
+;font-size:15px;color:#fff;line-height:28px;"><tbody><tr><td> 100% REMOTE S=
+enior Data Engineer / Lead Data Engineer Needed for Growing Subsidiary of a=
+ Large Public Company! </td></tr></tbody></table><table width=3D"100%" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"color:white;font-fami=
+ly:'Lato', arial, sans-serif;"><tbody><tr><td width=3D"66%" class=3D"column=
+ full" style=3D"color:white;font-family:'Lato', arial, sans-serif;"><span c=
+lass=3D"EmailJobFlair"><span><span class=3D"step"><strong><img src=3D"https=
+://media.jobot.com/email/icons/16px/white_fas_fa-house-signal.png" alt=3D"=
+=F0=9F=8F=A1" class=3D"icon">&nbsp;REMOTE</strong> &nbsp;&nbsp;&nbsp; </spa=
+n><!----><!----><!----><!----><!----><!----></span><span><!----><span class=
+=3D"step"><img src=3D"https://media.jobot.com/email/icons/16px/white_fas_fa=
+-location-dot.png" alt=3D"=F0=9F=93=8D" class=3D"icon"> Charlotte,&nbsp;NC =
+&nbsp;&nbsp;&nbsp; </span><!----><!----><!----><!----><!----></span><span><=
+!----><!----><span class=3D"step"><img src=3D"https://media.jobot.com/email=
+/icons/16px/white_fas_fa-square-dollar.png" alt=3D"=F0=9F=92=B5" class=3D"i=
+con">&nbsp;$145,000&nbsp;-&nbsp;$235,000 &nbsp;&nbsp;&nbsp; </span><!----><=
+!----><!----><!----></span><span><!----><!----><!----><!----><!----><!---->=
+<!----></span></span></td><td width=3D"10" height=3D"10" class=3D"column"><=
+/td><td width=3D"33%" class=3D"column full"><div style=3D"text-align:center=
+;background-color:white;font-family:'Lato', arial, sans-serif;font-size:.9r=
+em;color:#23b3e7;line-height:1rem;font-weight:bold;mso-padding-alt:6px 10px=
+;border-radius:10px;"><a href=3D"https://url9751.alerts.jobot.com/ls/click?=
+upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2BpGg733glLFowWEMvwvyCDrwX4XdIbNjDN5m1TCf706=
+MouQtJ1uJELtGKZREH6LpkFIKWK1JDsA2tB36kTL0Dfqd0Dlw7ir0PT9lUOK1lQOakjd5NrU542=
+jaoLaYRS4wOa3oLq8Y679vzFCstkKZD2SzAEtkFNJPRa8O2l77jBeQd0FyCyOK9OCQJ3U8Ux2wm=
+9BgYQy6Z74JY4uaN90MA-2B-2Bfw4GioGS45j4LCpWvBwvQUfOlQ_rO1JRqZrx5Oo25BATZItEv=
+IKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJh2rbfTNMI5BMs6MYBKlWXjqgddduek8h=
+QpT23Qrm5HWrZINpAT5ipywx5prJAK1Fotee5gTF117NdWzEvaaXr9KXtZIVYTAAV08lZ6kdapC=
+oSe8mQUUcs9rflErFqfrFGLYuQvMsM6EAGEWt-2F9BWNhqH-2FwD47ejDDvBJy0mx9RrRdRD9-2=
+BvxVAv4MiKY-2BTR4qDZIGpmQlfYXF8Eygy6pp-2BIg-3D-3D" style=3D"padding:6px 10p=
+x !important;color:#23b3e7 !important;display:block;"><span style=3D"color:=
+#23b3e7 !important;"> 1-Click Apply </span></a></div></td></tr></tbody></ta=
+ble></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody><=
+/table></td><td width=3D"10" height=3D"10"></td><td dir=3D"ltr" align=3D"le=
+ft" width=3D"50" valign=3D"bottom"><img src=3D"https://jobot.imgix.net/pro/=
+a5bb684ef44f1405f379c94daa96baa9c8e36bea66ed654d741eed1c0aab95d6.jpeg?w=3D1=
+75&amp;h=3D175&amp;fit=3Dcrop&amp;mask=3Dellipse&amp;fm=3Dpng" alt=3D"Reed =
+Kellick" width=3D"50" style=3D"border-radius:50%;"><br><small style=3D"colo=
+r:#777;font-size:.7rem;display:block;text-align:center;max-width:50px;"> Re=
+ed </small></td></tr></tbody></table></td></tr></tbody></table></div><div s=
+et=3D"0"><table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0"><tbody><tr><td dir=3D"ltr" align=3D"center" bgcolor=3D"#FFFFFF" styl=
+e=3D"padding:15px 0;"><table width=3D"600" border=3D"0" cellspacing=3D"0" c=
+ellpadding=3D"0" class=3D"inner" style=3D"max-width:600px;"><tbody><tr><td =
+width=3D"520"><table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspac=
+ing=3D"0"><tbody><tr><td dir=3D"ltr" bgcolor=3D"#37ca5d" style=3D"padding:1=
+0px 20px;border-radius:30px 30px 5px 30px;"><table width=3D"100%" border=3D=
+"0" cellpadding=3D"0" cellspacing=3D"0"><tbody><tr><td dir=3D"ltr" valign=
+=3D"top"><table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0"><tbody><tr><td><table width=3D"100%" border=3D"0" cellpadding=3D"0" =
+cellspacing=3D"0" style=3D"color:white;font-family:'Lato', arial, sans-seri=
+f;"><tbody><tr><td style=3D"font-weight:bold;color:#f0f0f0;font-size:.7rem;=
+"> Also Consider -- Based on your resume </td></tr></tbody></table><table w=
+idth=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tbody><tr><=
+td style=3D"padding-bottom:.5rem;padding-top:.5rem;font-weight:700;font-siz=
+e:1.2rem;"><a href=3D"https://url9751.alerts.jobot.com/ls/click?upn=3Du001.=
+nzDSnI8Q0Y9UfX4wWW5-2BpLmDLJUw5zsWrRP9ba15kqquOcBiUenmhyz-2BD2d2gK1XH2wh1uS=
+AhQYS1KSMSDf7AUo2Hfv26k15F9CqHbpFRT2EISmWlVO8FEVrIJToDhzmFpqxNUuhtVdmq4PXUD=
+4bHwZzSA6ALOfJoLtlvM2vnGjiKUWYGHWpFmiG-2BJIRenHZBlzN_rO1JRqZrx5Oo25BATZItEv=
+IKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJhh-2BRbKkyi9u2ZdsBNYvk2dqowjQysc=
+XxNYPpjQpQcpjYFiD4SAgZOo3zt3MvhuK-2B360yw7a75H9nygzGTYsPqJyTmE7ZWywkC8btHFf=
+X4DEyV9ViFXgBL8x09aWyheNQNI-2Bfv2u6mViRUJ2bmag-2BEkHcVGIRaqlVlAROJ0Gl2NVRUW=
+nV1bz2hJogLKI2QOAI-2BPA0EM74xETPGL2THc-2BdIbA-3D-3D" style=3D"color:#ffffff=
+!important;"> Senior Data Engineer </a></td></tr></tbody></table><table wid=
+th=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"font-=
+family:'Lato', arial, sans-serif;font-size:15px;color:#fff;line-height:28px=
+;"><tbody><tr><td> 100% REMOTE Senior Data Engineer / Lead Data Engineer Ne=
+eded for Growing Subsidiary of a Large Public Company! </td></tr></tbody></=
+table><table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0=
+" style=3D"color:white;font-family:'Lato', arial, sans-serif;"><tbody><tr><=
+td width=3D"66%" class=3D"column full" style=3D"color:white;font-family:'La=
+to', arial, sans-serif;"><span class=3D"EmailJobFlair"><span><span class=3D=
+"step"><strong><img src=3D"https://media.jobot.com/email/icons/16px/white_f=
+as_fa-house-signal.png" alt=3D"=F0=9F=8F=A1" class=3D"icon">&nbsp;REMOTE</s=
+trong> &nbsp;&nbsp;&nbsp; </span><!----><!----><!----><!----><!----><!---->=
+</span><span><!----><span class=3D"step"><img src=3D"https://media.jobot.co=
+m/email/icons/16px/white_fas_fa-location-dot.png" alt=3D"=F0=9F=93=8D" clas=
+s=3D"icon"> San&nbsp;Francisco,&nbsp;CA &nbsp;&nbsp;&nbsp; </span><!----><!=
+----><!----><!----><!----></span><span><!----><!----><span class=3D"step"><=
+img src=3D"https://media.jobot.com/email/icons/16px/white_fas_fa-square-dol=
+lar.png" alt=3D"=F0=9F=92=B5" class=3D"icon">&nbsp;$145,000&nbsp;-&nbsp;$23=
+5,000 &nbsp;&nbsp;&nbsp; </span><!----><!----><!----><!----></span><span><!=
+----><!----><!----><!----><!----><!----><!----></span></span></td><td width=
+=3D"10" height=3D"10" class=3D"column"></td><td width=3D"33%" class=3D"colu=
+mn full"><div style=3D"text-align:center;background-color:white;font-family=
+:'Lato', arial, sans-serif;font-size:.9rem;color:#23b3e7;line-height:1rem;f=
+ont-weight:bold;mso-padding-alt:6px 10px;border-radius:10px;"><a href=3D"ht=
+tps://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2BpG=
+g733glLFowWEMvwvyCDrwX4XdIbNjDN5m1TCf706Moa3tHIG7d-2FhyM4dpJBeWDkB9AbLrvTr0=
+-2BPXZgvi0RkGIomd2o0BseV0v1xbVHRQ1ghJshCKUrnNgXFyrxctlqjna-2BEw5wgpRdWok1Qr=
+LoEKOwXSVPdz1C1vKJeqVqOu7FemP5OMSl-2FLXZ6KLDiRIUkq0-2FjmHE0GXZC1YLMoYFiuwOp=
+kCZChP13KWadzlQNd9oG_MV_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1=
+UsnYnOWyT8iTUJhnGAop1mBZ75TFiEtBGX9iRLumCbswV91Rq1IW63NYMaM5V2g7lfWNuWOCkRM=
+5bBUeRJf3whA8T-2Fmzk46puClk8NSBnwtoGXHv1KXMXtWYIkmgBLiNIGh2SzYBXnYaWkonJaxE=
+qc5QOfAY5enpRLQjdzjtTUv2z9szbHOsUTeMB-2FNKd6yKKAR5LHmZWNl-2BLdHzievWB3zvhEJ=
+OOxYmaRP3w-3D-3D" style=3D"padding:6px 10px !important;color:#23b3e7 !impor=
+tant;display:block;"><span style=3D"color:#23b3e7 !important;"> 1-Click App=
+ly </span></a></div></td></tr></tbody></table></td></tr></tbody></table></t=
+d></tr></tbody></table></td></tr></tbody></table></td><td width=3D"10" heig=
+ht=3D"10"></td><td dir=3D"ltr" align=3D"right" width=3D"50" valign=3D"botto=
+m"><img src=3D"https://jobot.imgix.net/pro/a5bb684ef44f1405f379c94daa96baa9=
+c8e36bea66ed654d741eed1c0aab95d6.jpeg?w=3D175&amp;h=3D175&amp;fit=3Dcrop&am=
+p;mask=3Dellipse&amp;fm=3Dpng" alt=3D"Reed Kellick" width=3D"50" style=3D"b=
+order-radius:50%;"><br><small style=3D"color:#777;font-size:.7rem;display:b=
+lock;text-align:center;max-width:50px;"> Reed </small></td></tr></tbody></t=
+able></td></tr></tbody></table></div><div set=3D"1"><table width=3D"100%" b=
+order=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tbody><tr><td dir=3D"rtl" =
+align=3D"center" bgcolor=3D"#FFFFFF" style=3D"padding:15px 0;"><table width=
+=3D"600" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" class=3D"inner" s=
+tyle=3D"max-width:600px;"><tbody><tr><td width=3D"520"><table width=3D"100%=
+" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tbody><tr><td dir=3D"lt=
+r" bgcolor=3D"#3190f8" style=3D"padding:10px 20px;border-radius:30px 30px 3=
+0px 5px;"><table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0"><tbody><tr><td dir=3D"ltr" valign=3D"top"><table width=3D"100%" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tbody><tr><td><table width=3D=
+"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"color:whit=
+e;font-family:'Lato', arial, sans-serif;"><tbody><tr><td style=3D"font-weig=
+ht:bold;color:#f0f0f0;font-size:.7rem;"> Also Consider -- Based on your res=
+ume </td></tr></tbody></table><table width=3D"100%" border=3D"0" cellpaddin=
+g=3D"0" cellspacing=3D"0"><tbody><tr><td style=3D"padding-bottom:.5rem;padd=
+ing-top:.5rem;font-weight:700;font-size:1.2rem;"><a href=3D"https://url9751=
+.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2BpLmDLJUw5zsWrRP=
+9ba15kqquOcBiUenmhyz-2BD2d2gK1XKFok4FfR2MxsPfZKDUrIPWHsoumD7kBedAQMM9qTHDa8=
+YGqTcdkwazJ9hm-2FNEIwiWrMYN3iUUQSyoQ17ZEtgaQKsLuidy5nrralT7RRx4p6xxZlgYYNaL=
+e-2B6TFZuo05PBYgY_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnO=
+WyT8iTUJhhb3ZPW7CwYTjdh4wbima1wNp33BKiKfB5vi2z5Uqpr-2FL8aS2KMlcDeCspI1E2tdH=
+72ckpjncQOLwjwSAsXENgGzTJXqJXSBcIGk5kGx2yxJIX656Rexi8kGXMDUrSE74GsaYU1CIYUk=
+KvMWyrXJ5hvonpjf4n-2Bv-2FOQPi29I6RHyz-2FZSlTi8RLPUduMjJBh02DYHkeuNW4d2GVTe7=
+1vSg7A-3D-3D" style=3D"color:#ffffff!important;"> Senior Data Engineer </a>=
+</td></tr></tbody></table><table width=3D"100%" border=3D"0" cellpadding=3D=
+"0" cellspacing=3D"0" style=3D"font-family:'Lato', arial, sans-serif;font-s=
+ize:15px;color:#fff;line-height:28px;"><tbody><tr><td> 100% REMOTE Senior D=
+ata Engineer / Lead Data Engineer Needed for Growing Subsidiary of a Large =
+Public Company! </td></tr></tbody></table><table width=3D"100%" border=3D"0=
+" cellpadding=3D"0" cellspacing=3D"0" style=3D"color:white;font-family:'Lat=
+o', arial, sans-serif;"><tbody><tr><td width=3D"66%" class=3D"column full" =
+style=3D"color:white;font-family:'Lato', arial, sans-serif;"><span class=3D=
+"EmailJobFlair"><span><span class=3D"step"><strong><img src=3D"https://medi=
+a.jobot.com/email/icons/16px/white_fas_fa-house-signal.png" alt=3D"=F0=9F=
+=8F=A1" class=3D"icon">&nbsp;REMOTE</strong> &nbsp;&nbsp;&nbsp; </span><!--=
+--><!----><!----><!----><!----><!----></span><span><!----><span class=3D"st=
+ep"><img src=3D"https://media.jobot.com/email/icons/16px/white_fas_fa-locat=
+ion-dot.png" alt=3D"=F0=9F=93=8D" class=3D"icon"> San&nbsp;Jose,&nbsp;CA &n=
+bsp;&nbsp;&nbsp; </span><!----><!----><!----><!----><!----></span><span><!-=
+---><!----><span class=3D"step"><img src=3D"https://media.jobot.com/email/i=
+cons/16px/white_fas_fa-square-dollar.png" alt=3D"=F0=9F=92=B5" class=3D"ico=
+n">&nbsp;$145,000&nbsp;-&nbsp;$235,000 &nbsp;&nbsp;&nbsp; </span><!----><!-=
+---><!----><!----></span><span><!----><!----><!----><!----><!----><!----><!=
+----></span></span></td><td width=3D"10" height=3D"10" class=3D"column"></t=
+d><td width=3D"33%" class=3D"column full"><div style=3D"text-align:center;b=
+ackground-color:white;font-family:'Lato', arial, sans-serif;font-size:.9rem=
+;color:#23b3e7;line-height:1rem;font-weight:bold;mso-padding-alt:6px 10px;b=
+order-radius:10px;"><a href=3D"https://url9751.alerts.jobot.com/ls/click?up=
+n=3Du001.nzDSnI8Q0Y9UfX4wWW5-2BpGg733glLFowWEMvwvyCDrwX4XdIbNjDN5m1TCf706Mo=
+Okq8eZVfsx9u4xijCdpp-2BKblgGBBI6LxLV6disjTux-2FH195GnDlus88yz7qaFuAdh4wPlKo=
+VdUV-2BMkx-2FIwSxMf-2FCjgPlRlfIxzn03hRQdvlyJuB9ymsVeUJ0JanAc4T7EztUxDh45Hle=
+gF2qG3crWOZPJRaWkatWcTxUA78hYBAKfxrlg6Pw1lGC5PTUdOXQ9-yd_rO1JRqZrx5Oo25BATZ=
+ItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJhswKIwYNsFZvfpAOSHFNXVCdcOqA=
+7OD5g33YaJY3hU8UrSGV0a-2Fga80ny2bfO37FZO-2B19IumTB4VY4RfctpHESL4zGntmRmTNVG=
+cAK0BKa-2FKE8TdYJ69Qjun5wpKzylYzCRzLLeXcBk4-2FDQ5OCkXRIRMMxCmPcTEWalPGVZ2vf=
+wbgqNBGQnd879NCrfI8yln-2F-2B6bDgGL-2Bgvi9cKdtyFpYyw-3D-3D" style=3D"padding=
+:6px 10px !important;color:#23b3e7 !important;display:block;"><span style=
+=3D"color:#23b3e7 !important;"> 1-Click Apply </span></a></div></td></tr></=
+tbody></table></td></tr></tbody></table></td></tr></tbody></table></td></tr=
+></tbody></table></td><td width=3D"10" height=3D"10"></td><td dir=3D"ltr" a=
+lign=3D"left" width=3D"50" valign=3D"bottom"><img src=3D"https://jobot.imgi=
+x.net/pro/a5bb684ef44f1405f379c94daa96baa9c8e36bea66ed654d741eed1c0aab95d6.=
+jpeg?w=3D175&amp;h=3D175&amp;fit=3Dcrop&amp;mask=3Dellipse&amp;fm=3Dpng" al=
+t=3D"Reed Kellick" width=3D"50" style=3D"border-radius:50%;"><br><small sty=
+le=3D"color:#777;font-size:.7rem;display:block;text-align:center;max-width:=
+50px;"> Reed </small></td></tr></tbody></table></td></tr></tbody></table></=
+div><table width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0">=
+<tbody><tr><td align=3D"center" bgcolor=3D"#FFFFFF" style=3D"padding:25px 1=
+5px;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0"><tbody><tr><t=
+d><table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0">=
+<tbody><tr><td align=3D"center" style=3D"padding:0px 10px;"><a href=3D"http=
+s://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2BpPRk=
+N-2BkxGSEONcuBgJ9KfzQuHtzbdyCAfwnDxDhCBP1hUMnVCqqRugnIM02JmQ8S1A-3D-3Dch0P_=
+rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1UsnYnOWyT8iTUJhefQRr5pE8=
+AwV01DbfCK5778-2BDdfqzTR9bTQ0x-2F5SkMKVlWbQDT5sqYl5-2BN-2BG96te7do4Xh7bZJPo=
+1WPzqSbo14MfVGDoO-2BasLSZTsoA5Vzih0vE0mG-2B-2FohZ6F39YMykFzfNxWVy2a-2Bt41VN=
+BwipWgUrd8OUmsh1zekinkmy70TK07Z6hPl7xuRuR4Pn5oZTtum51I7G-2FwiaUO-2FL8aeAhmw=
+-3D-3D" target=3D"_blank"><img width=3D"25" src=3D"https://media.jobot.com/=
+email/linkedin_sig.png" alt=3D"LinkedIn logo" style=3D"width:25px;"></a></t=
+d><td align=3D"center" style=3D"padding:0px 10px;"><a href=3D"https://url97=
+51.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2BpI-2FOr7Lrd9u=
+CqO1yAKFz8I2MZ0VL82sMkML8tuAT6EsO5yD4_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BX=
+ngf09BwXHLgXw1UsnYnOWyT8iTUJhYHlzxYvaTfkn-2BiqFfcYgX7rh4RKYVNpjve59LdgyH25K=
+Y7-2FRu5FREMMKsMp2QXZtx0BNsHk-2B7s6uR9szruHv9SVORFQKZZrZM6kqlmBU7qdYKzijiz3=
+4yl9FH-2FrsdUAr8x-2FMBCz7Ndj43RapYCyeCtFqouOpXr8lxMsNXvk78FoDTl5w-2BdEd4Nps=
+X-2Fa9zoCeytUJ3hWhh-2Fwrh1LGJR-2F78g-3D-3D" target=3D"_blank"><img width=3D=
+"25" src=3D"https://media.jobot.com/email/instagram_sig.png" alt=3D"Instagr=
+am logo" style=3D"width:25px;"></a></td></tr></tbody></table></td></tr><tr>=
+<td align=3D"center" style=3D"font-family:'Lato', arial, sans-serif;font-si=
+ze:14px;color:#14213D;line-height:28px;padding:10px 25px 0px;"><a href=3D"h=
+ttps://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2Bp=
+ICm9ELzN335UUJHag9HugisWnzX3Utw1mDppr4YysBut2Sbe3O4EzyP99HDbAWcmEYuB1o-2BGt=
+0PYjJzdjC1jcc-3DAlG1_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwXHLgXw1Usn=
+YnOWyT8iTUJh43afhF-2FX1knm4mcIYUN79oEsfAhIeVY-2B62EQDDuHndECuzc6i19txeO6cik=
+lbhl1nhNSkkExWJKNsnzirOLYsC-2ByFIGVRp5DmGbc6BwCU42v7JdzRCrtWPtfJwv0XlvUaBsk=
+VLcEcFxgcAz8ybMSifp4-2FXixZhyQZVXiGLhxZ97aDPji31djnI6S-2FYUOI9wEOioGrcruyRZ=
+Yz9-2FWUO4tnQ-3D-3D" style=3D"color:#14213D;">Jobot.com</a> | <a href=3D"ht=
+tps://url9751.alerts.jobot.com/ls/click?upn=3Du001.nzDSnI8Q0Y9UfX4wWW5-2BpA=
+2bCbg4puiQAdqk26y-2Fa5ugpA2pYNUNge4Bg9DytIZ-2BVHDoguV9P6ZU2I-2B4zA2q54PpPM1=
+HDf9voAzj8yfTRuQ6igdRnSO8sFe1y5wp3ld0G1RS2gXsjT2EqZ58v45yh-2Fnu1ogUBdBGn7zm=
+IppfvCgTwNJYO-2BH9UELWbDBQW79PNH6v_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf=
+09BwXHLgXw1UsnYnOWyT8iTUJhRzk4g-2FQuG1qE-2B1GuGSGe8FYJYAe3ebp0dRPgmWD-2BDgc=
+MFkT6V-2FuLFQbrLS5qS01c-2BTizpYhJb515wctVua-2Bq-2Fbm2WAvm44WyZHFWfXfrInDNXX=
+TzTc2R7KRoAYOf0IEQxlsR7wDHt-2B9TpRQiNsK1ZwkC-2BA423yUz1K11Gzci-2FdGkxnLVkIa=
+8kOKiBGp4nPcjqPI5POP4zWfmsWvRupHbSA-3D-3D" style=3D"color:#14213D;">Unsubsc=
+ribe</a><br> Copyright =C2=A9 Jobot, LLC, All rights reserved. <br> 3101 We=
+st Pacific Coast Hwy, Newport Beach, CA 92663 </td></tr></tbody></table></t=
+d></tr></tbody></table></div>
+   =20
+  <img src=3D"https://url9751.alerts.jobot.com/wf/open?upn=3Du001.wJ4wQoWqp=
+ttL0LnWj9yCngQD-2BPKOSnIWwGo2A-2BWj6Xh26QURZg0GKLsSODvOvfIt1yakEXWQciaLDyn4=
+U06FFEWWGWS5lH8kPUmzFHt4Rl8LFyFVsXZXTzF2WpHED0X3cBFfJDr7nb0CWHChmfWu41AdT-2=
+BjOMRPoutCQx2WTGDtR3Dvn0UyPOrHi3rzrQevxARsEKOd9uCfU7zZ3hCL1utg0LWExbDeyzosd=
+GSp3mimywqVLmF2oNO6IG9duG-2BwwNMSJb2ggUrzy-2FePdlCKB7Q-3D-3D" alt=3D"" widt=
+h=3D"1" height=3D"1" border=3D"0" style=3D"height:1px !important;width:1px =
+!important;border-width:0 !important;margin-top:0 !important;margin-bottom:=
+0 !important;margin-right:0 !important;margin-left:0 !important;padding-top=
+:0 !important;padding-bottom:0 !important;padding-right:0 !important;paddin=
+g-left:0 !important;"/></body></html>
+--756455647e34a5108ae21cb45c0ff68f9e5562ceacb45b43d2948f76254f--
+

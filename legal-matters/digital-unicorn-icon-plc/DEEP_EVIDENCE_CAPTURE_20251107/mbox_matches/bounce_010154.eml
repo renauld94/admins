@@ -1,0 +1,592 @@
+X-GM-THRID: 1714572434061500419
+X-Gmail-Labels: Inbox,Important,Opened,Category Updates
+Delivered-To: sn.renauld@gmail.com
+Received: by 2002:a05:7110:4343:b0:fb:6c4:3307 with SMTP id g3csp4232274gee;
+        Sun, 24 Oct 2021 23:34:54 -0700 (PDT)
+X-Google-Smtp-Source: 
+ ABdhPJyIK6+3xN+P+VpFh9+Z9Z+OlKuxdeVuZ0U2/f7IjoF8aZMWBp6dncyEokBt6Oi2VeaBcbXA
+X-Received: by 2002:a17:902:db02:b0:140:581e:6eb5 with SMTP id
+ m2-20020a170902db0200b00140581e6eb5mr3570531plx.46.1635143694320;
+        Sun, 24 Oct 2021 23:34:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1635143694; cv=none;
+        d=google.com; s=arc-20160816;
+        b=ESsAjqs3AT1QL8BUKtJHFhSJGkC/pOFZbW62bTawFlc0v5B2jCZ9lyRPon/Rk6zM3F
+         FQpjX9TbcQz7TiCIFLgYJI337mpEJ5qiJU5dcHDoqonO87OAceqhWwa6KVTKhgwWAit+
+         MQM/cEnRSooFwC4Je2EqwoxpiP9pfiyYngmpjj0Tqh45+lchNlGr4qxV0Gphy88zfgEQ
+         LrTFsQqALvGealRF73AwKzHz48ywx0KidKKPQc45TeYmazGifv9JEtaLmJxQTymk4iBD
+         PaIiTAL+2cfvRPijfPnD4KU5hRwLkPsFvf/Vj9xy4bH4iRzsy/tldOOfDVMOwcuOdzY4
+         Vtbw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20160816;
+        h=to:reply-to:message-id:subject:mime-version:list-unsubscribe:from
+         :date:dkim-signature:dkim-signature;
+        bh=uynUz++7fFdheYAyhKdZVRjbDxckVZWyH8s4K9FIGwI=;
+        b=iSvjU9l8EjN1H7O/FddLergdjjIERefE2nyKyJxOV5FbWsdeWbzgs/O8yegYnN9wiA
+         LwrOtBON17IufR6KkMv5aC9cy/ipjH5IvleUSLsGDEJb+4x5wMCAtIjVLjbwoXYr8htF
+         ljbLZpwWgGvw8LM8HM7fQocuRUlogAeBSDznBw7vBLQK7GS7mQq467E+qE2usQGX4FQG
+         CX4fm1vpWB1+++gGM+rqFM55HVhORNQiIxDKlLPP00Th7d2EMv0huXosutyQbx2OSf0e
+         STsxN9++LQlApHaz8QhNqLC0tv+bQbN6OLuYcRhc6bVyiSP9mV9VB6pLRTTxcJkGhwZE
+         flAw==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@epam.com header.s=bmy header.b=oSHlkMRi;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=L32b4RUj;
+       spf=pass (google.com: domain of
+ bounces+15257641-9b85-sn.renauld=gmail.com@trm.epam.com designates
+ 149.72.206.74 as permitted sender)
+ smtp.mailfrom="bounces+15257641-9b85-sn.renauld=gmail.com@trm.epam.com";
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=epam.com
+Return-Path: <bounces+15257641-9b85-sn.renauld=gmail.com@trm.epam.com>
+Received: from wrqvczqx.outbound-mail.sendgrid.net
+ (wrqvczqx.outbound-mail.sendgrid.net. [149.72.206.74])
+        by mx.google.com with ESMTPS id l5si3657200plg.284.2021.10.24.23.34.54
+        for <sn.renauld@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 24 Oct 2021 23:34:54 -0700 (PDT)
+Received-SPF: pass (google.com: domain of
+ bounces+15257641-9b85-sn.renauld=gmail.com@trm.epam.com designates
+ 149.72.206.74 as permitted sender) client-ip=149.72.206.74;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@epam.com header.s=bmy header.b=oSHlkMRi;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=L32b4RUj;
+       spf=pass (google.com: domain of
+ bounces+15257641-9b85-sn.renauld=gmail.com@trm.epam.com designates
+ 149.72.206.74 as permitted sender)
+ smtp.mailfrom="bounces+15257641-9b85-sn.renauld=gmail.com@trm.epam.com";
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=epam.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=epam.com;
+	h=content-type:from:list-unsubscribe:mime-version:subject:reply-to:
+	x-feedback-id:to;
+	s=bmy; bh=uynUz++7fFdheYAyhKdZVRjbDxckVZWyH8s4K9FIGwI=;
+	b=oSHlkMRiHz7JHXIOmHiTBY0uGhLxBA2lFbYETMMOa4x0/YPTxGl+IRmp2/lfILc4edyy
+	CN1wUsWqIEPgpXP3IrInZVttIgsvJMXixZFobLXfY1zKMmCOPnGAi9GMJj+EuhT9I0LXB0
+	W8fNn7FfoZJdcm3r5ff4HW2ZKySllwnn6NJDzeFPGSGiUPWL0/XRMtfeOMTeSEELMGN8jJ
+	F57cIVk82I0ouptLJ7rhLepZRtesiQO+mTIou4FHcSwcR2mkC5gmriLn6qGdIuNWfOjHcm
+	o6ubTWAVH0ttxCo0liP8DMyCpulS/YFdTpSZdabCRxRvG4HmagA+btJOzzlObh0Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendgrid.info;
+	h=content-type:from:list-unsubscribe:mime-version:subject:reply-to:
+	x-feedback-id:to;
+	s=smtpapi; bh=uynUz++7fFdheYAyhKdZVRjbDxckVZWyH8s4K9FIGwI=;
+	b=L32b4RUjexp2PRbs2tWOVJC6VhJtFbGgO6HkF9vhfB3ZpTSaPdoH/VFriLV8WpMqYZB+
+	TatY2yjFnE46oFiWdoHBw5/IExvfydBycxqNkZ5mlFdhKxR3gvd/565x3fZT4nmIjbAL5f
+	YPQy8NVSLw9ejY6DXtgUzbrNpWIzKQ5pA=
+Received: by filterdrecv-58bbc978dc-fgtl4 with SMTP id
+ filterdrecv-58bbc978dc-fgtl4-1-6176500D-17
+        2021-10-25 06:34:53.663221109 +0000 UTC m=+1486258.582327542
+Received: from MTUyNTc2NDE (unknown)
+	by geopod-ismtpd-6-1 (SG) with HTTP
+	id sK1FwX8oRGOl39osHClKkQ
+	for <sn.renauld@gmail.com>;
+	Mon, 25 Oct 2021 06:34:53.523 +0000 (UTC)
+Content-Type: multipart/alternative;
+ boundary=f52175f9318c674bef38b7fbaabf6702fe6242c8c38051554614814a0b48
+Date: Mon, 25 Oct 2021 06:34:53 +0000 (UTC)
+From: EPAM Anywhere <noreply.anywhere@epam.com>
+List-Unsubscribe: <mailto:noreply.anywhere@epam.com>
+Mime-Version: 1.0
+Subject: Your application results
+X-250ok-CID: 
+ 67b4fb7191b6459fa911:b987add3-68e8-44dc-8cc0-9e97808899b2:Vb6kq_Tsk
+Message-ID: <sK1FwX8oRGOl39osHClKkQ@geopod-ismtpd-6-1>
+Reply-To: EPAM Anywhere <epam-anywhere-lf8ys_v5j@campaign.beamery.com>
+X-Feedback-ID: 15257641:SG
+X-SG-EID: 
+ =?us-ascii?Q?P1cN1Ppe+9VGie8ZbAWiQF2CX2pcrU4USikCx8ll4CVheH1hMWjORD4gvcb4qL?=
+ =?us-ascii?Q?pFCsycr+x4k3SmMwwKe3Eow5h8qNfZbggVSlLd=2F?=
+ =?us-ascii?Q?qIqj9LSX37RNYUHaWsNnWod6eSdt1pGMbNRXkLw?=
+ =?us-ascii?Q?45lfUa4j7TEK97I1BTIDNoV5S1BolOZdQFcMd1Z?=
+ =?us-ascii?Q?d+CD0xPeN1RjUS2YL33KLXwJfhmATsVAloflCdf?=
+ =?us-ascii?Q?w=2FpgPMa22it0d9U0h=2FQuDW4MRndCuTgFRFUHbf?=
+X-SG-ID: 
+ =?us-ascii?Q?N2C25iY2uzGMFz6rgvQsb8raWjw0ZPf1VmjsCkspi=2FIARr5ApfQLGQYXi0KvHQ?=
+ =?us-ascii?Q?0zgfMl2kqrin8HuSdjeBbfMNRyIUawpOqs3YLmC?=
+ =?us-ascii?Q?Ehmfv+8RQ+eV1eRKXiAj2KtXb6ib16f4Uir77Iv?=
+ =?us-ascii?Q?oviVFF3Tn8ODyXkTGIKJ6FGrhh065rUCd8l05aU?=
+ =?us-ascii?Q?Ou4bLWDrgIIiZVMqd1Se8BwNMupjLLsDUp3o0jw?=
+ =?us-ascii?Q?a2LyUqeNM+Cb+Bctld1QGsFIsKg4giyU+ZCSKLV?=
+ =?us-ascii?Q?VrpGdOHn6slWTJSJGpY3jfMC2JkRWzmFpjqfnCV?=
+ =?us-ascii?Q?WZy93FGQMvBO8pUlWtqPZAz+RdzkBaGQMfT7E+1?=
+ =?us-ascii?Q?8bC2dL33HMgkOkPIdWa+TUuh0d3Uq42t6Ws941m?=
+ =?us-ascii?Q?+AXkI8+Dv2SR1aQKDOXHf6xuRgvaZPoE7lk1w1P?=
+ =?us-ascii?Q?40fSHvYDwGf7sDBUKYCRf9Z9wM2cRGWktdLnM+J?=
+ =?us-ascii?Q?NvNDEdhr9p5ndiaVF57q=2FMxlQ9wWRSbxlAeC5DG?=
+ =?us-ascii?Q?LsjNbn+RTtzUWnUP7PksT8b66Y5jMMkWBPlnbvC?=
+ =?us-ascii?Q?W0WVOkfCeh=2F0iLI5gyttHdXTt64B+l=2Fo7bHsTrf?=
+ =?us-ascii?Q?AB1RmdIKAFZTvSspKdzzqwY=2FyQGVS6utGRZ6m6a?=
+ =?us-ascii?Q?nqCFtPW6zkYzBJpcmAFQJlz1cj2f060crXlHc+p?=
+ =?us-ascii?Q?bqUs5Kz0o=2FQNQu4Lr6fKkqIgvq7hoME34CLKpqX?=
+ =?us-ascii?Q?icvk1hbF0cuYXUBzDxakRnzrcNXGeNHHR3QU034?=
+ =?us-ascii?Q?bvbV9LepeJ1IbvIXJGRhMU=3D?=
+To: sn.renauld@gmail.com
+X-Entity-ID: BdpOoosqkEb61P5xcL8q3A==
+
+--f52175f9318c674bef38b7fbaabf6702fe6242c8c38051554614814a0b48
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0
+
+[http://careerslink.epam.com/ss/c/tyi2sJevxS8GN7VEznc2KfB7P7yNTsdw0Rb9NOcWz=
+hxE8DW7nj18ShOuMJumcSYxpM5_nWYOL7tZJJyCb815ECw2pdtUpUiAuXnYyj6GNTMmQ8ntrptx=
+9rfYDCzRMDDOTox8ji1lcBTk6nJZuQrBRH3Fd3Uaq6HWpfj9H0SCT_U/3gg/mKcrOXkMQceYVHR=
+GO9DfRw/t0/Qa601nvWoPFk-9iBpVardJDnJxU4DlQIf3bhXEjqAXo]
+HELLO!
+Thank you for the time you've invested in applying with EPAM Anywhere
+[http://careerslink.epam.com/ss/c/xQod6_fREurEz1toDBubEcKGrnYjO5FgL2l_wae60=
+EnJfC1CxwyRaf3jEiRATaIph1nhCKkAHv4CCHBuaI7qEXmuhJ_FDrpoL9NutcoBMsXhZ7m5Wwpa=
+vUXwUboRMwIkQt6AylNEKiaRm4vmuqt1_w/3gg/mKcrOXkMQceYVHRGO9DfRw/t1/qHUpEPu5RQ=
+ktZ2OF5t9fKpLMdt9lRVK_g0fNtYEGNdM]
+. Unfortunately, we can't move forward with your application this time. But=
+ we'd
+like to keep your resume on file, so let=E2=80=99s stay in touch!
+
+
+
+You can apply again in 10 days for the position that better fits your skill=
+s
+using our platform
+[http://careerslink.epam.com/ss/c/xQod6_fREurEz1toDBubEcKGrnYjO5FgL2l_wae60=
+EkcjoTWoD-9muE9a_MnZ_Dz1XIFCA6D2Fv4Ng7ZEQ2LeiQHVU6iT2k3xXKbsqoA0xxEOTsmB34u=
+Jl3sBHpAOTZsq7-IZhw5HsiDxidn5WZDrg/3gg/mKcrOXkMQceYVHRGO9DfRw/t2/piVz_TlGes=
+O4ogPFt6CirToWPvZMDnogEvs54_exlQM]=20
+and explore some really useful content
+[http://careerslink.epam.com/ss/c/xQod6_fREurEz1toDBubEcKGrnYjO5FgL2l_wae60=
+EkGP89P7HgYGGh8yJbpwIv8Qy1l0TLfQlBcPtAezB3R5boFOfcrgu79iQQPcXg9cQ6kbhr9xKee=
+3VBCjYCmnK4pcNuh-eI_HsgOJ0GUuUItXg/3gg/mKcrOXkMQceYVHRGO9DfRw/t3/00l8g1rmsY=
+QM-nUW2FQmt2pm-orJKbG-GcNjfwYpq7w]=20
+in our blog.
+
+
+
+
+
+Thank you again for your time and good luck in your career pursuit.
+
+
+
+
+
+
+Everything best,
+
+EPAM Anywhere Team
+
+Our contacts and social media:
+
+Fb
+[http://careerslink.epam.com/ss/c/tyi2sJevxS8GN7VEznc2KfB7P7yNTsdw0Rb9NOcWz=
+hzd5Uwx4lOwi5KdOqR8pKk6BzxMa2SoEfv2aXtHcK0E1KA5lp7tmd81c4mjF7OYeHITlZMpbjDF=
+I7I8h67AeDxjtRyiyxVQ7og82sjZEBjcZg4zViN9wThZQU5ZKji7GHU/3gg/mKcrOXkMQceYVHR=
+GO9DfRw/t4/wyObxpu9QCq7FviLu6gcilhMZIPcfo_HahOG2ba0j68]
+[http://careerslink.epam.com/ss/c/3GY89PmQ-kr_GtAYIntGuq8vaewXp1Y924O8FQZOK=
+tPVvgsQVGI5-3UPFJxm9XHIbBA4mCfyNbd_XPhkUS9HplehDIMmwjEYCDhmG_D4_140afIf5m3I=
+dUdVeFp6jonGOS-rBmLpEKcx37il5SgawvkLev35rPCj5qjPxDlH4j8/3gg/mKcrOXkMQceYVHR=
+GO9DfRw/t5/oJiPSDZ6xPphm7D_6t1KS1_ZkCYhQatSDyuguAis4TQ]
+World
+[http://careerslink.epam.com/ss/c/tyi2sJevxS8GN7VEznc2KfB7P7yNTsdw0Rb9NOcWz=
+hzd5Uwx4lOwi5KdOqR8pKk6KByjqcir2LLtWNBK6n0t9sbO1pzT9fgmHoxkGIH1niJWfRVRFwAX=
+sNLU6HJnsOD90ro0f59r6LTxXhoEAZjFM-vOqwgBh7BjBBoxx9FZDfU/3gg/mKcrOXkMQceYVHR=
+GO9DfRw/t6/LQ8h-1X86oOPmNbYT2bRmtmSJGW1oUHWuyVDdB3Zruc]
+[http://careerslink.epam.com/ss/c/xQod6_fREurEz1toDBubEcKGrnYjO5FgL2l_wae60=
+EkAGZMPDkMCtvKRrX_Q35d3LbCzaz5gbfCngzdZiu8nRbL7p3GcMA7ppZYTRi1RVvRPZp6D0nQU=
+SUD30OGsG1rLxNumb2u5-O2zZdhIPNeNTQ/3gg/mKcrOXkMQceYVHRGO9DfRw/t7/xECI33JToz=
+13x2BF5jtyO6Um-rKr_fs9FYwEnGyEgTw]
+In
+[http://careerslink.epam.com/ss/c/tyi2sJevxS8GN7VEznc2KfB7P7yNTsdw0Rb9NOcWz=
+hzd5Uwx4lOwi5KdOqR8pKk6BzxMa2SoEfv2aXtHcK0E1KA5lp7tmd81c4mjF7OYeHJvXzYQ9byA=
+z1yW3M6cQyZC5LMc0AAJG-sQorIWEUE0JDQhdisdedH_OUo62J668-M/3gg/mKcrOXkMQceYVHR=
+GO9DfRw/t8/Ykdo4ICmQkLBk75M9suRl-KvCbMnJAxSDvLMK63SgFM]
+[http://careerslink.epam.com/ss/c/3GY89PmQ-kr_GtAYIntGuibSbuppkYpq3jK85x1cq=
+E25wSgsg_5aoExvvUqbD_vIHXSLi_Ic3BKHyBJR6IOxVCu3J56C-pZTUYMHBNubMKflW36tFMRY=
+K_FFAy2VTzOlgPxlpjvDxJh70MalJ4NP8pxU1DBhqqLIg_NexQfJKbA/3gg/mKcrOXkMQceYVHR=
+GO9DfRw/t9/0NYbndeuMcvS0XwFyknvpqVEGPdV_O-CS5vl8KGQZVQ]
+Email Support [supportme@epam.com?subject=3DEPAM%20Anywhere%20support] in c=
+ase of
+any questions
+
+=C2=A9 2021 EPAM Systems, Inc. All Rights Reserved
+--f52175f9318c674bef38b7fbaabf6702fe6242c8c38051554614814a0b48
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=utf-8
+Mime-Version: 1.0
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.=
+w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html style=3D"width:100%;fon=
+t-family:arial, 'helvetica neue', helvetica, sans-serif;-webkit-text-size-a=
+djust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0;"><head><meta conte=
+nt=3D"width=3Ddevice-width, initial-scale=3D1" name=3D"viewport"><meta char=
+set=3D"UTF-8"><meta name=3D"x-apple-disable-message-reformatting"><meta htt=
+p-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge"><meta content=3D"telephon=
+e=3Dno" name=3D"format-detection"><title>Reject of Anywhere</title><!--[if =
+(mso 16)]>
+<style type=3D"text/css">
+a {text-decoration: none;}
+</style>
+<![endif]--><!--[if gte mso 9]><style>sup { font-size: 100% !important; }</=
+style><![endif]--><!--[if gte mso 9]>
+<xml>
+<o:OfficeDocumentSettings>
+<o:AllowPNG></o:AllowPNG>
+<o:PixelsPerInch>96</o:PixelsPerInch>
+</o:OfficeDocumentSettings>
+</xml>
+<![endif]--><style type=3D"text/css">
+#outlook a {
+padding:0;
+}
+.ExternalClass {
+width:100%;
+}
+.ExternalClass,
+.ExternalClass p,
+.ExternalClass span,
+.ExternalClass font,
+.ExternalClass td,
+.ExternalClass div {
+line-height:100%;
+}
+.es-button {
+mso-style-priority:100!important;
+text-decoration:none!important;
+}
+a[x-apple-data-detectors] {
+color:inherit!important;
+text-decoration:none!important;
+font-size:inherit!important;
+font-family:inherit!important;
+font-weight:inherit!important;
+line-height:inherit!important;
+}
+.es-desk-hidden {
+display:none;
+float:left;
+overflow:hidden;
+width:0;
+max-height:0;
+line-height:0;
+mso-hide:all;
+}
+[data-ogsb] .es-button {
+border-width:0!important;
+padding:10px 20px 10px 20px!important;
+}
+@media only screen and (max-width:600px) {p, ul li, ol li, a { line-height:=
+150%!important } h1, h2, h3, h1 a, h2 a, h3 a { line-height:120%!important =
+} h1 { font-size:30px!important; text-align:center } h2 { font-size:26px!im=
+portant; text-align:center } h3 { font-size:20px!important; text-align:cent=
+er } .es-header-body h1 a, .es-content-body h1 a, .es-footer-body h1 a { fo=
+nt-size:30px!important } .es-header-body h2 a, .es-content-body h2 a, .es-f=
+ooter-body h2 a { font-size:26px!important } .es-header-body h3 a, .es-cont=
+ent-body h3 a, .es-footer-body h3 a { font-size:20px!important } .es-menu t=
+d a { font-size:16px!important } .es-header-body p, .es-header-body ul li, =
+.es-header-body ol li, .es-header-body a { font-size:16px!important } .es-c=
+ontent-body p, .es-content-body ul li, .es-content-body ol li, .es-content-=
+body a { font-size:16px!important } .es-footer-body p, .es-footer-body ul l=
+i, .es-footer-body ol li, .es-footer-body a { font-size:16px!important } .e=
+s-infoblock p, .es-infoblock ul li, .es-infoblock ol li, .es-infoblock a { =
+font-size:12px!important } *[class=3D"gmail-fix"] { display:none!important =
+} .es-m-txt-c, .es-m-txt-c h1, .es-m-txt-c h2, .es-m-txt-c h3 { text-align:=
+center!important } .es-m-txt-r, .es-m-txt-r h1, .es-m-txt-r h2, .es-m-txt-r=
+ h3 { text-align:right!important } .es-m-txt-l, .es-m-txt-l h1, .es-m-txt-l=
+ h2, .es-m-txt-l h3 { text-align:left!important } .es-m-txt-r img, .es-m-tx=
+t-c img, .es-m-txt-l img { display:inline!important } .es-button-border { d=
+isplay:block!important } .es-btn-fw { border-width:10px 0px!important; text=
+-align:center!important } .es-adaptive table, .es-btn-fw, .es-btn-fw-brdr, =
+.es-left, .es-right { width:100%!important } .es-content table, .es-header =
+table, .es-footer table, .es-content, .es-footer, .es-header { width:100%!i=
+mportant; max-width:600px!important } .es-adapt-td { display:block!importan=
+t; width:100%!important } .adapt-img { width:100%!important; height:auto!im=
+portant } .es-m-p0 { padding:0px!important } .es-m-p0r { padding-right:0px!=
+important } .es-m-p0l { padding-left:0px!important } .es-m-p0t { padding-to=
+p:0px!important } .es-m-p0b { padding-bottom:0!important } .es-m-p20b { pad=
+ding-bottom:20px!important } .es-mobile-hidden, .es-hidden { display:none!i=
+mportant } .es-desk-hidden { display:table-row!important; width:auto!import=
+ant; overflow:visible!important; float:none!important; max-height:inherit!i=
+mportant; line-height:inherit!important } .es-desk-menu-hidden { display:ta=
+ble-cell!important } table.es-table-not-adapt, .esd-block-html table { widt=
+h:auto!important } table.es-social { display:inline-block!important } table=
+.es-social td { display:inline-block!important } a.es-button, button.es-but=
+ton { font-size:20px!important; display:block!important; border-width:10px =
+0px 10px 0px!important } }
+</style></head><body aria-disabled=3D"false" data-gr-ext-installed=3D"" dat=
+a-new-gr-c-s-check-loaded=3D"14.1029.0" data-new-gr-c-s-loaded=3D"14.1029.0=
+" spellcheck=3D"false" style=3D'width: 100%; font-family: arial, "helvetica=
+ neue", helvetica, sans-serif; text-size-adjust: 100%; padding: 0px; margin=
+: 0px;'><div class=3D"es-wrapper-color" style=3D"background-color:#E4EBF5;"=
+><!--[if gte mso 9]>
+<v:background xmlns:v=3D"urn:schemas-microsoft-com:vml" fill=3D"t">
+<v:fill type=3D"tile" color=3D"#E4EBF5"></v:fill>
+</v:background>
+<![endif]--><table cellpadding=3D"0" cellspacing=3D"0" class=3D"es-wrapper"=
+ style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collaps=
+e;border-spacing:0px;padding:0;Margin:0;width:100%;height:100%;background-r=
+epeat:repeat;background-position:center top;" width=3D"100%"><tbody><tr fr-=
+original-style=3D"border-collapse:collapse;" style=3D"border-collapse: coll=
+apse; user-select: none;"><td fr-original-style=3D"padding:0;Margin:0;" sty=
+le=3D"padding: 0px; margin: 0px; user-select: text; border: 0px;" valign=3D=
+"top"><table align=3D"center" cellpadding=3D"0" cellspacing=3D"0" class=3D"=
+es-content" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-colla=
+pse:collapse;border-spacing:0px;table-layout:fixed !important;width:100%;">=
+<tbody><tr fr-original-style=3D"border-collapse:collapse;" style=3D"border-=
+collapse: collapse; user-select: none;"><td align=3D"center" fr-original-st=
+yle=3D"padding:0;Margin:0;" style=3D"padding: 0px; margin: 0px; user-select=
+: text; border: 0px;"><table align=3D"center" bgcolor=3D"#ffffff" cellpaddi=
+ng=3D"0" cellspacing=3D"0" class=3D"es-content-body" style=3D"mso-table-lsp=
+ace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;ba=
+ckground-color:#FFFFFF;width:600px;"><tbody><tr fr-original-style=3D"border=
+-collapse:collapse;" style=3D"border-collapse: collapse; user-select: none;=
+"><td align=3D"left" background=3D"https://fbuefo.stripocdn.email/content/g=
+uids/CABINET_db3a4f071b9a3515684960ea33b253a2/images/83951612864407382.png"=
+ fr-original-style=3D"Margin:0;padding-bottom:25px;padding-left:30px;paddin=
+g-right:30px;padding-top:40px;background-image:url(https://fbuefo.stripocdn=
+.email/content/guids/CABINET_db3a4f071b9a3515684960ea33b253a2/images/839516=
+12864407382.png);background-repeat:no-repeat;background-position:left top;"=
+ style=3D'margin: 0px; padding: 40px 30px 25px; background-image: url("http=
+s://fbuefo.stripocdn.email/content/guids/CABINET_db3a4f071b9a3515684960ea33=
+b253a2/images/83951612864407382.png"); background-repeat: no-repeat; backgr=
+ound-position: left top; user-select: text; border: 0px;'><table cellpaddin=
+g=3D"0" cellspacing=3D"0" style=3D"mso-table-lspace:0pt;mso-table-rspace:0p=
+t;border-collapse:collapse;border-spacing:0px;" width=3D"100%"><tbody><tr f=
+r-original-style=3D"border-collapse:collapse;" style=3D"border-collapse: co=
+llapse; user-select: none;"><td align=3D"center" fr-original-style=3D"paddi=
+ng:0;Margin:0;width:540px;" style=3D"padding: 0px; margin: 0px; width: 540p=
+x; user-select: text; border: 0px;" valign=3D"top"><table cellpadding=3D"0"=
+ cellspacing=3D"0" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;borde=
+r-collapse:collapse;border-spacing:0px;" width=3D"100%"><tbody><tr fr-origi=
+nal-style=3D"border-collapse:collapse;" style=3D"border-collapse: collapse;=
+ user-select: none;"><td align=3D"right" fr-original-style=3D"padding:0;Mar=
+gin:0;padding-bottom:15px;font-size:0px;" style=3D"padding: 0px 0px 15px; m=
+argin: 0px; font-size: 0px; user-select: text; border: 0px;"><img src=3D"ht=
+tps://fbuefo.stripocdn.email/content/guids/CABINET_db3a4f071b9a3515684960ea=
+33b253a2/images/10251612864399754.png" alt=3D"" style=3D"display: block; bo=
+rder: 0px; outline: none; text-decoration: none; cursor: pointer;" width=3D=
+"250" height=3D"25" fr-original-style=3D"display: block; border: 0px; outli=
+ne: none; text-decoration: none;" fr-original-class=3D"adapt-img fr-draggab=
+le"></td></tr></tbody></table></td></tr></tbody></table></td></tr><tr fr-or=
+iginal-style=3D"border-collapse:collapse;" style=3D"border-collapse: collap=
+se; user-select: none;"><td align=3D"left" fr-original-style=3D"Margin:0;pa=
+dding-top:20px;padding-bottom:20px;padding-left:30px;padding-right:30px;" s=
+tyle=3D"margin: 0px; padding: 20px 30px; user-select: text; border: 0px;"><=
+table cellpadding=3D"0" cellspacing=3D"0" style=3D"mso-table-lspace:0pt;mso=
+-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;" width=3D"10=
+0%"><tbody><tr fr-original-style=3D"border-collapse:collapse;" style=3D"bor=
+der-collapse: collapse; user-select: none;"><td align=3D"center" fr-origina=
+l-style=3D"padding:0;Margin:0;width:540px;" style=3D"padding: 0px; margin: =
+0px; width: 540px; user-select: text; border: 0px;" valign=3D"top"><table c=
+ellpadding=3D"0" cellspacing=3D"0" style=3D"mso-table-lspace:0pt;mso-table-=
+rspace:0pt;border-collapse:collapse;border-spacing:0px;" width=3D"100%"><tb=
+ody><tr fr-original-style=3D"border-collapse:collapse;" style=3D"border-col=
+lapse: collapse; user-select: none;"><td align=3D"left" fr-original-style=
+=3D"padding:0;Margin:0;padding-bottom:10px;" style=3D"padding: 0px 0px 10px=
+; margin: 0px; user-select: text; border: 0px;"><h3 style=3D"Margin:0;line-=
+height:26px;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue=
+', helvetica, sans-serif;font-size:22px;font-style:normal;font-weight:norma=
+l;color:#333333;">Hello!</h3></td></tr><tr fr-original-style=3D"border-coll=
+apse:collapse;" style=3D"border-collapse: collapse; user-select: none;"><td=
+ align=3D"left" fr-original-style=3D"padding:0;Margin:0;padding-bottom:5px;=
+padding-top:10px;" style=3D"padding: 10px 0px 5px; margin: 0px; user-select=
+: text; border: 0px;"><p style=3D"Margin:0;-webkit-text-size-adjust:none;-m=
+s-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'he=
+lvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-si=
+ze:14px;">Thank you for the time you&#39;ve invested in applying with <a fr=
+-original-style=3D"-webkit-text-size-adjust:none;-ms-text-size-adjust:none;=
+mso-line-height-rule:exactly;text-decoration:underline;color:#008ACE;font-s=
+ize:14px;" href=3D"http://careerslink.epam.com/ss/c/xQod6_fREurEz1toDBubEcK=
+GrnYjO5FgL2l_wae60EnJfC1CxwyRaf3jEiRATaIph1nhCKkAHv4CCHBuaI7qEXmuhJ_FDrpoL9=
+NutcoBMsXhZ7m5WwpavUXwUboRMwIkQt6AylNEKiaRm4vmuqt1_w/3gg/mKcrOXkMQceYVHRGO9=
+DfRw/h10/18mKPUWpymhEN28MSO69umygE_bFdv3DJD1Wlg3DYY4" style=3D"text-size-ad=
+just: none; text-decoration: underline; color: rgb(0, 138, 206); font-size:=
+ 14px; user-select: auto;" target=3D"_blank">EPAM Anywhere</a>. Unfortunate=
+ly, we can&#39;t move forward with your application this time. But we&#39;d=
+ like to keep your resume on file, so let&rsquo;s stay in touch!<br><br></p=
+><p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:no=
+ne;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvet=
+ica, sans-serif;line-height:21px;color:#333333;font-size:14px;">You can app=
+ly again in 10 days for the position that better fits your skills using our=
+ <a fr-original-style=3D"-webkit-text-size-adjust:none;-ms-text-size-adjust=
+:none;mso-line-height-rule:exactly;text-decoration:underline;color:#008ACE;=
+font-size:14px;" href=3D"http://careerslink.epam.com/ss/c/xQod6_fREurEz1toD=
+BubEcKGrnYjO5FgL2l_wae60EkcjoTWoD-9muE9a_MnZ_Dz1XIFCA6D2Fv4Ng7ZEQ2LeiQHVU6i=
+T2k3xXKbsqoA0xxEOTsmB34uJl3sBHpAOTZsq7-IZhw5HsiDxidn5WZDrg/3gg/mKcrOXkMQceY=
+VHRGO9DfRw/h11/lNeSM2Ih1DoOjS_ph0dwyWRS_U0E_dHzG6clNgtbCVw" style=3D"text-s=
+ize-adjust: none; text-decoration: underline; color: rgb(0, 138, 206); font=
+-size: 14px; user-select: auto;" target=3D"_blank">platform</a> and explore=
+ some really <a fr-original-style=3D"-webkit-text-size-adjust:none;-ms-text=
+-size-adjust:none;mso-line-height-rule:exactly;text-decoration:underline;co=
+lor:#008ACE;font-size:14px;" href=3D"http://careerslink.epam.com/ss/c/xQod6=
+_fREurEz1toDBubEcKGrnYjO5FgL2l_wae60EkGP89P7HgYGGh8yJbpwIv8Qy1l0TLfQlBcPtAe=
+zB3R5boFOfcrgu79iQQPcXg9cQ6kbhr9xKee3VBCjYCmnK4pcNuh-eI_HsgOJ0GUuUItXg/3gg/=
+mKcrOXkMQceYVHRGO9DfRw/h12/Hw-pxt9pjTRQbT8dMAJXK-N77zpJHUa1zsxZ-EkxZBU" sty=
+le=3D"text-size-adjust: none; text-decoration: underline; color: rgb(0, 138=
+, 206); font-size: 14px; user-select: auto;" target=3D"_blank">useful conte=
+nt</a> in our blog.</p><p style=3D"Margin:0;-webkit-text-size-adjust:none;-=
+ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'h=
+elvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-s=
+ize:14px;"><br><br></p><p style=3D"Margin:0;-webkit-text-size-adjust:none;-=
+ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'h=
+elvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;font-s=
+ize:14px;">Thank you again for your time and good luck in your career pursu=
+it.</p><p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adj=
+ust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', =
+helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px;"><br><=
+/p><p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:=
+none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helv=
+etica, sans-serif;line-height:21px;color:#333333;font-size:14px;">&nbsp;&nb=
+sp;</p><p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adj=
+ust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', =
+helvetica, sans-serif;line-height:21px;color:#333333;font-size:14px;text-al=
+ign:right;">Everything best,</p><p style=3D"Margin:0;-webkit-text-size-adju=
+st:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:=
+arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;color:#3333=
+33;font-size:14px;text-align:right;"><strong>EPAM Anywhere Team&nbsp;</stro=
+ng></p></td></tr></tbody></table></td></tr></tbody></table></td></tr><tr fr=
+-original-style=3D"border-collapse:collapse;" style=3D"border-collapse: col=
+lapse; user-select: none;"><td align=3D"left" bgcolor=3D"#edf5fb" fr-origin=
+al-style=3D"padding:30px;Margin:0;background-color:#edf5fb;" style=3D"paddi=
+ng: 30px; margin: 0px; background-color: rgb(237, 245, 251); user-select: t=
+ext; border: 0px;"><!--[if mso]><table style=3D"width:540px" cellpadding=3D=
+"0" cellspacing=3D"0"><tr><td style=3D"width:315px" valign=3D"top"><![endif=
+]--><table align=3D"left" cellpadding=3D"0" cellspacing=3D"0" class=3D"es-l=
+eft" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:col=
+lapse;border-spacing:0px;float:left;"><tbody><tr fr-original-style=3D"borde=
+r-collapse:collapse;" style=3D"border-collapse: collapse; user-select: none=
+;"><td align=3D"left" fr-original-class=3D"es-m-p20b" fr-original-style=3D"=
+padding:0;Margin:0;width:315px;" style=3D"padding: 0px; margin: 0px; width:=
+ 315px; user-select: text; border: 0px;"><table cellpadding=3D"0" cellspaci=
+ng=3D"0" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse=
+:collapse;border-spacing:0px;" width=3D"100%"><tbody><tr fr-original-style=
+=3D"border-collapse:collapse;" style=3D"border-collapse: collapse; user-sel=
+ect: none;"><td align=3D"right" fr-original-style=3D"padding:0;Margin:0;pad=
+ding-top:5px;" style=3D"padding: 5px 0px 0px; margin: 0px; user-select: tex=
+t; border: 0px;"><p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-tex=
+t-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helveti=
+ca neue', helvetica, sans-serif;line-height:21px;color:#333333;font-size:14=
+px;">Our contacts and social media:</p></td></tr></tbody></table></td></tr>=
+</tbody></table><!--[if mso]></td><td style=3D"width:20px"></td><td style=
+=3D"width:205px" valign=3D"top"><![endif]--><table align=3D"right" cellpadd=
+ing=3D"0" cellspacing=3D"0" class=3D"es-right" style=3D"mso-table-lspace:0p=
+t;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:ri=
+ght;"><tbody><tr fr-original-style=3D"border-collapse:collapse;" style=3D"b=
+order-collapse: collapse; user-select: none;"><td align=3D"left" fr-origina=
+l-style=3D"padding:0;Margin:0;width:205px;" style=3D"padding: 0px; margin: =
+0px; width: 205px; user-select: text; border: 0px;"><table cellpadding=3D"0=
+" cellspacing=3D"0" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;bord=
+er-collapse:collapse;border-spacing:0px;" width=3D"100%"><tbody><tr fr-orig=
+inal-style=3D"border-collapse:collapse;" style=3D"border-collapse: collapse=
+; user-select: none;"><td align=3D"left" fr-original-class=3D"es-m-txt-c" f=
+r-original-style=3D"padding:0;Margin:0;font-size:0;" style=3D"padding: 0px;=
+ margin: 0px; font-size: 0px; user-select: text; border: 0px;"><table cellp=
+adding=3D"0" cellspacing=3D"0" class=3D"es-table-not-adapt es-social" style=
+=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;bord=
+er-spacing:0px;"><tbody><tr fr-original-style=3D"border-collapse:collapse;"=
+ style=3D"border-collapse: collapse; user-select: none;"><td align=3D"cente=
+r" fr-original-style=3D"padding:0;Margin:0;padding-right:10px;" style=3D"pa=
+dding: 0px 10px 0px 0px; margin: 0px; user-select: text; border: 0px;" vali=
+gn=3D"top"><a fr-original-style=3D"-webkit-text-size-adjust:none;-ms-text-s=
+ize-adjust:none;mso-line-height-rule:exactly;text-decoration:underline;colo=
+r:#008ACE;font-size:14px;" href=3D"http://careerslink.epam.com/ss/c/3GY89Pm=
+Q-kr_GtAYIntGuq8vaewXp1Y924O8FQZOKtPVvgsQVGI5-3UPFJxm9XHIbBA4mCfyNbd_XPhkUS=
+9HplehDIMmwjEYCDhmG_D4_140afIf5m3IdUdVeFp6jonGOS-rBmLpEKcx37il5SgawvkLev35r=
+PCj5qjPxDlH4j8/3gg/mKcrOXkMQceYVHRGO9DfRw/h13/OR_VpBkmm1gC0Z5qK4wAUQLAg1Y7T=
+hTxkTZxLyKzwrc" style=3D"text-size-adjust: none; text-decoration: underline=
+; color: rgb(0, 138, 206); font-size: 14px; user-select: auto;" target=3D"_=
+blank"><img title=3D"Facebook" src=3D"https://fbuefo.stripocdn.email/conten=
+t/assets/img/social-icons/logo-colored-bordered/facebook-logo-colored-borde=
+red.png" alt=3D"Fb" width=3D"32" height=3D"32" style=3D"display: block; bor=
+der: 0px; outline: none; text-decoration: none; cursor: pointer;" fr-origin=
+al-style=3D"display: block; border: 0px; outline: none; text-decoration: no=
+ne;" fr-original-class=3D"fr-draggable"></a></td><td align=3D"center" fr-or=
+iginal-style=3D"padding:0;Margin:0;padding-right:10px;" style=3D"padding: 0=
+px 10px 0px 0px; margin: 0px; user-select: text; border: 0px;" valign=3D"to=
+p"><a fr-original-style=3D"-webkit-text-size-adjust:none;-ms-text-size-adju=
+st:none;mso-line-height-rule:exactly;text-decoration:underline;color:#008AC=
+E;font-size:14px;" href=3D"http://careerslink.epam.com/ss/c/xQod6_fREurEz1t=
+oDBubEcKGrnYjO5FgL2l_wae60EkAGZMPDkMCtvKRrX_Q35d3LbCzaz5gbfCngzdZiu8nRbL7p3=
+GcMA7ppZYTRi1RVvRPZp6D0nQUSUD30OGsG1rLxNumb2u5-O2zZdhIPNeNTQ/3gg/mKcrOXkMQc=
+eYVHRGO9DfRw/h14/gJ3Em-Hw5yOgoIu5uJN_Lby0PZSu1XwwkXFm-5Ku-HE" style=3D"text=
+-size-adjust: none; text-decoration: underline; color: rgb(0, 138, 206); fo=
+nt-size: 14px; user-select: auto;" target=3D"_blank"><img title=3D"World" s=
+rc=3D"https://fbuefo.stripocdn.email/content/assets/img/other-icons/logo-co=
+lored-bordered/globe-logo-colored-bordered.png" alt=3D"World" width=3D"32" =
+height=3D"32" style=3D"display: block; border: 0px; outline: none; text-dec=
+oration: none; cursor: pointer;" fr-original-style=3D"display: block; borde=
+r: 0px; outline: none; text-decoration: none;" fr-original-class=3D"fr-drag=
+gable"></a></td><td align=3D"center" fr-original-style=3D"padding:0;Margin:=
+0;" style=3D"padding: 0px; margin: 0px; user-select: text; border: 0px;" va=
+lign=3D"top"><a fr-original-style=3D"-webkit-text-size-adjust:none;-ms-text=
+-size-adjust:none;mso-line-height-rule:exactly;text-decoration:underline;co=
+lor:#008ACE;font-size:14px;" href=3D"http://careerslink.epam.com/ss/c/3GY89=
+PmQ-kr_GtAYIntGuibSbuppkYpq3jK85x1cqE25wSgsg_5aoExvvUqbD_vIHXSLi_Ic3BKHyBJR=
+6IOxVCu3J56C-pZTUYMHBNubMKflW36tFMRYK_FFAy2VTzOlgPxlpjvDxJh70MalJ4NP8pxU1DB=
+hqqLIg_NexQfJKbA/3gg/mKcrOXkMQceYVHRGO9DfRw/h15/ww8TH7NGYo9d-CWbrNUP7nDAYHJ=
+fI39hGewPRrfsp1M" style=3D"text-size-adjust: none; text-decoration: underli=
+ne; color: rgb(0, 138, 206); font-size: 14px; user-select: auto;" target=3D=
+"_blank"><img title=3D"Linkedin" src=3D"https://fbuefo.stripocdn.email/cont=
+ent/assets/img/social-icons/logo-colored-bordered/linkedin-logo-colored-bor=
+dered.png" alt=3D"In" width=3D"32" height=3D"32" style=3D"display: block; b=
+order: 0px; outline: none; text-decoration: none; cursor: pointer;" fr-orig=
+inal-style=3D"display: block; border: 0px; outline: none; text-decoration: =
+none;" fr-original-class=3D"fr-draggable"></a></td></tr></tbody></table></t=
+d></tr></tbody></table></td></tr></tbody></table><!--[if mso]></td></tr></t=
+able><![endif]--></td></tr><tr fr-original-style=3D"border-collapse:collaps=
+e;" style=3D"border-collapse: collapse; user-select: none;"><td align=3D"le=
+ft" bgcolor=3D"#222222" fr-original-style=3D"Margin:0;padding-top:25px;padd=
+ing-bottom:25px;padding-left:30px;padding-right:30px;background-color:#2222=
+22;" style=3D"margin: 0px; padding: 25px 30px; background-color: rgb(34, 34=
+, 34); user-select: text; border: 0px;"><table cellpadding=3D"0" cellspacin=
+g=3D"0" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:=
+collapse;border-spacing:0px;" width=3D"100%"><tbody><tr fr-original-style=
+=3D"border-collapse:collapse;" style=3D"border-collapse: collapse; user-sel=
+ect: none;"><td align=3D"center" fr-original-style=3D"padding:0;Margin:0;wi=
+dth:540px;" style=3D"padding: 0px; margin: 0px; width: 540px; user-select: =
+text; border: 0px;" valign=3D"top"><table cellpadding=3D"0" cellspacing=3D"=
+0" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:colla=
+pse;border-spacing:0px;" width=3D"100%"><tbody><tr fr-original-style=3D"bor=
+der-collapse:collapse;" style=3D"border-collapse: collapse; user-select: no=
+ne;"><td align=3D"center" fr-original-style=3D"padding:0;Margin:0;padding-b=
+ottom:15px;" style=3D"padding: 0px 0px 15px; margin: 0px; user-select: text=
+; border: 0px;"><p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text=
+-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetic=
+a neue', helvetica, sans-serif;line-height:18px;color:#ffffff;font-size:12p=
+x;">Email <a fr-original-style=3D"-webkit-text-size-adjust:none;-ms-text-si=
+ze-adjust:none;mso-line-height-rule:exactly;text-decoration:underline;color=
+:#5cb8e5;font-size:12px;" href=3D"mailto:supportme@epam.com?subject=3DEPAM%=
+20Anywhere%20support" style=3D"text-size-adjust: none; text-decoration: und=
+erline; color: rgb(92, 184, 229); font-size: 12px; user-select: auto;" targ=
+et=3D"_blank">Support</a> in case of any questions</p></td></tr><tr fr-orig=
+inal-style=3D"border-collapse:collapse;" style=3D"border-collapse: collapse=
+; user-select: none;"><td align=3D"center" fr-original-style=3D"padding:0;M=
+argin:0;" style=3D"padding: 0px; margin: 0px; user-select: text; border: 0p=
+x;"><p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust=
+:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', hel=
+vetica, sans-serif;line-height:12px;color:#b2b2b2;font-size:8px;">&copy; 20=
+21 EPAM Systems, Inc. All Rights Reserved</p></td></tr></tbody></table></td=
+></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table><=
+/td></tr></tbody></table></div><img src=3D"http://careerslink.epam.com/ss/o=
+/WvlWcu76BLOppwwoA48_Rw/3gg/mKcrOXkMQceYVHRGO9DfRw/ho.gif" alt=3D"" width=
+=3D"1" height=3D"1" border=3D"0" style=3D"height:1px !important;width:1px !=
+important;border-width:0 !important;margin-top:0 !important;margin-bottom:0=
+ !important;margin-right:0 !important;margin-left:0 !important;padding-top:=
+0 !important;padding-bottom:0 !important;padding-right:0 !important;padding=
+-left:0 !important;"/></body></html><span style=3D"font-size: 9px;">Don=E2=
+=80=99t want to receive these e-mails? <a clicktracking=3Doff href=3D"http:=
+//beamery.com/unsubscribe/521c1e9661e6a4e81ca67f37c8362a876e52a67f3f1c9f8f2=
+948a0668e2c284fc9b616b6da7ad3d71c68b9ab3e80b087e6835391987c2343ee829be78587=
+a8e23553ab9e6773595cf427de11291d986c9341c29466cce6c7c1c06775e93b677551feea4=
+ea9d1e61dca3b52e8365f2a8e6fa400e08a05b19b639006beb43c5e31c38d7d71c33db92492=
+37fc5005d110f0ef71cf333a089dedff4e60d6dc5062061f61ce195e4a30ecc8b40be16b080=
+ab66f8a446e5b4b31c971d97fe98664a72486fb283c482b261a2690aa7c8c69fa04d59c8bdd=
+b723f41ae6b99bf32f185ede50fc85b7fc/false" target=3D"_blank">Click to unsubs=
+cribe</a></span>=20
+ <style> @media print{ #_two50 { background-image:url('http://250okanalytic=
+s.beamery.com/ea/YmJu51wZvF/?t=3Dp&e=3Dsn.renauld@gmail.com&c=3D67b4fb7191b=
+6459fa911:b987add3-68e8-44dc-8cc0-9e97808899b2:Vb6kq_Tsk'); } } blockquote =
+#_two50, #mailContainerBody #_two50, div.OutlookMessageHeader, table.moz-em=
+ail-headers-table { background-image:url('http://250okanalytics.beamery.com=
+/ea/YmJu51wZvF/?t=3Df&e=3Dsn.renauld@gmail.com&c=3D67b4fb7191b6459fa911:b98=
+7add3-68e8-44dc-8cc0-9e97808899b2:Vb6kq_Tsk'); } </style> <div id=3D'_two50=
+'></div> <img id=3D'_two50_img' src=3D'http://250okanalytics.beamery.com/ea=
+/YmJu51wZvF/?e=3Dsn.renauld@gmail.com&c=3D67b4fb7191b6459fa911:b987add3-68e=
+8-44dc-8cc0-9e97808899b2:Vb6kq_Tsk' width=3D'1' height=3D'1' style=3D'margi=
+n:0 !important; padding:0 !important; border:0 !important; height:1px !impo=
+rtant; width:1px !important;' />
+--f52175f9318c674bef38b7fbaabf6702fe6242c8c38051554614814a0b48--
+

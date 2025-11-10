@@ -1,0 +1,732 @@
+X-GM-THRID: 1822460126925405348
+X-Gmail-Labels: Inbox,Category Promotions,Unread
+Delivered-To: sn.renauld@gmail.com
+Received: by 2002:a17:906:310c:b0:aab:de38:9884 with SMTP id 12csp2925773ejx;
+        Mon, 27 Jan 2025 19:03:36 -0800 (PST)
+X-Forwarded-Encrypted: i=2;
+ AJvYcCXlp5OOkVtTf/2iLX0dck/qCSBsSKdcMjats6RxKTKMgkACt20/4bsHR97L+XEAuECmTlXMeH03pQwQ@gmail.com
+X-Google-Smtp-Source: 
+ AGHT+IE8F7jyBoyTb+d7MGQiBSxV4X6tqeVr2usELo0VtSL4Wp6Dqz98D3omC3isUVfqF1Y6XBtT
+X-Received: by 2002:a05:6000:4025:b0:38a:36a5:ff81 with SMTP id
+ ffacd0b85a97d-38bf59e254bmr41733860f8f.40.1738033415835;
+        Mon, 27 Jan 2025 19:03:35 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1738033415; cv=none;
+        d=google.com; s=arc-20240605;
+        b=gvdu/lCJHVOLHJYt05CAEDX2tOvro5+HzPS64VEOP9Z2AFTutkcH+2uwd6DbuiIZOD
+         YhRpDPuNaMupQVwA2WBcB4CM/7WbGZuhIdrBBDuidXnC1uhcsWpB4fClQckhKMOyQENi
+         8KYVLULiHIWVRjA7XCzn7GRwsPO2ND52pn6voFl86EP9Z34JDTpFZKF/EXzFhWOwWLCh
+         8VNzaC0o31kZ2ToMuBZrYNesmXjyG0kJG3dsJQdRDy4c8AcbUDOpv6bQErQBY1O9h5Oe
+         tIsalzwX8zdrLLZl5XeZUuhm40Ii8DsKpny4Wb/3eNRcjyu6R4kRjs9l6KkDyt0Jb4SD
+         YbxQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605;
+        h=message-id:list-unsubscribe-post:list-unsubscribe:reply-to
+         :feedback-id:to:from:subject:mime-version:date:sender:dkim-signature
+         :delivered-to;
+        bh=8K4Oxqm/PrMjrMSveDxn7iVyYWX6hN7k8qW7whAQQ6s=;
+        fh=PtvM+3MFXUjY4IoQonFu3/PZGaDPHwj8XoabnUc3IG8=;
+        b=Ve8yhE8C4k5RMd+2mEU0t9YUH52IkayzumsUQ1csGABR4pXSS4S+vvGd+sF9z4umku
+         ZzEqwkDUMGY+AJsrTKb0d5/e8zkp57UjyzD7UbOsPcIAH4BH4TQCbzuGKGAEWEjjoPdE
+         /pzjJbLlkXW9KrtLZB2gSJ4Yh4lvyRQZCHFtjGE867KFi7YCRbZTN3TFxSIsl+qfgYYp
+         soyQ2KFT2S0hKX1S4zwjIrBS5P0PDQx07w4qVvueudpArQN8rbBMoAgIxrFX0wrLga2Z
+         ttlv6oEyz08y4AEKd7u54rwncJOtatsyZkpqF+RZV/C8ciuQvtcHMZPOxsmM5HubN/i0
+         yCDw==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@mail.gitlab.com header.s=krs header.b=NDoGQmqn;
+       spf=softfail (google.com: domain of transitioning
+ bounce+efabed.b0ce90-simon.renauld=digitalunicorn.fr@mail.gitlab.com does not
+ designate 46.105.34.162 as permitted sender)
+ smtp.mailfrom="bounce+efabed.b0ce90-simon.renauld=digitalunicorn.fr@mail.gitlab.com";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=gitlab.com
+Return-Path: 
+ <bounce+efabed.b0ce90-simon.renauld=digitalunicorn.fr@mail.gitlab.com>
+Received: from 13.mo558.mail-out.ovh.net (13.mo558.mail-out.ovh.net.
+ [46.105.34.162])
+        by mx.google.com with ESMTPS id
+ ffacd0b85a97d-38c2a1730b7si6891464f8f.96.2025.01.27.19.03.35
+        for <sn.renauld@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Jan 2025 19:03:35 -0800 (PST)
+Received-SPF: softfail (google.com: domain of transitioning
+ bounce+efabed.b0ce90-simon.renauld=digitalunicorn.fr@mail.gitlab.com does not
+ designate 46.105.34.162 as permitted sender) client-ip=46.105.34.162;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@mail.gitlab.com header.s=krs header.b=NDoGQmqn;
+       spf=softfail (google.com: domain of transitioning
+ bounce+efabed.b0ce90-simon.renauld=digitalunicorn.fr@mail.gitlab.com does not
+ designate 46.105.34.162 as permitted sender)
+ smtp.mailfrom="bounce+efabed.b0ce90-simon.renauld=digitalunicorn.fr@mail.gitlab.com";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=gitlab.com
+Received: from mx1.ovh.net (unknown [10.110.168.209])
+	by mo558.mail-out.ovh.net (Postfix) with SMTP id 4YhqqW4P5Hz1CKM
+	for <sn.renauld@gmail.com>; Tue, 28 Jan 2025 03:03:35 +0000 (UTC)
+Received: from localhost (HELO queueout) (127.0.0.1)
+	by localhost with SMTP; 28 Jan 2025 05:03:35 +0200
+Delivered-To: digitalunicorn.fr-simon.renauld@digitalunicorn.fr
+Received: from localhost (HELO queue) (127.0.0.1)
+	by localhost with SMTP; 28 Jan 2025 05:03:35 +0200
+Received: from unknown (HELO output43.mail.ovh.net) (192.168.13.133)
+  by 192.168.9.5 with AES256-GCM-SHA384 encrypted SMTP;
+ 28 Jan 2025 05:03:35 +0200
+Received: from vr20.mail.ovh.net (unknown [10.101.8.20])
+	by out43.mail.ovh.net (Postfix) with ESMTP id 4YhqqW0tMhzZPGbrj
+	for <simon.renauld@digitalunicorn.fr>; Tue, 28 Jan 2025 03:03:35 +0000 (UTC)
+Received: from in70.mail.ovh.net (unknown [10.101.4.70])
+	by vr20.mail.ovh.net (Postfix) with ESMTP id 4YhqqV6KzFz4fbBGQ
+	for <simon.renauld@digitalunicorn.fr>; Tue, 28 Jan 2025 03:03:34 +0000 (UTC)
+Received: from m240-144.mailgun.net (m240-144.mailgun.net [159.112.240.144])
+	by in70.mail.ovh.net (Postfix) with ESMTPS id 4YhqqV2YXZz28f3f
+	for <simon.renauld@digitalunicorn.fr>; Tue, 28 Jan 2025 03:03:34 +0000 (UTC)
+Authentication-Results: in70.mail.ovh.net;
+    dkim=pass (1024-bit rsa key sha256) header.d=mail.gitlab.com
+ header.i=@mail.gitlab.com header.b=NDoGQmqn header.a=rsa-sha256 header.s=krs;
+    dmarc=pass policy.published-domain-policy=reject
+ policy.applied-disposition=none policy.evaluated-disposition=none
+ (p=reject,d=none,d.eval=none) policy.policy-from=p
+ header.from=mail.gitlab.com;
+    spf=pass
+ smtp.mailfrom="bounce+efabed.b0ce90-simon.renauld=digitalunicorn.fr@mail.gitlab.com"
+ smtp.helo=m240-144.mailgun.net
+Received-SPF: pass
+    (mail.gitlab.com: Sender is authorized to use
+ 'bounce+efabed.b0ce90-simon.renauld=digitalunicorn.fr@mail.gitlab.com' in
+ 'mfrom' identity (mechanism 'include:mailgun.org' matched))
+    receiver=in70.mail.ovh.net;
+    identity=mailfrom;
+    envelope-from="bounce+efabed.b0ce90-simon.renauld=digitalunicorn.fr@mail.gitlab.com";
+    helo=m240-144.mailgun.net;
+    client-ip=159.112.240.144
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mail.gitlab.com;
+ q=dns/txt; s=krs; t=1738033406; x=1738040606;
+ h=Message-Id: X-Feedback-ID: List-Unsubscribe-Post: List-Unsubscribe:
+ Reply-To: To: To: From: From: Subject: Subject: Content-Type: Mime-Version:
+ Date: Sender: Sender;
+ bh=8K4Oxqm/PrMjrMSveDxn7iVyYWX6hN7k8qW7whAQQ6s=;
+ b=NDoGQmqnIEHPl21AaIykHywHPEjII/8zo2BI7XIOH2Btsr11CdymUiHljyptpfhG6oQctOLWjFiA9s+iXbRmDmjSOiNJcHtpyyECVhveKAG0hnInX1snx+XzyRp8BvX1WPMUeQbCKFTbLRBm4ZwzK80zdDhxsng2277ncbhiito=
+X-Mailgun-Sending-Ip: 159.112.240.144
+X-Mailgun-Sending-Ip-Pool-Name: gitlab_mktg
+X-Mailgun-Sending-Ip-Pool: 640a79b5aa05270a6c0d3956
+X-Mailgun-Sid: 
+ WyJiOWVjNiIsInNpbW9uLnJlbmF1bGRAZGlnaXRhbHVuaWNvcm4uZnIiLCJiMGNlOTAiXQ==
+Received: by 40660968263b with HTTP id 679848fec5e76384491e3484;
+ Tue, 28 Jan 2025
+ 03:03:26 GMT
+Sender: team@mail.gitlab.com
+Date: Tue, 28 Jan 2025 03:03:26 +0000
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="bfa9f0e9a20ccce95945048e5e2729f9235fbd5b79ba977108574a36780f"
+Subject: =?UTF-8?q?Approval_required:_your_team=E2=80=99s_merge_requests?=
+From: GitLab <team@mail.gitlab.com>
+To: simon.renauld@digitalunicorn.fr
+Feedback-ID: 14820191:11267775:79074:iterable
+Reply-To: team@gitlab.com
+List-Unsubscribe: 
+ <https://links.gitlab.com/s/u/YREhrsAcKGv_A5ufMhce2u6HrMGuodFMRO6dPvH1SMB9_dElC1JLgOrNgWsSYlI8PrHPwxn6fL3D9w9Be4NahfOlhpTxaCoEXkRQRN4Um8sfM2PAcjy2QjltP_wioVCUT7NezSLtp8ppALFXfhBx91_Qj9uKZa5in3xflT0AawvEFrV9jsSf_qqolkh2Uy8cmpEfcko/72ghlKjBgxa4h6XkoeG2iIBbqD7eS3wR/5>,<mailto:unsubscribe+11267775+14820191@unsubscribe.iterable.com>
+X-Message-ID: 0248e9eadb85426abe23529a80f7ec65
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+X-Campaign-ID: 11267775
+X-Feedback-ID: 14820191:11267775:79074:iterable
+X-Mailgun-Variables: {"metadata":
+ "{\"messageId\":\"0248e9eadb85426abe23529a80f7ec65\",\"templateId\":14820191,\"projectId\":18598,\"campaignId\":11267775}"}
+Message-Id: <20250128030326.ddba5e924eb5a39e@mail.gitlab.com>
+X-OVH-Remote: 159.112.240.144 (m240-144.mailgun.net)
+X-Ovh-Tracer-Id: 5261893215459775395
+X-VR-SPAMSTATE: MCE
+X-VR-SPAMSCORE: 17
+X-VR-SPAMCAUSE: 
+ gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgudegleegucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucdnofetkffnkffpifculddujedmnecujfgurhepshffgggtuffhvfhrjffksegrtderredttdejnecuhfhrohhmpefiihhtnfgrsgcuoehtvggrmhesmhgrihhlrdhgihhtlhgrsgdrtghomheqnecuggftrfgrthhtvghrnhepkeduvdejtdeggfetkeekieelffdufeefgeetudegjeduffffgfevfeejffekveeknecuffhomhgrihhnpehgihhtlhgrsgdrtghomhenucfkphepudehledrudduvddrvdegtddrudeggeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduheelrdduuddvrddvgedtrddugeegpdhhvghlohepmhdvgedtqddugeegrdhmrghilhhguhhnrdhnvghtpdhmrghilhhfrhhomhepsghouhhntggvodgvfhgrsggvugdrsgdttggvledtqdhsihhmohhnrdhrvghnrghulhgupeguihhgihhtrghluhhnihgtohhrnhdrfhhrsehmrghilhdrghhithhlrggsrdgtohhmpdhnsggprhgtphhtthhopedupdhrtghpthhtohepshhimhhonhdrrhgvnhgruhhlugesughighhithgrlhhunhhitghorhhnrdhfrhdpoffvtefjohhsthepvhhrvddtmgdpughkihhmpehprghsshgmpdhsphhfpehprghsshgmpdhrvghvkffrpehmvdegtddqudeggedrmhgrihhlghhunhdrnhgvth
+ gmpdhgvghokffrpegfuf
+X-Ovh-Spam-Status: OK
+X-Ovh-Spam-Reason: vr: OK; dkim: disabled; spf: disabled
+X-Ovh-Message-Type: MCE
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 17
+X-VR-SPAMCAUSE: 
+ gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgudegleegucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucdnofetkffnkffpifculddujedmnecujfgurhepshffgggtuffhvfhrjffksegrtderredttdejnecuhfhrohhmpefiihhtnfgrsgcuoehtvggrmhesmhgrihhlrdhgihhtlhgrsgdrtghomheqnecuggftrfgrthhtvghrnhepkeduvdejtdeggfetkeekieelffdufeefgeetudegjeduffffgfevfeejffekveeknecuffhomhgrihhnpehgihhtlhgrsgdrtghomhenucfkphepuddvjedrtddrtddruddpudehledrudduvddrvdegtddrudeggeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepsghouhhntggvodgvfhgrsggvugdrsgdttggvledtqdhsihhmohhnrdhrvghnrghulhgupeguihhgihhtrghluhhnihgtohhrnhdrfhhrsehmrghilhdrghhithhlrggsrdgtohhmpdhnsggprhgtphhtthhopedupdhrtghpthhtohepshhnrdhrvghnrghulhgusehgmhgrihhlrdgtohhmpdfovfetjfhoshhtpehmohehheekmgdpmhhouggvpehsmhhtphhouhht
+
+--bfa9f0e9a20ccce95945048e5e2729f9235fbd5b79ba977108574a36780f
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+
+Simplify code reviews
+You make the rules, your team approves
+Explore approval rules: <[[https://docs.gitlab.com/ee/user/project/members/=
+index.html]]>
+
+Required approval rules help reduce security risk while keeping the best ey=
+es on code changes. Approvals are the easiest way to simplify code reviews =
+and set up your team for success.
+Explore approval rules <[[https://docs.gitlab.com/ee/user/project/merge_req=
+uests/approvals/rules]]>
+
+Make your own rules:
+
+Define code owners for files or repository path <[[https://docs.gitlab.com/=
+ee/user/project/code_owners.html]]>
+
+Add an approval rule for merge requests (MRs)<[[https://docs.gitlab.com/ee/=
+user/project/merge_requests/approvals/rules.html]]>
+
+Set up required approvals  for MRs <[[https://docs.gitlab.com/ee/user/proje=
+ct/merge_requests/approvals/#required-approvals]]>
+
+Go to GitLab <[[https://gitlab.com/users/sign_in/?]]>
+
+GitLab is better together
+Invite your teammates today!
+Transform your project into a contribution machine with issues and epics. S=
+hare ideas, solve problems, and plan work together.  Send invites > <[[http=
+s://docs.gitlab.com/ee/user/project/members/index.html]]>
+
+This email was sent to simon.renauld@digitalunicorn.fr. Please visit the Gi=
+tLab email subscription <https://links.gitlab.com/s/eh/1sx99oiK7K2nglJkuYmg=
+I-bPCdn5g_1je5MPsrKtYrJg0QNwG-fV7HpfOXE1IVrazqq9-qeWMO04NeH1Gw092ZUx05-_t5q=
+PBH5CPSvF91es4ADUEvFoYfvt3uEeBnL5UIHuE2F9cRlM0mHiGDvKbVhGtf_VWITGhqZDY_mvPU=
+wBVWx5XFmGNKcbmJ_yoIwflgKJpj7uCOp7Ph2Pndw00Dk0X0uL5bwmPFrfHanWadjnu7qvdJZOX=
+zOEEjyWr1NPbKjOEpkcc_qzCxON4DEX/CBnoSOjYo0wAI-ScJCKQMAyq7FM1UM1o/5> portal =
+to update your preferences. If you no longer wish to receive marketing emai=
+ls from us, you may=C2=A0unsubscribe=C2=A0<https://page.gitlab.com/Unsubscr=
+ibePage.html> at any time.=20
+
+--bfa9f0e9a20ccce95945048e5e2729f9235fbd5b79ba977108574a36780f
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=ascii
+
+<!DOCTYPE html><html xmlns=3D"http://www.w3.org/1999/xhtml" lang=3D"en"><he=
+ad> <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8=
+"> <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=
+=3D1"> <link href=3D"https://fonts.googleapis.com/css?family=3DInter:300,40=
+0,500,600" rel=3D"stylesheet" type=3D"text/css"> <!--[if mso]><meta http-eq=
+uiv=3D"X-UA-Compatible" content=3D"IE=3Dedge"/><![endif]--> <style type=3D"=
+text/css">@import url(https://fonts.googleapis.com/css?family=3DInter:300,4=
+00,500,600);</style> <style type=3D"text/css">body,table,td,a{-webkit-text-=
+size-adjust:100%;-ms-text-size-adjust:100%}table,td{mso-table-lspace:0;mso-=
+table-rspace:0}img{-ms-interpolation-mode:bicubic}img{border:0;height:auto;=
+line-height:100%;outline:0;text-decoration:none}table{border-collapse:colla=
+pse!important}body{height:100%!important;margin:0!important;padding:0!impor=
+tant;width:100%!important;background-color:#fff;color:#424242}a{color:#6b4f=
+bb;text-decoration:underline}.footernav{display:inline!important}.backgroun=
+d{background-image:linear-gradient(#fc6d26,#fff)}#Headline p{margin:0!impor=
+tant}#Subheadline p{margin:0!important}#headerbuttontext p{margin:0!importa=
+nt}#buttontextleft p{margin:0!important}#buttontextright p{margin:0!importa=
+nt}#buttontextbottom p{margin:0!important}#centerbuttontext1 p{margin:0!imp=
+ortant}#speakerimgleftname p{margin:0!important}#speakerimgleftjobtitle p{m=
+argin:0!important}#speakerimgrightname p{margin:0!important}#speakerimgrigh=
+tjobtitle p{margin:0!important}#speakerimgleftcompany p{margin:0!important}=
+#speakerimgrightcompany p{margin:0!important}</style> <style type=3D"text/c=
+ss">a[x-apple-data-detectors]{color:inherit!important;text-decoration:none!=
+important;font-size:inherit!important;font-family:inherit!important;font-we=
+ight:inherit!important;line-height:inherit!important}</style> <!--[if gte m=
+so 9]><xml> <o:OfficeDocumentSettings> <o:AllowPNG/> <o:PixelsPerInch>96</o=
+:PixelsPerInch> </o:OfficeDocumentSettings> </xml><![endif]--> <!--[if (mso=
+)|(mso 16)]><style type=3D"text/css">body,table,td,a,span{font-family:Arial=
+,Helvetica,sans-serif!important}</style><![endif]--> <style type=3D"text/cs=
+s">@media only screen and (max-width:595px){.wrapper{width:100%!important;m=
+argin:0 auto!important;padding:0!important}p,{font-size:18px!important;line=
+-height:26px!important}.stack{width:100%!important}.stack-mobile-padding{wi=
+dth:100%!important;margin-top:20px!important}.callout{padding-bottom:20px!i=
+mportant}.redbutton{text-align:center}}@media only screen and (max-width:48=
+0px){u~div{width:100vw!important}div&gt;u~div{width:100%!important}}</style=
+> </head> <body width=3D"100%" id=3D"body" style=3D"-webkit-text-size-adjus=
+t: 100%; -ms-text-size-adjust: 100%; background-color: #ffffff; color: #424=
+242; height: 100% !important; margin: 0 !important; padding: 0 !important; =
+width: 100% !important;"><span style=3D"color:transparent;visibility:hidden=
+;display:none;opacity:0;height:0;width:0;font-size:0;">Elevate your GitLab =
+trial with approval rules and more.</span><img src=3D"https://links.gitlab.=
+com/s/eo/oWE2hBLgwAEIt7HWBsi02rc7kRNpyp0n8k7u1JrKzOUJL-2keYdv5VeoRimgc5wUlU=
+Gjx1ZcFKxr7UA9_qV-brIMA5uBCXw_wFM3Zs-t12UIghOFkQEDMvl5fEZC2r3Y12fypA25c1AQr=
+CEsT3NuUOc-ppS9W-lvUG8oIXi6dwGpacQezsSQTTxe18OvhR0eLzArXHjz4Y9VlPMydwaQMNI0=
+Fbg/T9LfGYUVz6Mow2RCR_ODjZpKwF9oqEAn/5" style=3D"border:0;width:1px;height:=
+1px;border-width:0px!important;display:none!important;line-height:0!importa=
+nt;" width=3D"1" height=3D"1"/> <table border=3D"0" cellpadding=3D"0" cells=
+pacing=3D"0" role=3D"presentation" width=3D"100%" style=3D"-webkit-text-siz=
+e-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-tabl=
+e-rspace: 0pt; border-collapse: collapse !important;"> <tbody> <tr> <td ali=
+gn=3D"center" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust=
+: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0px;"> <tabl=
+e border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"wrapper" role=
+=3D"presentation" width=3D"600" style=3D"-webkit-text-size-adjust: 100%; -m=
+s-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; bor=
+der-collapse: collapse !important;"> <tbody> <tr> <td style=3D"-webkit-text=
+-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-=
+table-rspace: 0pt; padding: 0px;"><!--div--> <table border=3D"0" cellpaddin=
+g=3D"0" cellspacing=3D"0" class=3D"mktoContainer" id=3D"templatecontainer" =
+role=3D"presentation" width=3D"100%" style=3D"-webkit-text-size-adjust: 100=
+%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt=
+; border-collapse: collapse !important;"> <tbody> <tr class=3D"mktoModule" =
+id=3D"logoHeader" style=3D"height: 80.2656px;"> <td align=3D"left" bgcolor=
+=3D"#ffffff" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust:=
+ 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0px; backgrou=
+nd-image: linear-gradient(rgb(255, 255, 255), rgb(255, 255, 255));"><a href=
+=3D"https://links.gitlab.com/s/c/U7HyBRDK8AHmyebTIxO32r_YXMrNfqimGLYpuSfC5q=
+XbyPL-1i1KlGteePcjk1vQxo4KjeMJLqGtaaxDo0RJZHC6jLTmQuIxnUX_g1QWtUlPOGvPq0zrh=
+OQLsjhdaR4SgsX24wj9T8Akf41DyzlgHuCPN501HMRThd02YFm-bR3iXB5DG9hmVBWTXvJCs6sK=
+2p2-Kn3DFwhwiNZctvZNw1pMctqa5lp0we3SLPO1YnzEmHAgokNZHH7Oxdi8aMoDmMeC6IULzJN=
+fxOoZd1AUGiyk0SVwoZAfYJkkAJLxGaFRCs3199TspgmtIB5QirhwFO4C7yu0VmwBbSG5dYjC_B=
+VC-Di9G89x3RfN62dtAQPCUMAnrcqRU649QZj7gt1MKudN_2zpac0YwVQMWH3BbwFzJKUpqr1W6=
+Hz1FIClVmiuU3LDDSaDkmILPmDO_rY_r5kZ8kJnE9R3vRr79UwNLUy_9D0Awg/TnHSqwkAW8haC=
+rRgiLo83Z9m03IjxglW/5" rel=3D"noopener" target=3D"_blank" title=3D"GitLab" =
+style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; color:=
+ #6b4fbb; text-decoration: underline;"> <img alt=3D"go to about.gitlab.com"=
+ src=3D"https://about.gitlab.com/images/press/logo/png/gitlab-logo-gray-rgb=
+=2Epng" width=3D"200" style=3D"-ms-interp=
+olation-mode: bicubic; border: 0; he=
+ight: auto; line-height: 100%; outline: none; text-decoration: none;"></a><=
+/td> </tr> <tr class=3D"mktoModule" id=3D"bodytext"> <td style=3D"-webkit-t=
+ext-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; m=
+so-table-rspace: 0pt; padding: 10px 20px; font-family: 'Inter', Arial, Helv=
+etica, sans-serif; color: rgb(66, 66, 66); font-size: 16px; line-height: 20=
+px; margin: 0px 0px 20px;"> <div class=3D"mktoText" id=3D"Paragraph1"> <p><=
+span style=3D"font-family: 'Inter', Arial, Helvetica, sans-serif; font-size=
+: 32px; font-style: normal; font-variant-ligatures: normal; font-variant-ca=
+ps: normal; font-weight: 500; letter-spacing: normal; orphans: 2; text-alig=
+n: start; text-indent: 0px; text-transform: none; white-space: normal; wido=
+ws: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; color: rgb(23, 19=
+, 33); float: none; display: inline !important;">Simplify code reviews</spa=
+n></p> </div> <div class=3D"mktoText" id=3D"Bulletpoints"> <p style=3D"colo=
+r: #171321; font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: =
+16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps=
+: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align:=
+ start; text-indent: 0px; text-transform: none; white-space: normal; widows=
+: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thi=
+ckness: initial; text-decoration-style: initial; text-decoration-color: ini=
+tial;"><span style=3D"color: rgb(23, 19, 33); font-family: 'Inter', Arial, =
+Helvetica, sans-serif; font-size: 18px; font-style: normal; font-variant-li=
+gatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacin=
+g: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform:=
+ none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stro=
+ke-width: 0px; float: none; display: inline !important;">You make the rules=
+, your team approves</span></p> <p style=3D"color: #171321; font-family: 'I=
+nter', Arial, Helvetica, sans-serif; font-size: 16px; font-style: normal; f=
+ont-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400;=
+ letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; t=
+ext-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -we=
+bkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decor=
+ation-style: initial; text-decoration-color: initial;"><a href=3D"https://l=
+inks.gitlab.com/s/c/2EIDKA3hkP_PFHVkM-6GmCKl27CsGFBvY8SIXKzNgIsgHQIRXlkpe71=
+KrpJnMDhc5I2YMPx20ST4KuyYQHJPz1gZ9B463VSpLXt2AyjJQCAI7XwBMQdorMo-qnVr530BJW=
+_sIbVBzedJWXDehdXITrfp6UhxqTbHAha3JJqjs9_YPuJNGqUTrWdPhCsO-TKUVFF4BYMrG9XVO=
+cd6vGGTs1dwex8GSdt_PMXuUNYGVKbV8RbN_HEaOLRaLhCFppbb73loO6VWndvW3eilQKK7o6qC=
+rNOaccBWIlNDmn_GEilzxsh7Jdz0Rjjb-U_HrSpeCWSghER9Ny1OEZTCZVsYJlRZcPpN-TCfJcL=
+GcyRcix8IB0MZoC6IRx1u1Xn_bvO64euYXYDtxg8s_OSe1G63-FNMFZ5fyFNxg9OkOgbuvxZ5Yq=
+lKgmbto47K4SzM7sKqPNOrbyUY0ry80ceBGwS6LJgQszbG0dOt3Iu2ucjHBElAUZYJ3QUlialEe=
+ehzPI8miWbsvmRzOeUiacpg7omfjUw8Yg/AY7wSWUfdAZBEqVL-4myQ_tGszue2dTh/5" rel=
+=3D"noopener" target=3D"_blank" title=3D"Explore approvals" style=3D"-webki=
+t-text-size-adjust: 100%; -ms-text-size-adjust: 100%; color: #6b4fbb; text-=
+decoration: underline;"><img alt=3D"Approvals widget" height=3D"230" src=3D=
+"https://library.iterable.com/3033/18598/1dddf54c1cd74379a1192fd0a2289bd3-m=
+r_approvals_widget_16_0.png" width=3D"500" style=3D"-ms-interpolation-mode:=
+ bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-d=
+ecoration: none;"></a></p> <p style=3D"color: #171321; font-family: 'Inter'=
+, Arial, Helvetica, sans-serif; font-size: 16px; font-style: normal; font-v=
+ariant-ligatures: normal; font-variant-caps: normal; font-weight: 400; lett=
+er-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-t=
+ransform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-=
+text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration=
+-style: initial; text-decoration-color: initial;"><span style=3D"color: #17=
+1321;">Required approval rules help reduce security risk while keeping the =
+best eyes on code changes.&nbsp;<strong><a href=3D"https://links.gitlab.com=
+/s/c/l_F1ljwu1LMICnWahLJ0tOI0sNL_3vQkrR4Xln8b8twX2qv1ANGAhO7iVwzcvoUY1m6ISw=
+Yzhvv0lQGOZDcFscsoGpVZreuWaH3_IiK-DxZz__arMDv53-53S_rrcD0xL-J-4tsdFpgPYsOot=
+ZNvXOP7EmY2dGRFjzXepDDSuGr6mg3hbqLWYsGcrf0r_cJANExuWLRhppyzs4pUZ4Q0vHZZ8sdA=
+9tmEFANu_jHQnhz1PUpJDD5lOWS5_Iq7FWsqyaVrtiPjKDbiWnKGmGnnv8-hUItDsGTFiwIF3DC=
+87B6TgPw-ZlIuAnZD2DZpSqaMQnYmsyQA1jjBSt4oj5ZHjN1CR-izSOC2KtDU-DT4xPg8yFb_HA=
+ZoqJ79giRWBqoIKhhDzs54h3bR953r4nQAijpPTroPsLh3s-OvV3VvxvpvKsGwT8JQit5gXIJvY=
+DDpqccZwfmMRPWDzFILxnsAEKAj0sH33FnIZorbJeLHS4keJ4TR8nIoT305K5PDGYX-InZ2S7n6=
+mDH5M_mpI19DNPYkNw/0tpNVei5W9tQ83mAaeUoMqBpsHsXZOvm/5" rel=3D"noopener" sty=
+le=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; text-size=
+-adjust: 100%; color: #7759c2; text-decoration: none;" target=3D"_blank">Ap=
+provals</a></strong>&nbsp;are the easiest way to simplify code reviews and =
+set up your team for success.</span></p> </div> </td> </tr> <tr class=3D"mk=
+toModule" id=3D"onebuttonsection" style=3D"height: 42.5px;"> <td align=3D"l=
+eft" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; m=
+so-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 10px 20px 20px; font-=
+family: 'Inter', helvetica, arial, sans-serif; height: 42.5px;" height=3D"4=
+2.5"> <div class=3D"mktoText" id=3D"centerbuttontext1"> <p style=3D"margin:=
+ 0px !important;"><a href=3D"https://links.gitlab.com/s/c/ItbhvnzzvRypbxUeh=
+qB9EFof-Mjn8DNoUtn13us1U_LZ8fLrRb-mI3MpLwMni0wGpQp7JW5UbZB6mkGv-psI7CQBq3QS=
+HA8iCx2YHFcG6sZs0einOUl7Jk2ZCJrr2OvIQVa90QdbVNb-wM4nHa799ylSB0bNM4PJ4IDj8Eg=
+pPh_-GPybTAzS7kn7m1bvAeRigA2iXxb_VKAZXkBlw-_lM0iWW2nbOZs83aAovnOyzapwAkjSD-=
+tq6Zv9cCuKWikYyJW3aQXiq9EcAMscjlfGLqZ6nXfzJaU4rW2tr8x8fNSe0SGy2DBao_tlL3CpE=
+CE5kS02L4IEfxAPae-Qb1Bh8d-fMEOl2wPE5thGlYHZAvIpjp2TafzTuKemnxehGFfuPdiqXgal=
+j50Yl8InE1q8taBrvHmtUngLycr8TTQ8LZ-ivmylde0fbzUJmf8i-JkVMe_UUgHFMiMeryZ6v3u=
+B7fEIQEJiGeSD21WHpkCl5FM1LUjT5LSfkQs-b2oG_imY21MID8V_fz7awQPJDhNV5BMaMQ/1SA=
+aL3ZC_dZvuyuqKSWxN0Fr0tlR3yHV/5" rel=3D"noopener" style=3D"-webkit-text-siz=
+e-adjust: 100%; -ms-text-size-adjust: 100%; font-size: 18px; font-family: '=
+Inter', Arial, Helvetica, sans-serif; color: #ffffff; text-decoration: none=
+; border-radius: 5px; -webkit-border-radius: 5px; background-color: #7759c2=
+; border-top: 10px solid #7759C2; border-bottom: 10px solid #7759C2; border=
+-right: 40px solid #7759C2; border-left: 40px solid #7759C2; display: inlin=
+e-block;" target=3D"_blank">Explore approval rules</a></p> </div> </td> </t=
+r> <tr class=3D"mktoModule" id=3D"bodytext132501d1-0292-48c8-8af7-4803cfb09=
+af7"> <td style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 10=
+0%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 30px 20px 10px; =
+font-family: 'Inter', Arial, Helvetica, sans-serif; color: rgb(66, 66, 66);=
+ font-size: 16px; line-height: 20px; margin: 0px 0px 20px; height: 324.5px;=
+" height=3D"324.5"> <div class=3D"mktoText" id=3D"Paragraph130844e99-7503-4=
+597-8901-e6d3c4791b66"> <p><span style=3D"color: #171321; font-family: 'Int=
+er', Arial, Helvetica, sans-serif; font-size: 24px; font-style: normal; fon=
+t-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; l=
+etter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; tex=
+t-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webk=
+it-text-stroke-width: 0px; text-decoration-thickness: initial; text-decorat=
+ion-style: initial; text-decoration-color: initial; display: inline !import=
+ant; float: none;">Make your own rules:</span></p> </div> <div class=3D"mkt=
+oText" id=3D"Bulletpoints1ca073a0-38f9-4d1d-af1e-092b3d671a03"> <table bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"-webki=
+t-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt=
+; mso-table-rspace: 0pt; border-collapse: collapse !important;"> <tbody> <t=
+r> <td align=3D"center" style=3D"-webkit-text-size-adjust: 100%; -ms-text-s=
+ize-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"> <table bo=
+rder=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"-webkit-text-size-a=
+djust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-r=
+space: 0pt; max-width: 600px; border-collapse: collapse !important;" width=
+=3D"100%"> <tbody> <tr> <td style=3D"-webkit-text-size-adjust: 100%; -ms-te=
+xt-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: =
+21.9643%; padding-left: 30px;" width=3D"21.9643%"><a href=3D"https://links.=
+gitlab.com/s/c/F0VsKu07oRvEB0w3Iif_WVfxpkfbTUPlSvL2fDOIgSu43JcKcs5WqOBej6V5=
+fpPFTXiu_38eCCoO_nLQikuM-gfp4-lz_i8FdGvFfSQmp1O_t9UO9w2dhRNwJbrzP0H3JjNN5cF=
+IFuAS-zcjRCsXn-HuOdQhAfwmLfi_a3l6kVRKjpk7x5YldGvimpzMPq8DvZ46NZumiqUWC5ywBM=
+Vw5WB5NwyzMcSlS0cOVCPLD8f0JMRI3F7wgepi9xbgTkpntGgL5h67b8JCQir541bi66F1SkiiQ=
+FiBK_3x38UuVGMLf1t4b-qwEYlaVZcJg2w4c-LnnGLyn9q2Y41eJsFcDecnynqX4c66OOSwQQh-=
+DNvKjMj52594_R9ohDTI0LWdn1DlIBSqfaPx8MFLVG9Ewn28Rm2WfF-lQWoYDLRfkRICLQEPJTX=
+WNKkJD1bz0p48fuaw6oZ-PQzD-u9seQOmkhMQv-NVMRSOiqKmtPFxlrYKc9zoZL4c6cchEvX01J=
+zS/T_2aDmjTxjguv8e6EZXozAiRGwTQBgjP/5" rel=3D"noopener" target=3D"_blank" t=
+itle=3D"Code owners" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; color: #6b4fbb; text-decoration: underline;"><img alt=3D"Def=
+ine code owners" height=3D"80" src=3D"https://page.gitlab.com/rs/194-VVC-22=
+1/images/user-computer-teal-icon.png?version=3D0" width=3D"80" style=3D"-ms=
+-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; o=
+utline: none; text-decoration: none;"></a></td> <td style=3D"-webkit-text-s=
+ize-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-ta=
+ble-rspace: 0pt; width: 78.0357%;" width=3D"78.0357%"> <p style=3D"padding-=
+left: 15px;"><span style=3D"font-size: 18px;"></span><span style=3D"font-si=
+ze: 18px;"><a href=3D"https://links.gitlab.com/s/c/KWsXmLHFLzNHloAwqIo5VONR=
+Zsp1m9LiEVVxxR-JEdD57LIDC8diwc5s8AgBv_XXBLIADUpr_iuiOfPrDNem1C8R3A_2urOyf9W=
+mtPStY0geflOQo-jnMzhsnRakspcuV5546I5temFKWkGLnN-BD3iESAGBWTNoaajXhg9bBIDGqB=
+xLiXj0DGXDOrNM8YqNKdNBDBWq8Oi9y8pdVcP9_dDkwVZJUTtYimF8WQUlvyawPDPwkJYGXTzLZ=
+twVsnNc2qiWA-BzKVBQvnYwfSvY8VPjS3yAwt9JhATb-6WuyUMlVOkqe7-RlUutkazWqdOc8ht1=
+wT2vK4yZk5QCPtnhOvzNtyjHDyKhsT1efEYOk-K5qcDqkbG2C8Zk3KhhQTTSsDQz0xsWyMPsk7f=
+k_kx27Hyj_yWL8k_-qc0zKKJWYviYselt6SHcLeo-IhVbM3chDHjhvPDoHwjTo8hwASjdHUHkBw=
+KdQHZ0mIIDkWVlBJwMBlEbOeQDaIdMSTaQ0mSe/y5h2W1f_AFZUzYIeGoMvGS3CJNh6Pyua/5" =
+rel=3D"noopener" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adj=
+ust: 100%; text-decoration: underline; undefined: 'inter',arial,helvetica,s=
+ans-serif; font-size: 18px; text-size-adjust: 100%; color: #7759c2;" target=
+=3D"_blank" title=3D"Define code owners">Define code owners</a><span style=
+=3D"font-family: 'Inter', Arial, Helvetica, sans-serif;">&nbsp;</span><span=
+ style=3D"font-family: 'Inter', Arial, Helvetica, sans-serif; color: #17132=
+1;">for files or repository path</span></span></p> </td> </tr> <tr> <td sty=
+le=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table=
+-lspace: 0pt; mso-table-rspace: 0pt; text-align: justify; padding-top: 10px=
+; padding-left: 30px; width: 21.9643%;" width=3D"21.9643%" align=3D"justify=
+"><a href=3D"https://links.gitlab.com/s/c/k3OwwrXmeufbiK1EvKVHXKyD5tUqYBO58=
+ZSdTltJoqIHj67TLY43k0CuINWhIpxXYpnf7maYDHdCbxSSuRX9cpFX1EtTew8wM_oO-5Lp_Xa-=
+vsprUdF9ql_etGlSwqCNPMKRbWFL9Hu5gDnHCd5gbXNGCt_E2sb01d0VLX3hP5ncCj1EsRbZX_W=
+02XVF7KQcD0KU38_dkJPB_ap7-e3nh6uS3m455ssM0jt7PCaP7_AqkXRuNIocH-n6GxGjxA9f1I=
+BLahEPYuR7Xnl-NL1vxcWhwFvfFxR8OrHFzgck0jLj5NGnoKheKx20-ASIlnFCnCSZenOZ81fz7=
+D6epeZ2ZzmY2N4YaS9ms4h3phGljQBMh1xwzF0epZ6hVDftCoXEynFV0at7IegrmzExN6w_GvYl=
+9B7vfZCmExZIk7axXhQzO0gALIYgBcPVJva59SIy17FTXvTdUbxFq9BsctZAOZzzegUf6Uztupn=
+j--vwQqiLU6TZCHFw30MPZcbHLRl7kuCKJvwkaMyukVceULWH80xD5uw0__DSxm9-WPRNPiOIPd=
+hLmJgucNOECVJT/q2yzqq3eGmZ6bT3-HZb9P8pflmZT-Fc3/5" rel=3D"noopener" target=
+=3D"_blank" title=3D"Summarize discussions" style=3D"-webkit-text-size-adju=
+st: 100%; -ms-text-size-adjust: 100%; color: #6b4fbb; text-decoration: unde=
+rline;"><img alt=3D"Summarize discussions" height=3D"80" src=3D"https://pag=
+e.gitlab.com/rs/194-VVC-221/images/AI icon - light purple.png?version=3D0" =
+style=3D"-ms-interpolation-mode: bicubic; border: 0; height: auto; line-hei=
+ght: 100%; outline: none; text-decoration: none; float: left; display: bloc=
+k; margin-left: auto; margin-right: auto;" width=3D"80"></a></td> <td style=
+=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-l=
+space: 0pt; mso-table-rspace: 0pt; width: 78.0357%;" width=3D"78.0357%"> <p=
+ style=3D"padding-left: 15px; line-height:24px;"><span style=3D"font-size: =
+18px;"><a href=3D"https://links.gitlab.com/s/c/oNHhMqvuGxe3MA-B68xTZ-J4Im2C=
+lSj_AagQ5f3KcOQgIRWvxEVwpkKPp-kTP_pYeF6kr8W786i7fQah_euANQgy4e2e0gkgQ1masty=
+8TVc4npi_nvdMZ3IuLmtzJAaRK39sNjmp01K_KwTKc8DYAbSo7_L2c8NBZUAaxWXTlTEJYemmyK=
+q0JkjSzxYjhoXjgleTcnfbEzbCwU56nPpD0J-t0KLlYlhKRo_BjL8mkc52ocxWyaSgEVp3Oke5z=
+U7WAKS97hgaQLuGMnerhqQFSTatPVShvAQGlghEPeSR0w26L0xspPB2KYh8aUoRStfRabmaU6CW=
+qbytfNwGeUDZSvnKw6YUdQRBMhkrNcqxmZVC0vm-fUt7WDqiUV6VPYL1fUJ_JwUEPjn6ElK1TNb=
+hROEzd2rHy372pEHCP7O9TyO3eXauFSvybDDMl7BlTXvNCtgifG-9ndAdy5_21Y_x5lZBBsK8rV=
+fOb8w_tnjIMFF_I7CCnfQCIO3ShC0SlQ5ukULY5Hxn8B0eLmQ7rCljtU9nGfdRFebod_WfcmUrk=
+vSFqLtBQxIGP0Caun91/EdAIIA2NHVvA5TH2fy4zaM8Rs_D-Pf6w/5" rel=3D"noopener" st=
+yle=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; text-dec=
+oration: underline; font-family: 'Inter', Arial, Helvetica, sans-serif; fon=
+t-size: 18px; text-size-adjust: 100%; color: #7759c2;" target=3D"_blank" ti=
+tle=3D"Add an approval rule">Summarize discussions</a><span style=3D"font-f=
+amily: 'Inter', Arial, Helvetica, sans-serif;">&nbsp;</span><span style=3D"=
+font-family: 'Inter', Arial, Helvetica, sans-serif; color: #171321;">to get=
+ everyone up to speed on lengthy conversations</span></span></p> </td> </tr=
+> <tr> <td style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 1=
+00%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 21.9643%; padding=
+-top: 10px; padding-left: 30px;" width=3D"21.9643%"><span style=3D"font-siz=
+e: 14px;"><a href=3D"https://links.gitlab.com/s/c/iWouNd1HBiIjJuOHtGXy8MiV-=
+ykhXytamZd2xoWjVRQdGdIjtdKz4ScHZenpL5CXkaKwNwin2jzEvxPHzJFtMsZYnMzDB81Cvocs=
+XhBpLiB2LqccKVFw3WBps-w-C_RDqx3TD98giDanNC03U_4atbHt7Q71gRj0jN5vepJpSBQmHQv=
+XXDvx1TgW5-z_T2_KsFjbZWHdr_XEmGYLLi_rlbce97eT_4ZPiKD9HiQnpTgZBbaMfH4zMaMESV=
+-Q5ANL4UEOKsVtTSXi3eAy8LjSx-5RtmgWzwdszbRIBrXGXuA3GgL85g8JFKlz1jtBE2oZPF1P-=
+ocMwPaDf21OFCm7eTgsupGw4kMOF9MRu91MLr8pwYE2PJkboOT7mUArHEtJJeuJftCZXsoH3GiN=
+JUMapnpQQgpQ9IuSSuMaJJgnxk1sBj7YNcAOqN1OmS9jEgH_As2Uef2pFij1qaD072mP7lpN1hx=
+18iDQcVsVTwXXxgVIsuI-9RUnswFJJQ79h-m2n76jq8JvxDebHaqTAkX4N4V0g_HtQyn4hggseW=
+nO_oCv/QYd1lHj6ATrdEl25PrSqvEMymrjcUJ51/5" rel=3D"noopener" target=3D"_blan=
+k" title=3D"Set up rules for MRs" style=3D"-webkit-text-size-adjust: 100%; =
+-ms-text-size-adjust: 100%; color: #6b4fbb; text-decoration: underline;"><i=
+mg alt=3D"Setup required rules for MRs" height=3D"80" src=3D"https://page.g=
+itlab.com/rs/194-VVC-221/images/cog-in-padlock-icon-orange.png?version=3D0"=
+ width=3D"80" style=3D"-ms-interpolation-mode: bicubic; border: 0; height: =
+auto; line-height: 100%; outline: none; text-decoration: none;"></a></span>=
+</td> <td style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 10=
+0%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 78.0357%;" width=
+=3D"78.0357%"> <p style=3D"padding-top: 10px; padding-left: 10px; line-heig=
+ht:24px;"><a href=3D"https://links.gitlab.com/s/c/6d8PXtvqcIdpqZV5hltUJYFt6=
+XBpVMo61uEw7mDIvsxwBEsukQj0cmXdpmqi4P9VZ2j0Kk2vKeYk8fDudhnrA_NeZyxw3XI5Mto6=
+pL1RcsCmhDrGMi3NNzXJU5UbRZ3WLSfZoqocYAnO9SrXy0D_Jf8eQyiL32HUfymo63TztXs3V2j=
+V4hsFh8-IzSmgbKDF-RSpksU_wxnh9OHXzgyLEuluLBHPc8qP37OVk-xOODsbtNaAOAchsjZLk8=
+dgMbBFR_YnXuI-grnPG9WeGTcw6c0yOveNuIICIpB1VHfgtT6Jm3Moa8sBgC2P4daMvkymnTM2n=
+Wi1u8yLglQWUQtYTnUMp-ClBb0A-iDTNtOp_6DMC159H2cQKoZpM41yCYmos-vmaDsfrz41ppxz=
+hkhl6UZDYyQwDKvUcNlMk1_AooWMXJgNqV-6FjmnQJuWRmuFGkb1SOoQLwGDMAftqc3wmA54-YC=
+uVE4UiLsnEQyqiaWTnvyZPhyjUdd8_seJtC-6rf-mlibHBP_-H0G5LLJQGFQZo4aM_UgndiU3wC=
+fWHbBb/d6C3SgQjaRPxIZvPp6XHgCX_T_ZhBui0/5" rel=3D"noopener" style=3D"-webki=
+t-text-size-adjust: 100%; -ms-text-size-adjust: 100%; text-decoration: unde=
+rline; font-family: 'Inter', Arial, Helvetica, sans-serif; font-size: 18px;=
+ text-size-adjust: 100%; color: #7759c2; line-height: 24px;" target=3D"_bla=
+nk" title=3D"Set up required approvals">Set up required approvals</a><span =
+style=3D"color: #171321;"><span style=3D"font-family: 'Inter', Arial, Helve=
+tica, sans-serif;">&nbsp;</span><span style=3D"font-family: 'Inter', Arial,=
+ Helvetica, sans-serif; font-size: 18px;">for Merge Requests (MRs) and effi=
+ciently communicate the impact of your changes with <a href=3D"https://link=
+s.gitlab.com/s/c/9gwVqiwSTZ_TP21OQGmW6AF3LIx2k22mZ-VuPPT2iNqcS2DXS1-scIR8h-=
+R6mtK_sE_b3YwdPV3LgyT0HvUx0xjeTxqjhurkeyxkvBjtuZk0orC6KxQc09nn1Aqi-WMvsYI6L=
+XY3KVbJdsQCeD3KsjrijMakvJw_yPrbLO-8CUPLM4bKkitWjZKTeISiQFGj0vQ7SNOY-Od3XMn8=
+sWkYMlECeD6YVA8uDY9nU932BdBeSpzUe12IOEId7fOkPzu9v-izYirdzz3NXN7yaYjEsDaekTm=
+Qyz6kRkfi6sLkLRFexGptlFGr72LammlQyz__Xfa64z3vF0_vIHYt3mB8UceVLwGpPk8UMI6SCX=
+7Q0xV7C9TqYS-qPIxht3La-10Cus_R7X4ZmOMXSO9pp05Jxb2LmJRSPPlb2o9ctTNjaPWaHiuYa=
+wS0yCyzBxN_Vdza-xgFlKvkLNHtDuwKcDYeWm64xgLRn3YUDELnLfrTh2GLY1SOViaxhjS4MW3n=
+SU4l0-Yz7Gqx1RF4MbIO5shAVQAoBYaFsppUr3b2p_5XO_O0CuEoVVOO_xYkT7YXKozSaj7ShvG=
+OzCVbJ-ejlOmy6pkdqxou-7KQ_-YqrbwI8NOW/TlWQne0e3hGY4Frong_S8pp6g12CaMvr/5" r=
+el=3D"noopener" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adju=
+st: 100%; text-decoration: underline; font-family: 'Inter', Arial, Helvetic=
+a, sans-serif; font-size: 18px; text-size-adjust: 100%; color: #7759c2;" ta=
+rget=3D"_blank" title=3D"MR summaries">MR summaries</a></span></span><br><s=
+pan style=3D"font-size: 18px;"></span></p> </td> </tr> <tr> <td style=3D"-w=
+ebkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace:=
+ 0pt; mso-table-rspace: 0pt; text-align: justify; padding-top: 10px; paddin=
+g-left: 30px; width: 21.9643%;" width=3D"21.9643%" align=3D"justify"><a hre=
+f=3D"https://links.gitlab.com/s/c/Xq9KP5vRCLateRbXgiFiXX4a805wtb7ZEIXdp6o9j=
+Q_M6yCjqAL_H0ddm_TDcNmZYWv_qkcP1iT6wPucHGmEjmfmRxi573wDpl-Zt8Z_xIuYRA-ZytQs=
+TYTTIEqIlbRqTWNCshAfp8zAYkNhn-3Vq3xSpfEf52y5BQyf7AcCRvkitjiUq3KpC4fP9RQc7fP=
+puN5hr9m6XoQ1nxoH_AC1aaHUceFzelwbm6ldbGan_daba1foR9UDgqX_XS79bwsajDOp9WdDgh=
+lb6t9l_TbZeDQfUQ3cy-D-Il7Q5hbXj0STh4bzyS0WukZlWgAiztw8bt_8sOwKxBoLAZv2YG9xB=
+YGg2tQTEucIjylK8Dl1noG-Xq_rH8AXvYunVgtsF0rVNLFBT9bDgSyRcaOt4GhQXX3UVzbKgqjv=
+_XD-SLogQujqu5pCVdKl0Bszo9n42FXKtH6TOWif3_LtskR3wplUx_youubkQlHRxZTAFf6Cgtx=
+ZA8MKB-NhU5mpWKiplh_jd4em_Os151lsiuxGtQfgApx7KkSgpiYrMML1fuOmfk4fscq5Pla8q_=
+GZv903IrXxCDNryJtJ/WPSLr7kInkveui5o1WRwBH8n9q1wGxQs/5" rel=3D"noopener" tar=
+get=3D"_blank" title=3D"Summarize a code review" style=3D"-webkit-text-size=
+-adjust: 100%; -ms-text-size-adjust: 100%; color: #6b4fbb; text-decoration:=
+ underline;"><img alt=3D"Summarize a code review" height=3D"80" src=3D"http=
+s://page.gitlab.com/rs/194-VVC-221/images/AI code reviews - aqua.png?versio=
+n=3D0" style=3D"-ms-interpolation-mode: bicubic; border: 0; height: auto; l=
+ine-height: 100%; outline: none; text-decoration: none; float: left; displa=
+y: block; margin-left: auto; margin-right: auto;" width=3D"80"></a></td> <t=
+d style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-=
+table-lspace: 0pt; mso-table-rspace: 0pt; width: 78.0357%;" width=3D"78.035=
+7%"> <p style=3D"padding-left: 15px; line-height:24px;"><span style=3D"font=
+-size: 18px;"><a href=3D"https://links.gitlab.com/s/c/BDXRoLa1oR1BY3lzvdC7S=
+OcSniq0jwfwnU7Ujk3QtFQOiR27a4oORdVsjfbtLh8O0hoEUR-BdLyk1QTQ4mxa0G0rpzg38OKy=
+ylzNGhjUP5PgYC6IUwcZhDNgJTRzff-yzvPaiU1XsqNevCoV-F4vsFX8hb3izeJCQqdTjyUJ5As=
+DgkT0xsXKdg5jb98PfrJ9tG8AY8mGMS4IC5zGeRpAZ-0Y4RM5q5tDkDvZYpasEu4YE8yVnUx9ci=
+AXot3dUBdCJQKx5pXe4578MOYcIf6yi1l2lhW36gKvLi018nrwO6y9CDTRPPc_DfdcW3QX_jY2k=
+S_2IGUn5hcj6VQXC2WNKV7USGVKo5R_8LkOHfxnpbqXSUAWSdHbXfSVO9mdbB24N095LX1CFybP=
+MuLF7yaaDgO4EdTAQGtOjt0ajXCkYd_eoCltn6Yp8yL46k9DYQvsVSPUUCLkBWUdN-ckusJhr-i=
+y8Ww9rsr1Byj0xiDuIiGv9trJ_T26QPbP9p7upwcDALae4WXkpOkVQTigKPeTPjolR2tYtWtbPQ=
+Cim2RV4eIIII3uXJwSCmL2--bheqHcoEKF7h_K/Qvud2T28jvh1cSStNPF-iFf2zn4NQrIV/5" =
+rel=3D"noopener" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adj=
+ust: 100%; text-decoration: underline; font-family: 'Inter', Arial, Helveti=
+ca, sans-serif; font-size: 18px; text-size-adjust: 100%; color: #7759c2;" t=
+arget=3D"_blank" title=3D"Streamline code hand-offs">Streamline code hand-o=
+ffs</a><span style=3D"font-family: 'Inter', Arial, Helvetica, sans-serif;">=
+&nbsp;</span><span style=3D"font-family: 'Inter', Arial, Helvetica, sans-se=
+rif; color: #171321;">between authors and reviewers and help reviewers effi=
+ciently understand suggestions</span></span></p> </td> </tr> </tbody> </tab=
+le> </td> </tr> </tbody> </table> </div> </td> </tr> <tr class=3D"mktoModul=
+e" id=3D"twobuttonsection" style=3D"height: 76px;"> <td bgcolor=3D"#ffffff"=
+ style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-t=
+able-lspace: 0pt; mso-table-rspace: 0pt; padding: 5px 0px 25px; height: 76p=
+x;" valign=3D"middle" height=3D"76"><!-- TWO COLUMNS --> <table border=3D"0=
+" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" width=3D"100%" =
+style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-ta=
+ble-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse !importan=
+t;"> <tbody> <tr> <td style=3D"-webkit-text-size-adjust: 100%; -ms-text-siz=
+e-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"><!-- LEFT CO=
+LUMN--> <table align=3D"left" bgcolor=3D"#ffffff" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" class=3D"stack" role=3D"presentation" width=3D"48%=
+" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-=
+table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse !import=
+ant;"> <tbody> <tr> <td style=3D"-webkit-text-size-adjust: 100%; -ms-text-s=
+ize-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"> <table bo=
+rder=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" width=
+=3D"100%" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 10=
+0%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse=
+ !important;"> <tbody> <tr> <td align=3D"center" style=3D"-webkit-text-size=
+-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table=
+-rspace: 0pt; padding: 10px 25px; font-family: 'Inter', Arial, Helvetica, s=
+ans-serif;"> <div class=3D"mktoText" id=3D"buttontextleft"> <p style=3D"mar=
+gin: 0px !important;"><a href=3D"https://links.gitlab.com/s/c/0r0hU_RrAygZ4=
+jFus5Vr4yYr19lsPag43D2QAGCker08bhIyJQdTmU1h0oJ_tqNewobwReY6p_BNE9d6i6PZvpXe=
+g3Q3z3yyji1e8vJG1aHkpG5F2PVpsF-g5eIc-in_i5gb7ZVKMKLwuLt8C_wCXGyMDyvANOw_uE2=
+CINt-l7YLNDP9JhN7Fgy3L0EuOk4WQ54x2Jlr_nQ9ZDrZ9aLwb0kP5pOZ_QdXx_QH-9iBj7sUNw=
+XTR-e6Tqe_I26YlbYwGfZXLCY7jLLriLHPNc71hnM8NQY64wPpY-usk8G2f7CLmzQmo9PLMc01v=
+g8pQbTxlGQeVvwwYE-OKcboSvJDLWuEiPYL0_bcJKbWQyE6MaCz-wp0dWhhJOpjah52_iEnf-6t=
+iQJhjBUHC4k6I0oFLiYYVsG_XGX0IjuloiLc7JSD0QSfN25PtxrBjFgslRnFjpvEvgh4_Xd-nSX=
+Xcwh6pT0rz1-8cptLap_L7OtmH0_q6rS_fZd4SIwRPoQZwgw6KQPJVsfdRSSJxZ3KbfJt5S2eqf=
+eAaIz4/__gzjH7CfcPiWsacpt0sB0GIASeY0JoM/5" rel=3D"noopener" style=3D"-webki=
+t-text-size-adjust: 100%; -ms-text-size-adjust: 100%; background: #ffffff; =
+border: 2px solid #6e49cb; font-family: 'Inter', Arial, Helvetica, sans-ser=
+if; font-size: 22px; line-height: 32px; text-align: center; text-decoration=
+: none; display: block; -webkit-border-radius: 5px; border-radius: 5px; pad=
+ding: 10px; color: #6e49cb;" target=3D"_blank">Go to GitLab</a></p> </div> =
+</td> </tr> </tbody> </table> </td> </tr> </tbody> </table> <!--/LEFT COLUM=
+N --> <!-- RIGHT COLUMN --> <table align=3D"right" bgcolor=3D"#ffffff" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"stack-mobile-padding"=
+ role=3D"presentation" width=3D"48%" style=3D"-webkit-text-size-adjust: 100=
+%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt=
+; border-collapse: collapse !important;"> <tbody> <tr> <td style=3D"-webkit=
+-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt;=
+ mso-table-rspace: 0pt;"> <table border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" width=3D"100%" style=3D"-webkit-text-size-adju=
+st: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspa=
+ce: 0pt; border-collapse: collapse !important;"> <tbody> <tr> <td align=3D"=
+center" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%=
+; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background: #ffffff; text-a=
+lign: center; padding: 10px 15px; font-family: 'Inter', Arial, Helvetica, s=
+ans-serif;"> <div class=3D"mktoText" id=3D"buttontextright"></div> </td> </=
+tr> </tbody> </table> </td> </tr> </tbody> </table> <!--/RIGHT COLUMN --></=
+td> </tr> </tbody> </table> </td> </tr> <tr class=3D"mktoModule" id=3D"grey=
+boxsectionf8cf9169-14fb-429b-b410-98461582f426" style=3D"background-color: =
+#f6f3fe; border: none; height: 194.5px;"> <td style=3D"-webkit-text-size-ad=
+just: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rs=
+pace: 0pt; color: rgb(23, 19, 33); padding: 20px 30px; height: 194.5px;" he=
+ight=3D"194.5"> <div class=3D"mktoText" id=3D"orangetext1521a3ebf-efbd-4167=
+-895f-ea07b759a981"> <p><span style=3D"font-size: 16px; line-height: 26px; =
+text-align: center; color: rgb(23, 19, 33); text-transform: uppercase; font=
+-weight: 600; font-family: 'Inter', Arial, Helvetica, sans-serif;">Gitlab i=
+s better together</span></p> <div id=3D"gtx-trans" style=3D"position: absol=
+ute; left: -103px; top: -9px;"></div> </div> <div class=3D"mktoText" id=3D"=
+grayboxheadlined09ddf82-1ad0-4512-83a3-250f62ffe8e6"> <p><span style=3D"col=
+or: rgb(23, 19, 33); font-family: 'Inter', helvetica, arial, sans-serif; fo=
+nt-size: 24px; font-style: normal; font-variant-ligatures: normal; font-var=
+iant-caps: normal; font-weight: 600; letter-spacing: normal; orphans: 2; te=
+xt-align: center; text-indent: 0px; text-transform: none; white-space: norm=
+al; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; backgroun=
+d-color: #f6f3fe; text-decoration-thickness: initial; text-decoration-style=
+: initial; text-decoration-color: initial; float: none; display: inline !im=
+portant;">Invite your teammates today!</span></p> <div id=3D"gtx-trans" sty=
+le=3D"position: absolute; left: 357px; top: 46px;"></div> </div> <div class=
+=3D"mktoText" id=3D"grayboxparagraphf8d61233-2707-4f51-a3b2-81fed5b63291"> =
+<p><span style=3D"font-size: 16px; text-align: left; font-family: 'Inter', =
+helvetica, arial, sans-serif;"><span style=3D"color: #171321;">Transform yo=
+ur project into a contribution machine with issues and epics. Share ideas, =
+solve problems, and plan work together.</span> &nbsp;<a href=3D"https://lin=
+ks.gitlab.com/s/c/ik_Ccy9eMu7YkIpfbj3vFWT2b2oix90HnMftAhpiaOMBz4hMKDk6gX5zk=
+dwk5cT-sZFcUl6Np5R0IdMaXOvKXc_zL9m3nfh_OK1aPZfztK7aJs-zmsRF0IiWxZ2vUab4_bZa=
+u8ya69xemKH_JwJY1J_FXyUsDhyL71GX8hJrxHiHg0Zt2UoXZqheE-AKO5GZ6ZelaVLK-u70hZv=
+YHg_hVe8ZGoyemHlkg3PQFUNP6U1fVZAY1VSdWgYLkhgshQ2vMuXgMkJyzq8pBHR-h-f7sJV7gy=
+V08UjD4o0Cq2lHOemf2EtK6F7-Jym_qsKPRx9f7wH7WHTV6AJw3Hh2laJmn2nXy3_JMvz8USTxf=
+eSJpFWnHOHCVfoOLjqpzJkfyVUzFZ9ZHx9-qMrtBrkUQLF3HiBrHrwfSh_0gQZaYeSe9CW9Ui2J=
+iUcW8XEkwqTTVPTbv5oTkQnNKGt_bY8gb89_NZqeqe7tGqS7av-JoX0fcCF2BVmr-9sLhWUGNdO=
+qk_DQP1Wmp_5S8g/ucxp65HTqy8gnBa-coKXCHhei6MEOt4E/5" rel=3D"noopener" style=
+=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; text-decora=
+tion: underline; text-size-adjust: 100%; color: #7759c2;" target=3D"_blank"=
+ title=3D"Invite your team">Send invites &gt;</a></span></p> </div> <p></p>=
+ </td> </tr> <tr class=3D"mktoModule" id=3D"footer1" style=3D"background-co=
+lor: rgb(245, 244, 242); height: 133.5px;"> <td align=3D"center" style=3D"-=
+webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace=
+: 0pt; mso-table-rspace: 0pt; padding: 10px 20px; height: 133.5px;" height=
+=3D"133.5"><a href=3D"https://links.gitlab.com/s/c/uarM7OpHm6WuIXCywdL0_5s8=
+5uAyAv_5RJQ9-SVZ5D-BiTSReYZW-kD_qeWlWE0zE-VDqMiZ-bZ5hLgqPFu2T6uixcNLN61otII=
+tzuSLZaaOwqfwfrL6zCs8rVqemWfdoVB9tlJh3e_7daEJb9YDh0MikXsXkf2l7b9laRIXXRVSv7=
+sFOql4MBUot4XOdGLF_SyVICgU0KT-QDSrG9a7n0SirP7At4cOpoeNMQEHciPo27kqU_qQfmDHz=
+Ovfd1-rO9I0X_MuNZQNt81OHQ/JpvN2Kt4cPqpirNHAo13FulJcbWQ5J-3/5" style=3D"-web=
+kit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; color: #6b4fbb; tex=
+t-decoration: underline;"><img alt=3D"go to about.gitlab.com" src=3D"https:=
+//about.gitlab.com/images/press/logo/png/gitlab-icon-rgb.png" width=3D"130"=
+ style=3D"-ms-interpolation-mode: bicubic; border: 0; height: auto; line-he=
+ight: 100%; outline: none; text-decoration: none;"></a></td> </tr> <tr clas=
+s=3D"mktoModule" id=3D"footer2" style=3D"background-color: rgb(245, 244, 24=
+2); height: 0px;"> <td align=3D"center" style=3D"-webkit-text-size-adjust: =
+100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: =
+0pt; padding: 0px; height: 0px;" height=3D"0"></td> </tr> <tr class=3D"mkto=
+Module" id=3D"footer3" style=3D"background-color: rgb(245, 244, 242); heigh=
+t: 26px;"> <td align=3D"center" style=3D"-webkit-text-size-adjust: 100%; -m=
+s-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; pad=
+ding: 0px 10px; font-family: 'Inter', helvetica, arial, sans-serif; height:=
+ 26px;" height=3D"26"><span class=3D"footernav" style=3D"color: #6e49cb; fo=
+nt-size: 16px; line-height: 26px; font-family: 'Inter', helvetica, arial, s=
+ans-serif; display: inline !important;"> <a href=3D"https://links.gitlab.co=
+m/s/vb/D4be0xaGAQtlPyXPvRCEwPJi6ESgj43R-5svR7TRB-9em25GREZ1nX22S2AiZ9u1yj6q=
+zPATbbAaBuozuwtr7C5x7uvCneEfLM12N_h_4e8mp3kc0dtBMm7NEy1yDFR9c1deKE82ZXAEc1X=
+dIqRj93_5EwpE/uReQUI7MCO-031hs5ELh1ezVRoLiFTUs/5" style=3D"-webkit-text-siz=
+e-adjust: 100%; -ms-text-size-adjust: 100%; text-decoration: underline; col=
+or: #424242; font-weight: bold;">View Web Version</a>&nbsp;&nbsp;&nbsp;|&nb=
+sp;&nbsp;&nbsp;&nbsp; <a href=3D"https://links.gitlab.com/s/c/1Q54pe8mpnhIH=
+HtyDpdE1s_mpaMZjaUu-VNHsyuHDGGADtSUXd3GkE4EuKqTVWlHMBBPYxdVojRA3-u6M1Bwe55w=
+ZALZIYZ0otcAA9VcDXWQoX9FQrgp51qwxD2fJAtNBN7qP2I4SaMR00GC6UlYYp2_OqYuBBAAopC=
+N7ga-Shyrxg55TmRnLjuamA8YH4_Xytfy-eJ5R1gqWATEU7CAz2gDWAMtLkajcTUzVh3X4NRiQ8=
+Gcy41C_sgHDUDz5u7G4bpv11gLQDs3SD56H518TtU2/Cr4tzdOcmL9zbYxjRFpPvCFhRM86UIOY=
+/5" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; te=
+xt-decoration: underline; color: #6e49cb;">Blog</a> &nbsp;&nbsp;&nbsp;|&nbs=
+p;&nbsp;&nbsp;&nbsp;<a href=3D"https://links.gitlab.com/s/c/1TDrbStKkxPcoKY=
+9TJT_nbiqQjg2i6IMUUX0ksnxMrmxiwnjODubr1ka0_uSpRPcAqaXC99ElM_FNephFLuc93-Ptl=
+stCYjI2aOk80fjI6VaFWK4P0mr-8cSHsOQgMPcUXMyTiK8i6YYShj-cK1EBiJsolBwC29NpAdfr=
+0cpbYXG8rB9q6H5FXQvmYdLO_Nj0pM8cURiie9JPzgt-NPnjJUxfjRiLStqhb5l_08GLyfcBu9Z=
+jA2E0wgkeVZERtzwxhoct0HL0f4TSWifyuY/4YDoLgbL3TvUsT4KUfwLJYUfxDpIPxzI/5" sty=
+le=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; text-deco=
+ration: underline; color: #6e49cb;">Twitter</a> &nbsp;&nbsp;&nbsp;|&nbsp;&n=
+bsp;&nbsp;&nbsp;<a href=3D"https://links.gitlab.com/s/c/hGzJMwF_c_h4Xub2d5V=
+6IxtRP2tjk0vlSg5FDdfX0XFyRpDaUuvhWaeL-KKE_l6hHckgJa3oL77PbVVjgD6fp7b5AfWp6p=
+UB33i52KVfEjR53SOoickIPdj3HjHLRh57Kp7RXKEi-2S4hx74VwZahZYUw_-uSdaCTKPpkqaET=
+1NCMR3uhEAdncAenVmjMtW1nZiXr-7ZY-ep55NFtXbSTnEDl-xqgixEGW8yTJ8SX2JKjstbz3xz=
+EWUPTIq4zCFNmbZNZbP1-v2c_on8D0IE0qn1u7nRgw/-Cwf64iaJM6bO-TaLstao7M5H7eNFYe6=
+/5" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; te=
+xt-decoration: underline; color: #6e49cb;">Facebook</a> &nbsp;&nbsp;&nbsp;|=
+&nbsp;&nbsp;&nbsp;&nbsp;<a href=3D"https://links.gitlab.com/s/c/52cfjBimn3x=
+f0LhNHnFQdnhicy6xqvkgk1tAp2dPcHIGbnfBkbfb31BNnC2rDlEcdwwyLYmxzIO1Bxe1VPn4ts=
+B70BCVdeeIu1Oigq6FrrBArJ4Q5uiVAQVU8-Dg6UJBDiY2v5mK6940dAvdCyr6rGYIYGqkBekDs=
+1AjQ6h4TiUNlpqKEQXKS3Wz0DEXY49FTMd7h-m7_On5Fuz56hCe7V1JN1S3j_nM6WpwFqvIFwqI=
+om5rjlsp7LI0dBpOLwC0ZZbKFRkRJpE3rlm_SVExlrNhZfhaHn4ibxb-z44iUTkEfY2lFLv42EV=
+4iaU8Lw/mvPCU52lUEHdeEKRVQeftoth27bNrq6r/5" style=3D"-webkit-text-size-adju=
+st: 100%; -ms-text-size-adjust: 100%; text-decoration: underline; color: #6=
+e49cb;">YouTube</a> </span></td> </tr> <tr class=3D"mktoModule" id=3D"foote=
+r4" style=3D"background-color: rgb(245, 244, 242); height: 26.5px;"> <td al=
+ign=3D"center" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjus=
+t: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 40px 30px 2=
+0px; font-family: 'Inter', helvetica, arial, sans-serif; height: 26.5px;" h=
+eight=3D"26.5"><span style=3D"margin: 0; font-size: 18px; line-height: 26px=
+; font-weight: bold;"> GitLab Inc.</span> <span style=3D"margin: 0; font-si=
+ze: 16px; line-height: 26px;">&nbsp;268 Bush Street, #350, San Francisco, C=
+A 94104, USA </span></td> </tr> <tr class=3D"mktoModule" id=3D"footer5" sty=
+le=3D"background-color: rgb(245, 244, 242); height: 60px;"> <td align=3D"le=
+ft" style=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; ms=
+o-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 20px 30px; height: 60p=
+x;" height=3D"60"><span class=3D"footernav" style=3D"color: #424242; font-s=
+ize: 14px; line-height: 20px; font-family: 'Inter', helvetica, arial, sans-=
+serif; display: inline !important;"> This email was sent to simon.renauld@d=
+igitalunicorn.fr. Please visit the&nbsp;<a href=3D"https://links.gitlab.com=
+/s/c/rkuWSvwW3SwvZT2ZAccx-btrr8Xknqv3AidurpJkzSCSBkwWGBBb8zT869XotVtOe2UOrl=
+ka32lFFz3qc65UB-dDTZpvORCu7fM7g5_B_Kk5bCeBxhZK1QJYqiVupSwTdt-58rHREqP3iILVT=
+G5ct2up9qkoZlGvSOYDHt_J1PNZmuhSPOoY4j6efkEt_UJaZnd_CEumUWjZr8ju22DUWkibtmcN=
+1csvsLdRsvLB7apupSABSLgWoD0pTgVJb4I0Xj6OnNJlFIzB1oMG0ENUI4DGJupwBRsu7JDtE1x=
+3p0GeSOSsib4BeQ/6Rb_8x29Veb0EuGuAXWjAEmCPTF0KvD2/5" style=3D"-webkit-text-s=
+ize-adjust: 100%; -ms-text-size-adjust: 100%; text-decoration: underline; c=
+olor: #6e49cb !important;">GitLab email subscription portal</a> to update y=
+our preferences. If you no longer wish to receive marketing emails from us,=
+ you may&nbsp;<a href=3D"https://links.gitlab.com/s/eh/StLV5Xiu0MtbpVmbaPr-=
+-U0A6X8fovAxVdZniNYTmFhzUYHFqXsKZuWsNnsCFR9zo7869nkJVTtVfHQlWYIPmSzb0dQTkS2=
+OMMc5HUdn2BgriLzP7KQJ1FlXMDZVy1qkWbY8bm2Y0bAcXfH0QUnRJeko_1xjN-Aus-6srXfRwW=
+aMwoc0gpRzCSoYYHTBkhRzOObcvoIuucWaT6rqax-Jh9-LJlEPTP3yz_1fFT2FFXVdljNuwSaYn=
+BaDA4T9SczYdF_wWnjrEkYZFlm65zRD/UK3m_vn1WY2wEnInP6ntE-FlgHj3Y1m0/5" style=
+=3D"-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; text-decora=
+tion: underline; color: #6e49cb !important;">unsubscribe</a>&nbsp;at any ti=
+me. </span></td> </tr> </tbody> </table> <!--div--></td> </tr> </tbody> </t=
+able> </td> </tr> </tbody> </table> </body></html>
+--bfa9f0e9a20ccce95945048e5e2729f9235fbd5b79ba977108574a36780f--
+

@@ -1,0 +1,28 @@
+[Unit]
+Description=EPIC Job Search Continuous Daemon - Multi-Source Job Discovery & LinkedIn Automation
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=simon
+WorkingDirectory=/home/simon/Learning-Management-System-Academy/job-search-toolkit
+ExecStart=/usr/bin/python3 /home/simon/Learning-Management-System-Academy/job-search-toolkit/daemon_continuous.py
+Restart=always
+RestartSec=30
+StandardOutput=append:/home/simon/Learning-Management-System-Academy/job-search-toolkit/outputs/logs/daemon_service.log
+StandardError=append:/home/simon/Learning-Management-System-Academy/job-search-toolkit/outputs/logs/daemon_service_error.log
+
+# Resource limits
+MemoryMax=2G
+CPUQuota=50%
+
+# Security
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/home/simon/Learning-Management-System-Academy/job-search-toolkit/data /home/simon/Learning-Management-System-Academy/job-search-toolkit/outputs
+
+[Install]
+WantedBy=multi-user.target

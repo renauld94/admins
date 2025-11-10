@@ -1,0 +1,897 @@
+X-GM-THRID: 1799029384443390865
+X-Gmail-Labels: Inbox,Opened,Category Promotions
+Delivered-To: sn.renauld@gmail.com
+Received: by 2002:aa6:db81:0:b0:290:1b1c:b546 with SMTP id d1csp2307266lkd;
+        Tue, 14 May 2024 05:01:58 -0700 (PDT)
+X-Google-Smtp-Source: 
+ AGHT+IEogF8tSGSe6t8GhRoROhAV1HKjrz2LuRHbFzcQ8INtA9XP0Ei0/I/Sq6sxi1p7LzNboR+I
+X-Received: by 2002:a05:600c:4754:b0:41f:fca0:8c04 with SMTP id
+ 5b1f17b1804b1-41ffca08dcemr85167675e9.11.1715688118578;
+        Tue, 14 May 2024 05:01:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1715688118; cv=none;
+        d=google.com; s=arc-20160816;
+        b=xheS8RL9h0u8szyYqHW0VmQh8ys4IX+pPVUEuuPBScF+MRtzCPjwaiUEazHvTbr43c
+         MXUQ4ZupZ+ETLU11CJlaHenxoQ1BHJwsSMblEY1oIkGq3k5gN4FlkCZBDkvQwTG1IEZQ
+         tUXLAf0onZwm5usJ1ZODSwiKss+qgyPkQWXRFdv6vMG9qqLkOs8GQNss2jTMGYpw73xQ
+         J3Zf22m7dEPfhH6MkcBWbxIhvSIyfhLE0Q60hmh5xO7bqgPkFq7vN2Go1Azuv3jNjzWN
+         Ka6VWeG+6N4tMlLpvWsBtpwwJPor5bXfQojBSsiRJWWL7/mCLZMEcPoeYV7/eiwcykHf
+         aGZQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20160816;
+        h=to:list-unsubscribe:list-unsubscribe-post:reply-to:subject
+         :message-id:mime-version:from:date:dkim-signature:dkim-signature;
+        bh=O0crl5TV1vfFjWijQ7z+ZhmQGG/ltJmlZ3oghe2Z8r8=;
+        fh=UdbUcDkJKvqffcPeSfMTJ3BaP9WLNp68ZQroZAlxuH8=;
+        b=ihDmhR/seVEX5qTFcbIUEP4Z3FFWaRJPOU/eqXmYn6H7w9hgapUnNaCDgDcDz2jUMH
+         wVZirE1eS+B/V+5Nkydngoy6t/JeYsC+AhlAKgNpSRq3Wc00xb57VLSB1OIWHTKEqw1K
+         VVavet8m1Qm0YCqNZaC9OFHxrI8QxpRUtPvQw9zq+5T8BINJ1LPGmWQsKxMJpDKCIiyU
+         y+vgz/VA+pFCLr22kl/BSzZFNdQx7O2sixoorvK6iEEINPkVcQWnjFRjXgtY3+tqD6Px
+         ETPL6fMwPUFJ6NBUwT+0+APh2tdXWHVm+e/SgxQL/EWEgqOEdP+MAmzNX/XvZCJYnWud
+         8hhQ==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@mail.anthropic.com header.s=s1 header.b=pq7uFw6t;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=jkM1T7X9;
+       spf=pass (google.com: domain of
+ bounces+31859940-b458-sn.renauld=gmail.com@em9672.mail.anthropic.com
+ designates 149.72.89.246 as permitted sender)
+ smtp.mailfrom="bounces+31859940-b458-sn.renauld=gmail.com@em9672.mail.anthropic.com";
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE)
+ header.from=anthropic.com
+Return-Path: 
+ <bounces+31859940-b458-sn.renauld=gmail.com@em9672.mail.anthropic.com>
+Received: from o1.ptr3998.mail.anthropic.com (o1.ptr3998.mail.anthropic.com.
+ [149.72.89.246])
+        by mx.google.com with ESMTPS id
+ 5b1f17b1804b1-41fd4d1f804si67400525e9.191.2024.05.14.05.01.57
+        for <sn.renauld@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 14 May 2024 05:01:58 -0700 (PDT)
+Received-SPF: pass (google.com: domain of
+ bounces+31859940-b458-sn.renauld=gmail.com@em9672.mail.anthropic.com
+ designates 149.72.89.246 as permitted sender) client-ip=149.72.89.246;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@mail.anthropic.com header.s=s1 header.b=pq7uFw6t;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=jkM1T7X9;
+       spf=pass (google.com: domain of
+ bounces+31859940-b458-sn.renauld=gmail.com@em9672.mail.anthropic.com
+ designates 149.72.89.246 as permitted sender)
+ smtp.mailfrom="bounces+31859940-b458-sn.renauld=gmail.com@em9672.mail.anthropic.com";
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE)
+ header.from=anthropic.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mail.anthropic.com;
+	h=content-type:from:mime-version:subject:reply-to:list-unsubscribe-post:
+	list-unsubscribe:x-feedback-id:to:cc:content-type:from:subject:to;
+	s=s1; bh=O0crl5TV1vfFjWijQ7z+ZhmQGG/ltJmlZ3oghe2Z8r8=;
+	b=pq7uFw6tJlE/epJSYb91guY9pZrwbUwQRB6t0AMfGMmhTv+adR0rn190SMIF+kG2syU3
+	wzdiTfXS1s3+BeYzlatjPAKRpKWomPXkhgniR1E7N+P8N/+Tsm140XK3E78h47YhAXc8xo
+	iBICI8rtCrx4pcRTAH9SOiui4wlIZBS02ImAiMOes1TBXzsYNiyv6yyZvve+GaHCfuOaIB
+	Gj/wiXWRXtl4pZBplWvlanqWisHBxeHVTDRdRzgNuOUrvhNDjtTKO6fHC9mguj8pWCNl5d
+	GWM8M5kv8wn9Sb3KJcbf9Tdjm3nvzeKZeAH30EQ3la5W5bkBz4ewDGHUMI/v1q8w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendgrid.info;
+	h=content-type:from:mime-version:subject:reply-to:list-unsubscribe-post:
+	list-unsubscribe:x-feedback-id:to:cc:content-type:from:subject:to;
+	s=smtpapi; bh=O0crl5TV1vfFjWijQ7z+ZhmQGG/ltJmlZ3oghe2Z8r8=;
+	b=jkM1T7X9S02cXkMKr+1sRS6sDdK4C5WkBtNFgTSn0gSPYWROShboh1ti459AcIOUftoG
+	SPzXlUMouTZJ9cExrdSb6BZCDe8+yf2kO+shp5Y2Aggp/kJlmS7jnzfymm2xViZsD98YSl
+	+l+oKtjbtc+/7mmN0PylDKUZ8wLJ7Oo6I=
+Received: by filterdrecv-7899cc968f-mvbl5 with SMTP id
+ filterdrecv-7899cc968f-mvbl5-1-66435295-DC
+        2024-05-14 12:01:25.558107571 +0000 UTC m=+1257645.582527451
+Received: from MzE4NTk5NDA (unknown)
+	by geopod-ismtpd-22 (SG) with HTTP
+	id u6cNTul7TMays3wAtiBRjQ
+	Tue, 14 May 2024 12:01:25.396 +0000 (UTC)
+Content-Type: multipart/alternative;
+ boundary=768016a425f05bc7cc76bf66183c001d5318f9cff2a3a69fcd23b0b23d3e
+Date: Tue, 14 May 2024 12:01:27 +0000 (UTC)
+From: Anthropic Support <support+terms@mail.anthropic.com>
+Mime-Version: 1.0
+Message-ID: <u6cNTul7TMays3wAtiBRjQ@geopod-ismtpd-22>
+Subject: Updates to our policies and terms of service
+Reply-To: support+terms@mail.anthropic.com
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+List-Unsubscribe: 
+ =?us-ascii?Q?=3Cmailto=3Aunsubscribe=40em9672=2Email=2Eanthropic=2Ecom=3Fsubject=3Dhttps=3A=2F=2F?=
+ =?us-ascii?Q?url8792=2Email=2Eanthropic=2Ecom=2Fwf=2Funsubscri?=
+ =?us-ascii?Q?be*q*upn=3DwzqEHQSn045tRvE-2FnMN1Hk3pIyiQ?=
+ =?us-ascii?Q?CrrmqbFFROZ7VJY4uGXxRTINvolxYcyAmFeBGq9?=
+ =?us-ascii?Q?XDfP4Nm1b1RUuB46PrTPp7Du6KWhbH95MVU-2FC?=
+ =?us-ascii?Q?2sEE4ihV0RvzRL71ar-2B3i4ZjkmJbkQFEPi2aA?=
+ =?us-ascii?Q?UiFvuSTGKxGW810yTjSw1fFwQ4opZNdzW88roMN?=
+ =?us-ascii?Q?dYkDw8EWLyxWJc77JKA0MAoR-2FF-2FqILXZArf?=
+ =?us-ascii?Q?V2ziusfNWYFuaLDz5rdBrePI1bPe8v3BGqYOG87?=
+ =?us-ascii?Q?fF2h85eKpv3dw-2B5HTU9uvKGjhWausXJeM3mY8?=
+ =?us-ascii?Q?HQ73ByYuVUTyleF-2Fm6JWuHD0jG0pbwdkF-2Bs?=
+ =?us-ascii?Q?lm-2BJDDgac1ufXvZHA9FfXTsbhTI8sv5hME5en?=
+ =?us-ascii?Q?pVNJ6W-2BJjo2imC2D3bBMjsTltcJEMORm2xaeQ?=
+ =?us-ascii?Q?Ha4EDx4J7i3POEGHXOaZzNRcdoryETmvKTtdCsV?=
+ =?us-ascii?Q?3Zh5BMGiVCWUIyEx3t1XbqilOMZ2cEW2KGNKEOU?=
+ =?us-ascii?Q?QnqDzyYQ9BNbveezZaNdVWSbvy9p-2B7F9Xzamp?=
+ =?us-ascii?Q?pbKHc7m0HDQ6ubLzy6zfRQAYxxkT2mGRDqj1nb2?=
+ =?us-ascii?Q?v2jwq186R3xB3WS2zPZrLQx0b7NZN815wx1zMFL?=
+ =?us-ascii?Q?C5tCdSMb1NO1Ly5up1CDOWOWG-2FVNiGfU2SsBk?=
+ =?us-ascii?Q?aPHLou91joKwMxZx755CssC0t3jU-2Fj-2BC3NP?=
+ =?us-ascii?Q?BTn1jIoQ-2B-2Fzi7R-2FsYQUlXV9PhMQ3aRxtb?=
+ =?us-ascii?Q?XpC0liknRGqJy28SbKz-2Fa0IhMe4Eabqebwz9C?=
+ =?us-ascii?Q?Lerw-2FlGnk97A-2F97KWCHBl9jLshAb2ydfxQW?=
+ =?us-ascii?Q?EdAdW1Pg67gOdTHc2iGq1F-2Fw8srziFgX0gVqC?=
+ =?us-ascii?Q?oC7p0vC8h1XQPRHKVe18nnDIDOvED5rMo2OjPVi?=
+ =?us-ascii?Q?jHfrHR-2F2H4ocHeWBZRCbtRYoMiPMA-2BvtHid?=
+ =?us-ascii?Q?ggB4q0tgXucbLzFZhyjeuOOwkL-2BnSG5JERXJM?=
+ =?us-ascii?Q?8Cdfp67Je-2F-2FcWIjgcXvBu2X1j2hD27j7oNj?=
+ =?us-ascii?Q?O48hJeakybgS1vVnDGpSrtedr5nyXLsdsAJLTY7?=
+ =?us-ascii?Q?jb5lM4FWUM3uLQbx8chM0KFZUrHrfzt3=3E=2C=3Chttp?=
+ =?us-ascii?Q?s=3A=2F=2Furl8792=2Email=2Eanthropic=2Ecom=2Flu=2Funsub?=
+ =?us-ascii?Q?scribe=3Foc=3Du001=2E=5Fp3fbfnmU08W6nAPyRv2WoPB?=
+ =?us-ascii?Q?g6OWi7jd53kT9hc3MVTvij8Mm6EF-PkHtglyFXi?=
+ =?us-ascii?Q?-k3HNVWx6QHFOrlR=5F4VdZmy0Nz4urvI9HvvpT2Z?=
+ =?us-ascii?Q?=5Fia5UMMLMKskp5j1n5It5EHGNS00j8sdhewiYBN?=
+ =?us-ascii?Q?Ubp5foF0cOPeJlgE=5Fzf36ArGzeZk-ppT7nk0DEf?=
+ =?us-ascii?Q?nLk6KhNNWDYGp6BxoQv4cKMBAtXZ2IS56oJTVx-?=
+ =?us-ascii?Q?wO2fgV9qAZ3z2W-W2eL7lJjJKyF819mO67UqIbL?=
+ =?us-ascii?Q?Un3tS1tMRpxQzVGdIseSWFj9toSty0f4w-gd5ib?=
+ =?us-ascii?Q?O8ipZp3hI1HCEVQ7OTHaseMCQTP77p34AFQDjI=5F?=
+ =?us-ascii?Q?3j6nJW8ZKKWBr4c7QtxecvnjEc=5Ffe3MKBYVhoOL?=
+ =?us-ascii?Q?VuL1nDiTGyv6RJY38v8L8D3zU0Rw6ouqcKQNY5D?=
+ =?us-ascii?Q?gYcU7WyOdxrcCbYZHLmAVvsTMAmNxRi8LCBgMiy?=
+ =?us-ascii?Q?VIOUH=5FT4njjbOcXEZzAOh3HX9uRcNDgoVGVD1Zy?=
+ =?us-ascii?Q?UmjzB4uXsnET4Pvt3KfwmUzMF-8EXUm0UnyVyv-?=
+ =?us-ascii?Q?B7Q=5FbUpakkCx9H85XZydJD0iAZC6GwBUhqKNavo?=
+ =?us-ascii?Q?A2JIe1Tp35UpU87AIafNUTvCTKGysyNxObJ008D?=
+ =?us-ascii?Q?5SZp5hvRM=5FGgZEfz-Jy1Fg5ymc1CuuzP6m06I7l?=
+ =?us-ascii?Q?xB-9LH=5F9QpvV-qP6sS=5FT5ka0dAmplMuXFvcyzNL?=
+ =?us-ascii?Q?RdA7WuJOOMNLTC6T9Vq4XeQnjLafoG7Xr389uQy?=
+ =?us-ascii?Q?k=5Fq3RDN0ZxSYd15THa40zqIByx9evX9MQ4r-7tk?=
+ =?us-ascii?Q?wrLODFw8s9z1gM1hEDgF21Ic149sGDZwkZejuiA?=
+ =?us-ascii?Q?3KPnNVtxGZaFf8zX9AOJm4yCBU2VNSVDpPuzbTc?=
+ =?us-ascii?Q?YbbrqtPbyzmVD4yDrEyA7O2Jw5RGeKfORlMhh8e?=
+ =?us-ascii?Q?XF1-Yul=5FVC3j=5FIuUw1m4osKmvLT-YN=5FpSspaoYb?=
+ =?us-ascii?Q?RwNCYJRiI3BNJ=5FhI1LB4T57FDCmZKi60FV5QDRR?=
+ =?us-ascii?Q?b7HF=5F7T8FXOYTMmZvJhRSfR460o6gFuMgFG4i33?=
+ =?us-ascii?Q?kwWnXGZaIpmD0OvG5=5FwOOBTCddSpaekUxCUwUzV?=
+ =?us-ascii?Q?9rZ4s293gtnFR6Qj1NItPYskyjybnIDqVdvbBUs?=
+ =?us-ascii?Q?fkMj=5F7I2OaEy6YWoKybKUVyYqCdXU6TKjOlTwXu?=
+ =?us-ascii?Q?ZP4IPBtzokX0OZtzmXCDSr711RKIl1kvgtA0rLK?=
+ =?us-ascii?Q?h=5FIEwdTKDAPKnqKFj5lZcrk4e9zHlw=5FsYEf7ltd?=
+ =?us-ascii?Q?t6dDNDGESJ6Z=5FdXmT3QgxjrkTlHR9VxU30mIIOl?=
+ =?us-ascii?Q?JebB60e1=5FrqjOCvuZgjbTJtLEPYcyGOzNnwGGJQ?=
+ =?us-ascii?Q?WBYNg3=5FB3AGj5c1Y-wGTThpc5EB6yJaibhiCh47?=
+ =?us-ascii?Q?=5FLPV-rL=5FHSMREy4qaKgXuvOQbY2DIItAFMhbt5H?=
+ =?us-ascii?Q?itBqnnY=5Fvp=5FOey9e-m=5F92MKPR9W2Ps7hqikSdHL?=
+ =?us-ascii?Q?8nF1esJJ5deKa=5FJ4K7L-wF0lPlYZYFLrFq3-8Vs?=
+ =?us-ascii?Q?=5F1O90s=5FJCeJaDsuo6bAHvZ5XxB6OPzQ=5FMqQwK0-?=
+ =?us-ascii?Q?Xrtj3WfzWHPTWQnk7PVJQmfc4roVPAEDlDNXDBc?=
+ =?us-ascii?Q?2AbAvxnXf-298XPUYvwH7JQTbg0Y0o=3E?=
+X-Feedback-ID: 31859940:SG
+X-SG-EID: 
+ =?us-ascii?Q?u001=2ER8FFSRQkMo5zcpY7gjGOt+iYYSDRXnRCiLHFrmLxJDBLynzxQ1Qkm4+Gy?=
+ =?us-ascii?Q?pFSHgcCv=2FXaxX=2FkdosT3Fi9IdpvRxb9BnmMCenH?=
+ =?us-ascii?Q?j0Ofiu=2FUA95PQzrcVRUVjzAoT+3jsMV7fDUzAZK?=
+ =?us-ascii?Q?mCpI=2Fj8iQBPS=2F3jV1R2cHcER6zdNkEjvNmaJVl5?=
+ =?us-ascii?Q?2+1bpGlO2ZlYs+DxFYfuM4P=2FDAizSZxe6oCrrSs?=
+ =?us-ascii?Q?G9caTDRE0mh=2FRVgqQykaQH1Lbitd55ob2zd=2F24k?=
+ =?us-ascii?Q?vGIf0Uj5NFJD3u8FcTSUz76F5Q=3D=3D?=
+X-SG-ID: 
+ =?us-ascii?Q?u001=2EXwhBPNhCejkv4+fVosb2QVfR16Qxp9CrA7PjDe5zzeI=2F0IZCBsPXtgHbA?=
+ =?us-ascii?Q?oGIj+Rs6OlRm=2FcaEsw=2FcuQFYvtovQxG2Eq1SU7B?=
+ =?us-ascii?Q?65rZKu5ZeoNq8Ti1S9MX+R5OO9Fx46CN1M4ptEy?=
+ =?us-ascii?Q?H77YL2dmdyR2VLmi+KHzHWmQaLmF0mchtMAImxZ?=
+ =?us-ascii?Q?8Swo9S1cJJmEiCgFu6aYtupnguSyylfXEso4FaA?=
+ =?us-ascii?Q?0XNvYICsnfrw9+LZctUA+yrxwOrzOZL9r8GrZXA?=
+ =?us-ascii?Q?=2FQ4NLOZs4beAJq0yzZ0AFvZGAgYt9to4yHGpa=2FO?=
+ =?us-ascii?Q?+bx2lx4VeNNgfUHUZmOHHPXyA9NHsTFbKChufAO?=
+ =?us-ascii?Q?k=2FU3WzMDTAnb5DZLJNUQDKxO2EqenIc0s69dhHH?=
+ =?us-ascii?Q?VMRXj09fnSQRvTkVD7SX68OnOoo9NPMG=2Fqd0syw?=
+ =?us-ascii?Q?cXzI+Axy=2FXE7vXVXw4ZmtHUaGAJjnFViqhPt5Va?=
+ =?us-ascii?Q?Zyoqq+HquX7N3NAiEFobXUAZV=2FLr1xPPEPVAtn1?=
+ =?us-ascii?Q?He7z6KaSo50yKExCzPfnX3cyRLmOmDQYQWg2oxt?=
+ =?us-ascii?Q?YHa0yOe3yRN1PHYgX8Q7KbPK2PojEvBVdz+zCcP?=
+ =?us-ascii?Q?Kd6iGw9kcKGT0nsCVtT9nWUnCCRONKtDeu1GF+w?=
+ =?us-ascii?Q?U9plwrj5xTa2dfWMV3HO11XN0VCJp7InWbrqxE3?=
+ =?us-ascii?Q?ylIKqHp1PiGq98sgE=2FM8o2E9G8M=2Fq6yyFZjqAsd?=
+ =?us-ascii?Q?ztL1lmyHwPxka4EQmU1nV04=2FqRP9WjTKQhNeFSx?=
+ =?us-ascii?Q?IX52pad2chp9ioAK2mfs63FUU=2FOdzvi0Y=2FzON+b?=
+ =?us-ascii?Q?am9m2ElRlFTL9aDPdBvVGt+uLaN1Ula1aCweDta?=
+ =?us-ascii?Q?7Oh5GsN=2FWmFTA=3D?=
+To: sn.renauld@gmail.com
+X-Entity-ID: u001.+hTscy7rO4MXV2fUis5gmA==
+
+--768016a425f05bc7cc76bf66183c001d5318f9cff2a3a69fcd23b0b23d3e
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0
+
+Hello,
+
+We=E2=80=99re writing to let you know about some changes to Anthropic=E2=80=
+=99s Acceptable Use Policy (now, "Usage Policy") ( https://www.anthropic.co=
+m/legal/aup ) , Consumer Terms of Service ( https://www.anthropic.com/legal=
+/consumer-terms ) , and Privacy Policy ( https://www.anthropic.com/legal/pr=
+ivacy ). At Anthropic, we periodically review our policies and terms to ens=
+ure we=E2=80=99re providing the highest level of protection and clarity for=
+ our users. As our products evolve, we also want to keep you informed about=
+ our latest updates:
+
+* Claude is now available as an iOS app ( https://apps.apple.com/app/claude=
+/id6473753684 ) via the Apple App Store so you can access Claude from anywh=
+ere, any time.
+* For businesses looking to increase productivity, our new Team plan ( http=
+s://claude.ai ) offers increased usage for members and better tools for man=
+aging users and billing.
+* And Claude.ai is now available to users in the EU.
+
+We encourage you to read the updated documents on our website, but here is =
+a summary of key changes:
+
+Usage Policy
+
+* *Policy refinements:* We=E2=80=99ve refined and restructured our policy t=
+o give more details about the individuals and organizations covered by our =
+policies.
+* *More specific risk levels:* We=E2=80=99ve broken out some specific =E2=
+=80=9Chigh-risk use cases=E2=80=9D that have additional requirements due to=
+ posing an elevated risk of harm.
+* *Disclosure requirements:* We added new disclosure requirements so that o=
+rganizations who use our tools also help their own users understand they ar=
+e interacting with an AI system.
+
+Consumer Terms of Service
+
+* *Enhanced clarity:* With some help from Claude, we simplified some terms =
+to make them easier to understand. For example, Claude helped us simplify t=
+he provision that describes what happens if you create a Claude.ai account =
+with an email domain that belongs to your employer or another organization.
+* *Update for UK consumers.* For individuals based in the United Kingdom, o=
+ur UK Consumer Terms of Service now state that the agreement is between the=
+ user and our Irish subsidiary, Anthropic Ireland, Limited, rather than Ant=
+hropic, PBC.
+
+Privacy Policy
+
+* *Data controller:* We=E2=80=99ve updated our Privacy Policy ( https://www=
+.anthropic.com/legal/privacy ) to reflect that the data controller for our =
+users in the European Economic Area (EEA), UK, and Switzerland is Anthropic=
+ Ireland, Limited.
+* *Data retention:* We=E2=80=99ve changed our default data retention ( http=
+s://support.anthropic.com/en/articles/7996866-how-long-do-you-store-persona=
+l-data ) period to 30 days.
+
+Subprocessor Updates
+
+* We=E2=80=99ve updated our list of subprocessors ( https://www.anthropic.c=
+om/subprocessors ) to include Amazon Web Services.
+
+You can review our full Usage Policy ( https://www.anthropic.com/legal/aup =
+) , Consumer Terms of Service ( https://www.anthropic.com/legal/consumer-te=
+rms ) , and Privacy Policy on our website. If you have any questions, pleas=
+e contact us here.
+
+Thanks for using Claude! We appreciate you taking the time to stay informed=
+ on these updates as we work to responsibly deploy our products more broadl=
+y.
+
+Warmly,
+The Anthropic team
+
+Note: This is a legal notice, which is why you are receiving it even if you=
+ have opted out of Anthropic marketing emails.
+
+( https://twitter.com/anthropicai ) ( https://www.linkedin.com/company/anth=
+ropicresearch/ )
+--768016a425f05bc7cc76bf66183c001d5318f9cff2a3a69fcd23b0b23d3e
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=utf-8
+Mime-Version: 1.0
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org=
+/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html data-editor-version=3D"2" class=3D"sg-campaigns" xmlns=3D"http://www.=
+w3.org/1999/xhtml">
+    <head>
+      <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf=
+-8">
+      <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scal=
+e=3D1, minimum-scale=3D1, maximum-scale=3D1">
+      <!--[if !mso]><!-->
+      <meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3DEdge">
+      <!--<![endif]-->
+      <!--[if (gte mso 9)|(IE)]>
+      <xml>
+        <o:OfficeDocumentSettings>
+          <o:AllowPNG/>
+          <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+      </xml>
+      <![endif]-->
+      <!--[if (gte mso 9)|(IE)]>
+  <style type=3D"text/css">
+    body {width: 600px;margin: 0 auto;}
+    table {border-collapse: collapse;}
+    table, td {mso-table-lspace: 0pt;mso-table-rspace: 0pt;}
+    img {-ms-interpolation-mode: bicubic;}
+  </style>
+<![endif]-->
+      <style type=3D"text/css">
+    body, p, div {
+      font-family: arial,helvetica,sans-serif;
+      font-size: 14px;
+    }
+    body {
+      color: #000000;
+    }
+    body a {
+      color: #1188E6;
+      text-decoration: none;
+    }
+    p { margin: 0; padding: 0; }
+    table.wrapper {
+      width:100% !important;
+      table-layout: fixed;
+      -webkit-font-smoothing: antialiased;
+      -webkit-text-size-adjust: 100%;
+      -moz-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+    img.max-width {
+      max-width: 100% !important;
+    }
+    .column.of-2 {
+      width: 50%;
+    }
+    .column.of-3 {
+      width: 33.333%;
+    }
+    .column.of-4 {
+      width: 25%;
+    }
+    ul ul ul ul  {
+      list-style-type: disc !important;
+    }
+    ol ol {
+      list-style-type: lower-roman !important;
+    }
+    ol ol ol {
+      list-style-type: lower-latin !important;
+    }
+    ol ol ol ol {
+      list-style-type: decimal !important;
+    }
+    @media screen and (max-width:480px) {
+      .preheader .rightColumnContent,
+      .footer .rightColumnContent {
+        text-align: left !important;
+      }
+      .preheader .rightColumnContent div,
+      .preheader .rightColumnContent span,
+      .footer .rightColumnContent div,
+      .footer .rightColumnContent span {
+        text-align: left !important;
+      }
+      .preheader .rightColumnContent,
+      .preheader .leftColumnContent {
+        font-size: 80% !important;
+        padding: 5px 0;
+      }
+      table.wrapper-mobile {
+        width: 100% !important;
+        table-layout: fixed;
+      }
+      img.max-width {
+        height: auto !important;
+        max-width: 100% !important;
+      }
+      a.bulletproof-button {
+        display: block !important;
+        width: auto !important;
+        font-size: 80%;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      .columns {
+        width: 100% !important;
+      }
+      .column {
+        display: block !important;
+        width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+      .social-icon-column {
+        display: inline-block !important;
+      }
+    }
+  </style>
+      <!--user entered Head Start--><!--End Head user entered-->
+    </head>
+    <body>
+      <center class=3D"wrapper" data-link-color=3D"#1188E6" data-body-style=
+=3D"font-size:14px; font-family:arial,helvetica,sans-serif; color:#000000; =
+background-color:#FFFFFF;">
+        <div class=3D"webkit">
+          <table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"=
+100%" class=3D"wrapper" bgcolor=3D"#FFFFFF">
+            <tr>
+              <td valign=3D"top" bgcolor=3D"#FFFFFF" width=3D"100%">
+                <table width=3D"100%" role=3D"content-container" class=3D"o=
+uter" align=3D"center" cellpadding=3D"0" cellspacing=3D"0" border=3D"0">
+                  <tr>
+                    <td width=3D"100%">
+                      <table width=3D"100%" cellpadding=3D"0" cellspacing=
+=3D"0" border=3D"0">
+                        <tr>
+                          <td>
+                            <!--[if mso]>
+    <center>
+    <table><tr><td width=3D"600">
+  <![endif]-->
+                                    <table width=3D"100%" cellpadding=3D"0"=
+ cellspacing=3D"0" border=3D"0" style=3D"width:100%; max-width:600px;" alig=
+n=3D"center">
+                                      <tr>
+                                        <td role=3D"modules-container" styl=
+e=3D"padding:0px 0px 0px 0px; color:#000000; text-align:left;" bgcolor=3D"#=
+FAFAF7" width=3D"100%" align=3D"left"><table class=3D"module preheader preh=
+eader-hide" role=3D"module" data-type=3D"preheader" border=3D"0" cellpaddin=
+g=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"display: none !important;=
+ mso-hide: all; visibility: hidden; opacity: 0; color: transparent; height:=
+ 0; width: 0;">
+    <tr>
+      <td role=3D"module-content">
+        <p></p>
+      </td>
+    </tr>
+  </table><table class=3D"wrapper" role=3D"module" data-type=3D"image" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-=
+layout: fixed;" data-muid=3D"e734375b-ce70-409d-a486-9b79407a11a7">
+    <tbody>
+      <tr>
+        <td style=3D"font-size:6px; line-height:10px; padding:0px 0px 0px 0=
+px;" valign=3D"top" align=3D"center">
+          <img class=3D"max-width" border=3D"0" style=3D"display:block; col=
+or:#000000; text-decoration:none; font-family:Helvetica, arial, sans-serif;=
+ font-size:16px; max-width:100% !important; width:100%; height:auto !import=
+ant;" width=3D"600" alt=3D"" data-proportionally-constrained=3D"true" data-=
+responsive=3D"true" src=3D"http://cdn.mcauto-images-production.sendgrid.net=
+/2c7496d350bc5243/5ce661e1-3b4e-460b-81fa-db189ff30746/1200x188.png">
+        </td>
+      </tr>
+    </tbody>
+  </table><table class=3D"module" role=3D"module" data-type=3D"text" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-la=
+yout: fixed;" data-muid=3D"014982b1-3cc2-4d78-b133-e578e909701a" data-mc-mo=
+dule-version=3D"2019-10-22">
+    <tbody>
+      <tr>
+        <td style=3D"padding:18px 40px 40px 40px; line-height:26px; text-al=
+ign:inherit;" height=3D"100%" valign=3D"top" bgcolor=3D"" role=3D"module-co=
+ntent"><div><div style=3D"font-family: inherit; text-align: inherit"><span =
+style=3D"font-family: arial, helvetica, sans-serif; font-size: 18px">Hello,=
+</span></div>
+<div style=3D"font-family: inherit; text-align: inherit"><br></div>
+<div style=3D"font-family: inherit; text-align: inherit"><span style=3D"fon=
+t-family: arial, helvetica, sans-serif; font-size: 18px">We=E2=80=99re writ=
+ing to let you know about some changes to </span><a href=3D"https://url8792=
+.mail.anthropic.com/ls/click?upn=3Du001.rFcAmKXLOm9u6wLRWHIUYb57odYuMXptiIv=
+SnUIhs1NpAd1kqKtBo2tG2Opk2OpwP1CD_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf0=
+9BwUoS9Gpbl6QX1AUICtpGgmLDb6y-2F9BoMWQdxQFG7iaQE5WYQIENYHWW99UaxK9-2BiDd6cE=
+10IzOFA51xkqBOgfCGyUWhoSDKdNVFlrlP9oP0SshJcnh-2B2sB5kmohPgAElCDa-2FNi-2F6Pp=
+aXlnxiWPC1s2xBb1fGHwZwgYcBDwo2K9nqZzlPJ84AU2ZiPn-2F-2Fsuf8sGvw5DcroGb2ETFWZ=
+g10-2FliWgZfWVoly2HWNYQw0CUVStw8Je4YPoY25Z0jHiRTquwWfTm9NCrRUWp1m10j1zat7gW=
+3X0t7Tme7kha7F4roG9mMhFmaAEmID0WRmoVff3-2Bfxqqja8ms8J51882LRfJNIT4V-2F7bH2D=
+eQmZe3Tb9TgAsQVaafAI1f9fQZ0-2FDV37I9OoOktvOmzmzx0Ng2tj37eeNLMKcy-2FaoK9ncZE=
+5IadBR3PvPJkMoL4RmrxqW4QzMWd5bCAOBCvHUgEPRIWbntoHW3ATpcfv1-2F4NjYykZfwkde8Y=
+SMcGvWO6GI3-2F-2FGtkrzSxAUeAhYErQhBI9MTzHP-2FPggwSOpEymXg-2B8cmIjz8HyGHJoUX=
+GiZtDc92Jy-2B4gcEaI05bV7FHNEqIZx3oGPAN1vJYojBt5Ebkk7AmCB9xg4Wmxfw71EkpRmopn=
+2C-2BNk2DUawbBbBdsPyU5DdsnN1ctGBsPe81lD2LTMCqpt3L3PUW8ntxnTwR-2BwZM7L7hHfbh=
+guLlankNCkylhvEahJ4yvZjS98vEeaI-2FN0IV8-2BRxPJ9Btv16vDlCJAVgBaobCR1NV-2BWSg=
+VoTtaQtUoyaoG6FTMJInxLVUAUtCNC6jOlyVfxlf8IGp1ETRhYYWXshWEc7ROhCh9X5kkhpLd5a=
+zF8jPzo2G5I-2B5gbUMgVHPULYhacMDs7YpmKhcoulcPGlvHxi7ob5QlBxYX-2FxjL-2FXz0fpv=
+jOyKxmFe9XF7Fhur-2FLe3DvKB3udFiUGMPVWvdJ1-2F4-3D"><span style=3D"font-famil=
+y: arial, helvetica, sans-serif; font-size: 18px">Anthropic=E2=80=99s Accep=
+table Use Policy (now, "Usage Policy")</span></a><span style=3D"font-family=
+: arial, helvetica, sans-serif; font-size: 18px">, </span><a href=3D"https:=
+//url8792.mail.anthropic.com/ls/click?upn=3Du001.rFcAmKXLOm9u6wLRWHIUYb57od=
+YuMXptiIvSnUIhs1MQTuLFSCI0jda1uoPkR6C06toaRv4kavuWLzT3qNf3Pg-3D-3DJfCq_rO1J=
+RqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwUoS9Gpbl6QX1AUICtpGgmLDb6y-2F9BoMWQ=
+dxQFG7iaQE5WYQIENYHWW99UaxK9-2BiDd6cE10IzOFA51xkqBOgfCGyUWhoSDKdNVFlrlP9oP0=
+SshJcnh-2B2sB5kmohPgAElCDa-2FNi-2F6PpaXlnxiWPC1s2xBb1fGHwZwgYcBDwo2K9nqZzlP=
+J84AU2ZiPn-2F-2Fsuf8sGvw5DcroGb2ETFWZg10-2FliWgZfWVoly2HWNYQw0CUVStw8Je4YPo=
+Y25Z0jHiRTquwWfTm9NCrRUWp1m10j1zat7gW3X0t7Tme7kha7F4roG9mMhFmaAEmID0WRmoVff=
+3-2Bfxqqja8ms8J51882LRfJNIT4V-2F7bH2DeQmZe3Tb9TgAsQVaafAI1f9fQZ0-2FDV37I9Oo=
+OktvOmzmzx0Ng2tj37eeNLMKcy-2FaoK9ncZE5IadBR3PvPJkMoL4RmrxqW4QzMWd5bCAOBCvHU=
+gEPRIWbntoHW3ATpcfv1-2F4NjYykZfwkde8YSMcGvWO6GI3-2F-2FGtkrzSxAUeAhYErQhBI9M=
+TzHP-2FPggwSOpEymXg-2B8cmIjz8HyGHJoUXGiZtDc92Jy-2B4gcEaI05bV7FHNEqIZx3oGPAN=
+1vJYojBt5Ebkk7AmCB9xg4Wmxfw71EkpRmopn2C-2BNk2DUawbBbBdsPyU5DdsnN1ctGBsPe81l=
+D2LTMCqpt3L3PUW8ntxnTwR-2BwZM7L7hHfbhguLlankNCkylhvEahJ4yvZjS98vEeaI-2FN0IV=
+8-2BRxPJ9Btv16vDlCJAVgBaobCR1NV-2BWSgVoTtaQtUoyaoG6FTMJInxLVUAUtCNC6jOlyZYq=
+ioMqdf-2BkI2UzP4GgPxUsjbc3v3vKJc3xCYTiQZ46g8d5b6Tmm0VVjeu42zYVVyp7cW5Bjq17d=
+Aw2Z-2B1GexlH8QpNIxrkIIwyWCoRwgw-2Fi14rD81b9ElIXVB1nTq2TcxZ6Py7O4fJToaBFYYk=
+Da8-3D"><span style=3D"font-family: arial, helvetica, sans-serif; font-size=
+: 18px">Consumer Terms of Service</span></a><span style=3D"font-family: ari=
+al, helvetica, sans-serif; font-size: 18px">, and </span><a href=3D"https:/=
+/url8792.mail.anthropic.com/ls/click?upn=3Du001.rFcAmKXLOm9u6wLRWHIUYb57odY=
+uMXptiIvSnUIhs1OeXNnA7r2WnG1nFhdZo1sfosm2LvANeU55RgTPXis-2BZg-3D-3DkUVQ_rO1=
+JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwUoS9Gpbl6QX1AUICtpGgmLDb6y-2F9BoMW=
+QdxQFG7iaQE5WYQIENYHWW99UaxK9-2BiDd6cE10IzOFA51xkqBOgfCGyUWhoSDKdNVFlrlP9oP=
+0SshJcnh-2B2sB5kmohPgAElCDa-2FNi-2F6PpaXlnxiWPC1s2xBb1fGHwZwgYcBDwo2K9nqZzl=
+PJ84AU2ZiPn-2F-2Fsuf8sGvw5DcroGb2ETFWZg10-2FliWgZfWVoly2HWNYQw0CUVStw8Je4YP=
+oY25Z0jHiRTquwWfTm9NCrRUWp1m10j1zat7gW3X0t7Tme7kha7F4roG9mMhFmaAEmID0WRmoVf=
+f3-2Bfxqqja8ms8J51882LRfJNIT4V-2F7bH2DeQmZe3Tb9TgAsQVaafAI1f9fQZ0-2FDV37I9O=
+oOktvOmzmzx0Ng2tj37eeNLMKcy-2FaoK9ncZE5IadBR3PvPJkMoL4RmrxqW4QzMWd5bCAOBCvH=
+UgEPRIWbntoHW3ATpcfv1-2F4NjYykZfwkde8YSMcGvWO6GI3-2F-2FGtkrzSxAUeAhYErQhBI9=
+MTzHP-2FPggwSOpEymXg-2B8cmIjz8HyGHJoUXGiZtDc92Jy-2B4gcEaI05bV7FHNEqIZx3oGPA=
+N1vJYojBt5Ebkk7AmCB9xg4Wmxfw71EkpRmopn2C-2BNk2DUawbBbBdsPyU5DdsnN1ctGBsPe81=
+lD2LTMCqpt3L3PUW8ntxnTwR-2BwZM7L7hHfbhguLlankNCkylhvEahJ4yvZjS98vEeaI-2FN0I=
+V8-2BRxPJ9Btv16vDlCJAVgBaobCR1NV-2BWSgVoTtaQtUoyaoG6FTMJInxLVUAUtCNC6jOlyX7=
+QDM0U-2F8nQy9dNydzuKvz0EhA7IvNAvR1w3p-2FDiHhVOrLqtxP3-2FmSUSNu8wjeywDNFDsLX=
+nPwtupPxCNaqgyq6zBQcs6nula1-2B-2FHF7Dz5g79rS6z17VHXWBlBJFECGfWTxIWfh68cOKSA=
+yNhzmXI0-3D"><span style=3D"font-family: arial, helvetica, sans-serif; font=
+-size: 18px">Privacy Policy</span></a><span style=3D"font-family: arial, he=
+lvetica, sans-serif; font-size: 18px">. At Anthropic, we periodically revie=
+w our policies and terms to ensure we=E2=80=99re providing the highest leve=
+l of protection and clarity for our users. As our products evolve, we also =
+want to keep you informed about our latest updates:<br>
+</span></div>
+<ul>
+  <li style=3D"text-align: inherit; font-family: arial, helvetica, sans-ser=
+if; font-size: 18px; font-size: 18px"><span style=3D"font-family: arial, he=
+lvetica, sans-serif; font-size: 18px">Claude is now available as an </span>=
+<a href=3D"https://url8792.mail.anthropic.com/ls/click?upn=3Du001.rFcAmKXLO=
+m9u6wLRWHIUYXj5nmfs7-2F8wepwBHsqyhRDNt5slMjIWf0UUcXRXkBrr2ff3X2yvCZblZAIzCl=
+KQYw-3D-3D6UJC_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwUoS9Gpbl6QX1AUIC=
+tpGgmLDb6y-2F9BoMWQdxQFG7iaQE5WYQIENYHWW99UaxK9-2BiDd6cE10IzOFA51xkqBOgfCGy=
+UWhoSDKdNVFlrlP9oP0SshJcnh-2B2sB5kmohPgAElCDa-2FNi-2F6PpaXlnxiWPC1s2xBb1fGH=
+wZwgYcBDwo2K9nqZzlPJ84AU2ZiPn-2F-2Fsuf8sGvw5DcroGb2ETFWZg10-2FliWgZfWVoly2H=
+WNYQw0CUVStw8Je4YPoY25Z0jHiRTquwWfTm9NCrRUWp1m10j1zat7gW3X0t7Tme7kha7F4roG9=
+mMhFmaAEmID0WRmoVff3-2Bfxqqja8ms8J51882LRfJNIT4V-2F7bH2DeQmZe3Tb9TgAsQVaafA=
+I1f9fQZ0-2FDV37I9OoOktvOmzmzx0Ng2tj37eeNLMKcy-2FaoK9ncZE5IadBR3PvPJkMoL4Rmr=
+xqW4QzMWd5bCAOBCvHUgEPRIWbntoHW3ATpcfv1-2F4NjYykZfwkde8YSMcGvWO6GI3-2F-2FGt=
+krzSxAUeAhYErQhBI9MTzHP-2FPggwSOpEymXg-2B8cmIjz8HyGHJoUXGiZtDc92Jy-2B4gcEaI=
+05bV7FHNEqIZx3oGPAN1vJYojBt5Ebkk7AmCB9xg4Wmxfw71EkpRmopn2C-2BNk2DUawbBbBdsP=
+yU5DdsnN1ctGBsPe81lD2LTMCqpt3L3PUW8ntxnTwR-2BwZM7L7hHfbhguLlankNCkylhvEahJ4=
+yvZjS98vEeaI-2FN0IV8-2BRxPJ9Btv16vDlCJAVgBaobCR1NV-2BWSgVoTtaQtUoyaoG6FTMJI=
+nxLVUAUtCNC6jOlyRBYeu3RqIUapKkN5DZbPv-2FOJM0U6gDH4Has0FwZH5fnA0o6GPA4B40bkX=
+jLPfmn-2FeFIFua6YAzSn901UdOfddjyc49nkVtgP-2Fv5H-2BVei-2BaAtg95mlrHbJxMBH9Y0=
+6SXxcr1O0MDMpDNgdpUlQhbf-2Bs-3D"><span style=3D"font-family: arial, helveti=
+ca, sans-serif; font-size: 18px">iOS app</span></a><span style=3D"font-fami=
+ly: arial, helvetica, sans-serif; font-size: 18px"> via the Apple App Store=
+ so you can access Claude from anywhere, any time.</span></li>
+  <li style=3D"text-align: inherit; font-family: arial, helvetica, sans-ser=
+if; font-size: 18px; font-size: 18px"><span style=3D"font-family: arial, he=
+lvetica, sans-serif; font-size: 18px">For businesses looking to increase pr=
+oductivity, our new </span><a href=3D"https://url8792.mail.anthropic.com/ls=
+/click?upn=3Du001.rFcAmKXLOm9u6wLRWHIUYR2OTiBaouKIQ6GV-2FPwmu34-3DzGq1_rO1J=
+RqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwUoS9Gpbl6QX1AUICtpGgmLDb6y-2F9BoMWQ=
+dxQFG7iaQE5WYQIENYHWW99UaxK9-2BiDd6cE10IzOFA51xkqBOgfCGyUWhoSDKdNVFlrlP9oP0=
+SshJcnh-2B2sB5kmohPgAElCDa-2FNi-2F6PpaXlnxiWPC1s2xBb1fGHwZwgYcBDwo2K9nqZzlP=
+J84AU2ZiPn-2F-2Fsuf8sGvw5DcroGb2ETFWZg10-2FliWgZfWVoly2HWNYQw0CUVStw8Je4YPo=
+Y25Z0jHiRTquwWfTm9NCrRUWp1m10j1zat7gW3X0t7Tme7kha7F4roG9mMhFmaAEmID0WRmoVff=
+3-2Bfxqqja8ms8J51882LRfJNIT4V-2F7bH2DeQmZe3Tb9TgAsQVaafAI1f9fQZ0-2FDV37I9Oo=
+OktvOmzmzx0Ng2tj37eeNLMKcy-2FaoK9ncZE5IadBR3PvPJkMoL4RmrxqW4QzMWd5bCAOBCvHU=
+gEPRIWbntoHW3ATpcfv1-2F4NjYykZfwkde8YSMcGvWO6GI3-2F-2FGtkrzSxAUeAhYErQhBI9M=
+TzHP-2FPggwSOpEymXg-2B8cmIjz8HyGHJoUXGiZtDc92Jy-2B4gcEaI05bV7FHNEqIZx3oGPAN=
+1vJYojBt5Ebkk7AmCB9xg4Wmxfw71EkpRmopn2C-2BNk2DUawbBbBdsPyU5DdsnN1ctGBsPe81l=
+D2LTMCqpt3L3PUW8ntxnTwR-2BwZM7L7hHfbhguLlankNCkylhvEahJ4yvZjS98vEeaI-2FN0IV=
+8-2BRxPJ9Btv16vDlCJAVgBaobCR1NV-2BWSgVoTtaQtUoyaoG6FTMJInxLVUAUtCNC6jOlyc87=
+iDiMVebX5Bz76oC0pk9Ai0abRY5IOgzUjeoaXKZNv1MNGiowEocrDSXe-2FctFuJdzs9OHLsTvE=
+V636ZqWJKvsjmUYB9yjEyJM0UrwRaPY7ocDveoME9CF1HEObCoOYvfg9w4K6eJG7OmMP2biO1g-=
+3D"><span style=3D"font-family: arial, helvetica, sans-serif; font-size: 18=
+px">Team plan</span></a><span style=3D"font-family: arial, helvetica, sans-=
+serif; font-size: 18px"> offers increased usage for members and better tool=
+s for managing users and billing.&nbsp;</span></li>
+  <li color=3D"rgb(0, 0, 0)" style=3D"text-align: inherit; font-family: ari=
+al, helvetica, sans-serif; color: rgb(0, 0, 0); font-size: 18px; font-size:=
+ 18px"><span style=3D"color: #000000; font-family: arial, helvetica, sans-s=
+erif; font-size: 18px; font-style: normal; font-variant-ligatures: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphan=
+s: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2;=
+ word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space-collapse: p=
+reserve; text-wrap: wrap; background-color: rgb(250, 250, 247); text-decora=
+tion-thickness: initial; text-decoration-style: initial; text-decoration-co=
+lor: initial; float: none; display: inline">And Claude.ai is now available =
+to users in the EU.</span></li>
+</ul>
+<div color=3D"rgb(0, 0, 0)" style=3D"font-family: arial, helvetica, sans-se=
+rif; text-align: inherit; color: rgb(0, 0, 0); font-size: 18px"><span style=
+=3D"font-family: arial, helvetica, sans-serif; font-size: 18px">We encourag=
+e you to read the updated documents on our website, but here is a summary o=
+f key changes:</span></div>
+<div color=3D"rgb(0, 0, 0)" style=3D"font-family: arial, helvetica, sans-se=
+rif; text-align: inherit; color: rgb(0, 0, 0); font-size: 18px"><br></div>
+<div style=3D"font-family: inherit; text-align: inherit"><span style=3D"fon=
+t-family: arial, helvetica, sans-serif; font-size: 18px"><u>Usage Policy</u=
+></span></div>
+<ul>
+  <li style=3D"text-align: inherit; font-family: arial, helvetica, sans-ser=
+if; font-size: 18px; font-size: 18px"><span style=3D"font-family: arial, he=
+lvetica, sans-serif; font-size: 18px"><strong>Policy refinements:</strong><=
+/span><span style=3D"font-family: arial, helvetica, sans-serif; font-size: =
+18px"> We=E2=80=99ve refined and restructured our policy to give more detai=
+ls about the individuals and organizations covered by our policies.</span><=
+/li>
+  <li style=3D"text-align: inherit; font-family: arial, helvetica, sans-ser=
+if; font-size: 18px; font-size: 18px"><span style=3D"font-family: arial, he=
+lvetica, sans-serif; font-size: 18px"><strong>More specific risk levels:</s=
+trong></span><span style=3D"font-family: arial, helvetica, sans-serif; font=
+-size: 18px"> We=E2=80=99ve broken out some specific =E2=80=9Chigh-risk use=
+ cases=E2=80=9D that have additional requirements due to posing an elevated=
+ risk of harm.</span></li>
+  <li style=3D"text-align: inherit; font-family: arial, helvetica, sans-ser=
+if; font-size: 18px; font-size: 18px"><span style=3D"font-family: arial, he=
+lvetica, sans-serif; font-size: 18px"><strong>Disclosure requirements:</str=
+ong></span><span style=3D"font-family: arial, helvetica, sans-serif; font-s=
+ize: 18px"> We added new disclosure requirements so that organizations who =
+use our tools also help their own users understand they are interacting wit=
+h an AI system.</span></li>
+</ul>
+<div style=3D"font-family: arial, helvetica, sans-serif; text-align: inheri=
+t; font-size: 18px"><span style=3D"font-family: arial, helvetica, sans-seri=
+f; font-size: 18px"><u>Consumer Terms of Service</u></span></div>
+<ul>
+  <li style=3D"text-align: inherit; font-family: arial, helvetica, sans-ser=
+if; font-size: 18px; font-size: 18px"><span style=3D"font-family: arial, he=
+lvetica, sans-serif; font-size: 18px"><strong>Enhanced clarity:</strong></s=
+pan><span style=3D"font-family: arial, helvetica, sans-serif; font-size: 18=
+px"> With some help from Claude, we simplified some terms to make them easi=
+er to understand. For example, Claude helped us simplify the provision that=
+ describes what happens if you create a Claude.ai account with an email dom=
+ain that belongs to your employer or another organization.</span></li>
+  <li style=3D"text-align: inherit; font-family: arial, helvetica, sans-ser=
+if; font-size: 18px; font-size: 18px"><span style=3D"font-family: arial, he=
+lvetica, sans-serif; font-size: 18px"><strong>Update for UK consumers.</str=
+ong></span><span style=3D"font-family: arial, helvetica, sans-serif; font-s=
+ize: 18px"> For individuals based in the United Kingdom, our UK Consumer Te=
+rms of Service now state that the agreement is between the user and our Iri=
+sh subsidiary, Anthropic Ireland, Limited, rather than Anthropic, PBC.</spa=
+n></li>
+</ul>
+<div style=3D"font-family: arial, helvetica, sans-serif; text-align: inheri=
+t; font-size: 18px"><span style=3D"font-family: arial, helvetica, sans-seri=
+f; font-size: 18px"><u>Privacy Policy</u></span></div>
+<ul>
+  <li style=3D"text-align: inherit; font-family: arial, helvetica, sans-ser=
+if; font-size: 18px; font-size: 18px"><span style=3D"font-family: arial, he=
+lvetica, sans-serif; font-size: 18px"><strong>Data controller:</strong></sp=
+an><span style=3D"font-family: arial, helvetica, sans-serif; font-size: 18p=
+x"> We=E2=80=99ve updated our </span><a href=3D"https://url8792.mail.anthro=
+pic.com/ls/click?upn=3Du001.rFcAmKXLOm9u6wLRWHIUYb57odYuMXptiIvSnUIhs1OeXNn=
+A7r2WnG1nFhdZo1sfosm2LvANeU55RgTPXis-2BZg-3D-3DJbcN_rO1JRqZrx5Oo25BATZItEvI=
+KK9wiuA6UN-2BXngf09BwUoS9Gpbl6QX1AUICtpGgmLDb6y-2F9BoMWQdxQFG7iaQE5WYQIENYH=
+WW99UaxK9-2BiDd6cE10IzOFA51xkqBOgfCGyUWhoSDKdNVFlrlP9oP0SshJcnh-2B2sB5kmohP=
+gAElCDa-2FNi-2F6PpaXlnxiWPC1s2xBb1fGHwZwgYcBDwo2K9nqZzlPJ84AU2ZiPn-2F-2Fsuf=
+8sGvw5DcroGb2ETFWZg10-2FliWgZfWVoly2HWNYQw0CUVStw8Je4YPoY25Z0jHiRTquwWfTm9N=
+CrRUWp1m10j1zat7gW3X0t7Tme7kha7F4roG9mMhFmaAEmID0WRmoVff3-2Bfxqqja8ms8J5188=
+2LRfJNIT4V-2F7bH2DeQmZe3Tb9TgAsQVaafAI1f9fQZ0-2FDV37I9OoOktvOmzmzx0Ng2tj37e=
+eNLMKcy-2FaoK9ncZE5IadBR3PvPJkMoL4RmrxqW4QzMWd5bCAOBCvHUgEPRIWbntoHW3ATpcfv=
+1-2F4NjYykZfwkde8YSMcGvWO6GI3-2F-2FGtkrzSxAUeAhYErQhBI9MTzHP-2FPggwSOpEymXg=
+-2B8cmIjz8HyGHJoUXGiZtDc92Jy-2B4gcEaI05bV7FHNEqIZx3oGPAN1vJYojBt5Ebkk7AmCB9=
+xg4Wmxfw71EkpRmopn2C-2BNk2DUawbBbBdsPyU5DdsnN1ctGBsPe81lD2LTMCqpt3L3PUW8ntx=
+nTwR-2BwZM7L7hHfbhguLlankNCkylhvEahJ4yvZjS98vEeaI-2FN0IV8-2BRxPJ9Btv16vDlCJ=
+AVgBaobCR1NV-2BWSgVoTtaQtUoyaoG6FTMJInxLVUAUtCNC6jOlyZmxcjqXUmy1M1ZqlJKeQXk=
+orx2-2FjOLPonC9dG96-2BDJk09quYeJScnpoONBW3ZjCscQeMds8RRlPY6-2BuIFKRGUOdo6dy=
+gyjcu0NwkZdQqr4VAx2dhgLGv4lDTWFFQLjoaxSkkg6unyee5uP-2B5y2bKTM-3D"><span sty=
+le=3D"font-family: arial, helvetica, sans-serif; font-size: 18px">Privacy P=
+olicy</span></a><span style=3D"font-family: arial, helvetica, sans-serif; f=
+ont-size: 18px"> to reflect that the data controller for our users in the E=
+uropean Economic Area (EEA), UK, and Switzerland is Anthropic Ireland, Limi=
+ted.&nbsp;</span></li>
+  <li style=3D"text-align: inherit; font-family: arial, helvetica, sans-ser=
+if; font-size: 18px; font-size: 18px"><span style=3D"font-family: arial, he=
+lvetica, sans-serif; font-size: 18px"><strong>Data retention:</strong></spa=
+n><span style=3D"font-family: arial, helvetica, sans-serif; font-size: 18px=
+"> We=E2=80=99ve changed our </span><a href=3D"https://url8792.mail.anthrop=
+ic.com/ls/click?upn=3Du001.rFcAmKXLOm9u6wLRWHIUYfyNeOrCHBv8SqoHx5txZdDzl51E=
+q8xAzHL4-2F6a8DR0BmChbeTHwlh47TL18kIlSC56Uvk672cqpgARgC25bIbIKPFfg3BeYelBLA=
+NUzKWnkK9C6_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwUoS9Gpbl6QX1AUICtpG=
+gmLDb6y-2F9BoMWQdxQFG7iaQE5WYQIENYHWW99UaxK9-2BiDd6cE10IzOFA51xkqBOgfCGyUWh=
+oSDKdNVFlrlP9oP0SshJcnh-2B2sB5kmohPgAElCDa-2FNi-2F6PpaXlnxiWPC1s2xBb1fGHwZw=
+gYcBDwo2K9nqZzlPJ84AU2ZiPn-2F-2Fsuf8sGvw5DcroGb2ETFWZg10-2FliWgZfWVoly2HWNY=
+Qw0CUVStw8Je4YPoY25Z0jHiRTquwWfTm9NCrRUWp1m10j1zat7gW3X0t7Tme7kha7F4roG9mMh=
+FmaAEmID0WRmoVff3-2Bfxqqja8ms8J51882LRfJNIT4V-2F7bH2DeQmZe3Tb9TgAsQVaafAI1f=
+9fQZ0-2FDV37I9OoOktvOmzmzx0Ng2tj37eeNLMKcy-2FaoK9ncZE5IadBR3PvPJkMoL4RmrxqW=
+4QzMWd5bCAOBCvHUgEPRIWbntoHW3ATpcfv1-2F4NjYykZfwkde8YSMcGvWO6GI3-2F-2FGtkrz=
+SxAUeAhYErQhBI9MTzHP-2FPggwSOpEymXg-2B8cmIjz8HyGHJoUXGiZtDc92Jy-2B4gcEaI05b=
+V7FHNEqIZx3oGPAN1vJYojBt5Ebkk7AmCB9xg4Wmxfw71EkpRmopn2C-2BNk2DUawbBbBdsPyU5=
+DdsnN1ctGBsPe81lD2LTMCqpt3L3PUW8ntxnTwR-2BwZM7L7hHfbhguLlankNCkylhvEahJ4yvZ=
+jS98vEeaI-2FN0IV8-2BRxPJ9Btv16vDlCJAVgBaobCR1NV-2BWSgVoTtaQtUoyaoG6FTMJInxL=
+VUAUtCNC6jOlyeF8ji6rHrIe-2F510C9-2B4izFFTaw0txpCSI59RuDqjtuZo51VYu7bXxnc8EK=
+sRTFpeM1Kex-2BXetjPIpus4QqrVLVgPxUiQV-2F6tAOmIj3FeQLGoDwbN5rGGjIfAXPHe1F3Du=
+IonebBcM7CZH9Fop2ZkOE-3D"><span style=3D"font-family: arial, helvetica, san=
+s-serif; font-size: 18px">default data retention</span></a><span style=3D"f=
+ont-family: arial, helvetica, sans-serif; font-size: 18px"> period to 30 da=
+ys.<br>
+</span></li>
+</ul>
+<div style=3D"font-family: arial, helvetica, sans-serif; text-align: inheri=
+t; font-size: 18px"><span style=3D"font-family: arial, helvetica, sans-seri=
+f; font-size: 18px"><u>Subprocessor Updates</u></span></div>
+<ul>
+  <li style=3D"text-align: inherit; font-family: arial, helvetica, sans-ser=
+if; font-size: 18px; font-size: 18px"><span style=3D"font-family: arial, he=
+lvetica, sans-serif; font-size: 18px">We=E2=80=99ve updated our list of </s=
+pan><a href=3D"https://url8792.mail.anthropic.com/ls/click?upn=3Du001.rFcAm=
+KXLOm9u6wLRWHIUYb57odYuMXptiIvSnUIhs1PUlhi74B-2FIfSbyto9QGZx6U-2BrZrxCE2HNf=
+E1BUkKgU0g-3D-3DqTAn_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwUoS9Gpbl6Q=
+X1AUICtpGgmLDb6y-2F9BoMWQdxQFG7iaQE5WYQIENYHWW99UaxK9-2BiDd6cE10IzOFA51xkqB=
+OgfCGyUWhoSDKdNVFlrlP9oP0SshJcnh-2B2sB5kmohPgAElCDa-2FNi-2F6PpaXlnxiWPC1s2x=
+Bb1fGHwZwgYcBDwo2K9nqZzlPJ84AU2ZiPn-2F-2Fsuf8sGvw5DcroGb2ETFWZg10-2FliWgZfW=
+Voly2HWNYQw0CUVStw8Je4YPoY25Z0jHiRTquwWfTm9NCrRUWp1m10j1zat7gW3X0t7Tme7kha7=
+F4roG9mMhFmaAEmID0WRmoVff3-2Bfxqqja8ms8J51882LRfJNIT4V-2F7bH2DeQmZe3Tb9TgAs=
+QVaafAI1f9fQZ0-2FDV37I9OoOktvOmzmzx0Ng2tj37eeNLMKcy-2FaoK9ncZE5IadBR3PvPJkM=
+oL4RmrxqW4QzMWd5bCAOBCvHUgEPRIWbntoHW3ATpcfv1-2F4NjYykZfwkde8YSMcGvWO6GI3-2=
+F-2FGtkrzSxAUeAhYErQhBI9MTzHP-2FPggwSOpEymXg-2B8cmIjz8HyGHJoUXGiZtDc92Jy-2B=
+4gcEaI05bV7FHNEqIZx3oGPAN1vJYojBt5Ebkk7AmCB9xg4Wmxfw71EkpRmopn2C-2BNk2DUawb=
+BbBdsPyU5DdsnN1ctGBsPe81lD2LTMCqpt3L3PUW8ntxnTwR-2BwZM7L7hHfbhguLlankNCkylh=
+vEahJ4yvZjS98vEeaI-2FN0IV8-2BRxPJ9Btv16vDlCJAVgBaobCR1NV-2BWSgVoTtaQtUoyaoG=
+6FTMJInxLVUAUtCNC6jOlyW-2BplRsL-2FGKj4pR9dFZwI-2BI6ayZx8ltAP1g4g4mFZDIC2hsg=
+D8EgtngjgBPqssP-2Fbq-2BAtS2k-2BItS9ePVsR0DE0ZW3A-2Fyvs6ND88u9Cny7-2FZ66xiNI=
+LyDxdLXENSvVXeCztXsUchBRCpEyBimiXvlDNI-3D"><span style=3D"font-family: aria=
+l, helvetica, sans-serif; font-size: 18px">subprocessors</span></a><span st=
+yle=3D"font-family: arial, helvetica, sans-serif; font-size: 18px"> to incl=
+ude Amazon Web Services.</span></li>
+</ul>
+<div style=3D"font-family: inherit; text-align: inherit"><span style=3D"fon=
+t-family: arial, helvetica, sans-serif; font-size: 18px">You can review our=
+ full </span><a href=3D"https://url8792.mail.anthropic.com/ls/click?upn=3Du=
+001.rFcAmKXLOm9u6wLRWHIUYb57odYuMXptiIvSnUIhs1NpAd1kqKtBo2tG2Opk2Opwjsf2_rO=
+1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwUoS9Gpbl6QX1AUICtpGgmLDb6y-2F9BoM=
+WQdxQFG7iaQE5WYQIENYHWW99UaxK9-2BiDd6cE10IzOFA51xkqBOgfCGyUWhoSDKdNVFlrlP9o=
+P0SshJcnh-2B2sB5kmohPgAElCDa-2FNi-2F6PpaXlnxiWPC1s2xBb1fGHwZwgYcBDwo2K9nqZz=
+lPJ84AU2ZiPn-2F-2Fsuf8sGvw5DcroGb2ETFWZg10-2FliWgZfWVoly2HWNYQw0CUVStw8Je4Y=
+PoY25Z0jHiRTquwWfTm9NCrRUWp1m10j1zat7gW3X0t7Tme7kha7F4roG9mMhFmaAEmID0WRmoV=
+ff3-2Bfxqqja8ms8J51882LRfJNIT4V-2F7bH2DeQmZe3Tb9TgAsQVaafAI1f9fQZ0-2FDV37I9=
+OoOktvOmzmzx0Ng2tj37eeNLMKcy-2FaoK9ncZE5IadBR3PvPJkMoL4RmrxqW4QzMWd5bCAOBCv=
+HUgEPRIWbntoHW3ATpcfv1-2F4NjYykZfwkde8YSMcGvWO6GI3-2F-2FGtkrzSxAUeAhYErQhBI=
+9MTzHP-2FPggwSOpEymXg-2B8cmIjz8HyGHJoUXGiZtDc92Jy-2B4gcEaI05bV7FHNEqIZx3oGP=
+AN1vJYojBt5Ebkk7AmCB9xg4Wmxfw71EkpRmopn2C-2BNk2DUawbBbBdsPyU5DdsnN1ctGBsPe8=
+1lD2LTMCqpt3L3PUW8ntxnTwR-2BwZM7L7hHfbhguLlankNCkylhvEahJ4yvZjS98vEeaI-2FN0=
+IV8-2BRxPJ9Btv16vDlCJAVgBaobCR1NV-2BWSgVoTtaQtUoyaoG6FTMJInxLVUAUtCNC6jOlyf=
+PvWbyrS7dBQJYOeY8TKg7daWt8ZwUIZGYSbGZC1DtOsLvoRKTqm0doOz-2Bwf-2BLru-2BTBRVN=
+NYAsQCKbiqD4JZfqjpcjzPRCpnQGtzh26hoo9SljXWlF7GJ-2FwgjfxlLm52gqasRx25-2FUyVY=
+XteIUZLIQ-3D"><span style=3D"font-family: arial, helvetica, sans-serif; fon=
+t-size: 18px">Usage Policy</span></a><span style=3D"font-family: arial, hel=
+vetica, sans-serif; font-size: 18px">, </span><a href=3D"https://url8792.ma=
+il.anthropic.com/ls/click?upn=3Du001.rFcAmKXLOm9u6wLRWHIUYb57odYuMXptiIvSnU=
+Ihs1MQTuLFSCI0jda1uoPkR6C06toaRv4kavuWLzT3qNf3Pg-3D-3DuQFb_rO1JRqZrx5Oo25BA=
+TZItEvIKK9wiuA6UN-2BXngf09BwUoS9Gpbl6QX1AUICtpGgmLDb6y-2F9BoMWQdxQFG7iaQE5W=
+YQIENYHWW99UaxK9-2BiDd6cE10IzOFA51xkqBOgfCGyUWhoSDKdNVFlrlP9oP0SshJcnh-2B2s=
+B5kmohPgAElCDa-2FNi-2F6PpaXlnxiWPC1s2xBb1fGHwZwgYcBDwo2K9nqZzlPJ84AU2ZiPn-2=
+F-2Fsuf8sGvw5DcroGb2ETFWZg10-2FliWgZfWVoly2HWNYQw0CUVStw8Je4YPoY25Z0jHiRTqu=
+wWfTm9NCrRUWp1m10j1zat7gW3X0t7Tme7kha7F4roG9mMhFmaAEmID0WRmoVff3-2Bfxqqja8m=
+s8J51882LRfJNIT4V-2F7bH2DeQmZe3Tb9TgAsQVaafAI1f9fQZ0-2FDV37I9OoOktvOmzmzx0N=
+g2tj37eeNLMKcy-2FaoK9ncZE5IadBR3PvPJkMoL4RmrxqW4QzMWd5bCAOBCvHUgEPRIWbntoHW=
+3ATpcfv1-2F4NjYykZfwkde8YSMcGvWO6GI3-2F-2FGtkrzSxAUeAhYErQhBI9MTzHP-2FPggwS=
+OpEymXg-2B8cmIjz8HyGHJoUXGiZtDc92Jy-2B4gcEaI05bV7FHNEqIZx3oGPAN1vJYojBt5Ebk=
+k7AmCB9xg4Wmxfw71EkpRmopn2C-2BNk2DUawbBbBdsPyU5DdsnN1ctGBsPe81lD2LTMCqpt3L3=
+PUW8ntxnTwR-2BwZM7L7hHfbhguLlankNCkylhvEahJ4yvZjS98vEeaI-2FN0IV8-2BRxPJ9Btv=
+16vDlCJAVgBaobCR1NV-2BWSgVoTtaQtUoyaoG6FTMJInxLVUAUtCNC6jOlyYMW3yUu3oxp9Mpp=
+hctJKQ78e6c88v397gftgc2RQCr-2FISO0EaymnOcyL8UYGd2A1-2Bq3x2dUUpleZvKyb2NDtRA=
+koUmGZ1GwMPdHZpB2Ev3pwzC7fCTKAYA7AfskQHTwyqnlM3wM1EOrBAm3fp2acCE-3D"><span =
+style=3D"font-family: arial, helvetica, sans-serif; font-size: 18px">Consum=
+er Terms of Service</span></a><span style=3D"font-family: arial, helvetica,=
+ sans-serif; font-size: 18px">, and Privacy Policy on our website. If you h=
+ave any questions, please contact us here.<br>
+<br>
+Thanks for using Claude! We appreciate you taking the time to stay informed=
+ on these updates as we work to responsibly deploy our products more broadl=
+y.<br>
+<br>
+Warmly,<br>
+The Anthropic team<br>
+<br>
+Note: This is a legal notice, which is why you are receiving it even if you=
+ have opted out of Anthropic marketing emails.</span></div><div></div></div=
+></td>
+      </tr>
+    </tbody>
+  </table><table class=3D"module" role=3D"module" data-type=3D"social" alig=
+n=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%=
+" style=3D"table-layout: fixed;" data-muid=3D"fccac235-7e70-4925-bae4-aead3=
+f9cecaa">
+    <tbody>
+      <tr>
+        <td valign=3D"top" style=3D"padding:0px 0px 20px 0px; font-size:6px=
+; line-height:10px;" align=3D"center">
+          <table align=3D"center" style=3D"-webkit-margin-start:auto;-webki=
+t-margin-end:auto;">
+            <tbody><tr align=3D"center"><td style=3D"padding: 0px 5px;" cla=
+ss=3D"social-icon-column">
+      <a role=3D"social-icon-link" href=3D"https://url8792.mail.anthropic.c=
+om/ls/click?upn=3Du001.rFcAmKXLOm9u6wLRWHIUYSWc2j33PbGX5x2oXjoEA3GL1O9HfinW=
+G8ERgEJTj-2BAMdFN7_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwUoS9Gpbl6QX1=
+AUICtpGgmLDb6y-2F9BoMWQdxQFG7iaQE5WYQIENYHWW99UaxK9-2BiDd6cE10IzOFA51xkqBOg=
+fCGyUWhoSDKdNVFlrlP9oP0SshJcnh-2B2sB5kmohPgAElCDa-2FNi-2F6PpaXlnxiWPC1s2xBb=
+1fGHwZwgYcBDwo2K9nqZzlPJ84AU2ZiPn-2F-2Fsuf8sGvw5DcroGb2ETFWZg10-2FliWgZfWVo=
+ly2HWNYQw0CUVStw8Je4YPoY25Z0jHiRTquwWfTm9NCrRUWp1m10j1zat7gW3X0t7Tme7kha7F4=
+roG9mMhFmaAEmID0WRmoVff3-2Bfxqqja8ms8J51882LRfJNIT4V-2F7bH2DeQmZe3Tb9TgAsQV=
+aafAI1f9fQZ0-2FDV37I9OoOktvOmzmzx0Ng2tj37eeNLMKcy-2FaoK9ncZE5IadBR3PvPJkMoL=
+4RmrxqW4QzMWd5bCAOBCvHUgEPRIWbntoHW3ATpcfv1-2F4NjYykZfwkde8YSMcGvWO6GI3-2F-=
+2FGtkrzSxAUeAhYErQhBI9MTzHP-2FPggwSOpEymXg-2B8cmIjz8HyGHJoUXGiZtDc92Jy-2B4g=
+cEaI05bV7FHNEqIZx3oGPAN1vJYojBt5Ebkk7AmCB9xg4Wmxfw71EkpRmopn2C-2BNk2DUawbBb=
+BdsPyU5DdsnN1ctGBsPe81lD2LTMCqpt3L3PUW8ntxnTwR-2BwZM7L7hHfbhguLlankNCkylhvE=
+ahJ4yvZjS98vEeaI-2FN0IV8-2BRxPJ9Btv16vDlCJAVgBaobCR1NV-2BWSgVoTtaQtUoyaoG6F=
+TMJInxLVUAUtCNC6jOlydxZ95e8g3dnkZuzin0eaI9NQ-2FBSjVeVlqkLcgFFdw-2BvFm11pS0F=
+QFGLA8qVVE-2Fh8p6BlDmPVWaTOuBfS3xvZzbIjFzkZbVj1zPskUj-2Fr0WgV7m-2F9H83MVvws=
+-2FeZfYIeHbGvh7oxPdBjuarSk1FkIz4-3D" target=3D"_blank" alt=3D"Twitter" titl=
+e=3D"Twitter" style=3D"display:inline-block; background-color:#7AC4F7; heig=
+ht:30px; width:30px;">
+        <img role=3D"social-icon" alt=3D"Twitter" title=3D"Twitter" src=3D"=
+https://mc.sendgrid.com/assets/social/white/twitter.png" style=3D"height:30=
+px; width:30px;" height=3D"30" width=3D"30">
+      </a>
+    </td><td style=3D"padding: 0px 5px;" class=3D"social-icon-column">
+      <a role=3D"social-icon-link" href=3D"https://url8792.mail.anthropic.c=
+om/ls/click?upn=3Du001.rFcAmKXLOm9u6wLRWHIUYa6GzH-2BFtbEVfexYT4qRVAWazJ7g4O=
+eUD3adJ2mUpFcICy16n2hGL01Q-2BzfxCliP7w-3D-3D_3ud_rO1JRqZrx5Oo25BATZItEvIKK9=
+wiuA6UN-2BXngf09BwUoS9Gpbl6QX1AUICtpGgmLDb6y-2F9BoMWQdxQFG7iaQE5WYQIENYHWW9=
+9UaxK9-2BiDd6cE10IzOFA51xkqBOgfCGyUWhoSDKdNVFlrlP9oP0SshJcnh-2B2sB5kmohPgAE=
+lCDa-2FNi-2F6PpaXlnxiWPC1s2xBb1fGHwZwgYcBDwo2K9nqZzlPJ84AU2ZiPn-2F-2Fsuf8sG=
+vw5DcroGb2ETFWZg10-2FliWgZfWVoly2HWNYQw0CUVStw8Je4YPoY25Z0jHiRTquwWfTm9NCrR=
+UWp1m10j1zat7gW3X0t7Tme7kha7F4roG9mMhFmaAEmID0WRmoVff3-2Bfxqqja8ms8J51882LR=
+fJNIT4V-2F7bH2DeQmZe3Tb9TgAsQVaafAI1f9fQZ0-2FDV37I9OoOktvOmzmzx0Ng2tj37eeNL=
+MKcy-2FaoK9ncZE5IadBR3PvPJkMoL4RmrxqW4QzMWd5bCAOBCvHUgEPRIWbntoHW3ATpcfv1-2=
+F4NjYykZfwkde8YSMcGvWO6GI3-2F-2FGtkrzSxAUeAhYErQhBI9MTzHP-2FPggwSOpEymXg-2B=
+8cmIjz8HyGHJoUXGiZtDc92Jy-2B4gcEaI05bV7FHNEqIZx3oGPAN1vJYojBt5Ebkk7AmCB9xg4=
+Wmxfw71EkpRmopn2C-2BNk2DUawbBbBdsPyU5DdsnN1ctGBsPe81lD2LTMCqpt3L3PUW8ntxnTw=
+R-2BwZM7L7hHfbhguLlankNCkylhvEahJ4yvZjS98vEeaI-2FN0IV8-2BRxPJ9Btv16vDlCJAVg=
+BaobCR1NV-2BWSgVoTtaQtUoyaoG6FTMJInxLVUAUtCNC6jOlyUajYBEN7goC4wjJo9yCOVI3IW=
+uDWjXXO5b1tDM8sxwL3PTZUqMVIq8bf4J1IGZg1TR1Seop4L0OA9t2wKd1qBSyQPfeFu7CMYSHB=
+e0mTypJkVBSDIjCladsxyREGGNAm11gXYUQHOIPpanH1FnXWpE-3D" target=3D"_blank" al=
+t=3D"LinkedIn" title=3D"LinkedIn" style=3D"display:inline-block; background=
+-color:#0077B5; height:30px; width:30px;">
+        <img role=3D"social-icon" alt=3D"LinkedIn" title=3D"LinkedIn" src=
+=3D"https://mc.sendgrid.com/assets/social/white/linkedin.png" style=3D"heig=
+ht:30px; width:30px;" height=3D"30" width=3D"30">
+      </a>
+    </td></tr></tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table></td>
+                                      </tr>
+                                    </table>
+                                    <!--[if mso]>
+                                  </td>
+                                </tr>
+                              </table>
+                            </center>
+                            <![endif]-->
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </center>
+    <img src=3D"https://url8792.mail.anthropic.com/wf/open?upn=3Du001.wJ4wQ=
+oWqpttL0LnWj9yCngQD-2BPKOSnIWwGo2A-2BWj6Xi6FgHnN-2B9bhefwKVGNvqLcGhrbYgefP-=
+2FXEugaciFYlgmLHP1man5IWhC1LkqTfxjh9F7zMduMnNKqVt4Xu0DWqZns0Q491N-2B3QdjZBO=
+d-2BRNp3G7Sox3hipSVnNMCS-2B69svZ4kUMldfLv5D8THWWnkftC9HNlrahU6qEhQ5oaaV6Igh=
+-2FLd7NdbaHL-2BtFuGgYa094VbNvxe79VuB6xtSy8kAbs1duzR2Z8IQawTH7VHAA10KMKnA3ys=
+w4KIb-2FIr85WGgyqbNGGe4l-2FcDWvtomtNlWoG8dcE8Sx0XnmnHnKkUvnquNXJUWJPQhAEjNp=
+DXjhGJqrKnpp4BVlyEpInqC1narjJmf0XlLgBgXP4kK-2BfjmOFWuhMbLcRHN28pRRPInSywEgy=
+THsNGZfc-2Bgjz1r-2B-2B11vEbnncevUYivYZs4NtkY0HZ8EtgpLrrN29Q67XA2boAoYK91gH8=
+2ugXye3fDFIUHeL4QWAbK9HijPHnQ-2BySAZolz1-2Fsu7R5jMC7jkq5eQ0T6V-2BPJPgP9Bsd2=
+1LGbtOdJzDWttGdTaUGMIK4as9cIzGYa-2By-2Fa-2BDkwEm5TYH-2Fpd-2BxIdtffgIWYR-2F0=
+i1o60qR-2BH3V2mc3kFLqJwW2xJEunpbfSYvET9JtF8s8Wkyp77k72C4O7I3MJxE9a4amfCK9jj=
+5h3OPFZAhhpu0X9TArwMw9dZChnajLRW-2F1sA-2F2cwW-2B3ft-2FM9d6MCNwSCnCQtGzYluUG=
+l5Vqf2KScDoZE5UKB8NG62Ob-2BgH3jbRCgEACeG2fjmiHLeMHY5KO600pTQOldp0InjzfseHlI=
+j4YRDoUxPif-2FeQTo6b9riJp7AFwoNiQQppGSQE1PBUqgk5LPa5YjCFJAFajUrtb1NfRYNPdZX=
+lIcSXeflT4mFvOEjEVVKSlFvWmlmT29WmnKChV3d0fFtl8J26yxkFfcBNzAJ4nOgP8ru36ZH3XJ=
+mvpqHfPVlzv-2Bco3M44ua8l6aV-2BORjKP" alt=3D"" width=3D"1" height=3D"1" bord=
+er=3D"0" style=3D"height:1px !important;width:1px !important;border-width:0=
+ !important;margin-top:0 !important;margin-bottom:0 !important;margin-right=
+:0 !important;margin-left:0 !important;padding-top:0 !important;padding-bot=
+tom:0 !important;padding-right:0 !important;padding-left:0 !important;"/></=
+body>
+  </html>
+--768016a425f05bc7cc76bf66183c001d5318f9cff2a3a69fcd23b0b23d3e--
+

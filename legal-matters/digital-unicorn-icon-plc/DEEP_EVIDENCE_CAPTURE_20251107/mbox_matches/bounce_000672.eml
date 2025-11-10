@@ -1,0 +1,784 @@
+X-GM-THRID: 1846908149588504636
+X-Gmail-Labels: Inbox,Category Updates,Unread
+Delivered-To: sn.renauld@gmail.com
+Received: by 2002:a17:907:3f90:b0:b5f:f44b:774e with SMTP id hr16csp179834ejc;
+        Fri, 24 Oct 2025 16:34:26 -0700 (PDT)
+X-Google-Smtp-Source: 
+ AGHT+IGqVzgYxDJlhEqRDSKFgx9cA7ec9Ohh0SglsIv3XzM1lk5Pj91j/DXgtr/800nai6Zvt0Rh
+X-Received: by 2002:a05:6214:2521:b0:87c:1d89:a24d with SMTP id
+ 6a1803df08f44-87c20587c63mr391787046d6.27.1761348866586;
+        Fri, 24 Oct 2025 16:34:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1761348866; cv=none;
+        d=google.com; s=arc-20240605;
+        b=haNjXsgNCcfPS43y/A2lHEOHm0ufMZ8Q5RUIALmGlkw8VfvcMxjMNjGymTlFdfzHd+
+         pCt3xTR37eBumRr4pQeLkJj+Kpwnxnsc7C/w9Bm48hafzIhrLRHjNXfrcurQXf6khCQM
+         d/HfLLUMqsGD+NmSn4tfjs6Qzg95mwIVjHxup4xTNvm+ettRqTYGSz17wGeA6jWwhK6i
+         dsGCtLQ1ACzH92ZmEMpHgV/pkqICUwLhn1615v8AMbSIWKKtHoZyqRIMAMfOO6IBe4FI
+         YHZbfnxTet0RTV10aVnlrX+cQ74LI9i1alD0n58NomqFVIH3nlo+1U8S+nmwn87dlK2k
+         hGag==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605;
+        h=feedback-id:mime-version:subject:message-id:to:from:date
+         :dkim-signature;
+        bh=p7cEQ7kty/w+cZPnzzhktuSqxHzlQNYqBHim9eB8xpQ=;
+        fh=UdbUcDkJKvqffcPeSfMTJ3BaP9WLNp68ZQroZAlxuH8=;
+        b=HrudWBYoPkEjtf4+ezOqxoEB2oQl35pmVyaFLnqbZKUZU3914ot6ZVAt50WlHyATXf
+         cLV6nV+klyEL941iBCF3UopnaKjA0Y07h+3H82+u0Sspi8bvxR3xFtGtFLw1IVhsOOEL
+         e0g46ZG+/bFQJ+JzXjLOrimnMi7nmASsDr8l+b4kdYxMVS6z/uOWizarVcwW04sABQZz
+         zIm/MHdOpA0yDdcKsUuo0n3Eg0kBgdjarjeXW3VQOROHiAdK/t+HbQMRYmCzcqzjpuG6
+         E8Hsuk4QCsnPGQVKG0bycx6rECSX6dGw8pdtUQYMcCSiF/GqBxrCXFpc/EUtnYrHwrcU
+         EPoQ==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@insideapple.apple.com header.s=insideapple0517
+ header.b=O1Dqb7xk;
+       spf=pass (google.com: domain of developer_bounces@insideapple.apple.com
+ designates 17.32.227.202 as permitted sender)
+ smtp.mailfrom=developer_bounces@insideapple.apple.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE)
+ header.from=insideapple.apple.com
+Return-Path: <developer_bounces@insideapple.apple.com>
+Received: from mdn-epsmtap-mkt-lsndr10107.apple.com
+ (mdn-epsmtap-mkt-lsndr10107.apple.com. [17.32.227.202])
+        by mx.google.com with ESMTPS id
+ 6a1803df08f44-87fc6bcf150si612166d6.1516.2025.10.24.16.34.26
+        for <sn.renauld@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 24 Oct 2025 16:34:26 -0700 (PDT)
+Received-SPF: pass (google.com: domain of
+ developer_bounces@insideapple.apple.com designates 17.32.227.202 as permitted
+ sender) client-ip=17.32.227.202;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@insideapple.apple.com header.s=insideapple0517
+ header.b=O1Dqb7xk;
+       spf=pass (google.com: domain of developer_bounces@insideapple.apple.com
+ designates 17.32.227.202 as permitted sender)
+ smtp.mailfrom=developer_bounces@insideapple.apple.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE)
+ header.from=insideapple.apple.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=insideapple.apple.com; s=insideapple0517; t=1761348865;
+	bh=p7cEQ7kty/w+cZPnzzhktuSqxHzlQNYqBHim9eB8xpQ=;
+	h=Date:From:To:Message-ID:Subject:Content-Type;
+	b=O1Dqb7xkmm7mS8z+tN0l3lYUbY00AePY2hRGTUbWPqC6R/ue6rfIS/af5uzLVubUx
+	 0FM8vJcto09XntTAS+w6DkzxdpVXW9IgKZ0bLdvvBLbqPXPZgnjVMykMRT+kIjH4NR
+	 lawVhKFekmE7SniLb9sqbLq8FMxVBX4FtMhpKmGr/RwoCRniZjfJ0jkJxSqAeamlTh
+	 KkeOsQCBfR6diMKlAFnhcUqCobGWE88NwJy7ve2sQKxmwTSZTs2d4M7J2jlnNhYXxB
+	 bj4LCEHViBuf0zR6ZS6bE4nLwiyZv12l+SyJqRt2zhkqKTa/NmomD3CDTkYIpKRdpr
+	 bWGEdbiE83isA==
+Date: Fri, 24 Oct 2025 23:34:25 +0000 (GMT)
+From: Apple Developer <developer@insideapple.apple.com>
+To: sn.renauld@gmail.com
+Message-ID: <1239203196.118432342.1761348865895@insideapple.apple.com>
+Subject: Updates to FairPlay Streaming Server SDK
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="----=_Part_118432340_1260244628.1761348865895"
+X-Attach-Flag: N
+X-Sent-To: 
+ sn.renauld@gmail.com,2,8w%2BvXLoOe%2FyPdV0vFeToEZ0tUY8FAwLxWgKuK%2BM%2F4%2BFvreLEolsYl2iNJBoa9li3EoR1pnAItOpv7g%2B%2BT7%2BnwoD5pNQnGYYKTuj4yWLl2rZidKtX4utleWD2Zt3k8IqI5zWW3VO%2FDetdIysXPvJHLic9TXi7sc172FqD5%2FMM0L43hf4aYz7E4yRYEVd7J9bHYIt%2BKsuj98SiR9Ol%2FKoHSWMOugdLByj2MstHgprRyZXxgdMPHp6fH%2FrRGn9lNqAcm51LGE2TQNMWSAZXOS9VKw%3D%3D
+X-TXN_ID: b5d349a0-0d21-4d19-8cb6-919905642c2f
+X-DKIM_SIGN_REQUIRED: YES
+x-evs: BYPASS
+X-EmailType-Id: 181667
+X-Business-Group: 8067469
+X-Broadcast-Id: 181667
+Feedback-ID: M00774:c00351:developer@insideapple.apple.com:7967215940
+X-MSG-LINK: e2010169f907adad37ac49f108d2c3c7
+X-rpcampaign: M00774~c00351~r0001~1032811~e2010169f907adad37ac49f108d2c3c7
+X-mp: d
+
+------=_Part_118432340_1260244628.1761348865895
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Disposition: inline
+
+Hello,
+
+We=E2=80=99re reaching out to let you know that FairPlay Streaming Server S=
+DK 26 is now available. This release includes important security enhancemen=
+ts and interface updates, and we strongly recommend updating your deploymen=
+t to maintain the highest level of protection for your content.
+
+What you need to know:
+
+=E2=80=A2 Effective immediately, you can only generate new certificates for=
+ SDK 26 and SDK 4.
+
+=E2=80=A2 Starting September 2026, Apple will no longer provide technical s=
+upport for SDKs 4 and 5.
+
+=E2=80=A2 Existing deployments will continue to function in the same way, a=
+nd existing certificates will not expire.
+
+=E2=80=A2 Update your deployment to benefit from the latest security enhanc=
+ements and interface updates.
+
+
+Learn more about FairPlay Streaming
+https://c.apple.com/r?v=3D2&a=3DJO1XYJwWmbNCvWbplzNuaIanWX3fuC6Hkfu3jYT1piK=
+iuuQJ19%2FZuptaiggCOamnhjtQC4k%2FKuxcqn5cW%2BkVFFZpojKPtH6uv%2BPvNhq7c%2BOw=
+pd0v3H6FA%2BtW5YVrhUdyAESRo%2BSZ6fCPl6hOGAL2GTUB8hDKpQQ0%2F6fU0tFUApGmw2lhR=
+IjJymW9M%2FmwPzL6ud45AgqKquixWJrkgqGKJEnkLBnMh3%2BAAoKFRb7APPNOHtt7cSUuTS3U=
+AX46fjhRGIQCZHNl3Zp9L9zVRg6E0IaBzFDVZWomKGdZOKlmS9UmuKFiNNbRcKEr%2F6nqY6v5Y=
+hhC3C%2FvxFdyCwgLl%2FwFKaB0tLNxwITsTJ6RJnlGHIFrlqndAUHRyUO57qZhBEaL
+
+Upgrade to SDK 26
+https://c.apple.com/r?v=3D2&a=3DJO1XYJwWmbNCvWbplzNuaIanWX3fuC6Hkfu3jYT1piK=
+iuuQJ19%2FZuptaiggCOamnhjtQC4k%2FKuxcqn5cW%2BkVFFZpojKPtH6uv%2BPvNhq7c%2BOw=
+pd0v3H6FA%2BtW5YVrhUdyAESRo%2BSZ6fCPl6hOGAL2GTUB8hDKpQQ0%2F6fU0tFUApGmw2lhR=
+IjJymW9M%2FmwPzL6ud45AgqKquixWJrkgqGKJEnkLBnMh3%2BAAoKFRb7APPNOHtt7cSUuTS3U=
+AX46fjhRGIQCZHNl3Zp9L9zVRg6E0IaBzFDVZWomKGdZOKlmS9UmuKFiNNbRcKEr%2F6nqY6v5Y=
+hhC3C%2FvxFdyCwgLl%2FwFKaB0tLNxwITsTJ6RJnlGHIEt9YRpr%2Fidb29wcXuhd%2B4p
+
+If you have any questions, please contact us.=20
+https://c.apple.com/r?v=3D2&a=3Do2CKfLM8dAL7lynfnyn7UJR94mniF31x6BQ8mUoKnZU=
+uD7R688jDyRawVhuktIJpSt%2FgbMRzUfqDXsstXce3A3qTDDOq3vNdm0YDoGAVVRur1Kkd%2Bi=
+lnd2DBvaDDedfPghFXD55tE08rNLoxKeIX1FOGCMg9vdz86ud%2B3%2B275QFhmK5VxyBTWvYPN=
+QkGjJD%2B5%2BfcTj%2FeTeoWD1s1RpiVlhtWCJpXejWp2SuOr796blg2a%2FxvDMfdWcubC%2B=
+0wwZ8ErRcq1CYdeMlMxVIY5kCymLVKgJnq64qMnZnzYbC9UL0%3D
+
+The Apple Developer Relations Team=20
+
+-------------------
+
+Copyright =C2=A9 2025 Apple=C2=A0Inc. One=C2=A0Apple=C2=A0Park=C2=A0Way,=C2=
+=A0MS=C2=A0923=E2=80=914DEV, Cupertino,=C2=A0CA=C2=A095014=20
+
+-------------------
+
+All Rights Reserved
+https://c.apple.com/r?v=3D2&a=3DJO1XYJwWmbNCvWbplzNuaIanWX3fuC6Hkfu3jYT1piK=
+iuuQJ19%2FZuptaiggCOamnhjtQC4k%2FKuxcqn5cW%2BkVFFZpojKPtH6uv%2BPvNhq7c%2BOw=
+pd0v3H6FA%2BtW5YVrhUdyAESRo%2BSZ6fCPl6hOGAL2GTUB8hDKpQQ0%2F6fU0tFUApGmw2lhR=
+IjJymW9M%2FmwPzL6ud45AgqKquixWJrkgqGKJEnkLBnMh3%2BAAoKFRb7APPNOHtt7cSUuTS3U=
+AX46fjhRGIQCZHNl3Zp9L9zVRg6E0IaBzFDVZWomKGdZOKlmS9UmuKFiNNbRcKEr%2F6nqY6v5Y=
+hhC3C%2FvxFdyCwgLl%2FwFKaB0tLNxwITsTJ6RJnlGHIEtFZBTYpNZim5t3jSNRbf7
+
+Privacy Policy
+https://c.apple.com/r?v=3D2&a=3DJO1XYJwWmbNCvWbplzNuaIanWX3fuC6Hkfu3jYT1piK=
+iuuQJ19%2FZuptaiggCOamnhjtQC4k%2FKuxcqn5cW%2BkVFFZpojKPtH6uv%2BPvNhq7c%2BOw=
+pd0v3H6FA%2BtW5YVrhUdyAESRo%2BSZ6fCPl6hOGAL2GTUB8hDKpQQ0%2F6fU0tFUApGmw2lhR=
+IjJymW9M%2FmwPzL6ud45AgqKquixWJrkgqGKJEnkLBnMh3%2BAAoKFRb7APPNOHtt7cSUuTS3U=
+AX46fjhRGIQCZHNl3Zp9L9zVRg6E0IaBzFDVZWomKGdZOKlmS9UmuKFiNNbRcKEr%2F6nqY6v5Y=
+hhC3C%2FvxFdyCwgLl%2FwFKaB0tLNxwITsTJ6RJnlGHIFqR2bajnoeofD2nWISYHKD
+
+Account
+https://c.apple.com/r?v=3D2&a=3DJO1XYJwWmbNCvWbplzNuaIanWX3fuC6Hkfu3jYT1piK=
+iuuQJ19%2FZuptaiggCOamnhjtQC4k%2FKuxcqn5cW%2BkVFFZpojKPtH6uv%2BPvNhq7c%2BOw=
+pd0v3H6FA%2BtW5YVrhUdyAESRo%2BSZ6fCPl6hOGAL2GTUB8hDKpQQ0%2F6fU0tFUApGmw2lhR=
+IjJymW9M%2FmwPzL6ud45AgqKquixWJrkgqGKJEnkLBnMh3%2BAAoKFRb7APPNOHtt7cSUuTS3U=
+AX46fjhRGIQCZHNl3Zp9L9zVRg6E0IaBzFDVZWomKGdZOKlmS9UmuKFiNNbRcKEr%2F6nqY6v5Y=
+hhC3C%2FvxFdyCwgLl%2FwFKaB0tLNxwITsTJ6RJnlGHIFgunH4mmsxupnKayHiYY7H
+
+This is a service notification related to your Apple Developer account.
+
+-------------------
+------=_Part_118432340_1260244628.1761348865895
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Disposition: inline
+
+<!DOCTYPE html><html><head><title></title><meta content=3D"width=3Ddevice-w=
+idth,initial-scale=3D1" name=3Dviewport><meta content=3D"text/html;charset=
+=3Dutf-8" http-equiv=3Dcontent-type><meta content=3D"date=3Dno" name=3Dform=
+at-detection><meta content=3D"address=3Dno" name=3Dformat-detection><meta c=
+ontent=3D"email=3Dno" name=3Dformat-detection><style type=3Dtext/css>@media=
+ only screen and (max-device-width:2732px){.m27 a[href^=3D"tel:"]{color:inh=
+erit!important}}@media screen and (max-device-width:414px) {u ~ div { min-w=
+idth: 375px;} body,u+div { min-width: 375px;} } </style><style type=3Dtext/=
+css>@media screen and (max-device-width:568px){h1 a,h2 a,h3 a,h4 a,h5 a,h6 =
+a{color:inherit!important;font-weight:inherit!important}}</style><style typ=
+e=3Dtext/css>@media only screen and (max-device-width:568px){.m0{display:no=
+ne!important}.m1{display:block!important;width:100%!important;height:inheri=
+t!important;overflow:visible!important}.m21,.m26{padding:0!important}.m26 u=
+l{font-size:12px!important;line-height:16px!important;margin-top:9px;margin=
+-bottom:0;margin-left:40px!important;padding-left:0}.m26 ul li{padding-bott=
+om:9px!important}.m26 ul li:last-child{padding-bottom:0!important}.m26 tabl=
+e.m27{width:100%!important;max-width:414px!important;padding-top:0!importan=
+t}.m28{padding:0 6.25%!important}.m26 table.m29{width:100%!important;max-wi=
+dth:362px!important;padding-top:0!important}.m21 p{font-size:12px!important=
+;line-height:39px!important;padding:0!important}.m21 span.m30{font-size:0;l=
+ine-height:0;display:block}.m31,.m31 p{line-height:20px!important}.m47 .m48=
+ p .m33 a,.m47 .m48 p a[href^=3D"tel:"],.m47 .m48.m49 p.m50 .m33 a,.m27 a[h=
+ref^=3D"tel:"]{color:inherit!important}.m47 .m27,.m47 .m29,.m47.m24{backgro=
+und-color:#f5f5f7!important}.m47 .m48,.m47 .m48 p,.m47 .m31{text-align:left=
+!important}.m47 .m21{border-top:none!important}.m47 .m21 span.m30{border-to=
+p:1px solid #d2d2d7}.m47 .m21.m51{border-bottom:0!important}.m47 .m48,.m47 =
+.m48 p,.m47 .m31 .m30{color:#6e6e73!important}.m47 .m48 p a,.m47 .m31 p,.m4=
+7 .m31 p a{color:#424245!important}}</style><style type=3Dtext/css>.m0,.m1,=
+td{font-size:17px;font-weight:400;line-height:25px;font-family:system-ui,-a=
+pple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Helvetica,Arial,=
+sans-serif,"SF Pro Icons"}.m1,.m1 div{box-sizing:border-box}.m2,.m2 h1,.m2 =
+h1 a,.m2 h1 a:hover,.m2 h1 a:visited,.m2 h2,.m2 h2 a,.m2 h2 a:hover,.m2 h2 =
+a:visited,.m2 h3,.m2 h3 a,.m2 h3 a:hover,.m2 h3 a:visited,.m2 h4,.m2 h4 a,.=
+m2 h4 a:hover,.m2 h4 a:visited{color:#1d1d1f}.m0,.m1,.m3,p,td{font-family:s=
+ystem-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Helve=
+tica,Arial,sans-serif,"SF Pro Icons"}*{-webkit-font-smoothing:antialiased;t=
+ext-rendering:optimizelegibility}.m0,.m1{width:100%!important}table{border-=
+spacing:0}.m4>p,.m5 h6,b{font-weight:600}.m1{display:none;margin:0 auto;max=
+-width:100%;width:100%}.m1 .m6,td img{max-width:100%}.m1 .m6 .m7{max-width:=
+414px;margin:0 auto}.m1 .m8{font-size:0;line-height:0;margin:0 auto}.m1 .m9=
+,.m1 .m10{font-size:17px;line-height:25px}.m11 img,.m12,.m13,a img{display:=
+inline-block}.m14,.m6{margin:0 auto}.m15{text-align:center}.m15 img,td.m15 =
+img{margin-left:auto;margin-right:auto}.m16{text-align:left}.m16 img{margin=
+-left:0;margin-right:auto}.m17 a,.m18 a{border:0;outline:0}.m18 .m8{font-si=
+ze:12px;line-height:16px}.m2{border-color:#fff;background-color:#fff}.m2 a,=
+.m2 a:hover,.m2 a:visited{color:#06c}.m2.m17,.m2.m18{color:#86868b;backgrou=
+nd-color:#f5f5f7}.m2.m17 .m11,.m2.m17 a,.m2.m17 a.m11,.m2.m18 .m11,.m2.m18 =
+a,.m2.m18 a.m11{color:#515154}.m19 .m2{color:#6e6e73;background-color:#f5f5=
+f7}.m20 .m21 a,.m19 .m2 .m11,.m19 .m2 a,.m19 .m2 a.m11,.m19 .m2 a:hover,.m1=
+9 .m2 a:visited{color:#424245}.m2 .m22,.m2 .m22 td,.m2 .m22>div,.m2 td.m22{=
+border-color:#d2d2d7;color:#d2d2d7}.m23{white-space:nowrap}.m3 a,.m3 a:link=
+,a,p a,p a:link{cursor:pointer}.m24.m25 .m21,.m24.m25 .m26{padding:0!import=
+ant}.m24.m25 .m26 ul{font-size:12px!important;line-height:16px!important;ma=
+rgin-top:9px;margin-bottom:0;margin-left:40px!important;padding-left:0}.m24=
+.m25 .m26 ul li{padding-bottom:9px!important}.m24.m25 .m26 ul li:last-child=
+{padding-bottom:0!important}.m24.m25 .m26 table.m27{width:100%!important;ma=
+x-width:414px!important;padding-top:0!important}.m24.m25 .m28{padding:0 6.2=
+5%!important}.m24.m25 .m26 table.m29{width:100%!important;max-width:362px!i=
+mportant;padding-top:0!important}.m24.m25 .m21 p{font-size:12px!important;l=
+ine-height:39px!important;padding:0!important}.m24.m25 .m21 span.m30{font-s=
+ize:0;line-height:0;display:block}.m24.m25 .m31,.m24.m25 .m31 p{line-height=
+:20px!important}.m24.m25 .m27 a[href^=3D"tel:"]{color:inherit!important}.m3=
+ a.m32,.m3 a:link.m32,p a.m32,p a:link.m32{border:0;outline:0}.m1 .m10 ul{m=
+argin-top:9px;margin-bottom:0;margin-left:40px;padding-left:0}.m1 .m10 p+*,=
+.m1 .m10 ul+*{margin-top:9px!important}a,a:link{text-decoration:none;word-s=
+pacing:0!important}a:focus,a:hover,a:link:focus,a:link:hover{text-decoratio=
+n:underline!important}a:link[x-apple-data-detectors],a[x-apple-data-detecto=
+rs]{text-decoration:none!important}a:link[x-apple-data-detectors]:hover,a[x=
+-apple-data-detectors]:hover{text-decoration:underline!important}a.m11,a:li=
+nk.m11{text-decoration:none}a.m32,a:link.m32{text-decoration:none!important=
+}a[x-apple-data-detectors],a[x-apple-data-detectors]:hover,a[x-apple-data-d=
+etectors]:link{color:inherit;text-decoration:underline}p a,p a:link{text-de=
+coration:underline}p a.m33,p a:link.m33{text-decoration:none!important}p a.=
+m33:focus,p a.m33:hover,p a:link.m33:focus,p a:link.m33:hover{text-decorati=
+on:underline!important}td.m16 img{margin-right:auto;margin-left:0}.m3,p{fon=
+t-size:17px;font-weight:400;line-height:25px;margin:0}.m3 a.m32,a.m32,p a.m=
+32{border:0;outline:0}.m11.m22>div{border-top-style:solid;border-top-width:=
+1px}ul{margin-top:0;margin-bottom:0;margin-left:40px;padding-left:0}h1,h2,h=
+3,h4,h5,h6{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,=
+"Segoe UI","Helvetica Neue",Helvetica,Arial,sans-serif;display:inline-block=
+}h1 p a,h1 p a:link,h2 p a,h2 p a:link,h3 p a,h3 p a:link,h4 p a,h4 p a:lin=
+k,h5 p a,h5 p a:link,h6 p a,h6 p a:link{color:inherit!important;text-decora=
+tion:none}h1.m15,h2.m15,h3.m15,h4.m15,h5.m15,h6.m15{margin:0 auto;text-alig=
+n:center}.m1 .m34{font-size:19px;line-height:1.21053;letter-spacing:0}.m1 .=
+m35{font-size:17px;line-height:25px;letter-spacing:0}a{font-family:system-u=
+i,-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Helvetica,Ar=
+ial,sans-serif,"SF Pro Icons"}a>span{letter-spacing:inherit}.m11+.m30{displ=
+ay:inline-block;font-size:12px;padding:0 4px}.m11.m22>div{height:0;line-hei=
+ght:0}.m18 .m11{display:inline}.m36{line-height:0;padding-top:24px;padding-=
+bottom:24px}.m37{padding-bottom:17px;font-weight:400}.m38,.m38>p,.m37>p,.m3=
+9,.m39>p,.m40>p,.m41>p{font-weight:400}.m5{padding-top:16px}.m42{height:-1p=
+x;line-height:-1px}.m4{padding-left:17px;font-weight:600}.m43,.m44{padding-=
+top:12px;font-weight:400}.m43 img,.m44 img{width:12px;height:10px}.m40{padd=
+ing-top:24px;font-weight:400}.m41{padding-top:32px;font-weight:400}.m45{pad=
+ding-right:6.25%;padding-left:6.25%}.m46{padding-bottom:32px}.m52.m52.m52{c=
+olor:#333;margin:0 0 16px;padding:0;line-height:1.6em;font-size:17px;font-f=
+amily:system,-apple-system,-webkit-system-font,SFNSText,'Segoe UI','Helveti=
+ca Neue',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}.m53=
+.m53.m53{display:inline;margin:0}</style><!--[if gte mso 9]><style type=3D"=
+text/css">table,td,tr,a,span,b,sup{line-height:normal !important; mso-line-=
+height-rule: exactly;}sup{font-size:100% !important;}h1,h2,h3,h4,h5,h6 {lin=
+e-height: inherit !important; font-family:'Segoe UI SemiBold','Segoe UI', A=
+rial, sans-serif !important; font-weight: 400 !important; mso-line-height-r=
+ule: exactly; mso-text-raise: 2px;}h1 sup,h2 sup,h3 sup,h4 sup,h5 sup,h6 su=
+p, .outSemiBold sup, .outBold sup{font-size:90% !important;}b,strong {line-=
+height: inherit !important; font-family:'Segoe UI SemiBold','Segoe UI', Ari=
+al, sans-serif !important; font-weight: 400 !important; mso-line-height-rul=
+e: exactly; }.outBold { font-family: 'Segoe UI', Arial, sans-serif !importa=
+nt; font-weight: 600 !important; }.outSemiBold { font-family:'Segoe UI Semi=
+Bold','Segoe UI', Arial, sans-serif !important; font-weight: 400 !important=
+;line-height: inherit !important;mso-text-raise: 2px; }.outBold {overflow:v=
+isible;line-height: inherit !important;mso-line-height-rule: exactly;mso-te=
+xt-raise: 2px; }.fallback { display: block !important}.animated, .m1, .nthr=
+eturn, .return{ display: none !important}li {margin-bottom: 9px;}ol {margin=
+-left: 0 !important; }</style><xml><o:OfficeDocumentSettings><o:AllowPNG/><=
+o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml><![end=
+if]--><!--[if gte mso 15]><style type=3D"text/css">   h1,h2,h3,h4,h5,h6 {ms=
+o-text-raise: 2px;}</style><![endif]--><!--[if mso 15]><style type=3D"text/=
+css">   h1 {mso-text-raise: 4px;}</style><![endif]--></head><body style=3Dm=
+argin:0;padding:0><div style=3Ddisplay:none;max-height:0;overflow:hidden> F=
+airPlay Streaming Server SDK 26 is now available.  &#8199;&#847;</div><!-- =
+Adding spaces to prevent email copy from being visible --> <div style=3Ddis=
+play:none;max-height:0;overflow:hidden> =E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=
+=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=
+=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=
+=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=
+=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=
+=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=
+=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=
+=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=
+=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=
+=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=
+=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=
+=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=
+=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=
+=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=
+=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=
+=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=
+=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=
+=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=
+=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=
+=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=
+=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=
+=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=
+=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=
+=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=
+=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=
+=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=
+=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=
+=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=
+=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=
+=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=
+=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=
+=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=
+=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=
+=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=
+=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=
+=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=
+=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=
+=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=
+=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=
+=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=
+=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=
+=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=
+=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=
+=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=
+=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=
+=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=
+=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=
+=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=
+=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=
+=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=
+=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=
+=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=
+=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=
+=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=
+=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=
+=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=
+=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=
+=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=
+=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=
+=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=
+=A0=80=E2=A0=80=E2=A0=80=E2=A0=80=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=
+=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=
+=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=
+=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=
+=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=
+=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=
+=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=
+=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=
+=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=
+=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=
+=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=
+=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=
+=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=
+=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=
+=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=
+=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=
+=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=
+=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=
+=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=
+=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=
+=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=
+=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=
+=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=
+=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=
+=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=
+=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=
+=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=
+=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=
+=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=
+=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=
+=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=
+=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=
+=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=
+=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=
+=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=
+=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=
+=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=
+=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=
+=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=
+=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=
+=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=
+=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=
+=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=
+=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=
+=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=
+=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=
+=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=
+=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=
+=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=
+=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=
+=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=
+=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=
+=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=
+=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=
+=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=
+=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=
+=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=
+=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=
+=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=
+=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=
+=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=
+=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=
+=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=
+=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=
+=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=
+=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=
+=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=
+=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=
+=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=
+=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=
+=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=
+=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=
+=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=
+=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=
+=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=
+=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=
+=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=
+=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=
+=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=
+=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=
+=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=
+=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=
+=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=
+=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=
+=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=
+=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=
+=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=
+=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=
+=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=
+=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=
+=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=
+=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=
+=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=
+=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=
+=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=
+=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=
+=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=
+=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=
+=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=
+=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=
+=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=
+=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=
+=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=
+=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=
+=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=
+=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=
+=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=
+=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=
+=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=
+=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=
+=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=
+=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=
+=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=
+=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=
+=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=
+=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=
+=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=
+=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=
+=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=
+=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=
+=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=
+=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=
+=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=
+=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=
+=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=
+=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=
+=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=
+=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=
+=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=
+=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=
+=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=
+=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=
+=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=
+=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=
+=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=
+=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=
+=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=
+=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=
+=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=
+=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=
+=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=
+=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=
+=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=
+=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=
+=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=
+=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=
+=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=
+=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=
+=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=
+=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=
+=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=
+=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=
+=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=
+=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=
+=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=
+=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=
+=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=
+=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=
+=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=
+=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=
+=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=
+=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=
+=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=
+=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=
+=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=
+=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=
+=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=
+=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=
+=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=
+=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=
+=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=
+=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=
+=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=
+=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=
+=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=
+=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=
+=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=
+=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=
+=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=
+=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=
+=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=
+=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=
+=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=
+=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=
+=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=
+=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=
+=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=
+=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=
+=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=
+=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=
+=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=
+=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=
+=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=
+=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=
+=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=
+=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=
+=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=
+=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=
+=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=
+=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=
+=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=
+=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=
+=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=
+=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=
+=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=
+=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=
+=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=
+=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=
+=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=
+=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=
+=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=
+=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=
+=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=
+=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=
+=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=
+=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=
+=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=
+=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=
+=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=
+=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=
+=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=
+=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=
+=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=
+=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=
+=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=
+=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=
+=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=
+=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=
+=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=
+=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=
+=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=
+=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=
+=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=
+=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=
+=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=
+=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=
+=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=
+=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=
+=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=
+=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=
+=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=
+=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=
+=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=
+=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=
+=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=
+=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=
+=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=
+=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=
+=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=
+=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=
+=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=
+=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=
+=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=
+=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=
+=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=
+=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=
+=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=
+=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=
+=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=
+=EF=BB=BF=CD=8F=E2=80=8C=C2=A0=E2=80=87=EF=BB=BF=CD=8F=E2=80=8C=C2=A0</div>=
+<div class=3Dm1 style=3Ddisplay:none;width:0;height:0;overflow:hidden><div =
+class=3D"m6 m2 m46"><div class=3Dm7><div class=3D"m8 m45"><div class=3Dm9><=
+div class=3D"m14 m16 m36"><img alt=3D" " height=3D25 src=3Dhttps://develope=
+r.apple.com/click/images/mcfly/apple_icon_2x.png width=3D20 class=3Dm13></d=
+iv><div class=3D"m10 m37"><p class=3Dm3>Hello,</p></div><div class=3D"m10 m=
+38"><p class=3Dm3>We=E2=80=99re reaching out to let you know that FairPlay =
+Streaming Server SDK 26 is now available. This release includes important s=
+ecurity enhancements and interface updates, and we strongly recommend updat=
+ing your deployment to maintain the highest level of protection for your co=
+ntent.</p></div><div class=3D"m16 m5"><h6 class=3Dm34>What you need to know=
+:</h6></div><div class=3Dm42></div><div class=3D"m10 m4"><p class=3Dm3></p>=
+</div><div class=3D"m10 m39"><ul> <li class=3Dm52>Effective immediately, yo=
+u can only generate new certificates for SDK 26 and SDK 4.</li> <li class=
+=3Dm52>Starting September 2026, Apple will no longer provide technical supp=
+ort for SDKs 4 and 5.</li> <li class=3Dm52>Existing deployments will contin=
+ue to function in the same way, and existing certificates will not expire.<=
+/li> <li class=3Dm52>Update your deployment to benefit from the latest secu=
+rity enhancements and interface updates.</li> </ul></div><div class=3D"m14 =
+m43"><a href=3Dhttps://developer.apple.com/streaming/fps/ class=3Dm11>Learn=
+ more about FairPlay <span class=3Dm23>Streaming<img alt=3D" " height=3D10 =
+src=3Dhttps://developer.apple.com/click/images/mcfly/17_chevron_0066cc_2x.p=
+ng width=3D12 class=3Dm53></span></a></div><div class=3D"m14 m44"><a href=
+=3D"https://developer.apple.com/download/all/?q=3DFairPlay%20Streaming%20Se=
+rver%20SDK" class=3Dm11>Upgrade to SDK <span class=3Dm23>26<img alt=3D" " h=
+eight=3D10 src=3Dhttps://developer.apple.com/click/images/mcfly/17_chevron_=
+0066cc_2x.png width=3D12 class=3Dm53></span></a></div><div class=3D"m10 m40=
+"><p class=3Dm3>If you have any questions, please <a href=3D"https://c.appl=
+e.com/r?v=3D2&a=3Do2CKfLM8dAL7lynfnyn7UJR94mniF31x6BQ8mUoKnZUuD7R688jDyRawV=
+huktIJpSt%2FgbMRzUfqDXsstXce3A%2BpQiPxporKCHbyfW6ec5kI5GKUhRd%2BX1Vd1yNdZ8X=
+L7vijrTLeDPxa66a6LFrhzJro9CLb9gmuxYb8rbg9hKZsBDhbny8qEl0xWwsNM76TAbZujeaoMf=
+KW6LycXO8FbVrvYjxtV4nQ4CdMPijp4wJuCdL5IU8JjuWrYz%2B0nz67dpV%2Bk33N5%2B23n0s=
+%2BP%2FWv9X%2F%2BPp3H%2Fsac4D8XgLA9GjyE%3D" style=3Dcolor:#06c;text-decorat=
+ion:none>contact us</a>. </p></div><div class=3D"m10 m41"><p class=3Dm3> Th=
+e Apple Developer Relations Team </p></div></div></div></div></div></div><t=
+able border=3D0 cellpadding=3D0 cellspacing=3D0 role=3Dpresentation width=
+=3D100% align=3Dcenter><tr><td><div class=3Dm0><table border=3D0 cellpaddin=
+g=3D0 cellspacing=3D0 role=3Dpresentation width=3D100% align=3Dcenter><tr><=
+td style=3Dtext-align:center align=3Dcenter><table border=3D0 cellpadding=
+=3D0 cellspacing=3D0 role=3Dpresentation width=3D100% align=3Dcenter><tr cl=
+ass=3Dm6><td style=3Dbackground-color:#fff;padding-bottom:32px class=3Dm2 a=
+lign=3Dcenter><table border=3D0 cellpadding=3D0 cellspacing=3D0 role=3Dpres=
+entation width=3D712 align=3Dcenter><tr class=3Dm8><td><table border=3D0 ce=
+llpadding=3D0 cellspacing=3D0 role=3Dpresentation width=3D100% align=3Dleft=
+><tr><td class=3Dm9 width=3D100%><table border=3D0 cellpadding=3D0 cellspac=
+ing=3D0 role=3Dpresentation width=3D100% class=3Dm9><tr><td style=3Dpadding=
+-top:24px;padding-bottom:24px;padding-left:24px align=3Dleft><img alt=3D" "=
+ height=3D25 src=3Dhttps://developer.apple.com/click/images/mcfly/apple_ico=
+n_2x.png width=3D20 border=3D0 style=3Ddisplay:block></td></tr><tr><td styl=
+e=3D"padding:0 0 17px 24px" class=3Dm10><p style=3Dfont-weight:400;color:#1=
+d1d1f>Hello,</p></td></tr><tr><td style=3D"padding:0 0 0 24px" class=3Dm10>=
+<p style=3Dfont-weight:400;color:#1d1d1f>We=E2=80=99re reaching out to let =
+you know that FairPlay Streaming Server SDK 26 is now available. This relea=
+se includes important security enhancements and interface updates, and we s=
+trongly recommend updating your deployment to maintain the highest level of=
+ protection for your content.</p></td></tr><tr><td style=3Dpadding-top:25px=
+;padding-left:24px;text-align:left;line-height:normal><h6 style=3Dfont-size=
+:19px;letter-spacing:0;line-height:23px;font-weight:600;color:#1d1d1f>What =
+you need to know:</h6></td></tr><tr><td><table border=3D0 cellpadding=3D0 c=
+ellspacing=3D0 role=3Dpresentation align=3Dleft><tr><td style=3Dheight:12px=
+;width:0;font-size:0;line-height:12px height=3D12 width=3D0>=C2=A0</td></tr=
+></table></td></tr><tr><td style=3D"padding:0 0 0 17px" class=3Dm10></td></=
+tr><tr><td style=3D"padding:6px 0 0 24px" class=3Dm10><ul style=3Dfont-weig=
+ht:400;padding:0;margin-top:9px;margin-bottom:0;margin-left:40px> <li style=
+=3D"color:#333;margin:0 0 16px;padding:0;line-height:1.6em;font-size:17px;f=
+ont-family:system,-apple-system,-webkit-system-font,SFNSText,'Segoe UI','He=
+lvetica Neue',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased=
+">Effective immediately, you can only generate new certificates for SDK 26 =
+and SDK 4.</li> <li style=3D"color:#333;margin:0 0 16px;padding:0;line-heig=
+ht:1.6em;font-size:17px;font-family:system,-apple-system,-webkit-system-fon=
+t,SFNSText,'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif;-webkit-f=
+ont-smoothing:antialiased">Starting September 2026, Apple will no longer pr=
+ovide technical support for SDKs 4 and 5.</li> <li style=3D"color:#333;marg=
+in:0 0 16px;padding:0;line-height:1.6em;font-size:17px;font-family:system,-=
+apple-system,-webkit-system-font,SFNSText,'Segoe UI','Helvetica Neue',Helve=
+tica,Arial,sans-serif;-webkit-font-smoothing:antialiased">Existing deployme=
+nts will continue to function in the same way, and existing certificates wi=
+ll not expire.</li> <li style=3D"color:#333;margin:0 0 16px;padding:0;line-=
+height:1.6em;font-size:17px;font-family:system,-apple-system,-webkit-system=
+-font,SFNSText,'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif;-webk=
+it-font-smoothing:antialiased">Update your deployment to benefit from the l=
+atest security enhancements and interface updates.</li> </ul></td></tr><tr>=
+<td style=3Dpadding-top:12px;padding-left:24px;font-size:17px;line-height:2=
+5px><a href=3D"https://c.apple.com/r?v=3D2&a=3DJO1XYJwWmbNCvWbplzNuaIanWX3f=
+uC6Hkfu3jYT1piKiuuQJ19%2FZuptaiggCOamnIclyuw%2B1RdnMk0wnvuLgs2dxqg9uTJ1%2Bc=
+LcfuFm6maP14Pq9H04X%2BWMav6y5GTVlbszgcRVB%2B1CkKvRvuFLcO%2FRx0nzBtWM%2BJqL7=
+9E1UuN%2BLVyT8hKViXie95j1hETKJucuJ3rsOokjQ2a77OkMIGSvIKPV83Fw9oN5bg7YziAlqD=
+8%2BarN1iHqJtxJaBUP%2B3DyhHjDWM2zUH14D1O7YBSGNpYQqeCsZK3lzB8nUlE8oWiSFg0fX6=
+dFYF54KXtIasGgBNP%2F%2FPgAaXeNdEHZdXqvE%2FnFWZwWKP3dMTMIp0ZF5HBUhX%2Bn7OLLr=
+ZhqqIABAO" style=3Dfont-size:17px;font-weight:400;line-height:25px;color:#0=
+6c class=3D"m3 m11">Learn more about FairPlay <span style=3Dwhite-space:now=
+rap>Streaming<img alt=3D" " height=3D10 src=3Dhttps://developer.apple.com/c=
+lick/images/mcfly/17_chevron_0066cc_2x.png width=3D12 border=3D0 style=3Dfo=
+nt-size:0;display:inline-block;margin:0></span></a></td></tr><tr><td style=
+=3Dpadding-top:12px;padding-left:24px;font-size:17px;line-height:25px><a hr=
+ef=3D"https://c.apple.com/r?v=3D2&a=3DJO1XYJwWmbNCvWbplzNuaIanWX3fuC6Hkfu3j=
+YT1piKiuuQJ19%2FZuptaiggCOamnIclyuw%2B1RdnMk0wnvuLgs2dxqg9uTJ1%2BcLcfuFm6ma=
+P14Pq9H04X%2BWMav6y5GTVlbszgcRVB%2B1CkKvRvuFLcO%2FRx0nzBtWM%2BJqL79E1UuN%2B=
+LVyT8hKViXie95j1hETKJucuJ3rsOokjQ2a77OkMIGSvIKPV83Fw9oN5bg7YziAlqD8%2BarN1i=
+HqJtxJaBUP%2B3DyhHjDWM2zUH14D1O7YBSGNpYQqeCsZK3lzB8nUlE8oWiSFg0fX6dFYF54KXt=
+IasGgBNP%2F%2FPgAaXeNdEHZdXqvE%2FnFWZwWKP3dMTMIp0ZF7rUalium6uiHPgjdJ5%2FpTb=
+" style=3Dfont-size:17px;font-weight:400;line-height:25px;color:#06c class=
+=3D"m3 m11">Upgrade to SDK <span style=3Dwhite-space:nowrap>26<img alt=3D" =
+" height=3D10 src=3Dhttps://developer.apple.com/click/images/mcfly/17_chevr=
+on_0066cc_2x.png width=3D12 border=3D0 style=3Dfont-size:0;display:inline-b=
+lock;margin:0></span></a></td></tr><tr><td style=3D"padding:24px 0 0 24px" =
+class=3Dm10><p style=3Dfont-weight:400;color:#1d1d1f>If you have any questi=
+ons, please <a href=3D"https://c.apple.com/r?v=3D2&a=3Do2CKfLM8dAL7lynfnyn7=
+UJR94mniF31x6BQ8mUoKnZUuD7R688jDyRawVhuktIJpSt%2FgbMRzUfqDXsstXce3A%2BpQiPx=
+porKCHbyfW6ec5kI5GKUhRd%2BX1Vd1yNdZ8XL7vijrTLeDPxa66a6LFrhzJro9CLb9gmuxYb8r=
+bg9hKZsBDhbny8qEl0xWwsNM76TAbZujeaoMfKW6LycXO8FbVrvYjxtV4nQ4CdMPijp4wJuCdL5=
+IU8JjuWrYz%2B0nz67dpV%2Bk33N5%2B23n0s%2BP%2FWv9X%2F%2BPp3H%2Fsac4D8XgLA9Gjy=
+E%3D" style=3Dcolor:#06c;text-decoration:none>contact us</a>. </p></td></tr=
+><tr><td style=3D"padding:24px 0 24px 24px" class=3Dm10><p style=3Dfont-wei=
+ght:400;color:#1d1d1f> The Apple Developer Relations Team </p></td></tr></t=
+able></td></tr></table></td></tr></table></td></tr></table></td></tr></tabl=
+e></div></td></tr><tr><td><table border=3D0 cellpadding=3D0 cellspacing=3D0=
+ role=3Dpresentation width=3D100% class=3D"m20 m24 m47" bgcolor=3D#F5F5F7 s=
+tyle=3Dbackground-color:#f5f5f7><tr class=3Dm6><td class=3Dm26><table borde=
+r=3D0 cellpadding=3D0 cellspacing=3D0 role=3Dpresentation width=3D736 align=
+=3Dcenter bgcolor=3D#F5F5F7 class=3Dm27 style=3Dbackground-color:#f5f5f7><t=
+r><td style=3D"padding:0 20px" class=3Dm28><table border=3D0 cellpadding=3D=
+0 cellspacing=3D0 role=3Dpresentation width=3D660 align=3Dcenter bgcolor=3D=
+#F5F5F7 class=3Dm29><tr><td style=3Dfont-size:12px;line-height:16px;border-=
+top-width:0;border-top-style:none;border-top-color:currentcolor class=3D"m2=
+1 m51" align=3Dcenter></td></tr><tr><td style=3D"padding:10px 0 9px;text-al=
+ign:left" class=3D"m48 m49"><p style=3Dfont-size:12px;line-height:16px;colo=
+r:#6e6e73 class=3Dm50>Copyright =C2=A9 2025 Apple=C2=A0Inc. <br>One=C2=A0Ap=
+ple=C2=A0Park=C2=A0Way,=C2=A0MS=C2=A0923=E2=80=914DEV, Cupertino,=C2=A0CA=
+=C2=A095014 </p></td></tr><tr><td style=3D"padding:0 0 9px;font-size:12px;l=
+ine-height:16px;color:#424245;text-align:left" class=3Dm31><p style=3D"colo=
+r:#424245;margin:0 auto;font-size:12px;line-height:16px"><a href=3D"https:/=
+/c.apple.com/r?v=3D2&a=3DJO1XYJwWmbNCvWbplzNuaIanWX3fuC6Hkfu3jYT1piKiuuQJ19=
+%2FZuptaiggCOamnIclyuw%2B1RdnMk0wnvuLgs2dxqg9uTJ1%2BcLcfuFm6maP14Pq9H04X%2B=
+WMav6y5GTVlbszgcRVB%2B1CkKvRvuFLcO%2FRx0nzBtWM%2BJqL79E1UuN%2BLVyT8hKViXie9=
+5j1hETKJucuJ3rsOokjQ2a77OkMIGSvIKPV83Fw9oN5bg7YziAlqD8%2BarN1iHqJtxJaBUP%2B=
+3DyhHjDWM2zUH14D1O7YBSGNpYQqeCsZK3lzB8nUlE8oWiSFg0fX6dFYF54KXtIasGgBNP%2F%2=
+FPgAaXeNdEHZdXqvE%2FnFWZwWKP3dMTMIp0ZF6D472J4ZGk8q4sTbeJQtDI" style=3Dborde=
+r:0;outline:0;text-decoration:none;color:#424245>All Rights Reserved</a>=C2=
+=A0=C2=A0<span class=3Dm30 style=3Dcolor:#6e6e73>|</span>=C2=A0=C2=A0<a hre=
+f=3D"https://c.apple.com/r?v=3D2&a=3DJO1XYJwWmbNCvWbplzNuaIanWX3fuC6Hkfu3jY=
+T1piKiuuQJ19%2FZuptaiggCOamnIclyuw%2B1RdnMk0wnvuLgs2dxqg9uTJ1%2BcLcfuFm6maP=
+14Pq9H04X%2BWMav6y5GTVlbszgcRVB%2B1CkKvRvuFLcO%2FRx0nzBtWM%2BJqL79E1UuN%2BL=
+VyT8hKViXie95j1hETKJucuJ3rsOokjQ2a77OkMIGSvIKPV83Fw9oN5bg7YziAlqD8%2BarN1iH=
+qJtxJaBUP%2B3DyhHjDWM2zUH14D1O7YBSGNpYQqeCsZK3lzB8nUlE8oWiSFg0fX6dFYF54KXtI=
+asGgBNP%2F%2FPgAaXeNdEHZdXqvE%2FnFWZwWKP3dMTMIp0ZF48JQhQqlCDqMeU0N4WpXxz" s=
+tyle=3Dborder:0;outline:0;text-decoration:none;color:#424245>Privacy Policy=
+</a>=C2=A0=C2=A0<span class=3Dm30 style=3Dcolor:#6e6e73>|</span>=C2=A0=C2=
+=A0<a href=3D"https://c.apple.com/r?v=3D2&a=3DJO1XYJwWmbNCvWbplzNuaIanWX3fu=
+C6Hkfu3jYT1piKiuuQJ19%2FZuptaiggCOamnIclyuw%2B1RdnMk0wnvuLgs2dxqg9uTJ1%2BcL=
+cfuFm6maP14Pq9H04X%2BWMav6y5GTVlbszgcRVB%2B1CkKvRvuFLcO%2FRx0nzBtWM%2BJqL79=
+E1UuN%2BLVyT8hKViXie95j1hETKJucuJ3rsOokjQ2a77OkMIGSvIKPV83Fw9oN5bg7YziAlqD8=
+%2BarN1iHqJtxJaBUP%2B3DyhHjDWM2zUH14D1O7YBSGNpYQqeCsZK3lzB8nUlE8oWiSFg0fX6d=
+FYF54KXtIasGgBNP%2F%2FPgAaXeNdEHZdXqvE%2FnFWZwWKP3dMTMIp0ZF7E70ocDvDRPMST3e=
+MH4%2BtB" style=3Dborder:0;outline:0;text-decoration:none;color:#424245>Acc=
+ount</a> </p></td></tr><tr><td style=3D"padding:0 0 56px;text-align:left" c=
+lass=3Dm48><p style=3Dfont-size:12px;line-height:16px;color:#6e6e73>This is=
+ a service notification related to your Apple Developer account.</p></td></=
+tr></table></td></tr></table></td></tr></table></td></tr></table> </body></=
+html>
+------=_Part_118432340_1260244628.1761348865895--
+

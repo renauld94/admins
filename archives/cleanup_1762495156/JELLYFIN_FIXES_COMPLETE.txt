@@ -1,0 +1,312 @@
+╔══════════════════════════════════════════════════════════════════════════╗
+║                                                                          ║
+║   🎬 JELLYFIN FIXES - COMPLETE GUIDE                                    ║
+║   ═══════════════════════════════════                                   ║
+║                                                                          ║
+║   Date: November 6, 2025                                                ║
+║   Server: 136.243.155.166:8096 / jellyfin.simondatalab.de              ║
+║                                                                          ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📋 ISSUE 1: JavaScript ScrollBehavior Error
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Error Message:
+  TypeError: Failed to execute 'scrollTo' on 'Element': 
+  The provided value 'null' is not a valid enum value of type ScrollBehavior
+
+Root Cause:
+  Jellyfin 10.10.7 bug - Live TV guide passes behavior: null to scroll functions
+
+✅ SOLUTION: Install Tampermonkey Userscript
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+AUTOMATED INSTALLATION (Recommended):
+  
+  Run this command:
+  
+    bash /home/simon/Learning-Management-System-Academy/scripts/install-tampermonkey-script.sh
+  
+  Then follow the interactive prompts:
+    1. Chrome will open to Tampermonkey extension page
+    2. Click "Add to Chrome" → "Add extension"
+    3. Press ENTER in terminal when installed
+    4. Tampermonkey dashboard opens
+    5. Click "+" or "Create new script"
+    6. Press ENTER in terminal
+    7. Script content is copied to clipboard
+    8. Paste (Ctrl+V) into editor
+    9. Press ENTER in terminal
+    10. Save script (Ctrl+S)
+    11. Jellyfin opens - press F12 to verify fix
+
+MANUAL INSTALLATION:
+  
+  1. Install Tampermonkey extension:
+     https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo
+  
+  2. Click Tampermonkey icon → Dashboard → "+"
+  
+  3. Copy script from:
+     /home/simon/Learning-Management-System-Academy/config/jellyfin/jellyfin-scrollfix.user.js
+  
+  4. Paste into editor and save (Ctrl+S)
+
+VERIFICATION:
+  
+  1. Open: https://jellyfin.simondatalab.de
+  2. Press F12 (Developer Console)
+  3. Look for: "✅ Jellyfin ScrollBehavior Fix - Applied successfully!"
+  4. Navigate to: Live TV → Guide
+  5. Scroll through channels - no errors!
+
+QUICK CONSOLE FIX (Temporary, must repeat each session):
+  
+  Press F12 in Jellyfin, paste this into console:
+  
+  (function(){const e=Element.prototype.scrollTo;Element.prototype.scrollTo=function(t){typeof t=="object"&&t!==null&&(t.behavior===null&&(t.behavior="smooth"),["smooth","auto","instant"].includes(t.behavior)||(t.behavior="smooth"));return e.call(this,t)};const o=window.scrollTo;window.scrollTo=function(t){typeof t=="object"&&t!==null&&(t.behavior===null&&(t.behavior="smooth"),["smooth","auto","instant"].includes(t.behavior)||(t.behavior="smooth"));return o.call(this,t)};console.log("✅ Jellyfin ScrollBehavior fix applied")})();
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🖼️  ISSUE 2: Channel Images Showing 500 Errors
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Error Message:
+  GET https://jellyfin.simondatalab.de/Items/.../Images/Primary
+  500 (Internal Server Error)
+
+Root Causes Identified:
+  1. ✅ FIXED: 2 channels missing tvg-logo metadata
+  2. ⚠️  LIKELY: Jellyfin image cache corruption
+  3. ⚠️  POSSIBLE: External logo URLs unreachable
+  4. ⚠️  POSSIBLE: Storage permission issues on server
+
+✅ COMPLETED FIXES:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Added default logos to channels:
+   - ABC 4 Pittsburg PA (WTAE) (720p)
+   - AntenaSport (720p) [Not 24/7]
+   
+   Backup created:
+   /home/simon/Learning-Management-System-Academy/alternative_m3u_sources/jellyfin-channels-enhanced.m3u.backup-20251106-110328
+
+2. Analyzed M3U file:
+   - Total channels: 311
+   - Channels with logos: 309 → 311 (100%)
+   - Tested 5 random logos: All ✅ accessible
+
+📋 MANUAL STEPS REQUIRED:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 1: Refresh Jellyfin Channel Metadata
+  
+  1. Open Jellyfin Dashboard:
+     http://136.243.155.166:8096/web/index.html#!/dashboard
+  
+  2. Navigate to: Live TV → Tuner Devices
+  
+  3. Click on your M3U Tuner
+  
+  4. Click: "Refresh Guide Data"
+  
+  5. Wait for refresh to complete (may take 2-5 minutes)
+
+STEP 2: Clear Image Cache (Requires VM200 Access)
+  
+  If you have SSH access to VM200 (10.0.0.103):
+  
+    ssh root@10.0.0.103
+    
+    # If Docker:
+    docker exec jellyfin rm -rf /config/data/cache/images/*
+    docker restart jellyfin
+    
+    # If systemd service:
+    rm -rf /var/lib/jellyfin/data/cache/images/*
+    systemctl restart jellyfin
+    
+    # Check logs:
+    docker logs jellyfin -n 100 | grep -i error
+    # OR
+    journalctl -u jellyfin -n 100 --no-pager
+
+STEP 3: Verify Image Loading
+  
+  1. Open: https://jellyfin.simondatalab.de
+  2. Navigate to: Live TV → Channels
+  3. Check if channel thumbnails load
+  4. Press F12 → Console tab
+  5. Look for any remaining 500 errors
+
+ALTERNATIVE: Use Jellyfin API
+  
+  1. Get API key: Dashboard → API Keys → Create new key
+  
+  2. Refresh library:
+     curl -X POST 'http://136.243.155.166:8096/Library/Refresh' \
+       -H 'X-MediaBrowser-Token: YOUR_API_KEY'
+  
+  3. Clear cache:
+     curl -X POST 'http://136.243.155.166:8096/System/Tasks/Running/ClearImageCache' \
+       -H 'X-MediaBrowser-Token: YOUR_API_KEY'
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔧 DIAGNOSTIC TOOLS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Diagnose Image Issues:
+   bash /home/simon/Learning-Management-System-Academy/scripts/diagnose-jellyfin-images.sh
+
+2. Fix Image Issues:
+   bash /home/simon/Learning-Management-System-Academy/scripts/fix-jellyfin-images.sh
+
+3. Test Channel Health:
+   python3 /home/simon/Learning-Management-System-Academy/scripts/jellyfin-channel-monitor.py --dry-run
+
+4. Check Jellyfin Server Info:
+   curl -s http://136.243.155.166:8096/System/Info/Public | python3 -m json.tool
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 CURRENT STATUS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Server Details:
+  ✅ Jellyfin Version: 10.10.7
+  ✅ Server Name: 92a7a8ae540f
+  ✅ External URL: https://jellyfin.simondatalab.de (Cloudflare proxy)
+  ✅ Internal IP: 136.243.155.166:8096
+  ✅ VM200 IP: 10.0.0.103:8096 (not directly accessible from your machine)
+
+Channel Status:
+  ✅ Total Channels: 311
+  ✅ Working Channels: 286 (92.0%)
+  ✅ Channels with Logos: 311 (100%) ← JUST FIXED!
+  ⚠️  Failed Channels: 25 (8.0%)
+  📊 Latest Report: /home/simon/Learning-Management-System-Academy/reports/jellyfin/channel-health-20251106_103258.html
+
+Fixes Implemented:
+  ✅ JavaScript scrollBehavior patch (Tampermonkey script ready)
+  ✅ Missing logos added to M3U file
+  ✅ Diagnostic scripts created
+  ✅ Auto-fix scripts created
+  ⏳ Awaiting: Manual Jellyfin metadata refresh
+  ⏳ Awaiting: Image cache clear on server
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 QUICK START COMMANDS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+# Install Tampermonkey script (interactive):
+bash /home/simon/Learning-Management-System-Academy/scripts/install-tampermonkey-script.sh
+
+# Diagnose image issues:
+bash /home/simon/Learning-Management-System-Academy/scripts/diagnose-jellyfin-images.sh
+
+# Test all channels:
+python3 /home/simon/Learning-Management-System-Academy/scripts/jellyfin-channel-monitor.py --dry-run
+
+# View latest health report:
+google-chrome /home/simon/Learning-Management-System-Academy/reports/jellyfin/channel-health-20251106_103258.html
+
+# Open Jellyfin:
+google-chrome https://jellyfin.simondatalab.de
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📁 FILE LOCATIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Configuration:
+  • M3U Playlist: alternative_m3u_sources/jellyfin-channels-enhanced.m3u
+  • M3U Backup: alternative_m3u_sources/jellyfin-channels-enhanced.m3u.backup-*
+  • Userscript: config/jellyfin/jellyfin-scrollfix.user.js
+  • Console Fix: config/jellyfin/browser-console-fix.txt
+
+Scripts:
+  • Tampermonkey Installer: scripts/install-tampermonkey-script.sh
+  • Image Diagnostic: scripts/diagnose-jellyfin-images.sh
+  • Image Fix: scripts/fix-jellyfin-images.sh
+  • Channel Monitor: scripts/jellyfin-channel-monitor.py
+
+Reports:
+  • Channel Health: reports/jellyfin/channel-health-*.html
+  • Setup Complete: config/jellyfin/JELLYFIN_SETUP_COMPLETE.txt
+  • Awesome Features: config/jellyfin/JELLYFIN_AWESOME_FEATURES.md
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ NEXT STEPS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+HIGH PRIORITY (Do Now - 10 minutes):
+
+  1. Install Tampermonkey script:
+     bash /home/simon/Learning-Management-System-Academy/scripts/install-tampermonkey-script.sh
+  
+  2. Refresh Jellyfin channel metadata:
+     Dashboard → Live TV → Tuner Devices → Refresh Guide Data
+  
+  3. Test Live TV guide:
+     https://jellyfin.simondatalab.de/web/#/livetv.html?collectionType=livetv
+
+MEDIUM PRIORITY (If images still fail - 15 minutes):
+
+  4. Access VM200 and clear image cache:
+     ssh root@10.0.0.103
+     docker logs jellyfin -n 100 | grep -i error
+     docker exec jellyfin rm -rf /config/data/cache/images/*
+     docker restart jellyfin
+  
+  5. Verify image loading in browser:
+     Press F12 → Console → Check for 500 errors
+
+LOW PRIORITY (Optional enhancements):
+
+  6. Setup EPG data for program guide
+  7. Enable hardware transcoding
+  8. Install recommended plugins
+  
+  See: config/jellyfin/JELLYFIN_AWESOME_FEATURES.md
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+❓ TROUBLESHOOTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Q: Tampermonkey script not working?
+A: 1. Check Tampermonkey icon shows "1" badge
+   2. Click icon → Dashboard → Script should have green light
+   3. Refresh Jellyfin page (Ctrl+R)
+   4. Open console (F12) and verify message appears
+
+Q: Images still showing 500 errors?
+A: 1. Run diagnostic: bash scripts/diagnose-jellyfin-images.sh
+   2. Check Jellyfin logs on VM200
+   3. Clear image cache and restart Jellyfin
+   4. Verify logo URLs are accessible
+   5. Check storage permissions on server
+
+Q: Can't access VM200?
+A: 1. Check if you're on the same network
+   2. Try from Proxmox console
+   3. Use Jellyfin API instead (requires API key)
+
+Q: Channel monitor not working?
+A: python3 scripts/jellyfin-channel-monitor.py --dry-run --workers 10 --timeout 5
+
+Q: Need to restore M3U backup?
+A: cp alternative_m3u_sources/jellyfin-channels-enhanced.m3u.backup-* \
+      alternative_m3u_sources/jellyfin-channels-enhanced.m3u
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✨ All tools and fixes are ready! Just run the commands above. ✨
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

@@ -1,0 +1,1432 @@
+X-GM-THRID: 1802781521880051315
+X-Gmail-Labels: Inbox,Category Promotions,Unread
+Delivered-To: sn.renauld@gmail.com
+Received: by 2002:a17:906:3297:b0:a6f:5f1c:8b7f with SMTP id 23csp2268155ejw;
+        Mon, 24 Jun 2024 15:00:35 -0700 (PDT)
+X-Google-Smtp-Source: 
+ AGHT+IETyTqmavvvNCX+skRRiEPNe1c71Y0g7E8PklFTNyX7ufdYqn4TS2cTbWcbPr2DVOPxkBFf
+X-Received: by 2002:a05:6122:368a:b0:4ec:fe27:28e9 with SMTP id
+ 71dfb90a1353d-4ef6d8cf49amr4478271e0c.14.1719266435431;
+        Mon, 24 Jun 2024 15:00:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1719266435; cv=none;
+        d=google.com; s=arc-20160816;
+        b=dZjWun2nOmsVG12DMoFVvITbj0CGo1XFOlpcNLkvkmd/JX3BF1hTrI7zY1s3HlDCS7
+         Esl//1kze5nC3s0Fv40Uz8+IF7jyRcpVa5KXVND+nsudQnXERBR0ym8JD+DjV1FicmgC
+         IFnksJWYX6av6Vt0KUtBObscT9VV/aWWFnQ/8+hEVBCODRv54If96bFYgKsasFaD5JJb
+         ov4FLxKmLHf4OnkmwmxCfjvCj2HL063O50t1gkTxVyuygLEMmeCxQqbPlgPVhkrNv/xO
+         4CaW4liYvZmMApddnSoFx80M7EVyNitXBTMM7yrbRkAno2+aDx7f5+8UAr1Oa2ZOkrQs
+         iLOw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20160816;
+        h=to:list-unsubscribe-post:list-unsubscribe:reply-to:subject
+         :message-id:mime-version:from:date:dkim-signature:dkim-signature;
+        bh=nMz4i0aIkwFfW41fVbl6jA/b2yu+rslhsfRBfdIDIJc=;
+        fh=UdbUcDkJKvqffcPeSfMTJ3BaP9WLNp68ZQroZAlxuH8=;
+        b=hLdPBg1rwz/TieRU6TAPQyrgNq5fyOvi6Cm9VHnNkHrQPHsrg6cz8rkuSi3mqi+XjZ
+         0aCUvONKzir2dHjoQcG35V158jUrBStK+1Eks2UjrJFwAjzP9fK/oHfD0+wIcKBXg+Ru
+         N5J4/9MUQqK1nbS8Y3Io1uYuif+2f0s2bOH3CfblzPpUt8z/Iq8FowFaLFgj5jKeBkhA
+         FXCbn09bHbVYeNxFA0PInESPkTQkVX3swfw4tlWe7UGQXWz4eNQlexUmwzpu5rvGI/Dk
+         z9+2GUMfM+brvjM5NWxtzbD0zImlr/flBbwO4281MyqBF7gCdqikflqLoys1/tVXwB0y
+         ZxxA==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@mail.anthropic.com header.s=s1 header.b=aBAo2jt8;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=HvJpNoNL;
+       spf=pass (google.com: domain of
+ bounces+31859940-b458-sn.renauld=gmail.com@em9672.mail.anthropic.com
+ designates 149.72.125.152 as permitted sender)
+ smtp.mailfrom="bounces+31859940-b458-sn.renauld=gmail.com@em9672.mail.anthropic.com";
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE)
+ header.from=anthropic.com
+Return-Path: 
+ <bounces+31859940-b458-sn.renauld=gmail.com@em9672.mail.anthropic.com>
+Received: from o3.mail.anthropic.com (o3.mail.anthropic.com. [149.72.125.152])
+        by mx.google.com with ESMTPS id
+ 71dfb90a1353d-4ef726d79ffsi516689e0c.307.2024.06.24.15.00.35
+        for <sn.renauld@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 24 Jun 2024 15:00:35 -0700 (PDT)
+Received-SPF: pass (google.com: domain of
+ bounces+31859940-b458-sn.renauld=gmail.com@em9672.mail.anthropic.com
+ designates 149.72.125.152 as permitted sender) client-ip=149.72.125.152;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@mail.anthropic.com header.s=s1 header.b=aBAo2jt8;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=HvJpNoNL;
+       spf=pass (google.com: domain of
+ bounces+31859940-b458-sn.renauld=gmail.com@em9672.mail.anthropic.com
+ designates 149.72.125.152 as permitted sender)
+ smtp.mailfrom="bounces+31859940-b458-sn.renauld=gmail.com@em9672.mail.anthropic.com";
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE)
+ header.from=anthropic.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mail.anthropic.com;
+	h=content-type:from:mime-version:subject:reply-to:list-unsubscribe:
+	list-unsubscribe-post:x-feedback-id:to:cc:content-type:from:subject:to;
+	s=s1; bh=nMz4i0aIkwFfW41fVbl6jA/b2yu+rslhsfRBfdIDIJc=;
+	b=aBAo2jt8jDmQ4P82G3M8lJGKhbX5/uHKBV3ZGfiGTjOhFTLP8yC3PpAXXp8ho1XpBYHO
+	MRqzwVQqPguo3ck9qRFgimHgxmqISe2e25nSjdDMe1QjH1VU8JQgbmGycie7eaDpuYwtak
+	QLCnZJ3yeo5cRgwk2+DMHTZA+IMmuX3VoPXTt1JvvDh74UyuFUrV8EdBNsoPOV6SmWbEaQ
+	UwWKTVDpiKqAdn1Q4rmtoeoLVU+IPkoDfPxfu8DKXekE+EN8V7LYhF1V/pO9cZg/gZVxO8
+	imNk1ISxaKxe+rsD++ek/rMv1Wvpryf63CHGqzO223zxtrSIjCGJ/RiSSmIcVFng==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendgrid.info;
+	h=content-type:from:mime-version:subject:reply-to:list-unsubscribe:
+	list-unsubscribe-post:x-feedback-id:to:cc:content-type:from:subject:to;
+	s=smtpapi; bh=nMz4i0aIkwFfW41fVbl6jA/b2yu+rslhsfRBfdIDIJc=;
+	b=HvJpNoNLFVjL7nkNfQjSN6XGBJX4lea5PSw2Q3Jhbs3tY1LfiQvIL1n7gJZDEix5jRKc
+	gXHEV6E+FjFeEwCCuLL4ztW/J+3+GL9/zPFnY/YGjao5db6GBWMW+uHiPXETiIB2F/ygRc
+	GvLFKGllNRTla6PcCuJ1wLDyKdkbRyhpI=
+Received: by recvd-7fb687567-7bqx4 with SMTP id
+ recvd-7fb687567-7bqx4-1-6679EC79-C
+	2024-06-24 22:00:25.737421872 +0000 UTC m=+519115.815344708
+Received: from MzE4NTk5NDA (unknown)
+	by geopod-ismtpd-19 (SG) with HTTP
+	id T5ho5fnBQzS0AkrE3rRPng
+	Mon, 24 Jun 2024 22:00:25.717 +0000 (UTC)
+Content-Type: multipart/alternative;
+ boundary=c07c74bdb0df0719d885a018db64be591a9b2922d722829bd1451cdf2b5a
+Date: Mon, 24 Jun 2024 22:00:26 +0000 (UTC)
+From: Anthropic <support+news@mail.anthropic.com>
+Mime-Version: 1.0
+Message-ID: <T5ho5fnBQzS0AkrE3rRPng@geopod-ismtpd-19>
+Subject: Claude 3.5 Sonnet is here
+Reply-To: support+news@mail.anthropic.com
+List-Unsubscribe: 
+ =?us-ascii?Q?=3Cmailto=3Aunsubscribe=40em9672=2Email=2Eanthropic=2Ecom=3Fsubject=3Dhttps=3A=2F=2F?=
+ =?us-ascii?Q?url8792=2Email=2Eanthropic=2Ecom=2Fwf=2Funsubscri?=
+ =?us-ascii?Q?be*q*upn=3DwzqEHQSn045tRvE-2FnMN1Hk3pIyiQ?=
+ =?us-ascii?Q?CrrmqbFFROZ7VJY4uGXxRTINvolxYcyAmFeBGq9?=
+ =?us-ascii?Q?XDfP4Nm1b1RUuB46PrTPp7Du6KWhbH95MVU-2FC?=
+ =?us-ascii?Q?2sEE4ihV0RvzRL71ar-2B3i4ZjkmJbkQFEPi2aA?=
+ =?us-ascii?Q?UiFvuSTGDX-2BZ9w6epDpE6Om94UELgZ9YAQ144?=
+ =?us-ascii?Q?lUs9LjtWl9zutzc1daKeBhl-2FFlzJj-2BtfHSO?=
+ =?us-ascii?Q?kMTPzBBsZm54HLY-2FrcnvwAWwY37WnfFferMrD?=
+ =?us-ascii?Q?ab7zmsF5dy7GBNU6JA57Aqdze-2Bn73t7yl0Z1R?=
+ =?us-ascii?Q?hXUFJkpltfJMgPEXbnrAOsOcgFhpwBpWuVklsHM?=
+ =?us-ascii?Q?syInLE1NUno2Ri1Y49suH-2BWiNQeTb2ywxXTjZ?=
+ =?us-ascii?Q?rH1xZLsB5hKnmT6mmWK566RGWJAtoBZOU1vSruW?=
+ =?us-ascii?Q?xdjlDrSTwWjKbZEaiNeyCOUExXDbK-2BYoIQjtx?=
+ =?us-ascii?Q?Xyq96yljYH1BKbbbHPY-2B78LbZUbFKhJhoNwsb?=
+ =?us-ascii?Q?7lCO1Y-2BUHT-2FUArEKavuVXbaJ48hn2btYENc?=
+ =?us-ascii?Q?LJwa4OjOEYJLjcBXhKmUQboV1eCjX169Czcgbky?=
+ =?us-ascii?Q?U1Xf1gtazeNgMNrFzGx-2Bh4tCCU9IfTYy2M75V?=
+ =?us-ascii?Q?Hg9zVF9NwG04S4UqWCw-2BqtDQv7vrcU71YR6gT?=
+ =?us-ascii?Q?AJdzKi1rIU4awUEr7-2FzRdTn8ES-2B2AJKdido?=
+ =?us-ascii?Q?7-2Bi7dx6CNMqbmsiwwa3NZLbnzoyOEWzbYY8Zz?=
+ =?us-ascii?Q?kKkWKXeCHLotN8oQ7oyWGvc9F2vlF4tVpFaxHCB?=
+ =?us-ascii?Q?O3v7P4-2BFmjhAFa7JHNnMwxACRyKB204b0gsHr?=
+ =?us-ascii?Q?13-2Fctdu2qq-2Baz1DPorNkP4UCflfoOqLhV1-?=
+ =?us-ascii?Q?2FLftys6iKt3bvPb4qhN1h6vPYSC1kwjXABhPs8?=
+ =?us-ascii?Q?WSMHcJy2CNeYNMZUwaTzwrNFVVNNrr6TjUlXYDg?=
+ =?us-ascii?Q?BYe4l-2BoVU6gbSFrKMa-2BkTcVSb5v8aYxeob1?=
+ =?us-ascii?Q?9-2FEko-2BxiSsAhOai2y-2BA18t2kU8M7-2Br6?=
+ =?us-ascii?Q?hdFX1aJylaQS7aV4AQGt8nbfKUcdlqjptv1eAs4?=
+ =?us-ascii?Q?ADr7kN2iZkxMcJI-3D=3E=2C=3Chttps=3A=2F=2Furl8792=2Ema?=
+ =?us-ascii?Q?il=2Eanthropic=2Ecom=2Flu=2Funsubscribe=3Foc=3Du001?=
+ =?us-ascii?Q?=2E=5Fp3fbfnmU08W6nAPyRv2WoPBg6OWi7jd53kT9h?=
+ =?us-ascii?Q?c3MVTvij8Mm6EF-PkHtglyFXi-k3HNVWx6QHFOr?=
+ =?us-ascii?Q?lR=5F4VdZmy0Nz4urvI9HvvpT2Z=5Fia5UMMLMKskp5?=
+ =?us-ascii?Q?j1n5It5EHGNS00j8sdhewiYBNUbp5foF0cOPeJl?=
+ =?us-ascii?Q?gE=5Fzf36ArGzeZk-ppT7nk0DEfnLk6KhNNWDYGp6?=
+ =?us-ascii?Q?BxoQv4cKMBAtXZ2IS56oJTVx-wO2fgV9qAZ3z2W?=
+ =?us-ascii?Q?-W2eL7lJjJKyF819mO67UqIbLUn3tS1tMRpxQzV?=
+ =?us-ascii?Q?GdIseYJ3YMKSIt6ojlImAi=5F94c233PPMuDzMaFJ?=
+ =?us-ascii?Q?PVA-Dkw1Y0n36scJIySheKn0oFu6XWXmuywMZFY?=
+ =?us-ascii?Q?LD8S7jpMz45dGmz7xUdB2vfgH4wnzxHXURzF37Z?=
+ =?us-ascii?Q?iNoeEE3PZ63ngnvrqShc-u8vB8ZhpI6GaBMS5bz?=
+ =?us-ascii?Q?pAygstMqVzU8tknDV29-aScAf-eOoYtPS6vkduw?=
+ =?us-ascii?Q?blVr2RKh3X3qs=5FWwrcCPywlFMWHu6nscTKhb0lR?=
+ =?us-ascii?Q?LKjZ=5FevqsPMIYpE3VYZP8pYY34Zf1hImmeANGnu?=
+ =?us-ascii?Q?29LLHdJ4to54lwr3Pzg1sLwm0Gmtsb5m6cqEuHk?=
+ =?us-ascii?Q?b2JlIvlgfTWoRCbnGhMnavKe-1j0l9I1fk3ZJff?=
+ =?us-ascii?Q?2q15YPtd-Mm=5FQMTPwJBLikbnmstCX1KNrBCRaTk?=
+ =?us-ascii?Q?ZlIbJ6-i=5F-ck0mSuF2W8oiqTNZosLSrtU9smL27?=
+ =?us-ascii?Q?i4tXL1KPvO0UJ4M1TB2qVqFYaJmuvYURWPBqTyY?=
+ =?us-ascii?Q?Xn=5FzatwB6jLK16mQRXPindICLAWOoBSrBxSOUe5?=
+ =?us-ascii?Q?emGm-NS5FkkRP2VBugDX80bXrCp8oWb7o84xMGN?=
+ =?us-ascii?Q?8zQRyR4MgTKkTOSonhqJmqAbSYo-7sY1Aa05BNr?=
+ =?us-ascii?Q?ee8UcII-KYXq7RTxs-taOhcfVUtgA7WXNc2sECK?=
+ =?us-ascii?Q?3QYjRZuO5P80pLFCWfVILyGZV4sAybhdz-uLow-?=
+ =?us-ascii?Q?ETK0P0moV3pC9XtbpCIEAJvSygAPGA6NzMwwrjr?=
+ =?us-ascii?Q?jeIJr9PfOajefLRN0p2qondHAMP6VcYBiXeHQFZ?=
+ =?us-ascii?Q?Sh-tkg6hFc2qaW927CU7T7tPeYr0mzWLeo-mA2T?=
+ =?us-ascii?Q?fwT950ji2cGMXz84bicy-589ZgbG6SNUBu1y6Xg?=
+ =?us-ascii?Q?AFtooT8usYMMckSKThQtS-fh4CfqG=5FT-PF=5F-=5FFS?=
+ =?us-ascii?Q?JtDguXdf6QpcE57pIypDxgKIlQObdv8akNW3fsD?=
+ =?us-ascii?Q?En0FWD6fSpxbm-uHYw-vPJVYgnXShloM0JxMTdA?=
+ =?us-ascii?Q?UHNHpHI9VAekjb-2potp-1AsaC9UQlT=5FG4WEpJ-?=
+ =?us-ascii?Q?cT-hzrEHLVxrkyc1DFll016I47wdugo9bYdQvaC?=
+ =?us-ascii?Q?WrDXu4eTaszexf9zyuIyB4qkvuhrgeVPUGJZZw8?=
+ =?us-ascii?Q?GKqWIfn-KyHV1nthqzIizweX1Vn2kd=5FxRncd5eo?=
+ =?us-ascii?Q?MVDRT4p5=5FhkwIZwZIeDTUg=5FfhvXYHF9yMgfNqKU?=
+ =?us-ascii?Q?1ywoGsR8eu-sgITyNa237oUZtCFGffesRYpcftf?=
+ =?us-ascii?Q?KzurvTSSOd9926Ed7hcYnkAxOzLhS3tfI91DElF?=
+ =?us-ascii?Q?4zLhGdIOYVCIg=3E?=
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+X-Feedback-ID: 31859940:SG
+X-SG-EID: 
+ =?us-ascii?Q?u001=2ER8FFSRQkMo5zcpY7gjGOtwXGbvIYgVm6CFq3nMjZaaR3mzm5oazaW4IK8?=
+ =?us-ascii?Q?PdCL4cBM=2FSLaMYqRes8r45X+8H6K=2Fsri2A0MwO=2F?=
+ =?us-ascii?Q?i5l15MnWQ4NoPU1Hn1zt5Fni6BISnXMEfXoD3ma?=
+ =?us-ascii?Q?+=2FUpD41gHpWUUo+nf43Rh35sWfUIxlCwKklsTE2?=
+ =?us-ascii?Q?YxizU5ibfvxI9AP=2Fc3wZ9073XaZMR9AiF+XrKS+?=
+ =?us-ascii?Q?OZvwqKZdZk3Kw0B7doXvRSN=2F=2FKFoU23D28ETQuA?=
+ =?us-ascii?Q?RcEU?=
+X-SG-ID: 
+ =?us-ascii?Q?u001=2EXwhBPNhCejkv4+fVosb2QVfR16Qxp9CrA7PjDe5zzeI=2F0IZCBsPXtgHbA?=
+ =?us-ascii?Q?oGIj+Rs6OlRm=2FcaEsw=2FcuQFYvtovQxG2Eq1SU7B?=
+ =?us-ascii?Q?65rZKu5ZeoNq8Ti1S9MX+R5OO9Fx46CNOtE1w3o?=
+ =?us-ascii?Q?J+sCaqorG1MNyUTbS01tdr4OZtiM4DaNTOGrbpO?=
+ =?us-ascii?Q?y0pAxJ40prAltfiPWXxsCshbgrS=2F+eRx4dXmzo9?=
+ =?us-ascii?Q?ZB+7DhB7b2Ysn6nlMDHPdfyj84MXPv96Vvafhfe?=
+ =?us-ascii?Q?iKcivVlaw35jGsCpc85Yr9626=2FFfq3fMbVfJjte?=
+ =?us-ascii?Q?+ML+65vloEOunoSiHiziS8WZyMyQMDqWE90liuu?=
+ =?us-ascii?Q?SXnyKsO9=2F0gQzBSPjMbpbMFTOwIDtMwP43Z6CVV?=
+ =?us-ascii?Q?BSguKrRpwSEPzsopzDfLu261ISFvY4a9d8XLcTe?=
+ =?us-ascii?Q?xp9nm0We=2FMbKIVKYdeVOE6o5tzwiLAlrEktPJlT?=
+ =?us-ascii?Q?NPyLHfOZ5qO4KcLAaKuWKRQYDcaODxfkVzOFK7I?=
+ =?us-ascii?Q?8CX+dk2MKoI4wHF+j=2Fuo+raoENe1WvLNcCyMUpY?=
+ =?us-ascii?Q?BdjuuwXbX3j0IdRFcsvChpH=2FpWxRqsudrIHQXc4?=
+ =?us-ascii?Q?wPR1wDOTIM8nwhnwq2K9Mgt1XhFA35544O2cRP6?=
+ =?us-ascii?Q?lRmtTBgGQiG=2FAiR1wfJzSP+8zC55GrZDfA3HDMc?=
+ =?us-ascii?Q?JbEfamVzuN77nFtwih3mThOX2KKq0l2duMfxs1R?=
+ =?us-ascii?Q?sh=2FA6ZyFuCvOcJKENh1vozi2xIKlMRziPuyNgvS?=
+ =?us-ascii?Q?3AopVrEmzCIsBI61vuDWND3k7Fi+EK6I6cyJfil?=
+ =?us-ascii?Q?D89oAa0t5A1SxNf0C=2Fh1Gbft8DWDuGcP8SQDMSf?=
+ =?us-ascii?Q?GI4ALslL+E4TI=3D?=
+To: sn.renauld@gmail.com
+X-Entity-ID: u001.+hTscy7rO4MXV2fUis5gmA==
+
+--c07c74bdb0df0719d885a018db64be591a9b2922d722829bd1451cdf2b5a
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0
+
+Claude 3.5 Sonnet is here
+
+( https://youtu.be/rHqk0ZGb6qo )
+
+Try Claude 3.5 Sonnet ( https://claude.ai/ )
+
+Hello,
+
+Today, we're launching Claude 3.5 Sonnet ( https://www.anthropic.com/news/c=
+laude-3-5-sonnet ) =E2=80=94the first release in our Claude 3.5 model famil=
+y. Claude 3.5 Sonnet raises the industry bar for intelligence, outperformin=
+g competitor models and Claude 3 Opus on a wide range of evaluations.
+
+The model is now available for free on claude.ai ( https://claude.ai ) and =
+on the Claude iOS app ( https://apps.apple.com/us/app/claude-by-anthropic/i=
+d6473753684 ). Claude Pro and Team plan subscribers benefit from significan=
+tly higher rate limits than the free plan and gain priority access during h=
+igh-traffic periods.
+
+What=E2=80=99s new?
+
+Frontier intelligence
+Claude 3.5 Sonnet sets new industry benchmarks for graduate-level reasoning=
+ (GPQA), undergraduate-level knowledge (MMLU), and coding proficiency (Huma=
+nEval). It shows marked improvement in grasping nuance, humor, and complex =
+instructions and is exceptional at writing high-quality content with a natu=
+ral, relatable tone.
+
+2x speed
+Operating at twice the speed of Claude 3 Opus, Claude 3.5 Sonnet is ideal f=
+or complex tasks like code generation, writing high-quality content, summar=
+izing lengthy documents with improved accuracy, creating insights and visua=
+lizations from unstructured data, and more.
+
+State-of-the-art vision
+Claude 3.5 Sonnet is our strongest vision model, performing an average of ~=
+10% better than Claude 3 Opus on all vision benchmarks. These step-change i=
+mprovements are most noticeable for tasks that require visual reasoning, li=
+ke interpreting charts and graphs. Claude 3.5 Sonnet can also accurately tr=
+anscribe text from imperfect images.
+
+*Introducing Artifacts=E2=80=94a new way to use Claude*
+
+We're also introducing Artifacts on claude.ai ( https://claude.ai ) , a new=
+ feature that expands how you can interact with Claude. When you ask Claude=
+ to generate content like code snippets, text documents, or website designs=
+, these Artifacts appear in a dedicated window alongside your conversation.=
+ This creates a dynamic workspace where you can see, edit, and build upon C=
+laude's creations in real-time, seamlessly integrating AI-generated content=
+ into your projects and workflows.
+
+*Get started*
+
+You can start using Claude 3.5 Sonnet for free today at claude.ai ( https:/=
+/claude.ai ) and on the Claude iOS app ( https://apps.apple.com/us/app/clau=
+de-by-anthropic/id6473753684 ). For inspiration, visit our YouTube channel =
+( https://www.youtube.com/channel/UCrDwWp7EBBv4NwvScIpBDOA ) to watch demo =
+videos and see our new Artifacts feature in action.
+
+If you=E2=80=99re interested in building applications with Claude 3.5 Sonne=
+t, you can also access it through our API ( http://anthropic.com/claude/api=
+ ).
+
+As always, we look forward to seeing what you create and discover with Clau=
+de.
+
+=E2=80=94 The Anthropic team
+
+( https://x.com/anthropicai ) ( https://www.linkedin.com/company/anthropicr=
+esearch/ )
+
+Unsubscribe ( https://url8792.mail.anthropic.com/wf/unsubscribe?upn=3DwzqEH=
+QSn045tRvE-2FnMN1Hk3pIyiQCrrmqbFFROZ7VJY4uGXxRTINvolxYcyAmFeBGq9XDfP4Nm1b1R=
+UuB46PrTPp7Du6KWhbH95MVU-2FC2sEE4ihV0RvzRL71ar-2B3i4ZjkmJbkQFEPi2aAUiFvuSTG=
+DX-2BZ9w6epDpE6Om94UELgZ9YAQ144lUs9LjtWl9zutzc1daKeBhl-2FFlzJj-2BtfHSOkMTPz=
+BBsZm54HLY-2FrcnvwAWwY37WnfFferMrDab7zmsF5dy7GBNU6JA57Aqdze-2Bn73t7yl0Z1RhX=
+UFJkpltfJMgPEXbnrAOsOcgFhpwBpWuVklsHMsyInLE1NUno2Ri1Y49suH-2BWiNQeTb2ywxXTj=
+ZrH1xZLsB5hKnmT6mmWK566RGWJAtoBZOU1vSruWxdjlDrSTwWjKbZEaiNeyCOUExXDbK-2BYoI=
+QjtxXyq96yljYH1BKbbbHPY-2B78LbZUbFKhJhoNwsb7lCO1Y-2BUHT-2FUArEKavuVXbaJ48hn=
+2btYENcLJwa4OjOEYJLjcBXhKmUQboV1eCjX169CzcgbkyU1Xf1gtazeNgMNrFzGx-2Bh4tCCU9=
+IfTYy2M75VHg9zVF9NwG04S4UqWCw-2BqtDQv7vrcU71YR6gTAJdzKi1rIU4awUEr7-2FzRdTn8=
+ES-2B2AJKdido7-2Bi7dx6CNMqbmsiwwa3NZLbnzoyOEWzbYY8ZzkKkWKXeCHLotN8oQ7oyWGvc=
+9F2vlF4tVpFaxHCBO3v7P4-2BFmjhAFa7JHNnMwxACRyKB204b0gsHr13-2Fctdu2qq-2Baz1DP=
+orNkP4UCflfoOqLhV1-2FLftys6iKt3bvPb4qhN1h6vPYSC1kwjXABhPs8WSMHcJy2COsfXYhmD=
+1Lcyba9J-2BcxsZCuRsaNSEVyTgKCoS5FOLw-2FLi-2BxaMnHLaId-2BPcKWursS8BSMFemnsSR=
+xZMHYHMmjalPoaAW-2Bg1nG2FRgvMrQe2Xc-2FwFm9AZ0OJTJgXGlwKAnIV1NlaN7C9obojCtvg=
+IWL0-3D )
+--c07c74bdb0df0719d885a018db64be591a9b2922d722829bd1451cdf2b5a
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=utf-8
+Mime-Version: 1.0
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org=
+/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html data-editor-version=3D"2" class=3D"sg-campaigns" xmlns=3D"http://www.=
+w3.org/1999/xhtml">
+    <head>
+      <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf=
+-8">
+      <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scal=
+e=3D1, minimum-scale=3D1, maximum-scale=3D1">
+      <!--[if !mso]><!-->
+      <meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3DEdge">
+      <!--<![endif]-->
+      <!--[if (gte mso 9)|(IE)]>
+      <xml>
+        <o:OfficeDocumentSettings>
+          <o:AllowPNG/>
+          <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+      </xml>
+      <![endif]-->
+      <!--[if (gte mso 9)|(IE)]>
+  <style type=3D"text/css">
+    body {width: 600px;margin: 0 auto;}
+    table {border-collapse: collapse;}
+    table, td {mso-table-lspace: 0pt;mso-table-rspace: 0pt;}
+    img {-ms-interpolation-mode: bicubic;}
+  </style>
+<![endif]-->
+      <style type=3D"text/css">
+    body, p, div {
+      font-family: arial,helvetica,sans-serif;
+      font-size: 14px;
+    }
+    body {
+      color: #000000;
+    }
+    body a {
+      color: #1188E6;
+      text-decoration: none;
+    }
+    p { margin: 0; padding: 0; }
+    table.wrapper {
+      width:100% !important;
+      table-layout: fixed;
+      -webkit-font-smoothing: antialiased;
+      -webkit-text-size-adjust: 100%;
+      -moz-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+    img.max-width {
+      max-width: 100% !important;
+    }
+    .column.of-2 {
+      width: 50%;
+    }
+    .column.of-3 {
+      width: 33.333%;
+    }
+    .column.of-4 {
+      width: 25%;
+    }
+    ul ul ul ul  {
+      list-style-type: disc !important;
+    }
+    ol ol {
+      list-style-type: lower-roman !important;
+    }
+    ol ol ol {
+      list-style-type: lower-latin !important;
+    }
+    ol ol ol ol {
+      list-style-type: decimal !important;
+    }
+    @media screen and (max-width:480px) {
+      .preheader .rightColumnContent,
+      .footer .rightColumnContent {
+        text-align: left !important;
+      }
+      .preheader .rightColumnContent div,
+      .preheader .rightColumnContent span,
+      .footer .rightColumnContent div,
+      .footer .rightColumnContent span {
+        text-align: left !important;
+      }
+      .preheader .rightColumnContent,
+      .preheader .leftColumnContent {
+        font-size: 80% !important;
+        padding: 5px 0;
+      }
+      table.wrapper-mobile {
+        width: 100% !important;
+        table-layout: fixed;
+      }
+      img.max-width {
+        height: auto !important;
+        max-width: 100% !important;
+      }
+      a.bulletproof-button {
+        display: block !important;
+        width: auto !important;
+        font-size: 80%;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      .columns {
+        width: 100% !important;
+      }
+      .column {
+        display: block !important;
+        width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+      .social-icon-column {
+        display: inline-block !important;
+      }
+    }
+  </style>
+      <!--user entered Head Start--><!--End Head user entered-->
+    </head>
+    <body>
+      <center class=3D"wrapper" data-link-color=3D"#1188E6" data-body-style=
+=3D"font-size:14px; font-family:arial,helvetica,sans-serif; color:#000000; =
+background-color:#FFFFFF;">
+        <div class=3D"webkit">
+          <table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"=
+100%" class=3D"wrapper" bgcolor=3D"#FFFFFF">
+            <tr>
+              <td valign=3D"top" bgcolor=3D"#FFFFFF" width=3D"100%">
+                <table width=3D"100%" role=3D"content-container" class=3D"o=
+uter" align=3D"center" cellpadding=3D"0" cellspacing=3D"0" border=3D"0">
+                  <tr>
+                    <td width=3D"100%">
+                      <table width=3D"100%" cellpadding=3D"0" cellspacing=
+=3D"0" border=3D"0">
+                        <tr>
+                          <td>
+                            <!--[if mso]>
+    <center>
+    <table><tr><td width=3D"600">
+  <![endif]-->
+                                    <table width=3D"100%" cellpadding=3D"0"=
+ cellspacing=3D"0" border=3D"0" style=3D"width:100%; max-width:600px;" alig=
+n=3D"center">
+                                      <tr>
+                                        <td role=3D"modules-container" styl=
+e=3D"padding:0px 0px 0px 0px; color:#000000; text-align:left;" bgcolor=3D"#=
+FAFAF7" width=3D"100%" align=3D"left"><table class=3D"module preheader preh=
+eader-hide" role=3D"module" data-type=3D"preheader" border=3D"0" cellpaddin=
+g=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"display: none !important;=
+ mso-hide: all; visibility: hidden; opacity: 0; color: transparent; height:=
+ 0; width: 0;">
+    <tr>
+      <td role=3D"module-content">
+        <p></p>
+      </td>
+    </tr>
+  </table><table class=3D"wrapper" role=3D"module" data-type=3D"image" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-=
+layout: fixed;" data-muid=3D"e734375b-ce70-409d-a486-9b79407a11a7">
+    <tbody>
+      <tr>
+        <td style=3D"font-size:6px; line-height:10px; padding:0px 0px 0px 0=
+px;" valign=3D"top" align=3D"center">
+          <img class=3D"max-width" border=3D"0" style=3D"display:block; col=
+or:#000000; text-decoration:none; font-family:Helvetica, arial, sans-serif;=
+ font-size:16px; max-width:100% !important; width:100%; height:auto !import=
+ant;" width=3D"600" alt=3D"" data-proportionally-constrained=3D"true" data-=
+responsive=3D"true" src=3D"http://cdn.mcauto-images-production.sendgrid.net=
+/2c7496d350bc5243/28b56263-1eec-48ea-835f-289fa29c1714/1200x200.png">
+        </td>
+      </tr>
+    </tbody>
+  </table><table class=3D"module" role=3D"module" data-type=3D"text" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-la=
+yout: fixed;" data-muid=3D"014982b1-3cc2-4d78-b133-e578e909701a" data-mc-mo=
+dule-version=3D"2019-10-22">
+    <tbody>
+      <tr>
+        <td style=3D"padding:40px 10px 0px 10px; line-height:45px; text-ali=
+gn:inherit;" height=3D"100%" valign=3D"top" bgcolor=3D"" role=3D"module-con=
+tent"><div><div style=3D"font-family: inherit; text-align: center"><span st=
+yle=3D"color: #000000; font-family: helvetica, sans-serif; font-style: norm=
+al; font-variant-ligatures: normal; font-variant-caps: normal; font-weight:=
+ 700; letter-spacing: normal; orphans: 2; text-align: center; text-indent: =
+0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-strok=
+e-width: 0px; white-space-collapse: preserve; text-wrap: wrap; background-c=
+olor: rgb(250, 250, 247); text-decoration-thickness: initial; text-decorati=
+on-style: initial; text-decoration-color: initial; float: none; display: in=
+line; font-size: 43px">Claude 3.5 Sonnet is here</span></div><div></div></d=
+iv></td>
+      </tr>
+    </tbody>
+  </table><table class=3D"wrapper" role=3D"module" data-type=3D"image" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-=
+layout: fixed;" data-muid=3D"dc553b4d-c6d2-4a9b-b77b-288dd3e74f4d.1">
+    <tbody>
+      <tr>
+        <td style=3D"font-size:6px; line-height:10px; padding:40px 0px 40px=
+ 0px;" valign=3D"top" align=3D"center">
+         =20
+        <a href=3D"https://url8792.mail.anthropic.com/ls/click?upn=3Du001.r=
+FcAmKXLOm9u6wLRWHIUYTtMdDaK7fw67jdBJskJBmJC2sAC2j9XMiifUbsWd8hWH8l7_rO1JRqZ=
+rx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwUoS9Gpbl6QX1AUICtpGgmLDb6y-2F9BoMWQdxQ=
+FG7iaQE5WYQIENYHWW99UaxK9-2BiDd6cE10IzOFA51xkqBOgfCGyUWhoSDKdNVFlrlP9oP0SjS=
+2Bdj9wdnFH6CBDR8d9Ftzu8Vu7n5CmRdB2MJCtPFMczGftkTcfMjiOzPttfX1gkU7TTrVpiE-2F=
+fFk9B1Z0-2FX1-2F0t8QD2m-2BmhdPOE3nmSXkewI-2BEYlIzpw7Mhdzu3u8YTpqdlLg0cs7Xk6=
+Z-2BprcanBS3LQvotBFAThxL0bg31VZMd97zqRNuwFLK-2F-2BgOefT6dgS6wGIygFnRHlr-2FS=
+ANW-2Fs18SyU-2BCMu-2BS9W0f-2FvzxTvQNcp66-2BuZdd9LBOGj0sYFAwdiQz4gAbY8e31kF3=
+is5IXajz-2FPsQHRnNBoOcrGpw0-2BSN98A7dSLRBkuiD89YqLJ-2BIPOErxP-2BXbTU716MwSw=
+34MiFB-2FVpDZTNIdjZui4laJdEKmtA-2BKH4YUnKmdvr82fgJZlStmfVMGBKu2NohAJ02eYp6-=
+2F2f0Djjo3Mpu-2BWCq9wJCeQtjeeHpJ-2Fm20CEw3JEtwHkZJV1F80TWzUGOfWhteonfCDWHxy=
+z3-2B-2F6dxa-2BvSVrPcq576l1SB7nb6biPYqQz1Ty6q5xkL5zKCIgs5-2FCyL03xqaPSWaBo-=
+2BvpUHKxt44TyduxToFRfd8wY-2BCv4AHGmENvq2akk0wfg8rmc0HX1f0pHaPwNPxumlXk3s-2B=
+vOHlLyBst4CD0B13eYOSZH8jOwEakXEPtI5zCZskrQtP1oHshYqW2SqdAI9HXNZ5trTTXBVn0rJ=
+sU8V3RSOxix5D-2B0VSZKcTYwPzFDh-2B9wcmOQy00CoyjcbbtP94LEz8VzP0RDfEHN27QmJFIE=
+q-2BFEMZp2-2FlpLiklQj28V5XqYJ5fXHbOI3G9uSv4NTDZrDWcnLvxSXUFBpHLJBEtxUBQScQ-=
+3D-3D"><img class=3D"max-width" border=3D"0" style=3D"display:block; color:=
+#000000; text-decoration:none; font-family:Helvetica, arial, sans-serif; fo=
+nt-size:16px; max-width:100% !important; width:100%; height:auto !important=
+;" width=3D"600" alt=3D"" data-proportionally-constrained=3D"true" data-res=
+ponsive=3D"true" src=3D"http://cdn.mcauto-images-production.sendgrid.net/2c=
+7496d350bc5243/863a41a9-5335-4481-a0f9-96484787838c/3840x2160.png"></a></td=
+>
+      </tr>
+    </tbody>
+  </table><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"=
+module" data-role=3D"module-button" data-type=3D"button" role=3D"module" st=
+yle=3D"table-layout:fixed;" width=3D"100%" data-muid=3D"96bbcc24-02f6-402c-=
+b18f-8565f685260e.1">
+      <tbody>
+        <tr>
+          <td align=3D"center" bgcolor=3D"" class=3D"outer-td" style=3D"pad=
+ding:0px 0px 0px 0px;">
+            <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=
+=3D"wrapper-mobile" style=3D"text-align:center;">
+              <tbody>
+                <tr>
+                <td align=3D"center" bgcolor=3D"#333333" class=3D"inner-td"=
+ style=3D"border-radius:6px; font-size:16px; text-align:center; background-=
+color:inherit;">
+                  <a href=3D"https://url8792.mail.anthropic.com/ls/click?up=
+n=3Du001.rFcAmKXLOm9u6wLRWHIUYUUA-2BSVUXqYUh1-2F5t4CljUM-3DQ9a6_rO1JRqZrx5O=
+o25BATZItEvIKK9wiuA6UN-2BXngf09BwUoS9Gpbl6QX1AUICtpGgmLDb6y-2F9BoMWQdxQFG7i=
+aQE5WYQIENYHWW99UaxK9-2BiDd6cE10IzOFA51xkqBOgfCGyUWhoSDKdNVFlrlP9oP0SjS2Bdj=
+9wdnFH6CBDR8d9Ftzu8Vu7n5CmRdB2MJCtPFMczGftkTcfMjiOzPttfX1gkU7TTrVpiE-2FfFk9=
+B1Z0-2FX1-2F0t8QD2m-2BmhdPOE3nmSXkewI-2BEYlIzpw7Mhdzu3u8YTpqdlLg0cs7Xk6Z-2B=
+prcanBS3LQvotBFAThxL0bg31VZMd97zqRNuwFLK-2F-2BgOefT6dgS6wGIygFnRHlr-2FSANW-=
+2Fs18SyU-2BCMu-2BS9W0f-2FvzxTvQNcp66-2BuZdd9LBOGj0sYFAwdiQz4gAbY8e31kF3is5I=
+Xajz-2FPsQHRnNBoOcrGpw0-2BSN98A7dSLRBkuiD89YqLJ-2BIPOErxP-2BXbTU716MwSw34Mi=
+FB-2FVpDZTNIdjZui4laJdEKmtA-2BKH4YUnKmdvr82fgJZlStmfVMGBKu2NohAJ02eYp6-2F2f=
+0Djjo3Mpu-2BWCq9wJCeQtjeeHpJ-2Fm20CEw3JEtwHkZJV1F80TWzUGOfWhteonfCDWHxyz3-2=
+B-2F6dxa-2BvSVrPcq576l1SB7nb6biPYqQz1Ty6q5xkL5zKCIgs5-2FCyL03xqaPSWaBo-2Bvp=
+UHKxt44TyduxToFRfd8wY-2BCv4AHGmENvq2akk0wfg8rmc0HX1f0pHaPwNPxumlXk3s-2BvOHl=
+LyBst4CD0B13eYOSZH8jOwEakXEPtI5zCZskrQtP1oHshYqW2SqdAI9HXNZ5trTTXBVn0rJsU8V=
+3RSOxix5GNn4X2GPDE8Im31Ix-2BXSD7nol6WmDUXpFiXQa7y5gfsC3N-2BvEe0nPFegP-2FoN6=
+KcPO-2FQqsC2Hu5WlerrxiOdODdwgEDsl1MbzR-2FWfDPbvAe8QxwgmJm8NQhyprM74PzdLg-3D=
+-3D" style=3D"background-color:#333333; border:1px solid #333333; border-co=
+lor:#333333; border-radius:15px; border-width:1px; color:#ffffff; display:i=
+nline-block; font-size:14px; font-weight:normal; letter-spacing:0px; line-h=
+eight:normal; padding:12px 18px 12px 18px; text-align:center; text-decorati=
+on:none; border-style:solid;" target=3D"_blank">Try Claude 3.5 Sonnet</a>
+                </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table><table class=3D"module" role=3D"module" data-type=3D"text" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-=
+layout: fixed;" data-muid=3D"014982b1-3cc2-4d78-b133-e578e909701a.2" data-m=
+c-module-version=3D"2019-10-22">
+    <tbody>
+      <tr>
+        <td style=3D"padding:40px 40px 40px 40px; line-height:23px; text-al=
+ign:inherit;" height=3D"100%" valign=3D"top" bgcolor=3D"" role=3D"module-co=
+ntent"><div><div style=3D"font-family: inherit; text-align: inherit"><span =
+style=3D"font-family: helvetica, sans-serif; font-size: 18px">Hello,<br>
+<br>
+Today, we're launching </span><a href=3D"https://url8792.mail.anthropic.com=
+/ls/click?upn=3Du001.rFcAmKXLOm9u6wLRWHIUYb57odYuMXptiIvSnUIhs1P-2FZd30fRJK=
+YNIcjCv-2F9spqDg7My93cH8a3qpVDCL7ZKQ-3D-3D7baB_rO1JRqZrx5Oo25BATZItEvIKK9wi=
+uA6UN-2BXngf09BwUoS9Gpbl6QX1AUICtpGgmLDb6y-2F9BoMWQdxQFG7iaQE5WYQIENYHWW99U=
+axK9-2BiDd6cE10IzOFA51xkqBOgfCGyUWhoSDKdNVFlrlP9oP0SjS2Bdj9wdnFH6CBDR8d9Ftz=
+u8Vu7n5CmRdB2MJCtPFMczGftkTcfMjiOzPttfX1gkU7TTrVpiE-2FfFk9B1Z0-2FX1-2F0t8QD=
+2m-2BmhdPOE3nmSXkewI-2BEYlIzpw7Mhdzu3u8YTpqdlLg0cs7Xk6Z-2BprcanBS3LQvotBFAT=
+hxL0bg31VZMd97zqRNuwFLK-2F-2BgOefT6dgS6wGIygFnRHlr-2FSANW-2Fs18SyU-2BCMu-2B=
+S9W0f-2FvzxTvQNcp66-2BuZdd9LBOGj0sYFAwdiQz4gAbY8e31kF3is5IXajz-2FPsQHRnNBoO=
+crGpw0-2BSN98A7dSLRBkuiD89YqLJ-2BIPOErxP-2BXbTU716MwSw34MiFB-2FVpDZTNIdjZui=
+4laJdEKmtA-2BKH4YUnKmdvr82fgJZlStmfVMGBKu2NohAJ02eYp6-2F2f0Djjo3Mpu-2BWCq9w=
+JCeQtjeeHpJ-2Fm20CEw3JEtwHkZJV1F80TWzUGOfWhteonfCDWHxyz3-2B-2F6dxa-2BvSVrPc=
+q576l1SB7nb6biPYqQz1Ty6q5xkL5zKCIgs5-2FCyL03xqaPSWaBo-2BvpUHKxt44TyduxToFRf=
+d8wY-2BCv4AHGmENvq2akk0wfg8rmc0HX1f0pHaPwNPxumlXk3s-2BvOHlLyBst4CD0B13eYOSZ=
+H8jOwEakXEPtI5zCZskrQtP1oHshYqW2SqdAI9HXNZ5trTTXBVn0rJsU8V3RSOxix5A5hyVFeWU=
+IqpHvVFUBWfF5yz-2F5QxTmKEqLQbxeGOxwQnlZ5HDIYxgniAwTCEmnJ4jsLbllDW8x2wuRHxu8=
+Hn758NHvWmWC9Elft-2Fr0Feu5aAdBsf9ZvdAPKo53U-2Fe7p8g-3D-3D"><span style=3D"f=
+ont-family: helvetica, sans-serif; font-size: 18px; color: #1188e6">Claude =
+3.5 Sonnet</span></a><span style=3D"font-family: helvetica, sans-serif; fon=
+t-size: 18px">=E2=80=94the first release in our Claude 3.5 model family. Cl=
+aude 3.5 Sonnet raises the industry bar for intelligence, outperforming com=
+petitor models and Claude 3 Opus on a wide range of evaluations.<br>
+<br>
+The model is now available for free on </span><a href=3D"https://url8792.ma=
+il.anthropic.com/ls/click?upn=3Du001.rFcAmKXLOm9u6wLRWHIUYR2OTiBaouKIQ6GV-2=
+FPwmu34-3DzioG_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwUoS9Gpbl6QX1AUIC=
+tpGgmLDb6y-2F9BoMWQdxQFG7iaQE5WYQIENYHWW99UaxK9-2BiDd6cE10IzOFA51xkqBOgfCGy=
+UWhoSDKdNVFlrlP9oP0SjS2Bdj9wdnFH6CBDR8d9Ftzu8Vu7n5CmRdB2MJCtPFMczGftkTcfMji=
+OzPttfX1gkU7TTrVpiE-2FfFk9B1Z0-2FX1-2F0t8QD2m-2BmhdPOE3nmSXkewI-2BEYlIzpw7M=
+hdzu3u8YTpqdlLg0cs7Xk6Z-2BprcanBS3LQvotBFAThxL0bg31VZMd97zqRNuwFLK-2F-2BgOe=
+fT6dgS6wGIygFnRHlr-2FSANW-2Fs18SyU-2BCMu-2BS9W0f-2FvzxTvQNcp66-2BuZdd9LBOGj=
+0sYFAwdiQz4gAbY8e31kF3is5IXajz-2FPsQHRnNBoOcrGpw0-2BSN98A7dSLRBkuiD89YqLJ-2=
+BIPOErxP-2BXbTU716MwSw34MiFB-2FVpDZTNIdjZui4laJdEKmtA-2BKH4YUnKmdvr82fgJZlS=
+tmfVMGBKu2NohAJ02eYp6-2F2f0Djjo3Mpu-2BWCq9wJCeQtjeeHpJ-2Fm20CEw3JEtwHkZJV1F=
+80TWzUGOfWhteonfCDWHxyz3-2B-2F6dxa-2BvSVrPcq576l1SB7nb6biPYqQz1Ty6q5xkL5zKC=
+Igs5-2FCyL03xqaPSWaBo-2BvpUHKxt44TyduxToFRfd8wY-2BCv4AHGmENvq2akk0wfg8rmc0H=
+X1f0pHaPwNPxumlXk3s-2BvOHlLyBst4CD0B13eYOSZH8jOwEakXEPtI5zCZskrQtP1oHshYqW2=
+SqdAI9HXNZ5trTTXBVn0rJsU8V3RSOxix5NWxR5vKSr9RDTaIy2mKkf17ilkgaamXNRLp9hchnv=
+E2Chr65Wr-2B1gUb-2BwGGxUVQB1RfVxJpqFptXZmavbPFo4FnkEP1Nudidpj2tLjNGX9ERUm0q=
+wkAfEGbiKzYXrza8Q-3D-3D"><span style=3D"font-family: helvetica, sans-serif;=
+ font-size: 18px">claude.ai</span></a><span style=3D"font-family: helvetica=
+, sans-serif; font-size: 18px"> and on the </span><a href=3D"https://url879=
+2.mail.anthropic.com/ls/click?upn=3Du001.rFcAmKXLOm9u6wLRWHIUYXj5nmfs7-2F8w=
+epwBHsqyhRDvNGeK94CjJrJbPMqjfDSqo0GbbwlSMJtxjGWF1V7RkRIrHV0kYlzGABLuQ-2FOTW=
+rI-3DtEAP_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwUoS9Gpbl6QX1AUICtpGgm=
+LDb6y-2F9BoMWQdxQFG7iaQE5WYQIENYHWW99UaxK9-2BiDd6cE10IzOFA51xkqBOgfCGyUWhoS=
+DKdNVFlrlP9oP0SjS2Bdj9wdnFH6CBDR8d9Ftzu8Vu7n5CmRdB2MJCtPFMczGftkTcfMjiOzPtt=
+fX1gkU7TTrVpiE-2FfFk9B1Z0-2FX1-2F0t8QD2m-2BmhdPOE3nmSXkewI-2BEYlIzpw7Mhdzu3=
+u8YTpqdlLg0cs7Xk6Z-2BprcanBS3LQvotBFAThxL0bg31VZMd97zqRNuwFLK-2F-2BgOefT6dg=
+S6wGIygFnRHlr-2FSANW-2Fs18SyU-2BCMu-2BS9W0f-2FvzxTvQNcp66-2BuZdd9LBOGj0sYFA=
+wdiQz4gAbY8e31kF3is5IXajz-2FPsQHRnNBoOcrGpw0-2BSN98A7dSLRBkuiD89YqLJ-2BIPOE=
+rxP-2BXbTU716MwSw34MiFB-2FVpDZTNIdjZui4laJdEKmtA-2BKH4YUnKmdvr82fgJZlStmfVM=
+GBKu2NohAJ02eYp6-2F2f0Djjo3Mpu-2BWCq9wJCeQtjeeHpJ-2Fm20CEw3JEtwHkZJV1F80TWz=
+UGOfWhteonfCDWHxyz3-2B-2F6dxa-2BvSVrPcq576l1SB7nb6biPYqQz1Ty6q5xkL5zKCIgs5-=
+2FCyL03xqaPSWaBo-2BvpUHKxt44TyduxToFRfd8wY-2BCv4AHGmENvq2akk0wfg8rmc0HX1f0p=
+HaPwNPxumlXk3s-2BvOHlLyBst4CD0B13eYOSZH8jOwEakXEPtI5zCZskrQtP1oHshYqW2SqdAI=
+9HXNZ5trTTXBVn0rJsU8V3RSOxix5Ih9N2fz3xwEIR18I6vPHGFGLNVFNY6zZdTDnOR59Fcwxze=
+JXI1WtAMwF-2BY2C6dm07PCqaX5NNg0FlXlJ2qlHI6QKmqhy0XQ6hdPsoc-2B7tCnZY4e135VXW=
+WHUAf1LukqEA-3D-3D"><span style=3D"font-family: helvetica, sans-serif; font=
+-size: 18px">Claude iOS app</span></a><span style=3D"font-family: helvetica=
+, sans-serif; font-size: 18px">. Claude Pro and Team plan subscribers benef=
+it from significantly higher rate limits than the free plan and gain priori=
+ty access during high-traffic periods.</span></div>
+<div style=3D"font-family: inherit; text-align: inherit"><br></div>
+<div style=3D"font-family: inherit; text-align: inherit; margin-left: 0px">=
+<span style=3D"box-sizing: border-box; padding-top: 0px; padding-right: 0px=
+; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0p=
+x; margin-bottom: 0px; margin-left: 0px; font-style: inherit; font-variant-=
+ligatures: inherit; font-variant-caps: inherit; font-variant-numeric: inher=
+it; font-variant-east-asian: inherit; font-variant-alternates: inherit; fon=
+t-variant-position: inherit; font-weight: bold; font-stretch: inherit; line=
+-height: inherit; font-family: helvetica, sans-serif; font-optical-sizing: =
+inherit; font-kerning: inherit; font-feature-settings: inherit; font-variat=
+ion-settings: inherit; font-size: 18px; vertical-align: baseline; border-to=
+p-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-lef=
+t-width: 0px; border-top-style: initial; border-right-style: initial; borde=
+r-bottom-style: initial; border-left-style: initial; border-top-color: init=
+ial; border-right-color: initial; border-bottom-color: initial; border-left=
+-color: initial; border-image-source: initial; border-image-slice: initial;=
+ border-image-width: initial; border-image-outset: initial; border-image-re=
+peat: initial; color: #000000; letter-spacing: normal; orphans: 2; text-ali=
+gn: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing:=
+ 0px; -webkit-text-stroke-width: 0px; white-space-collapse: preserve; text-=
+wrap: wrap; background-color: rgb(250, 250, 247); text-decoration-thickness=
+: initial; text-decoration-style: initial; text-decoration-color: initial">=
+What=E2=80=99s new?</span>&nbsp;</div>
+<div style=3D"font-family: inherit; text-align: inherit; margin-left: 0px">=
+<br></div>
+<div style=3D"font-family: inherit; text-align: inherit; margin-left: 0px">=
+<span style=3D"box-sizing: border-box; padding-top: 0px; padding-right: 0px=
+; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0p=
+x; margin-bottom: 0px; margin-left: 0px; font-style: italic; font-variant-l=
+igatures: inherit; font-variant-caps: inherit; font-variant-numeric: inheri=
+t; font-variant-east-asian: inherit; font-variant-alternates: inherit; font=
+-variant-position: inherit; font-weight: inherit; font-stretch: inherit; li=
+ne-height: inherit; font-family: helvetica, sans-serif; font-optical-sizing=
+: inherit; font-kerning: inherit; font-feature-settings: inherit; font-vari=
+ation-settings: inherit; font-size: 18px; vertical-align: baseline; border-=
+top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-l=
+eft-width: 0px; border-top-style: initial; border-right-style: initial; bor=
+der-bottom-style: initial; border-left-style: initial; border-top-color: in=
+itial; border-right-color: initial; border-bottom-color: initial; border-le=
+ft-color: initial; border-image-source: initial; border-image-slice: initia=
+l; border-image-width: initial; border-image-outset: initial; border-image-=
+repeat: initial; color: #000000; letter-spacing: normal; orphans: 2; text-a=
+lign: start; text-indent: 0px; text-transform: none; widows: 2; word-spacin=
+g: 0px; -webkit-text-stroke-width: 0px; white-space-collapse: preserve; tex=
+t-wrap: wrap; background-color: rgb(250, 250, 247); text-decoration-thickne=
+ss: initial; text-decoration-style: initial; text-decoration-color: initial=
+"><u>Frontier intelligence</u></span></div>
+<div style=3D"font-family: inherit; text-align: inherit; margin-left: 0px">=
+<span style=3D"box-sizing: border-box; padding-top: 0px; padding-right: 0px=
+; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0p=
+x; margin-bottom: 0px; margin-left: 0px; font-style: inherit; font-variant-=
+ligatures: inherit; font-variant-caps: inherit; font-variant-numeric: inher=
+it; font-variant-east-asian: inherit; font-variant-alternates: inherit; fon=
+t-variant-position: inherit; font-weight: inherit; font-stretch: inherit; l=
+ine-height: inherit; font-family: helvetica, sans-serif; font-optical-sizin=
+g: inherit; font-kerning: inherit; font-feature-settings: inherit; font-var=
+iation-settings: inherit; font-size: 18px; vertical-align: baseline; border=
+-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-=
+left-width: 0px; border-top-style: initial; border-right-style: initial; bo=
+rder-bottom-style: initial; border-left-style: initial; border-top-color: i=
+nitial; border-right-color: initial; border-bottom-color: initial; border-l=
+eft-color: initial; border-image-source: initial; border-image-slice: initi=
+al; border-image-width: initial; border-image-outset: initial; border-image=
+-repeat: initial; color: #000000; letter-spacing: normal; orphans: 2; text-=
+align: start; text-indent: 0px; text-transform: none; widows: 2; word-spaci=
+ng: 0px; -webkit-text-stroke-width: 0px; white-space-collapse: preserve; te=
+xt-wrap: wrap; background-color: rgb(250, 250, 247); text-decoration-thickn=
+ess: initial; text-decoration-style: initial; text-decoration-color: initia=
+l">Claude 3.5 Sonnet sets new industry benchmarks for graduate-level reason=
+ing (GPQA), undergraduate-level knowledge (MMLU), and coding proficiency (H=
+umanEval). It shows marked improvement in grasping nuance, humor, and compl=
+ex instructions and is exceptional at writing high-quality content with a n=
+atural, relatable tone.</span></div>
+<div style=3D"font-family: inherit; text-align: inherit; margin-left: 0px">=
+<br></div>
+<div style=3D"font-family: inherit; text-align: inherit; margin-left: 0px">=
+<span style=3D"box-sizing: border-box; padding-top: 0px; padding-right: 0px=
+; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0p=
+x; margin-bottom: 0px; margin-left: 0px; font-style: inherit; font-variant-=
+ligatures: inherit; font-variant-caps: inherit; font-variant-numeric: inher=
+it; font-variant-east-asian: inherit; font-variant-alternates: inherit; fon=
+t-variant-position: inherit; font-weight: inherit; font-stretch: inherit; l=
+ine-height: inherit; font-family: helvetica, sans-serif; font-optical-sizin=
+g: inherit; font-kerning: inherit; font-feature-settings: inherit; font-var=
+iation-settings: inherit; font-size: 18px; vertical-align: baseline; border=
+-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-=
+left-width: 0px; border-top-style: initial; border-right-style: initial; bo=
+rder-bottom-style: initial; border-left-style: initial; border-top-color: i=
+nitial; border-right-color: initial; border-bottom-color: initial; border-l=
+eft-color: initial; border-image-source: initial; border-image-slice: initi=
+al; border-image-width: initial; border-image-outset: initial; border-image=
+-repeat: initial; color: #000000; letter-spacing: normal; orphans: 2; text-=
+align: start; text-indent: 0px; text-transform: none; widows: 2; word-spaci=
+ng: 0px; -webkit-text-stroke-width: 0px; white-space-collapse: preserve; te=
+xt-wrap: wrap; background-color: rgb(250, 250, 247); text-decoration-thickn=
+ess: initial; text-decoration-style: initial; text-decoration-color: initia=
+l"><u><em>2x speed</em></u></span></div>
+<div style=3D"font-family: inherit; text-align: inherit; margin-left: 0px">=
+<span style=3D"box-sizing: border-box; padding-top: 0px; padding-right: 0px=
+; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0p=
+x; margin-bottom: 0px; margin-left: 0px; font-style: inherit; font-variant-=
+ligatures: inherit; font-variant-caps: inherit; font-variant-numeric: inher=
+it; font-variant-east-asian: inherit; font-variant-alternates: inherit; fon=
+t-variant-position: inherit; font-weight: inherit; font-stretch: inherit; l=
+ine-height: inherit; font-family: helvetica, sans-serif; font-optical-sizin=
+g: inherit; font-kerning: inherit; font-feature-settings: inherit; font-var=
+iation-settings: inherit; font-size: 18px; vertical-align: baseline; border=
+-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-=
+left-width: 0px; border-top-style: initial; border-right-style: initial; bo=
+rder-bottom-style: initial; border-left-style: initial; border-top-color: i=
+nitial; border-right-color: initial; border-bottom-color: initial; border-l=
+eft-color: initial; border-image-source: initial; border-image-slice: initi=
+al; border-image-width: initial; border-image-outset: initial; border-image=
+-repeat: initial; color: #000000; letter-spacing: normal; orphans: 2; text-=
+align: start; text-indent: 0px; text-transform: none; widows: 2; word-spaci=
+ng: 0px; -webkit-text-stroke-width: 0px; white-space-collapse: preserve; te=
+xt-wrap: wrap; background-color: rgb(250, 250, 247); text-decoration-thickn=
+ess: initial; text-decoration-style: initial; text-decoration-color: initia=
+l">Operating at twice the speed of Claude 3 Opus, Claude 3.5 Sonnet is idea=
+l for complex tasks like code generation, writing high-quality content, sum=
+marizing lengthy documents with improved accuracy, creating insights and vi=
+sualizations from unstructured data, and more.&nbsp;</span></div>
+<div style=3D"font-family: inherit; text-align: inherit; margin-left: 0px">=
+<br></div>
+<div style=3D"font-family: inherit; text-align: inherit; margin-left: 0px">=
+<span style=3D"box-sizing: border-box; padding-top: 0px; padding-right: 0px=
+; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0p=
+x; margin-bottom: 0px; margin-left: 0px; font-style: inherit; font-variant-=
+ligatures: inherit; font-variant-caps: inherit; font-variant-numeric: inher=
+it; font-variant-east-asian: inherit; font-variant-alternates: inherit; fon=
+t-variant-position: inherit; font-weight: inherit; font-stretch: inherit; l=
+ine-height: inherit; font-family: helvetica, sans-serif; font-optical-sizin=
+g: inherit; font-kerning: inherit; font-feature-settings: inherit; font-var=
+iation-settings: inherit; font-size: 18px; vertical-align: baseline; border=
+-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-=
+left-width: 0px; border-top-style: initial; border-right-style: initial; bo=
+rder-bottom-style: initial; border-left-style: initial; border-top-color: i=
+nitial; border-right-color: initial; border-bottom-color: initial; border-l=
+eft-color: initial; border-image-source: initial; border-image-slice: initi=
+al; border-image-width: initial; border-image-outset: initial; border-image=
+-repeat: initial; color: #000000; letter-spacing: normal; orphans: 2; text-=
+align: start; text-indent: 0px; text-transform: none; widows: 2; word-spaci=
+ng: 0px; -webkit-text-stroke-width: 0px; white-space-collapse: preserve; te=
+xt-wrap: wrap; background-color: rgb(250, 250, 247); text-decoration-thickn=
+ess: initial; text-decoration-style: initial; text-decoration-color: initia=
+l"><u><em>State-of-the-art vision</em></u></span></div>
+<div style=3D"font-family: inherit; text-align: inherit; margin-left: 0px">=
+<span style=3D"box-sizing: border-box; padding-top: 0px; padding-right: 0px=
+; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0p=
+x; margin-bottom: 0px; margin-left: 0px; font-style: inherit; font-variant-=
+ligatures: inherit; font-variant-caps: inherit; font-variant-numeric: inher=
+it; font-variant-east-asian: inherit; font-variant-alternates: inherit; fon=
+t-variant-position: inherit; font-weight: inherit; font-stretch: inherit; l=
+ine-height: inherit; font-family: helvetica, sans-serif; font-optical-sizin=
+g: inherit; font-kerning: inherit; font-feature-settings: inherit; font-var=
+iation-settings: inherit; font-size: 18px; vertical-align: baseline; border=
+-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-=
+left-width: 0px; border-top-style: initial; border-right-style: initial; bo=
+rder-bottom-style: initial; border-left-style: initial; border-top-color: i=
+nitial; border-right-color: initial; border-bottom-color: initial; border-l=
+eft-color: initial; border-image-source: initial; border-image-slice: initi=
+al; border-image-width: initial; border-image-outset: initial; border-image=
+-repeat: initial; color: #000000; letter-spacing: normal; orphans: 2; text-=
+align: start; text-indent: 0px; text-transform: none; widows: 2; word-spaci=
+ng: 0px; -webkit-text-stroke-width: 0px; white-space-collapse: preserve; te=
+xt-wrap: wrap; background-color: rgb(250, 250, 247); text-decoration-thickn=
+ess: initial; text-decoration-style: initial; text-decoration-color: initia=
+l">Claude 3.5 Sonnet is our strongest vision model, performing an average o=
+f ~10% better than Claude 3 Opus on all vision benchmarks. These step-chang=
+e improvements are most noticeable for tasks that require visual reasoning,=
+ like interpreting charts and graphs. Claude 3.5 Sonnet can also accurately=
+ transcribe text from imperfect images.</span></div>
+<div style=3D"font-family: inherit; text-align: inherit; margin-left: 0px">=
+<br></div>
+<div style=3D"font-family: inherit; text-align: inherit; margin-left: 0px">=
+<span style=3D"box-sizing: border-box; padding-top: 0px; padding-right: 0px=
+; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0p=
+x; margin-bottom: 0px; margin-left: 0px; font-style: inherit; font-variant-=
+ligatures: inherit; font-variant-caps: inherit; font-variant-numeric: inher=
+it; font-variant-east-asian: inherit; font-variant-alternates: inherit; fon=
+t-variant-position: inherit; font-weight: inherit; font-stretch: inherit; l=
+ine-height: inherit; font-family: helvetica, sans-serif; font-optical-sizin=
+g: inherit; font-kerning: inherit; font-feature-settings: inherit; font-var=
+iation-settings: inherit; font-size: 18px; vertical-align: baseline; border=
+-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-=
+left-width: 0px; border-top-style: initial; border-right-style: initial; bo=
+rder-bottom-style: initial; border-left-style: initial; border-top-color: i=
+nitial; border-right-color: initial; border-bottom-color: initial; border-l=
+eft-color: initial; border-image-source: initial; border-image-slice: initi=
+al; border-image-width: initial; border-image-outset: initial; border-image=
+-repeat: initial; color: #000000; letter-spacing: normal; orphans: 2; text-=
+align: start; text-indent: 0px; text-transform: none; widows: 2; word-spaci=
+ng: 0px; -webkit-text-stroke-width: 0px; white-space-collapse: preserve; te=
+xt-wrap: wrap; background-color: rgb(250, 250, 247); text-decoration-thickn=
+ess: initial; text-decoration-style: initial; text-decoration-color: initia=
+l"><strong>Introducing Artifacts=E2=80=94a new way to use Claude</strong></=
+span></div>
+<div style=3D"font-family: inherit; text-align: inherit; margin-left: 0px">=
+<br></div>
+<div style=3D"font-family: inherit; text-align: inherit; margin-left: 0px">=
+<span style=3D"box-sizing: border-box; padding-top: 0px; padding-right: 0px=
+; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0p=
+x; margin-bottom: 0px; margin-left: 0px; font-style: inherit; font-variant-=
+ligatures: inherit; font-variant-caps: inherit; font-variant-numeric: inher=
+it; font-variant-east-asian: inherit; font-variant-alternates: inherit; fon=
+t-variant-position: inherit; font-weight: inherit; font-stretch: inherit; l=
+ine-height: inherit; font-family: helvetica, sans-serif; font-optical-sizin=
+g: inherit; font-kerning: inherit; font-feature-settings: inherit; font-var=
+iation-settings: inherit; font-size: 18px; vertical-align: baseline; border=
+-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-=
+left-width: 0px; border-top-style: initial; border-right-style: initial; bo=
+rder-bottom-style: initial; border-left-style: initial; border-top-color: i=
+nitial; border-right-color: initial; border-bottom-color: initial; border-l=
+eft-color: initial; border-image-source: initial; border-image-slice: initi=
+al; border-image-width: initial; border-image-outset: initial; border-image=
+-repeat: initial; color: #000000; letter-spacing: normal; orphans: 2; text-=
+align: start; text-indent: 0px; text-transform: none; widows: 2; word-spaci=
+ng: 0px; -webkit-text-stroke-width: 0px; white-space-collapse: preserve; te=
+xt-wrap: wrap; background-color: rgb(250, 250, 247); text-decoration-thickn=
+ess: initial; text-decoration-style: initial; text-decoration-color: initia=
+l">We're also introducing Artifacts on </span><a href=3D"https://url8792.ma=
+il.anthropic.com/ls/click?upn=3Du001.rFcAmKXLOm9u6wLRWHIUYR2OTiBaouKIQ6GV-2=
+FPwmu34-3DapkF_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwUoS9Gpbl6QX1AUIC=
+tpGgmLDb6y-2F9BoMWQdxQFG7iaQE5WYQIENYHWW99UaxK9-2BiDd6cE10IzOFA51xkqBOgfCGy=
+UWhoSDKdNVFlrlP9oP0SjS2Bdj9wdnFH6CBDR8d9Ftzu8Vu7n5CmRdB2MJCtPFMczGftkTcfMji=
+OzPttfX1gkU7TTrVpiE-2FfFk9B1Z0-2FX1-2F0t8QD2m-2BmhdPOE3nmSXkewI-2BEYlIzpw7M=
+hdzu3u8YTpqdlLg0cs7Xk6Z-2BprcanBS3LQvotBFAThxL0bg31VZMd97zqRNuwFLK-2F-2BgOe=
+fT6dgS6wGIygFnRHlr-2FSANW-2Fs18SyU-2BCMu-2BS9W0f-2FvzxTvQNcp66-2BuZdd9LBOGj=
+0sYFAwdiQz4gAbY8e31kF3is5IXajz-2FPsQHRnNBoOcrGpw0-2BSN98A7dSLRBkuiD89YqLJ-2=
+BIPOErxP-2BXbTU716MwSw34MiFB-2FVpDZTNIdjZui4laJdEKmtA-2BKH4YUnKmdvr82fgJZlS=
+tmfVMGBKu2NohAJ02eYp6-2F2f0Djjo3Mpu-2BWCq9wJCeQtjeeHpJ-2Fm20CEw3JEtwHkZJV1F=
+80TWzUGOfWhteonfCDWHxyz3-2B-2F6dxa-2BvSVrPcq576l1SB7nb6biPYqQz1Ty6q5xkL5zKC=
+Igs5-2FCyL03xqaPSWaBo-2BvpUHKxt44TyduxToFRfd8wY-2BCv4AHGmENvq2akk0wfg8rmc0H=
+X1f0pHaPwNPxumlXk3s-2BvOHlLyBst4CD0B13eYOSZH8jOwEakXEPtI5zCZskrQtP1oHshYqW2=
+SqdAI9HXNZ5trTTXBVn0rJsU8V3RSOxix5CPAyQhGWqEdk6Ij5-2FiCdwQETiWCt-2FqnEjoit7=
+AVXdF4g71GUvQavDT4NpG-2BXF3U-2BZaNmqd0hFw2argVHbdtllxU76e1OtYuNBI5LwkafID3A=
+gB6N2IGltfumQDwF3NctQ-3D-3D"><span style=3D"box-sizing: border-box; padding=
+-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; marg=
+in-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-=
+style: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit=
+; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-var=
+iant-alternates: inherit; font-variant-position: inherit; font-weight: inhe=
+rit; font-stretch: inherit; line-height: inherit; font-family: helvetica, s=
+ans-serif; font-optical-sizing: inherit; font-kerning: inherit; font-featur=
+e-settings: inherit; font-variation-settings: inherit; font-size: 18px; ver=
+tical-align: baseline; border-top-width: 0px; border-right-width: 0px; bord=
+er-bottom-width: 0px; border-left-width: 0px; border-top-style: initial; bo=
+rder-right-style: initial; border-bottom-style: initial; border-left-style:=
+ initial; border-top-color: initial; border-right-color: initial; border-bo=
+ttom-color: initial; border-left-color: initial; border-image-source: initi=
+al; border-image-slice: initial; border-image-width: initial; border-image-=
+outset: initial; border-image-repeat: initial; letter-spacing: normal; orph=
+ans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: =
+2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space-collapse:=
+ preserve; text-wrap: wrap; background-color: rgb(250, 250, 247); text-deco=
+ration-thickness: initial; text-decoration-style: initial; text-decoration-=
+color: initial; color: #1188e6">claude.ai</span></a><span style=3D"box-sizi=
+ng: border-box; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; =
+padding-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; =
+margin-left: 0px; font-style: inherit; font-variant-ligatures: inherit; fon=
+t-variant-caps: inherit; font-variant-numeric: inherit; font-variant-east-a=
+sian: inherit; font-variant-alternates: inherit; font-variant-position: inh=
+erit; font-weight: inherit; font-stretch: inherit; line-height: inherit; fo=
+nt-family: helvetica, sans-serif; font-optical-sizing: inherit; font-kernin=
+g: inherit; font-feature-settings: inherit; font-variation-settings: inheri=
+t; font-size: 18px; vertical-align: baseline; border-top-width: 0px; border=
+-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px; border=
+-top-style: initial; border-right-style: initial; border-bottom-style: init=
+ial; border-left-style: initial; border-top-color: initial; border-right-co=
+lor: initial; border-bottom-color: initial; border-left-color: initial; bor=
+der-image-source: initial; border-image-slice: initial; border-image-width:=
+ initial; border-image-outset: initial; border-image-repeat: initial; color=
+: #000000; letter-spacing: normal; orphans: 2; text-align: start; text-inde=
+nt: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-s=
+troke-width: 0px; white-space-collapse: preserve; text-wrap: wrap; backgrou=
+nd-color: rgb(250, 250, 247); text-decoration-thickness: initial; text-deco=
+ration-style: initial; text-decoration-color: initial">, a new feature that=
+ expands how you can interact with Claude. When you ask Claude to generate =
+content like code snippets, text documents, or website designs, these Artif=
+acts appear in a dedicated window alongside your conversation. This creates=
+ a dynamic workspace where you can see, edit, and build upon Claude's creat=
+ions in real-time, seamlessly integrating AI-generated content into your pr=
+ojects and workflows.</span></div>
+<div style=3D"font-family: inherit; text-align: inherit; margin-left: 0px">=
+<br></div>
+<div style=3D"font-family: inherit; text-align: inherit; margin-left: 0px">=
+<span style=3D"box-sizing: border-box; padding-top: 0px; padding-right: 0px=
+; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0p=
+x; margin-bottom: 0px; margin-left: 0px; font-style: inherit; font-variant-=
+ligatures: inherit; font-variant-caps: inherit; font-variant-numeric: inher=
+it; font-variant-east-asian: inherit; font-variant-alternates: inherit; fon=
+t-variant-position: inherit; font-weight: inherit; font-stretch: inherit; l=
+ine-height: inherit; font-family: helvetica, sans-serif; font-optical-sizin=
+g: inherit; font-kerning: inherit; font-feature-settings: inherit; font-var=
+iation-settings: inherit; font-size: 18px; vertical-align: baseline; border=
+-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-=
+left-width: 0px; border-top-style: initial; border-right-style: initial; bo=
+rder-bottom-style: initial; border-left-style: initial; border-top-color: i=
+nitial; border-right-color: initial; border-bottom-color: initial; border-l=
+eft-color: initial; border-image-source: initial; border-image-slice: initi=
+al; border-image-width: initial; border-image-outset: initial; border-image=
+-repeat: initial; color: #000000; letter-spacing: normal; orphans: 2; text-=
+align: start; text-indent: 0px; text-transform: none; widows: 2; word-spaci=
+ng: 0px; -webkit-text-stroke-width: 0px; white-space-collapse: preserve; te=
+xt-wrap: wrap; background-color: rgb(250, 250, 247); text-decoration-thickn=
+ess: initial; text-decoration-style: initial; text-decoration-color: initia=
+l"><strong>Get started</strong></span></div>
+<div style=3D"font-family: inherit; text-align: inherit; margin-left: 0px">=
+<br></div>
+<div style=3D"font-family: inherit; text-align: inherit; margin-left: 0px">=
+<span style=3D"box-sizing: border-box; padding-top: 0px; padding-right: 0px=
+; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0p=
+x; margin-bottom: 0px; margin-left: 0px; font-style: inherit; font-variant-=
+ligatures: inherit; font-variant-caps: inherit; font-variant-numeric: inher=
+it; font-variant-east-asian: inherit; font-variant-alternates: inherit; fon=
+t-variant-position: inherit; font-weight: inherit; font-stretch: inherit; l=
+ine-height: inherit; font-family: helvetica, sans-serif; font-optical-sizin=
+g: inherit; font-kerning: inherit; font-feature-settings: inherit; font-var=
+iation-settings: inherit; font-size: 18px; vertical-align: baseline; border=
+-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-=
+left-width: 0px; border-top-style: initial; border-right-style: initial; bo=
+rder-bottom-style: initial; border-left-style: initial; border-top-color: i=
+nitial; border-right-color: initial; border-bottom-color: initial; border-l=
+eft-color: initial; border-image-source: initial; border-image-slice: initi=
+al; border-image-width: initial; border-image-outset: initial; border-image=
+-repeat: initial; color: #000000; letter-spacing: normal; orphans: 2; text-=
+align: start; text-indent: 0px; text-transform: none; widows: 2; word-spaci=
+ng: 0px; -webkit-text-stroke-width: 0px; white-space-collapse: preserve; te=
+xt-wrap: wrap; background-color: rgb(250, 250, 247); text-decoration-thickn=
+ess: initial; text-decoration-style: initial; text-decoration-color: initia=
+l">You can start using Claude 3.5 Sonnet for free today at </span><a href=
+=3D"https://url8792.mail.anthropic.com/ls/click?upn=3Du001.rFcAmKXLOm9u6wLR=
+WHIUYR2OTiBaouKIQ6GV-2FPwmu34-3Dx5ZK_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXn=
+gf09BwUoS9Gpbl6QX1AUICtpGgmLDb6y-2F9BoMWQdxQFG7iaQE5WYQIENYHWW99UaxK9-2BiDd=
+6cE10IzOFA51xkqBOgfCGyUWhoSDKdNVFlrlP9oP0SjS2Bdj9wdnFH6CBDR8d9Ftzu8Vu7n5CmR=
+dB2MJCtPFMczGftkTcfMjiOzPttfX1gkU7TTrVpiE-2FfFk9B1Z0-2FX1-2F0t8QD2m-2BmhdPO=
+E3nmSXkewI-2BEYlIzpw7Mhdzu3u8YTpqdlLg0cs7Xk6Z-2BprcanBS3LQvotBFAThxL0bg31VZ=
+Md97zqRNuwFLK-2F-2BgOefT6dgS6wGIygFnRHlr-2FSANW-2Fs18SyU-2BCMu-2BS9W0f-2Fvz=
+xTvQNcp66-2BuZdd9LBOGj0sYFAwdiQz4gAbY8e31kF3is5IXajz-2FPsQHRnNBoOcrGpw0-2BS=
+N98A7dSLRBkuiD89YqLJ-2BIPOErxP-2BXbTU716MwSw34MiFB-2FVpDZTNIdjZui4laJdEKmtA=
+-2BKH4YUnKmdvr82fgJZlStmfVMGBKu2NohAJ02eYp6-2F2f0Djjo3Mpu-2BWCq9wJCeQtjeeHp=
+J-2Fm20CEw3JEtwHkZJV1F80TWzUGOfWhteonfCDWHxyz3-2B-2F6dxa-2BvSVrPcq576l1SB7n=
+b6biPYqQz1Ty6q5xkL5zKCIgs5-2FCyL03xqaPSWaBo-2BvpUHKxt44TyduxToFRfd8wY-2BCv4=
+AHGmENvq2akk0wfg8rmc0HX1f0pHaPwNPxumlXk3s-2BvOHlLyBst4CD0B13eYOSZH8jOwEakXE=
+PtI5zCZskrQtP1oHshYqW2SqdAI9HXNZ5trTTXBVn0rJsU8V3RSOxix5LmmxalPQF0pRBqL-2Bs=
+2TVCUbj-2F-2BPqIbJUeHzAsj9jcnL29Gi5BmmmQsLkeyQRleYc8-2F5e7qsB5-2FdQmnud6Iyp=
+t3C6X5TATtWTkqsp-2F0sQDvLvnFvJcj-2FXbSgcQBzBx-2FAhQ-3D-3D"><span style=3D"b=
+ox-sizing: border-box; padding-top: 0px; padding-right: 0px; padding-bottom=
+: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom=
+: 0px; margin-left: 0px; font-style: inherit; font-variant-ligatures: inher=
+it; font-variant-caps: inherit; font-variant-numeric: inherit; font-variant=
+-east-asian: inherit; font-variant-alternates: inherit; font-variant-positi=
+on: inherit; font-weight: inherit; font-stretch: inherit; line-height: inhe=
+rit; font-family: helvetica, sans-serif; font-optical-sizing: inherit; font=
+-kerning: inherit; font-feature-settings: inherit; font-variation-settings:=
+ inherit; font-size: 18px; vertical-align: baseline; border-top-width: 0px;=
+ border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px;=
+ border-top-style: initial; border-right-style: initial; border-bottom-styl=
+e: initial; border-left-style: initial; border-top-color: initial; border-r=
+ight-color: initial; border-bottom-color: initial; border-left-color: initi=
+al; border-image-source: initial; border-image-slice: initial; border-image=
+-width: initial; border-image-outset: initial; border-image-repeat: initial=
+; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-wid=
+th: 0px; white-space-collapse: preserve; text-wrap: wrap; background-color:=
+ rgb(250, 250, 247); text-decoration-thickness: initial; text-decoration-st=
+yle: initial; text-decoration-color: initial; color: #1188e6">claude.ai</sp=
+an></a><span style=3D"box-sizing: border-box; padding-top: 0px; padding-rig=
+ht: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-ri=
+ght: 0px; margin-bottom: 0px; margin-left: 0px; font-style: inherit; font-v=
+ariant-ligatures: inherit; font-variant-caps: inherit; font-variant-numeric=
+: inherit; font-variant-east-asian: inherit; font-variant-alternates: inher=
+it; font-variant-position: inherit; font-weight: inherit; font-stretch: inh=
+erit; line-height: inherit; font-family: helvetica, sans-serif; font-optica=
+l-sizing: inherit; font-kerning: inherit; font-feature-settings: inherit; f=
+ont-variation-settings: inherit; font-size: 18px; vertical-align: baseline;=
+ border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; =
+border-left-width: 0px; border-top-style: initial; border-right-style: init=
+ial; border-bottom-style: initial; border-left-style: initial; border-top-c=
+olor: initial; border-right-color: initial; border-bottom-color: initial; b=
+order-left-color: initial; border-image-source: initial; border-image-slice=
+: initial; border-image-width: initial; border-image-outset: initial; borde=
+r-image-repeat: initial; letter-spacing: normal; orphans: 2; text-align: st=
+art; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; white-space-collapse: preserve; text-wrap: =
+wrap; background-color: rgb(250, 250, 247); text-decoration-thickness: init=
+ial; text-decoration-style: initial; text-decoration-color: initial; color:=
+ #1188e6"> </span><span style=3D"box-sizing: border-box; padding-top: 0px; =
+padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 0px=
+; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-style: inhe=
+rit; font-variant-ligatures: inherit; font-variant-caps: inherit; font-vari=
+ant-numeric: inherit; font-variant-east-asian: inherit; font-variant-altern=
+ates: inherit; font-variant-position: inherit; font-weight: inherit; font-s=
+tretch: inherit; line-height: inherit; font-family: helvetica, sans-serif; =
+font-optical-sizing: inherit; font-kerning: inherit; font-feature-settings:=
+ inherit; font-variation-settings: inherit; font-size: 18px; vertical-align=
+: baseline; border-top-width: 0px; border-right-width: 0px; border-bottom-w=
+idth: 0px; border-left-width: 0px; border-top-style: initial; border-right-=
+style: initial; border-bottom-style: initial; border-left-style: initial; b=
+order-top-color: initial; border-right-color: initial; border-bottom-color:=
+ initial; border-left-color: initial; border-image-source: initial; border-=
+image-slice: initial; border-image-width: initial; border-image-outset: ini=
+tial; border-image-repeat: initial; color: #000000; letter-spacing: normal;=
+ orphans: 2; text-align: start; text-indent: 0px; text-transform: none; wid=
+ows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space-coll=
+apse: preserve; text-wrap: wrap; background-color: rgb(250, 250, 247); text=
+-decoration-thickness: initial; text-decoration-style: initial; text-decora=
+tion-color: initial">and on the </span><a href=3D"https://url8792.mail.anth=
+ropic.com/ls/click?upn=3Du001.rFcAmKXLOm9u6wLRWHIUYXj5nmfs7-2F8wepwBHsqyhRD=
+vNGeK94CjJrJbPMqjfDSqo0GbbwlSMJtxjGWF1V7RkRIrHV0kYlzGABLuQ-2FOTWrI-3DCSJH_r=
+O1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwUoS9Gpbl6QX1AUICtpGgmLDb6y-2F9Bo=
+MWQdxQFG7iaQE5WYQIENYHWW99UaxK9-2BiDd6cE10IzOFA51xkqBOgfCGyUWhoSDKdNVFlrlP9=
+oP0SjS2Bdj9wdnFH6CBDR8d9Ftzu8Vu7n5CmRdB2MJCtPFMczGftkTcfMjiOzPttfX1gkU7TTrV=
+piE-2FfFk9B1Z0-2FX1-2F0t8QD2m-2BmhdPOE3nmSXkewI-2BEYlIzpw7Mhdzu3u8YTpqdlLg0=
+cs7Xk6Z-2BprcanBS3LQvotBFAThxL0bg31VZMd97zqRNuwFLK-2F-2BgOefT6dgS6wGIygFnRH=
+lr-2FSANW-2Fs18SyU-2BCMu-2BS9W0f-2FvzxTvQNcp66-2BuZdd9LBOGj0sYFAwdiQz4gAbY8=
+e31kF3is5IXajz-2FPsQHRnNBoOcrGpw0-2BSN98A7dSLRBkuiD89YqLJ-2BIPOErxP-2BXbTU7=
+16MwSw34MiFB-2FVpDZTNIdjZui4laJdEKmtA-2BKH4YUnKmdvr82fgJZlStmfVMGBKu2NohAJ0=
+2eYp6-2F2f0Djjo3Mpu-2BWCq9wJCeQtjeeHpJ-2Fm20CEw3JEtwHkZJV1F80TWzUGOfWhteonf=
+CDWHxyz3-2B-2F6dxa-2BvSVrPcq576l1SB7nb6biPYqQz1Ty6q5xkL5zKCIgs5-2FCyL03xqaP=
+SWaBo-2BvpUHKxt44TyduxToFRfd8wY-2BCv4AHGmENvq2akk0wfg8rmc0HX1f0pHaPwNPxumlX=
+k3s-2BvOHlLyBst4CD0B13eYOSZH8jOwEakXEPtI5zCZskrQtP1oHshYqW2SqdAI9HXNZ5trTTX=
+BVn0rJsU8V3RSOxix5P28wXqTKNABMbf-2F7lJUjgC0Iz-2BRWtIesDiyh6CS0mqobynRy-2BOz=
+NyY-2BxNcHcFYOmTZD-2FkHHxjCpBhWTQaLBX7oc2yhYT-2BDi08puRSIWuIdtg63QmtkNM3rTa=
+tUbA4-2FXQw-3D-3D"><span style=3D"box-sizing: border-box; padding-top: 0px;=
+ padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 0p=
+x; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-style: inh=
+erit; font-variant-ligatures: inherit; font-variant-caps: inherit; font-var=
+iant-numeric: inherit; font-variant-east-asian: inherit; font-variant-alter=
+nates: inherit; font-variant-position: inherit; font-weight: inherit; font-=
+stretch: inherit; line-height: inherit; font-family: helvetica, sans-serif;=
+ font-optical-sizing: inherit; font-kerning: inherit; font-feature-settings=
+: inherit; font-variation-settings: inherit; font-size: 18px; vertical-alig=
+n: baseline; border-top-width: 0px; border-right-width: 0px; border-bottom-=
+width: 0px; border-left-width: 0px; border-top-style: initial; border-right=
+-style: initial; border-bottom-style: initial; border-left-style: initial; =
+border-top-color: initial; border-right-color: initial; border-bottom-color=
+: initial; border-left-color: initial; border-image-source: initial; border=
+-image-slice: initial; border-image-width: initial; border-image-outset: in=
+itial; border-image-repeat: initial; letter-spacing: normal; orphans: 2; te=
+xt-align: start; text-indent: 0px; text-transform: none; widows: 2; word-sp=
+acing: 0px; -webkit-text-stroke-width: 0px; white-space-collapse: preserve;=
+ text-wrap: wrap; background-color: rgb(250, 250, 247); text-decoration-thi=
+ckness: initial; text-decoration-style: initial; text-decoration-color: ini=
+tial; color: #1188e6">Claude iOS app</span></a><span style=3D"box-sizing: b=
+order-box; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; paddi=
+ng-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margi=
+n-left: 0px; font-style: inherit; font-variant-ligatures: inherit; font-var=
+iant-caps: inherit; font-variant-numeric: inherit; font-variant-east-asian:=
+ inherit; font-variant-alternates: inherit; font-variant-position: inherit;=
+ font-weight: inherit; font-stretch: inherit; line-height: inherit; font-fa=
+mily: helvetica, sans-serif; font-optical-sizing: inherit; font-kerning: in=
+herit; font-feature-settings: inherit; font-variation-settings: inherit; fo=
+nt-size: 18px; vertical-align: baseline; border-top-width: 0px; border-righ=
+t-width: 0px; border-bottom-width: 0px; border-left-width: 0px; border-top-=
+style: initial; border-right-style: initial; border-bottom-style: initial; =
+border-left-style: initial; border-top-color: initial; border-right-color: =
+initial; border-bottom-color: initial; border-left-color: initial; border-i=
+mage-source: initial; border-image-slice: initial; border-image-width: init=
+ial; border-image-outset: initial; border-image-repeat: initial; color: #00=
+0000; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0=
+px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke=
+-width: 0px; white-space-collapse: preserve; text-wrap: wrap; background-co=
+lor: rgb(250, 250, 247); text-decoration-thickness: initial; text-decoratio=
+n-style: initial; text-decoration-color: initial">. For inspiration, visit =
+our </span><a href=3D"https://url8792.mail.anthropic.com/ls/click?upn=3Du00=
+1.rFcAmKXLOm9u6wLRWHIUYbSvu-2Fvdza4oBX08-2Bjz7HBXQXguhC-2BJZNH2WoRQphrdHB87=
+3QEG6DAoluq-2FaDOnEk-2FyMDCAFoM5lOr6sx60a2eQ-3DLPWg_rO1JRqZrx5Oo25BATZItEvI=
+KK9wiuA6UN-2BXngf09BwUoS9Gpbl6QX1AUICtpGgmLDb6y-2F9BoMWQdxQFG7iaQE5WYQIENYH=
+WW99UaxK9-2BiDd6cE10IzOFA51xkqBOgfCGyUWhoSDKdNVFlrlP9oP0SjS2Bdj9wdnFH6CBDR8=
+d9Ftzu8Vu7n5CmRdB2MJCtPFMczGftkTcfMjiOzPttfX1gkU7TTrVpiE-2FfFk9B1Z0-2FX1-2F=
+0t8QD2m-2BmhdPOE3nmSXkewI-2BEYlIzpw7Mhdzu3u8YTpqdlLg0cs7Xk6Z-2BprcanBS3LQvo=
+tBFAThxL0bg31VZMd97zqRNuwFLK-2F-2BgOefT6dgS6wGIygFnRHlr-2FSANW-2Fs18SyU-2BC=
+Mu-2BS9W0f-2FvzxTvQNcp66-2BuZdd9LBOGj0sYFAwdiQz4gAbY8e31kF3is5IXajz-2FPsQHR=
+nNBoOcrGpw0-2BSN98A7dSLRBkuiD89YqLJ-2BIPOErxP-2BXbTU716MwSw34MiFB-2FVpDZTNI=
+djZui4laJdEKmtA-2BKH4YUnKmdvr82fgJZlStmfVMGBKu2NohAJ02eYp6-2F2f0Djjo3Mpu-2B=
+WCq9wJCeQtjeeHpJ-2Fm20CEw3JEtwHkZJV1F80TWzUGOfWhteonfCDWHxyz3-2B-2F6dxa-2Bv=
+SVrPcq576l1SB7nb6biPYqQz1Ty6q5xkL5zKCIgs5-2FCyL03xqaPSWaBo-2BvpUHKxt44Tydux=
+ToFRfd8wY-2BCv4AHGmENvq2akk0wfg8rmc0HX1f0pHaPwNPxumlXk3s-2BvOHlLyBst4CD0B13=
+eYOSZH8jOwEakXEPtI5zCZskrQtP1oHshYqW2SqdAI9HXNZ5trTTXBVn0rJsU8V3RSOxix5KYxO=
+GXntN-2FTHQbSOw4NMhZfJ9fcBGSBigwieLZLhWNjYnhAzgKzLNARXOFv-2FW8r-2BEsU3PIkUK=
+uTInZR8gZ5XcXokCGGoJtZcMRXX-2BcRczepuB2yhR0l34B2Dz-2B98Tld4w-3D-3D"><span s=
+tyle=3D"box-sizing: border-box; padding-top: 0px; padding-right: 0px; paddi=
+ng-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0px; marg=
+in-bottom: 0px; margin-left: 0px; font-style: inherit; font-variant-ligatur=
+es: inherit; font-variant-caps: inherit; font-variant-numeric: inherit; fon=
+t-variant-east-asian: inherit; font-variant-alternates: inherit; font-varia=
+nt-position: inherit; font-weight: inherit; font-stretch: inherit; line-hei=
+ght: inherit; font-family: helvetica, sans-serif; font-optical-sizing: inhe=
+rit; font-kerning: inherit; font-feature-settings: inherit; font-variation-=
+settings: inherit; font-size: 18px; vertical-align: baseline; border-top-wi=
+dth: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-wi=
+dth: 0px; border-top-style: initial; border-right-style: initial; border-bo=
+ttom-style: initial; border-left-style: initial; border-top-color: initial;=
+ border-right-color: initial; border-bottom-color: initial; border-left-col=
+or: initial; border-image-source: initial; border-image-slice: initial; bor=
+der-image-width: initial; border-image-outset: initial; border-image-repeat=
+: initial; letter-spacing: normal; orphans: 2; text-align: start; text-inde=
+nt: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-s=
+troke-width: 0px; white-space-collapse: preserve; text-wrap: wrap; backgrou=
+nd-color: rgb(250, 250, 247); text-decoration-thickness: initial; text-deco=
+ration-style: initial; text-decoration-color: initial; color: #1188e6">YouT=
+ube channel</span></a><span style=3D"box-sizing: border-box; padding-top: 0=
+px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top:=
+ 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-style: =
+inherit; font-variant-ligatures: inherit; font-variant-caps: inherit; font-=
+variant-numeric: inherit; font-variant-east-asian: inherit; font-variant-al=
+ternates: inherit; font-variant-position: inherit; font-weight: inherit; fo=
+nt-stretch: inherit; line-height: inherit; font-family: helvetica, sans-ser=
+if; font-optical-sizing: inherit; font-kerning: inherit; font-feature-setti=
+ngs: inherit; font-variation-settings: inherit; font-size: 18px; vertical-a=
+lign: baseline; border-top-width: 0px; border-right-width: 0px; border-bott=
+om-width: 0px; border-left-width: 0px; border-top-style: initial; border-ri=
+ght-style: initial; border-bottom-style: initial; border-left-style: initia=
+l; border-top-color: initial; border-right-color: initial; border-bottom-co=
+lor: initial; border-left-color: initial; border-image-source: initial; bor=
+der-image-slice: initial; border-image-width: initial; border-image-outset:=
+ initial; border-image-repeat: initial; color: #000000; letter-spacing: nor=
+mal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none;=
+ widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space-=
+collapse: preserve; text-wrap: wrap; background-color: rgb(250, 250, 247); =
+text-decoration-thickness: initial; text-decoration-style: initial; text-de=
+coration-color: initial"> to watch demo videos and see our new Artifacts fe=
+ature in action.</span></div>
+<div style=3D"font-family: inherit; text-align: inherit; margin-left: 0px">=
+<br></div>
+<div style=3D"font-family: inherit; text-align: inherit; margin-left: 0px">=
+<span style=3D"box-sizing: border-box; padding-top: 0px; padding-right: 0px=
+; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0p=
+x; margin-bottom: 0px; margin-left: 0px; font-style: inherit; font-variant-=
+ligatures: inherit; font-variant-caps: inherit; font-variant-numeric: inher=
+it; font-variant-east-asian: inherit; font-variant-alternates: inherit; fon=
+t-variant-position: inherit; font-weight: inherit; font-stretch: inherit; l=
+ine-height: inherit; font-family: helvetica, sans-serif; font-optical-sizin=
+g: inherit; font-kerning: inherit; font-feature-settings: inherit; font-var=
+iation-settings: inherit; font-size: 18px; vertical-align: baseline; border=
+-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-=
+left-width: 0px; border-top-style: initial; border-right-style: initial; bo=
+rder-bottom-style: initial; border-left-style: initial; border-top-color: i=
+nitial; border-right-color: initial; border-bottom-color: initial; border-l=
+eft-color: initial; border-image-source: initial; border-image-slice: initi=
+al; border-image-width: initial; border-image-outset: initial; border-image=
+-repeat: initial; color: #000000; letter-spacing: normal; orphans: 2; text-=
+align: start; text-indent: 0px; text-transform: none; widows: 2; word-spaci=
+ng: 0px; -webkit-text-stroke-width: 0px; white-space-collapse: preserve; te=
+xt-wrap: wrap; background-color: rgb(250, 250, 247); text-decoration-thickn=
+ess: initial; text-decoration-style: initial; text-decoration-color: initia=
+l">If you=E2=80=99re interested in building applications with Claude 3.5 So=
+nnet, you can </span><a href=3D"https://url8792.mail.anthropic.com/ls/click=
+?upn=3Du001.DQPN1aY4ZNxl1FjlYxeAhXCSFgL3fnLGm3CkyN-2B6p-2FOurGFHiU4SUekEdnC=
+nNqOb2JDK_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwUoS9Gpbl6QX1AUICtpGgm=
+LDb6y-2F9BoMWQdxQFG7iaQE5WYQIENYHWW99UaxK9-2BiDd6cE10IzOFA51xkqBOgfCGyUWhoS=
+DKdNVFlrlP9oP0SjS2Bdj9wdnFH6CBDR8d9Ftzu8Vu7n5CmRdB2MJCtPFMczGftkTcfMjiOzPtt=
+fX1gkU7TTrVpiE-2FfFk9B1Z0-2FX1-2F0t8QD2m-2BmhdPOE3nmSXkewI-2BEYlIzpw7Mhdzu3=
+u8YTpqdlLg0cs7Xk6Z-2BprcanBS3LQvotBFAThxL0bg31VZMd97zqRNuwFLK-2F-2BgOefT6dg=
+S6wGIygFnRHlr-2FSANW-2Fs18SyU-2BCMu-2BS9W0f-2FvzxTvQNcp66-2BuZdd9LBOGj0sYFA=
+wdiQz4gAbY8e31kF3is5IXajz-2FPsQHRnNBoOcrGpw0-2BSN98A7dSLRBkuiD89YqLJ-2BIPOE=
+rxP-2BXbTU716MwSw34MiFB-2FVpDZTNIdjZui4laJdEKmtA-2BKH4YUnKmdvr82fgJZlStmfVM=
+GBKu2NohAJ02eYp6-2F2f0Djjo3Mpu-2BWCq9wJCeQtjeeHpJ-2Fm20CEw3JEtwHkZJV1F80TWz=
+UGOfWhteonfCDWHxyz3-2B-2F6dxa-2BvSVrPcq576l1SB7nb6biPYqQz1Ty6q5xkL5zKCIgs5-=
+2FCyL03xqaPSWaBo-2BvpUHKxt44TyduxToFRfd8wY-2BCv4AHGmENvq2akk0wfg8rmc0HX1f0p=
+HaPwNPxumlXk3s-2BvOHlLyBst4CD0B13eYOSZH8jOwEakXEPtI5zCZskrQtP1oHshYqW2SqdAI=
+9HXNZ5trTTXBVn0rJsU8V3RSOxix5GX9ziNa0znCQ6n6MN19oNstcgV4Ov1zMjD6b2Sn3PEFqqe=
+i9o7aFDaus1Ja1bE175sB-2BBE4sSUyLTjOmmK7mI19tnHFKhafFneqbXJp0cFFQhaQRVg688Zl=
+XHNe7cG5VQ-3D-3D"><span style=3D"box-sizing: border-box; padding-top: 0px; =
+padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margin-top: 0px=
+; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-style: inhe=
+rit; font-variant-ligatures: inherit; font-variant-caps: inherit; font-vari=
+ant-numeric: inherit; font-variant-east-asian: inherit; font-variant-altern=
+ates: inherit; font-variant-position: inherit; font-weight: inherit; font-s=
+tretch: inherit; line-height: inherit; font-family: helvetica, sans-serif; =
+font-optical-sizing: inherit; font-kerning: inherit; font-feature-settings:=
+ inherit; font-variation-settings: inherit; font-size: 18px; vertical-align=
+: baseline; border-top-width: 0px; border-right-width: 0px; border-bottom-w=
+idth: 0px; border-left-width: 0px; border-top-style: initial; border-right-=
+style: initial; border-bottom-style: initial; border-left-style: initial; b=
+order-top-color: initial; border-right-color: initial; border-bottom-color:=
+ initial; border-left-color: initial; border-image-source: initial; border-=
+image-slice: initial; border-image-width: initial; border-image-outset: ini=
+tial; border-image-repeat: initial; letter-spacing: normal; orphans: 2; tex=
+t-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spa=
+cing: 0px; -webkit-text-stroke-width: 0px; white-space-collapse: preserve; =
+text-wrap: wrap; background-color: rgb(250, 250, 247); text-decoration-thic=
+kness: initial; text-decoration-style: initial; text-decoration-color: init=
+ial; color: #1188e6">also access it through our API</span></a><span style=
+=3D"box-sizing: border-box; padding-top: 0px; padding-right: 0px; padding-b=
+ottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0px; margin-b=
+ottom: 0px; margin-left: 0px; font-style: inherit; font-variant-ligatures: =
+inherit; font-variant-caps: inherit; font-variant-numeric: inherit; font-va=
+riant-east-asian: inherit; font-variant-alternates: inherit; font-variant-p=
+osition: inherit; font-weight: inherit; font-stretch: inherit; line-height:=
+ inherit; font-family: helvetica, sans-serif; font-optical-sizing: inherit;=
+ font-kerning: inherit; font-feature-settings: inherit; font-variation-sett=
+ings: inherit; font-size: 18px; vertical-align: baseline; border-top-width:=
+ 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width:=
+ 0px; border-top-style: initial; border-right-style: initial; border-bottom=
+-style: initial; border-left-style: initial; border-top-color: initial; bor=
+der-right-color: initial; border-bottom-color: initial; border-left-color: =
+initial; border-image-source: initial; border-image-slice: initial; border-=
+image-width: initial; border-image-outset: initial; border-image-repeat: in=
+itial; color: #000000; letter-spacing: normal; orphans: 2; text-align: star=
+t; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -w=
+ebkit-text-stroke-width: 0px; white-space-collapse: preserve; text-wrap: wr=
+ap; background-color: rgb(250, 250, 247); text-decoration-thickness: initia=
+l; text-decoration-style: initial; text-decoration-color: initial">.</span>=
+</div>
+<div style=3D"font-family: inherit; text-align: inherit; margin-left: 0px">=
+<br></div>
+<div style=3D"font-family: inherit; text-align: inherit; margin-left: 0px">=
+<span style=3D"box-sizing: border-box; padding-top: 0px; padding-right: 0px=
+; padding-bottom: 0px; padding-left: 0px; margin-top: 0px; margin-right: 0p=
+x; margin-bottom: 0px; margin-left: 0px; font-style: inherit; font-variant-=
+ligatures: inherit; font-variant-caps: inherit; font-variant-numeric: inher=
+it; font-variant-east-asian: inherit; font-variant-alternates: inherit; fon=
+t-variant-position: inherit; font-weight: inherit; font-stretch: inherit; l=
+ine-height: inherit; font-family: helvetica, sans-serif; font-optical-sizin=
+g: inherit; font-kerning: inherit; font-feature-settings: inherit; font-var=
+iation-settings: inherit; font-size: 18px; vertical-align: baseline; border=
+-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-=
+left-width: 0px; border-top-style: initial; border-right-style: initial; bo=
+rder-bottom-style: initial; border-left-style: initial; border-top-color: i=
+nitial; border-right-color: initial; border-bottom-color: initial; border-l=
+eft-color: initial; border-image-source: initial; border-image-slice: initi=
+al; border-image-width: initial; border-image-outset: initial; border-image=
+-repeat: initial; color: #000000; letter-spacing: normal; orphans: 2; text-=
+align: start; text-indent: 0px; text-transform: none; widows: 2; word-spaci=
+ng: 0px; -webkit-text-stroke-width: 0px; white-space-collapse: preserve; te=
+xt-wrap: wrap; background-color: rgb(250, 250, 247); text-decoration-thickn=
+ess: initial; text-decoration-style: initial; text-decoration-color: initia=
+l">As always, we look forward to seeing what you create and discover with C=
+laude.</span></div>
+<div style=3D"font-family: inherit; text-align: inherit; margin-left: 0px">=
+<br></div>
+<div style=3D"font-family: inherit; text-align: inherit"><span style=3D"col=
+or: #000000; font-family: helvetica, sans-serif; font-size: 18px; font-styl=
+e: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-=
+weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-in=
+dent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text=
+-stroke-width: 0px; white-space-collapse: preserve; text-wrap: wrap; backgr=
+ound-color: rgb(250, 250, 247); text-decoration-thickness: initial; text-de=
+coration-style: initial; text-decoration-color: initial; float: none; displ=
+ay: inline">=E2=80=94</span><span style=3D"box-sizing: border-box; padding-=
+top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; margi=
+n-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; font-s=
+tyle: inherit; font-variant-ligatures: inherit; font-variant-caps: inherit;=
+ font-variant-numeric: inherit; font-variant-east-asian: inherit; font-vari=
+ant-alternates: inherit; font-variant-position: inherit; font-weight: inher=
+it; font-stretch: inherit; line-height: inherit; font-family: helvetica, sa=
+ns-serif; font-optical-sizing: inherit; font-kerning: inherit; font-feature=
+-settings: inherit; font-variation-settings: inherit; font-size: 18px; vert=
+ical-align: baseline; border-top-width: 0px; border-right-width: 0px; borde=
+r-bottom-width: 0px; border-left-width: 0px; border-top-style: initial; bor=
+der-right-style: initial; border-bottom-style: initial; border-left-style: =
+initial; border-top-color: initial; border-right-color: initial; border-bot=
+tom-color: initial; border-left-color: initial; border-image-source: initia=
+l; border-image-slice: initial; border-image-width: initial; border-image-o=
+utset: initial; border-image-repeat: initial; color: #000000; letter-spacin=
+g: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform:=
+ none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-=
+space-collapse: preserve; text-wrap: wrap; background-color: rgb(250, 250, =
+247); text-decoration-thickness: initial; text-decoration-style: initial; t=
+ext-decoration-color: initial">The Anthropic team</span></div><div></div></=
+div></td>
+      </tr>
+    </tbody>
+  </table><table class=3D"module" role=3D"module" data-type=3D"social" alig=
+n=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%=
+" style=3D"table-layout: fixed;" data-muid=3D"f4569f76-5401-4d05-b706-32502=
+f6e9cd4">
+    <tbody>
+      <tr>
+        <td valign=3D"top" style=3D"padding:0px 0px 0px 0px; font-size:6px;=
+ line-height:10px;" align=3D"center">
+          <table align=3D"center" style=3D"-webkit-margin-start:auto;-webki=
+t-margin-end:auto;">
+            <tbody><tr align=3D"center"><td style=3D"padding: 0px 5px;" cla=
+ss=3D"social-icon-column">
+      <a role=3D"social-icon-link" href=3D"https://url8792.mail.anthropic.c=
+om/ls/click?upn=3Du001.rFcAmKXLOm9u6wLRWHIUYfw6YEn6S7SZHsYwi-2Bdxy7gWNonWz4=
+HUpGN07CsdA5MWU3Zb_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwUoS9Gpbl6QX1=
+AUICtpGgmLDb6y-2F9BoMWQdxQFG7iaQE5WYQIENYHWW99UaxK9-2BiDd6cE10IzOFA51xkqBOg=
+fCGyUWhoSDKdNVFlrlP9oP0SjS2Bdj9wdnFH6CBDR8d9Ftzu8Vu7n5CmRdB2MJCtPFMczGftkTc=
+fMjiOzPttfX1gkU7TTrVpiE-2FfFk9B1Z0-2FX1-2F0t8QD2m-2BmhdPOE3nmSXkewI-2BEYlIz=
+pw7Mhdzu3u8YTpqdlLg0cs7Xk6Z-2BprcanBS3LQvotBFAThxL0bg31VZMd97zqRNuwFLK-2F-2=
+BgOefT6dgS6wGIygFnRHlr-2FSANW-2Fs18SyU-2BCMu-2BS9W0f-2FvzxTvQNcp66-2BuZdd9L=
+BOGj0sYFAwdiQz4gAbY8e31kF3is5IXajz-2FPsQHRnNBoOcrGpw0-2BSN98A7dSLRBkuiD89Yq=
+LJ-2BIPOErxP-2BXbTU716MwSw34MiFB-2FVpDZTNIdjZui4laJdEKmtA-2BKH4YUnKmdvr82fg=
+JZlStmfVMGBKu2NohAJ02eYp6-2F2f0Djjo3Mpu-2BWCq9wJCeQtjeeHpJ-2Fm20CEw3JEtwHkZ=
+JV1F80TWzUGOfWhteonfCDWHxyz3-2B-2F6dxa-2BvSVrPcq576l1SB7nb6biPYqQz1Ty6q5xkL=
+5zKCIgs5-2FCyL03xqaPSWaBo-2BvpUHKxt44TyduxToFRfd8wY-2BCv4AHGmENvq2akk0wfg8r=
+mc0HX1f0pHaPwNPxumlXk3s-2BvOHlLyBst4CD0B13eYOSZH8jOwEakXEPtI5zCZskrQtP1oHsh=
+YqW2SqdAI9HXNZ5trTTXBVn0rJsU8V3RSOxix5MIEtksw1dYUJL1vwkRKKPyo9sMKB4jU8WGffX=
+Yk71QqHmqmkyDlxhBBRHGChjLLr5U3YSVQjnv5OTJ69wwdE4U168iMbpgRxchBZMEyv8nnmkOC1=
+yv5SCM71JwEgrMRPA7mnG5U-2BEjCZuVqnb8-2F7qg-3D" target=3D"_blank" alt=3D"X" =
+title=3D"X" style=3D"display:inline-block; background-color:#000000; height=
+:21px; width:21px;">
+        <img role=3D"social-icon" alt=3D"X" title=3D"X" src=3D"https://mc.s=
+endgrid.com/assets/social/white/x.png" style=3D"height:21px; width:21px;" h=
+eight=3D"21" width=3D"21">
+      </a>
+    </td><td style=3D"padding: 0px 5px;" class=3D"social-icon-column">
+      <a role=3D"social-icon-link" href=3D"https://url8792.mail.anthropic.c=
+om/ls/click?upn=3Du001.rFcAmKXLOm9u6wLRWHIUYa6GzH-2BFtbEVfexYT4qRVAWazJ7g4O=
+eUD3adJ2mUpFcICy16n2hGL01Q-2BzfxCliP7w-3D-3Dfwxr_rO1JRqZrx5Oo25BATZItEvIKK9=
+wiuA6UN-2BXngf09BwUoS9Gpbl6QX1AUICtpGgmLDb6y-2F9BoMWQdxQFG7iaQE5WYQIENYHWW9=
+9UaxK9-2BiDd6cE10IzOFA51xkqBOgfCGyUWhoSDKdNVFlrlP9oP0SjS2Bdj9wdnFH6CBDR8d9F=
+tzu8Vu7n5CmRdB2MJCtPFMczGftkTcfMjiOzPttfX1gkU7TTrVpiE-2FfFk9B1Z0-2FX1-2F0t8=
+QD2m-2BmhdPOE3nmSXkewI-2BEYlIzpw7Mhdzu3u8YTpqdlLg0cs7Xk6Z-2BprcanBS3LQvotBF=
+AThxL0bg31VZMd97zqRNuwFLK-2F-2BgOefT6dgS6wGIygFnRHlr-2FSANW-2Fs18SyU-2BCMu-=
+2BS9W0f-2FvzxTvQNcp66-2BuZdd9LBOGj0sYFAwdiQz4gAbY8e31kF3is5IXajz-2FPsQHRnNB=
+oOcrGpw0-2BSN98A7dSLRBkuiD89YqLJ-2BIPOErxP-2BXbTU716MwSw34MiFB-2FVpDZTNIdjZ=
+ui4laJdEKmtA-2BKH4YUnKmdvr82fgJZlStmfVMGBKu2NohAJ02eYp6-2F2f0Djjo3Mpu-2BWCq=
+9wJCeQtjeeHpJ-2Fm20CEw3JEtwHkZJV1F80TWzUGOfWhteonfCDWHxyz3-2B-2F6dxa-2BvSVr=
+Pcq576l1SB7nb6biPYqQz1Ty6q5xkL5zKCIgs5-2FCyL03xqaPSWaBo-2BvpUHKxt44TyduxToF=
+Rfd8wY-2BCv4AHGmENvq2akk0wfg8rmc0HX1f0pHaPwNPxumlXk3s-2BvOHlLyBst4CD0B13eYO=
+SZH8jOwEakXEPtI5zCZskrQtP1oHshYqW2SqdAI9HXNZ5trTTXBVn0rJsU8V3RSOxix5PWgWt6I=
+s1v792XUx5t4-2FgUpAJsRXA-2BI5v6IYd1p1tIQarqOpxlNUfRKbcKuJNRacBcnw9OOhUSP6tw=
+JpHoQ8xYaeo-2FSHmoa7aGpCQHGUNo3gRBSQzOHKS-2Fuhl0lLcYLwr-2FVFCybQdMthGq-2FXl=
+DdxzM-3D" target=3D"_blank" alt=3D"LinkedIn" title=3D"LinkedIn" style=3D"di=
+splay:inline-block; background-color:#0077B5; height:21px; width:21px;">
+        <img role=3D"social-icon" alt=3D"LinkedIn" title=3D"LinkedIn" src=
+=3D"https://mc.sendgrid.com/assets/social/white/linkedin.png" style=3D"heig=
+ht:21px; width:21px;" height=3D"21" width=3D"21">
+      </a>
+    </td></tr></tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table><div data-role=3D"module-unsubscribe" class=3D"module" role=3D"mo=
+dule" data-type=3D"unsubscribe" style=3D"color:#444444; font-size:12px; lin=
+e-height:20px; padding:16px 16px 16px 16px; text-align:center;" data-muid=
+=3D"27ea0023-57b7-4254-875b-bf22d38c5a01"><div class=3D"Unsubscribe--addres=
+sLine"></div><p style=3D"font-size:12px; line-height:20px;"><a class=3D"Uns=
+ubscribe--unsubscribeLink" href=3D"https://url8792.mail.anthropic.com/wf/un=
+subscribe?upn=3DwzqEHQSn045tRvE-2FnMN1Hk3pIyiQCrrmqbFFROZ7VJY4uGXxRTINvolxY=
+cyAmFeBGq9XDfP4Nm1b1RUuB46PrTPp7Du6KWhbH95MVU-2FC2sEE4ihV0RvzRL71ar-2B3i4Zj=
+kmJbkQFEPi2aAUiFvuSTGDX-2BZ9w6epDpE6Om94UELgZ9YAQ144lUs9LjtWl9zutzc1daKeBhl=
+-2FFlzJj-2BtfHSOkMTPzBBsZm54HLY-2FrcnvwAWwY37WnfFferMrDab7zmsF5dy7GBNU6JA57=
+Aqdze-2Bn73t7yl0Z1RhXUFJkpltfJMgPEXbnrAOsOcgFhpwBpWuVklsHMsyInLE1NUno2Ri1Y4=
+9suH-2BWiNQeTb2ywxXTjZrH1xZLsB5hKnmT6mmWK566RGWJAtoBZOU1vSruWxdjlDrSTwWjKbZ=
+EaiNeyCOUExXDbK-2BYoIQjtxXyq96yljYH1BKbbbHPY-2B78LbZUbFKhJhoNwsb7lCO1Y-2BUH=
+T-2FUArEKavuVXbaJ48hn2btYENcLJwa4OjOEYJLjcBXhKmUQboV1eCjX169CzcgbkyU1Xf1gta=
+zeNgMNrFzGx-2Bh4tCCU9IfTYy2M75VHg9zVF9NwG04S4UqWCw-2BqtDQv7vrcU71YR6gTAJdzK=
+i1rIU4awUEr7-2FzRdTn8ES-2B2AJKdido7-2Bi7dx6CNMqbmsiwwa3NZLbnzoyOEWzbYY8ZzkK=
+kWKXeCHLotN8oQ7oyWGvc9F2vlF4tVpFaxHCBO3v7P4-2BFmjhAFa7JHNnMwxACRyKB204b0gsH=
+r13-2Fctdu2qq-2Baz1DPorNkP4UCflfoOqLhV1-2FLftys6iKt3bvPb4qhN1h6vPYSC1kwjXAB=
+hPs8WSMHcJy2CExCqcBpJVMh3mhIahLQgEyVHQAbEgLCtCb08q6DpDFUBLniE5j3Y3n8U-2BqM2=
+RyQCnyWlgej23rVAPkX5hzGDW2yUQBsyMTWuxdWb6NkFq2QwpCTNP9579SbCp3y2EV2XBENb2-2=
+B7Pv26txy8KO1dM-2Fs-3D" target=3D"_blank" style=3D"">Unsubscribe</a></p></d=
+iv></td>
+                                      </tr>
+                                    </table>
+                                    <!--[if mso]>
+                                  </td>
+                                </tr>
+                              </table>
+                            </center>
+                            <![endif]-->
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </center>
+    <img src=3D"https://url8792.mail.anthropic.com/wf/open?upn=3Du001.wJ4wQ=
+oWqpttL0LnWj9yCngQD-2BPKOSnIWwGo2A-2BWj6Xi6FgHnN-2B9bhefwKVGNvqLcGhrbYgefP-=
+2FXEugaciFYlgmLHP1man5IWhC1LkqTfxjh9F7zMduMnNKqVt4Xu0DWqZns0Q491N-2B3QdjZBO=
+d-2BRNl3uXlqLqmbi4-2BYNcUzT2FdfTBk1d9jBU6oChqWqnl3wOmUxDE2q7IfsmYeLfOkSmbwa=
+ggJGXhmLRbrI0gAJfmgJP323g5CUiWDtgJxq1hxn86pDvdadQFg-2BNOGo4VpmHSa423RjEoHuv=
+ypMZJcexxmDmZUjAHFqgtun0steAlsWZbgyT5P6JeUAXdiCAQ7l7zUZWO-2BtQl51MeE-2F5dnG=
+Jqc6RrZbedgqApIvygubZSllWFL6X-2BEGSuHI42bsEly1n8f2zBXuYMH0WVxBcKtQ6kMMJKiMw=
+6awiWSPEDmXtnbBe6g-2FFKGRB51pXeaR5dPQ5S2R-2BeVWOkY-2FPRDhOLt6egtyTn93HFJQeW=
+UqRbvzYzGiA22X2MyFMTsCu-2FDSRd1-2FGsJ9QkPQSjNYC-2F2QgpUJI6kTHQoP3mzWSyw0lty=
+4iBmTS11ECKEY-2BGWIhSOg5a8Jr4Unhw4pf5SR8-2BcF4J0cBtZsR5l4VQhUOeYgrDVzdAUgJb=
+8b3tO0On3HnmXPD9DDyHbG-2BcAyvwaKd0xKbUoZIq7zqjtcy4ABsSGZUtAahySJkfH2mXxiOP1=
+HbKBTE2266Y4nnFA0SrA9c58rIoED6i3kgU0YCtQZpPGK0zFtw9yl2ssZf9DlmZl8X-2BTiaEMH=
+jPFuTv8t6-2FlotNOwqTKJ0X5B7WdL3N1bkrzZmThVCG2KuXrJirqJ8pn4f0eQqVUer1N3kqMre=
+JqVdE51l-2Fnehv8HucFRfKNMOjFIZFEt66iL0ZxODB8rkdWrua2ramkvBZqd-2FcSynzgn9Y3O=
+5KiOgjA27xrvF10LimIMWOntVxaOETCd-2FY3-2BwrNAj46NqwftgGlcMJZKWpNAW-2Fd8CwmsO=
+uE-3D" alt=3D"" width=3D"1" height=3D"1" border=3D"0" style=3D"height:1px !=
+important;width:1px !important;border-width:0 !important;margin-top:0 !impo=
+rtant;margin-bottom:0 !important;margin-right:0 !important;margin-left:0 !i=
+mportant;padding-top:0 !important;padding-bottom:0 !important;padding-right=
+:0 !important;padding-left:0 !important;"/></body>
+  </html>
+--c07c74bdb0df0719d885a018db64be591a9b2922d722829bd1451cdf2b5a--
+

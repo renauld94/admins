@@ -1,0 +1,636 @@
+X-GM-THRID: 1756010865769634937
+X-Gmail-Labels: Inbox,Opened,Category Updates
+Delivered-To: sn.renauld@gmail.com
+Received: by 2002:ac9:586:0:0:0:0:0 with SMTP id 6csp499819ocw;
+        Wed, 25 Jan 2023 08:01:02 -0800 (PST)
+X-Google-Smtp-Source: 
+ AMrXdXtJ9wI8B2I4WdQcp33pcUlSptV2fAUolIbrbJl6BwcwNfQvMqkk2qrOypwxsCzlje7xFCfL
+X-Received: by 2002:a25:d101:0:b0:7ff:9a20:ed30 with SMTP id
+ i1-20020a25d101000000b007ff9a20ed30mr16870603ybg.16.1674662462205;
+        Wed, 25 Jan 2023 08:01:02 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1674662462; cv=none;
+        d=google.com; s=arc-20160816;
+        b=lVsXDIRvWUho6fkWTCQR2TMzlG29yfR5FuKkqFtWOD4MnFOTXesw3F3WWtJNah7vKe
+         W8dCz3YgCI4UcBCVil3SUJtS1yXfa2L7ReirLHSQZgRX+R9jkUCXZ2W7CW1QbVDSawME
+         /ig+Q7SNI13poDpQsvLRGRnWdQajCoyqO0HTnSTgIC5G8jLmzBtIfPD3MsTUDaGpFw68
+         2f96gNbQmk+dG2i34MiI6TWEr1ERYgfpTX5I7AzTuOa4Jda/527bGeuoJsyYKKYp6xfD
+         07QR7JQOzlxL95P3qlFwAj+ljcNch8PUw7dhKH5NW+g86jNKQPpuudYmDO7iuAKhGevm
+         iUOw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20160816;
+        h=to:subject:message-id:mime-version:from:date:dkim-signature
+         :dkim-signature;
+        bh=2vWd3JTMjW/nshZjfAVU5DKYaQrjr8yDEMe/N+WvJjI=;
+        b=frFfiGi5HXnUTWYp+kxdLRoAnLkFs3fqvk7vvN3mo9EpksP1it0TkN+XU+nvwi4ykb
+         lKwv6lwL09SJODvuJP9vCj2kQ2EMCtVrn7S8zZrPw9zLVVfoM7J2H2IT7xKXkh+/bllJ
+         f4ZHFrHwCSwbqELPXT6aCYyCmH+1GBYfJjDW9I50xxB2l6yfFPsGQYIrubx0yWb/CbDV
+         x4d6KgTneHoghTBYRzN9IQyexWgg9Exxb8HSDe/NvSjiT3tVko07kSnuIHVmw+xLaLYH
+         sXBati3Ch6diuuheqTrw9QQlUzmO8kR8KpalAPxwap8oxxsblOkjzsKpxjtzcCssc2iX
+         HJXg==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@stackoverflow.email header.s=s1 header.b=swV476tv;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=t8f3N1Ri;
+       spf=pass (google.com: domain of
+ bounces+3553988-6fe5-sn.renauld=gmail.com@em.stackoverflow.email designates
+ 167.89.81.234 as permitted sender)
+ smtp.mailfrom="bounces+3553988-6fe5-sn.renauld=gmail.com@em.stackoverflow.email";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE)
+ header.from=stackoverflow.email
+Return-Path: 
+ <bounces+3553988-6fe5-sn.renauld=gmail.com@em.stackoverflow.email>
+Received: from o1.em.stackoverflow.email (o1.em.stackoverflow.email.
+ [167.89.81.234])
+        by mx.google.com with ESMTPS id
+ g5-20020a25af85000000b00746f75b8379si6425759ybh.521.2023.01.25.08.01.01
+        for <sn.renauld@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 Jan 2023 08:01:02 -0800 (PST)
+Received-SPF: pass (google.com: domain of
+ bounces+3553988-6fe5-sn.renauld=gmail.com@em.stackoverflow.email designates
+ 167.89.81.234 as permitted sender) client-ip=167.89.81.234;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@stackoverflow.email header.s=s1 header.b=swV476tv;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=t8f3N1Ri;
+       spf=pass (google.com: domain of
+ bounces+3553988-6fe5-sn.renauld=gmail.com@em.stackoverflow.email designates
+ 167.89.81.234 as permitted sender)
+ smtp.mailfrom="bounces+3553988-6fe5-sn.renauld=gmail.com@em.stackoverflow.email";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE)
+ header.from=stackoverflow.email
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stackoverflow.email;
+	h=content-type:from:mime-version:subject:x-feedback-id:to:cc:
+	content-type:from:subject:to;
+	s=s1; bh=2vWd3JTMjW/nshZjfAVU5DKYaQrjr8yDEMe/N+WvJjI=;
+	b=swV476tvpraZwG3LfeGHR/3Pkegq21lLIScKSm8G9PaAc+Im0tfLPm5OPUjQRDUqqu12
+	DM+iapQDVH/63R0XjcKdlDGLY4+U4YyGjjGEKJm65aoQykBczmUABnG3r/EodvpxiVFUYa
+	TpBJOvJKPsvpLBccEBT0L6cTizm72yHpSG01XqOSghXaEhBk1IoNOe4hKUcSfkNJn+vJDa
+	1TY9VUdEvMXd798KXzc4pET0gdkfG76zAdeI8vd9AuzqeYxgyMiadQL1N7rUBA3crIq47n
+	dzsjJLlKnsb/v/75EicDULduSqwmEMLp4lYwEx0wb7ObIIawuKjwAF1V9t/ac3rw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendgrid.info;
+	h=content-type:from:mime-version:subject:x-feedback-id:to:cc:
+	content-type:from:subject:to;
+	s=smtpapi; bh=2vWd3JTMjW/nshZjfAVU5DKYaQrjr8yDEMe/N+WvJjI=;
+	b=t8f3N1RizNjp9UJM0gEIhU/VVbui4QxhBwsvLwS2ADKc2klFeF+WGpw+3bQN/v8SI9D5
+	TlLNjLZAzUWeUwCs9zTkGQ+U0AsqHCPgTBuuQ+PLfHXV8zkEyYkp0XsCABqBW2inIlC38S
+	yrB3lQ6kBU4uFLnc8Nkx6RNPfaHXB9aus=
+Received: by filterdrecv-7d745f857d-lp4hl with SMTP id
+ filterdrecv-7d745f857d-lp4hl-1-63D1523D-9D
+        2023-01-25 16:01:01.457565054 +0000 UTC m=+5936049.435135338
+Received: from MzU1Mzk4OA (unknown)
+	by geopod-ismtpd-1-4 (SG) with HTTP
+	id FVzdPFyZQgaxv_XT9HUaoA
+	Wed, 25 Jan 2023 16:01:01.449 +0000 (UTC)
+Content-Type: multipart/alternative;
+ boundary=a45665ac65594d3c640cc2e2c42831d60dd10e575454ca9b3825384b8da9
+Date: Wed, 25 Jan 2023 16:01:01 +0000 (UTC)
+From: Stack Overflow <do-not-reply@stackoverflow.email>
+Mime-Version: 1.0
+Message-ID: <FVzdPFyZQgaxv_XT9HUaoA@geopod-ismtpd-1-4>
+Subject: 1 new item in your Stack Exchange inbox
+X-Feedback-ID: 3553988:SG
+X-SG-EID: 
+ =?us-ascii?Q?dS5vRUIVQDy3PcFfIFS4qYRV6oplzdNSHVVJNo9oQwP5Dyf6MKIiGStsXhSN2s?=
+ =?us-ascii?Q?jD66yWZvMOD6iFh5N57Ol+mXtcI2IRwT2ocTtIz?=
+ =?us-ascii?Q?8+oKOhCtVHOxrqUpgDMeLYQEhyR8UM+X4hsiloN?=
+ =?us-ascii?Q?TgJqqIgrNYMukJSDpObAcP38+h97m9g8=2F3d72Td?=
+ =?us-ascii?Q?E85M3vyabzSn0Zmw4JCpLbjiNAdLeu0Mw+DcdS2?=
+ =?us-ascii?Q?ckDpYl+BVJmotSYQ0BlgDvEqTN2zMwyi5lFVSJb?=
+ =?us-ascii?Q?RYlNr3wAIOW+RIY1425fw=3D=3D?=
+X-SG-ID: 
+ =?us-ascii?Q?N2C25iY2uzGMFz6rgvQsbwKyUj85BwZfdMq3tNxOaO6vscVanjyTZpbki9N=2Fw0?=
+ =?us-ascii?Q?VcqfYFOg7DPiZXIrwW0vCaVbNf1f8cHjuq0A89y?=
+ =?us-ascii?Q?oDEYShTsUr6M61izfH31cQo8Ibm2ec23ptINnXu?=
+ =?us-ascii?Q?W0YZpPVGIXuZaFxzGFBcx60Sqo8V1eHMaENUlle?=
+ =?us-ascii?Q?Ks3PkFgbaepykllbCyJCPPp76p+094UIM11MQJY?=
+ =?us-ascii?Q?ZZvGc5tiU1wzHKn6bWIgvpEPQi4vL3tocONrneI?=
+ =?us-ascii?Q?IIVbjvnrAU+su4IlGcfqTwZt4QT6sYu28=2FKKXSg?=
+ =?us-ascii?Q?tQW=2FNck=2FvxmpkZNfUBqZC+oGzv4thJnUgYlWauG?=
+ =?us-ascii?Q?twyigQg=3D=3D?=
+To: sn.renauld@gmail.com
+X-Entity-ID: YesOk1FjmaSVeic2SbOZJw==
+
+--a45665ac65594d3c640cc2e2c42831d60dd10e575454ca9b3825384b8da9
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0
+
+1 new item in your Stack Exchange inbox
+    # Google Sheets add a Conditional Formatting if values don&#39;t exists
+    ### answer | Jan 24 at 15:52
+   =20
+    Good morning,
+I believe this will answer your question.  Make sure to apply the Condition=
+al Forma...
+    ---------------------------------------------
+See all of your inbox items:https://stackexchange.com/users/27484734?tab=3D=
+inbox
+
+
+Edit email settings: https://email.stackoverflow.com/subscriptions/manage?i=
+d=3D0443ab53ce4f403e8a5d3930d413022f&auth=3DwiDOQwIfk50XuK507uy23LXW0fswt0W=
+EjjCaHv1_DD5Ud2ip2qA6O6Tou2aEogwq9HPWfCxVEoPGSVDN7v_Vvg2
+Contact us: https://stackoverflow.co/company/contact
+Privacy: https://stackoverflow.com/legal/privacy-policy
+Stack Overflow, 110 William Street, 28th floor, New York, NY 10038 <3
+--a45665ac65594d3c640cc2e2c42831d60dd10e575454ca9b3825384b8da9
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=us-ascii
+Mime-Version: 1.0
+
+<!DOCTYPE html>
+<html lang=3D"en" xmlns=3D"http://www.w3.org/1999/xhtml" xmlns:o=3D"urn:sch=
+emas-microsoft-com:office:office" xmlns:v=3D"urn:schemas-microsoft-com:vml"=
+>
+<head>
+    <meta charset=3D"utf-8">
+    <meta name=3D"viewport" content=3D"width=3Ddevice-width">
+    <meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge">
+    <meta name=3D"x-apple-disable-message-reformatting">
+    <meta name=3D"format-detection" content=3D"telephone=3Dno,address=3Dno,=
+email=3Dno,date=3Dno,url=3Dno">=20
+		<title>
+	1 new item in your Stack Exchange inbox
+</title>    <style>
+        html,
+        body {
+            margin: 0 auto !important;
+            padding: 0 !important;
+            height: 100% !important;
+            width: 100% !important;
+        }
+
+        * {
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        div[style*=3D"margin: 16px 0"] {
+            margin:0 !important;
+        }
+
+        table,
+        td {
+            mso-table-lspace: 0pt !important;
+            mso-table-rspace: 0pt !important;
+        }
+
+        table {
+            border: 0;
+            border-spacing: 0;
+            border-collapse: collapse
+        }
+
+        #MessageViewBody,
+        #MessageWebViewDiv{
+            width: 100% !important;
+        }
+
+        img {
+            -ms-interpolation-mode:bicubic;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        a[x-apple-data-detectors],
+        .unstyle-auto-detected-links a,
+        .aBn {
+            border-bottom: 0 !important;
+            cursor: default !important;
+            color: inherit !important;
+            text-decoration: none !important;
+            font-size: inherit !important;
+            font-family: inherit !important;
+            font-weight: inherit !important;
+            line-height: inherit !important;
+        }
+        u + #body a,       =20
+        #MessageViewBody a =20
+        {
+           color: inherit;
+           text-decoration: none;
+           font-size: inherit;
+           font-family: inherit;
+           font-weight: inherit;
+           line-height: inherit;
+        }
+
+        .im {
+            color: inherit !important;
+        }
+
+        .a6S {
+            display: none !important;
+            opacity: 0.01 !important;
+        }
+        img.g-img + div {
+            display:none !important;
+        }
+
+
+        @media only screen and (min-device-width: 320px) and (max-device-wi=
+dth: 374px) {
+            u ~ div .email-container {
+                min-width: 320px !important;
+            }
+        }
+        @media only screen and (min-device-width: 375px) and (max-device-wi=
+dth: 413px) {
+            u ~ div .email-container {
+                min-width: 375px !important;
+            }
+        }
+        @media only screen and (min-device-width: 414px) {
+            u ~ div .email-container {
+                min-width: 414px !important;
+            }
+        }
+    </style>
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:AllowPNG/>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+        </xml>
+    <![endif]-->
+
+
+    <style>
+        .s-btn__primary:hover {
+            background: #0077CC !important;
+            border-color: #0077CC !important;
+        }
+        .s-btn__white:hover {
+            background: #EFF0F1 !important;
+            border-color: #EFF0F1 !important;
+        }
+        .s-btn__outlined:hover {
+            background: rgba(0,119,204,.05) !important;
+            color: #005999 !important;
+        }
+        .s-tag:hover,
+        .post-tag:hover {
+            border-color: #cee0ed !important;
+            background: #cee0ed !important;
+        }
+
+        .has-markdown a,
+        .has-markdown a:visited {
+            color: #0077CC !important;
+            text-decoration: none !important;
+        }
+
+        code {
+            padding: 1px 5px;
+            background-color: #EFF0F1;
+            color: #242729;
+            font-size: 13px;
+            line-height: inherit;
+            font-family: Consolas, Menlo, Monaco, Lucida Console, Liberatio=
+n Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace,=
+ sans-serif;
+        }
+        pre {
+            margin: 0 0 15px;
+            line-height: 17px;
+            background-color: #EFF0F1;
+            padding: 4px 8px;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+        pre code {
+            margin: 0 0 15px;
+            padding: 0;
+            line-height: 17px;
+            background-color: none;
+        }
+
+        blockquote {
+            margin: 0 0 15px;
+            padding: 4px 10px;
+            background-color: #FFF8DC;
+            border-left: 2px solid #ffeb8e;
+        }
+        blockquote p {
+            padding: 4px 0;
+            margin: 0;
+            overflow-wrap: break-word;
+        }
+
+        .bar {
+            border-radius: 5px;
+        }
+        .btr {
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+        .bbr {
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+
+        @media screen and (max-width: 680px) {
+            .stack-column,
+            .stack-column-center {
+                display: block !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                direction: ltr !important;
+            }
+            .stack-column-center {
+                text-align: center !important;
+            }
+
+            .hide-on-mobile {
+                display: none !important;
+                max-height: 0 !important;
+                overflow: hidden !important;
+                visibility: hidden !important;
+            }
+
+            .sm-p   {padding: 20px !important;}
+            .sm-pt  {padding-top: 20px !important;}
+            .sm-pb  {padding-bottom: 20px !important;}
+            .sm-pr  {padding-right: 20px !important;}
+            .sm-pl  {padding-left: 20px !important;}
+            .sm-px  {padding-left: 20px !important; padding-right: 20px !im=
+portant;}
+            .sm-py  {padding-top: 20px !important; padding-bottom: 20px !im=
+portant;}
+            .sm-mb  {margin-bottom: 20px !important;}
+
+            .bar,
+            .btr,
+            .bbr {
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+        }
+    </style>
+</head>
+
+<body width=3D"100%" style=3D"margin: 0; padding: 0 !important; background:=
+ #f3f3f5; mso-line-height-rule: exactly;">
+	<center style=3D"width: 100%; background: #f3f3f5;">
+	<!--[if mso | IE]>
+	<table role=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=3D=
+"0" width=3D"100%" style=3D"background-color: #f3f3f5;">
+	<tr>
+	<td>
+	<![endif]-->
+		<div lang=3D"en" class=3D"email-container" style=3D"max-width: 680px; mar=
+gin: 0 auto;">
+			<!--[if mso]>
+			<table role=3D"presentation" cellspacing=3D"0" cellpadding=3D"0" border=
+=3D"0" width=3D"680" align=3D"center">
+			<tr>
+			<td>
+			<![endif]-->
+			<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presenta=
+tion" style=3D"max-width: 680px; width:100%">
+				<tr>
+					<td style=3D"padding: 20px 30px; text-align: left;" class=3D"sm-px">
+						<a href=3D"https://sg-links.stackoverflow.email/ls/click?upn=3DFhKQFe=
+mTFIJzn5ywFPMHvni76Wx7eeSM4UTVwzVAAnAID4xNQ1Vt2v7-2BpJtuKw5nQ559_WDIy9ad7T8=
+S4xeK-2BZGT6T6A6uhXvRnn6gglzK5yJSY-2BEjyPaZwIzH5BXnwsZYao3sGtNM7a2R-2BbzDzH=
+4zJDoZUMQ0Wwie2nUjtxj1v9QJANwnwoxJgFiD4eB3SF3jxwVMh164h-2B4WoDAVf7-2F3cPxHM=
+Un6iUjk6tskum3D8Wdkqsg7TSdLmxucJXkPnkYtk-2FEAX2-2BR83-2BsGFcHrjuN8OrRjAzqf-=
+2BIz2-2BH9t7foXO22C0Lu7ACtvtHwgS3xKUuj52Qu0w9sI71Gu8SrFtLrKu6O-2FemGH1Y1cOf=
+CWj383uUeIiWutn3WKnZe6eZOJsRkyVyvLo-2BMe3-2FiyLadeys5j9LGjvoEmnzZidJQ6EPrq8=
+MYAPjPhbeIA-2B0o2bygdlaZiZTW54-2Fpa1yJ5fCjvPRO-2BAwwM2EQDT3TC3Pz81WExXEsqch=
+IOlsWG22YcMLkbHkyMyi4abgKAbr2zGJby061f-2FRxuyVVrZD30xrGvch2mw7Nh6MV6le0unTW=
+uTZ-2BYFLYec3h1ZYtZd6xN-2B-2BErnNpOXHWw-3D-3D">
+                                <img src=3D"https://cdn.sstatic.net/Sites/s=
+tackoverflow/Img/LogoEmail.png?v=3D754ed0a800c4" alt=3D"Stack Overflow" bor=
+der=3D"0" style=3D"font-family: arial, sans-serif; font-size: 15px; line-he=
+ight: 15px; color: #54595F; height: 36px; width: auto;">
+						</a>
+					</td>
+				</tr>
+
+
+		=09
+
+	<tr>
+		<td style=3D"padding: 0 30px; background-color: #54595F;" class=3D"sm-px =
+btr">
+			<table role=3D"presentation" cellspacing=3D"0" cellpadding=3D"0" border=
+=3D"0" align=3D"left">
+				<tr>
+					<td valign=3D"middle" width=3D"20" style=3D"padding: 10px 10px 10px 0;=
+">
+						<img src=3D"https://cdn.sstatic.net/Img/email/icon-inbox-small-white.=
+png?v=3Dce696643cbf4" alt=3D"Inbox" width=3D"20" height=3D"20" style=3D"fon=
+t-size: 12px; font-family: arial, sans-serif; color: #ffffff; display: bloc=
+k; margin: 0;">
+					</td>
+					<td valign=3D"middle" style=3D"padding: 5px 0; font-family: arial, san=
+s-serif; font-size: 13px; line-height: 13px; color: #ffffff;">
+						<p syle=3D"margin: 0;">
+The following item was added to your inbox since you last checked it on <b>=
+2023-01-10</b>:						</p>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+
+	<tr>
+		<td style=3D"padding: 20px 30px 0 30px; background-color: #ffffff;" class=
+=3D"sm-py bbr">
+			<table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presenta=
+tion" style=3D"width:100%; border-bottom: 1px solid #D6D9DC;">
+				<tr>
+						<td style=3D"padding-right: 10px; width:50px" valign=3D"top" align=3D=
+"left">
+							<img src=3D"https://cdn.sstatic.net/Sites/stackoverflow/Img/apple-to=
+uch-icon.png?v=3Dc78bd457575a" alt=3D"Stack Overflow." width=3D"48" height=
+=3D"48" border=3D"0" style=3D"display: block;">
+						</td>
+					<td style=3D"padding-bottom: 15px;">
+						<table role=3D"presentation" width=3D"100%" cellspacing=3D"0" cellpad=
+ding=3D"0" border=3D"0">
+							<tr>
+								<td valign=3D"middle" style=3D"font-family: arial, sans-serif; font=
+-size: 13px; line-height: 13px; color: #6A737C;">answer</td>
+								<td valign=3D"middle" style=3D"font-family: arial, sans-serif; font=
+-size: 13px; line-height: 13px; color: #6A737C; text-align: right"><span ti=
+tle=3D"2023-01-24 15:52:35Z">Jan 24 at 15:52</span></td>
+							</tr>
+							<tr>
+								<td style=3D"padding-top: 5px;" class=3D"sm-pb" colspan=3D"2">
+									<h2 style=3D"margin: 0 0 5px; font-family: arial, sans-serif; font=
+-size: 17px; line-height: 21px; font-weight: normal;">
+										<a href=3D"https://sg-links.stackoverflow.email/ls/click?upn=3DFh=
+KQFemTFIJzn5ywFPMHvni76Wx7eeSM4UTVwzVAAnDgVcSK7poVi5cUpO4Hla0ETnjXh8ve4WQ-2=
+FfdUInavTIg-3D-3DndQT_WDIy9ad7T8S4xeK-2BZGT6T6A6uhXvRnn6gglzK5yJSY-2BEjyPaZ=
+wIzH5BXnwsZYao3sGtNM7a2R-2BbzDzH4zJDoZUMQ0Wwie2nUjtxj1v9QJANwnwoxJgFiD4eB3S=
+F3jxwVMh164h-2B4WoDAVf7-2F3cPxHMUn6iUjk6tskum3D8Wdkqsg7TSdLmxucJXkPnkYtk-2F=
+EAX2-2BR83-2BsGFcHrjuN8OrRjAzqf-2BIz2-2BH9t7foXO22C0Lu7ACtvtHwgS3xKUuj52Qu0=
+w9sI71Gu8SrFtLrKu6O-2FemGH1Y1cOfCWj383uUeIiWutn3WKnZe6eZOJsRkyVyLvQi-2B6TAp=
+JT-2FMdKVWlvcMNzVg3yfo37cP8LNpm-2Bn9O6OWtLdnVlME8iMScTMAwgLtRqoibgiV3BdEeYb=
+fo9mutJ9ZZT6ALuMVt6GTqiDvS4fR9jebzvRYAv9GnWwhZKGABXk3-2FPqoSrMavRHCVr95f2rb=
+X-2FnMY-2BveLw7MAb-2F8DeLvGC41Q80UBl-2FKgkbK7dsjhnUcAJgtzzYg2dEisS1AA-3D-3D=
+" style=3D"color: #0077cc; text-decoration: none;">Google Sheets add a Cond=
+itional Formatting if values don&#39;t exists</a>
+									</h2>
+									<p style=3D"margin: 0; font-family: arial, sans-serif; font-size: =
+15px; line-height: 21px; color: #3B4045;" class=3D"has-markdown">Good morni=
+ng,
+I believe this will answer your question.  Make sure to apply the Condition=
+al Forma...</p>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td style=3D"font-family: arial, sans-serif; font-size: 15px; padding: 15=
+px 30px; background-color: #ffffff; line-height: 21px; color: #3C3F44;" cla=
+ss=3D"sm-px" valign=3D"top" align=3D"left">
+			<p>
+				See all of your inbox items:
+				<a href=3D"https://sg-links.stackoverflow.email/ls/click?upn=3DFhKQFemT=
+FIJzn5ywFPMHvkqvH-2FbllLVw2TaXCv03iGqmmjmQZYLckr-2Bme5GEhV4ToQrRDV3ZKpJBUrm=
+hKXKrxQ-3D-3DfFde_WDIy9ad7T8S4xeK-2BZGT6T6A6uhXvRnn6gglzK5yJSY-2BEjyPaZwIzH=
+5BXnwsZYao3sGtNM7a2R-2BbzDzH4zJDoZUMQ0Wwie2nUjtxj1v9QJANwnwoxJgFiD4eB3SF3jx=
+wVMh164h-2B4WoDAVf7-2F3cPxHMUn6iUjk6tskum3D8Wdkqsg7TSdLmxucJXkPnkYtk-2FEAX2=
+-2BR83-2BsGFcHrjuN8OrRjAzqf-2BIz2-2BH9t7foXO22C0Lu7ACtvtHwgS3xKUuj52Qu0w9sI=
+71Gu8SrFtLrKu6O-2FemGH1Y1cOfCWj383uUeIiWutn3WKnZe6eZOJsRkyVyILPPcyag5Cx1Pf9=
+T9JWnabV6aTuq3yB-2BEJ03DRhOYnrrks1ZOaAYwBzbHeaHScjjVPURG-2B8qcrngsc-2FXg0En=
+0-2B7ZfedSnM3L93OF-2Fx-2FERa9d5R-2FmpZcXq0x0zJbEHunh9Wfl60sOg-2BdcYUrlb5zyI=
+f4OYUn8ZiBHCtYPcsfHUZHwQdoAdwXvVoqwUyOIHxoKgl1J2Gq9yB3aoAaWzXfOag-3D-3D" st=
+yle=3D"color: #0077CC; text-decoration: none;">
+					https://stackexchange.com/users/27484734?tab=3Dinbox
+				</a>
+			</p>
+		</td>
+	</tr>
+
+
+
+				<tr>
+					<td style=3D"padding: 30px;" class=3D"sm-p">
+						<table align=3D"left" border=3D"0" cellpadding=3D"0" cellspacing=3D"0=
+" role=3D"presentation" width=3D"100%">
+							<tr>
+								<td style=3D"padding-bottom: 10px; font-family: arial, sans-serif; =
+font-size: 12px; line-height: 15px; color: #93999F; text-align: left;">
+								</td>
+							</tr>
+							<tr>
+								<td style=3D"font-size: 12px; line-height: 15px; font-family: arial=
+, sans-serif; color: #93999F; text-align: left;">
+
+<a href=3D"https://sg-links.stackoverflow.email/ls/click?upn=3DFhKQFemTFIJz=
+n5ywFPMHvmfTNQuHch-2BdBSRMIU5hUkReW4X67eTxz6cyYHejzGsLZHEoNaaS1eCrS-2BP8MOQ=
+ImxQX0BUbrVClB7pbddC5s5Pij14JOuCydrHij0E6dLN-2FLHZ4VXsNbxQ7JmQqVKTPdkIjADtQ=
+V9miA4LknF5wGjfv1Cf41gL7ZfhsuCHtCFDa25sOonEmQ1DQ9RKql4uFNNlaNOioE1zGZ27ENq5=
+xjiIDMKcubFt0VmHem4Il6amW-kvr_WDIy9ad7T8S4xeK-2BZGT6T6A6uhXvRnn6gglzK5yJSY-=
+2BEjyPaZwIzH5BXnwsZYao3sGtNM7a2R-2BbzDzH4zJDoZUMQ0Wwie2nUjtxj1v9QJANwnwoxJg=
+FiD4eB3SF3jxwVMh164h-2B4WoDAVf7-2F3cPxHMUn6iUjk6tskum3D8Wdkqsg7TSdLmxucJXkP=
+nkYtk-2FEAX2-2BR83-2BsGFcHrjuN8OrRjAzqf-2BIz2-2BH9t7foXO22C0Lu7ACtvtHwgS3xK=
+Uuj52Qu0w9sI71Gu8SrFtLrKu6O-2FemGH1Y1cOfCWj383uUeIiWutn3WKnZe6eZOJsRkyVythI=
+S2sxJZyrkE1FUGLTeRMK60zVoKbyaqeesQ-2FBYevcmY0xFqPEdf5WDvgwTBcq-2F5Zfc7Z9kwN=
+WP3Y0FpbzH9qK1AhiUj14kFSsqlMdUe5jC7nLdZ2C4pd-2FGgsMzPYmoEAvtYlRhCB6I6e40-2B=
+IahB-2BMZh5vqbU8PqvIMtc8koWhUiiMZEuIP2gD0vsUyuhar3bcbNlSsfZUaEqR2xVtF8A-3D-=
+3D" style=3D"color:#9EA3A9; text-decoration:underline;">Edit email settings=
+</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href=3D"https://sg-links.stackoverfl=
+ow.email/ls/click?upn=3DFhKQFemTFIJzn5ywFPMHvni76Wx7eeSM4UTVwzVAAnCqGiuJGU2=
+mf8K23EU6V5RWWoVabWbS-2FVd4j9n8-2FrZOAw-3D-3DPS60_WDIy9ad7T8S4xeK-2BZGT6T6A=
+6uhXvRnn6gglzK5yJSY-2BEjyPaZwIzH5BXnwsZYao3sGtNM7a2R-2BbzDzH4zJDoZUMQ0Wwie2=
+nUjtxj1v9QJANwnwoxJgFiD4eB3SF3jxwVMh164h-2B4WoDAVf7-2F3cPxHMUn6iUjk6tskum3D=
+8Wdkqsg7TSdLmxucJXkPnkYtk-2FEAX2-2BR83-2BsGFcHrjuN8OrRjAzqf-2BIz2-2BH9t7foX=
+O22C0Lu7ACtvtHwgS3xKUuj52Qu0w9sI71Gu8SrFtLrKu6O-2FemGH1Y1cOfCWj383uUeIiWutn=
+3WKnZe6eZOJsRkyVywbBdM5GzIVNMNvJNRFtBGzp2S0uSUWfOqPueeAcnHEbw2y2VmRNFv5vmCD=
+69E3uOPJ2tqosO-2B8TicKGsWg3gXlKYmHECezh7UxE7vPMUDsMvLrkYJeJpn34mdE0y5I81NID=
+2tn2oD1NMidnIGTOVRv4Fdqv0DE066lu6tqGHsMqWjCQCfx0SlLe-2BSpJZFQ6hJaG75KmVS0I1=
+feDwc-2BdT-2FA-3D-3D" style=3D"color:#9EA3A9; text-decoration:underline;">C=
+ontact us</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href=3D"https://sg-links.st=
+ackoverflow.email/ls/click?upn=3DFhKQFemTFIJzn5ywFPMHvni76Wx7eeSM4UTVwzVAAn=
+BIzveIDo2fSGwgVZBtzSg3aVyMFtlFQ6FxY1-2FjUx1BcA-3D-3DFPlG_WDIy9ad7T8S4xeK-2B=
+ZGT6T6A6uhXvRnn6gglzK5yJSY-2BEjyPaZwIzH5BXnwsZYao3sGtNM7a2R-2BbzDzH4zJDoZUM=
+Q0Wwie2nUjtxj1v9QJANwnwoxJgFiD4eB3SF3jxwVMh164h-2B4WoDAVf7-2F3cPxHMUn6iUjk6=
+tskum3D8Wdkqsg7TSdLmxucJXkPnkYtk-2FEAX2-2BR83-2BsGFcHrjuN8OrRjAzqf-2BIz2-2B=
+H9t7foXO22C0Lu7ACtvtHwgS3xKUuj52Qu0w9sI71Gu8SrFtLrKu6O-2FemGH1Y1cOfCWj383uU=
+eIiWutn3WKnZe6eZOJsRkyVyKaawGB8OpUDvh05-2FUDy69zK0UrdS2y0qsjE00K4NwVibMz0tJ=
+aKG8iLwTHvTbpESuk1mA1B2N37Nx5oLG1irhl-2F6dSvX-2Bw4lSwNsVgn9OG1Q9DmTJtbYBg5a=
+x9wFfuw7SFLXzXcXuqezuxy1-2BIskZK-2FUU91l9t3nuNkR0Kh6aoGwmsWu-2FJrBDFvOrKbcU=
+SvuQAUfgfXH2nbAjSijExpkLQ-3D-3D" style=3D"color:#9EA3A9; text-decoration:un=
+derline;">Privacy</a>								</td>
+							</tr>
+							<tr>
+								<td style=3D"padding: 20px 0;" width=3D"100%" class=3D"sm-py">
+									<table aria-hidden=3D"true" border=3D"0" cellpadding=3D"0" cellspa=
+cing=3D"0" role=3D"presentation" style=3D"width:100%">
+										<tr>
+											<td height=3D"1" width=3D"100%" style=3D"font-size: 0px; line-he=
+ight: 0px; border-top: 1px solid #D6D8DB;">&nbsp;</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<td style=3D"padding-bottom: 5px; text-align: left;">
+									<img src=3D"https://cdn.sstatic.net/Img/logo-so-gray@2x.png?v=3D43=
+e3e57a3d3e" align=3D"left" alt=3D"Stack Overflow" border=3D"0" width=3D"111=
+" height=3D"22" style=3D"display: block;">
+								</td>
+							</tr>
+							<tr>
+								<td style=3D"padding-bottom: 5px; font-size: 12px; line-height: 15p=
+x; font-family: arial, sans-serif; color: #93999F; text-align: left;"><stro=
+ng>Stack&nbsp;Overflow</strong>, <span class=3D"unstyle-auto-detected-links=
+">110 William Street, 28th Floor, New York, NY 10038</span></td>
+							</tr>
+							<tr>
+								<td>
+									<table align=3D"left" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" style=3D"background:#ffffff; border-radius:1px=
+; line-height:0px">
+										<tr>
+											<td>
+												<div style=3D"border-radius: 1px; border: 1px solid #D6D9DC; pa=
+dding: 4px 6px 3px 6px; font-size: 11px; line-height: 11px; font-family: Co=
+nsolas, monospace; color: #E06C77;" title=3D"because we care">&lt;3</div>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div>
+	<!--[if mso | IE]>
+	</td>
+	</tr>
+	</table>
+	<![endif]-->
+	</center>
+<img src=3D"https://sg-links.stackoverflow.email/wf/open?upn=3DwzqEHQSn045t=
+RvE-2FnMN1Hk3pIyiQCrrmqbFFROZ7VJahhIFYsobBJzTiH24d0iPw8lfN7XiyUTl-2FZwBCL-2=
+BF078ggTJBPqrl6xmrVDJBYqtBjupSw6wZqwgjDQaJwOBWmysk-2BbCNx-2B-2FCgxOwrtz19YQ=
+9htLBC2pboj9qFaUygrAnyQ5zXM-2BOpIoCZOXyzfzNcUB5Ep75aoWUzK2prOTrPDIOtgrOyFrT=
+9kXchDFyg-2BQJLxJhg8lCwP1q4cZ8mpumHsvD3AXJUoQX0IensXJrh46yoY4m-2BuaEbPYYlmi=
+Pje4oBgdyVbAe-2Bj1FV3O-2FaRFcI4foN-2FjOLHHCzJCoGILsv2UaEEi7akcVgP7j5JwPOOQM=
+06cIMNX7n8K1e6XOaAJOr0zZeEH7rruFNtMTBo-2FHJipdOEh7vA7pNA6XNDmHRlt3Z8tOHii2V=
+rw2TiZ5soRABWbvs1PnTiF0E00lQ5Cxo3BQSEXdqK0p60SLMAV84PJGdaclZwC5ejX1yHYKyQ3w=
+dXFNAcKUyds-2FYD9Q-2F8XLXdQ-3D-3D" alt=3D"" width=3D"1" height=3D"1" border=
+=3D"0" style=3D"height:1px !important;width:1px !important;border-width:0 !=
+important;margin-top:0 !important;margin-bottom:0 !important;margin-right:0=
+ !important;margin-left:0 !important;padding-top:0 !important;padding-botto=
+m:0 !important;padding-right:0 !important;padding-left:0 !important;"/></bo=
+dy>
+</html>
+--a45665ac65594d3c640cc2e2c42831d60dd10e575454ca9b3825384b8da9--
+

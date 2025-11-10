@@ -1,0 +1,183 @@
+================================================================================
+JELLYFIN LIVE TV FIX - SUMMARY
+================================================================================
+Date: November 6, 2025
+Status: READY TO APPLY
+================================================================================
+
+PROBLEM IDENTIFIED
+==================
+Live TV channels cannot be played in Jellyfin. Analysis shows:
+
+1. DNS Resolution Failure
+   - FFmpeg: "Failed to resolve hostname viamotionhsi.netplus.ch"
+   - Container cannot resolve external hostnames
+   
+2. Image Fetch Timeouts
+   - 100+ HttpClient.Timeout errors (100 seconds)
+   - Cannot reach: i.imgur.com, i.postimg.cc, upload.wikimedia.org
+   - Socket error: "Resource temporarily unavailable"
+
+3. Client-Side JavaScript Error
+   - scrollTo behavior: null crashes UI
+   - Prevents Live TV guide from loading
+
+SOLUTION CREATED
+================
+
+File: scripts/fix-jellyfin-connectivity.sh
+----------------------------------------------
+Automated fix script that:
+✓ Updates DNS to Cloudflare (1.1.1.1) + Google (8.8.8.8)
+✓ Tests connectivity to IPTV sources
+✓ Restarts Jellyfin service
+✓ Validates all changes
+
+File: JELLYFIN_CONNECTIVITY_FIX.md
+----------------------------------------------
+Complete documentation with:
+✓ Root cause analysis
+✓ Three fix options (automated, container, manual)
+✓ Troubleshooting steps
+✓ Verification procedures
+✓ Rollback instructions
+
+HOW TO APPLY THE FIX
+====================
+
+Since SSH to 136.243.155.166 is currently timing out, you need to:
+
+OPTION A: Copy script to VM200 and run it
+------------------------------------------
+1. From VM200 console or local access:
+   
+   # If you're ON the Proxmox host:
+   bash /path/to/fix-jellyfin-connectivity.sh
+   
+   # If you're INSIDE the container:
+   bash /path/to/fix-jellyfin-connectivity.sh --inside-container
+
+OPTION B: Manual fix (fastest)
+-------------------------------
+1. Access container console on VM200
+2. Run these commands:
+
+cat > /etc/resolv.conf << 'EOF'
+nameserver 1.1.1.1
+nameserver 1.0.0.1
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+options timeout:2 attempts:3 rotate
+EOF
+
+3. Test DNS:
+   dig +short viamotionhsi.netplus.ch
+   
+4. Restart Jellyfin:
+   systemctl restart jellyfin
+
+5. Verify:
+   systemctl status jellyfin
+
+OPTION C: When SSH access is restored
+--------------------------------------
+From your local machine:
+
+scp scripts/fix-jellyfin-connectivity.sh root@136.243.155.166:/tmp/
+ssh root@136.243.155.166
+bash /tmp/fix-jellyfin-connectivity.sh
+
+WHAT THIS FIXES
+===============
+
+✅ DNS resolution for all external domains
+✅ IPTV stream playback (viamotionhsi.netplus.ch, etc.)
+✅ Channel thumbnail downloads
+✅ Image metadata fetching
+✅ Eliminates HTTP 500 errors
+✅ Clears "Resource temporarily unavailable" errors
+✅ Restores Live TV functionality
+
+ADDITIONAL OPTIONAL FIX
+=======================
+
+To fix the scrollTo JavaScript error in the browser:
+
+1. Open Jellyfin Admin Dashboard
+2. Dashboard → Branding → Custom CSS
+3. Add to Custom JavaScript section:
+
+(function() {
+    const orig = Element.prototype.scrollTo;
+    Element.prototype.scrollTo = function(opts) {
+        if (typeof opts === 'object' && opts !== null) {
+            if (opts.behavior === null || opts.behavior === undefined) {
+                opts.behavior = 'smooth';
+            }
+        }
+        return orig.call(this, opts);
+    };
+})();
+
+VERIFICATION AFTER FIX
+======================
+
+1. DNS Test:
+   pct exec 200 -- dig +short viamotionhsi.netplus.ch
+   Expected: 78.155.24.242
+
+2. HTTPS Test:
+   pct exec 200 -- curl -I https://viamotionhsi.netplus.ch/live/eds/3sathd/browser-HLS8/3sathd.m3u8
+   Expected: HTTP 200 or 302
+
+3. Jellyfin Status:
+   pct exec 200 -- systemctl status jellyfin
+   Expected: Active (running)
+
+4. Browser Test:
+   - Clear cache (Ctrl+Shift+R)
+   - Open Live TV
+   - Play any channel
+   Expected: Stream plays without errors
+
+ROLLBACK (if needed)
+====================
+
+pct exec 200 -- cp /etc/resolv.conf.backup /etc/resolv.conf
+pct exec 200 -- systemctl restart jellyfin
+
+FILES CREATED
+=============
+
+1. scripts/fix-jellyfin-connectivity.sh (executable)
+   - Automated fix script
+   - Can run on host or inside container
+   - Includes diagnostics and verification
+
+2. JELLYFIN_CONNECTIVITY_FIX.md
+   - Complete documentation
+   - Troubleshooting guide
+   - Manual fix instructions
+
+3. JELLYFIN_FIX_SUMMARY.txt (this file)
+   - Quick reference
+   - Action steps
+   - Verification checklist
+
+CURRENT STATUS
+==============
+
+❌ SSH access to 136.243.155.166 - UNAVAILABLE (timeout)
+✅ Fix script created and ready
+✅ Documentation complete
+⏳ Waiting for VM200 access to apply fix
+
+NEXT ACTION
+===========
+
+Access VM200 (Proxmox host at 136.243.155.166) and run the fix script.
+The script is safe, reversible, and only changes DNS configuration.
+
+================================================================================
+END OF SUMMARY
+================================================================================

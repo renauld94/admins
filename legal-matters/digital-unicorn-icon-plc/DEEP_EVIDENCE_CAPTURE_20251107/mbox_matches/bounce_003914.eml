@@ -1,0 +1,813 @@
+X-GM-THRID: 1822097739123233208
+X-Gmail-Labels: Inbox,Category Promotions,Unread
+Delivered-To: sn.renauld@gmail.com
+Received: by 2002:a17:906:310c:b0:aab:de38:9884 with SMTP id 12csp640778ejx;
+        Thu, 23 Jan 2025 19:03:36 -0800 (PST)
+X-Forwarded-Encrypted: i=2;
+ AJvYcCWc0cMo5YxtI94gO6pvJPEiEFrTpg0DAMk3F5R8FcS9CqtVZbWwDOOHxXsuwDU8+4F+n3dECxtszaL5@gmail.com
+X-Google-Smtp-Source: 
+ AGHT+IFhNPwUY8AZpAECeZtD2eFKzosTBpccTXu9RoP+BYYFhQ2vTH07o518mngpCMsxZGuCoVbI
+X-Received: by 2002:a05:6000:1faa:b0:385:deca:f7cf with SMTP id
+ ffacd0b85a97d-38bf5655457mr24110205f8f.8.1737687815947;
+        Thu, 23 Jan 2025 19:03:35 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1737687815; cv=none;
+        d=google.com; s=arc-20240605;
+        b=hCu2Zus/lg3eyuc6UHm64hAvQSZ9TDH3GqSA5XVMiO8oJS0WhpocZeAwuYCHzuEMyg
+         kykhvcJLTstyxy+OYXgzjoJGuwIcvxQCh9UdwPk5zUMhW1DQq+gWL3uH3c4Q2T1dJhMu
+         EtaAabiUCsN4nDcYMOPQdBB9PeW2eaGgWbXn9WYo0zvIEA8YVxihmKoBkKYqoeGV2uKR
+         hRITOrj0lypTQnsusxP1nTWfNJMKoeoB+jqW8U9kt6drZGhX0UXpWNVM/UZd3TVLLKCR
+         yRECfwTUHiXCTBhyXbjEl9a8WXMI8nr3JagxZMR2rhbC2B/6PNvtVjdl3x8aGILcQ02b
+         qzuQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605;
+        h=message-id:list-unsubscribe:feedback-id:list-unsubscribe-post
+         :reply-to:to:from:subject:mime-version:date:sender:dkim-signature
+         :delivered-to;
+        bh=FLVQLVuxywLPMrVC3ShUoGQPfzoYEJdpdfDtmUK/6vM=;
+        fh=PtvM+3MFXUjY4IoQonFu3/PZGaDPHwj8XoabnUc3IG8=;
+        b=grDkcpIGEd7+nDUAFaQtdqTFrQh+N6Mf9I8MpaSHZyD5ovrbC6/8uaKIkJIPSPQp0y
+         F5Lq8/y0WR9m13NLg4BuB1q/pEQSLakF2I6jiSKqORGm8yCeNUnvpDYdl85FpLKiuKD+
+         zKzkBwwrVLuMw3GpikgjCkD5v0V60UZ9kIGmgKVOQn9v8tYaPdTdjIw0O3aNm34FWLOf
+         pIPp14lhlsvDK++saz8obFIeUaPlJ9sbL7AKNXdySMtBim0ao5vWLEWuFBI0wuucKWtD
+         FYBaw9ShjCcQCgN3VAhLkFSE1Vkn/HFTf1xxhymyPYaqWGXQLRH+444Ke7tje2e+O1/1
+         lpnQ==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@mail.gitlab.com header.s=krs header.b=Mjy1irt9;
+       spf=softfail (google.com: domain of transitioning
+ bounce+efabed.b0ce90-simon.renauld=digitalunicorn.fr@mail.gitlab.com does not
+ designate 188.165.58.219 as permitted sender)
+ smtp.mailfrom="bounce+efabed.b0ce90-simon.renauld=digitalunicorn.fr@mail.gitlab.com";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=gitlab.com
+Return-Path: 
+ <bounce+efabed.b0ce90-simon.renauld=digitalunicorn.fr@mail.gitlab.com>
+Received: from 5.mo554.mail-out.ovh.net (5.mo554.mail-out.ovh.net.
+ [188.165.58.219])
+        by mx.google.com with ESMTPS id
+ ffacd0b85a97d-38c2a1ba27dsi807067f8f.408.2025.01.23.19.03.35
+        for <sn.renauld@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Jan 2025 19:03:35 -0800 (PST)
+Received-SPF: softfail (google.com: domain of transitioning
+ bounce+efabed.b0ce90-simon.renauld=digitalunicorn.fr@mail.gitlab.com does not
+ designate 188.165.58.219 as permitted sender) client-ip=188.165.58.219;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@mail.gitlab.com header.s=krs header.b=Mjy1irt9;
+       spf=softfail (google.com: domain of transitioning
+ bounce+efabed.b0ce90-simon.renauld=digitalunicorn.fr@mail.gitlab.com does not
+ designate 188.165.58.219 as permitted sender)
+ smtp.mailfrom="bounce+efabed.b0ce90-simon.renauld=digitalunicorn.fr@mail.gitlab.com";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=gitlab.com
+Received: from mx1.ovh.net (unknown [10.110.164.250])
+	by mo554.mail-out.ovh.net (Postfix) with SMTP id 4YfN1M4vPMz1FFV
+	for <sn.renauld@gmail.com>; Fri, 24 Jan 2025 03:03:35 +0000 (UTC)
+Received: from localhost (HELO queueout) (127.0.0.1)
+	by localhost with SMTP; 24 Jan 2025 05:03:35 +0200
+Delivered-To: digitalunicorn.fr-simon.renauld@digitalunicorn.fr
+Received: from localhost (HELO queue) (127.0.0.1)
+	by localhost with SMTP; 24 Jan 2025 05:03:35 +0200
+Received: from unknown (HELO output28.mail.ovh.net) (192.168.13.134)
+  by 192.168.9.5 with AES256-GCM-SHA384 encrypted SMTP;
+ 24 Jan 2025 05:03:35 +0200
+Received: from vr42.mail.ovh.net (unknown [10.101.8.42])
+	by out28.mail.ovh.net (Postfix) with ESMTP id 4YfN1M1lQjz2sCkQ
+	for <simon.renauld@digitalunicorn.fr>; Fri, 24 Jan 2025 03:03:35 +0000 (UTC)
+Received: from in49.mail.ovh.net (unknown [10.101.4.49])
+	by vr42.mail.ovh.net (Postfix) with ESMTP id 4YfN1M01Gqz4crqYt
+	for <simon.renauld@digitalunicorn.fr>; Fri, 24 Jan 2025 03:03:35 +0000 (UTC)
+Received: from m240-144.mailgun.net (m240-144.mailgun.net [159.112.240.144])
+	by in49.mail.ovh.net (Postfix) with ESMTPS id 4YfN1L3Wxsz2sCdX
+	for <simon.renauld@digitalunicorn.fr>; Fri, 24 Jan 2025 03:03:34 +0000 (UTC)
+Authentication-Results: in49.mail.ovh.net;
+    dkim=pass (1024-bit rsa key sha256) header.d=mail.gitlab.com
+ header.i=@mail.gitlab.com header.b=Mjy1irt9 header.a=rsa-sha256 header.s=krs;
+    dmarc=pass policy.published-domain-policy=reject
+ policy.applied-disposition=none policy.evaluated-disposition=none
+ (p=reject,d=none,d.eval=none) policy.policy-from=p
+ header.from=mail.gitlab.com;
+    spf=pass
+ smtp.mailfrom="bounce+efabed.b0ce90-simon.renauld=digitalunicorn.fr@mail.gitlab.com"
+ smtp.helo=m240-144.mailgun.net
+Received-SPF: pass
+    (mail.gitlab.com: Sender is authorized to use
+ 'bounce+efabed.b0ce90-simon.renauld=digitalunicorn.fr@mail.gitlab.com' in
+ 'mfrom' identity (mechanism 'include:mailgun.org' matched))
+    receiver=in49.mail.ovh.net;
+    identity=mailfrom;
+    envelope-from="bounce+efabed.b0ce90-simon.renauld=digitalunicorn.fr@mail.gitlab.com";
+    helo=m240-144.mailgun.net;
+    client-ip=159.112.240.144
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mail.gitlab.com;
+ q=dns/txt; s=krs; t=1737687807; x=1737695007;
+ h=Message-Id: List-Unsubscribe: List-Unsubscribe-Post: Reply-To:
+ X-Feedback-ID: To: To: From: From: Subject: Subject: Content-Type:
+ Mime-Version: Date: Sender: Sender;
+ bh=FLVQLVuxywLPMrVC3ShUoGQPfzoYEJdpdfDtmUK/6vM=;
+ b=Mjy1irt9y2gPNhknYuZNaGA7P4/pkCRhxQZhCDRviEd5Z7sNYlJpPiM7x1WwlkOvFCqGEb1STGx8NT5FhOEaZ0k5L67SHHgg9I/GjU644J/QXzgE+AJbm2FW/+jnC//2XWBxCOopn1wGQ5vxG2dcAP3KpApmsPOniZ1gtnd13KQ=
+X-Mailgun-Sending-Ip: 159.112.240.144
+X-Mailgun-Sending-Ip-Pool-Name: gitlab_mktg
+X-Mailgun-Sending-Ip-Pool: 640a79b5aa05270a6c0d3956
+X-Mailgun-Sid: 
+ WyJiOWVjNiIsInNpbW9uLnJlbmF1bGRAZGlnaXRhbHVuaWNvcm4uZnIiLCJiMGNlOTAiXQ==
+Received: by 23d8795cc330 with HTTP id 679302ff3926af7a17766394;
+ Fri, 24 Jan 2025
+ 03:03:27 GMT
+Sender: team@mail.gitlab.com
+Date: Fri, 24 Jan 2025 03:03:27 +0000
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="899b4fd5b0cd3836575458ef0a111faabd8675511e5c6fca0ba07747f3bf"
+Subject: 5 minutes to optimize your processes
+From: GitLab <team@mail.gitlab.com>
+To: simon.renauld@digitalunicorn.fr
+X-Feedback-ID: 14820192:11267774:79074:iterable
+Reply-To: team@gitlab.com
+X-Campaign-ID: 11267774
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+Feedback-ID: 14820192:11267774:79074:iterable
+X-Message-ID: 940c05ed9ce64740b2b6edd20b153486
+List-Unsubscribe: 
+ <https://links.gitlab.com/e/encryptedUnsubscribe?_r=a752d10009b24b21b953ea16b8d7bf2c&_s=940c05ed9ce64740b2b6edd20b153486&_t=HM9E4K8jGfDoAgvuO6SbbMW0y1pDUD8HmKiPUI2Buud9GExNhN0XRiRH5IUjulp8wuQOfFXIak2RHMSRvbXhbPdWRnLAdqwuGu64wYi6cQaX6knUaXeCa3sYuLrBEj3G>,<mailto:unsubscribe+11267774+14820192@unsubscribe.iterable.com>
+X-Mailgun-Variables: {"metadata":
+ "{\"messageId\":\"940c05ed9ce64740b2b6edd20b153486\",\"templateId\":14820192,\"projectId\":18598,\"campaignId\":11267774}"}
+Message-Id: <20250124030327.1ff14a2388a02db0@mail.gitlab.com>
+X-OVH-Remote: 159.112.240.144 (m240-144.mailgun.net)
+X-Ovh-Tracer-Id: 217861633037865891
+X-VR-SPAMSTATE: MCE
+X-VR-SPAMSCORE: 17
+X-VR-SPAMCAUSE: 
+ gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgfeegudcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecundfotefknffkpffiucdludejmdenucfjughrpehsffggtgfuhffvrhfjkfesrgdtreertddtjeenucfhrhhomhepifhithfnrggsuceothgvrghmsehmrghilhdrghhithhlrggsrdgtohhmqeenucggtffrrghtthgvrhhnpeekuddvjedtgefgteekkeeileffudeffeegtedugeejudfffffgveefjeffkeevkeenucffohhmrghinhepghhithhlrggsrdgtohhmnecukfhppeduheelrdduuddvrddvgedtrddugeegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepudehledrudduvddrvdegtddrudeggedphhgvlhhopehmvdegtddqudeggedrmhgrihhlghhunhdrnhgvthdpmhgrihhlfhhrohhmpegsohhunhgtvgdovghfrggsvggurdgstdgtvgeltddqshhimhhonhdrrhgvnhgruhhlugepughighhithgrlhhunhhitghorhhnrdhfrhesmhgrihhlrdhgihhtlhgrsgdrtghomhdpnhgspghrtghpthhtohepuddprhgtphhtthhopehsihhmohhnrdhrvghnrghulhguseguihhgihhtrghluhhnihgtohhrnhdrfhhrpdfovfetjfhoshhtpehvrhegvdgmpdgukhhimhepphgrshhsmgdpshhpfhepphgrshhsmgdprhgvvhfkrfepmhdvgedtqddugeegrdhmrghilhhguhhnrdhnvghtmg
+ dpghgvohfkrfepfgfu
+X-Ovh-Spam-Status: OK
+X-Ovh-Spam-Reason: vr: OK; dkim: disabled; spf: disabled
+X-Ovh-Message-Type: MCE
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 17
+X-VR-SPAMCAUSE: 
+ gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgfeegudcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecundfotefknffkpffiucdludejmdenucfjughrpehsffggtgfuhffvrhfjkfesrgdtreertddtjeenucfhrhhomhepifhithfnrggsuceothgvrghmsehmrghilhdrghhithhlrggsrdgtohhmqeenucggtffrrghtthgvrhhnpeekuddvjedtgefgteekkeeileffudeffeegtedugeejudfffffgveefjeffkeevkeenucffohhmrghinhepghhithhlrggsrdgtohhmnecukfhppeduvdejrddtrddtrddupdduheelrdduuddvrddvgedtrddugeegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpegsohhunhgtvgdovghfrggsvggurdgstdgtvgeltddqshhimhhonhdrrhgvnhgruhhlugepughighhithgrlhhunhhitghorhhnrdhfrhesmhgrihhlrdhgihhtlhgrsgdrtghomhdpnhgspghrtghpthhtohepuddprhgtphhtthhopehsnhdrrhgvnhgruhhlugesghhmrghilhdrtghomhdpoffvtefjohhsthepmhhoheehgegmpdhmohguvgepshhmthhpohhuth
+
+--899b4fd5b0cd3836575458ef0a111faabd8675511e5c6fca0ba07747f3bf
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+
+Set up now, iterate continuously
+Create, verify, repeat with GitLab CI
+Configure now <[[https://docs.gitlab.com/ee/ci/quick_start/]]>
+
+Make the most of your trial by taking a few minutes to configure your CI. Y=
+ou=E2=80=99ll get 400 free (pipeline) minutes in return!
+
+Free up your team=E2=80=99s time: With more of your deployment process auto=
+mated, your team has time for more rewarding projects. It's estimated that =
+developers spend between 35% and 50% of their time testing, validating, and=
+ debugging code. By automating these processes, developers significantly im=
+prove their productivity.
+
+Don=E2=80=99t waste another manual minute. Optimize your processes with Git=
+Lab CI.
+
+Configure now <[[https://docs.gitlab.com/ee/ci/quick_start/]]>
+
+Need help troubleshooting? See our docs<[[https://docs.gitlab.com/ee/ci/tro=
+ubleshooting.html]]>.=20
+
+
+See how to save time with AI-assisted Root Cause Analysis
+Discover how we've infused Root Cause Analysis with AI to help remedy broke=
+n CI/CD pipelines, including example scenarios and take-away exercises.
+> <[[https://about.gitlab.com/blog/2024/06/06/developing-gitlab-duo-blendin=
+g-ai-and-root-cause-analysis-to-fix-ci-cd/?utm_medium=3Demail&utm_source=3D=
+iterable&utm_campaign=3Deg_global_lfc_nurture_autosd_en_createverify&utm_co=
+ntent=3Dcreateverify_ultimatetrialnurturefree_email_x]]>
+
+
+
+This email was sent to simon.renauld@digitalunicorn.fr. Please visit the Gi=
+tLab email subscription <https://links.gitlab.com/e/eh?_t=3Da752d10009b24b2=
+1b953ea16b8d7bf2c&amp;_m=3D940c05ed9ce64740b2b6edd20b153486&amp;_e=3DuSa_tF=
+H39zcQ20oEwVLXWLUJVyiAJUGZ9qrtWuL6HGt1TY7BiOaL423gENhby3lZGlWJhME2Bo4ytXzj1=
+WSY9ljIYbk-LBW8RURIRRl83JHQH5IkNht_Pe8wsaIQYgQrumwLIQVMMiqSZzZhTCz4ZM-g74bz=
+7me1Djlg8xkb9F78Pwgd_DTstQDybYnSSvsgbRzTFI4jm-eu5rEVkmSCiw%3D%3D> portal to=
+ update your preferences. If you no longer wish to receive marketing emails=
+ from us, you may=C2=A0unsubscribe=C2=A0<https://page.gitlab.com/Unsubscrib=
+ePage.html> at any time.=20
+
+
+--899b4fd5b0cd3836575458ef0a111faabd8675511e5c6fca0ba07747f3bf
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=ascii
+
+<!DOCTYPE html> <html xmlns=3D"http://www.w3.org/1999/xhtml" xmlns:v=3D"urn=
+:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-microsoft-com:office:off=
+ice" style=3D"font-family: 'Inter', Arial, Helvetica, sans-serif;"> <head> =
+<!-- All variables --> <!-- Header variables --> <!-- Hero variables --> <t=
+itle>Get started with CI/CD</title> <!--[if !mso]><!--> <meta http-equiv=3D=
+"X-UA-Compatible" content=3D"IE=3Dedge"> <!--<![endif]--> <meta http-equiv=
+=3D"Content-Type" content=3D"text/html; charset=3DUTF-8"> <meta name=3D"vie=
+wport" content=3D"width=3Ddevice-width,initial-scale=3D1"> <style type=3D"t=
+ext/css">a[x-apple-data-detectors]{color:inherit!important;text-decoration:=
+none!important;font-size:inherit!important;font-family:inherit!important;fo=
+nt-weight:inherit!important;line-height:inherit!important}*{font-family:"In=
+ter",Arial,Helvetica,sans-serif}#outlook a{padding:0;color:#7759c2!importan=
+t}body{margin:0;padding:0;-webkit-text-size-adjust:100%;-ms-text-size-adjus=
+t:100%}table,td{border-collapse:collapse;mso-table-lspace:0;mso-table-rspac=
+e:0}img{border:0;height:auto;line-height:100%;outline:0;text-decoration:non=
+e;-ms-interpolation-mode:bicubic}p{display:block;margin:13px 0}#copyText a,=
+#spotlightCopy a,.copy-text a,.copy-text p a,.spotlight-copy a,.spotlight-c=
+opy p a,#copyText a[x-apple-data-detectors],#spotlightCopy a[x-apple-data-d=
+etectors],.copy-text a[x-apple-data-detectors],.spotlight-copy a[x-apple-da=
+ta-detectors],.copy-text a[href],.spotlight-text a[href]{color:#7759c2!impo=
+rtant}#primaryButtonText p,#heroCtaText p,h1 div p,h2 div p,h3 div p,h4 div=
+ p{margin:0!important;padding:0!important}</style> <!--[if mso]><noscript> =
+<xml> <o:OfficeDocumentSettings> <o:AllowPNG/> <o:PixelsPerInch>96</o:Pixel=
+sPerInch> </o:OfficeDocumentSettings> </xml> </noscript><![endif]--> <!--[i=
+f lte mso 11]><style type=3D"text/css">.mj-outlook-group-fix{width:100%!imp=
+ortant}</style><![endif]--> <!--[if !mso]><!--> <link href=3D"https://fonts=
+=2Egoogleapis.com/css?family=3DInter:30=
+0,400,500,600" rel=3D"stylesheet" type=
+=3D"text/css"> <style type=3D"text/css">@import url(https://fonts.googleapi=
+s.com/css?family=3DInter:300,400,500,600);</style> <!--<![endif]--> <style =
+type=3D"text/css">@media only screen and (min-width:480px){.mj-column-per-1=
+0{width:10%!important;max-width:10%}.mj-column-per-20{width:20%!important;m=
+ax-width:20%}.mj-column-per-25{width:25%!important;max-width:25%}.mj-column=
+-per-30{width:30%!important;max-width:30%}.mj-column-per-40{width:40%!impor=
+tant;max-width:40%}.mj-column-per-50{width:50%!important;max-width:50%}.mj-=
+column-per-60{width:60%!important;max-width:60%}.mj-column-per-70{width:70%=
+!important;max-width:70%}.mj-column-per-80{width:80%!important;max-width:80=
+%}.mj-column-per-90{width:90%!important;max-width:90%}.mj-column-per-100{wi=
+dth:100%!important;max-width:100%}}@media only screen and (max-width:414px)=
+{.mj-column-per-10,.mj-column-per-20,.mj-column-per-25,.mj-column-per-30,.m=
+j-column-per-40,.mj-column-per-50,.mj-column-per-60,.mj-column-per-70,.mj-c=
+olumn-per-80,.mj-column-per-90{width:100%!important;max-width:100%}}</style=
+> <style media=3D"screen and (min-width:480px)">.moz-text-html .mj-column-p=
+er-100{width:100%!important;max-width:100%}.moz-text-html .mj-column-per-20=
+{width:20%!important;max-width:20%}.moz-text-html .mj-column-per-80{width:8=
+0%!important;max-width:80%}</style> <style type=3D"text/css">@media only sc=
+reen and (max-width:480px){table.mj-full-width-mobile{width:100%!important}=
+td.mj-full-width-mobile{width:auto!important}}</style> </head> <body style=
+=3D"font-family: 'Inter', Arial, Helvetica, sans-serif; -webkit-text-size-a=
+djust: 100%; -ms-text-size-adjust: 100%; background-color: #ffffff; color: =
+#424242; word-spacing: normal; height: 100% !important; margin: 0 !importan=
+t; padding: 0 !important; width: 100% !important;"><span style=3D"color:tra=
+nsparent;visibility:hidden;display:none;opacity:0;height:0;width:0;font-siz=
+e:0;">Get started with GitLab CI. Here are some resources to get started, t=
+roubleshooting docs, and more.</span><img src=3D"https://links.gitlab.com/e=
+/eo?_t=3Da752d10009b24b21b953ea16b8d7bf2c&amp;_m=3D940c05ed9ce64740b2b6edd2=
+0b153486&amp;_e=3DHM9E4K8jGfDoAgvuO6SbbMW0y1pDUD8HmKiPUI2Buud9GExNhN0XRiRH5=
+IUjulp8wuQOfFXIak2RHMSRvbXhbPdWRnLAdqwuGu64wYi6cQZ6Y0aI-nM6lG0sq2X0KlI1J8DC=
+WOT_2t2hjBXUTGx4AxcCgUAc-AxBhxZOi9ydNRk%3D" style=3D"border:0;width:1px;hei=
+ght:1px;border-width:0px!important;display:none!important;line-height:0!imp=
+ortant;" width=3D"1" height=3D"1"/> <!-- Outer table START --> <table borde=
+r=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"font-family: 'Inter', =
+Arial, Helvetica, sans-serif; -webkit-text-size-adjust: 100%; -ms-text-size=
+-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-spacing=
+: 0; border-collapse: collapse;" width=3D"100%"> <tbody style=3D"font-famil=
+y: 'Inter', Arial, Helvetica, sans-serif;"> <tr style=3D"font-family: 'Inte=
+r', Arial, Helvetica, sans-serif;"> <td class=3D"outer" style=3D"font-famil=
+y: 'Inter', Arial, Helvetica, sans-serif; -webkit-text-size-adjust: 100%; -=
+ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; wo=
+rd-break: break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: n=
+one; min-width: 600px; border-collapse: collapse; background-color: #eeeeee=
+;" valign=3D"top" bgcolor=3D"#eeeeee"> <table align=3D"center" border=3D"0"=
+ cellpadding=3D"0" cellspacing=3D"0" id=3D"boxing" style=3D"font-family: 'I=
+nter', Arial, Helvetica, sans-serif; -webkit-text-size-adjust: 100%; -ms-te=
+xt-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-=
+spacing: 0; border-collapse: collapse;" width=3D"600"> <tbody style=3D"font=
+-family: 'Inter', Arial, Helvetica, sans-serif;"> <tr style=3D"font-family:=
+ 'Inter', Arial, Helvetica, sans-serif;"> <td style=3D"font-family: 'Inter'=
+, Arial, Helvetica, sans-serif; -webkit-text-size-adjust: 100%; -ms-text-si=
+ze-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: =
+break-word; -webkit-hyphens: none; -moz-hyphens: none; hyphens: none; borde=
+r-collapse: collapse;"><!-- HEADER START --> <!--[if mso | IE]><table align=
+=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"" rol=
+e=3D"presentation" style=3D"width:600px;" width=3D"600" bgcolor=3D"#ffffff"=
+> <tr> <td style=3D"line-height:0px;font-size:0px;mso-line-height-rule:exac=
+tly;"><![endif]--> <table align=3D"center" border=3D"0" cellpadding=3D"0" c=
+ellspacing=3D"0" id=3D"header" role=3D"presentation" style=3D"font-family: =
+'Inter', Arial, Helvetica, sans-serif; border-collapse: collapse; mso-table=
+-lspace: 0pt; mso-table-rspace: 0pt; background: #ffffff; background-color:=
+ #ffffff; width: 100%;" width=3D"100%" bgcolor=3D"#ffffff"> <tbody style=3D=
+"font-family: 'Inter', Arial, Helvetica, sans-serif;"> <tr style=3D"font-fa=
+mily: 'Inter', Arial, Helvetica, sans-serif;"> <td style=3D"font-family: 'I=
+nter', Arial, Helvetica, sans-serif; border-collapse: collapse; mso-table-l=
+space: 0pt; mso-table-rspace: 0pt; direction: ltr; font-size: 0px; padding:=
+ 20px 20px 20px 20px; text-align: center; background: #ffffff; background-c=
+olor: #ffffff; background-image: linear-gradient(#ffffff, #ffffff);" align=
+=3D"center" bgcolor=3D"#ffffff"><!--[if mso | IE]><table role=3D"presentati=
+on" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"> <tr> <td class=3D"" s=
+tyle=3D"vertical-align:top;width:560px;"><![endif]--> <div class=3D"mj-colu=
+mn-per-100 mj-outlook-group-fix" style=3D"font-family: 'Inter', Arial, Helv=
+etica, sans-serif; font-size: 0px; text-align: left; direction: ltr; displa=
+y: inline-block; vertical-align: top; width: 100%;"> <table border=3D"0" ce=
+llpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"font-famil=
+y: 'Inter', Arial, Helvetica, sans-serif; border-collapse: collapse; mso-ta=
+ble-lspace: 0pt; mso-table-rspace: 0pt; vertical-align: top;" width=3D"100%=
+" valign=3D"top"> <tbody style=3D"font-family: 'Inter', Arial, Helvetica, s=
+ans-serif;"> <tr style=3D"font-family: 'Inter', Arial, Helvetica, sans-seri=
+f;"> <td align=3D"left" style=3D"font-family: 'Inter', Arial, Helvetica, sa=
+ns-serif; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspac=
+e: 0pt; font-size: 0px; padding: 0; word-break: break-word;"> <table border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"f=
+ont-family: 'Inter', Arial, Helvetica, sans-serif; mso-table-lspace: 0pt; m=
+so-table-rspace: 0pt; border-collapse: collapse; border-spacing: 0px;"> <tb=
+ody style=3D"font-family: 'Inter', Arial, Helvetica, sans-serif;"> <tr styl=
+e=3D"font-family: 'Inter', Arial, Helvetica, sans-serif;"> <td style=3D"fon=
+t-family: 'Inter', Arial, Helvetica, sans-serif; border-collapse: collapse;=
+ mso-table-lspace: 0pt; mso-table-rspace: 0pt;"> <div id=3D"header-img" sty=
+le=3D"font-family: 'Inter', Arial, Helvetica, sans-serif;"><a href=3D"https=
+://links.gitlab.com/u/click?_t=3Da752d10009b24b21b953ea16b8d7bf2c&_m=3D940c=
+05ed9ce64740b2b6edd20b153486&_e=3DuSa_tFH39zcQ20oEwVLXWE-89jJukN_w6oMrJziXH=
+A3XAapVOH1l1yCiGHSyN6pBScrvVGJB_CFoSAaVVuuJeH00SIAQvglS2GP_kZ5pFgeEpIloWK25=
+tU-C9RJ9DE0Fp-jd8VSKGdPMXMniuiWuxzaujaxK9wuZsy4UQbfbDNQvQWxwxjrfvafwwndMLl-=
+Ltq9KhVmtmBXz3cZRbNPu1xUao1_fDE3WJmOmijVUA60%3D" style=3D"font-family: 'Int=
+er', Arial, Helvetica, sans-serif;"> <img alt=3D"GitLab" height=3D"28" src=
+=3D"https://page.gitlab.com/rs/194-VVC-221/images/gitlab-logo-black.png" st=
+yle=3D"font-family: 'Inter', Arial, Helvetica, sans-serif; line-height: 100=
+%; -ms-interpolation-mode: bicubic; border: 0; display: block; outline: non=
+e; text-decoration: none; font-size: 13px; width: 128px; height: 28px;" wid=
+th=3D"128"> </a></div> </td> </tr> </tbody> </table> </td> </tr> </tbody> <=
+/table> </div> <!--[if mso | IE]></td> </tr> </table><![endif]--></td> </tr=
+> </tbody> </table> <!--[if mso | IE]></td> </tr> </table><![endif]--> <!--=
+ HEADER END --><!-- HERO START --> <!--[if mso | IE]><table align=3D"center=
+" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"" role=3D"prese=
+ntation" style=3D"width:600px;" width=3D"600" bgcolor=3D"#ffffff"> <tr> <td=
+ style=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![e=
+ndif]--> <table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" id=3D"hero" role=3D"presentation" style=3D"font-family: 'Inter', Ari=
+al, Helvetica, sans-serif; border-collapse: collapse; mso-table-lspace: 0pt=
+; mso-table-rspace: 0pt; background: #ffffff; background-color: #ffffff; wi=
+dth: 100%;" width=3D"100%" bgcolor=3D"#ffffff"> <tbody style=3D"font-family=
+: 'Inter', Arial, Helvetica, sans-serif;"> <tr style=3D"font-family: 'Inter=
+', Arial, Helvetica, sans-serif;"> <td style=3D"font-family: 'Inter', Arial=
+, Helvetica, sans-serif; border-collapse: collapse; mso-table-lspace: 0pt; =
+mso-table-rspace: 0pt; direction: ltr; font-size: 0px; padding: 16px 20px 1=
+0px 20px; text-align: center;" align=3D"center"><!--[if mso | IE]><table ro=
+le=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"> <tr> =
+<td class=3D"" style=3D"vertical-align:top;width:560px;"><![endif]--> <div =
+class=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-family: 'Int=
+er', Arial, Helvetica, sans-serif; font-size: 0px; text-align: left; direct=
+ion: ltr; display: inline-block; vertical-align: top; width: 100%;"> <table=
+ border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" sty=
+le=3D"font-family: 'Inter', Arial, Helvetica, sans-serif; border-collapse: =
+collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; vertical-align: top=
+;" width=3D"100%" valign=3D"top"> <tbody style=3D"font-family: 'Inter', Ari=
+al, Helvetica, sans-serif;"> <tr style=3D"font-family: 'Inter', Arial, Helv=
+etica, sans-serif;"> <td align=3D"left" style=3D"font-family: 'Inter', Aria=
+l, Helvetica, sans-serif; border-collapse: collapse; mso-table-lspace: 0pt;=
+ mso-table-rspace: 0pt; font-size: 0px; padding: 0; word-break: break-word;=
+"> <div style=3D"font-family: Inter, Helvetica, Arial, sans-serif; font-siz=
+e: 24px; line-height: 1; text-align: left; color: #171321;"> <div id=3D"her=
+o-heading-1" style=3D"font-family: 'Inter', Arial, Helvetica, sans-serif;">=
+ <p style=3D"font-family: 'Inter', Arial, Helvetica, sans-serif; display: b=
+lock; margin: 13px 0;"><strong style=3D"font-family: 'Inter', Arial, Helvet=
+ica, sans-serif;"><span style=3D"font-family: 'Inter', Arial, Helvetica, sa=
+ns-serif; font-size: 32pt;">Set up now, iterate continuously</span></strong=
+></p> </div> <div id=3D"hero-text" style=3D"font-family: 'Inter', Arial, He=
+lvetica, sans-serif;"> <p style=3D"display: block; margin: 13px 0; padding-=
+bottom: 12px; padding-top: 0; font-size: 20px; line-height: 24px; font-fami=
+ly: 'Inter', Arial, Helvetica, sans-serif;">Create, verify, repeat with Git=
+Lab CI</p> </div> </div> </td> </tr> <tr style=3D"font-family: 'Inter', Ari=
+al, Helvetica, sans-serif;"> <td align=3D"left" style=3D"font-family: 'Inte=
+r', Arial, Helvetica, sans-serif; border-collapse: collapse; mso-table-lspa=
+ce: 0pt; mso-table-rspace: 0pt; font-size: 0px; padding: 0; word-break: bre=
+ak-word;"> <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"=
+presentation" style=3D"font-family: 'Inter', Arial, Helvetica, sans-serif; =
+mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: separate; li=
+ne-height: 100%;"> <tbody style=3D"font-family: 'Inter', Arial, Helvetica, =
+sans-serif;"> <tr style=3D"font-family: 'Inter', Arial, Helvetica, sans-ser=
+if;"> <td align=3D"left" style=3D"font-family: 'Inter', Arial, Helvetica, s=
+ans-serif; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspa=
+ce: 0pt; margin: 0;" class=3D"Pad_LR20"> <table width=3D"100%" border=3D"0"=
+ cellspacing=3D"0" cellpadding=3D"0" style=3D"font-family: 'Inter', Arial, =
+Helvetica, sans-serif; border-collapse: collapse; mso-table-lspace: 0pt; ms=
+o-table-rspace: 0pt;"> <tbody style=3D"font-family: 'Inter', Arial, Helveti=
+ca, sans-serif;"> <tr style=3D"font-family: 'Inter', Arial, Helvetica, sans=
+-serif;"> <td align=3D"left" style=3D"border-collapse: collapse; mso-table-=
+lspace: 0pt; mso-table-rspace: 0pt; padding: 10px 0px 10px 10px; font-famil=
+y: 'Inter', helvetica, arial, sans-serif; color: #ffffff; font-size: 16px; =
+line-height: 20px;" class> <!--[if mso | IE]><table style=3D"-webkit-text-s=
+ize-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-ta=
+ble-rspace: 0pt; border-spacing: 0; border-collapse: collapse;" align=3D"le=
+ft" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D""><tr><td bgc=
+olor=3D"#7759c2" height=3D"38" style=3D"font-family: 'Inter', helvetica, ar=
+ial, sans-serif; font-size: 18px; font-weight: 600; padding: 0px 30px; -web=
+kit-border-radius: 3px; border-radius: 3px;vertical-align: middle;"><![endi=
+f]--> <a href=3D"https://links.gitlab.com/u/click?_t=3Da752d10009b24b21b953=
+ea16b8d7bf2c&_m=3D940c05ed9ce64740b2b6edd20b153486&_e=3DuSa_tFH39zcQ20oEwVL=
+XWPOCu_h4xblKJIN2ehIMI3ddHHdpAvlHSJMAN8slHoCtCsAmwpSbqtm0VPeMwWZFKn9g5mI8ub=
+om4gX2U5Tk0SFx7q9uE_Cq0ZyvaACvcnWAvEP23wmcTyULK4NtNBC-JB58ZU6BKb2sd2N-G3KRR=
+ZtRXeh8pqfFZKrREfbfeyhghpm6zcbEFsF2OzIRUgDfFa0NX6Ic_uEYI6ATWawrjDui_xb9CXZ7=
+8w9CiwXkg837-FRKf-6Q4jYeZtLBVUfYXWtR86BFbjtzYm6ELmNbF5zEOtvvG4Jwh0HI4K3tjvY=
+7GGK5Eiryt5GVUGorjlYVaO86D8h9qhtbwopVD7PDlGQ%3D" target=3D"_blank" style=3D=
+"font-family: 'Inter', helvetica, arial, sans-serif; font-size: 18px; font-=
+weight: 600; line-height: 40px; text-align: center; -webkit-font-smoothing:=
+ antialiased; text-decoration: none; display: inline-block; color: #fffffe;=
+ padding: 0px 40px 0px 40px; -webkit-border-radius: 3px; border-radius: 3px=
+; background-color: #7759c2;">Configure now</a> <!--[if mso | IE]></td></tr=
+></table><![endif]--> </td> </tr> </tbody> </table> </td> </tr> </tbody> </=
+table> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]></td> </tr> <=
+/table><![endif]--></td> </tr> </tbody> </table> <!--[if mso | IE]></td> </=
+tr> </table><![endif]--> <!-- HERO END --><!-- IMAGE START --> <!--[if mso =
+| IE]><table align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D=
+"0" role=3D"presentation" style=3D"width: 600px; padding: 0; margin: 0;" wi=
+dth=3D"600" bgcolor=3D"#ffffff"> <tr> <td style=3D"line-height:0px;font-siz=
+e:0px;mso-line-height-rule:exactly; padding: 0; margin: 0; width: 600px;" w=
+idth=3D"600"><![endif]--> <table align=3D"center" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" id=3D"image" role=3D"presentation" style=3D"font-f=
+amily: 'Inter', Arial, Helvetica, sans-serif; border-collapse: collapse; ms=
+o-table-lspace: 0pt; mso-table-rspace: 0pt; background: #ffffff; background=
+-color: #ffffff; width: 600px;" width=3D"600" bgcolor=3D"#ffffff"> <tbody s=
+tyle=3D"font-family: 'Inter', Arial, Helvetica, sans-serif;"> <tr style=3D"=
+font-family: 'Inter', Arial, Helvetica, sans-serif;"> <td style=3D"font-fam=
+ily: 'Inter', Arial, Helvetica, sans-serif; border-collapse: collapse; mso-=
+table-lspace: 0pt; mso-table-rspace: 0pt; direction: ltr; font-size: 0px; p=
+adding: 0 20px; text-align: center;" align=3D"center"><!--[if mso | IE]><ta=
+ble role=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" =
+style=3D"padding: 0; margin: 0;"> <tr> <td style=3D"vertical-align:top; wid=
+th: 100%; padding: 0; margin: 0;"><![endif]--> <div class=3D"mj-column-per-=
+100 mj-outlook-group-fix" style=3D"font-family: 'Inter', Arial, Helvetica, =
+sans-serif; font-size: 0px; text-align: left; direction: ltr; display: inli=
+ne-block; vertical-align: top;"> <table border=3D"0" cellpadding=3D"0" cell=
+spacing=3D"0" role=3D"presentation" style=3D"font-family: 'Inter', Arial, H=
+elvetica, sans-serif; border-collapse: collapse; mso-table-lspace: 0pt; mso=
+-table-rspace: 0pt; vertical-align: top;" valign=3D"top"> <tbody style=3D"f=
+ont-family: 'Inter', Arial, Helvetica, sans-serif;"> <tr style=3D"font-fami=
+ly: 'Inter', Arial, Helvetica, sans-serif;"> <td align=3D"center" style=3D"=
+font-family: 'Inter', Arial, Helvetica, sans-serif; border-collapse: collap=
+se; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-size: 0px; word-brea=
+k: break-word;"> <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" cl=
+ass=3D"mj-full-width-mobile" role=3D"presentation" style=3D"font-family: 'I=
+nter', Arial, Helvetica, sans-serif; mso-table-lspace: 0pt; mso-table-rspac=
+e: 0pt; border-collapse: collapse; border-spacing: 0px; max-width: 600px;">=
+ <tbody style=3D"font-family: 'Inter', Arial, Helvetica, sans-serif;"> <tr =
+style=3D"font-family: 'Inter', Arial, Helvetica, sans-serif;"> <td style=3D=
+"font-family: 'Inter', Arial, Helvetica, sans-serif; border-collapse: colla=
+pse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; margin: 0; m=
+ax-width: 600px;"> <div id=3D"sizable-img" style=3D"font-family: 'Inter', A=
+rial, Helvetica, sans-serif;"><a href=3D"https://links.gitlab.com/u/click?_=
+t=3Da752d10009b24b21b953ea16b8d7bf2c&_m=3D940c05ed9ce64740b2b6edd20b153486&=
+_e=3DuSa_tFH39zcQ20oEwVLXWPOCu_h4xblKJIN2ehIMI3ddHHdpAvlHSJMAN8slHoCtNcT_rL=
+ZJYpryT8iOluoqa06NtD0mPGWUbfZQyY8K_xnd2OOP6V8OJgV9ys0t14v3pHDtSrnMLXATqZCkk=
+XbsHnw0smPQAMYYNDjBaH3YVBuzjhlDpxd0_dZcjo9ZRbJRe4EwjUlVPL_ARCBD8Zw3rlKwNKCC=
+1iOfmF1-EGN6QX2WMym2sK4kXFXMG7WD0jnSicPTeyxxQGF8gbuhaOTKU_SzloEf0mnXNo5eeTX=
+NSbsJ11rUpiz4LFs7mzdIXYXPt25QUP_NKC41Xc-wejpzCwf_sPq_MpLeOsbMJflnWRH24gVZGB=
+dtLeVV_rNDsJHFxLSjG2cnFxFc-rNSlnYiLr4GYiJ23w3LMwnPCqV8Kml4JCYv_Kmb1pPyPVGPC=
+0RP" style=3D"font-family: 'Inter', Arial, Helvetica, sans-serif;"> <img al=
+t=3D"See the docs" height=3D"254" src=3D"https://d2axdqolvqmdvx.cloudfront.=
+net/2f10e82c-5083-4234-9d85-669cbc718997/ciimage1.png" style=3D"font-family=
+: 'Inter', Arial, Helvetica, sans-serif; line-height: 100%; -ms-interpolati=
+on-mode: bicubic; border: 0; display: block; outline: none; text-decoration=
+: none; font-size: 13px; max-width: 540px; width: 100%; height: 254px; marg=
+in: 0; padding: 0 !important;" width=3D"100%"> </a></div> </td> </tr> </tbo=
+dy> </table> </td> </tr> </tbody> </table> </div> <!--[if mso | IE]></td> <=
+/tr> </table><![endif]--></td> </tr> </tbody> </table> <!--[if mso | IE]></=
+td> </tr> </table><![endif]--> <!-- IMAGE END --> <!-- COPY START --> <!--[=
+if mso | IE]><table align=3D"center" border=3D"0" cellpadding=3D"0" cellspa=
+cing=3D"0" class=3D"" role=3D"presentation" style=3D"width:600px;" width=3D=
+"600" bgcolor=3D"#ffffff"> <tr> <td style=3D"line-height:0px;font-size:0px;=
+mso-line-height-rule:exactly;"><![endif]--> <table align=3D"center" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" id=3D"copy" role=3D"presentation=
+" style=3D"font-family: 'Inter', Arial, Helvetica, sans-serif; border-colla=
+pse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background: #f=
+fffff; background-color: #ffffff; width: 100%;" width=3D"100%" bgcolor=3D"#=
+ffffff"> <tbody style=3D"font-family: 'Inter', Arial, Helvetica, sans-serif=
+;"> <tr style=3D"font-family: 'Inter', Arial, Helvetica, sans-serif;"> <td =
+style=3D"font-family: 'Inter', Arial, Helvetica, sans-serif; border-collaps=
+e: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; direction: ltr; =
+font-size: 0px; padding: 2px 30px 5px 30px; text-align: center;" align=3D"c=
+enter"><!--[if mso | IE]><table role=3D"presentation" border=3D"0" cellpadd=
+ing=3D"0" cellspacing=3D"0"> <tr> <td class=3D"" style=3D"vertical-align:to=
+p;width:560px;"><![endif]--> <div class=3D"mj-column-per-100 mj-outlook-gro=
+up-fix" style=3D"font-family: 'Inter', Arial, Helvetica, sans-serif; font-s=
+ize: 0px; text-align: left; direction: ltr; display: inline-block; vertical=
+-align: top; width: 100%;"> <table border=3D"0" cellpadding=3D"0" cellspaci=
+ng=3D"0" role=3D"presentation" style=3D"font-family: 'Inter', Arial, Helvet=
+ica, sans-serif; border-collapse: collapse; mso-table-lspace: 0pt; mso-tabl=
+e-rspace: 0pt; vertical-align: top;" width=3D"100%" valign=3D"top"> <tbody =
+style=3D"font-family: 'Inter', Arial, Helvetica, sans-serif;"> <tr style=3D=
+"font-family: 'Inter', Arial, Helvetica, sans-serif;"> <td align=3D"left" s=
+tyle=3D"font-family: 'Inter', Arial, Helvetica, sans-serif; border-collapse=
+: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-size: 0px; p=
+adding: 0; word-break: break-word;"> <div class=3D"copy-text" id=3D"copyTex=
+t" style=3D"font-family: Inter, Helvetica, Arial, sans-serif; font-size: 16=
+px; line-height: 20px; text-align: left; color: #171321;"> <p style=3D"font=
+-family: 'Inter', Arial, Helvetica, sans-serif; display: block; margin: 13p=
+x 0;">Make the most of your trial by taking a few minutes to configure your=
+ CI. You&rsquo;ll get 400 free (pipeline) minutes in return!</p> <p style=
+=3D"font-family: 'Inter', Arial, Helvetica, sans-serif; display: block; mar=
+gin: 13px 0;"><strong style=3D"font-family: 'Inter', Arial, Helvetica, sans=
+-serif;">Free up your team&rsquo;s time:</strong> With more of your deploym=
+ent process automated, your team has time for more rewarding projects.It's =
+estimated that developers spend between 35% and 50% of their time testing, =
+validating, and debugging code. By automating these processes, developers s=
+ignificantly improve their productivity.</p> <p style=3D"font-family: 'Inte=
+r', Arial, Helvetica, sans-serif; display: block; margin: 13px 0;">Don&rsqu=
+o;t waste another manual minute. <strong style=3D"font-family: 'Inter', Ari=
+al, Helvetica, sans-serif;"><a href=3D"https://links.gitlab.com/u/click?_t=
+=3Da752d10009b24b21b953ea16b8d7bf2c&_m=3D940c05ed9ce64740b2b6edd20b153486&_=
+e=3DuSa_tFH39zcQ20oEwVLXWPOCu_h4xblKJIN2ehIMI3ddHHdpAvlHSJMAN8slHoCtNcT_rLZ=
+JYpryT8iOluoqa06NtD0mPGWUbfZQyY8K_xnd2OOP6V8OJgV9ys0t14v3pHDtSrnMLXATqZCkkX=
+bsHnw0smPQAMYYNDjBaH3YVBuzjhlDpxd0_dZcjo9ZRbJRe4EwjUlVPL_ARCBD8Zw3rlKwNKCC1=
+iOfmF1-EGN6QX2WMym2sK4kXFXMG7WD0jnSicPTeyxxQGF8gbuhaOTKU8vrISYyjwfI7fmrI7RB=
+W7FwIU0E4kcSJ15QD0FkAHp_0m9FFGXEPix54mOlnhjNU33AXXEoReC55Bi-C0aINxeIetc1sOn=
+azoQoaJNdT1nnMoMbiR1JI57kGpm2wZO3qrAdaD8fMk6Qyr_kITJZ93le1EdpFVBcPxjjgcDduv=
+3Z" rel=3D"noopener" style=3D"font-family: 'Inter', Arial, Helvetica, sans-=
+serif; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; text-dec=
+oration: underline; text-size-adjust: 100%; color: #7759c2 !important;" tar=
+get=3D"_blank" title=3D"Optimize your processes">Optimize your processes</a=
+></strong> with GitLab CI.&nbsp;</p> </div> </td> </tr> </tbody> </table> <=
+/div> <!--[if mso | IE]></td> </tr> </table><![endif]--></td> </tr> </tbody=
+> </table> <!--[if mso | IE]></td> </tr> </table><![endif]--> <!-- COPY END=
+ --> <!-- Primary CTA Button row START --> <!--[if mso | IE]><table align=
+=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"" rol=
+e=3D"presentation" style=3D"width:600px;" width=3D"600" bgcolor=3D"#ffffff"=
+> <tr> <td style=3D"line-height:0px;font-size:0px;mso-line-height-rule:exac=
+tly;"><![endif]--> <table align=3D"center" border=3D"0" cellpadding=3D"0" c=
+ellspacing=3D"0" id=3D"primary-button" role=3D"presentation" style=3D"font-=
+family: 'Inter', Arial, Helvetica, sans-serif; border-collapse: collapse; m=
+so-table-lspace: 0pt; mso-table-rspace: 0pt; background: #ffffff; backgroun=
+d-color: #ffffff; width: 100%;" width=3D"100%" bgcolor=3D"#ffffff"> <tbody =
+style=3D"font-family: 'Inter', Arial, Helvetica, sans-serif;"> <tr style=3D=
+"font-family: 'Inter', Arial, Helvetica, sans-serif;"> <td style=3D"font-fa=
+mily: 'Inter', Arial, Helvetica, sans-serif; border-collapse: collapse; mso=
+-table-lspace: 0pt; mso-table-rspace: 0pt; direction: ltr; font-size: 0px; =
+padding: 4px 20px 10px 20px; text-align: left;" align=3D"left"><!--[if mso =
+| IE]><table role=3D"presentation" border=3D"0" cellpadding=3D"0" cellspaci=
+ng=3D"0"> <tr> <td class=3D"" style=3D"vertical-align:top;width:560px;"><![=
+endif]--> <div class=3D"mj-outlook-group-fix" style=3D"font-family: 'Inter'=
+, Arial, Helvetica, sans-serif; font-size: 0px; text-align: left; direction=
+: ltr; display: inline-block; vertical-align: top;"> <table align=3D"left" =
+border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" styl=
+e=3D"font-family: 'Inter', Arial, Helvetica, sans-serif; border-collapse: c=
+ollapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; vertical-align: top;=
+" valign=3D"top"> <tbody style=3D"font-family: 'Inter', Arial, Helvetica, s=
+ans-serif;"> <tr style=3D"font-family: 'Inter', Arial, Helvetica, sans-seri=
+f;"> <td align=3D"left" class=3D"cta-button" style=3D"font-family: 'Inter',=
+ Arial, Helvetica, sans-serif; border-collapse: collapse; mso-table-lspace:=
+ 0pt; mso-table-rspace: 0pt; font-size: 0px; padding: 0px; word-break: brea=
+k-word;"> <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" style=3D"=
+font-family: 'Inter', Arial, Helvetica, sans-serif; border-collapse: collap=
+se; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"> <tbody style=3D"font-fa=
+mily: 'Inter', Arial, Helvetica, sans-serif;"> <tr style=3D"font-family: 'I=
+nter', Arial, Helvetica, sans-serif;"> <td style=3D"font-family: 'Inter', A=
+rial, Helvetica, sans-serif; border-collapse: collapse; mso-table-lspace: 0=
+pt; mso-table-rspace: 0pt;"> <table border=3D"0" cellpadding=3D"0" cellspac=
+ing=3D"0" style=3D"font-family: 'Inter', Arial, Helvetica, sans-serif; bord=
+er-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;"> <tbo=
+dy style=3D"font-family: 'Inter', Arial, Helvetica, sans-serif;"> <tr style=
+=3D"font-family: 'Inter', Arial, Helvetica, sans-serif;"> <td align=3D"left=
+" class=3D"fullwidth" style=3D"border-collapse: collapse; mso-table-lspace:=
+ 0pt; mso-table-rspace: 0pt; padding: 30px 0px 0px 0px; font-family: 'Inter=
+', helvetica, arial, sans-serif; color: #ffffff; font-size: 16px; line-heig=
+ht: 20px;"> <div id=3D"ctaBottom" style=3D"font-family: 'Inter', Arial, Hel=
+vetica, sans-serif;"></div> </td> <td align=3D"left" style=3D"font-family: =
+'Inter', Arial, Helvetica, sans-serif; border-collapse: collapse; mso-table=
+-lspace: 0pt; mso-table-rspace: 0pt; font-size: 0px; padding: 0; word-break=
+: break-word;"> <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" rol=
+e=3D"presentation" style=3D"font-family: 'Inter', Arial, Helvetica, sans-se=
+rif; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: separat=
+e; line-height: 100%;"> <tbody style=3D"font-family: 'Inter', Arial, Helvet=
+ica, sans-serif;"> <tr style=3D"font-family: 'Inter', Arial, Helvetica, san=
+s-serif;"> <td height=3D"20" style=3D"font-family: 'Inter', Arial, Helvetic=
+a, sans-serif; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-=
+rspace: 0pt;"><a href=3D"https://links.gitlab.com/u/click?_t=3Da752d10009b2=
+4b21b953ea16b8d7bf2c&_m=3D940c05ed9ce64740b2b6edd20b153486&_e=3DuSa_tFH39zc=
+Q20oEwVLXWPOCu_h4xblKJIN2ehIMI3ddHHdpAvlHSJMAN8slHoCtNcT_rLZJYpryT8iOluoqa0=
+6NtD0mPGWUbfZQyY8K_xnd2OOP6V8OJgV9ys0t14v3pHDtSrnMLXATqZCkkXbsHnw0smPQAMYYN=
+DjBaH3YVBuzjhlDpxd0_dZcjo9ZRbJRe4EwjUlVPL_ARCBD8Zw3rlKwNKCC1iOfmF1-EGN6QX2W=
+Mym2sK4kXFXMG7WD0jnSicPTeyxxQGF8gbuhaOTKU6tX09GRs5SYwwE7GFR-XVkUfmxKD8sIh73=
+XsuV-5aFovWbKthM6o75oWesIqabBz9vzh_5outI89kqR9xjP_LdfPVmXVkK82S_SdFpAYJ55Ea=
+gTXbCMekgaxtoLKgL51um-WaaSKDUxbEmQ2jURwUl8dL2bsEo8Osp5dELs7uL5" rel=3D"noop=
+ener" style=3D"color: #fff; display: inline-block; font-family: 'Inter', Ar=
+ial, Helvetica, sans-serif; font-size: 16px; font-weight: bold; text-decora=
+tion: none;" target=3D"_blank"> <table border=3D"0" cellpadding=3D"0" cells=
+pacing=3D"0" width style=3D"font-family: 'Inter', Arial, Helvetica, sans-se=
+rif; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0p=
+t;"> <tbody style=3D"font-family: 'Inter', Arial, Helvetica, sans-serif;"> =
+<tr style=3D"font-family: 'Inter', Arial, Helvetica, sans-serif;"> <td styl=
+e=3D"border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0p=
+t; display: block; background: #7759c2; color: #fff; font-family: 'Inter', =
+Arial, Helvetica, sans-serif; font-size: 16px; font-weight: bold; line-heig=
+ht: 120%; margin: 0; text-decoration: none; text-transform: none; padding: =
+10px 25px; mso-padding-alt: 10px 25px; border-radius: 3px;">Configure now</=
+td> </tr> </tbody> </table> </a></td> </tr> </tbody> </table> </td> </tr> <=
+/tbody> </table> </td> </tr> </tbody> </table> </td> </tr> </tbody> </table=
+> </div> </td> </tr> </tbody> </table> <!--[if mso | IE]></td> </tr> </tabl=
+e> <!--[if mso | IE]> </td> </tr> </table><![endif]--> <!-- Primary CTA But=
+ton row END --> <!-- COPY START --> <!--[if mso | IE]><table align=3D"cente=
+r" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"" role=3D"pres=
+entation" style=3D"width:600px;" width=3D"600" bgcolor=3D"#ffffff"> <tr> <t=
+d style=3D"line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![=
+endif]--> <table align=3D"left" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" id=3D"copy" role=3D"presentation" style=3D"font-family: 'Inter', Ari=
+al, Helvetica, sans-serif; border-collapse: collapse; mso-table-lspace: 0pt=
+; mso-table-rspace: 0pt; background: #ffffff; background-color: #ffffff; wi=
+dth: 100%;" width=3D"100%" bgcolor=3D"#ffffff"> <tbody style=3D"font-family=
+: 'Inter', Arial, Helvetica, sans-serif;"> <tr style=3D"font-family: 'Inter=
+', Arial, Helvetica, sans-serif;"> <td style=3D"font-family: 'Inter', Arial=
+, Helvetica, sans-serif; border-collapse: collapse; mso-table-lspace: 0pt; =
+mso-table-rspace: 0pt; direction: ltr; font-size: 0px; padding: 0px 20px 30=
+px 15px; text-align: center;" align=3D"center"><!--[if mso | IE]><table rol=
+e=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"> <tr> <=
+td class=3D"" style=3D"vertical-align:top;width:560px;"><![endif]--> <div c=
+lass=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-family: 'Inte=
+r', Arial, Helvetica, sans-serif; font-size: 0px; text-align: left; directi=
+on: ltr; display: inline-block; vertical-align: top; width: 100%;"> <table =
+border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" styl=
+e=3D"font-family: 'Inter', Arial, Helvetica, sans-serif; border-collapse: c=
+ollapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; vertical-align: top;=
+" width=3D"100%" valign=3D"top"> <tbody style=3D"font-family: 'Inter', Aria=
+l, Helvetica, sans-serif;"> <tr style=3D"font-family: 'Inter', Arial, Helve=
+tica, sans-serif;"> <td align=3D"left" style=3D"font-family: 'Inter', Arial=
+, Helvetica, sans-serif; border-collapse: collapse; mso-table-lspace: 0pt; =
+mso-table-rspace: 0pt; font-size: 0px; padding-left: 8px; word-break: break=
+-word;"> <div class=3D"copy-text" id=3D"copyText" style=3D"font-family: Int=
+er, Helvetica, Arial, sans-serif; font-size: 12px; line-height: 20px; text-=
+align: left; color: #171321;">Need help troubleshooting? See our <strong st=
+yle=3D"font-family: 'Inter', Arial, Helvetica, sans-serif;"><a href=3D"http=
+s://links.gitlab.com/u/click?_t=3Da752d10009b24b21b953ea16b8d7bf2c&_m=3D940=
+c05ed9ce64740b2b6edd20b153486&_e=3DuSa_tFH39zcQ20oEwVLXWPOCu_h4xblKJIN2ehIM=
+I3ccBJy0D2SoTNePHcUkJbTOLLADVbqyVTF7IG-SVu9rrjCwiXgSmSvlau0YZ6S9jXkOz2dlt7l=
+7ej0HHXrAUkiPB6o_4Kgu3lTnA6stO7mQjUlf6QLFMWbKCkdvXSavvgztn1Cc6OMRmJGR_SzAch=
+1w7aWDBVDPRM-YMin74F-dVzgaEyLfqPF5bw1mUdGVXZ0pGfmlFYRKDEV262gHuoS3rws4bi087=
+-4QJ5C7Nn_IhEOLNDpQuxN3_xiLt1MSYPSCPlrNgJdSf7ihBdHFxiRVDnRrfPRara226ibiQYeL=
+kRkrNjuURRTGZc1cUttjQ_vWXRKCojTsOxTix7z05_gpOzxqHYwdYj71ry97hydists6hQe2W1L=
+WHswLDXcd0B1KgCIli2lAsBZXmkBgZMLtWV-7auoTbBZx9tN2zK0Dow%3D%3D" style=3D"fon=
+t-family: 'Inter', Arial, Helvetica, sans-serif; color: #7759c2 !important;=
+">docs</a></strong>.</div> </td> </tr> </tbody> </table> </div> <!--[if mso=
+ | IE]></td> </tr> </table><![endif]--></td> </tr> </tbody> </table> <!--[i=
+f mso | IE]></td> </tr> </table><![endif]--> <!-- COPY END --> <!-- SPOTLIG=
+HT COPY WITH LINK START --> <!--[if mso | IE]><table align=3D"center" borde=
+r=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"" role=3D"presentation=
+" width=3D"100%" bgcolor=3D"#F6F3FE"> <tr> <td style=3D"line-height:0px;fon=
+t-size:0px;mso-line-height-rule:exactly;"><![endif]--> <table align=3D"cent=
+er" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" id=3D"spotlightLinkCop=
+y" role=3D"presentation" style=3D"font-family: 'Inter', Arial, Helvetica, s=
+ans-serif; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspa=
+ce: 0pt; background: #F6F3FE; background-color: #f6f3fe; width: 100%;" widt=
+h=3D"100%" bgcolor=3D"#f6f3fe"> <tbody style=3D"font-family: 'Inter', Arial=
+, Helvetica, sans-serif;"> <tr style=3D"font-family: 'Inter', Arial, Helvet=
+ica, sans-serif;"> <td style=3D"font-family: 'Inter', Arial, Helvetica, san=
+s-serif; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace=
+: 0pt; direction: ltr; font-size: 0px; padding: 16px 20px; text-align: cent=
+er;" align=3D"center"><!--[if mso | IE]><table role=3D"presentation" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0"> <tr> <td class=3D"" style=3D"ve=
+rtical-align:top;width:560px;"><![endif]--> <div class=3D"mj-column-per-100=
+ mj-outlook-group-fix" style=3D"font-family: 'Inter', Arial, Helvetica, san=
+s-serif; font-size: 0px; text-align: left; direction: ltr; display: inline-=
+block; vertical-align: top; width: 100%;"> <table border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"font-family: 'Inter=
+', Arial, Helvetica, sans-serif; border-collapse: collapse; mso-table-lspac=
+e: 0pt; mso-table-rspace: 0pt; vertical-align: top;" width=3D"100%" valign=
+=3D"top"> <tbody style=3D"font-family: 'Inter', Arial, Helvetica, sans-seri=
+f;"> <tr style=3D"font-family: 'Inter', Arial, Helvetica, sans-serif;"> <td=
+ align=3D"left" style=3D"font-family: 'Inter', Arial, Helvetica, sans-serif=
+; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; =
+font-size: 0px; padding: 16px 0; word-break: break-word;"> <div id=3D"spotl=
+ightLinkCopyHeader" style=3D"font-family: Inter, Helvetica, Arial, sans-ser=
+if; font-weight: 600; font-size: 24px; line-height: 32px; text-align: left;=
+ color: #171321; padding-bottom: 10px;">See how to save time with AI-assist=
+ed Root Cause Analysis</div> <div class=3D"spotlight-copy" id=3D"spotlightL=
+inkCopyText" style=3D"font-family: Inter, Helvetica, Arial, sans-serif; fon=
+t-size: 16px; line-height: 20px; text-align: left; color: #171321;">Discove=
+r how we've infused Root Cause Analysis with AI to help remedy broken CI/CD=
+ pipelines, including example scenarios and take-away exercises. </div> <a =
+href=3D"https://links.gitlab.com/u/click?_t=3Da752d10009b24b21b953ea16b8d7b=
+f2c&_m=3D940c05ed9ce64740b2b6edd20b153486&_e=3DuSa_tFH39zcQ20oEwVLXWLUJVyiA=
+JUGZ9qrtWuL6HGuwuLrkG8SgPmQwFOUFuZoqBxZnQj1DqMrB1hf9_uEUsL9L32SMcTnAHB_a0DN=
+8WMfAoUl4cdBNwV6F620yjAy4F0nWhaFN8vZcAl-tD2M4boGbVemn1o5UxiM8Gk9Y6MBovEZV9D=
+UGwMShqRBIOG3uiae1epw7O1ENeC7aLDJCzXl1Vv4SOZuhJry0sh4awHyOkMT2adgdFQFkai5I0=
+8R2gAXmZpZk9oTHXxVj95BmXo5A-WoWSib8-PKMoTX8PZVAwxQ4QjOH_OzLJ_69hCTZhLystpPC=
+Dp0AXmoR2jkWMVl4SoWG4-E_3PbKt33hU5O5gPMlFwbycqT_l4-X08-YCibvVlyGrsHWjtH985R=
+YNy4qfLlHt23oWPvK3mJUiMtMv1h9oenrAS7CwukEEXmyGt1BxMdLaNK-MPBl_cLRRhXrlWGYCj=
+nMq_ASmwXzYzwfx6XZQlyIxCh2oOREzhxIrB5qZRj_PVeB-vOlDTzDxfDzApRIjuZs9q_vcitaP=
+1Q%3D" rel=3D"noopener" style=3D"display: block; color: #7759c2; padding-to=
+p: 16px; font-family: Inter, Helvetica, Arial, sans-serif; font-size: 16px;=
+ line-height: 20px; text-align: left;" target=3D"_blank"> <div id=3D"spotli=
+ght-link-link-text" style=3D"font-family: 'Inter', Arial, Helvetica, sans-s=
+erif; color: #7759c2; padding: 0; margin: 0;">Learn more</div> </a></td> </=
+tr> </tbody> </table> </div> <!--[if mso | IE]></td> </tr> </table><![endif=
+]--></td> </tr> </tbody> </table> <!--[if mso | IE]></td> </tr> </table><![=
+endif]--> <!-- POTLIGHT COPY WITH LINK END --> <!-- FOOTER START --> <!--[i=
+f mso | IE]><table align=3D"center" border=3D"0" cellpadding=3D"0" cellspac=
+ing=3D"0" class=3D"" role=3D"presentation" width=3D"100%" bgcolor=3D"#f5f4f=
+2"> <tr> <td style=3D"line-height:0px;font-size:0px;mso-line-height-rule:ex=
+actly;"><![endif]--> <table align=3D"center" border=3D"0" cellpadding=3D"0"=
+ cellspacing=3D"0" id=3D"footer" role=3D"presentation" style=3D"font-family=
+: 'Inter', Arial, Helvetica, sans-serif; border-collapse: collapse; mso-tab=
+le-lspace: 0pt; mso-table-rspace: 0pt; background: #f5f4f2; background-colo=
+r: #f5f4f2; width: 100%;" width=3D"100%" bgcolor=3D"#f5f4f2"> <tbody style=
+=3D"font-family: 'Inter', Arial, Helvetica, sans-serif;"> <tr style=3D"font=
+-family: 'Inter', Arial, Helvetica, sans-serif;"> <td style=3D"font-family:=
+ 'Inter', Arial, Helvetica, sans-serif; border-collapse: collapse; mso-tabl=
+e-lspace: 0pt; mso-table-rspace: 0pt; direction: ltr; font-size: 0px; paddi=
+ng: 24px 20px; text-align: center;" align=3D"center"><!--[if mso | IE]><tab=
+le role=3D"presentation" border=3D"0" cellpadding=3D"0" cellspacing=3D"0"> =
+<tr> <td class=3D"" style=3D"vertical-align:top;width:560px;"><![endif]--> =
+<div class=3D"mj-column-per-100 mj-outlook-group-fix" style=3D"font-family:=
+ 'Inter', Arial, Helvetica, sans-serif; font-size: 0px; text-align: left; d=
+irection: ltr; display: inline-block; vertical-align: top; width: 100%;"> <=
+table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation=
+" style=3D"font-family: 'Inter', Arial, Helvetica, sans-serif; border-colla=
+pse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; vertical-align=
+: top;" width=3D"100%" valign=3D"top"> <tbody style=3D"font-family: 'Inter'=
+, Arial, Helvetica, sans-serif;"> <tr style=3D"font-family: 'Inter', Arial,=
+ Helvetica, sans-serif;"> <td align=3D"center" style=3D"font-family: 'Inter=
+', Arial, Helvetica, sans-serif; border-collapse: collapse; mso-table-lspac=
+e: 0pt; mso-table-rspace: 0pt; font-size: 0px; padding: 10px 25px; padding-=
+bottom: 24px; word-break: break-word;"> <table border=3D"0" cellpadding=3D"=
+0" cellspacing=3D"0" role=3D"presentation" style=3D"font-family: 'Inter', A=
+rial, Helvetica, sans-serif; mso-table-lspace: 0pt; mso-table-rspace: 0pt; =
+border-collapse: collapse; border-spacing: 0px;"> <tbody style=3D"font-fami=
+ly: 'Inter', Arial, Helvetica, sans-serif;"> <tr style=3D"font-family: 'Int=
+er', Arial, Helvetica, sans-serif;"> <td style=3D"font-family: 'Inter', Ari=
+al, Helvetica, sans-serif; border-collapse: collapse; mso-table-lspace: 0pt=
+; mso-table-rspace: 0pt;"> <div style=3D"font-family: 'Inter', Arial, Helve=
+tica, sans-serif;"><a href=3D"https://links.gitlab.com/u/click?_t=3Da752d10=
+009b24b21b953ea16b8d7bf2c&_m=3D940c05ed9ce64740b2b6edd20b153486&_e=3DuSa_tF=
+H39zcQ20oEwVLXWLUJVyiAJUGZ9qrtWuL6HGttjgG4_RMlpVvIHSA2bRLBbwk8j0-NHZtjYIpZ2=
+87R4-HIv_x4Ph9BZSe-IvgGpcME-FSHAri2LAyl0BD9IoOi_Bf-rGEHUxVpEuMgQumi_ZEI_mY9=
+lKfVupiUcw6oS0BIjD-xlUsd5q_AoudVwzSq62UNCdjpoKnjjYBD6gQm_c34ZmG_9Sky3sZd6YS=
+OPTFM-_yIFcyZ-eBJ9e2xwcsLd0D3okfTUkEaz4-YYikQisdFvYPrj1W4kBVMg6_jSSy6NJcRfh=
+XZF2P48Y6UBPY8SCdFwmiEPCTiJHJQ7lxJyjatUNtmM7PrE0BD_pS6RwaNc_drKJGECP2K6yC0r=
+N5jpyL5GVghtACEWyJpAYUE6OqLXuTNTRzpoUDXTqMomwQ%3D" style=3D"font-family: 'I=
+nter', Arial, Helvetica, sans-serif;"> <img alt=3D"GitLab logo" height=3D"4=
+6" src=3D"https://page.gitlab.com/rs/194-VVC-221/images/Tanuki_Logo.png" wi=
+dth=3D"48" style=3D"font-family: 'Inter', Arial, Helvetica, sans-serif; bor=
+der: 0; height: auto; line-height: 100%; outline: none; text-decoration: no=
+ne; -ms-interpolation-mode: bicubic;"> </a></div> </td> </tr> </tbody> </ta=
+ble> </td> </tr> <tr style=3D"font-family: 'Inter', Arial, Helvetica, sans-=
+serif;"> <td align=3D"center" style=3D"font-family: 'Inter', Arial, Helveti=
+ca, sans-serif; border-collapse: collapse; mso-table-lspace: 0pt; mso-table=
+-rspace: 0pt; font-size: 0px; padding: 0; padding-bottom: 10px; word-break:=
+ break-word;"> <div style=3D"font-family: Inter, Helvetica, Arial, sans-ser=
+if; font-size: 14px; line-height: 20px; text-align: center; color: #171321;=
+"><a href=3D"https://links.gitlab.com/e/evib?_t=3Da752d10009b24b21b953ea16b=
+8d7bf2c&_m=3D940c05ed9ce64740b2b6edd20b153486&_e=3DHM9E4K8jGfDoAgvuO6SbbMW0=
+y1pDUD8HmKiPUI2BuueMeTbm3zJ14FHSsJlBlMYV" style=3D"color: #7759c2; padding-=
+right: 16px; font-weight: 600; font-family: 'Inter', Arial, Helvetica, sans=
+-serif;">View Web Version</a> <a href=3D"https://links.gitlab.com/u/click?_=
+t=3Da752d10009b24b21b953ea16b8d7bf2c&_m=3D940c05ed9ce64740b2b6edd20b153486&=
+_e=3DuSa_tFH39zcQ20oEwVLXWE-89jJukN_w6oMrJziXHA2qK2Qh5Yx2HWevVf4iE7nFRbbGjI=
+xox7HoBhcz4AEL8by3ax-yBIi43Y3A5ciEFYX3t0BUlNFD8VaJPUkQWU1m3o49Hv1e1oZLoJugy=
+ftGEMpozEhziEJYuSzvFzMWsfesBLz1ObAHZIid9jjAnxKE4Xn7eBFenpIONSH-JDoph0chtKkR=
+-q8W0ANDR_aP8lo%3D" rel=3D"noopener" style=3D"color: #7759c2; padding-right=
+: 16px; font-weight: 600; font-family: 'Inter', Arial, Helvetica, sans-seri=
+f;" target=3D"_blank">Blog</a> <a href=3D"https://links.gitlab.com/u/click?=
+_t=3Da752d10009b24b21b953ea16b8d7bf2c&_m=3D940c05ed9ce64740b2b6edd20b153486=
+&_e=3DuSa_tFH39zcQ20oEwVLXWHry-DPiRWlHOGXHuL8te8TJCFy-8-RdcKOgwDFcU8_Kb1pNp=
+96CEhVNzwQQSV1Wvo5piYQDGNxZBSiEmRwOSHCn-4AJjjoDg6GEIPMbAyc9Te79MULtSmaTIryu=
+xNi_6vOhmA2ffKZZO9_G3Zqr7K4HStFKed9U-N2c4o7is-PhXbHskDcnef-dDNhgH5fKQFro2mb=
+ioCCUSxZd3OXvcJ8%3D" rel=3D"noopener" style=3D"color: #7759c2; padding-righ=
+t: 16px; font-weight: 600; font-family: 'Inter', Arial, Helvetica, sans-ser=
+if;" target=3D"_blank">X</a> <a href=3D"https://links.gitlab.com/u/click?_t=
+=3Da752d10009b24b21b953ea16b8d7bf2c&_m=3D940c05ed9ce64740b2b6edd20b153486&_=
+e=3DuSa_tFH39zcQ20oEwVLXWLydbbZr4L8NRkzu69n7lQg3dRLVHmMm8NeEoYLAcENn5VlePuv=
+pOhvoNie8W9pgq6Fa99-ZLFcvyelybPrksk3Yuw7BAWfnM1MbtmLxB_WBvrKfsIXA__r_eOqMWf=
+KZGhnZU7vZcExM_dGWoJK-6nk6Mzi-moL-0yIjcXmP_3mPcWWZaf3fal1jDaLFzIqs7WAHL3k69=
+bpx32KGiGVWk7E%3D" rel=3D"noopener" style=3D"color: #7759c2; padding-right:=
+ 16px; font-weight: 600; font-family: 'Inter', Arial, Helvetica, sans-serif=
+;" target=3D"_blank">Facebook</a> <a href=3D"https://links.gitlab.com/u/cli=
+ck?_t=3Da752d10009b24b21b953ea16b8d7bf2c&_m=3D940c05ed9ce64740b2b6edd20b153=
+486&_e=3DuSa_tFH39zcQ20oEwVLXWHkuqUCg1ij972gEKHnN3R3RLV_hrYMBjqqmK9SBAXDn_L=
+Kq00R_y4uZ-f4vlOIco-sofdVCJzNMkkutjzdf9LGiqPBecYFCFSDd21f1OGmDmnJ26OE050O0R=
+qRNSQ-8KU0BTB2CHbKN1GcHKIXanNzLXbmsNBozB0VfiDitCUIQpCLSwDeEwPKxzLPBt0s8g2sf=
+0rxKZUxu6N3REuiH2O1_FLX5OfO80iClEPEkDYyUJ_GhzX4ZkRtkhVbYhtWLSg%3D%3D" rel=
+=3D"noopener" style=3D"color: #7759c2; font-weight: 600; font-family: 'Inte=
+r', Arial, Helvetica, sans-serif;" target=3D"_blank">YouTube</a></div> </td=
+> </tr> <tr style=3D"font-family: 'Inter', Arial, Helvetica, sans-serif;"> =
+<td align=3D"center" style=3D"font-family: 'Inter', Arial, Helvetica, sans-=
+serif; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: =
+0pt; font-size: 0px; padding: 0; padding-bottom: 10px; word-break: break-wo=
+rd;"> <div style=3D"font-family: Inter, Helvetica, Arial, sans-serif; font-=
+size: 14px; line-height: 20px; text-align: center; color: #171321;"> <p sty=
+le=3D"display: block; margin: 13px 0; font-family: 'Inter', Arial, Helvetic=
+a, sans-serif;">GitLab Inc. 268 Bush Street, #350, San Francisco, CA 94104,=
+ USA</p> </div> </td> </tr> <tr style=3D"font-family: 'Inter', Arial, Helve=
+tica, sans-serif;"> <td align=3D"left" style=3D"font-family: 'Inter', Arial=
+, Helvetica, sans-serif; border-collapse: collapse; mso-table-lspace: 0pt; =
+mso-table-rspace: 0pt; font-size: 0px; padding: 0; padding-top: 0px; word-b=
+reak: break-word;"> <div style=3D"font-family: Inter, Helvetica, Arial, san=
+s-serif; font-size: 10px; line-height: 14px; text-align: left; color: #1713=
+21;"> <p style=3D"display: block; margin: 13px 0; font-family: 'Inter', Ari=
+al, Helvetica, sans-serif;">This email was sent to simon.renauld@digitaluni=
+corn.fr. Please visit the <a href=3D"https://links.gitlab.com/e/eh?_t=3Da75=
+2d10009b24b21b953ea16b8d7bf2c&_m=3D940c05ed9ce64740b2b6edd20b153486&_e=3DuS=
+a_tFH39zcQ20oEwVLXWLUJVyiAJUGZ9qrtWuL6HGt1TY7BiOaL423gENhby3lZGlWJhME2Bo4yt=
+Xzj1WSY9ljIYbk-LBW8RURIRRl83JHQH5IkNht_Pe8wsaIQYgQrumwLIQVMMiqSZzZhTCz4ZM-g=
+74bz7me1Djlg8xkb9F78Pwgd_DTstQDybYnSSvsgbRzTFI4jm-eu5rEVkmSCiw%3D%3D" style=
+=3D"font-family: 'Inter', Arial, Helvetica, sans-serif; color: #7759c2;">Gi=
+tLab email subscription portal</a> to update your preferences. If you no lo=
+nger wish to receive marketing emails from us, you can <a href=3D"https://l=
+inks.gitlab.com/u/click?_t=3Da752d10009b24b21b953ea16b8d7bf2c&_m=3D940c05ed=
+9ce64740b2b6edd20b153486&_e=3DuSa_tFH39zcQ20oEwVLXWE1tqblYU1z2DGi2C4B-wYfy1=
+4qkSYgYLf95oBM5LcdnSfzCQ7spXy-vZzqDESaORCRQ8qc6pMps-F3atdLEeSCp_gzz0viZrCzL=
+W9tWQRZD551_5KirvJsTPPp4ZD_YwIOfxJ1ibMKV0x3WSjkWInZxT44Iay-7aE4ZrQJw27V7W72=
+mudw6DDNUWq0qpECWop7OLqLFRyg_F5ZNQof8wnXdnWHm4QHyBCQ7sjkg8sXk" style=3D"fon=
+t-family: 'Inter', Arial, Helvetica, sans-serif; color: #7759c2;">unsubscri=
+be</a> at any time.</p> </div> </td> </tr> </tbody> </table> </div> <!--[if=
+ mso | IE]></td> </tr> </table><![endif]--></td> </tr> </tbody> </table> <!=
+--[if mso | IE]></td> </tr> </table><![endif]--> <!-- FOOTER END --></td> <=
+/tr> </tbody> </table> </td> </tr> </tbody> </table> </body> </html>
+--899b4fd5b0cd3836575458ef0a111faabd8675511e5c6fca0ba07747f3bf--
+

@@ -1,0 +1,960 @@
+X-GM-THRID: 1796477982553545174
+X-Gmail-Labels: Archived,Category Updates,Unread
+Delivered-To: sn.renauld@gmail.com
+Received: by 2002:a05:6520:2357:b0:28e:b28a:d4f5 with SMTP id
+ c23csp1347393lkc;
+        Tue, 16 Apr 2024 01:08:32 -0700 (PDT)
+X-Google-Smtp-Source: 
+ AGHT+IFu/gLg18SkIoGnlokU06jpHMC5mM5k8kVUEXWpFptFhkEek5Wy2T4KPzh85aXmpt1rIU9t
+X-Received: by 2002:a05:6a20:71d2:b0:1a3:c3e0:518c with SMTP id
+ t18-20020a056a2071d200b001a3c3e0518cmr12442492pzb.52.1713254911834;
+        Tue, 16 Apr 2024 01:08:31 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1713254911; cv=none;
+        d=google.com; s=arc-20160816;
+        b=OxoZIAxhxkOvEQ1kCdIFLAs9CSG6T195J6umRDrKBsxZ7qRjJus+q6hav5vP+HOxyp
+         /+mHytENqUU9w76w9cY+dBdTZ2pBWefIGEvK0MvOEGV2V4Qw6+T5iHiniJOLrsEWaBvu
+         EQAtfD78mx4dpKiEwv5NEQgU7Tq73LqqgRSJjYtblOyEJnKiHHjaHW6DSn1qaEqTo3Qy
+         BdjoSweZZuDUgy7EHq8OcFqnm+5HvbWG+KlqXr9SRmGsvXoOWrKQEsP99HNaWE5KY4dB
+         TdSxsgXLwuEExvcHhYxccp6gs6y5X8abW+SodD6EPC3yjO48OH8yy1pqlygOs2OmoHwO
+         zZSw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20160816;
+        h=require-recipient-valid-since:feedback-id:date:to:mime-version
+         :subject:message-id:from:dkim-signature:dkim-signature;
+        bh=O45p2x2OkMyTb0Z9gKRocS5qPnRGet3zwFEvjmVoEV4=;
+        fh=PS+1PpKbugN1TpmcDEkdQ0Zps38F1SzOC+DqdLOHqOY=;
+        b=k4jPMos7x5vwzYB7O7bpZPCU4kL9OYmU+WLBjcaUZIGz32Oyyg+Qwk59koZx820bOb
+         fzVlS9xB1DxsEtywvnmnND98lVFXHGbvrrN8DHGeOXYY0PZL1jY/Hu+gHe+68Cueptf0
+         URKRElAVD7kPn7T4FBRXTbFqivL6yJrJwR2p/LhIGb82V65dxzy6tJLemFAUqfyaBeI5
+         jAl7s/v/DIfQSoNjhhiXKTfsTiN7PI65wiqOgEpES/v8xhgpdr3a0bppI9K9BEYdSOes
+         B2bggzp4VNhNTw2tY9wJQG+B2301XgzYyTtjH5RqiG4H9i+5ouYBZ4E7ZkJgSqT5zSWE
+         Rn/w==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@maild.linkedin.com header.s=d2048-202308-0d
+ header.b=DhEWXm2z;
+       dkim=pass header.i=@linkedin.com header.s=d2048-202308-00
+ header.b=mMjWt2H2;
+       spf=pass (google.com: domain of
+ m-1kp8ljepfwr48mwab3k6zzkm2e7e6c9dygcv313eb5yv8453o3ysaksrwilbg@bounce.linkedin.com
+ designates 108.174.0.182 as permitted sender)
+ smtp.mailfrom=m-1kp8ljepfwr48mwab3k6zzkm2e7e6c9dygcv313eb5yv8453o3ysaksrwilbg@bounce.linkedin.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=linkedin.com
+Return-Path: 
+ <m-1kp8ljepfwr48mwab3k6zzkm2e7e6c9dygcv313eb5yv8453o3ysaksrwilbg@bounce.linkedin.com>
+Received: from maild-gf.linkedin.com (maild-gf.linkedin.com. [108.174.0.182])
+        by mx.google.com with ESMTPS id
+ w14-20020a170902e88e00b001e2bc22445dsi9575278plg.439.2024.04.16.01.08.31
+        for <sn.renauld@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 16 Apr 2024 01:08:31 -0700 (PDT)
+Received-SPF: pass (google.com: domain of
+ m-1kp8ljepfwr48mwab3k6zzkm2e7e6c9dygcv313eb5yv8453o3ysaksrwilbg@bounce.linkedin.com
+ designates 108.174.0.182 as permitted sender) client-ip=108.174.0.182;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@maild.linkedin.com header.s=d2048-202308-0d
+ header.b=DhEWXm2z;
+       dkim=pass header.i=@linkedin.com header.s=d2048-202308-00
+ header.b=mMjWt2H2;
+       spf=pass (google.com: domain of
+ m-1kp8ljepfwr48mwab3k6zzkm2e7e6c9dygcv313eb5yv8453o3ysaksrwilbg@bounce.linkedin.com
+ designates 108.174.0.182 as permitted sender)
+ smtp.mailfrom=m-1kp8ljepfwr48mwab3k6zzkm2e7e6c9dygcv313eb5yv8453o3ysaksrwilbg@bounce.linkedin.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=linkedin.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=maild.linkedin.com;
+	s=d2048-202308-0d; t=1713254911;
+	bh=O45p2x2OkMyTb0Z9gKRocS5qPnRGet3zwFEvjmVoEV4=;
+	h=From:Subject:MIME-Version:Content-Type:To:Date:X-LinkedIn-Class:
+	 X-LinkedIn-Template:X-LinkedIn-fbl;
+	b=DhEWXm2ztBJ0i9KmDp5H0AWMGBdHdwwTrdF6ndEkQmSM/bDeWW2hHdAZ2kBHiND6q
+	 IhE8N8w4qn10ZCT2gJOUyc1o4ZtvzT4fSShLjTCTwNnC1hFpk2TvkKe5bTk4bJcqoj
+	 b+gJHH8opROcSldYrvoz68wM7R1nw72tnyQQlZmqlK3dpC3YfpuKh/nXXNKdBJJBrW
+	 jDyHhUT0frW6pbOVkun0N/Pv8kWH/KMUZmsS8Co8yxBZg2WcGMY2le8f3kdAYtahmJ
+	 YAcTXG1KkgcLQ9Syt2R9SYW9b4lLSV6OhI24jeHX5Xb3YWmWM0PTheavwQ68FTyBaY
+	 lMDn6BeRgilBw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linkedin.com;
+	s=d2048-202308-00; t=1713254911;
+	bh=O45p2x2OkMyTb0Z9gKRocS5qPnRGet3zwFEvjmVoEV4=;
+	h=From:Subject:MIME-Version:Content-Type:To:Date:X-LinkedIn-Class:
+	 X-LinkedIn-Template:X-LinkedIn-fbl;
+	b=mMjWt2H2fYctjV//qi7wt0qr8ulu9sOO/YQXKwUhrVpcAd19FPWex0JSmiCPF74KR
+	 8KdhUoxco6KeizcLyKLLqkVphCGT22om3jk20b4wTMhsC8GMXBgrRSyIP6qBLH2rd3
+	 s12VMsVghIYgdTuEZaHcQaq/Lo3RIpMOOnXxmjo3j8dsE67D0peMTyE4d4p5MjK4Qc
+	 3f+pD6SkPwDW4fDcbo2QqJrp6YiOUAbny9PjhYdl7O3z/uvzOA33sxzpWAv8DyGtbs
+	 ASyGpNHNm1PfJbGRAJv9adqzSIet8L+YB0aHF6x7LUnSt/87zZO/J9x4D/OvTN6ORj
+	 CNTVUOBp/qWIw==
+From: LinkedIn Job Alerts <jobalerts-noreply@linkedin.com>
+Message-ID: <259704356.12805536.1713254911410@lor1-app74459.prod.linkedin.com>
+Subject: Simon: your job alert for data AND french in Worldwide has been
+ created
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="----=_Part_12805534_572362555.1713254911404"
+To: Simon Renauld <sn.renauld@gmail.com>
+Date: Tue, 16 Apr 2024 08:08:31 +0000 (UTC)
+X-LinkedIn-Class: SAVEDSEARCH
+X-LinkedIn-Template: email_job_alert_confirmation_01
+X-LinkedIn-fbl: 
+ m2-aszuibnt1d3vc5v9cxg0z0tr03dxrdpkzer1qsdtt5fpqxholztj6h8jgdfkdwhowkatu8p8l2lpjza64uv10co873bvphe2tzuwde
+X-LinkedIn-Id: 5wfzof-lv23qlxr-hl
+Feedback-ID: email_job_alert_confirmation_01:linkedin
+Require-Recipient-Valid-Since: sn.renauld@gmail.com;
+ Wed, 6 Oct 2021 21:13:35 +0000
+
+------=_Part_12805534_572362555.1713254911404
+Content-Type: text/plain;charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-ID: text-body
+
+LinkedIn | Your job alert has been created: data AND french in Worldwide
+
+You=E2=80=99ll receive notifications when new jobs are posted that match yo=
+ur search preferences.
+
+---------------------------------------------------------
+
+
+Big Data Consultant
+KCS iT
+Lisbon, Portugal
+
+View job: https://www.linkedin.com/comm/jobs/view/3890440930?alertAction=3D=
+markasviewed&savedSearchId=3D1741495325&refId=3DByteString%28length%3D16%2C=
+bytes%3D2690e9a3%2E%2E%2E33fc148f%29&trackingId=3DItUpIi4YmqA7KFexI6Gyfw%3D=
+%3D&midToken=3DAQFLPdtV4lKjdg&midSig=3D0aBSdS9g48Jbc1&trk=3Deml-email_job_a=
+lert_confirmation_01-job_alert-1-member_details_mercado&trkEmail=3Deml-emai=
+l_job_alert_confirmation_01-job_alert-1-member_details_mercado-null-5wfzof%=
+7Elv23qlxr%7Ehl-null-jobs%7Eview&lipi=3Durn%3Ali%3Apage%3Aemail_email_job_a=
+lert_confirmation_01%3BQIP1BXvJS32nYYVhoOhKYA%3D%3D
+
+----------------------------------------------------------------
+
+Assistant - National Data Curation team for the CLSA  (Research Institute)
+RI-MUHC | Research Institute of the MUHC | #rimuhc
+Montreal, Quebec, Canada16 school alumni=20
+
+View job: https://www.linkedin.com/comm/jobs/view/3902110551?alertAction=3D=
+markasviewed&savedSearchId=3D1741495325&refId=3DByteString%28length%3D16%2C=
+bytes%3D2690e9a3%2E%2E%2E33fc148f%29&trackingId=3DR0wlbkAwbsibVLBBg64OmA%3D=
+%3D&midToken=3DAQFLPdtV4lKjdg&midSig=3D0aBSdS9g48Jbc1&trk=3Deml-email_job_a=
+lert_confirmation_01-job_alert-2-member_details_mercado&trkEmail=3Deml-emai=
+l_job_alert_confirmation_01-job_alert-2-member_details_mercado-null-5wfzof%=
+7Elv23qlxr%7Ehl-null-jobs%7Eview&lipi=3Durn%3Ali%3Apage%3Aemail_email_job_a=
+lert_confirmation_01%3BQIP1BXvJS32nYYVhoOhKYA%3D%3D
+
+----------------------------------------------------------------
+
+Data Architect to build modern data solutions
+Solita
+Belgium
+
+View job: https://www.linkedin.com/comm/jobs/view/3897744401?alertAction=3D=
+markasviewed&savedSearchId=3D1741495325&refId=3DByteString%28length%3D16%2C=
+bytes%3D2690e9a3%2E%2E%2E33fc148f%29&trackingId=3DVii1W7j8KK%2Bd3oOdfKv%2BZ=
+Q%3D%3D&midToken=3DAQFLPdtV4lKjdg&midSig=3D0aBSdS9g48Jbc1&trk=3Deml-email_j=
+ob_alert_confirmation_01-job_alert-3-member_details_mercado&trkEmail=3Deml-=
+email_job_alert_confirmation_01-job_alert-3-member_details_mercado-null-5wf=
+zof%7Elv23qlxr%7Ehl-null-jobs%7Eview&lipi=3Durn%3Ali%3Apage%3Aemail_email_j=
+ob_alert_confirmation_01%3BQIP1BXvJS32nYYVhoOhKYA%3D%3D
+
+----------------------------------------------------------------
+
+Data Strategy Consultant
+dataroots
+Brussels Metropolitan Area
+
+View job: https://www.linkedin.com/comm/jobs/view/3895859962?alertAction=3D=
+markasviewed&savedSearchId=3D1741495325&refId=3DByteString%28length%3D16%2C=
+bytes%3D2690e9a3%2E%2E%2E33fc148f%29&trackingId=3DTqn5e3h4ygeUNIFfRUK%2FyA%=
+3D%3D&midToken=3DAQFLPdtV4lKjdg&midSig=3D0aBSdS9g48Jbc1&trk=3Deml-email_job=
+_alert_confirmation_01-job_alert-4-member_details_mercado&trkEmail=3Deml-em=
+ail_job_alert_confirmation_01-job_alert-4-member_details_mercado-null-5wfzo=
+f%7Elv23qlxr%7Ehl-null-jobs%7Eview&lipi=3Durn%3Ali%3Apage%3Aemail_email_job=
+_alert_confirmation_01%3BQIP1BXvJS32nYYVhoOhKYA%3D%3D
+
+----------------------------------------------------------------
+
+Data & Analytics Manager
+efficy
+Paris, =C3=8Ele-de-France, France
+
+View job: https://www.linkedin.com/comm/jobs/view/3899647138?alertAction=3D=
+markasviewed&savedSearchId=3D1741495325&refId=3DByteString%28length%3D16%2C=
+bytes%3D2690e9a3%2E%2E%2E33fc148f%29&trackingId=3DYrFVK4yy3OqUa5Hdb3bcug%3D=
+%3D&midToken=3DAQFLPdtV4lKjdg&midSig=3D0aBSdS9g48Jbc1&trk=3Deml-email_job_a=
+lert_confirmation_01-job_alert-5-member_details_mercado&trkEmail=3Deml-emai=
+l_job_alert_confirmation_01-job_alert-5-member_details_mercado-null-5wfzof%=
+7Elv23qlxr%7Ehl-null-jobs%7Eview&lipi=3Durn%3Ali%3Apage%3Aemail_email_job_a=
+lert_confirmation_01%3BQIP1BXvJS32nYYVhoOhKYA%3D%3D
+
+----------------------------------------------------------------
+
+Data Privacy & Protection Analyst  (France and England)=20
+Data Privacy Recruitment Ltd
+United Kingdom
+
+View job: https://www.linkedin.com/comm/jobs/view/3898007835?alertAction=3D=
+markasviewed&savedSearchId=3D1741495325&refId=3DByteString%28length%3D16%2C=
+bytes%3D2690e9a3%2E%2E%2E33fc148f%29&trackingId=3DJYxpry4eY3nT45S7Kriv3A%3D=
+%3D&midToken=3DAQFLPdtV4lKjdg&midSig=3D0aBSdS9g48Jbc1&trk=3Deml-email_job_a=
+lert_confirmation_01-job_alert-6-member_details_mercado&trkEmail=3Deml-emai=
+l_job_alert_confirmation_01-job_alert-6-member_details_mercado-null-5wfzof%=
+7Elv23qlxr%7Ehl-null-jobs%7Eview&lipi=3Durn%3Ali%3Apage%3Aemail_email_job_a=
+lert_confirmation_01%3BQIP1BXvJS32nYYVhoOhKYA%3D%3D
+
+----------------------------------------------------------------
+
+See all jobs on LinkedIn: https://www.linkedin.com/comm/jobs/search?savedSe=
+archId=3D1741495325&origin=3DJOB_ALERT_EMAIL&alertAction=3Dviewjobs&f_TPR=
+=3Da1712650109-&savedSearchAuthToken=3D1%26AQHZ8lHt22AI9QAAAY7l80xvNXmnaw1s=
+4R4W3AOqqqRzard2puvWaPLTpeuNd-JmFeS_6AaB9B9FFZYwBHJxFvKBxH6CjR0yTcQA_d1rMGf=
+nBFSCbgZnNoLYCjgxxmumLjh1LY3LtoFNodl834DWnwtbBTYPaez3X5XmwVphSuzxH-WP-tar71=
+Mm2S3N42C9vDUXCMPyC_BICsKgBsu8MoTKdctF3CX774MCYGynsfx9LygkN03LtXhWW4MTzMi89=
+4qqyjnTxRXkmrXk1kJjSzdXdXtvI2PLjKrwTxF4ypqFPC4bH3E%26ARVhoKzwLEXajTU4PX80RP=
+PCda0j&midToken=3DAQFLPdtV4lKjdg&midSig=3D0aBSdS9g48Jbc1&trk=3Deml-email_jo=
+b_alert_confirmation_01-job_alert-11-member_teaser_mercado&trkEmail=3Deml-e=
+mail_job_alert_confirmation_01-job_alert-11-member_teaser_mercado-null-5wfz=
+of%7Elv23qlxr%7Ehl-null-jobs%7Ejserp%7Esearch&lipi=3Durn%3Ali%3Apage%3Aemai=
+l_email_job_alert_confirmation_01%3BQIP1BXvJS32nYYVhoOhKYA%3D%3D
+
+---------------------------------------------------------
+
+
+.....................................
+
+Manage your job alerts: https://www.linkedin.com/comm/jobs/alerts?midToken=
+=3DAQFLPdtV4lKjdg&amp;midSig=3D0aBSdS9g48Jbc1&amp;trk=3Deml-email_job_alert=
+_confirmation_01-footer-12-manage_alert&amp;trkEmail=3Deml-email_job_alert_=
+confirmation_01-footer-12-manage_alert-null-5wfzof%7Elv23qlxr%7Ehl-null-job=
+%7Ealert%7Emanager&amp;lipi=3Durn%3Ali%3Apage%3Aemail_email_job_alert_confi=
+rmation_01%3BQIP1BXvJS32nYYVhoOhKYA%3D%3D
+
+Unsubscribe: https://www.linkedin.com/comm/jobs/alerts?midToken=3DAQFLPdtV4=
+lKjdg&amp;midSig=3D0aBSdS9g48Jbc1&amp;trk=3Deml-email_job_alert_confirmatio=
+n_01-footer-12-manage_alert&amp;trkEmail=3Deml-email_job_alert_confirmation=
+_01-footer-12-manage_alert-null-5wfzof%7Elv23qlxr%7Ehl-null-job%7Ealert%7Em=
+anager&amp;lipi=3Durn%3Ali%3Apage%3Aemail_email_job_alert_confirmation_01%3=
+BQIP1BXvJS32nYYVhoOhKYA%3D%3D
+
+Help: https://www.linkedin.com/e/v2?e=3D5wfzof-lv23qlxr-hl&lipi=3Durn%3Ali%=
+3Apage%3Aemail_email_job_alert_confirmation_01%3BQIP1BXvJS32nYYVhoOhKYA%3D%=
+3D&a=3DcustomerServiceUrl&midToken=3DAQFLPdtV4lKjdg&midSig=3D0aBSdS9g48Jbc1=
+&ek=3Demail_job_alert_confirmation_01&li=3D29&m=3Dfooter&ts=3Dhelp&articleI=
+d=3D67
+
+
+You are receiving LinkedIn notification emails.
+
+This email was intended for Simon Renauld (Data Expert | Analytics & Engine=
+ering Leader | Driving Business Growth Through Data Science Solutions).
+Learn why we included this: https://www.linkedin.com/e/v2?e=3D5wfzof-lv23ql=
+xr-hl&lipi=3Durn%3Ali%3Apage%3Aemail_email_job_alert_confirmation_01%3BQIP1=
+BXvJS32nYYVhoOhKYA%3D%3D&a=3DcustomerServiceUrl&midToken=3DAQFLPdtV4lKjdg&m=
+idSig=3D0aBSdS9g48Jbc1&ek=3Demail_job_alert_confirmation_01&articleId=3D478=
+8
+
+=C2=A9 2024 LinkedIn Ireland Unlimited Company, Wilton Plaza, Wilton Place,=
+ Dublin 2. LinkedIn is a registered business name of LinkedIn Ireland Unlim=
+ited Company. LinkedIn and the LinkedIn logo are registered trademarks of L=
+inkedIn.
+------=_Part_12805534_572362555.1713254911404
+Content-Type: text/html;charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-ID: html-body
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.=
+w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> <html xmlns=3D"http://www.w3=
+.org/1999/xhtml" lang=3D"en" xml:lang=3D"en"> <head> <meta http-equiv=3D"Co=
+ntent-Type" content=3D"text/html;charset=3Dutf-8"> <meta name=3D"HandheldFr=
+iendly" content=3D"true"> <meta name=3D"viewport" content=3D"width=3Ddevice=
+-width; initial-scale=3D0.666667; user-scalable=3D0"> <meta name=3D"viewpor=
+t" content=3D"width=3Ddevice-width"> <title></title><!--[if mso]><style typ=
+e=3D"text/css">body {font-family: Helvetica Neue, Helvetica, Arial, sans-se=
+rif;}.mercado-email-container {width: 512px !important;}h1, h2, h3, h4, h5,=
+ h6 {font-weight: 700 !important;}</style><![endif]--><!--[if IE]><style ty=
+pe=3D"text/css">.mercado-email-container {width: 512px !important;}h1, h2, =
+h3, h4, h5, h6 {font-weight: 700 !important;}</style><![endif]--> <style ty=
+pe=3D"text/css">@media only screen and (max-width:32em) {
+  .mercado-email-container { width:100% !important; }
+}
+@media only screen and (max-width:20em) {}
+@media only screen and (max-device-width:30em) {}
+@media screen and (device-width:30em) and (device-height:22.5em), screen an=
+d (device-width:22.5em) and (device-height:30em), screen and (device-width:=
+20em) and (device-height:15em) {}
+@media screen and (-webkit-min-device-pixel-ratio:0) {}
+@media screen and (max-device-width:25.88em) and (max-device-height:48.5em)=
+ {}
+@media only screen and (max-width:32em) {
+  .mercado-email-container { width:100% !important; }
+}
+@media only screen and (max-width:20em) {}
+@media only screen and (max-device-width:30em) {}
+@media screen and (device-width:30em) and (device-height:22.5em), screen an=
+d (device-width:22.5em) and (device-height:30em), screen and (device-width:=
+20em) and (device-height:15em) {}
+@media screen and (-webkit-min-device-pixel-ratio:0) {}
+@media screen and (max-device-width:25.88em) and (max-device-height:48.5em)=
+ {}
+</style> </head> <body style=3D"padding:0;margin:0 auto;-webkit-text-size-a=
+djust:100%;width:100% !important;-ms-text-size-adjust:100%;font-family:Helv=
+etica Neue,Helvetica,Arial,sans-serif;"> <div style=3D"overflow:hidden;colo=
+r:transparent;visibility:hidden;mso-hide:all;width:0;font-size:0;opacity:0;=
+height:0;"> See your latest job matches for data AND french =E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=
+=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp;=E2=80=8C&nbsp; </div> <table =
+role=3D"presentation" align=3D"center" border=3D"0" cellspacing=3D"0" cellp=
+adding=3D"0" width=3D"100%" bgcolor=3D"#F3F2EF" style=3D"background-color:#=
+F3F2EF;table-layout:fixed;-webkit-text-size-adjust:100%;mso-table-rspace:0p=
+t;mso-table-lspace:0pt;-ms-text-size-adjust:100%;"> <tbody> <tr> <td align=
+=3D"center" style=3D"padding-top:24px;-webkit-text-size-adjust:100%;mso-tab=
+le-rspace:0pt;mso-table-lspace:0pt;-ms-text-size-adjust:100%;"> <center sty=
+le=3D"width:100%;"> <table role=3D"presentation" border=3D"0" class=3D"merc=
+ado-email-container" cellspacing=3D"0" cellpadding=3D"0" width=3D"512" bgco=
+lor=3D"#FFFFFF" style=3D"background-color:#FFFFFF;margin:0 auto;max-width:5=
+12px;-webkit-text-size-adjust:100%;mso-table-rspace:0pt;width:inherit;mso-t=
+able-lspace:0pt;-ms-text-size-adjust:100%;"> <tbody> <tr> <td bgcolor=3D"#F=
+FFFFF" style=3D"background-color:#FFFFFF;padding:18px 32px 0 32px;-webkit-t=
+ext-size-adjust:100%;mso-table-rspace:0pt;mso-table-lspace:0pt;-ms-text-siz=
+e-adjust:100%;"> <table role=3D"presentation" border=3D"0" cellspacing=3D"0=
+" cellpadding=3D"0" width=3D"100%" style=3D"-webkit-text-size-adjust:100%;m=
+so-table-rspace:0pt;width:100% !important;mso-table-lspace:0pt;-ms-text-siz=
+e-adjust:100%;min-width:100% !important;"> <tbody> <tr> <td align=3D"left" =
+valign=3D"middle" style=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0=
+pt;mso-table-lspace:0pt;-ms-text-size-adjust:100%;"><a href=3D"https://www.=
+linkedin.com/comm/feed/?midToken=3DAQFLPdtV4lKjdg&amp;midSig=3D0aBSdS9g48Jb=
+c1&amp;trk=3Deml-email_job_alert_confirmation_01-header-26-home&amp;trkEmai=
+l=3Deml-email_job_alert_confirmation_01-header-26-home-null-5wfzof%7Elv23ql=
+xr%7Ehl-null-neptune%2Ffeed&amp;lipi=3Durn%3Ali%3Apage%3Aemail_email_job_al=
+ert_confirmation_01%3BQIP1BXvJS32nYYVhoOhKYA%3D%3D" style=3D"cursor:pointer=
+;color:#0A66C2;-webkit-text-size-adjust:100%;display:inline-block;text-deco=
+ration:none;-ms-text-size-adjust:100%;"> <img alt=3D"LinkedIn" border=3D"0"=
+ src=3D"https://www.linkedin.com/comm/dms/logo?midToken=3DAQFLPdtV4lKjdg&am=
+p;midSig=3D0aBSdS9g48Jbc1&amp;trk=3Deml-email_job_alert_confirmation_01-nul=
+l-31-null&amp;trkEmail=3Deml-email_job_alert_confirmation_01-null-31-null-n=
+ull-5wfzof%7Elv23qlxr%7Ehl-null-comms%7Ebadging%7Edynamic&amp;lipi=3Durn%3A=
+li%3Apage%3Aemail_email_job_alert_confirmation_01%3BQIP1BXvJS32nYYVhoOhKYA%=
+3D%3D&amp;_sig=3D1suWCniTw8Jbc1" height=3D"38" style=3D"max-height:38px;out=
+line:none;-ms-interpolation-mode:bicubic;color:#FFFFFF;max-width:unset !imp=
+ortant;text-decoration:none;"></a></td> <td valign=3D"middle" width=3D"100%=
+" align=3D"right" style=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0=
+pt;mso-table-lspace:0pt;-ms-text-size-adjust:100%;"><a href=3D"https://www.=
+linkedin.com/comm/in/simonrenauld?midToken=3DAQFLPdtV4lKjdg&amp;midSig=3D0a=
+BSdS9g48Jbc1&amp;trk=3Deml-email_job_alert_confirmation_01-header-32-profil=
+e&amp;trkEmail=3Deml-email_job_alert_confirmation_01-header-32-profile-null=
+-5wfzof%7Elv23qlxr%7Ehl-null-neptune%2Fprofile%7Evanity%2Eview&amp;lipi=3Du=
+rn%3Ali%3Apage%3Aemail_email_job_alert_confirmation_01%3BQIP1BXvJS32nYYVhoO=
+hKYA%3D%3D" style=3D"cursor:pointer;margin:0;color:#0A66C2;-webkit-text-siz=
+e-adjust:100%;display:inline-block;text-decoration:none;-ms-text-size-adjus=
+t:100%;"> <table role=3D"presentation" border=3D"0" cellspacing=3D"0" cellp=
+adding=3D"0" width=3D"100%" style=3D"-webkit-text-size-adjust:100%;mso-tabl=
+e-rspace:0pt;mso-table-lspace:0pt;-ms-text-size-adjust:100%;"> <tbody> <tr>=
+ <td align=3D"left" valign=3D"middle" style=3D"padding:0 0 0 10px;padding-t=
+op:7px;-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-table-lspace:=
+0pt;-ms-text-size-adjust:100%;"></td> <td valign=3D"middle" width=3D"40" st=
+yle=3D"padding-top:7px;-webkit-text-size-adjust:100%;mso-table-rspace:0pt;p=
+adding-left:10px;mso-table-lspace:0pt;-ms-text-size-adjust:100%;"> <img alt=
+=3D"Simon Renauld" border=3D"0" height=3D"32" width=3D"32" src=3D"https://m=
+edia.licdn.com/dms/image/D5603AQGtUzaRnu5pCA/profile-displayphoto-shrink_10=
+0_100/0/1709803120065?e=3D2147483647&amp;v=3Dbeta&amp;t=3DVUIv_iq12nrjQs1N0=
+teEQ4UQCOej6_4SgQ0Cedn-op0" style=3D"border-radius:50%;outline:none;-ms-int=
+erpolation-mode:bicubic;color:#FFFFFF;max-width:unset !important;text-decor=
+ation:none;"></td> </tr> </tbody> </table></a></td> </tr> </tbody> </table>=
+</td> </tr> <tr> <td style=3D"-webkit-text-size-adjust:100%;mso-table-rspac=
+e:0pt;mso-table-lspace:0pt;-ms-text-size-adjust:100%;"> <table role=3D"pres=
+entation" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" s=
+tyle=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-table-lspace=
+:0pt;-ms-text-size-adjust:100%;"> <tbody> <tr> <td style=3D"-webkit-text-si=
+ze-adjust:100%;mso-table-rspace:0pt;mso-table-lspace:0pt;-ms-text-size-adju=
+st:100%;"> <table role=3D"presentation" border=3D"0" cellspacing=3D"0" cell=
+padding=3D"0" width=3D"100%" style=3D"-webkit-text-size-adjust:100%;mso-tab=
+le-rspace:0pt;mso-table-lspace:0pt;-ms-text-size-adjust:100%;"> <tbody> <tr=
+> <td style=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-table=
+-lspace:0pt;-ms-text-size-adjust:100%;"> <table role=3D"presentation" borde=
+r=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" style=3D"-webkit=
+-text-size-adjust:100%;mso-table-rspace:0pt;mso-table-lspace:0pt;-ms-text-s=
+ize-adjust:100%;"> <tbody> <tr> <td style=3D"padding:24px 24px 8px;-webkit-=
+text-size-adjust:100%;mso-table-rspace:0pt;mso-table-lspace:0pt;-ms-text-si=
+ze-adjust:100%;"> <h2 style=3D"margin:0;color:#000000;font-weight:400;font-=
+size:24px;line-height:1.333;"><a href=3D"https://www.linkedin.com/comm/jobs=
+/search?savedSearchId=3D1741495325&amp;alertAction=3Dviewjobs&amp;f_TPR=3Da=
+1712650109-&amp;savedSearchAuthToken=3D1%26AQHZ8lHt22AI9QAAAY7l80xvNXmnaw1s=
+4R4W3AOqqqRzard2puvWaPLTpeuNd-JmFeS_6AaB9B9FFZYwBHJxFvKBxH6CjR0yTcQA_d1rMGf=
+nBFSCbgZnNoLYCjgxxmumLjh1LY3LtoFNodl834DWnwtbBTYPaez3X5XmwVphSuzxH-WP-tar71=
+Mm2S3N42C9vDUXCMPyC_BICsKgBsu8MoTKdctF3CX774MCYGynsfx9LygkN03LtXhWW4MTzMi89=
+4qqyjnTxRXkmrXk1kJjSzdXdXtvI2PLjKrwTxF4ypqFPC4bH3E%26ARVhoKzwLEXajTU4PX80RP=
+PCda0j&amp;midToken=3DAQFLPdtV4lKjdg&amp;midSig=3D0aBSdS9g48Jbc1&amp;trk=3D=
+eml-email_job_alert_confirmation_01-job_alert-0-header_mercado&amp;trkEmail=
+=3Deml-email_job_alert_confirmation_01-job_alert-0-header_mercado-null-5wfz=
+of%7Elv23qlxr%7Ehl-null-jobs%7Ejserp%7Esearch&amp;lipi=3Durn%3Ali%3Apage%3A=
+email_email_job_alert_confirmation_01%3BQIP1BXvJS32nYYVhoOhKYA%3D%3D" style=
+=3D"cursor:pointer;color:#242424;-webkit-text-size-adjust:100%;display:inli=
+ne;text-decoration:none;-ms-text-size-adjust:100%;">Your job alert has been=
+ created: <span style=3D"font-weight:700;">data AND french in Worldwide</sp=
+an></a></h2></td> </tr> </tbody> </table></td> </tr> <tr> <td style=3D"padd=
+ing:0 24px 16px;-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-tabl=
+e-lspace:0pt;-ms-text-size-adjust:100%;"> <p style=3D"margin:0;color:#00000=
+0;font-weight:400;font-size:14px;line-height:1.429;">You=E2=80=99ll receive=
+ notifications when new jobs are posted that match your search preferences.=
+</p></td> </tr> <tr> <td style=3D"-webkit-text-size-adjust:100%;mso-table-r=
+space:0pt;mso-table-lspace:0pt;-ms-text-size-adjust:100%;"> <table cellspac=
+ing=3D"0" cellpadding=3D"0" style=3D"padding:10px 24px;-webkit-text-size-ad=
+just:100%;mso-table-rspace:0pt;mso-table-lspace:0pt;-ms-text-size-adjust:10=
+0%;"> <tbody valign=3D"top" style=3D"table-layout:fixed;vertical-align:top;=
+width:100%;"> <tr> <td width=3D"56" style=3D"-webkit-text-size-adjust:100%;=
+mso-table-rspace:0pt;width:56px;mso-table-lspace:0pt;-ms-text-size-adjust:1=
+00%;padding-right:16px;"><a href=3D"https://www.linkedin.com/comm/jobs/view=
+/3890440930?alertAction=3Dmarkasviewed&amp;savedSearchId=3D1741495325&amp;r=
+efId=3DByteString%28length%3D16%2Cbytes%3D2690e9a3%2E%2E%2E33fc148f%29&amp;=
+trackingId=3DItUpIi4YmqA7KFexI6Gyfw%3D%3D&amp;midToken=3DAQFLPdtV4lKjdg&amp=
+;midSig=3D0aBSdS9g48Jbc1&amp;trk=3Deml-email_job_alert_confirmation_01-job_=
+alert-1-member_details_mercado&amp;trkEmail=3Deml-email_job_alert_confirmat=
+ion_01-job_alert-1-member_details_mercado-null-5wfzof%7Elv23qlxr%7Ehl-null-=
+jobs%7Eview&amp;lipi=3Durn%3Ali%3Apage%3Aemail_email_job_alert_confirmation=
+_01%3BQIP1BXvJS32nYYVhoOhKYA%3D%3D" style=3D"cursor:pointer;color:#0A66C2;-=
+webkit-text-size-adjust:100%;display:inline-block;text-decoration:none;-ms-=
+text-size-adjust:100%;"><img src=3D"https://media.licdn.com/dms/image/C4D0B=
+AQEpB57YaB4wkA/company-logo_100_100/0/1643620175295/kcsit_logo?e=3D21474836=
+47&amp;v=3Dbeta&amp;t=3D92CrxU6yGLyfdo-hUmzXRjGrOE1WzROiNlqCnDiPqLA" alt=3D=
+"KCS iT" border=3D"0" width=3D"48" style=3D"outline:none;-ms-interpolation-=
+mode:bicubic;color:#FFFFFF;text-decoration:none;"></a></td> <td align=3D"le=
+ft" style=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;padding-lef=
+t:0;mso-table-lspace:0pt;-ms-text-size-adjust:100%;text-align:left;"><a hre=
+f=3D"https://www.linkedin.com/comm/jobs/view/3890440930?alertAction=3Dmarka=
+sviewed&amp;savedSearchId=3D1741495325&amp;refId=3DByteString%28length%3D16=
+%2Cbytes%3D2690e9a3%2E%2E%2E33fc148f%29&amp;trackingId=3DItUpIi4YmqA7KFexI6=
+Gyfw%3D%3D&amp;midToken=3DAQFLPdtV4lKjdg&amp;midSig=3D0aBSdS9g48Jbc1&amp;tr=
+k=3Deml-email_job_alert_confirmation_01-job_alert-1-member_details_mercado&=
+amp;trkEmail=3Deml-email_job_alert_confirmation_01-job_alert-1-member_detai=
+ls_mercado-null-5wfzof%7Elv23qlxr%7Ehl-null-jobs%7Eview&amp;lipi=3Durn%3Ali=
+%3Apage%3Aemail_email_job_alert_confirmation_01%3BQIP1BXvJS32nYYVhoOhKYA%3D=
+%3D" style=3D"cursor:pointer;color:#0A66C2;-webkit-text-size-adjust:100%;di=
+splay:inline-block;text-decoration:none;-ms-text-size-adjust:100%;"> <table=
+ role=3D"presentation" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" wid=
+th=3D"100%" valign=3D"top" style=3D"table-layout:fixed;-webkit-text-size-ad=
+just:100%;mso-table-rspace:0pt;vertical-align:top;width:100%;mso-table-lspa=
+ce:0pt;-ms-text-size-adjust:100%;"> <tbody> <tr> <td style=3D"-webkit-text-=
+size-adjust:100%;mso-table-rspace:0pt;mso-table-lspace:0pt;padding-bottom:4=
+px;-ms-text-size-adjust:100%;"><a href=3D"https://www.linkedin.com/comm/job=
+s/view/3890440930?alertAction=3Dmarkasviewed&amp;savedSearchId=3D1741495325=
+&amp;refId=3DByteString%28length%3D16%2Cbytes%3D2690e9a3%2E%2E%2E33fc148f%2=
+9&amp;trackingId=3DItUpIi4YmqA7KFexI6Gyfw%3D%3D&amp;midToken=3DAQFLPdtV4lKj=
+dg&amp;midSig=3D0aBSdS9g48Jbc1&amp;trk=3Deml-email_job_alert_confirmation_0=
+1-job_alert-1-member_details_mercado&amp;trkEmail=3Deml-email_job_alert_con=
+firmation_01-job_alert-1-member_details_mercado-null-5wfzof%7Elv23qlxr%7Ehl=
+-null-jobs%7Eview&amp;lipi=3Durn%3Ali%3Apage%3Aemail_email_job_alert_confir=
+mation_01%3BQIP1BXvJS32nYYVhoOhKYA%3D%3D" style=3D"cursor:pointer;color:#0A=
+66C2;-webkit-text-size-adjust:100%;font-weight:700;text-decoration:none;dis=
+play:inline-block;font-size:16px;-ms-text-size-adjust:100%;">Big Data Consu=
+ltant</a></td> </tr> <tr> <td style=3D"-webkit-text-size-adjust:100%;mso-ta=
+ble-rspace:0pt;mso-table-lspace:0pt;-ms-text-size-adjust:100%;"> <p style=
+=3D"margin:0;color:#000000;font-weight:400;font-size:14px;line-height:1.429=
+;">KCS iT =C2=B7 Lisbon, Portugal</p></td> </tr> <tr> <td width=3D"100%" st=
+yle=3D"padding-top:8px;-webkit-text-size-adjust:100%;mso-table-rspace:0pt;w=
+idth:100%;mso-table-lspace:0pt;-ms-text-size-adjust:100%;"> <table role=3D"=
+presentation" align=3D"left" border=3D"0" cellspacing=3D"0" cellpadding=3D"=
+0" width=3D"initial" style=3D"-webkit-text-size-adjust:100%;mso-table-rspac=
+e:0pt;mso-table-lspace:0pt;-ms-text-size-adjust:100%;"> <tbody> <tr style=
+=3D"color:black;"></tr> </tbody> </table></td> </tr> </tbody> </table></a><=
+/td> </tr> </tbody> </table> <table cellspacing=3D"0" cellpadding=3D"0" sty=
+le=3D"padding:10px 24px;-webkit-text-size-adjust:100%;mso-table-rspace:0pt;=
+mso-table-lspace:0pt;-ms-text-size-adjust:100%;"> <tbody valign=3D"top" sty=
+le=3D"table-layout:fixed;vertical-align:top;width:100%;"> <tr> <td width=3D=
+"56" style=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;width:56px=
+;mso-table-lspace:0pt;-ms-text-size-adjust:100%;padding-right:16px;"><a hre=
+f=3D"https://www.linkedin.com/comm/jobs/view/3902110551?alertAction=3Dmarka=
+sviewed&amp;savedSearchId=3D1741495325&amp;refId=3DByteString%28length%3D16=
+%2Cbytes%3D2690e9a3%2E%2E%2E33fc148f%29&amp;trackingId=3DR0wlbkAwbsibVLBBg6=
+4OmA%3D%3D&amp;midToken=3DAQFLPdtV4lKjdg&amp;midSig=3D0aBSdS9g48Jbc1&amp;tr=
+k=3Deml-email_job_alert_confirmation_01-job_alert-2-member_details_mercado&=
+amp;trkEmail=3Deml-email_job_alert_confirmation_01-job_alert-2-member_detai=
+ls_mercado-null-5wfzof%7Elv23qlxr%7Ehl-null-jobs%7Eview&amp;lipi=3Durn%3Ali=
+%3Apage%3Aemail_email_job_alert_confirmation_01%3BQIP1BXvJS32nYYVhoOhKYA%3D=
+%3D" style=3D"cursor:pointer;color:#0A66C2;-webkit-text-size-adjust:100%;di=
+splay:inline-block;text-decoration:none;-ms-text-size-adjust:100%;"><img sr=
+c=3D"https://media.licdn.com/dms/image/C4E0BAQFPA2btOyBW2g/company-logo_100=
+_100/0/1630597399340/ircusm_rimuhc_logo?e=3D2147483647&amp;v=3Dbeta&amp;t=
+=3DE3pNIX4m6TmOUf5tIJhr4d_KJAL4Bt7hfKg_K_TRV1w" alt=3D"RI-MUHC | Research I=
+nstitute of the MUHC | #rimuhc" border=3D"0" width=3D"48" style=3D"outline:=
+none;-ms-interpolation-mode:bicubic;color:#FFFFFF;text-decoration:none;"></=
+a></td> <td align=3D"left" style=3D"-webkit-text-size-adjust:100%;mso-table=
+-rspace:0pt;padding-left:0;mso-table-lspace:0pt;-ms-text-size-adjust:100%;t=
+ext-align:left;"><a href=3D"https://www.linkedin.com/comm/jobs/view/3902110=
+551?alertAction=3Dmarkasviewed&amp;savedSearchId=3D1741495325&amp;refId=3DB=
+yteString%28length%3D16%2Cbytes%3D2690e9a3%2E%2E%2E33fc148f%29&amp;tracking=
+Id=3DR0wlbkAwbsibVLBBg64OmA%3D%3D&amp;midToken=3DAQFLPdtV4lKjdg&amp;midSig=
+=3D0aBSdS9g48Jbc1&amp;trk=3Deml-email_job_alert_confirmation_01-job_alert-2=
+-member_details_mercado&amp;trkEmail=3Deml-email_job_alert_confirmation_01-=
+job_alert-2-member_details_mercado-null-5wfzof%7Elv23qlxr%7Ehl-null-jobs%7E=
+view&amp;lipi=3Durn%3Ali%3Apage%3Aemail_email_job_alert_confirmation_01%3BQ=
+IP1BXvJS32nYYVhoOhKYA%3D%3D" style=3D"cursor:pointer;color:#0A66C2;-webkit-=
+text-size-adjust:100%;display:inline-block;text-decoration:none;-ms-text-si=
+ze-adjust:100%;"> <table role=3D"presentation" border=3D"0" cellspacing=3D"=
+0" cellpadding=3D"0" width=3D"100%" valign=3D"top" style=3D"table-layout:fi=
+xed;-webkit-text-size-adjust:100%;mso-table-rspace:0pt;vertical-align:top;w=
+idth:100%;mso-table-lspace:0pt;-ms-text-size-adjust:100%;"> <tbody> <tr> <t=
+d style=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-table-lsp=
+ace:0pt;padding-bottom:4px;-ms-text-size-adjust:100%;"><a href=3D"https://w=
+ww.linkedin.com/comm/jobs/view/3902110551?alertAction=3Dmarkasviewed&amp;sa=
+vedSearchId=3D1741495325&amp;refId=3DByteString%28length%3D16%2Cbytes%3D269=
+0e9a3%2E%2E%2E33fc148f%29&amp;trackingId=3DR0wlbkAwbsibVLBBg64OmA%3D%3D&amp=
+;midToken=3DAQFLPdtV4lKjdg&amp;midSig=3D0aBSdS9g48Jbc1&amp;trk=3Deml-email_=
+job_alert_confirmation_01-job_alert-2-member_details_mercado&amp;trkEmail=
+=3Deml-email_job_alert_confirmation_01-job_alert-2-member_details_mercado-n=
+ull-5wfzof%7Elv23qlxr%7Ehl-null-jobs%7Eview&amp;lipi=3Durn%3Ali%3Apage%3Aem=
+ail_email_job_alert_confirmation_01%3BQIP1BXvJS32nYYVhoOhKYA%3D%3D" style=
+=3D"cursor:pointer;color:#0A66C2;-webkit-text-size-adjust:100%;font-weight:=
+700;text-decoration:none;display:inline-block;font-size:16px;-ms-text-size-=
+adjust:100%;">Assistant - National Data Curation team for the CLSA (Researc=
+h Institute)</a></td> </tr> <tr> <td style=3D"-webkit-text-size-adjust:100%=
+;mso-table-rspace:0pt;mso-table-lspace:0pt;-ms-text-size-adjust:100%;"> <p =
+style=3D"margin:0;color:#000000;font-weight:400;font-size:14px;line-height:=
+1.429;">RI-MUHC | Research Institute of the MUHC | #rimuhc =C2=B7 Montreal,=
+ Quebec, Canada</p></td> </tr> <tr> <td width=3D"100%" style=3D"padding-top=
+:8px;-webkit-text-size-adjust:100%;mso-table-rspace:0pt;width:100%;mso-tabl=
+e-lspace:0pt;-ms-text-size-adjust:100%;"> <table role=3D"presentation" alig=
+n=3D"left" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"initia=
+l" style=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-table-ls=
+pace:0pt;-ms-text-size-adjust:100%;"> <tbody> <tr style=3D"color:black;"> <=
+td style=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;display:inli=
+ne-block;mso-table-lspace:0pt;-ms-text-size-adjust:100%;"> <table role=3D"p=
+resentation" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"init=
+ial" style=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-table-=
+lspace:0pt;-ms-text-size-adjust:100%;"> <tbody> <tr> <td style=3D"white-spa=
+ce:nowrap;-webkit-text-size-adjust:100%;mso-table-rspace:0pt;display:inline=
+-block;mso-table-lspace:0pt;-ms-text-size-adjust:100%;"> <table role=3D"pre=
+sentation" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"initia=
+l" style=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-table-ls=
+pace:0pt;-ms-text-size-adjust:100%;"> <tbody> <tr> <td width=3D"24" style=
+=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;display:inline-block=
+;width:24px;mso-table-lspace:0pt;-ms-text-size-adjust:100%;"><img src=3D"ht=
+tps://media.licdn.com/dms/image/C4D0BAQG9u_4mjmdGUg/company-logo_100_100/0/=
+1630515439550/universite_laval_logo?e=3D2147483647&amp;v=3Dbeta&amp;t=3DMKw=
+cgZPm8OQEcW2W38Rb1mmLQMYKAzzLC9VUftw77g4" border=3D"0" alt=3D"" width=3D"24=
+" style=3D"outline:none;-ms-interpolation-mode:bicubic;color:#FFFFFF;text-d=
+ecoration:none;"></td> <td width=3D"4" style=3D"-webkit-text-size-adjust:10=
+0%;mso-table-rspace:0pt;display:inline-block;width:4px;mso-table-lspace:0pt=
+;-ms-text-size-adjust:100%;">&nbsp;</td> <td style=3D"padding:0 24px 4px 4p=
+x;white-space:normal;-webkit-text-size-adjust:100%;mso-table-rspace:0pt;dis=
+play:inline-block;mso-table-lspace:0pt;-ms-text-size-adjust:100%;"> <p styl=
+e=3D"margin:0;color:#737373;font-weight:400;font-size:12px;line-height:1.33=
+3;">16 school alumni</p></td> </tr> </tbody> </table></td> </tr> </tbody> <=
+/table></td> </tr> </tbody> </table></td> </tr> </tbody> </table></a></td> =
+</tr> </tbody> </table> <table cellspacing=3D"0" cellpadding=3D"0" style=3D=
+"padding:10px 24px;-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-t=
+able-lspace:0pt;-ms-text-size-adjust:100%;"> <tbody valign=3D"top" style=3D=
+"table-layout:fixed;vertical-align:top;width:100%;"> <tr> <td width=3D"56" =
+style=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;width:56px;mso-=
+table-lspace:0pt;-ms-text-size-adjust:100%;padding-right:16px;"><a href=3D"=
+https://www.linkedin.com/comm/jobs/view/3897744401?alertAction=3Dmarkasview=
+ed&amp;savedSearchId=3D1741495325&amp;refId=3DByteString%28length%3D16%2Cby=
+tes%3D2690e9a3%2E%2E%2E33fc148f%29&amp;trackingId=3DVii1W7j8KK%2Bd3oOdfKv%2=
+BZQ%3D%3D&amp;midToken=3DAQFLPdtV4lKjdg&amp;midSig=3D0aBSdS9g48Jbc1&amp;trk=
+=3Deml-email_job_alert_confirmation_01-job_alert-3-member_details_mercado&a=
+mp;trkEmail=3Deml-email_job_alert_confirmation_01-job_alert-3-member_detail=
+s_mercado-null-5wfzof%7Elv23qlxr%7Ehl-null-jobs%7Eview&amp;lipi=3Durn%3Ali%=
+3Apage%3Aemail_email_job_alert_confirmation_01%3BQIP1BXvJS32nYYVhoOhKYA%3D%=
+3D" style=3D"cursor:pointer;color:#0A66C2;-webkit-text-size-adjust:100%;dis=
+play:inline-block;text-decoration:none;-ms-text-size-adjust:100%;"><img src=
+=3D"https://media.licdn.com/dms/image/C4E0BAQGJ81a4guxqWw/company-logo_100_=
+100/0/1630642162493/solita_logo?e=3D2147483647&amp;v=3Dbeta&amp;t=3DhXY02EB=
+8xm39reQcZQw0sHKGxt1jgmw4qFc5Shk5-OU" alt=3D"Solita" border=3D"0" width=3D"=
+48" style=3D"outline:none;-ms-interpolation-mode:bicubic;color:#FFFFFF;text=
+-decoration:none;"></a></td> <td align=3D"left" style=3D"-webkit-text-size-=
+adjust:100%;mso-table-rspace:0pt;padding-left:0;mso-table-lspace:0pt;-ms-te=
+xt-size-adjust:100%;text-align:left;"><a href=3D"https://www.linkedin.com/c=
+omm/jobs/view/3897744401?alertAction=3Dmarkasviewed&amp;savedSearchId=3D174=
+1495325&amp;refId=3DByteString%28length%3D16%2Cbytes%3D2690e9a3%2E%2E%2E33f=
+c148f%29&amp;trackingId=3DVii1W7j8KK%2Bd3oOdfKv%2BZQ%3D%3D&amp;midToken=3DA=
+QFLPdtV4lKjdg&amp;midSig=3D0aBSdS9g48Jbc1&amp;trk=3Deml-email_job_alert_con=
+firmation_01-job_alert-3-member_details_mercado&amp;trkEmail=3Deml-email_jo=
+b_alert_confirmation_01-job_alert-3-member_details_mercado-null-5wfzof%7Elv=
+23qlxr%7Ehl-null-jobs%7Eview&amp;lipi=3Durn%3Ali%3Apage%3Aemail_email_job_a=
+lert_confirmation_01%3BQIP1BXvJS32nYYVhoOhKYA%3D%3D" style=3D"cursor:pointe=
+r;color:#0A66C2;-webkit-text-size-adjust:100%;display:inline-block;text-dec=
+oration:none;-ms-text-size-adjust:100%;"> <table role=3D"presentation" bord=
+er=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" valign=3D"top" =
+style=3D"table-layout:fixed;-webkit-text-size-adjust:100%;mso-table-rspace:=
+0pt;vertical-align:top;width:100%;mso-table-lspace:0pt;-ms-text-size-adjust=
+:100%;"> <tbody> <tr> <td style=3D"-webkit-text-size-adjust:100%;mso-table-=
+rspace:0pt;mso-table-lspace:0pt;padding-bottom:4px;-ms-text-size-adjust:100=
+%;"><a href=3D"https://www.linkedin.com/comm/jobs/view/3897744401?alertActi=
+on=3Dmarkasviewed&amp;savedSearchId=3D1741495325&amp;refId=3DByteString%28l=
+ength%3D16%2Cbytes%3D2690e9a3%2E%2E%2E33fc148f%29&amp;trackingId=3DVii1W7j8=
+KK%2Bd3oOdfKv%2BZQ%3D%3D&amp;midToken=3DAQFLPdtV4lKjdg&amp;midSig=3D0aBSdS9=
+g48Jbc1&amp;trk=3Deml-email_job_alert_confirmation_01-job_alert-3-member_de=
+tails_mercado&amp;trkEmail=3Deml-email_job_alert_confirmation_01-job_alert-=
+3-member_details_mercado-null-5wfzof%7Elv23qlxr%7Ehl-null-jobs%7Eview&amp;l=
+ipi=3Durn%3Ali%3Apage%3Aemail_email_job_alert_confirmation_01%3BQIP1BXvJS32=
+nYYVhoOhKYA%3D%3D" style=3D"cursor:pointer;color:#0A66C2;-webkit-text-size-=
+adjust:100%;font-weight:700;text-decoration:none;display:inline-block;font-=
+size:16px;-ms-text-size-adjust:100%;">Data Architect to build modern data s=
+olutions</a></td> </tr> <tr> <td style=3D"-webkit-text-size-adjust:100%;mso=
+-table-rspace:0pt;mso-table-lspace:0pt;-ms-text-size-adjust:100%;"> <p styl=
+e=3D"margin:0;color:#000000;font-weight:400;font-size:14px;line-height:1.42=
+9;">Solita =C2=B7 Belgium</p></td> </tr> <tr> <td width=3D"100%" style=3D"p=
+adding-top:8px;-webkit-text-size-adjust:100%;mso-table-rspace:0pt;width:100=
+%;mso-table-lspace:0pt;-ms-text-size-adjust:100%;"> <table role=3D"presenta=
+tion" align=3D"left" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=
+=3D"initial" style=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;ms=
+o-table-lspace:0pt;-ms-text-size-adjust:100%;"> <tbody> <tr style=3D"color:=
+black;"></tr> </tbody> </table></td> </tr> </tbody> </table></a></td> </tr>=
+ </tbody> </table> <table cellspacing=3D"0" cellpadding=3D"0" style=3D"padd=
+ing:10px 24px;-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-table-=
+lspace:0pt;-ms-text-size-adjust:100%;"> <tbody valign=3D"top" style=3D"tabl=
+e-layout:fixed;vertical-align:top;width:100%;"> <tr> <td width=3D"56" style=
+=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;width:56px;mso-table=
+-lspace:0pt;-ms-text-size-adjust:100%;padding-right:16px;"><a href=3D"https=
+://www.linkedin.com/comm/jobs/view/3895859962?alertAction=3Dmarkasviewed&am=
+p;savedSearchId=3D1741495325&amp;refId=3DByteString%28length%3D16%2Cbytes%3=
+D2690e9a3%2E%2E%2E33fc148f%29&amp;trackingId=3DTqn5e3h4ygeUNIFfRUK%2FyA%3D%=
+3D&amp;midToken=3DAQFLPdtV4lKjdg&amp;midSig=3D0aBSdS9g48Jbc1&amp;trk=3Deml-=
+email_job_alert_confirmation_01-job_alert-4-member_details_mercado&amp;trkE=
+mail=3Deml-email_job_alert_confirmation_01-job_alert-4-member_details_merca=
+do-null-5wfzof%7Elv23qlxr%7Ehl-null-jobs%7Eview&amp;lipi=3Durn%3Ali%3Apage%=
+3Aemail_email_job_alert_confirmation_01%3BQIP1BXvJS32nYYVhoOhKYA%3D%3D" sty=
+le=3D"cursor:pointer;color:#0A66C2;-webkit-text-size-adjust:100%;display:in=
+line-block;text-decoration:none;-ms-text-size-adjust:100%;"><img src=3D"htt=
+ps://media.licdn.com/dms/image/D560BAQF0sY-c9sGvEA/company-logo_100_100/0/1=
+701447046709/dataroots_logo?e=3D2147483647&amp;v=3Dbeta&amp;t=3DZJ0iv8M5Ecl=
+XmohHezoZne2ULKC5RJTTG-MF-u36G9w" alt=3D"dataroots" border=3D"0" width=3D"4=
+8" style=3D"outline:none;-ms-interpolation-mode:bicubic;color:#FFFFFF;text-=
+decoration:none;"></a></td> <td align=3D"left" style=3D"-webkit-text-size-a=
+djust:100%;mso-table-rspace:0pt;padding-left:0;mso-table-lspace:0pt;-ms-tex=
+t-size-adjust:100%;text-align:left;"><a href=3D"https://www.linkedin.com/co=
+mm/jobs/view/3895859962?alertAction=3Dmarkasviewed&amp;savedSearchId=3D1741=
+495325&amp;refId=3DByteString%28length%3D16%2Cbytes%3D2690e9a3%2E%2E%2E33fc=
+148f%29&amp;trackingId=3DTqn5e3h4ygeUNIFfRUK%2FyA%3D%3D&amp;midToken=3DAQFL=
+PdtV4lKjdg&amp;midSig=3D0aBSdS9g48Jbc1&amp;trk=3Deml-email_job_alert_confir=
+mation_01-job_alert-4-member_details_mercado&amp;trkEmail=3Deml-email_job_a=
+lert_confirmation_01-job_alert-4-member_details_mercado-null-5wfzof%7Elv23q=
+lxr%7Ehl-null-jobs%7Eview&amp;lipi=3Durn%3Ali%3Apage%3Aemail_email_job_aler=
+t_confirmation_01%3BQIP1BXvJS32nYYVhoOhKYA%3D%3D" style=3D"cursor:pointer;c=
+olor:#0A66C2;-webkit-text-size-adjust:100%;display:inline-block;text-decora=
+tion:none;-ms-text-size-adjust:100%;"> <table role=3D"presentation" border=
+=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" valign=3D"top" st=
+yle=3D"table-layout:fixed;-webkit-text-size-adjust:100%;mso-table-rspace:0p=
+t;vertical-align:top;width:100%;mso-table-lspace:0pt;-ms-text-size-adjust:1=
+00%;"> <tbody> <tr> <td style=3D"-webkit-text-size-adjust:100%;mso-table-rs=
+pace:0pt;mso-table-lspace:0pt;padding-bottom:4px;-ms-text-size-adjust:100%;=
+"><a href=3D"https://www.linkedin.com/comm/jobs/view/3895859962?alertAction=
+=3Dmarkasviewed&amp;savedSearchId=3D1741495325&amp;refId=3DByteString%28len=
+gth%3D16%2Cbytes%3D2690e9a3%2E%2E%2E33fc148f%29&amp;trackingId=3DTqn5e3h4yg=
+eUNIFfRUK%2FyA%3D%3D&amp;midToken=3DAQFLPdtV4lKjdg&amp;midSig=3D0aBSdS9g48J=
+bc1&amp;trk=3Deml-email_job_alert_confirmation_01-job_alert-4-member_detail=
+s_mercado&amp;trkEmail=3Deml-email_job_alert_confirmation_01-job_alert-4-me=
+mber_details_mercado-null-5wfzof%7Elv23qlxr%7Ehl-null-jobs%7Eview&amp;lipi=
+=3Durn%3Ali%3Apage%3Aemail_email_job_alert_confirmation_01%3BQIP1BXvJS32nYY=
+VhoOhKYA%3D%3D" style=3D"cursor:pointer;color:#0A66C2;-webkit-text-size-adj=
+ust:100%;font-weight:700;text-decoration:none;display:inline-block;font-siz=
+e:16px;-ms-text-size-adjust:100%;">Data Strategy Consultant</a></td> </tr> =
+<tr> <td style=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-ta=
+ble-lspace:0pt;-ms-text-size-adjust:100%;"> <p style=3D"margin:0;color:#000=
+000;font-weight:400;font-size:14px;line-height:1.429;">dataroots =C2=B7 Bru=
+ssels Metropolitan Area</p></td> </tr> <tr> <td width=3D"100%" style=3D"pad=
+ding-top:8px;-webkit-text-size-adjust:100%;mso-table-rspace:0pt;width:100%;=
+mso-table-lspace:0pt;-ms-text-size-adjust:100%;"> <table role=3D"presentati=
+on" align=3D"left" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=
+=3D"initial" style=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;ms=
+o-table-lspace:0pt;-ms-text-size-adjust:100%;"> <tbody> <tr style=3D"color:=
+black;"></tr> </tbody> </table></td> </tr> </tbody> </table></a></td> </tr>=
+ </tbody> </table> <table cellspacing=3D"0" cellpadding=3D"0" style=3D"padd=
+ing:10px 24px;-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-table-=
+lspace:0pt;-ms-text-size-adjust:100%;"> <tbody valign=3D"top" style=3D"tabl=
+e-layout:fixed;vertical-align:top;width:100%;"> <tr> <td width=3D"56" style=
+=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;width:56px;mso-table=
+-lspace:0pt;-ms-text-size-adjust:100%;padding-right:16px;"><a href=3D"https=
+://www.linkedin.com/comm/jobs/view/3899647138?alertAction=3Dmarkasviewed&am=
+p;savedSearchId=3D1741495325&amp;refId=3DByteString%28length%3D16%2Cbytes%3=
+D2690e9a3%2E%2E%2E33fc148f%29&amp;trackingId=3DYrFVK4yy3OqUa5Hdb3bcug%3D%3D=
+&amp;midToken=3DAQFLPdtV4lKjdg&amp;midSig=3D0aBSdS9g48Jbc1&amp;trk=3Deml-em=
+ail_job_alert_confirmation_01-job_alert-5-member_details_mercado&amp;trkEma=
+il=3Deml-email_job_alert_confirmation_01-job_alert-5-member_details_mercado=
+-null-5wfzof%7Elv23qlxr%7Ehl-null-jobs%7Eview&amp;lipi=3Durn%3Ali%3Apage%3A=
+email_email_job_alert_confirmation_01%3BQIP1BXvJS32nYYVhoOhKYA%3D%3D" style=
+=3D"cursor:pointer;color:#0A66C2;-webkit-text-size-adjust:100%;display:inli=
+ne-block;text-decoration:none;-ms-text-size-adjust:100%;"><img src=3D"https=
+://media.licdn.com/dms/image/D4D0BAQFbVn3jgo1P3Q/company-logo_100_100/0/170=
+0813271329/efficy_logo?e=3D2147483647&amp;v=3Dbeta&amp;t=3D-BGFPJdD7mlnJCmg=
+b_rzAG-OYb7t7HNH51QJBVBiyjU" alt=3D"efficy" border=3D"0" width=3D"48" style=
+=3D"outline:none;-ms-interpolation-mode:bicubic;color:#FFFFFF;text-decorati=
+on:none;"></a></td> <td align=3D"left" style=3D"-webkit-text-size-adjust:10=
+0%;mso-table-rspace:0pt;padding-left:0;mso-table-lspace:0pt;-ms-text-size-a=
+djust:100%;text-align:left;"><a href=3D"https://www.linkedin.com/comm/jobs/=
+view/3899647138?alertAction=3Dmarkasviewed&amp;savedSearchId=3D1741495325&a=
+mp;refId=3DByteString%28length%3D16%2Cbytes%3D2690e9a3%2E%2E%2E33fc148f%29&=
+amp;trackingId=3DYrFVK4yy3OqUa5Hdb3bcug%3D%3D&amp;midToken=3DAQFLPdtV4lKjdg=
+&amp;midSig=3D0aBSdS9g48Jbc1&amp;trk=3Deml-email_job_alert_confirmation_01-=
+job_alert-5-member_details_mercado&amp;trkEmail=3Deml-email_job_alert_confi=
+rmation_01-job_alert-5-member_details_mercado-null-5wfzof%7Elv23qlxr%7Ehl-n=
+ull-jobs%7Eview&amp;lipi=3Durn%3Ali%3Apage%3Aemail_email_job_alert_confirma=
+tion_01%3BQIP1BXvJS32nYYVhoOhKYA%3D%3D" style=3D"cursor:pointer;color:#0A66=
+C2;-webkit-text-size-adjust:100%;display:inline-block;text-decoration:none;=
+-ms-text-size-adjust:100%;"> <table role=3D"presentation" border=3D"0" cell=
+spacing=3D"0" cellpadding=3D"0" width=3D"100%" valign=3D"top" style=3D"tabl=
+e-layout:fixed;-webkit-text-size-adjust:100%;mso-table-rspace:0pt;vertical-=
+align:top;width:100%;mso-table-lspace:0pt;-ms-text-size-adjust:100%;"> <tbo=
+dy> <tr> <td style=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;ms=
+o-table-lspace:0pt;padding-bottom:4px;-ms-text-size-adjust:100%;"><a href=
+=3D"https://www.linkedin.com/comm/jobs/view/3899647138?alertAction=3Dmarkas=
+viewed&amp;savedSearchId=3D1741495325&amp;refId=3DByteString%28length%3D16%=
+2Cbytes%3D2690e9a3%2E%2E%2E33fc148f%29&amp;trackingId=3DYrFVK4yy3OqUa5Hdb3b=
+cug%3D%3D&amp;midToken=3DAQFLPdtV4lKjdg&amp;midSig=3D0aBSdS9g48Jbc1&amp;trk=
+=3Deml-email_job_alert_confirmation_01-job_alert-5-member_details_mercado&a=
+mp;trkEmail=3Deml-email_job_alert_confirmation_01-job_alert-5-member_detail=
+s_mercado-null-5wfzof%7Elv23qlxr%7Ehl-null-jobs%7Eview&amp;lipi=3Durn%3Ali%=
+3Apage%3Aemail_email_job_alert_confirmation_01%3BQIP1BXvJS32nYYVhoOhKYA%3D%=
+3D" style=3D"cursor:pointer;color:#0A66C2;-webkit-text-size-adjust:100%;fon=
+t-weight:700;text-decoration:none;display:inline-block;font-size:16px;-ms-t=
+ext-size-adjust:100%;">Data &amp; Analytics Manager</a></td> </tr> <tr> <td=
+ style=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-table-lspa=
+ce:0pt;-ms-text-size-adjust:100%;"> <p style=3D"margin:0;color:#000000;font=
+-weight:400;font-size:14px;line-height:1.429;">efficy =C2=B7 Paris, =C3=8El=
+e-de-France, France</p></td> </tr> <tr> <td width=3D"100%" style=3D"padding=
+-top:8px;-webkit-text-size-adjust:100%;mso-table-rspace:0pt;width:100%;mso-=
+table-lspace:0pt;-ms-text-size-adjust:100%;"> <table role=3D"presentation" =
+align=3D"left" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"in=
+itial" style=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-tabl=
+e-lspace:0pt;-ms-text-size-adjust:100%;"> <tbody> <tr style=3D"color:black;=
+"></tr> </tbody> </table></td> </tr> </tbody> </table></a></td> </tr> </tbo=
+dy> </table></td> </tr> <tr> <td style=3D"padding:14px 24px 32px;-webkit-te=
+xt-size-adjust:100%;mso-table-rspace:0pt;mso-table-lspace:0pt;-ms-text-size=
+-adjust:100%;"> <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" rol=
+e=3D"presentation" align=3D"left" style=3D"-webkit-text-size-adjust:100%;ms=
+o-table-rspace:0pt;display:inline-block;mso-table-lspace:0pt;-ms-text-size-=
+adjust:100%;"> <tbody> <tr> <td align=3D"center" valign=3D"middle" style=3D=
+"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-table-lspace:0pt;fo=
+nt-size:16px;-ms-text-size-adjust:100%;"><a href=3D"https://www.linkedin.co=
+m/comm/jobs/search?savedSearchId=3D1741495325&amp;origin=3DJOB_ALERT_EMAIL&=
+amp;alertAction=3Dviewjobs&amp;f_TPR=3Da1712650109-&amp;savedSearchAuthToke=
+n=3D1%26AQHZ8lHt22AI9QAAAY7l80xvNXmnaw1s4R4W3AOqqqRzard2puvWaPLTpeuNd-JmFeS=
+_6AaB9B9FFZYwBHJxFvKBxH6CjR0yTcQA_d1rMGfnBFSCbgZnNoLYCjgxxmumLjh1LY3LtoFNod=
+l834DWnwtbBTYPaez3X5XmwVphSuzxH-WP-tar71Mm2S3N42C9vDUXCMPyC_BICsKgBsu8MoTKd=
+ctF3CX774MCYGynsfx9LygkN03LtXhWW4MTzMi894qqyjnTxRXkmrXk1kJjSzdXdXtvI2PLjKrw=
+TxF4ypqFPC4bH3E%26ARVhoKzwLEXajTU4PX80RPPCda0j&amp;midToken=3DAQFLPdtV4lKjd=
+g&amp;midSig=3D0aBSdS9g48Jbc1&amp;trk=3Deml-email_job_alert_confirmation_01=
+-job_alert-11-member_teaser_mercado&amp;trkEmail=3Deml-email_job_alert_conf=
+irmation_01-job_alert-11-member_teaser_mercado-null-5wfzof%7Elv23qlxr%7Ehl-=
+null-jobs%7Ejserp%7Esearch&amp;lipi=3Durn%3Ali%3Apage%3Aemail_email_job_ale=
+rt_confirmation_01%3BQIP1BXvJS32nYYVhoOhKYA%3D%3D" aria-label=3D"See all jo=
+bs" style=3D"cursor:pointer;word-wrap:normal;color:#0A66C2;word-break:norma=
+l;white-space:normal;-webkit-text-size-adjust:100%;display:block;text-decor=
+ation:none;-ms-text-size-adjust:100%;overflow-wrap:normal;text-align:center=
+;"> <table role=3D"presentation" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0" width=3D"100%" style=3D"-webkit-text-size-adjust:100%;mso-table-rspa=
+ce:0pt;mso-table-lspace:0pt;-ms-text-size-adjust:100%;"> <tbody> <tr> <td b=
+gcolor=3D"#0A66C2" style=3D"padding:12px 24px;color:#FFFFFF;-webkit-text-si=
+ze-adjust:100%;font-weight:400;display:inline-block;text-decoration:none;fo=
+nt-size:16px;-ms-text-size-adjust:100%;line-height:1.25em;border-color:#0A6=
+6C2;background-color:#0A66C2;border-radius:34px;mso-table-rspace:0pt;mso-ta=
+ble-lspace:0pt;border-width:1px;border-style:solid;"><a href=3D"https://www=
+.linkedin.com/comm/jobs/search?savedSearchId=3D1741495325&amp;origin=3DJOB_=
+ALERT_EMAIL&amp;alertAction=3Dviewjobs&amp;f_TPR=3Da1712650109-&amp;savedSe=
+archAuthToken=3D1%26AQHZ8lHt22AI9QAAAY7l80xvNXmnaw1s4R4W3AOqqqRzard2puvWaPL=
+TpeuNd-JmFeS_6AaB9B9FFZYwBHJxFvKBxH6CjR0yTcQA_d1rMGfnBFSCbgZnNoLYCjgxxmumLj=
+h1LY3LtoFNodl834DWnwtbBTYPaez3X5XmwVphSuzxH-WP-tar71Mm2S3N42C9vDUXCMPyC_BIC=
+sKgBsu8MoTKdctF3CX774MCYGynsfx9LygkN03LtXhWW4MTzMi894qqyjnTxRXkmrXk1kJjSzdX=
+dXtvI2PLjKrwTxF4ypqFPC4bH3E%26ARVhoKzwLEXajTU4PX80RPPCda0j&amp;midToken=3DA=
+QFLPdtV4lKjdg&amp;midSig=3D0aBSdS9g48Jbc1&amp;trk=3Deml-email_job_alert_con=
+firmation_01-job_alert-11-member_teaser_mercado&amp;trkEmail=3Deml-email_jo=
+b_alert_confirmation_01-job_alert-11-member_teaser_mercado-null-5wfzof%7Elv=
+23qlxr%7Ehl-null-jobs%7Ejserp%7Esearch&amp;lipi=3Durn%3Ali%3Apage%3Aemail_e=
+mail_job_alert_confirmation_01%3BQIP1BXvJS32nYYVhoOhKYA%3D%3D" tabindex=3D"=
+-1" aria-hidden=3D"true" style=3D"cursor:pointer;word-wrap:normal;color:#FF=
+FFFF;word-break:normal;white-space:normal;-webkit-text-size-adjust:100%;dis=
+play:block;text-decoration:none;-ms-text-size-adjust:100%;overflow-wrap:nor=
+mal;text-align:center;">See all jobs</a></td> </tr> </tbody> </table></a></=
+td> </tr><!--[if !mso]><!--> <tr> <td height=3D"3" style=3D"-webkit-text-si=
+ze-adjust:100%;mso-table-rspace:0pt;mso-table-lspace:0pt;-ms-text-size-adju=
+st:100%;"> <table width=3D"1" border=3D"0" cellspacing=3D"0" cellpadding=3D=
+"1" style=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-table-l=
+space:0pt;-ms-text-size-adjust:100%;"> <tbody> <tr> <td style=3D"-webkit-te=
+xt-size-adjust:100%;mso-table-rspace:0pt;mso-table-lspace:0pt;-ms-text-size=
+-adjust:100%;"> <div style=3D"height:1px;font-size:1px;line-height:1px"> &n=
+bsp; </div></td> </tr> </tbody> </table></td> </tr><!--<![endif]--> </tbody=
+> </table></td> </tr> </tbody> </table></td> </tr> </tbody> </table></td> <=
+/tr> <tr> <td style=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;m=
+so-table-lspace:0pt;-ms-text-size-adjust:100%;"> <table role=3D"presentatio=
+n" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" bgcolor=
+=3D"#F3F2EF" align=3D"left" style=3D"background-color:#F3F2EF;padding-top:1=
+6px;color:#000000;-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-ta=
+ble-lspace:0pt;-ms-text-size-adjust:100%;text-align:left;"> <tbody> <tr> <t=
+d style=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-table-lsp=
+ace:0pt;-ms-text-size-adjust:100%;"> <table width=3D"24" border=3D"0" cells=
+pacing=3D"0" cellpadding=3D"1" style=3D"-webkit-text-size-adjust:100%;mso-t=
+able-rspace:0pt;mso-table-lspace:0pt;-ms-text-size-adjust:100%;"> <tbody> <=
+tr> <td style=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-tab=
+le-lspace:0pt;-ms-text-size-adjust:100%;"> <div style=3D"height:0px;font-si=
+ze:0px;line-height:0px"> &nbsp; </div></td> </tr> </tbody> </table></td> <t=
+d style=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-table-lsp=
+ace:0pt;-ms-text-size-adjust:100%;"> <table role=3D"presentation" border=3D=
+"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" style=3D"-webkit-tex=
+t-size-adjust:100%;mso-table-rspace:0pt;mso-table-lspace:0pt;-ms-text-size-=
+adjust:100%;"> <tbody> <tr> <td style=3D"-webkit-text-size-adjust:100%;mso-=
+table-rspace:0pt;mso-table-lspace:0pt;-ms-text-size-adjust:100%;"> <table r=
+ole=3D"presentation" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=
+=3D"100%" style=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-t=
+able-lspace:0pt;-ms-text-size-adjust:100%;"> <tbody> <tr> <td style=3D"-web=
+kit-text-size-adjust:100%;mso-table-rspace:0pt;mso-table-lspace:0pt;-ms-tex=
+t-size-adjust:100%;"> <table width=3D"1" border=3D"0" cellspacing=3D"0" cel=
+lpadding=3D"1" style=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;=
+mso-table-lspace:0pt;-ms-text-size-adjust:100%;"> <tbody> <tr> <td style=3D=
+"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-table-lspace:0pt;-m=
+s-text-size-adjust:100%;"> <div style=3D"height:12px;font-size:12px;line-he=
+ight:12px"> &nbsp; </div></td> </tr> </tbody> </table></td> </tr> <tr> <td =
+align=3D"left" style=3D"padding:0;color:#000000;-webkit-text-size-adjust:10=
+0%;mso-table-rspace:0pt;mso-table-lspace:0pt;-ms-text-size-adjust:100%;text=
+-align:left;"> <p style=3D"margin:0;word-wrap:break-word;color:#000000;word=
+-break:break-word;font-weight:400;-ms-word-break:break-all;font-size:12px;l=
+ine-height:1.333;overflow-wrap:break-word;">This email was intended for Sim=
+on Renauld (Data Expert | Analytics &amp; Engineering Leader | Driving Busi=
+ness Growth Through Data Science Solutions). <a href=3D"https://www.linkedi=
+n.com/e/v2?e=3D5wfzof-lv23qlxr-hl&amp;lipi=3Durn%3Ali%3Apage%3Aemail_email_=
+job_alert_confirmation_01%3BQIP1BXvJS32nYYVhoOhKYA%3D%3D&amp;a=3DcustomerSe=
+rviceUrl&amp;midToken=3DAQFLPdtV4lKjdg&amp;midSig=3D0aBSdS9g48Jbc1&amp;ek=
+=3Demail_job_alert_confirmation_01&amp;articleId=3D4788" style=3D"cursor:po=
+inter;color:#0A66C2;-webkit-text-size-adjust:100%;text-decoration:underline=
+;display:inline-block;-ms-text-size-adjust:100%;">Learn why we included thi=
+s.</a></p></td> </tr> <tr> <td style=3D"-webkit-text-size-adjust:100%;mso-t=
+able-rspace:0pt;mso-table-lspace:0pt;-ms-text-size-adjust:100%;"> <table wi=
+dth=3D"1" border=3D"0" cellspacing=3D"0" cellpadding=3D"1" style=3D"-webkit=
+-text-size-adjust:100%;mso-table-rspace:0pt;mso-table-lspace:0pt;-ms-text-s=
+ize-adjust:100%;"> <tbody> <tr> <td style=3D"-webkit-text-size-adjust:100%;=
+mso-table-rspace:0pt;mso-table-lspace:0pt;-ms-text-size-adjust:100%;"> <div=
+ style=3D"height:16px;font-size:16px;line-height:16px"> &nbsp; </div></td> =
+</tr> </tbody> </table></td> </tr> <tr> <td align=3D"left" style=3D"padding=
+:0;color:#000000;-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-tab=
+le-lspace:0pt;-ms-text-size-adjust:100%;text-align:left;"> <p style=3D"marg=
+in:0;color:#000000;font-weight:400;font-size:12px;line-height:1.333;">You a=
+re receiving Job Alert emails.</p></td> </tr> <tr> <td style=3D"-webkit-tex=
+t-size-adjust:100%;mso-table-rspace:0pt;mso-table-lspace:0pt;-ms-text-size-=
+adjust:100%;"> <table width=3D"1" border=3D"0" cellspacing=3D"0" cellpaddin=
+g=3D"1" style=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-tab=
+le-lspace:0pt;-ms-text-size-adjust:100%;"> <tbody> <tr> <td style=3D"-webki=
+t-text-size-adjust:100%;mso-table-rspace:0pt;mso-table-lspace:0pt;-ms-text-=
+size-adjust:100%;"> <div style=3D"height:16px;font-size:16px;line-height:16=
+px"> &nbsp; </div></td> </tr> </tbody> </table></td> </tr> <tr> <td align=
+=3D"left" style=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-t=
+able-lspace:0pt;-ms-text-size-adjust:100%;text-align:left;"> <table role=3D=
+"presentation" align=3D"center" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0" width=3D"100%" style=3D"-webkit-text-size-adjust:100%;mso-table-rspa=
+ce:0pt;mso-table-lspace:0pt;-ms-text-size-adjust:100%;"> <tbody> <tr> <td v=
+align=3D"middle" align=3D"left" style=3D"-webkit-text-size-adjust:100%;mso-=
+table-rspace:0pt;vertical-align:middle;mso-table-lspace:0pt;-ms-text-size-a=
+djust:100%;text-align:left;"><a href=3D"https://www.linkedin.com/comm/jobs/=
+alerts?midToken=3DAQFLPdtV4lKjdg&amp;midSig=3D0aBSdS9g48Jbc1&amp;trk=3Deml-=
+email_job_alert_confirmation_01-footer-12-manage_alert&amp;trkEmail=3Deml-e=
+mail_job_alert_confirmation_01-footer-12-manage_alert-null-5wfzof%7Elv23qlx=
+r%7Ehl-null-job%7Ealert%7Emanager&amp;lipi=3Durn%3Ali%3Apage%3Aemail_email_=
+job_alert_confirmation_01%3BQIP1BXvJS32nYYVhoOhKYA%3D%3D" style=3D"cursor:p=
+ointer;color:#0A66C2;-webkit-text-size-adjust:100%;text-decoration:underlin=
+e;display:inline-block;-ms-text-size-adjust:100%;"> <span style=3D"color:#0=
+A66C2;font-weight:400;font-size:12px;line-height:1.333;">Manage job alerts<=
+/span></a>&nbsp;&nbsp;=C2=B7&nbsp;&nbsp;<a href=3D"https://www.linkedin.com=
+/comm/jobs/alerts?midToken=3DAQFLPdtV4lKjdg&amp;midSig=3D0aBSdS9g48Jbc1&amp=
+;trk=3Deml-email_job_alert_confirmation_01-footer-12-manage_alert&amp;trkEm=
+ail=3Deml-email_job_alert_confirmation_01-footer-12-manage_alert-null-5wfzo=
+f%7Elv23qlxr%7Ehl-null-job%7Ealert%7Emanager&amp;lipi=3Durn%3Ali%3Apage%3Ae=
+mail_email_job_alert_confirmation_01%3BQIP1BXvJS32nYYVhoOhKYA%3D%3D" style=
+=3D"cursor:pointer;color:#0A66C2;-webkit-text-size-adjust:100%;text-decorat=
+ion:underline;display:inline-block;-ms-text-size-adjust:100%;"> <span style=
+=3D"color:#0A66C2;font-weight:400;font-size:12px;line-height:1.333;">Unsubs=
+cribe</span></a>&nbsp;&nbsp;=C2=B7&nbsp;&nbsp;<a href=3D"https://www.linked=
+in.com/e/v2?e=3D5wfzof-lv23qlxr-hl&amp;lipi=3Durn%3Ali%3Apage%3Aemail_email=
+_job_alert_confirmation_01%3BQIP1BXvJS32nYYVhoOhKYA%3D%3D&amp;a=3DcustomerS=
+erviceUrl&amp;midToken=3DAQFLPdtV4lKjdg&amp;midSig=3D0aBSdS9g48Jbc1&amp;ek=
+=3Demail_job_alert_confirmation_01&amp;li=3D29&amp;m=3Dfooter&amp;ts=3Dhelp=
+&amp;articleId=3D67" style=3D"cursor:pointer;color:#0A66C2;-webkit-text-siz=
+e-adjust:100%;text-decoration:underline;display:inline-block;-ms-text-size-=
+adjust:100%;"> <span style=3D"color:#0A66C2;font-weight:400;font-size:12px;=
+line-height:1.333;">Help</span></a></td> </tr> <tr> <td style=3D"-webkit-te=
+xt-size-adjust:100%;mso-table-rspace:0pt;mso-table-lspace:0pt;-ms-text-size=
+-adjust:100%;"> <table width=3D"1" border=3D"0" cellspacing=3D"0" cellpaddi=
+ng=3D"1" style=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-ta=
+ble-lspace:0pt;-ms-text-size-adjust:100%;"> <tbody> <tr> <td style=3D"-webk=
+it-text-size-adjust:100%;mso-table-rspace:0pt;mso-table-lspace:0pt;-ms-text=
+-size-adjust:100%;"> <div style=3D"height:16px;font-size:16px;line-height:1=
+6px"> &nbsp; </div></td> </tr> </tbody> </table></td> </tr> </tbody> </tabl=
+e></td> </tr> <tr> <td align=3D"left" style=3D"padding:0;-webkit-text-size-=
+adjust:100%;mso-table-rspace:0pt;mso-table-lspace:0pt;-ms-text-size-adjust:=
+100%;text-align:left;"><a href=3D"https://www.linkedin.com/comm/feed/?midTo=
+ken=3DAQFLPdtV4lKjdg&amp;midSig=3D0aBSdS9g48Jbc1&amp;trk=3Deml-email_job_al=
+ert_confirmation_01-footer-28-home&amp;trkEmail=3Deml-email_job_alert_confi=
+rmation_01-footer-28-home-null-5wfzof%7Elv23qlxr%7Ehl-null-neptune%2Ffeed&a=
+mp;lipi=3Durn%3Ali%3Apage%3Aemail_email_job_alert_confirmation_01%3BQIP1BXv=
+JS32nYYVhoOhKYA%3D%3D" style=3D"cursor:pointer;color:#0A66C2;-webkit-text-s=
+ize-adjust:100%;text-decoration:underline;display:inline-block;-ms-text-siz=
+e-adjust:100%;"><img alt=3D"LinkedIn" border=3D"0" height=3D"14" src=3D"htt=
+ps://static.licdn.com/sc/p/com.linkedin.email-assets-frontend%3Aemail-asset=
+s-frontend-static-content%2B__latest__/f/%2Femail-assets-frontend%2Fimages%=
+2Flogos%2Flogo_linkedin_mercado_blue_112x28.png" width=3D"56" style=3D"outl=
+ine:none;-ms-interpolation-mode:bicubic;color:#FFFFFF;max-width:unset !impo=
+rtant;display:block;text-decoration:none;"></a></td> </tr> <tr> <td style=
+=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-table-lspace:0pt=
+;-ms-text-size-adjust:100%;"> <table width=3D"1" border=3D"0" cellspacing=
+=3D"0" cellpadding=3D"1" style=3D"-webkit-text-size-adjust:100%;mso-table-r=
+space:0pt;mso-table-lspace:0pt;-ms-text-size-adjust:100%;"> <tbody> <tr> <t=
+d style=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-table-lsp=
+ace:0pt;-ms-text-size-adjust:100%;"> <div style=3D"height:16px;font-size:16=
+px;line-height:16px"> &nbsp; </div></td> </tr> </tbody> </table></td> </tr>=
+ <tr> <td align=3D"left" style=3D"padding:0;color:#000000;-webkit-text-size=
+-adjust:100%;mso-table-rspace:0pt;mso-table-lspace:0pt;-ms-text-size-adjust=
+:100%;text-align:left;"> <p style=3D"margin:0;color:#000000;font-weight:400=
+;font-size:12px;line-height:1.333;">=C2=A9 2024 LinkedIn Ireland Unlimited =
+Company, Wilton Plaza, Wilton Place, Dublin 2. LinkedIn is a registered bus=
+iness name of LinkedIn Ireland Unlimited Company. LinkedIn and the LinkedIn=
+ logo are registered trademarks of LinkedIn.</p></td> </tr> <tr> <td style=
+=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-table-lspace:0pt=
+;-ms-text-size-adjust:100%;"> <table width=3D"1" border=3D"0" cellspacing=
+=3D"0" cellpadding=3D"1" style=3D"-webkit-text-size-adjust:100%;mso-table-r=
+space:0pt;mso-table-lspace:0pt;-ms-text-size-adjust:100%;"> <tbody> <tr> <t=
+d style=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-table-lsp=
+ace:0pt;-ms-text-size-adjust:100%;"> <div style=3D"height:24px;font-size:24=
+px;line-height:24px"> &nbsp; </div></td> </tr> </tbody> </table></td> </tr>=
+ </tbody> </table></td> </tr> </tbody> </table></td> <td style=3D"-webkit-t=
+ext-size-adjust:100%;mso-table-rspace:0pt;mso-table-lspace:0pt;-ms-text-siz=
+e-adjust:100%;"> <table width=3D"24" border=3D"0" cellspacing=3D"0" cellpad=
+ding=3D"1" style=3D"-webkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-=
+table-lspace:0pt;-ms-text-size-adjust:100%;"> <tbody> <tr> <td style=3D"-we=
+bkit-text-size-adjust:100%;mso-table-rspace:0pt;mso-table-lspace:0pt;-ms-te=
+xt-size-adjust:100%;"> <div style=3D"height:0px;font-size:0px;line-height:0=
+px"> &nbsp; </div></td> </tr> </tbody> </table></td> </tr> </tbody> </table=
+></td> </tr> </tbody> </table> </center></td> </tr> </tbody> </table> <img =
+alt=3D"" role=3D"presentation" src=3D"https://www.linkedin.com/emimp/ip_Tlh=
+kbWVtOW1MV3gyTWpOeGJIaHlMV2hzOlpXMWhhV3hmYW05aVgyRnNaWEowWDJOdmJtWnBjbTFoZE=
+dsdmJsOHdNUT09Og=3D=3D.gif" style=3D"outline:none;-ms-interpolation-mode:bi=
+cubic;color:#FFFFFF;text-decoration:none;width:1px;height:1px;"> </body> </=
+html>
+------=_Part_12805534_572362555.1713254911404--
+
+

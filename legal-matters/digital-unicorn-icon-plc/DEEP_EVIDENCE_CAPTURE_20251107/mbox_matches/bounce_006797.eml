@@ -1,0 +1,886 @@
+X-GM-THRID: 1808919465969036886
+X-Gmail-Labels: Inbox,Category Promotions,Unread
+Delivered-To: sn.renauld@gmail.com
+Received: by 2002:a17:906:d1c3:b0:a77:e52c:a9e5 with SMTP id bs3csp984325ejb;
+        Sat, 31 Aug 2024 09:00:35 -0700 (PDT)
+X-Google-Smtp-Source: 
+ AGHT+IHwc3F75OqVK5B5zBaWMUMSv/B5lCtopCNwLExn/wi3AL/en8suXp5KWqzT8BYAgZszStW/
+X-Received: by 2002:a17:90b:4a02:b0:2d3:ba42:774b with SMTP id
+ 98e67ed59e1d1-2d8561a36ffmr10402076a91.16.1725120035069;
+        Sat, 31 Aug 2024 09:00:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1725120035; cv=none;
+        d=google.com; s=arc-20240605;
+        b=kQ0YmNlIq7lYofW0esGoVbVnFa3VoL1q4GP1/WYAdpIsEm7wJNfy2Uvk7s5oOOwphn
+         i/mujsgO/zYS5ZhkqCKWxZb9f4HMOWxTJR7eDacr7vrJHZT9G6V1fMVN4uj627L0XNCB
+         1G17feSeqCTvGeroY4sAhsoptIWcZxktBwJ5P9R6Bw3hKaS7tj2YduIN/tEZWrbDFwJO
+         ivPZaBlYEtZiQPwzPvzHrYOK43fqvg3uiyoC/NYSjYp44HJ/lyGGgSU1VDxUoOh0t13x
+         G89HJot4780y7uU5Fbrv81MDOLfJL4Rk0DQ9qdX077Ckyr6dpybgB7+yz6I7Ws0Y8G8l
+         SSVw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605;
+        h=to:list-unsubscribe:list-unsubscribe-post:reply-to:subject
+         :message-id:mime-version:from:date:dkim-signature:dkim-signature;
+        bh=kDvDs9h0gtAAVWtB6qoZpfbLyQ9BRCZRVDsBNmVbuPo=;
+        fh=UdbUcDkJKvqffcPeSfMTJ3BaP9WLNp68ZQroZAlxuH8=;
+        b=UYJorExjvWFOncogOf/z5UqL0FuV8Rh9XfCP4VE69RaGnD9D1mU61T7uDWIeWhr6OK
+         OREhug3Avu0+CY/LYDvx+3j38cyeu3s4SibdryYzyJ5YTL5LifrkVGnqnBPev+AN3rZR
+         ru5xLtj3j8kw7nILu6YKbZY6ld23hWfFF2SiiMDTIkqFffwfqBH9RJqy/6GhV1m5r1mK
+         9Kb7WkxBDeKp4z1La5EPD6tRsWsZm4Kjh42hczVoX1971EokCdF+TpvqXGRmbU2nhZRK
+         2FY0WELPVhQNKEN3C2EsqDsNNcd9ZTwyRd1kwswJfNnf8Jb8gCaPr66/MnW4AiCVmxxn
+         vz0w==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@mail.anthropic.com header.s=s1 header.b=KJ+HKl6y;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=OQCOSwkG;
+       spf=pass (google.com: domain of
+ bounces+31859940-b458-sn.renauld=gmail.com@em9672.mail.anthropic.com
+ designates 168.245.4.162 as permitted sender)
+ smtp.mailfrom="bounces+31859940-b458-sn.renauld=gmail.com@em9672.mail.anthropic.com";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=mail.anthropic.com
+Return-Path: 
+ <bounces+31859940-b458-sn.renauld=gmail.com@em9672.mail.anthropic.com>
+Received: from o4.mail.anthropic.com (o4.mail.anthropic.com. [168.245.4.162])
+        by mx.google.com with ESMTPS id
+ 98e67ed59e1d1-2d85b3a4944si6546449a91.111.2024.08.31.09.00.34
+        for <sn.renauld@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 31 Aug 2024 09:00:35 -0700 (PDT)
+Received-SPF: pass (google.com: domain of
+ bounces+31859940-b458-sn.renauld=gmail.com@em9672.mail.anthropic.com
+ designates 168.245.4.162 as permitted sender) client-ip=168.245.4.162;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@mail.anthropic.com header.s=s1 header.b=KJ+HKl6y;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=OQCOSwkG;
+       spf=pass (google.com: domain of
+ bounces+31859940-b458-sn.renauld=gmail.com@em9672.mail.anthropic.com
+ designates 168.245.4.162 as permitted sender)
+ smtp.mailfrom="bounces+31859940-b458-sn.renauld=gmail.com@em9672.mail.anthropic.com";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=mail.anthropic.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mail.anthropic.com;
+	h=content-type:from:mime-version:subject:reply-to:list-unsubscribe-post:
+	list-unsubscribe:x-feedback-id:to:cc:content-type:from:subject:to;
+	s=s1; bh=kDvDs9h0gtAAVWtB6qoZpfbLyQ9BRCZRVDsBNmVbuPo=;
+	b=KJ+HKl6yfCD7cauOFtGqv5/nxozk7Jo3943cC6zCzagqc6IVOuPSui51e9Rk/mBlKpZ4
+	AaGsYStpkSJAO5u9fRiKhofxXzj7BZ7lf9xG5kMP2G7fvk0l+DexGFV9nF0vZzP57Nc5mE
+	NRMu5QH7fm7JFbqRFPSneeXxZHBQQKywq5Gp2GuQPVcpq+94H32tiDc9kEZ1B13Z3W0CG4
+	BTQP6z3vKXvVWZeS3PBt8EBmTQuUzuONZkuqfUo5I9jHYRY/DKlfyfD/wrNKU4EvD80rjR
+	ATEyCzTJd+C8N92Eru5RW71dbTu9bTLhJWKkhg4dXmiJ+0RSOj4aHqQMIjsy/pYQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendgrid.info;
+	h=content-type:from:mime-version:subject:reply-to:list-unsubscribe-post:
+	list-unsubscribe:x-feedback-id:to:cc:content-type:from:subject:to;
+	s=smtpapi; bh=kDvDs9h0gtAAVWtB6qoZpfbLyQ9BRCZRVDsBNmVbuPo=;
+	b=OQCOSwkGalUiAWzr1d4N0df3BBXJVpDEDyRr5jyE8qp/83CH5CHHgXSsunKfqHVLOsR/
+	nMd9W0MxOSZRX/HzO7A4K6Ykyr/xjgFXG4mKt3v4YPUVGU/7UeRJdrgj8DSqVOzHYx/prN
+	vixk4/PLtBkH4YOO9CVY0HHQeF5pryCjA=
+Received: by recvd-canary-76bcc6df55-6lmms with SMTP id
+ recvd-canary-76bcc6df55-6lmms-1-66D33E20-8
+	2024-08-31 16:00:32.027685623 +0000 UTC m=+841501.919574786
+Received: from MzE4NTk5NDA (unknown)
+	by geopod-ismtpd-22 (SG) with HTTP
+	id 0YtkHXx_RaeKWwPgbWnPcQ
+	Sat, 31 Aug 2024 16:00:31.968 +0000 (UTC)
+Content-Type: multipart/alternative;
+ boundary=2606fa5de5a717d118e43ada07996330dbd109d731d1886305cb0fd7cfda
+Date: Sat, 31 Aug 2024 16:00:33 +0000 (UTC)
+From: Anthropic <support+news@mail.anthropic.com>
+Mime-Version: 1.0
+Message-ID: <0YtkHXx_RaeKWwPgbWnPcQ@geopod-ismtpd-22>
+Subject: Artifacts are now generally available
+Reply-To: support+news@mail.anthropic.com
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+List-Unsubscribe: 
+ =?us-ascii?Q?=3Cmailto=3Aunsubscribe=40em9672=2Email=2Eanthropic=2Ecom=3Fsubject=3Dhttps=3A=2F=2F?=
+ =?us-ascii?Q?url8792=2Email=2Eanthropic=2Ecom=2Fwf=2Funsubscri?=
+ =?us-ascii?Q?be*q*upn=3Du001=2EwJ4wQoWqpttL0LnWj9yCngQD-?=
+ =?us-ascii?Q?2BPKOSnIWwGo2A-2BWj6Xi6FgHnN-2B9bhefwKV?=
+ =?us-ascii?Q?GNvqLcGhrbYgefP-2FXEugaciFYlgmLHP1man5I?=
+ =?us-ascii?Q?WhC1LkqTfxjh9F7zMduMnNKqVt4Xu0DWqZns0Q4?=
+ =?us-ascii?Q?91N-2B3QdjZBOd-2BRNn9rN1HFmryloiENnYn3s?=
+ =?us-ascii?Q?Z8sV-2FiqE756Fu7n48iWJysOy285-2F4LSJ6ny?=
+ =?us-ascii?Q?f9PS0sQbxbvJktL9XC6-2Bq1VSPApuqspLLoSTe?=
+ =?us-ascii?Q?wIDkeZJosCNBskN8SYwizAZfcXXnoyrU1C13MK3?=
+ =?us-ascii?Q?Yzdeu9FEt7pAzAw4q11PA6OCUAyZaElmoqey3YT?=
+ =?us-ascii?Q?74ZkJbqS1AD5mITOtVpQaMdhTQ6-2Boe0fZ6dGj?=
+ =?us-ascii?Q?hWluMVryeTQUwNq9bAAbwWmA8nGHeKCMJnCyB54?=
+ =?us-ascii?Q?fHfFxjE-2BBjyUlgXpr2fDT1-2BV2grCuiHQrwv?=
+ =?us-ascii?Q?JuiPIMvE-2B0W5hX9Myg9-2FaSHRGZbDEfrz1d4?=
+ =?us-ascii?Q?ixepVcHQ6bfXtS9NVBNQfj0UEBYC6I0gFk3OJ2m?=
+ =?us-ascii?Q?UXCmRpO6DgLvicAGmw0-2FIvdsqbPQfkjsBtNKP?=
+ =?us-ascii?Q?cyGWEtOJjZuMrn4Hg-2FNJr-2FBIktwN85BNctr?=
+ =?us-ascii?Q?OdoxattZ0MlfQE2HppM8kfttwHqhjhNYVwPNrhK?=
+ =?us-ascii?Q?X-2Bm5skg-2B641VX2P8YREiXuH7Ats-2B0NEEY?=
+ =?us-ascii?Q?lcDSES-2FCr8jWyiUHKuNb0X-2B0Vk4pkfeRQR6?=
+ =?us-ascii?Q?cPyAaLvt7MGKXSwJVQOThbNDZR8mrzW9A-2FZ2u?=
+ =?us-ascii?Q?YdKkDZ0F3cuD9nMvTekWJ7lhFz-2BfjGH0s2hXq?=
+ =?us-ascii?Q?9-2Br7BWs2o3Zg-2B3JLQfs53UeDUBsJ8h4nOMZ?=
+ =?us-ascii?Q?jSp7HNuVWNpvuMbSzigJaqDiN9DFbYsZqeM8w5-?=
+ =?us-ascii?Q?2BItHZKsRwwcqh735GgOID21utFDtWSx3rrf1f3?=
+ =?us-ascii?Q?L-2F9tftVibJ0AqOC3Bx0dNFhtVEjd6kHIbGdgW?=
+ =?us-ascii?Q?Qw20P3ZpPET3ygT5qXzwGSZfxP5KyfKAmPeNONk?=
+ =?us-ascii?Q?MvmVqKx-2BZDKsrZP7DhWr9gYRgXnPm3nz-2BGq?=
+ =?us-ascii?Q?dOdYpBZAbQ3ptzNSUUtt4d-2Fw1R0NvxtfbvOfP?=
+ =?us-ascii?Q?or3Nhofm=3E=2C=3Chttps=3A=2F=2Furl8792=2Email=2Eanthrop?=
+ =?us-ascii?Q?ic=2Ecom=2Flu=2Funsubscribe=3Foc=3Du001=2E=5Fp3fbfnmU?=
+ =?us-ascii?Q?08W6nAPyRv2WoPBg6OWi7jd53kT9hc3MVTvij8M?=
+ =?us-ascii?Q?m6EF-PkHtglyFXi-v4w0T9CvnUn0BsOKXkMs1h0?=
+ =?us-ascii?Q?aR8Bl2SUdhBAC3gDb-CHeagsNORbz4AfT1Zyelx?=
+ =?us-ascii?Q?DVq05LHWM5UdGO-JBY-eWaYBEujgkWmABhYIM4M?=
+ =?us-ascii?Q?J8rBhNkAgdO0b9aOBHcO7lX8xHNK=5FnBZCcb1v8q?=
+ =?us-ascii?Q?-oIknGvSJAgqIKRfPVR=5FGMfBYqm8SbwiNa4MUD-?=
+ =?us-ascii?Q?8QW8Kw4z9ZCFO2ZBmCGRNIhPvBl1vrKsgOihWTR?=
+ =?us-ascii?Q?96TDl68=5F1EjK3lUUHFCXstsnoG9urhk5vdEPUPy?=
+ =?us-ascii?Q?x6qsyA=5Fc2JGtpFes-Qr5ndJ-woU9Wdrf2mctCOH?=
+ =?us-ascii?Q?G9hJ3JsxR3TrazTgHH9Zu11-UToP0=5Fm21DKnACE?=
+ =?us-ascii?Q?qikn=5FK4Ar85tgXdjzzI9ShmC3Ks76x-vNoz5j7w?=
+ =?us-ascii?Q?76P7OSs06oHeVdOCaNscUz3RPU45=5FNU-HiURkIr?=
+ =?us-ascii?Q?FLeumjuR7bAypED6QjGyuwPbVjYBwSc-PGuvudE?=
+ =?us-ascii?Q?WZ3NTIcFhYLR0ity9gZYOn0gTTDsuKXgQjieNDW?=
+ =?us-ascii?Q?26K7=5FcQ19Iv5vAJygo6sZoSPIytpBr17B-0Tasw?=
+ =?us-ascii?Q?hj4XNpdmwFgb8C-NbR5aDnj=5FLIkqFF88sl2yS28?=
+ =?us-ascii?Q?dilWrSQ3fka3KtUp6fPa9EyPFtlq856xpEinPLz?=
+ =?us-ascii?Q?hPT6C=5F5D-ab7ix5naRHYqGBmosdO6oKN6-YnnO0?=
+ =?us-ascii?Q?eedj4ddVBvDp4GeeA-KzAwiO373ZtE5FHBjSj2-?=
+ =?us-ascii?Q?DSL9qLCGwSZl3Z5v2CspThi1VLFV4YBb9gerfiB?=
+ =?us-ascii?Q?=5Fo-6yBShgjS6wnJPjBluUAZ234WpOwWBlskoERR?=
+ =?us-ascii?Q?JD=5F3YG4gS=5FTaG5y5fsQUKrxxTqemuMeSqG799cE?=
+ =?us-ascii?Q?h8Fm0AVBGIGGgGgVwJp8tq-Eb3zHvKnRw80u5aW?=
+ =?us-ascii?Q?1fiXbzoP2JZ3BaPcNPDhmLXVXKKHdLZnKYdeSI8?=
+ =?us-ascii?Q?s0Xq47gOnPcmMJY04utwH1HWWhIf=5FxiEKBue-JN?=
+ =?us-ascii?Q?dJGoivdd9ygxKijOkW0Mks1QXLleM5MB1aYZuR5?=
+ =?us-ascii?Q?QBZRF0J=5Fccm=5FUi0Zk5zmRStPgD3mtBTYe6zekNT?=
+ =?us-ascii?Q?qVJGf=5FWmAkhZvQG00xo6HoAViJiSxeJjSb-8IcH?=
+ =?us-ascii?Q?A3MN32yImblfXx3dDi5gk9NVbLMUjZ-bMaq8DxG?=
+ =?us-ascii?Q?ap4hCLJadX4BGlHYGHAumOBma3Ne692kUJM3Kla?=
+ =?us-ascii?Q?mWNrrbsxRt0ECVjHWthod5qPqPPpspxV0cr-q8s?=
+ =?us-ascii?Q?KZsejtqiXXHqP8t249ee-QyumR-AK2gzhBTm2kr?=
+ =?us-ascii?Q?voVMFv97QdocZsrj2wBihFmlbAwnOlDfERNQJLB?=
+ =?us-ascii?Q?inXRs7Mo3SKElrbaM2QDWsyoEgmcUU-MTQeqPPe?=
+ =?us-ascii?Q?d6zhqoEF93qsy9miV-KgrNEvXNrjnMNeG-FR26f?=
+ =?us-ascii?Q?-nvXuE2aHk1bW3tT7RL03cYlH2AP6b2CXZSSLjV?=
+ =?us-ascii?Q?6kNK16aE=5FZATi6oeE7rygcZguZqQrEAJTQgvAwI?=
+ =?us-ascii?Q?gZmnHvRqY0HxdptaRbL7VjTMDwva5JbR5hUDRqf?=
+ =?us-ascii?Q?Eq4cReX32=5Fwypm5XYNjlJE-KqvLTxk8KjygyFeN?=
+ =?us-ascii?Q?SYL7qERO5QVgt-sVDL7BCkjmjYJQ=3E?=
+X-Feedback-ID: 31859940:SG
+X-SG-EID: 
+ =?us-ascii?Q?u001=2ER8FFSRQkMo5zcpY7gjGOtwXGbvIYgVm6CFq3nMjZaaR3mzm5oazaW4IK8?=
+ =?us-ascii?Q?PdCL4cBM=2FSLaMYqRes8r45X+8H6K5CCOG+txubV?=
+ =?us-ascii?Q?ZaYSvXYntKWtQLzgaGOqE5DNCSPpo00yU2aWYCo?=
+ =?us-ascii?Q?3O9hZ9IW5elohbysUk3g29Ea6oB6jjczXCrzREA?=
+ =?us-ascii?Q?MCYWF6Tu5NHUxrI6q7PXyt8FsOXgH0xwVNCvNFJ?=
+ =?us-ascii?Q?wI3m6lUdLI31vyCJkmG+Z05WKyJRAMah0siJz3P?=
+ =?us-ascii?Q?ZWbYLZQTl=2FbfA7ccC1F3fGWIoA=3D=3D?=
+X-SG-ID: 
+ =?us-ascii?Q?u001=2EXwhBPNhCejkv4+fVosb2QVfR16Qxp9CrA7PjDe5zzeI=2F0IZCBsPXtgHbA?=
+ =?us-ascii?Q?oGIj+Rs6OlRm=2FcaEsw=2FcuQFYvtovQxG2Eq1SU7B?=
+ =?us-ascii?Q?65rZKu5ZeoNq8Ti1S9MX+R5OO9Fx46CN4hbKIOa?=
+ =?us-ascii?Q?14r9l7WUwScG2ovYe26ogPmh+DIDtwKPBZU=2F2gI?=
+ =?us-ascii?Q?cr3cu1ficA3P0D6cGi=2F0QrKHog2sWH64g8s1a81?=
+ =?us-ascii?Q?YkTs9N1DfLyODkszS9vGNjt5ct1EapBaLbp+Yc5?=
+ =?us-ascii?Q?7rTcIr3mvW7p70+hF4wzf+aj2qIEa+S4SMse7p9?=
+ =?us-ascii?Q?mt9kzVKS=2FJZ8BrVTb=2FLNBFDjJfJj8f6oPt3AfCN?=
+ =?us-ascii?Q?FAIWTspgYzHhe7=2F8kPuqSMdLiJnSz19q0NV=2FRA+?=
+ =?us-ascii?Q?QxIahmUtDBtTbhn+GqOGJ2PFCZfn9MkT090fBhq?=
+ =?us-ascii?Q?bzmPr7XyRm+3qGXdzdDlPJDsf+kM=2F3=2FffSJu91M?=
+ =?us-ascii?Q?lqeSbEMFm7PN3kIQ3wPAEQwnUwO1A9WCHEShg74?=
+ =?us-ascii?Q?2LttiDBbXgMcrksB2KwdD6=2Ffeq+aKJ+VnHXT=2FYt?=
+ =?us-ascii?Q?YIkrp7AFtffRCo1+Hn5mOfoHiedgm=2FbdWK5e9nM?=
+ =?us-ascii?Q?64h1YMnSg40LGkJ=2FXXdbbPzEKz=2FWKqrrKnYXC0I?=
+ =?us-ascii?Q?lgdhQjCBt7KBHZI=2FiZp3uZPYgD4qDx=2FvV4G89Ht?=
+ =?us-ascii?Q?nTFGDL27PJurLzUdA1NOaf+ychXejtOuQa4cJvG?=
+ =?us-ascii?Q?3rTdVmzxQG3hClk62UO1rW7wzgUk6W2fUCd+4+y?=
+ =?us-ascii?Q?GdGe4skI+ATZDQZB2Tl7U6Yt898ZmmZU0nHM+Mt?=
+ =?us-ascii?Q?juz8JoLodPgUHeiG46hFydcWHMKf3YxkCid1w6P?=
+ =?us-ascii?Q?oj6BZu0qunPzhelTFc+ZtA0VojIRP7hX=2Fu?=
+To: sn.renauld@gmail.com
+X-Entity-ID: u001.+hTscy7rO4MXV2fUis5gmA==
+
+--2606fa5de5a717d118e43ada07996330dbd109d731d1886305cb0fd7cfda
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0
+
+Artifacts are now generally available
+
+( http://Claude.ai )
+
+Learn More ( https://www.anthropic.com/news/artifacts )
+
+Hello,
+
+Today, we=E2=80=99re making Artifacts available for all Claude.ai ( http://=
+Claude.ai ) users across our Free, Pro, and Team plans. In addition, you ca=
+n now create and view Artifacts on our iOS ( https://anthropic.com/ios ) an=
+d Android ( https://anthropic.com/android ) apps.
+
+Artifacts turn conversations with Claude into a more creative and collabora=
+tive experience. With Artifacts, you have a dedicated window to instantly s=
+ee, iterate, and build on the work you create with Claude. Since launching =
+as a feature preview ( https://www.anthropic.com/news/claude-3-5-sonnet ) i=
+n June, users have created tens of millions of Artifacts.
+
+Every team can use Claude to create high-quality work products faster than =
+ever before. Artifacts help bring your ideas and projects to life, for exam=
+ple:
+
+* *Developers* can make architecture diagrams ( https://claude.site/artifac=
+ts/d2b833dd-3b0c-4cac-9e02-787cdb9d89fc ) from codebases
+* *Product managers* can create interactive prototypes ( https://claude.sit=
+e/artifacts/61e95bd8-906b-48f7-b905-60161630aae2 ) for rapid feature testin=
+g
+* *Marketers* can design campaign dashboards ( https://claude.site/artifact=
+s/ed827c8a-f2e1-45a8-bfb8-6e2f2dc9c94a ) with performance metrics
+
+Users on Free and Pro plans can publish and remix Artifacts with the broade=
+r community, allowing you to build and iterate on the materials published b=
+y other users around the world.
+
+Team plan users can create Artifacts and share them in Projects, enabling t=
+eammates to collaborate in a secure environment.
+
+We look forward to seeing what you build and share next on Claude.ai ( http=
+://Claude.ai ).
+
+=E2=80=93 The Anthropic Team
+
+( https://x.com/anthropicai ) ( https://www.linkedin.com/company/anthropicr=
+esearch/ )
+
+Unsubscribe ( https://url8792.mail.anthropic.com/wf/unsubscribe?upn=3Du001.=
+wJ4wQoWqpttL0LnWj9yCngQD-2BPKOSnIWwGo2A-2BWj6Xi6FgHnN-2B9bhefwKVGNvqLcGhrbY=
+gefP-2FXEugaciFYlgmLHP1man5IWhC1LkqTfxjh9F7zMduMnNKqVt4Xu0DWqZns0Q491N-2B3Q=
+djZBOd-2BRNn9rN1HFmryloiENnYn3sZ8sV-2FiqE756Fu7n48iWJysOy285-2F4LSJ6nyf9PS0=
+sQbxbvJktL9XC6-2Bq1VSPApuqspLLoSTewIDkeZJosCNBskN8SYwizAZfcXXnoyrU1C13MK3Yz=
+deu9FEt7pAzAw4q11PA6OCUAyZaElmoqey3YT74ZkJbqS1AD5mITOtVpQaMdhTQ6-2Boe0fZ6dG=
+jhWluMVryeTQUwNq9bAAbwWmA8nGHeKCMJnCyB54fHfFxjE-2BBjyUlgXpr2fDT1-2BV2grCuiH=
+QrwvJuiPIMvE-2B0W5hX9Myg9-2FaSHRGZbDEfrz1d4ixepVcHQ6bfXtS9NVBNQfj0UEBYC6I0g=
+Fk3OJ2mUXCmRpO6DgLvicAGmw0-2FIvdsqbPQfkjsBtNKPcyGWEtOJjZuMrn4Hg-2FNJr-2FBIk=
+twN85BNctrOdoxattZ0MlfQE2HppM8kfttwHqhjhNYVwPNrhKX-2Bm5skg-2B641VX2P8YREiXu=
+H7Ats-2B0NEEYlcDSES-2FCr8jWyiUHKuNb0X-2B0Vk4pkfeRQR6cPyAaLvt7MGKXSwJVQOThbN=
+DZR8mrzW9A-2FZ2uYdKkDZ0F3cuD9nMvTekWJ7lhFz-2BfjGH0s2hXq9-2Br7BWs2o3Zg-2B3JL=
+Qfs53UeDUBsJ8h4nOMZjSp7HNuVWNpvuMbSzigJaqDiN9DFbYsZqeM8w5-2BItHZKsRwwcqh735=
+GgOID21mlq7HmVu43ajWrO2DwKtKTBy-2BxcJp3zGYsBDOYas2BrG8JR9pHTNf0ohrD7NDQuhjG=
+IyjR3lKQC1NJz9-2FYyuO8ypbYVxheB7h5IGhHKFvFr0r6XMB7LriEXuaGSNGt-2FAFZWw-2Fwz=
+I-2Ff8S1yhrgslMvbysN8GNgddGId6haLn3RDu )
+--2606fa5de5a717d118e43ada07996330dbd109d731d1886305cb0fd7cfda
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=utf-8
+Mime-Version: 1.0
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org=
+/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html data-editor-version=3D"2" class=3D"sg-campaigns" xmlns=3D"http://www.=
+w3.org/1999/xhtml">
+    <head>
+      <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf=
+-8">
+      <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scal=
+e=3D1, minimum-scale=3D1, maximum-scale=3D1">
+      <!--[if !mso]><!-->
+      <meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3DEdge">
+      <!--<![endif]-->
+      <!--[if (gte mso 9)|(IE)]>
+      <xml>
+        <o:OfficeDocumentSettings>
+          <o:AllowPNG/>
+          <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+      </xml>
+      <![endif]-->
+      <!--[if (gte mso 9)|(IE)]>
+  <style type=3D"text/css">
+    body {width: 600px;margin: 0 auto;}
+    table {border-collapse: collapse;}
+    table, td {mso-table-lspace: 0pt;mso-table-rspace: 0pt;}
+    img {-ms-interpolation-mode: bicubic;}
+  </style>
+<![endif]-->
+      <style type=3D"text/css">
+    body, p, div {
+      font-family: arial,helvetica,sans-serif;
+      font-size: 14px;
+    }
+    body {
+      color: #000000;
+    }
+    body a {
+      color: #1188E6;
+      text-decoration: none;
+    }
+    p { margin: 0; padding: 0; }
+    table.wrapper {
+      width:100% !important;
+      table-layout: fixed;
+      -webkit-font-smoothing: antialiased;
+      -webkit-text-size-adjust: 100%;
+      -moz-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+    img.max-width {
+      max-width: 100% !important;
+    }
+    .column.of-2 {
+      width: 50%;
+    }
+    .column.of-3 {
+      width: 33.333%;
+    }
+    .column.of-4 {
+      width: 25%;
+    }
+    ul ul ul ul  {
+      list-style-type: disc !important;
+    }
+    ol ol {
+      list-style-type: lower-roman !important;
+    }
+    ol ol ol {
+      list-style-type: lower-latin !important;
+    }
+    ol ol ol ol {
+      list-style-type: decimal !important;
+    }
+    @media screen and (max-width:480px) {
+      .preheader .rightColumnContent,
+      .footer .rightColumnContent {
+        text-align: left !important;
+      }
+      .preheader .rightColumnContent div,
+      .preheader .rightColumnContent span,
+      .footer .rightColumnContent div,
+      .footer .rightColumnContent span {
+        text-align: left !important;
+      }
+      .preheader .rightColumnContent,
+      .preheader .leftColumnContent {
+        font-size: 80% !important;
+        padding: 5px 0;
+      }
+      table.wrapper-mobile {
+        width: 100% !important;
+        table-layout: fixed;
+      }
+      img.max-width {
+        height: auto !important;
+        max-width: 100% !important;
+      }
+      a.bulletproof-button {
+        display: block !important;
+        width: auto !important;
+        font-size: 80%;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      .columns {
+        width: 100% !important;
+      }
+      .column {
+        display: block !important;
+        width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+      .social-icon-column {
+        display: inline-block !important;
+      }
+    }
+  </style>
+      <!--user entered Head Start--><!--End Head user entered-->
+    </head>
+    <body>
+      <center class=3D"wrapper" data-link-color=3D"#1188E6" data-body-style=
+=3D"font-size:14px; font-family:arial,helvetica,sans-serif; color:#000000; =
+background-color:#FFFFFF;">
+        <div class=3D"webkit">
+          <table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"=
+100%" class=3D"wrapper" bgcolor=3D"#FFFFFF">
+            <tr>
+              <td valign=3D"top" bgcolor=3D"#FFFFFF" width=3D"100%">
+                <table width=3D"100%" role=3D"content-container" class=3D"o=
+uter" align=3D"center" cellpadding=3D"0" cellspacing=3D"0" border=3D"0">
+                  <tr>
+                    <td width=3D"100%">
+                      <table width=3D"100%" cellpadding=3D"0" cellspacing=
+=3D"0" border=3D"0">
+                        <tr>
+                          <td>
+                            <!--[if mso]>
+    <center>
+    <table><tr><td width=3D"600">
+  <![endif]-->
+                                    <table width=3D"100%" cellpadding=3D"0"=
+ cellspacing=3D"0" border=3D"0" style=3D"width:100%; max-width:600px;" alig=
+n=3D"center">
+                                      <tr>
+                                        <td role=3D"modules-container" styl=
+e=3D"padding:0px 0px 0px 0px; color:#000000; text-align:left;" bgcolor=3D"#=
+FAFAF7" width=3D"100%" align=3D"left"><table class=3D"module preheader preh=
+eader-hide" role=3D"module" data-type=3D"preheader" border=3D"0" cellpaddin=
+g=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"display: none !important;=
+ mso-hide: all; visibility: hidden; opacity: 0; color: transparent; height:=
+ 0; width: 0;">
+    <tr>
+      <td role=3D"module-content">
+        <p></p>
+      </td>
+    </tr>
+  </table><table class=3D"wrapper" role=3D"module" data-type=3D"image" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-=
+layout: fixed;" data-muid=3D"e734375b-ce70-409d-a486-9b79407a11a7">
+    <tbody>
+      <tr>
+        <td style=3D"font-size:6px; line-height:10px; padding:0px 0px 0px 0=
+px;" valign=3D"top" align=3D"center">
+          <img class=3D"max-width" border=3D"0" style=3D"display:block; col=
+or:#000000; text-decoration:none; font-family:Helvetica, arial, sans-serif;=
+ font-size:16px; max-width:100% !important; width:100%; height:auto !import=
+ant;" width=3D"600" alt=3D"" data-proportionally-constrained=3D"true" data-=
+responsive=3D"true" src=3D"http://cdn.mcauto-images-production.sendgrid.net=
+/2c7496d350bc5243/28b56263-1eec-48ea-835f-289fa29c1714/1200x200.png">
+        </td>
+      </tr>
+    </tbody>
+  </table><table class=3D"module" role=3D"module" data-type=3D"text" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-la=
+yout: fixed;" data-muid=3D"014982b1-3cc2-4d78-b133-e578e909701a" data-mc-mo=
+dule-version=3D"2019-10-22">
+    <tbody>
+      <tr>
+        <td style=3D"padding:40px 30px 0px 30px; line-height:45px; text-ali=
+gn:inherit;" height=3D"100%" valign=3D"top" bgcolor=3D"" role=3D"module-con=
+tent"><div><div style=3D"font-family: inherit; text-align: center"><span st=
+yle=3D"color: #000000; font-family: helvetica, sans-serif; font-style: norm=
+al; font-variant-ligatures: normal; font-variant-caps: normal; font-weight:=
+ 700; letter-spacing: normal; orphans: 2; text-align: center; text-indent: =
+0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-strok=
+e-width: 0px; white-space-collapse: preserve; text-wrap: wrap; background-c=
+olor: rgb(250, 250, 247); text-decoration-thickness: initial; text-decorati=
+on-style: initial; text-decoration-color: initial; float: none; display: in=
+line; font-size: 43px">Artifacts are now generally available</span></div><d=
+iv></div></div></td>
+      </tr>
+    </tbody>
+  </table><table class=3D"wrapper" role=3D"module" data-type=3D"image" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-=
+layout: fixed;" data-muid=3D"dc553b4d-c6d2-4a9b-b77b-288dd3e74f4d.1">
+    <tbody>
+      <tr>
+        <td style=3D"font-size:6px; line-height:10px; padding:40px 0px 40px=
+ 0px;" valign=3D"top" align=3D"center">
+         =20
+        <a href=3D"https://url8792.mail.anthropic.com/ls/click?upn=3Du001.D=
+QPN1aY4ZNxl1FjlYxeAhVv-2F2k7kO-2Fw1-2BIAhPiD1VK8-3DDzpH_rO1JRqZrx5Oo25BATZI=
+tEvIKK9wiuA6UN-2BXngf09BwUoS9Gpbl6QX1AUICtpGgmLDb6y-2F9BoMWQdxQFG7iaQE5WYQI=
+ENYHWW99UaxK9-2BiDd6cE10IzOFA51xkqBOgfCGyUWhoSDKdNVFlrlP9oP0SvUFS-2BTG23Vnk=
+1Dyg9GYQaxHVqvFdUR9LxWZobn-2FavpCcVjoKSeGUovEQ9mmnXmzxrktcTreM4aMkV0JVsuDl2=
+ABRV9-2Bcw33-2Bx9E-2FpSqIagZOv0mUlRNmU704-2B-2BO3J42eyFLaybKW-2Fkw-2BxaO3Cp=
+1cAjJq2VTzCHKSj6Jy9PRG7EjAILsBLatjHHsoxak4oPnwelVUyMb0NkR5Dzkt6noUw8Og4qsvm=
+-2BTcSf2i01lokKggvogx2bjcQoYRmRqOXb8lbmHeyZCOFtjXfcD4FZhVpKlQYRGwIeL6n24ydT=
+EETyowi-2FnCTrrD0d9wSpI13Zo52FesIBmKB9QbjKLm8YCq7qMh8adZsmxyyCSYlZW1-2BXOrA=
+HPDYjAmiCzetyyQ4N8K-2Bo6Qywketau0yEIXCmrmqcSkH0TgH44QPjGhEIeDLmMnxnHEKERKqd=
+gxtdv6u1tJxQwE-2BuaZe7uclsH833SB-2FZk20brKIe2ei9ObrDeLvL-2FTDRN5DEsglK56yEl=
+1Xy3zlyEyVIM4F-2F-2FrSAi-2F-2F2R6cnyYHCzX7j1fuhXSiJLA834fX2P5xTitWBxJOEWxfR=
+thaLMSLvHNTYGKelJ4oLy7PjxDIDN4mq43EmBaPFBibyjF-2BOP4B5cEIaF9Pimdfmiat4spLg1=
+EJBi8Wk06YTTiRj0rGEIAuMxH-2Fa1RrxXETDWFUorBex-2BP74hedG9Z2CxMVZt-2FXAUWlPg8=
+jp3a558wAxQ3nBqcbERzbD05P19c0MnEylhysKJAeMIUNskqycInmpL9yMOZ4Lz-2BOplbSa1KJ=
+Dnqme7zQ0Wdy3GMox9SHWr91ZWXI3D5WbsKiu8-2BAfadP9qurGviqqJ0bwK3n4Mvzg-3D"><im=
+g class=3D"max-width" border=3D"0" style=3D"display:block; color:#000000; t=
+ext-decoration:none; font-family:Helvetica, arial, sans-serif; font-size:16=
+px; max-width:100% !important; width:100%; height:auto !important;" width=
+=3D"600" alt=3D"" data-proportionally-constrained=3D"true" data-responsive=
+=3D"true" src=3D"http://cdn.mcauto-images-production.sendgrid.net/2c7496d35=
+0bc5243/6cfc0350-56dd-411f-91fe-a8ce1a79a0f2/2400x1260.png"></a></td>
+      </tr>
+    </tbody>
+  </table><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=3D"=
+module" data-role=3D"module-button" data-type=3D"button" role=3D"module" st=
+yle=3D"table-layout:fixed;" width=3D"100%" data-muid=3D"96bbcc24-02f6-402c-=
+b18f-8565f685260e.1">
+      <tbody>
+        <tr>
+          <td align=3D"center" bgcolor=3D"" class=3D"outer-td" style=3D"pad=
+ding:0px 0px 0px 0px;">
+            <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" class=
+=3D"wrapper-mobile" style=3D"text-align:center;">
+              <tbody>
+                <tr>
+                <td align=3D"center" bgcolor=3D"#333333" class=3D"inner-td"=
+ style=3D"border-radius:6px; font-size:16px; text-align:center; background-=
+color:inherit;">
+                  <a href=3D"https://url8792.mail.anthropic.com/ls/click?up=
+n=3Du001.rFcAmKXLOm9u6wLRWHIUYb57odYuMXptiIvSnUIhs1NnLdKZP0Ub5Y4zA9zGRrp1jh=
+0Pub3cCeUoZaF-2BlwzjdA-3D-3DR9zF_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09=
+BwUoS9Gpbl6QX1AUICtpGgmLDb6y-2F9BoMWQdxQFG7iaQE5WYQIENYHWW99UaxK9-2BiDd6cE1=
+0IzOFA51xkqBOgfCGyUWhoSDKdNVFlrlP9oP0SvUFS-2BTG23Vnk1Dyg9GYQaxHVqvFdUR9LxWZ=
+obn-2FavpCcVjoKSeGUovEQ9mmnXmzxrktcTreM4aMkV0JVsuDl2ABRV9-2Bcw33-2Bx9E-2FpS=
+qIagZOv0mUlRNmU704-2B-2BO3J42eyFLaybKW-2Fkw-2BxaO3Cp1cAjJq2VTzCHKSj6Jy9PRG7=
+EjAILsBLatjHHsoxak4oPnwelVUyMb0NkR5Dzkt6noUw8Og4qsvm-2BTcSf2i01lokKggvogx2b=
+jcQoYRmRqOXb8lbmHeyZCOFtjXfcD4FZhVpKlQYRGwIeL6n24ydTEETyowi-2FnCTrrD0d9wSpI=
+13Zo52FesIBmKB9QbjKLm8YCq7qMh8adZsmxyyCSYlZW1-2BXOrAHPDYjAmiCzetyyQ4N8K-2Bo=
+6Qywketau0yEIXCmrmqcSkH0TgH44QPjGhEIeDLmMnxnHEKERKqdgxtdv6u1tJxQwE-2BuaZe7u=
+clsH833SB-2FZk20brKIe2ei9ObrDeLvL-2FTDRN5DEsglK56yEl1Xy3zlyEyVIM4F-2F-2FrSA=
+i-2F-2F2R6cnyYHCzX7j1fuhXSiJLA834fX2P5xTitWBxJOEWxfRthaLMSLvHNTYGKelJ4oLy7P=
+jxDIDN4mq43EmBaPFBibyjF-2BOP4B5cEIaF9Pimdfmiat4spLg1EJBi8Wk06YTTiRj0rGEIAuM=
+xH-2Fa1RrxXETDWFUorBex-2BP74hedG9Z2CxMeH7WflXuoNwl1qKTYeQdGPSdsbcKkKo6fS1Gn=
+HxnYC2w0B4mNiAcnQwx5E0wlQTOLYa0zgIOXMtMvMH9z0H0204DhqsPTyZrQwt0C83jpHlmSiCi=
+0VCG4pqrUedPDAH069ay66foGRO2JNIUhlS46s-3D" style=3D"background-color:#33333=
+3; border:1px solid #333333; border-color:#333333; border-radius:15px; bord=
+er-width:1px; color:#ffffff; display:inline-block; font-size:14px; font-wei=
+ght:normal; letter-spacing:0px; line-height:normal; padding:12px 18px 12px =
+18px; text-align:center; text-decoration:none; border-style:solid;" target=
+=3D"_blank">Learn More</a>
+                </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table><table class=3D"module" role=3D"module" data-type=3D"text" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%" style=3D"table-=
+layout: fixed;" data-muid=3D"014982b1-3cc2-4d78-b133-e578e909701a.2" data-m=
+c-module-version=3D"2019-10-22">
+    <tbody>
+      <tr>
+        <td style=3D"padding:40px 40px 40px 40px; line-height:23px; text-al=
+ign:inherit;" height=3D"100%" valign=3D"top" bgcolor=3D"" role=3D"module-co=
+ntent"><div><div style=3D"font-family: inherit; text-align: inherit"><span =
+style=3D"font-family: helvetica, sans-serif; font-size: 16px">Hello,&nbsp;<=
+/span></div>
+<div style=3D"font-family: inherit; text-align: inherit"><br></div>
+<div style=3D"font-family: inherit; text-align: inherit"><span style=3D"fon=
+t-family: helvetica, sans-serif; font-size: 16px">Today, we=E2=80=99re maki=
+ng Artifacts available for all </span><a href=3D"https://url8792.mail.anthr=
+opic.com/ls/click?upn=3Du001.DQPN1aY4ZNxl1FjlYxeAhVv-2F2k7kO-2Fw1-2BIAhPiD1=
+VK8-3DXTYx_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwUoS9Gpbl6QX1AUICtpGg=
+mLDb6y-2F9BoMWQdxQFG7iaQE5WYQIENYHWW99UaxK9-2BiDd6cE10IzOFA51xkqBOgfCGyUWho=
+SDKdNVFlrlP9oP0SvUFS-2BTG23Vnk1Dyg9GYQaxHVqvFdUR9LxWZobn-2FavpCcVjoKSeGUovE=
+Q9mmnXmzxrktcTreM4aMkV0JVsuDl2ABRV9-2Bcw33-2Bx9E-2FpSqIagZOv0mUlRNmU704-2B-=
+2BO3J42eyFLaybKW-2Fkw-2BxaO3Cp1cAjJq2VTzCHKSj6Jy9PRG7EjAILsBLatjHHsoxak4oPn=
+welVUyMb0NkR5Dzkt6noUw8Og4qsvm-2BTcSf2i01lokKggvogx2bjcQoYRmRqOXb8lbmHeyZCO=
+FtjXfcD4FZhVpKlQYRGwIeL6n24ydTEETyowi-2FnCTrrD0d9wSpI13Zo52FesIBmKB9QbjKLm8=
+YCq7qMh8adZsmxyyCSYlZW1-2BXOrAHPDYjAmiCzetyyQ4N8K-2Bo6Qywketau0yEIXCmrmqcSk=
+H0TgH44QPjGhEIeDLmMnxnHEKERKqdgxtdv6u1tJxQwE-2BuaZe7uclsH833SB-2FZk20brKIe2=
+ei9ObrDeLvL-2FTDRN5DEsglK56yEl1Xy3zlyEyVIM4F-2F-2FrSAi-2F-2F2R6cnyYHCzX7j1f=
+uhXSiJLA834fX2P5xTitWBxJOEWxfRthaLMSLvHNTYGKelJ4oLy7PjxDIDN4mq43EmBaPFBibyj=
+F-2BOP4B5cEIaF9Pimdfmiat4spLg1EJBi8Wk06YTTiRj0rGEIAuMxH-2Fa1RrxXETDWFUorBex=
+-2BP74hedG9Z2CxMRH4qJpa9lNlVd7qFb7LnghHOFAqO8Qix7CeruIz2O-2FiDPy0aAht0wwnLI=
+PJCZcqzKqkZSWOsrYMu-2BYFeRMm5onyIqmd0-2FUdIzW430ODwofzAdFMkhalUltOHKJM6XLbo=
+IRxy2B3g1HMDHi5S-2FpE6Lk-3D"><span style=3D"font-family: helvetica, sans-se=
+rif; font-size: 16px">Claude.ai</span></a><span style=3D"font-family: helve=
+tica, sans-serif; font-size: 16px"> users across our Free, Pro, and Team pl=
+ans. In addition, you can now create and view Artifacts on our </span><a hr=
+ef=3D"https://url8792.mail.anthropic.com/ls/click?upn=3Du001.rFcAmKXLOm9u6w=
+LRWHIUYe7LRAyGAH2GXPCbWGHu9WsQhaboe3owZ0d-2BOS9A4AkrOQk2_rO1JRqZrx5Oo25BATZ=
+ItEvIKK9wiuA6UN-2BXngf09BwUoS9Gpbl6QX1AUICtpGgmLDb6y-2F9BoMWQdxQFG7iaQE5WYQ=
+IENYHWW99UaxK9-2BiDd6cE10IzOFA51xkqBOgfCGyUWhoSDKdNVFlrlP9oP0SvUFS-2BTG23Vn=
+k1Dyg9GYQaxHVqvFdUR9LxWZobn-2FavpCcVjoKSeGUovEQ9mmnXmzxrktcTreM4aMkV0JVsuDl=
+2ABRV9-2Bcw33-2Bx9E-2FpSqIagZOv0mUlRNmU704-2B-2BO3J42eyFLaybKW-2Fkw-2BxaO3C=
+p1cAjJq2VTzCHKSj6Jy9PRG7EjAILsBLatjHHsoxak4oPnwelVUyMb0NkR5Dzkt6noUw8Og4qsv=
+m-2BTcSf2i01lokKggvogx2bjcQoYRmRqOXb8lbmHeyZCOFtjXfcD4FZhVpKlQYRGwIeL6n24yd=
+TEETyowi-2FnCTrrD0d9wSpI13Zo52FesIBmKB9QbjKLm8YCq7qMh8adZsmxyyCSYlZW1-2BXOr=
+AHPDYjAmiCzetyyQ4N8K-2Bo6Qywketau0yEIXCmrmqcSkH0TgH44QPjGhEIeDLmMnxnHEKERKq=
+dgxtdv6u1tJxQwE-2BuaZe7uclsH833SB-2FZk20brKIe2ei9ObrDeLvL-2FTDRN5DEsglK56yE=
+l1Xy3zlyEyVIM4F-2F-2FrSAi-2F-2F2R6cnyYHCzX7j1fuhXSiJLA834fX2P5xTitWBxJOEWxf=
+RthaLMSLvHNTYGKelJ4oLy7PjxDIDN4mq43EmBaPFBibyjF-2BOP4B5cEIaF9Pimdfmiat4spLg=
+1EJBi8Wk06YTTiRj0rGEIAuMxH-2Fa1RrxXETDWFUorBex-2BP74hedG9Z2CxMfFjjcsCwmT-2F=
+QGCoL8vwt-2Bv2VwtNvxBvBhWsxLHNksjbhAzfUoKtU7F0uor5bejH9nB7ENloaV1VVkV6xG4GQ=
+mOzf1TKTC8tv0sB9xLOJcwt7vs3Ms5uC9b5DxQLGYtih50I7H3iiNOh83NPbsdJMLU-3D"><spa=
+n style=3D"font-family: helvetica, sans-serif; font-size: 16px">iOS</span><=
+/a><span style=3D"font-family: helvetica, sans-serif; font-size: 16px"> and=
+ </span><a href=3D"https://url8792.mail.anthropic.com/ls/click?upn=3Du001.r=
+FcAmKXLOm9u6wLRWHIUYSu7-2BehylbKkeBaf1aKRbCKlU6uC0nm6Yz8RwIJnZH-2FP7pPv_rO1=
+JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwUoS9Gpbl6QX1AUICtpGgmLDb6y-2F9BoMW=
+QdxQFG7iaQE5WYQIENYHWW99UaxK9-2BiDd6cE10IzOFA51xkqBOgfCGyUWhoSDKdNVFlrlP9oP=
+0SvUFS-2BTG23Vnk1Dyg9GYQaxHVqvFdUR9LxWZobn-2FavpCcVjoKSeGUovEQ9mmnXmzxrktcT=
+reM4aMkV0JVsuDl2ABRV9-2Bcw33-2Bx9E-2FpSqIagZOv0mUlRNmU704-2B-2BO3J42eyFLayb=
+KW-2Fkw-2BxaO3Cp1cAjJq2VTzCHKSj6Jy9PRG7EjAILsBLatjHHsoxak4oPnwelVUyMb0NkR5D=
+zkt6noUw8Og4qsvm-2BTcSf2i01lokKggvogx2bjcQoYRmRqOXb8lbmHeyZCOFtjXfcD4FZhVpK=
+lQYRGwIeL6n24ydTEETyowi-2FnCTrrD0d9wSpI13Zo52FesIBmKB9QbjKLm8YCq7qMh8adZsmx=
+yyCSYlZW1-2BXOrAHPDYjAmiCzetyyQ4N8K-2Bo6Qywketau0yEIXCmrmqcSkH0TgH44QPjGhEI=
+eDLmMnxnHEKERKqdgxtdv6u1tJxQwE-2BuaZe7uclsH833SB-2FZk20brKIe2ei9ObrDeLvL-2F=
+TDRN5DEsglK56yEl1Xy3zlyEyVIM4F-2F-2FrSAi-2F-2F2R6cnyYHCzX7j1fuhXSiJLA834fX2=
+P5xTitWBxJOEWxfRthaLMSLvHNTYGKelJ4oLy7PjxDIDN4mq43EmBaPFBibyjF-2BOP4B5cEIaF=
+9Pimdfmiat4spLg1EJBi8Wk06YTTiRj0rGEIAuMxH-2Fa1RrxXETDWFUorBex-2BP74hedG9Z2C=
+xMW4-2FMGTB8AgCh30yYFd4BTdOdpa0wH3Imw2CJJHMNEn6w0bdBKO4OfkFxs370kYQSjNKOqak=
+ereyQbcObqH4svSDWXsW9yPYmtOOrctpW0v2pNEhVAm7Lh9XMluOKJ-2FPfoO0-2BiRjAYR88T9=
+xlXWVGkY-3D"><span style=3D"font-family: helvetica, sans-serif; font-size: =
+16px">Android</span></a><span style=3D"font-family: helvetica, sans-serif; =
+font-size: 16px"> apps.</span></div>
+<div style=3D"font-family: inherit; text-align: inherit"><br></div>
+<div style=3D"font-family: inherit; text-align: inherit"><span style=3D"fon=
+t-family: helvetica, sans-serif; font-size: 16px">Artifacts turn conversati=
+ons with Claude into a more creative and collaborative experience. With Art=
+ifacts, you have a dedicated window to instantly see, iterate, and build on=
+ the work you create with Claude. Since launching as a </span><a href=3D"ht=
+tps://url8792.mail.anthropic.com/ls/click?upn=3Du001.rFcAmKXLOm9u6wLRWHIUYb=
+57odYuMXptiIvSnUIhs1P-2FZd30fRJKYNIcjCv-2F9spqDg7My93cH8a3qpVDCL7ZKQ-3D-3Dj=
+6dR_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwUoS9Gpbl6QX1AUICtpGgmLDb6y-=
+2F9BoMWQdxQFG7iaQE5WYQIENYHWW99UaxK9-2BiDd6cE10IzOFA51xkqBOgfCGyUWhoSDKdNVF=
+lrlP9oP0SvUFS-2BTG23Vnk1Dyg9GYQaxHVqvFdUR9LxWZobn-2FavpCcVjoKSeGUovEQ9mmnXm=
+zxrktcTreM4aMkV0JVsuDl2ABRV9-2Bcw33-2Bx9E-2FpSqIagZOv0mUlRNmU704-2B-2BO3J42=
+eyFLaybKW-2Fkw-2BxaO3Cp1cAjJq2VTzCHKSj6Jy9PRG7EjAILsBLatjHHsoxak4oPnwelVUyM=
+b0NkR5Dzkt6noUw8Og4qsvm-2BTcSf2i01lokKggvogx2bjcQoYRmRqOXb8lbmHeyZCOFtjXfcD=
+4FZhVpKlQYRGwIeL6n24ydTEETyowi-2FnCTrrD0d9wSpI13Zo52FesIBmKB9QbjKLm8YCq7qMh=
+8adZsmxyyCSYlZW1-2BXOrAHPDYjAmiCzetyyQ4N8K-2Bo6Qywketau0yEIXCmrmqcSkH0TgH44=
+QPjGhEIeDLmMnxnHEKERKqdgxtdv6u1tJxQwE-2BuaZe7uclsH833SB-2FZk20brKIe2ei9ObrD=
+eLvL-2FTDRN5DEsglK56yEl1Xy3zlyEyVIM4F-2F-2FrSAi-2F-2F2R6cnyYHCzX7j1fuhXSiJL=
+A834fX2P5xTitWBxJOEWxfRthaLMSLvHNTYGKelJ4oLy7PjxDIDN4mq43EmBaPFBibyjF-2BOP4=
+B5cEIaF9Pimdfmiat4spLg1EJBi8Wk06YTTiRj0rGEIAuMxH-2Fa1RrxXETDWFUorBex-2BP74h=
+edG9Z2CxMX5MPNEirXx5i5XB2I6mA3QsEr9oHVAetq0b80Jr7mCKtRaQPfi3dhBU2v4OMaxLeYt=
+6FeI6C5-2BaN1S5Ehb6BKaT0M8bPUU4y3MgY4F4FbdTYGR857gamWK5j-2BwZKM3Vr1u8QO8-2B=
+gKKjhFkUsV9SEuM-3D"><span style=3D"font-family: helvetica, sans-serif; font=
+-size: 16px">feature preview</span></a><span style=3D"font-family: helvetic=
+a, sans-serif; font-size: 16px"> in June, users have created tens of millio=
+ns of Artifacts.</span></div>
+<div style=3D"font-family: inherit; text-align: inherit"><br></div>
+<div style=3D"font-family: inherit; text-align: inherit"><span style=3D"fon=
+t-family: helvetica, sans-serif; font-size: 16px">Every team can use Claude=
+ to create high-quality work products faster than ever before. Artifacts he=
+lp bring your ideas and projects to life, for example:</span></div>
+<ul>
+  <li style=3D"text-align: inherit; font-family: helvetica, sans-serif; fon=
+t-size: 16px; font-size: 16px"><span style=3D"font-family: helvetica, sans-=
+serif; font-size: 16px"><strong>Developers </strong></span><span style=3D"f=
+ont-family: helvetica, sans-serif; font-size: 16px">can make </span><a href=
+=3D"https://url8792.mail.anthropic.com/ls/click?upn=3Du001.rFcAmKXLOm9u6wLR=
+WHIUYYobzZAtg9CegpH4NJ-2Bbxl0WG52nFSzqNs5edTZ09EIjlq9ekASKuHnFceB-2BSdxEnyV=
+Nl9GRi7XT0leibE3qMzA-3DXkeA_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwUoS=
+9Gpbl6QX1AUICtpGgmLDb6y-2F9BoMWQdxQFG7iaQE5WYQIENYHWW99UaxK9-2BiDd6cE10IzOF=
+A51xkqBOgfCGyUWhoSDKdNVFlrlP9oP0SvUFS-2BTG23Vnk1Dyg9GYQaxHVqvFdUR9LxWZobn-2=
+FavpCcVjoKSeGUovEQ9mmnXmzxrktcTreM4aMkV0JVsuDl2ABRV9-2Bcw33-2Bx9E-2FpSqIagZ=
+Ov0mUlRNmU704-2B-2BO3J42eyFLaybKW-2Fkw-2BxaO3Cp1cAjJq2VTzCHKSj6Jy9PRG7EjAIL=
+sBLatjHHsoxak4oPnwelVUyMb0NkR5Dzkt6noUw8Og4qsvm-2BTcSf2i01lokKggvogx2bjcQoY=
+RmRqOXb8lbmHeyZCOFtjXfcD4FZhVpKlQYRGwIeL6n24ydTEETyowi-2FnCTrrD0d9wSpI13Zo5=
+2FesIBmKB9QbjKLm8YCq7qMh8adZsmxyyCSYlZW1-2BXOrAHPDYjAmiCzetyyQ4N8K-2Bo6Qywk=
+etau0yEIXCmrmqcSkH0TgH44QPjGhEIeDLmMnxnHEKERKqdgxtdv6u1tJxQwE-2BuaZe7uclsH8=
+33SB-2FZk20brKIe2ei9ObrDeLvL-2FTDRN5DEsglK56yEl1Xy3zlyEyVIM4F-2F-2FrSAi-2F-=
+2F2R6cnyYHCzX7j1fuhXSiJLA834fX2P5xTitWBxJOEWxfRthaLMSLvHNTYGKelJ4oLy7PjxDID=
+N4mq43EmBaPFBibyjF-2BOP4B5cEIaF9Pimdfmiat4spLg1EJBi8Wk06YTTiRj0rGEIAuMxH-2F=
+a1RrxXETDWFUorBex-2BP74hedG9Z2CxMWUDW60N5PmEglrbxfiSBOH8CE5EoyjVZLISCABh0Tt=
+ual9beUugG0ITJs0DGbmutXzUnnOn35-2Fxke9I-2BbPjvgOfpI8U2E-2B4RQCfNsWwH-2BtXr5=
+9ASoEHa-2FXIUq51vNWlfBICWKi25bZpYaVcKHzn6Q4-3D"><span style=3D"font-family:=
+ helvetica, sans-serif; font-size: 16px">architecture diagrams</span></a><s=
+pan style=3D"font-family: helvetica, sans-serif; font-size: 16px"> from cod=
+ebases</span></li>
+  <li style=3D"text-align: inherit; font-family: helvetica, sans-serif; fon=
+t-size: 16px; font-size: 16px"><span style=3D"font-family: helvetica, sans-=
+serif; font-size: 16px"><strong>Product managers</strong></span><span style=
+=3D"font-family: helvetica, sans-serif; font-size: 16px"> can create </span=
+><a href=3D"https://url8792.mail.anthropic.com/ls/click?upn=3Du001.rFcAmKXL=
+Om9u6wLRWHIUYYobzZAtg9CegpH4NJ-2Bbxl2DfDT4rXTDoyXEdJiN-2BeV2GaYb65IO1lahPr-=
+2BYkRCbUOgeQAepPoG1BC-2Bg2yNI2Sg-3DUGed_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2=
+BXngf09BwUoS9Gpbl6QX1AUICtpGgmLDb6y-2F9BoMWQdxQFG7iaQE5WYQIENYHWW99UaxK9-2B=
+iDd6cE10IzOFA51xkqBOgfCGyUWhoSDKdNVFlrlP9oP0SvUFS-2BTG23Vnk1Dyg9GYQaxHVqvFd=
+UR9LxWZobn-2FavpCcVjoKSeGUovEQ9mmnXmzxrktcTreM4aMkV0JVsuDl2ABRV9-2Bcw33-2Bx=
+9E-2FpSqIagZOv0mUlRNmU704-2B-2BO3J42eyFLaybKW-2Fkw-2BxaO3Cp1cAjJq2VTzCHKSj6=
+Jy9PRG7EjAILsBLatjHHsoxak4oPnwelVUyMb0NkR5Dzkt6noUw8Og4qsvm-2BTcSf2i01lokKg=
+gvogx2bjcQoYRmRqOXb8lbmHeyZCOFtjXfcD4FZhVpKlQYRGwIeL6n24ydTEETyowi-2FnCTrrD=
+0d9wSpI13Zo52FesIBmKB9QbjKLm8YCq7qMh8adZsmxyyCSYlZW1-2BXOrAHPDYjAmiCzetyyQ4=
+N8K-2Bo6Qywketau0yEIXCmrmqcSkH0TgH44QPjGhEIeDLmMnxnHEKERKqdgxtdv6u1tJxQwE-2=
+BuaZe7uclsH833SB-2FZk20brKIe2ei9ObrDeLvL-2FTDRN5DEsglK56yEl1Xy3zlyEyVIM4F-2=
+F-2FrSAi-2F-2F2R6cnyYHCzX7j1fuhXSiJLA834fX2P5xTitWBxJOEWxfRthaLMSLvHNTYGKel=
+J4oLy7PjxDIDN4mq43EmBaPFBibyjF-2BOP4B5cEIaF9Pimdfmiat4spLg1EJBi8Wk06YTTiRj0=
+rGEIAuMxH-2Fa1RrxXETDWFUorBex-2BP74hedG9Z2CxMRyzWSsz1EQD6rc0poocYalkWlOuXiR=
+Pn7H9YZlfwUbCaEalkKHTdFb3QMyCe6JXvLYvzKLuaSCy8Euxmju4GEnZcM5IpdFWJpudBoLKgm=
+AKqBlF6wngOTqSqfTe042MoaX8-2FxF532MjU32yGrmUUvA-3D"><span style=3D"font-fam=
+ily: helvetica, sans-serif; font-size: 16px">interactive prototypes</span><=
+/a><span style=3D"font-family: helvetica, sans-serif; font-size: 16px"> for=
+ rapid feature testing</span></li>
+  <li style=3D"text-align: inherit; font-family: helvetica, sans-serif; fon=
+t-size: 16px; font-size: 16px"><span style=3D"font-family: helvetica, sans-=
+serif; font-size: 16px"><strong>Marketers</strong></span><span style=3D"fon=
+t-family: helvetica, sans-serif; font-size: 16px"> can design </span><a hre=
+f=3D"https://url8792.mail.anthropic.com/ls/click?upn=3Du001.rFcAmKXLOm9u6wL=
+RWHIUYYobzZAtg9CegpH4NJ-2Bbxl2cXZFHh7d4O2cS11PQQoUsGaEyCmANsJ9Z0amrjNA3rcHT=
+nEwpsa36cH-2BbPs2XecM-3DWbfB_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwUo=
+S9Gpbl6QX1AUICtpGgmLDb6y-2F9BoMWQdxQFG7iaQE5WYQIENYHWW99UaxK9-2BiDd6cE10IzO=
+FA51xkqBOgfCGyUWhoSDKdNVFlrlP9oP0SvUFS-2BTG23Vnk1Dyg9GYQaxHVqvFdUR9LxWZobn-=
+2FavpCcVjoKSeGUovEQ9mmnXmzxrktcTreM4aMkV0JVsuDl2ABRV9-2Bcw33-2Bx9E-2FpSqIag=
+ZOv0mUlRNmU704-2B-2BO3J42eyFLaybKW-2Fkw-2BxaO3Cp1cAjJq2VTzCHKSj6Jy9PRG7EjAI=
+LsBLatjHHsoxak4oPnwelVUyMb0NkR5Dzkt6noUw8Og4qsvm-2BTcSf2i01lokKggvogx2bjcQo=
+YRmRqOXb8lbmHeyZCOFtjXfcD4FZhVpKlQYRGwIeL6n24ydTEETyowi-2FnCTrrD0d9wSpI13Zo=
+52FesIBmKB9QbjKLm8YCq7qMh8adZsmxyyCSYlZW1-2BXOrAHPDYjAmiCzetyyQ4N8K-2Bo6Qyw=
+ketau0yEIXCmrmqcSkH0TgH44QPjGhEIeDLmMnxnHEKERKqdgxtdv6u1tJxQwE-2BuaZe7uclsH=
+833SB-2FZk20brKIe2ei9ObrDeLvL-2FTDRN5DEsglK56yEl1Xy3zlyEyVIM4F-2F-2FrSAi-2F=
+-2F2R6cnyYHCzX7j1fuhXSiJLA834fX2P5xTitWBxJOEWxfRthaLMSLvHNTYGKelJ4oLy7PjxDI=
+DN4mq43EmBaPFBibyjF-2BOP4B5cEIaF9Pimdfmiat4spLg1EJBi8Wk06YTTiRj0rGEIAuMxH-2=
+Fa1RrxXETDWFUorBex-2BP74hedG9Z2CxMfAnYE4TyDxJHoNObttEWtV9MIxBaDSGz9NfH3kZmJ=
+R0Ip9g4vvTK-2F1rSxQMnbTgY8hj2DJGRCr6sNcoCQh5sXsLjlL5Mh7ElHqiNlQX6yOmsF5tYZp=
+q88rLYItSTGABmeHMmnmvFdCAqt96QCxUeUA-3D"><span style=3D"font-family: helvet=
+ica, sans-serif; font-size: 16px">campaign dashboards</span></a><span style=
+=3D"font-family: helvetica, sans-serif; font-size: 16px"> with performance =
+metrics</span></li>
+</ul>
+<div style=3D"font-family: helvetica, sans-serif; text-align: inherit; font=
+-size: 18px"><span style=3D"font-family: helvetica, sans-serif; font-size: =
+16px">Users on Free and Pro plans can publish and remix Artifacts with the =
+broader community, allowing you to build and iterate on the materials publi=
+shed by other users around the world.&nbsp;</span></div>
+<div style=3D"font-family: helvetica, sans-serif; text-align: inherit; font=
+-size: 18px"><br></div>
+<div style=3D"font-family: helvetica, sans-serif; text-align: inherit; font=
+-size: 18px"><span style=3D"font-family: helvetica, sans-serif; font-size: =
+16px">Team plan users can create Artifacts and share them in Projects, enab=
+ling teammates to collaborate in a secure environment.&nbsp;</span></div>
+<div style=3D"font-family: helvetica, sans-serif; text-align: inherit; font=
+-size: 18px"><br></div>
+<div style=3D"font-family: helvetica, sans-serif; text-align: inherit; font=
+-size: 18px"><span style=3D"font-family: helvetica, sans-serif; font-size: =
+16px">We look forward to seeing what you build and share next on </span><a =
+href=3D"https://url8792.mail.anthropic.com/ls/click?upn=3Du001.DQPN1aY4ZNxl=
+1FjlYxeAhVv-2F2k7kO-2Fw1-2BIAhPiD1VK8-3D3uG8_rO1JRqZrx5Oo25BATZItEvIKK9wiuA=
+6UN-2BXngf09BwUoS9Gpbl6QX1AUICtpGgmLDb6y-2F9BoMWQdxQFG7iaQE5WYQIENYHWW99Uax=
+K9-2BiDd6cE10IzOFA51xkqBOgfCGyUWhoSDKdNVFlrlP9oP0SvUFS-2BTG23Vnk1Dyg9GYQaxH=
+VqvFdUR9LxWZobn-2FavpCcVjoKSeGUovEQ9mmnXmzxrktcTreM4aMkV0JVsuDl2ABRV9-2Bcw3=
+3-2Bx9E-2FpSqIagZOv0mUlRNmU704-2B-2BO3J42eyFLaybKW-2Fkw-2BxaO3Cp1cAjJq2VTzC=
+HKSj6Jy9PRG7EjAILsBLatjHHsoxak4oPnwelVUyMb0NkR5Dzkt6noUw8Og4qsvm-2BTcSf2i01=
+lokKggvogx2bjcQoYRmRqOXb8lbmHeyZCOFtjXfcD4FZhVpKlQYRGwIeL6n24ydTEETyowi-2Fn=
+CTrrD0d9wSpI13Zo52FesIBmKB9QbjKLm8YCq7qMh8adZsmxyyCSYlZW1-2BXOrAHPDYjAmiCze=
+tyyQ4N8K-2Bo6Qywketau0yEIXCmrmqcSkH0TgH44QPjGhEIeDLmMnxnHEKERKqdgxtdv6u1tJx=
+QwE-2BuaZe7uclsH833SB-2FZk20brKIe2ei9ObrDeLvL-2FTDRN5DEsglK56yEl1Xy3zlyEyVI=
+M4F-2F-2FrSAi-2F-2F2R6cnyYHCzX7j1fuhXSiJLA834fX2P5xTitWBxJOEWxfRthaLMSLvHNT=
+YGKelJ4oLy7PjxDIDN4mq43EmBaPFBibyjF-2BOP4B5cEIaF9Pimdfmiat4spLg1EJBi8Wk06YT=
+TiRj0rGEIAuMxH-2Fa1RrxXETDWFUorBex-2BP74hedG9Z2CxMVcykXstGw-2Bjn4pW56IvrHmR=
+-2Fd7xYSgFe2tXrMseoTIkjhYU03zDsB-2Bo1N3KWD961ibxKn8opWAaic4L3mfdij8xasV4ldo=
+G-2F8lyTRoOR-2FOy-2BKIgnQ-2B8T-2FitoxwXQFwyNDXSxAjN9c1CBb13JbgsV0I-3D"><spa=
+n style=3D"font-family: helvetica, sans-serif; font-size: 16px">Claude.ai</=
+span></a><span style=3D"font-family: helvetica, sans-serif; font-size: 16px=
+">.&nbsp;</span></div>
+<div style=3D"font-family: inherit; text-align: inherit"><br></div>
+<div style=3D"font-family: inherit; text-align: inherit"><span style=3D"fon=
+t-family: helvetica, sans-serif; font-size: 16px">=E2=80=93 The Anthropic T=
+eam</span></div><div></div></div></td>
+      </tr>
+    </tbody>
+  </table><table class=3D"module" role=3D"module" data-type=3D"social" alig=
+n=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" width=3D"100%=
+" style=3D"table-layout: fixed;" data-muid=3D"f4569f76-5401-4d05-b706-32502=
+f6e9cd4">
+    <tbody>
+      <tr>
+        <td valign=3D"top" style=3D"padding:0px 0px 0px 0px; font-size:6px;=
+ line-height:10px;" align=3D"center">
+          <table align=3D"center" style=3D"-webkit-margin-start:auto;-webki=
+t-margin-end:auto;">
+            <tbody><tr align=3D"center"><td style=3D"padding: 0px 5px;" cla=
+ss=3D"social-icon-column">
+      <a role=3D"social-icon-link" href=3D"https://url8792.mail.anthropic.c=
+om/ls/click?upn=3Du001.rFcAmKXLOm9u6wLRWHIUYfw6YEn6S7SZHsYwi-2Bdxy7gWNonWz4=
+HUpGN07CsdA5MW4una_rO1JRqZrx5Oo25BATZItEvIKK9wiuA6UN-2BXngf09BwUoS9Gpbl6QX1=
+AUICtpGgmLDb6y-2F9BoMWQdxQFG7iaQE5WYQIENYHWW99UaxK9-2BiDd6cE10IzOFA51xkqBOg=
+fCGyUWhoSDKdNVFlrlP9oP0SvUFS-2BTG23Vnk1Dyg9GYQaxHVqvFdUR9LxWZobn-2FavpCcVjo=
+KSeGUovEQ9mmnXmzxrktcTreM4aMkV0JVsuDl2ABRV9-2Bcw33-2Bx9E-2FpSqIagZOv0mUlRNm=
+U704-2B-2BO3J42eyFLaybKW-2Fkw-2BxaO3Cp1cAjJq2VTzCHKSj6Jy9PRG7EjAILsBLatjHHs=
+oxak4oPnwelVUyMb0NkR5Dzkt6noUw8Og4qsvm-2BTcSf2i01lokKggvogx2bjcQoYRmRqOXb8l=
+bmHeyZCOFtjXfcD4FZhVpKlQYRGwIeL6n24ydTEETyowi-2FnCTrrD0d9wSpI13Zo52FesIBmKB=
+9QbjKLm8YCq7qMh8adZsmxyyCSYlZW1-2BXOrAHPDYjAmiCzetyyQ4N8K-2Bo6Qywketau0yEIX=
+CmrmqcSkH0TgH44QPjGhEIeDLmMnxnHEKERKqdgxtdv6u1tJxQwE-2BuaZe7uclsH833SB-2FZk=
+20brKIe2ei9ObrDeLvL-2FTDRN5DEsglK56yEl1Xy3zlyEyVIM4F-2F-2FrSAi-2F-2F2R6cnyY=
+HCzX7j1fuhXSiJLA834fX2P5xTitWBxJOEWxfRthaLMSLvHNTYGKelJ4oLy7PjxDIDN4mq43EmB=
+aPFBibyjF-2BOP4B5cEIaF9Pimdfmiat4spLg1EJBi8Wk06YTTiRj0rGEIAuMxH-2Fa1RrxXETD=
+WFUorBex-2BP74hedG9Z2CxMVtnmvo7sfGyoGRBF-2BpxiIHHxn1TVubovu4klHd1Ic4uvnKkoh=
+L1HtfM-2BixL23IMJtZVryGI639zlMByVZPFucA-2F-2BXDXEGjW5VlToZPeQHfAbF2EoMnKNwt=
+T4RTBYC-2FxIIE5opD7gNsOkKMgNOWBbN4-3D" target=3D"_blank" alt=3D"X" title=3D=
+"X" style=3D"display:inline-block; background-color:#000000; height:21px; w=
+idth:21px;">
+        <img role=3D"social-icon" alt=3D"X" title=3D"X" src=3D"https://mc.s=
+endgrid.com/assets/social/white/x.png" style=3D"height:21px; width:21px;" h=
+eight=3D"21" width=3D"21">
+      </a>
+    </td><td style=3D"padding: 0px 5px;" class=3D"social-icon-column">
+      <a role=3D"social-icon-link" href=3D"https://url8792.mail.anthropic.c=
+om/ls/click?upn=3Du001.rFcAmKXLOm9u6wLRWHIUYa6GzH-2BFtbEVfexYT4qRVAWazJ7g4O=
+eUD3adJ2mUpFcICy16n2hGL01Q-2BzfxCliP7w-3D-3DrLYV_rO1JRqZrx5Oo25BATZItEvIKK9=
+wiuA6UN-2BXngf09BwUoS9Gpbl6QX1AUICtpGgmLDb6y-2F9BoMWQdxQFG7iaQE5WYQIENYHWW9=
+9UaxK9-2BiDd6cE10IzOFA51xkqBOgfCGyUWhoSDKdNVFlrlP9oP0SvUFS-2BTG23Vnk1Dyg9GY=
+QaxHVqvFdUR9LxWZobn-2FavpCcVjoKSeGUovEQ9mmnXmzxrktcTreM4aMkV0JVsuDl2ABRV9-2=
+Bcw33-2Bx9E-2FpSqIagZOv0mUlRNmU704-2B-2BO3J42eyFLaybKW-2Fkw-2BxaO3Cp1cAjJq2=
+VTzCHKSj6Jy9PRG7EjAILsBLatjHHsoxak4oPnwelVUyMb0NkR5Dzkt6noUw8Og4qsvm-2BTcSf=
+2i01lokKggvogx2bjcQoYRmRqOXb8lbmHeyZCOFtjXfcD4FZhVpKlQYRGwIeL6n24ydTEETyowi=
+-2FnCTrrD0d9wSpI13Zo52FesIBmKB9QbjKLm8YCq7qMh8adZsmxyyCSYlZW1-2BXOrAHPDYjAm=
+iCzetyyQ4N8K-2Bo6Qywketau0yEIXCmrmqcSkH0TgH44QPjGhEIeDLmMnxnHEKERKqdgxtdv6u=
+1tJxQwE-2BuaZe7uclsH833SB-2FZk20brKIe2ei9ObrDeLvL-2FTDRN5DEsglK56yEl1Xy3zly=
+EyVIM4F-2F-2FrSAi-2F-2F2R6cnyYHCzX7j1fuhXSiJLA834fX2P5xTitWBxJOEWxfRthaLMSL=
+vHNTYGKelJ4oLy7PjxDIDN4mq43EmBaPFBibyjF-2BOP4B5cEIaF9Pimdfmiat4spLg1EJBi8Wk=
+06YTTiRj0rGEIAuMxH-2Fa1RrxXETDWFUorBex-2BP74hedG9Z2CxMebMNtAnfbsEA44T-2FaOh=
+QusuHHCZtKwEQsU0lPg6md1uVVZPtpWJsP7Ftp4EMxYqTVVl0utN-2B2KbNOpUNZt7k1BMCfcit=
+gptuiSTXdO8xlozok-2BMF2qu0m3WQhdR0X36LHZZBe4TkW5m9VGcs2sT9vs-3D" target=3D"=
+_blank" alt=3D"LinkedIn" title=3D"LinkedIn" style=3D"display:inline-block; =
+background-color:#0077B5; height:21px; width:21px;">
+        <img role=3D"social-icon" alt=3D"LinkedIn" title=3D"LinkedIn" src=
+=3D"https://mc.sendgrid.com/assets/social/white/linkedin.png" style=3D"heig=
+ht:21px; width:21px;" height=3D"21" width=3D"21">
+      </a>
+    </td></tr></tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table><div data-role=3D"module-unsubscribe" class=3D"module" role=3D"mo=
+dule" data-type=3D"unsubscribe" style=3D"color:#444444; font-size:12px; lin=
+e-height:20px; padding:16px 16px 16px 16px; text-align:center;" data-muid=
+=3D"27ea0023-57b7-4254-875b-bf22d38c5a01"><div class=3D"Unsubscribe--addres=
+sLine"></div><p style=3D"font-size:12px; line-height:20px;"><a class=3D"Uns=
+ubscribe--unsubscribeLink" href=3D"https://url8792.mail.anthropic.com/wf/un=
+subscribe?upn=3Du001.wJ4wQoWqpttL0LnWj9yCngQD-2BPKOSnIWwGo2A-2BWj6Xi6FgHnN-=
+2B9bhefwKVGNvqLcGhrbYgefP-2FXEugaciFYlgmLHP1man5IWhC1LkqTfxjh9F7zMduMnNKqVt=
+4Xu0DWqZns0Q491N-2B3QdjZBOd-2BRNn9rN1HFmryloiENnYn3sZ8sV-2FiqE756Fu7n48iWJy=
+sOy285-2F4LSJ6nyf9PS0sQbxbvJktL9XC6-2Bq1VSPApuqspLLoSTewIDkeZJosCNBskN8SYwi=
+zAZfcXXnoyrU1C13MK3Yzdeu9FEt7pAzAw4q11PA6OCUAyZaElmoqey3YT74ZkJbqS1AD5mITOt=
+VpQaMdhTQ6-2Boe0fZ6dGjhWluMVryeTQUwNq9bAAbwWmA8nGHeKCMJnCyB54fHfFxjE-2BBjyU=
+lgXpr2fDT1-2BV2grCuiHQrwvJuiPIMvE-2B0W5hX9Myg9-2FaSHRGZbDEfrz1d4ixepVcHQ6bf=
+XtS9NVBNQfj0UEBYC6I0gFk3OJ2mUXCmRpO6DgLvicAGmw0-2FIvdsqbPQfkjsBtNKPcyGWEtOJ=
+jZuMrn4Hg-2FNJr-2FBIktwN85BNctrOdoxattZ0MlfQE2HppM8kfttwHqhjhNYVwPNrhKX-2Bm=
+5skg-2B641VX2P8YREiXuH7Ats-2B0NEEYlcDSES-2FCr8jWyiUHKuNb0X-2B0Vk4pkfeRQR6cP=
+yAaLvt7MGKXSwJVQOThbNDZR8mrzW9A-2FZ2uYdKkDZ0F3cuD9nMvTekWJ7lhFz-2BfjGH0s2hX=
+q9-2Br7BWs2o3Zg-2B3JLQfs53UeDUBsJ8h4nOMZjSp7HNuVWNpvuMbSzigJaqDiN9DFbYsZqeM=
+8w5-2BItHZKsRwwcqh735GgOID21n5ubCPjlgSFrRM7jAqZJieUxZZxdQX1Th8Q-2Fd-2FLyb3I=
+PfF9u6hg7WNgZJZKhXAvAqlduB-2F1oNZVm7rsVHCXqbqgpjMVC4IdS3s4yflr674k9oJyogy69=
+EHxGhaLqraLFjIz0-2FkRWNyymnzXCm2SxHuxCxHEuJ6YuQeMmfx6xDI1" target=3D"_blank=
+" style=3D"">Unsubscribe</a></p></div></td>
+                                      </tr>
+                                    </table>
+                                    <!--[if mso]>
+                                  </td>
+                                </tr>
+                              </table>
+                            </center>
+                            <![endif]-->
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </center>
+    <img src=3D"https://url8792.mail.anthropic.com/wf/open?upn=3Du001.wJ4wQ=
+oWqpttL0LnWj9yCngQD-2BPKOSnIWwGo2A-2BWj6Xi6FgHnN-2B9bhefwKVGNvqLcGhrbYgefP-=
+2FXEugaciFYlgmLHP1man5IWhC1LkqTfxjh9F7zMduMnNKqVt4Xu0DWqZns0Q491N-2B3QdjZBO=
+d-2BRNn9rN1HFmryloiENnYn3sZ8sV-2FiqE756Fu7n48iWJysOy285-2F4LSJ6nyf9PS0sQbxb=
+vJktL9XC6-2Bq1VSPApuqspLLoSTewIDkeZJosCNBskN8SYwizAZfcXXnoyrU1C13MK3Yzdeu9F=
+Et7pAzAw4q11PA6OCUAyZaElmoqey3YT74ZkJbqS1AD5mITOtVpQaMdhTQ6-2Boe0fZ6dGjhWlu=
+MVryeTQUwNq9bAAbwWmA8nGHeKCMJnCyB54fHfFxjE-2BBjyUlgXpr2fDT1-2BV2grCuiHQrwvJ=
+uiPIMvE-2B0W5hX9Myg9-2FaSHRGZbDEfrz1d4ixepVcHQ6bfXtS9NVBNQfj0UEBYC6I0gFk3OJ=
+2mUXCmRpO6DgLvicAGmw0-2FIvdsqbPQfkjsBtNKPcyGWEtOJjZuMrn4Hg-2FNJr-2FBIktwN85=
+BNctrOdoxattZ0MlfQE2HppM8kfttwHqhjhNYVwPNrhKX-2Bm5skg-2B641VX2P8YREiXuH7Ats=
+-2B0NEEYlcDSES-2FCr8jWyiUHKuNb0X-2B0Vk4pkfeRQR6cPyAaLvt7MGKXSwJVQOThbNDZR8m=
+rzW9A-2FZ2uYdKkDZ0F3cuD9nMvTekWJ7lhFz-2BfjGH0s2hXq9-2Br7BWs2o3Zg-2B3JLQfs53=
+UeDUBsJ8h4nOMZjSp7HNuVWNpvuMbSzigJaqDiN9DFbYsZqeM8w5-2BItHZKsRwwcqh735GgOID=
+21qjJv5rMoPPLJXbdLM8huZeSMeAPuocwc3by7LdpR-2B-2BMUwDCCZxDxbCP7Ftnl1iDW-2BD9=
+4dBZ-2Be5TRj0OZFOyaIB8DfoqXILU-2Bqd5YD8qJJA08ooXjGlAymVh6HUZrUMfWF5OjWvvMxW=
+E3tXprdwUL7CP9QTMBOlPnoPn2wiY86ME" alt=3D"" width=3D"1" height=3D"1" border=
+=3D"0" style=3D"height:1px !important;width:1px !important;border-width:0 !=
+important;margin-top:0 !important;margin-bottom:0 !important;margin-right:0=
+ !important;margin-left:0 !important;padding-top:0 !important;padding-botto=
+m:0 !important;padding-right:0 !important;padding-left:0 !important;"/></bo=
+dy>
+  </html>
+--2606fa5de5a717d118e43ada07996330dbd109d731d1886305cb0fd7cfda--
+

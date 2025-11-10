@@ -1,0 +1,925 @@
+X-GM-THRID: 1802129666746748111
+X-Gmail-Labels: Archived,Category Updates,Unread
+Delivered-To: sn.renauld@gmail.com
+Received: by 2002:a17:906:3ec7:b0:a6f:5f1c:8b7f with SMTP id d7csp2088270ejj;
+        Mon, 17 Jun 2024 10:19:38 -0700 (PDT)
+X-Google-Smtp-Source: 
+ AGHT+IHwrAB8qVpWHzENlunHMXf8e8dnuGou9ZB4o92zmO0twuWME59F0bFM2wREq+oXZslMtgD0
+X-Received: by 2002:ad4:57cc:0:b0:6b0:6d9c:8eb6 with SMTP id
+ 6a1803df08f44-6b2afdb53d2mr101606456d6.58.1718644778391;
+        Mon, 17 Jun 2024 10:19:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1718644778; cv=none;
+        d=google.com; s=arc-20160816;
+        b=nuuqKGx/fGTU8neA5Rh7UoSzBB23DvR7UApISsFAT56xPzeecsGV9Hrl0VKhyfdcY6
+         5YEl8me6W50gQvmnXoyLy2zruhnGwUQmDZejKxGGqxcfDaOnzREQEUBJCBks1KJuGpDh
+         UFKU2mnQXllo8F6D7R5DtQRTaVKzNu3TmLV8S/VUooNvq5hVj3dgvY/tLPJ5ckjhjgmz
+         xxBIK8fxDpZFBpgUzoFWEfos6EtEzbJ+7A4e2Sp25i2givc5sUchLEDGItuLQ11RILwK
+         lXKIyExWfiy0DywkfcoDel50wwQfu0DoeD6M7TZ0qZdtIm2wCMO/Z1USKXFO8OayRpm9
+         nbPQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20160816;
+        h=feedback-id:message-id:list-unsubscribe-post:list-unsubscribe
+         :list-id:mime-version:list-help:date:subject:to:from:dkim-signature;
+        bh=OqhNAqoUHZXZgUTKWV/icNG7nhbxmZQEk3OnUcsWmrE=;
+        fh=ezyf6Fz0QsorQZg3NHSKqYMUgH/4Y1iKH7lSomCx2Nc=;
+        b=bsPgRfMVwhF5NXn5zEexy8aw3QVJsXPukg1pw5i68tkTje4tt8feBu32QMzuKZVQYV
+         NUcrjoiBC9HVQrC9EayjDLC0ItX3YoRcRfepD4cMYwqtbgskDXJQ/+8TUQsX/aix1vH/
+         FAQl8gjvUkzbaf5hhrGNQ7SPiEyH6N5O0xY4jyx2F2uYYA4b8ZSxZaze6rLOHNIdvPmy
+         Ygwrf8BgjQgfPFr7S4/PIAo3WkyR5oV+nHc9zPMGmbsqjCXzUMjuMh19sJTYas+uctGX
+         iwYJSjwmqR7or4X/xbk7kfJfVhOBPp0Z8WY2YyqzHMFnUYWDrQ7ao6peUiaQg9QCJ0c2
+         HFvg==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@heroku.com header.s=200608 header.b=hgrVfMhr;
+       spf=pass (google.com: domain of
+ bounce-1209_html-769979636-5121-7327546-546520@bounce.s7.exacttarget.com
+ designates 136.147.176.128 as permitted sender)
+ smtp.mailfrom=bounce-1209_HTML-769979636-5121-7327546-546520@bounce.s7.exacttarget.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=heroku.com
+Return-Path: 
+ <bounce-1209_HTML-769979636-5121-7327546-546520@bounce.s7.exacttarget.com>
+Received: from cr128.mta.exacttarget.com (cr128.mta.exacttarget.com.
+ [136.147.176.128])
+        by mx.google.com with ESMTPS id
+ 6a1803df08f44-6b2a5b57b08si111145306d6.423.2024.06.17.10.19.38
+        for <sn.renauld@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 17 Jun 2024 10:19:38 -0700 (PDT)
+Received-SPF: pass (google.com: domain of
+ bounce-1209_html-769979636-5121-7327546-546520@bounce.s7.exacttarget.com
+ designates 136.147.176.128 as permitted sender) client-ip=136.147.176.128;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@heroku.com header.s=200608 header.b=hgrVfMhr;
+       spf=pass (google.com: domain of
+ bounce-1209_html-769979636-5121-7327546-546520@bounce.s7.exacttarget.com
+ designates 136.147.176.128 as permitted sender)
+ smtp.mailfrom=bounce-1209_HTML-769979636-5121-7327546-546520@bounce.s7.exacttarget.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=heroku.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=200608; d=heroku.com;
+ h=From:To:Subject:Date:List-Help:MIME-Version:List-ID:List-Unsubscribe:
+ List-Unsubscribe-Post:Message-ID:Content-Type; i=no-reply@heroku.com;
+ bh=OqhNAqoUHZXZgUTKWV/icNG7nhbxmZQEk3OnUcsWmrE=;
+ b=hgrVfMhrLrjLSnuGq9dIKpR4ujEbtoAsDYsxfiG/8eut6YiB9YoikW5Oi44rJGrQH+YbrIlUxI7d
+   pTFCjqHf6NG2pfcQNmniIpGPDLZ+mvk50nhhVI3g5u8+bkb4etNOt0ESunQkwPY9Eva9vAaEEHUl
+   pABSnrjVlbmqcKefZ2k=
+Received: by cr128.mta.exacttarget.com id he1o2k2fmd42 for
+ <sn.renauld@gmail.com>;
+ Mon, 17 Jun 2024 17:19:37 +0000 (envelope-from <bounce-1209_HTML-769979636-5121-7327546-546520@bounce.s7.exacttarget.com>)
+From: "Heroku" <no-reply@heroku.com>
+To: <sn.renauld@gmail.com>
+Subject: Choose a language, deploy an app in minutes
+Date: Mon, 17 Jun 2024 11:19:37 -0600
+List-Help: 
+ <https://cl.S7.exct.net/subscription_center.aspx?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtaWQiOiI3MzI3NTQ2IiwicyI6Ijc2OTk3OTYzNiIsImxpZCI6IjEyMDkiLCJqIjoiNTEyMSIsImpiIjoiNTQ2NTIwIiwiZCI6IjcwMjQ0In0.Y_nY1wd9uG8UrMOCY_TWSdrcIqFK3_Kjmnd7ZX2uzXY>
+MIME-Version: 1.0
+List-ID: <7327546.xt.local>
+x-messageKey: undelivered+36622+1204731270@pd25.com
+X-Delivery: Transactional
+X-SFMC-Stack: 7
+x-job: 7327546_5121
+List-Unsubscribe: 
+ <https://hello.heroku.com/listUnsubscribeHeader/u/36622/96603dce3d63c1e55cab43fb3d59f4bc29982ad02fd32e0527a0f9294620a3f6/1204731270>
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+X-Report-Abuse-To: abuse@pd25.com
+Message-ID: <9c426174-c5eb-41ab-a4b9-8f6b890d8ec4@atl1s07mta2984.xt.local>
+Feedback-ID: 7327546:5121:136.147.176.128:sfmktgcld
+Content-Type: multipart/alternative;
+	boundary="3k8kzBnygNl5=_?:"
+
+This is a multi-part message in MIME format.
+
+--3k8kzBnygNl5=_?:
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: 8bit
+
+Have two minutes? That's all it takes to deploy an app in a new language.
+
+Whether you are learning a new language or just choosing the right tool for the right job, Heroku makes it easy.
+
+Choose a language to deploy an app yourself:
+
+-- Node.js [https://hello.heroku.com/e/36622/2fDvSsh/m657wq/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I]
+
+-- Ruby [https://hello.heroku.com/e/36622/2fCvuIB/m657wt/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I]
+
+-- Java [https://hello.heroku.com/e/36622/2fCATzq/m657wx/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I]
+
+-- PHP [https://hello.heroku.com/e/36622/2ejWG2X/m657x1/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I]
+
+-- Python [https://hello.heroku.com/e/36622/2ejSEHD/m657x4/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I]
+
+-- Go [https://hello.heroku.com/e/36622/2fCwqN6/m657x7/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I]
+
+-- Scala [https://hello.heroku.com/e/36622/2fCtn7I/m657xb/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I]
+
+-- Clojure [https://hello.heroku.com/e/36622/2fN6vCf/m657xf/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I]
+
+For additional inspiration, explore the full range of Heroku Buttons [https://hello.heroku.com/e/36622/2g04GX8-/m657xj/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I 
+
+You can test and try out APIs and microservices, web apps, e-commerce stores, data-centric and event-based applications, IoT apps, and more. Once deployed, check out the open source repos to inspect the code and learn more. 
+
+Happy coding,
+The Heroku Team
+
+
+P.S.  After deploying, check out our Getting Started guides [https://hello.heroku.com/e/36622/2ghoYul/m657xm/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I] to get a handle on the basics.
+
+---
+
+Focus, feel and flow
+Authentic experience
+Elements of life
+
+---
+
+Salesforce
+415 Mission Street, 3rd Floor
+​​​​​​​San Francisco, CA 94105
+
+Update your email preferences
+https://hello.heroku.com/KeepMeuptoDate?ehash=96603dce3d63c1e55cab43fb3d59f4bc29982ad02fd32e0527a0f9294620a3f6&email_id=1204731270&epc_hash=3Xg_n-jKJfU8YIfbbKiqKqWPEw2X7ci6qQui-1scgx0
+
+Privacy
+https://hello.heroku.com/e/36622/company-privacy/m657xq/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I
+
+https://hello.heroku.com/e/36622/2024-02-29/m67ktx/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I
+https://hello.heroku.com/e/36622/heroku/m657xx/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I
+https://hello.heroku.com/e/36622/heroku/m657y1/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I
+https://hello.heroku.com/e/36622/heroku/m657y4/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I
+https://hello.heroku.com/e/36622/heroku/m657y7/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I
+https://hello.heroku.com/e/36622/company-heroku/m657yb/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I
+
+--3k8kzBnygNl5=_?:
+Content-Type: text/html;
+	charset="utf-8"
+Content-Transfer-Encoding: 8bit
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; word-break: keep-all">
+  <head style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; word-break: keep-all">
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; word-break: keep-all">
+    <meta name="viewport" content="width=device-width" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; word-break: keep-all">
+    <title style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; word-break: keep-all">Choose a language, deploy an app in minutes</title>
+    <style type="text/css" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; word-break: keep-all">
+      /* prevent auto styling of date and phone number links on apple devices */
+      a[x-apple-data-detectors] {
+        color: inherit !important;
+        text-decoration: none !important;
+        font-size: inherit !important;
+        font-family: inherit !important;
+        font-weight: inherit !important;
+        line-height: inherit !important;
+      }
+      /* prevent download button from appearing on large images in gmail mail client */
+      * img + div {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body bgcolor="#473A8F" style="-moz-box-sizing: border-box; -moz-hyphens: none; -ms-hyphens: none; -ms-text-size-adjust: 100%; -webkit-box-sizing: border-box; -webkit-hyphens: none; -webkit-text-size-adjust: 100%; Margin: 0; background: #473A8F !important; background-color: #473A8F !important; box-sizing: border-box; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0; min-width: 100%; padding: 0; text-align: left; width: 100% !important; word-break: keep-all">
+<style type="text/css">@media only screen {
+  html {
+    min-height: 100%;
+    background: transparent;
+  }
+}
+
+@media only screen and (max-width: 615px) {
+  .small-float-center {
+    margin: 0 auto !important;
+    float: none !important;
+    text-align: center !important;
+  }
+
+  .small-text-center {
+    text-align: center !important;
+  }
+
+  .small-text-left {
+    text-align: left !important;
+  }
+
+  .small-text-right {
+    text-align: right !important;
+  }
+}
+
+@media only screen and (max-width: 615px) {
+  .hide-for-large {
+    display: block !important;
+    width: auto !important;
+    overflow: visible !important;
+    max-height: none !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+  }
+}
+
+@media only screen and (max-width: 615px) {
+  table.body table.container .hide-for-large,
+  table.body table.container .row.hide-for-large {
+    display: table !important;
+    width: 100% !important;
+  }
+}
+
+@media only screen and (max-width: 615px) {
+  table.body table.container .callout-inner.hide-for-large {
+    display: table-cell !important;
+    width: 100% !important;
+  }
+}
+
+@media only screen and (max-width: 615px) {
+  table.body table.container .show-for-large {
+    display: none !important;
+    width: 0;
+    mso-hide: all;
+    overflow: hidden;
+  }
+}
+
+@media only screen and (max-width: 615px) {
+  table.body img {
+    width: auto;
+    height: auto;
+  }
+
+  table.body center {
+    min-width: 0 !important;
+  }
+
+  table.body .container {
+    width: 95% !important;
+  }
+
+  table.body .columns,
+  table.body .column {
+    height: auto !important;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-left: 35px !important;
+    padding-right: 35px !important;
+  }
+
+  table.body .columns .column,
+  table.body .columns .columns,
+  table.body .column .column,
+  table.body .column .columns {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  table.body .collapse .columns,
+  table.body .collapse .column {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  td.small-1,
+  th.small-1 {
+    display: inline-block !important;
+    width: 8.33333% !important;
+  }
+
+  td.small-2,
+  th.small-2 {
+    display: inline-block !important;
+    width: 16.66667% !important;
+  }
+
+  td.small-3,
+  th.small-3 {
+    display: inline-block !important;
+    width: 25% !important;
+  }
+
+  td.small-4,
+  th.small-4 {
+    display: inline-block !important;
+    width: 33.33333% !important;
+  }
+
+  td.small-5,
+  th.small-5 {
+    display: inline-block !important;
+    width: 41.66667% !important;
+  }
+
+  td.small-6,
+  th.small-6 {
+    display: inline-block !important;
+    width: 50% !important;
+  }
+
+  td.small-7,
+  th.small-7 {
+    display: inline-block !important;
+    width: 58.33333% !important;
+  }
+
+  td.small-8,
+  th.small-8 {
+    display: inline-block !important;
+    width: 66.66667% !important;
+  }
+
+  td.small-9,
+  th.small-9 {
+    display: inline-block !important;
+    width: 75% !important;
+  }
+
+  td.small-10,
+  th.small-10 {
+    display: inline-block !important;
+    width: 83.33333% !important;
+  }
+
+  td.small-11,
+  th.small-11 {
+    display: inline-block !important;
+    width: 91.66667% !important;
+  }
+
+  td.small-12,
+  th.small-12 {
+    display: inline-block !important;
+    width: 100% !important;
+  }
+
+  .columns td.small-12,
+  .column td.small-12,
+  .columns th.small-12,
+  .column th.small-12 {
+    display: block !important;
+    width: 100% !important;
+  }
+
+  table.body td.small-offset-1,
+  table.body th.small-offset-1 {
+    margin-left: 8.33333% !important;
+    Margin-left: 8.33333% !important;
+  }
+
+  table.body td.small-offset-2,
+  table.body th.small-offset-2 {
+    margin-left: 16.66667% !important;
+    Margin-left: 16.66667% !important;
+  }
+
+  table.body td.small-offset-3,
+  table.body th.small-offset-3 {
+    margin-left: 25% !important;
+    Margin-left: 25% !important;
+  }
+
+  table.body td.small-offset-4,
+  table.body th.small-offset-4 {
+    margin-left: 33.33333% !important;
+    Margin-left: 33.33333% !important;
+  }
+
+  table.body td.small-offset-5,
+  table.body th.small-offset-5 {
+    margin-left: 41.66667% !important;
+    Margin-left: 41.66667% !important;
+  }
+
+  table.body td.small-offset-6,
+  table.body th.small-offset-6 {
+    margin-left: 50% !important;
+    Margin-left: 50% !important;
+  }
+
+  table.body td.small-offset-7,
+  table.body th.small-offset-7 {
+    margin-left: 58.33333% !important;
+    Margin-left: 58.33333% !important;
+  }
+
+  table.body td.small-offset-8,
+  table.body th.small-offset-8 {
+    margin-left: 66.66667% !important;
+    Margin-left: 66.66667% !important;
+  }
+
+  table.body td.small-offset-9,
+  table.body th.small-offset-9 {
+    margin-left: 75% !important;
+    Margin-left: 75% !important;
+  }
+
+  table.body td.small-offset-10,
+  table.body th.small-offset-10 {
+    margin-left: 83.33333% !important;
+    Margin-left: 83.33333% !important;
+  }
+
+  table.body td.small-offset-11,
+  table.body th.small-offset-11 {
+    margin-left: 91.66667% !important;
+    Margin-left: 91.66667% !important;
+  }
+
+  table.body table.columns td.expander,
+  table.body table.columns th.expander {
+    display: none !important;
+  }
+
+  table.body .right-text-pad,
+  table.body .text-pad-right {
+    padding-left: 10px !important;
+  }
+
+  table.body .left-text-pad,
+  table.body .text-pad-left {
+    padding-right: 10px !important;
+  }
+
+  table.menu {
+    width: 100% !important;
+  }
+
+  table.menu td,
+  table.menu th {
+    width: auto !important;
+    display: inline-block !important;
+  }
+
+  table.menu.vertical td,
+  table.menu.vertical th,
+  table.menu.small-vertical td,
+  table.menu.small-vertical th {
+    display: block !important;
+  }
+
+  table.menu[align="center"] {
+    width: auto !important;
+  }
+
+  table.button.small-expand,
+  table.button.small-expanded {
+    width: 100% !important;
+  }
+
+  table.button.small-expand table,
+  table.button.small-expanded table {
+    width: 100%;
+  }
+
+  table.button.small-expand table a,
+  table.button.small-expanded table a {
+    text-align: center !important;
+    width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  table.button.small-expand center,
+  table.button.small-expanded center {
+    min-width: 0;
+  }
+}
+</style>
+<table bgcolor="#473A8F" class="body" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; background: #473A8F !important; background-color: #473A8F !important; border-collapse: collapse; border-spacing: 0; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; height: 100%; hyphens: none; line-height: 1.5; margin: 0; padding: 0; text-align: left; vertical-align: top; width: 100%; word-break: keep-all">
+	<tbody>
+		<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+			<td align="center" class="center" style="-moz-hyphens: auto; -ms-hyphens: none; -webkit-hyphens: auto; Margin: 0; border-collapse: collapse !important; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: auto; line-height: 1.5; margin: 0; padding: 0; text-align: left; vertical-align: top; word-break: keep-all; word-wrap: break-word" valign="top">
+			<center data-parsed="" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; min-width: 580px; width: 100%; word-break: keep-all"><!-- preheader -->
+			<table align="center" class="container float-center" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0 auto; background: transparent; border-collapse: collapse; border-spacing: 0; float: none; hyphens: none; margin: 0 auto; padding: 0; text-align: center; vertical-align: top; width: 580px; word-break: keep-all">
+				<tbody style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; word-break: keep-all">
+					<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+						<td style="-moz-hyphens: auto; -ms-hyphens: none; -webkit-hyphens: auto; Margin: 0; border-collapse: collapse !important; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: auto; line-height: 1.5; margin: 0; padding: 0; text-align: left; vertical-align: top; word-break: keep-all; word-wrap: break-word">
+						<table class="row preheader-link collapse" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; background: #473A8F !important; background-color: #473A8F !important; border-collapse: collapse; border-spacing: 0; display: table; hyphens: none; padding: 0; position: relative; text-align: left; vertical-align: top; width: 100%; word-break: keep-all">
+							<tbody style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; word-break: keep-all">
+								<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+									<th class="small-12 large-12 columns first last" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0 auto; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0 auto; padding: 0; padding-bottom: 0 !important; padding-left: 0; padding-right: 0; text-align: left; width: 597.5px; word-break: keep-all">
+									<table style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; border-collapse: collapse; border-spacing: 0; hyphens: none; padding: 0; text-align: left; vertical-align: top; width: 100%; word-break: keep-all">
+										<tbody>
+											<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+												<th style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0; padding: 0; text-align: left; word-break: keep-all" class="">
+												<p class="text-right" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; Margin-bottom: 30px; color: !important; font-family: Helvetica, Arial, sans-serif; font-size: 80%; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: 0; margin-bottom: 10px; padding: 0; padding-bottom: 0 !important; padding-right: 10px; padding-top: 10px; text-align: right; word-break: keep-all"><a class="browser-link" href="https://hello.heroku.com/webmail/36622/1204731270/96603dce3d63c1e55cab43fb3d59f4bc29982ad02fd32e0527a0f9294620a3f6" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: inherit; color: white; font-family: Helvetica, Arial, sans-serif; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: inherit; outline: none !important; padding: 0; text-align: left; text-decoration: none; word-break:
+keep-all">View in Browser</a></p>
+												</th>
+												<th class="expander" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0; padding: 0 !important; text-align: left; visibility: hidden; width: 0; word-break: keep-all">&nbsp;</th>
+											</tr>
+										</tbody>
+									</table>
+									</th>
+								</tr>
+							</tbody>
+						</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- main content -->
+
+			<table align="center" class="container float-center" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0 auto; background: transparent; border-collapse: collapse; border-spacing: 0; float: none; hyphens: none; margin: 0 auto; padding: 0; text-align: center; vertical-align: top; width: 580px; word-break: keep-all">
+				<tbody style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; word-break: keep-all">
+					<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+						<td style="-moz-hyphens: auto; -ms-hyphens: none; -webkit-hyphens: auto; Margin: 0; border-collapse: collapse !important; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: auto; line-height: 1.5; margin: 0; padding: 0; text-align: left; vertical-align: top; word-break: keep-all; word-wrap: break-word">
+						<table class="row collapse content-area-header-img content-top" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; background-color: #FBFAFF; border-collapse: collapse; border-radius: 6px 6px 0 0 !important; border-spacing: 0; display: table; hyphens: none; padding: 0; position: relative; text-align: left; vertical-align: top; width: 100%; word-break: keep-all">
+							<tbody style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; word-break: keep-all">
+								<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+									<th class="small-12 large-12 columns first last" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0 auto; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0 auto; padding: 0; padding-bottom: 35px; padding-left: 0; padding-right: 0; text-align: left; width: 597.5px; word-break: keep-all">
+									<table style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; border-collapse: collapse; border-spacing: 0; hyphens: none; padding: 0; text-align: left; vertical-align: top; width: 100%; word-break: keep-all">
+										<tbody>
+											<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+												<th style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0; padding: 0; text-align: left; word-break: keep-all" class="">
+												<center data-parsed="" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; min-width: 475px; width: 100%; word-break: keep-all"><img align="center" alt="Heroku" class="float-center" src="https://go.pardot.com/l/36622/2016-10-31/b345m7/36622/117902/header_img_2x.png" style="-moz-hyphens: none; -ms-hyphens: none; -ms-interpolation-mode: bicubic; -webkit-hyphens: none; Margin: 0 auto; border: 0; clear: both; display: block; float: none; height: auto !important; hyphens: none; margin: 0 auto; max-width: 100%; outline: none; text-align: center; text-decoration: none; width: 578px !important; word-break: keep-all" width="578"></center>
+												</th>
+												<th class="expander" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0; padding: 0 !important; text-align: left; visibility: hidden; width: 0; word-break: keep-all">&nbsp;</th>
+											</tr>
+										</tbody>
+									</table>
+									</th>
+								</tr>
+							</tbody>
+						</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table align="center" class="container onboarding float-center" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0 auto; background: transparent; border-collapse: collapse; border-spacing: 0; float: none; hyphens: none; margin: 0 auto; padding: 0; text-align: center; vertical-align: top; width: 580px; word-break: keep-all">
+				<tbody style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; word-break: keep-all">
+					<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+						<td style="-moz-hyphens: auto; -ms-hyphens: none; -webkit-hyphens: auto; Margin: 0; border-collapse: collapse !important; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: auto; line-height: 1.5; margin: 0; padding: 0; text-align: left; vertical-align: top; word-break: keep-all; word-wrap: break-word"><!-- Start Header Content -->
+						<table class="row header-content" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; background-color: #FBFAFF; border-collapse: collapse; border-spacing: 0; box-shadow: 0 -2px 0 #FBFAFF; display: table; hyphens: none; padding: 0; position: relative; text-align: left; vertical-align: top; width: 100%; word-break: keep-all">
+							<tbody style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; word-break: keep-all">
+								<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+									<th class="small-12 large-12 columns first last" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0 auto; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0 auto; padding: 0; padding-bottom: 35px; padding-left: 35px; padding-right: 35px; text-align: left; width: 545px; word-break: keep-all">
+									<table style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; border-collapse: collapse; border-spacing: 0; hyphens: none; padding: 0; text-align: left; vertical-align: top; width: 100%; word-break: keep-all">
+										<tbody>
+											<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+												<th style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0; padding: 0; text-align: left; word-break: keep-all" class="">
+												<p style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; Margin-bottom: 30px; color: #513491; font-family: Helvetica, Arial, sans-serif; font-size: 14; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: 0; margin-bottom: 10px; padding: 0; text-align: left; word-break: keep-all"><strong style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; word-break: keep-all">Have two minutes?</strong> That's all it takes to deploy an app in a new language.</p>
+
+												<p class="mb0" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; Margin-bottom: 30px; color: #513491; font-family: Helvetica, Arial, sans-serif; font-size: 14; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: 0; margin-bottom: 0 !important; padding: 0; text-align: left; word-break: keep-all">Whether you are learning a new language or just choosing the right tool for the right job, Heroku makes it easy.</p>
+												</th>
+												<th class="expander" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0; padding: 0 !important; text-align: left; visibility: hidden; width: 0; word-break: keep-all">&nbsp;</th>
+											</tr>
+										</tbody>
+									</table>
+									</th>
+								</tr>
+							</tbody>
+						</table>
+						<!-- End Header Content --><!-- Start Content Row -->
+
+						<table class="row content border-top" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; background-color: #fefefe; border-collapse: collapse; border-spacing: 0; border-top: 1px solid #DBD9E5 !important; box-shadow: 0 -2px 0 #fefefe; display: table; hyphens: none; padding: 0; position: relative; text-align: left; vertical-align: top; width: 100%; word-break: keep-all">
+							<tbody style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; word-break: keep-all">
+								<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+									<th class="small-12 large-12 columns first last" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0 auto; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0 auto; padding: 0; padding-bottom: 35px; padding-left: 35px; padding-right: 35px; text-align: left; width: 545px; word-break: keep-all">
+									<table style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; border-collapse: collapse; border-spacing: 0; hyphens: none; padding: 0; text-align: left; vertical-align: top; width: 100%; word-break: keep-all">
+										<tbody>
+											<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+												<th style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0; padding: 0; text-align: left; word-break: keep-all" class="">
+												<table class="spacer" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; border-collapse: collapse; border-spacing: 0; hyphens: none; padding: 0; text-align: left; vertical-align: top; width: 100%; word-break: keep-all">
+													<tbody style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; word-break: keep-all">
+														<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+															<td height="35px" style="-moz-hyphens: auto; -ms-hyphens: none; -webkit-hyphens: auto; Margin: 0; border-collapse: collapse !important; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 35px; font-weight: normal; hyphens: auto; line-height: 35px; margin: 0; mso-line-height-rule: exactly; padding: 0; text-align: left; vertical-align: top; word-break: keep-all; word-wrap: break-word" class="">&nbsp;</td>
+														</tr>
+													</tbody>
+												</table>
+
+												<h1 style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; Margin-bottom: 10px; color: #79589F; font-family: Helvetica, Arial, sans-serif; font-size: 26px; font-weight: 400; hyphens: none !important; line-height: 140%; margin: 0; margin-bottom: 10px; padding: 0; text-align: center; word-break: keep-all; word-wrap: normal">Choose a language, deploy an app</h1>
+												</th>
+												<th class="expander" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0; padding: 0 !important; text-align: left; visibility: hidden; width: 0; word-break: keep-all">&nbsp;</th>
+											</tr>
+										</tbody>
+									</table>
+									</th>
+								</tr>
+							</tbody>
+						</table>
+						<!-- End Content Row --><!-- Begin app boxes -->
+
+						<table class="row content img-grid" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; background-color: #fefefe; border-collapse: collapse; border-spacing: 0; box-shadow: 0 -2px 0 #fefefe; display: table; hyphens: none; padding: 0; position: relative; text-align: left; vertical-align: top; width: 100%; word-break: keep-all">
+							<tbody style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; word-break: keep-all">
+								<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+									<th class="img-btn small-12 large-4 columns first" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0 auto; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0 auto; padding: 0; padding-bottom: 35px; padding-left: 35px; padding-right: 17.5px; text-align: left; width: 158.33333px; word-break: keep-all">
+									<table style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; border-collapse: collapse; border-spacing: 0; hyphens: none; padding: 0; text-align: left; vertical-align: top; width: 100%; word-break: keep-all">
+										<tbody>
+											<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+												<th style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; border: 1px solid #e1e5ea; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0; padding: 10px; text-align: left; word-break: keep-all" class="">
+												<center data-parsed="" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; min-width: 88.33333px; width: 100%; word-break: keep-all">
+												<p style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; Margin-bottom: 30px; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: 0; margin-bottom: 0; padding: 0; text-align: center !important; word-break: keep-all"><a align="center" class="float-center" href="https://hello.heroku.com/e/36622/l-36622-2016-11-09-b5hd6p/m657yf/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; color: #408FEC; font-family: Helvetica, Arial, sans-serif; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: 0; padding: 0; text-align: left; text-decoration: none; word-break: keep-all"><img alt="Node"
+src="https://go.pardot.com/l/36622/2016-10-31/b345n7/36622/117936/icon_node_2x.png" style="-moz-hyphens: none; -ms-hyphens: none; -ms-interpolation-mode: bicubic; -webkit-hyphens: none; border: 0; clear: both; display: block; height: auto !important; hyphens: none; margin: 0 auto; max-width: 100%; outline: none; text-decoration: none; width: 50px !important; word-break: keep-all" width="50"></a></p>
+												<a align="center" class="float-center" href="https://hello.heroku.com/e/36622/l-36622-2016-11-09-b5hd6p/m657yf/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; color: #408FEC; font-family: Helvetica, Arial, sans-serif; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: 0; padding: 0; text-align: left; text-decoration: none; word-break: keep-all"><span style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; color: #408FEC; display: block; font-size: 16px; hyphens: none; padding: 10px 0 0 0; text-align: center; word-break: keep-all">Node.js</span> </a></center>
+												</th>
+											</tr>
+										</tbody>
+									</table>
+									</th>
+									<th class="img-btn small-12 large-4 columns" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0 auto; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0 auto; padding: 0; padding-bottom: 35px; padding-left: 17.5px; padding-right: 17.5px; text-align: left; width: 158.33333px; word-break: keep-all">
+									<table style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; border-collapse: collapse; border-spacing: 0; hyphens: none; padding: 0; text-align: left; vertical-align: top; width: 100%; word-break: keep-all">
+										<tbody>
+											<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+												<th style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; border: 1px solid #e1e5ea; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0; padding: 10px; text-align: left; word-break: keep-all" class="">
+												<center data-parsed="" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; min-width: 88.33333px; width: 100%; word-break: keep-all">
+												<p style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; Margin-bottom: 30px; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: 0; margin-bottom: 0; padding: 0; text-align: center !important; word-break: keep-all"><a align="center" class="float-center" href="https://hello.heroku.com/e/36622/l-36622-2016-11-08-b585g5/m657yj/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; color: #408FEC; font-family: Helvetica, Arial, sans-serif; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: 0; padding: 0; text-align: left; text-decoration: none; word-break: keep-all"><img alt="Ruby"
+src="https://go.pardot.com/l/36622/2016-10-31/b345nh/36622/117946/icon_ruby_2x.png" style="-moz-hyphens: none; -ms-hyphens: none; -ms-interpolation-mode: bicubic; -webkit-hyphens: none; border: 0; clear: both; display: block; height: auto !important; hyphens: none; margin: 0 auto; max-width: 100%; outline: none; text-decoration: none; width: 50px !important; word-break: keep-all" width="50"></a></p>
+												<a align="center" class="float-center" href="https://hello.heroku.com/e/36622/l-36622-2016-11-08-b585g5/m657yj/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; color: #408FEC; font-family: Helvetica, Arial, sans-serif; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: 0; padding: 0; text-align: left; text-decoration: none; word-break: keep-all"><span style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; color: #408FEC; display: block; font-size: 16px; hyphens: none; padding: 10px 0 0 0; text-align: center; word-break: keep-all">Ruby</span> </a></center>
+												</th>
+											</tr>
+										</tbody>
+									</table>
+									</th>
+									<th class="img-btn small-12 large-4 columns last" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0 auto; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0 auto; padding: 0; padding-bottom: 35px; padding-left: 17.5px; padding-right: 35px; text-align: left; width: 158.33333px; word-break: keep-all">
+									<table style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; border-collapse: collapse; border-spacing: 0; hyphens: none; padding: 0; text-align: left; vertical-align: top; width: 100%; word-break: keep-all">
+										<tbody>
+											<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+												<th style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; border: 1px solid #e1e5ea; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0; padding: 10px; text-align: left; word-break: keep-all" class="">
+												<center data-parsed="" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; min-width: 88.33333px; width: 100%; word-break: keep-all">
+												<p style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; Margin-bottom: 30px; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: 0; margin-bottom: 0; padding: 0; text-align: center !important; word-break: keep-all"><a align="center" class="float-center" href="https://hello.heroku.com/e/36622/l-36622-2016-11-08-b585g3/m657ym/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; color: #408FEC; font-family: Helvetica, Arial, sans-serif; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: 0; padding: 0; text-align: left; text-decoration: none; word-break: keep-all"><img alt="Java"
+src="https://go.pardot.com/l/36622/2016-10-31/b345n5/36622/117934/icon_java_2x.png" style="-moz-hyphens: none; -ms-hyphens: none; -ms-interpolation-mode: bicubic; -webkit-hyphens: none; border: 0; clear: both; display: block; height: auto !important; hyphens: none; margin: 0 auto; max-width: 100%; outline: none; text-decoration: none; width: 50px !important; word-break: keep-all" width="50"></a></p>
+												<a align="center" class="float-center" href="https://hello.heroku.com/e/36622/l-36622-2016-11-08-b585g3/m657ym/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; color: #408FEC; font-family: Helvetica, Arial, sans-serif; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: 0; padding: 0; text-align: left; text-decoration: none; word-break: keep-all"><span style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; color: #408FEC; display: block; font-size: 16px; hyphens: none; padding: 10px 0 0 0; text-align: center; word-break: keep-all">Java</span> </a></center>
+												</th>
+											</tr>
+										</tbody>
+									</table>
+									</th>
+								</tr>
+							</tbody>
+						</table>
+						<!-- End Image Grid Row 1 --><!-- Start Image Grid Row 2 -->
+
+						<table class="row content img-grid" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; background-color: #fefefe; border-collapse: collapse; border-spacing: 0; box-shadow: 0 -2px 0 #fefefe; display: table; hyphens: none; padding: 0; position: relative; text-align: left; vertical-align: top; width: 100%; word-break: keep-all">
+							<tbody style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; word-break: keep-all">
+								<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+									<th class="img-btn small-12 large-4 columns first" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0 auto; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0 auto; padding: 0; padding-bottom: 35px; padding-left: 35px; padding-right: 17.5px; text-align: left; width: 158.33333px; word-break: keep-all">
+									<table style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; border-collapse: collapse; border-spacing: 0; hyphens: none; padding: 0; text-align: left; vertical-align: top; width: 100%; word-break: keep-all">
+										<tbody>
+											<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+												<th style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; border: 1px solid #e1e5ea; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0; padding: 10px; text-align: left; word-break: keep-all" class="">
+												<center data-parsed="" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; min-width: 88.33333px; width: 100%; word-break: keep-all">
+												<p style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; Margin-bottom: 30px; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: 0; margin-bottom: 0; padding: 0; text-align: center !important; word-break: keep-all"><a align="center" class="float-center" href="https://hello.heroku.com/e/36622/l-36622-2016-11-08-b585g1/m657yq/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; color: #408FEC; font-family: Helvetica, Arial, sans-serif; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: 0; padding: 0; text-align: left; text-decoration: none; word-break: keep-all"><img alt="Php"
+src="https://go.pardot.com/l/36622/2016-10-31/b345n9/36622/117938/icon_php_2x.png" style="-moz-hyphens: none; -ms-hyphens: none; -ms-interpolation-mode: bicubic; -webkit-hyphens: none; border: 0; clear: both; display: block; height: auto !important; hyphens: none; margin: 0 auto; max-width: 100%; outline: none; text-decoration: none; width: 50px !important; word-break: keep-all" width="50"></a></p>
+												<a align="center" class="float-center" href="https://hello.heroku.com/e/36622/l-36622-2016-11-08-b585g1/m657yq/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; color: #408FEC; font-family: Helvetica, Arial, sans-serif; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: 0; padding: 0; text-align: left; text-decoration: none; word-break: keep-all"><span style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; color: #408FEC; display: block; font-size: 16px; hyphens: none; padding: 10px 0 0 0; text-align: center; word-break: keep-all">php</span> </a></center>
+												</th>
+											</tr>
+										</tbody>
+									</table>
+									</th>
+									<th class="img-btn small-12 large-4 columns" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0 auto; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0 auto; padding: 0; padding-bottom: 35px; padding-left: 17.5px; padding-right: 17.5px; text-align: left; width: 158.33333px; word-break: keep-all">
+									<table style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; border-collapse: collapse; border-spacing: 0; hyphens: none; padding: 0; text-align: left; vertical-align: top; width: 100%; word-break: keep-all">
+										<tbody>
+											<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+												<th style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; border: 1px solid #e1e5ea; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0; padding: 10px; text-align: left; word-break: keep-all" class="">
+												<center data-parsed="" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; min-width: 88.33333px; width: 100%; word-break: keep-all">
+												<p style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; Margin-bottom: 30px; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: 0; margin-bottom: 0; padding: 0; text-align: center !important; word-break: keep-all"><a align="center" class="float-center" href="https://hello.heroku.com/e/36622/l-36622-2016-11-08-b585fy/m657yt/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; color: #408FEC; font-family: Helvetica, Arial, sans-serif; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: 0; padding: 0; text-align: left; text-decoration: none; word-break: keep-all"><img alt="Python"
+src="https://go.pardot.com/l/36622/2016-10-31/b345nf/36622/117944/icon_python_2x.png" style="-moz-hyphens: none; -ms-hyphens: none; -ms-interpolation-mode: bicubic; -webkit-hyphens: none; border: 0; clear: both; display: block; height: auto !important; hyphens: none; margin: 0 auto; max-width: 100%; outline: none; text-decoration: none; width: 50px !important; word-break: keep-all" width="50"></a></p>
+												<a align="center" class="float-center" href="https://hello.heroku.com/e/36622/l-36622-2016-11-08-b585fy/m657yt/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; color: #408FEC; font-family: Helvetica, Arial, sans-serif; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: 0; padding: 0; text-align: left; text-decoration: none; word-break: keep-all"><span style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; color: #408FEC; display: block; font-size: 16px; hyphens: none; padding: 10px 0 0 0; text-align: center; word-break: keep-all">Python</span> </a></center>
+												</th>
+											</tr>
+										</tbody>
+									</table>
+									</th>
+									<th class="img-btn small-12 large-4 columns last" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0 auto; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0 auto; padding: 0; padding-bottom: 35px; padding-left: 17.5px; padding-right: 35px; text-align: left; width: 158.33333px; word-break: keep-all">
+									<table style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; border-collapse: collapse; border-spacing: 0; hyphens: none; padding: 0; text-align: left; vertical-align: top; width: 100%; word-break: keep-all">
+										<tbody>
+											<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+												<th style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; border: 1px solid #e1e5ea; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0; padding: 10px; text-align: left; word-break: keep-all" class="">
+												<center data-parsed="" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; min-width: 88.33333px; width: 100%; word-break: keep-all">
+												<p style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; Margin-bottom: 30px; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: 0; margin-bottom: 0; padding: 0; text-align: center !important; word-break: keep-all"><a align="center" class="float-center" href="https://hello.heroku.com/e/36622/l-36622-2016-11-08-b585fr/m657yx/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; color: #408FEC; font-family: Helvetica, Arial, sans-serif; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: 0; padding: 0; text-align: left; text-decoration: none; word-break: keep-all"><img alt="Go"
+src="https://go.pardot.com/l/36622/2016-10-31/b345n3/36622/117932/icon_go_2x.png" style="-moz-hyphens: none; -ms-hyphens: none; -ms-interpolation-mode: bicubic; -webkit-hyphens: none; border: 0; clear: both; display: block; height: auto !important; hyphens: none; margin: 0 auto; max-width: 100%; outline: none; text-decoration: none; width: 50px !important; word-break: keep-all" width="50"></a></p>
+												<a align="center" class="float-center" href="https://hello.heroku.com/e/36622/l-36622-2016-11-08-b585fr/m657yx/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; color: #408FEC; font-family: Helvetica, Arial, sans-serif; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: 0; padding: 0; text-align: left; text-decoration: none; word-break: keep-all"><span style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; color: #408FEC; display: block; font-size: 16px; hyphens: none; padding: 10px 0 0 0; text-align: center; word-break: keep-all">Go</span> </a></center>
+												</th>
+											</tr>
+										</tbody>
+									</table>
+									</th>
+								</tr>
+							</tbody>
+						</table>
+						<!-- End Image Grid Row 2 --><!-- Start Image Grid Row 3 -->
+
+						<table class="row content img-grid" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; background-color: #fefefe; border-collapse: collapse; border-spacing: 0; box-shadow: 0 -2px 0 #fefefe; display: table; hyphens: none; padding: 0; position: relative; text-align: left; vertical-align: top; width: 100%; word-break: keep-all">
+							<tbody style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; word-break: keep-all">
+								<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+									<th class="img-btn small-12 large-4 columns first" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0 auto; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0 auto; padding: 0; padding-bottom: 35px; padding-left: 35px; padding-right: 17.5px; text-align: left; width: 158.33333px; word-break: keep-all">
+									<table style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; border-collapse: collapse; border-spacing: 0; hyphens: none; padding: 0; text-align: left; vertical-align: top; width: 100%; word-break: keep-all">
+										<tbody>
+											<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+												<th style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; border: 1px solid #e1e5ea; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0; padding: 10px; text-align: left; word-break: keep-all" class="">
+												<center data-parsed="" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; min-width: 88.33333px; width: 100%; word-break: keep-all">
+												<p style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; Margin-bottom: 30px; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: 0; margin-bottom: 0; padding: 0; text-align: center !important; word-break: keep-all"><a align="center" class="float-center" href="https://hello.heroku.com/e/36622/l-36622-2016-11-08-b585fp/m657z1/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; color: #408FEC; font-family: Helvetica, Arial, sans-serif; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: 0; padding: 0; text-align: left; text-decoration: none; word-break: keep-all"><img alt="Scala"
+src="https://go.pardot.com/l/36622/2016-10-31/b345nk/36622/117948/icon_scala_2x.png" style="-moz-hyphens: none; -ms-hyphens: none; -ms-interpolation-mode: bicubic; -webkit-hyphens: none; border: 0; clear: both; display: block; height: auto !important; hyphens: none; margin: 0 auto; max-width: 100%; outline: none; text-decoration: none; width: 50px !important; word-break: keep-all" width="50"></a></p>
+												<a align="center" class="float-center" href="https://hello.heroku.com/e/36622/l-36622-2016-11-08-b585fp/m657z1/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; color: #408FEC; font-family: Helvetica, Arial, sans-serif; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: 0; padding: 0; text-align: left; text-decoration: none; word-break: keep-all"><span style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; color: #408FEC; display: block; font-size: 16px; hyphens: none; padding: 10px 0 0 0; text-align: center; word-break: keep-all">Scala</span> </a></center>
+												</th>
+											</tr>
+										</tbody>
+									</table>
+									</th>
+									<th class="img-btn small-12 large-4 columns" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0 auto; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0 auto; padding: 0; padding-bottom: 35px; padding-left: 17.5px; padding-right: 17.5px; text-align: left; width: 158.33333px; word-break: keep-all">
+									<table style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; border-collapse: collapse; border-spacing: 0; hyphens: none; padding: 0; text-align: left; vertical-align: top; width: 100%; word-break: keep-all">
+										<tbody>
+											<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+												<th style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; border: 1px solid #e1e5ea; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0; padding: 10px; text-align: left; word-break: keep-all" class="">
+												<center data-parsed="" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; min-width: 88.33333px; width: 100%; word-break: keep-all">
+												<p style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; Margin-bottom: 30px; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: 0; margin-bottom: 0; padding: 0; text-align: center !important; word-break: keep-all"><a align="center" class="float-center" href="https://hello.heroku.com/e/36622/l-36622-2016-11-30-bcpg7c/m657z4/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; color: #408FEC; font-family: Helvetica, Arial, sans-serif; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: 0; padding: 0; text-align: left; text-decoration: none; word-break: keep-all"><img alt="Clojure"
+src="https://go.pardot.com/l/36622/2016-10-31/b345mk/36622/117918/icon_clojure_2x.png" style="-moz-hyphens: none; -ms-hyphens: none; -ms-interpolation-mode: bicubic; -webkit-hyphens: none; border: 0; clear: both; display: block; height: auto !important; hyphens: none; margin: 0 auto; max-width: 100%; outline: none; text-decoration: none; width: 50px !important; word-break: keep-all" width="50"></a></p>
+												<a align="center" class="float-center" href="https://hello.heroku.com/e/36622/l-36622-2016-11-30-bcpg7c/m657z4/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; color: #408FEC; font-family: Helvetica, Arial, sans-serif; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: 0; padding: 0; text-align: left; text-decoration: none; word-break: keep-all"><span style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; color: #408FEC; display: block; font-size: 16px; hyphens: none; padding: 10px 0 0 0; text-align: center; word-break: keep-all">Clojure</span> </a></center>
+												</th>
+											</tr>
+										</tbody>
+									</table>
+									</th>
+								</tr>
+							</tbody>
+						</table>
+						<!-- End Image Grid Row 3 --><!-- End app boxes --><!-- Start CTA Row -->
+
+						<table class="row content cta-text" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; background-color: #fefefe; border-collapse: collapse; border-spacing: 0; box-shadow: 0 -2px 0 #fefefe; display: table; hyphens: none; padding: 0; position: relative; text-align: left; vertical-align: top; width: 100%; word-break: keep-all">
+							<tbody style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; word-break: keep-all">
+								<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+									<th class="small-12 large-12 columns first last" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0 auto; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0 auto; padding: 0; padding-bottom: 35px; padding-left: 35px; padding-right: 35px; text-align: left; width: 545px; word-break: keep-all">
+									<table style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; border-collapse: collapse; border-spacing: 0; hyphens: none; padding: 0; text-align: left; vertical-align: top; width: 100%; word-break: keep-all">
+										<tbody>
+											<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+												<th style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0; padding: 0; text-align: left; word-break: keep-all" class="">
+												<center data-parsed="" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; min-width: 475px; width: 100%; word-break: keep-all">
+												<table class="spacer float-center" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0 auto; border-collapse: collapse; border-spacing: 0; float: none; hyphens: none; margin: 0 auto; padding: 0; text-align: center; vertical-align: top; width: 100%; word-break: keep-all">
+													<tbody style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; word-break: keep-all">
+														<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+															<td height="20px" style="-moz-hyphens: auto; -ms-hyphens: none; -webkit-hyphens: auto; Margin: 0; border-collapse: collapse !important; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 20px; font-weight: normal; hyphens: auto; line-height: 20px; margin: 0; mso-line-height-rule: exactly; padding: 0; text-align: left; vertical-align: top; word-break: keep-all; word-wrap: break-word" class="">&nbsp;</td>
+														</tr>
+													</tbody>
+												</table>
+
+												<p align="center" class="mb0 float-center" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; Margin-bottom: 30px; color: #79589F; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: 0; margin-bottom: 0 !important; padding: 0; text-align: center; word-break: keep-all">For additional inspiration, explore the full range of <a href="https://hello.heroku.com/e/36622/l-36622-2016-11-09-b5hd6r/m657z7/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: inherit; color: #408FEC; font-family: Helvetica, Arial, sans-serif; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: inherit; outline: none !important; padding: 0; text-align: left; text-decoration: none; word-break:
+keep-all">Heroku Buttons</a>. You can test and try out APIs and microservices, web apps, e-commerce stores, data-centric and event-based applications, IoT apps, and more.<br>
+												<br>
+												Once deployed, check out the open source repos to inspect the code and learn more.<br>
+												<br>
+												<span style="font-size:11px;"><em><span style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; font-weight: normal; hyphens: none; word-break: keep-all">P.S. After deploying, check out our <a href="https://hello.heroku.com/e/36622/l-36622-2016-12-06-bf5j2k/m657zb/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: inherit; color: #408FEC; font-family: Helvetica, Arial, sans-serif; font-weight: normal; hyphens: none !important; line-height: 1.5; margin: inherit; outline: none !important; padding: 0; text-align: left; text-decoration: none; word-break: keep-all">Getting Started guides</a> to get a handle on the basics.</span></em></span></p>
+												</center>
+												</th>
+												<th class="expander" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0; padding: 0 !important; text-align: left; visibility: hidden; width: 0; word-break: keep-all">&nbsp;</th>
+											</tr>
+										</tbody>
+									</table>
+									</th>
+								</tr>
+							</tbody>
+						</table>
+						<!-- End CTA Row --><!-- Start Endcap -->
+
+						<table class="row endcap" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; background-color: #fefefe; border-collapse: collapse; border-radius: 0 0 6px 6px; border-spacing: 0; border-top: 1px solid #DBD9E5; display: table; hyphens: none; margin-top: -2px; padding: 0; position: relative; text-align: left; vertical-align: top; width: 100%; word-break: keep-all">
+							<tbody style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; word-break: keep-all">
+								<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+									<th class="small-12 large-12 columns first last" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0 auto; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0 auto; padding: 0; padding-bottom: 35px; padding-left: 35px; padding-right: 35px; text-align: left; width: 545px; word-break: keep-all">
+									<table style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; border-collapse: collapse; border-spacing: 0; hyphens: none; padding: 0; text-align: left; vertical-align: top; width: 100%; word-break: keep-all">
+										<tbody>
+											<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+												<th style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0; padding: 0; text-align: left; word-break: keep-all" class="">
+												<table class="spacer" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; border-collapse: collapse; border-spacing: 0; hyphens: none; padding: 0; text-align: left; vertical-align: top; width: 100%; word-break: keep-all">
+													<tbody style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; word-break: keep-all">
+														<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+															<td height="35px" style="-moz-hyphens: auto; -ms-hyphens: none; -webkit-hyphens: auto; Margin: 0; border-collapse: collapse !important; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 35px; font-weight: normal; hyphens: auto; line-height: 35px; margin: 0; mso-line-height-rule: exactly; padding: 0; text-align: left; vertical-align: top; word-break: keep-all; word-wrap: break-word" class="">&nbsp;</td>
+														</tr>
+													</tbody>
+												</table>
+
+												<h3 style="color: rgb(121, 88, 159); font-family: Helvetica, Arial, sans-serif; font-size: 23px; font-weight: 400; line-height: 1.5; margin: 0px 0px 5px; padding: 0px; word-break: keep-all; overflow-wrap: normal; hyphens: none !important; text-align: center;">Happy deploying,</h3>
+
+												<p style="color: rgb(121, 88, 159); font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: bold; line-height: 1.5; margin: 0px 0px 10px; padding: 0px; word-break: keep-all; hyphens: none !important; text-align: center;">The Heroku Team</p>
+												</th>
+												<th class="expander" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0; padding: 0 !important; text-align: left; visibility: hidden; width: 0; word-break: keep-all">&nbsp;</th>
+											</tr>
+										</tbody>
+									</table>
+									</th>
+								</tr>
+							</tbody>
+						</table>
+						<!-- End Endcap --></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table align="center" class="container footer-purple footer-border float-center" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0 auto; background: transparent; background-color: #473A8F !important; border-collapse: collapse; border-spacing: 0; float: none; hyphens: none; margin: 0 auto; padding: 0; text-align: center; vertical-align: top; width: 580px; word-break: keep-all">
+				<tbody style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; word-break: keep-all">
+					<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+						<td style="-moz-hyphens: auto; -ms-hyphens: none; -webkit-hyphens: auto; Margin: 0; border-collapse: collapse !important; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: auto; line-height: 1.5; margin: 0; padding: 0; text-align: left; vertical-align: top; word-break: keep-all; word-wrap: break-word">
+						<table class="row footer-haiku" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; border-collapse: collapse; border-spacing: 0; display: table; hyphens: none; padding: 0; position: relative; text-align: left; vertical-align: top; width: 100%; word-break: keep-all">
+							<tbody style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; word-break: keep-all">
+								<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+									<th class="small-12 large-12 columns first last" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0 auto; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0 auto; padding: 0; padding-bottom: 35px; padding-left: 35px; padding-right: 35px; text-align: left; width: 545px; word-break: keep-all">
+									<table style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; border-collapse: collapse; border-spacing: 0; hyphens: none; padding: 0; text-align: left; vertical-align: top; width: 100%; word-break: keep-all">
+										<tbody>
+											<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+												<th style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0; padding: 0; text-align: left; word-break: keep-all" class="">
+												<table class="spacer" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; border-collapse: collapse; border-spacing: 0; hyphens: none; padding: 0; text-align: left; vertical-align: top; width: 100%; word-break: keep-all">
+													<tbody style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; word-break: keep-all">
+														<tr style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; padding: 0; text-align: left; vertical-align: top; word-break: keep-all">
+															<td height="35px" style="-moz-hyphens: auto; -ms-hyphens: none; -webkit-hyphens: auto; Margin: 0; border-collapse: collapse !important; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 35px; font-weight: normal; hyphens: auto; line-height: 35px; margin: 0; mso-line-height-rule: exactly; padding: 0; text-align: left; vertical-align: top; word-break: keep-all; word-wrap: break-word" class="">&nbsp;</td>
+														</tr>
+													</tbody>
+												</table>
+
+												<center data-parsed="" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; hyphens: none; min-width: 475px; width: 100%; word-break: keep-all"><img align="center" alt="haiku" class="float-center" src="https://storage.pardot.com/36622/85858/haiku.png" style="-moz-hyphens: none; -ms-hyphens: none; -ms-interpolation-mode: bicubic; -webkit-hyphens: none; Margin: 0 auto; clear: both; display: block; float: none; hyphens: none; margin: 0 auto; max-width: 100%; outline: none; text-align: center; text-decoration: none; width: auto; word-break: keep-all"></center>
+												</th>
+												<th class="expander" style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; Margin: 0; color: #3F3F44; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: normal; hyphens: none; line-height: 1.5; margin: 0; padding: 0 !important; text-align: left; visibility: hidden; width: 0; word-break: keep-all">&nbsp;</th>
+											</tr>
+										</tbody>
+									</table>
+									</th>
+								</tr>
+							</tbody>
+						</table>
+						<!-- Footer Start -->
+
+						<table align="center" class="container footer-purple footer-border float-center" style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;Margin:0 auto;background:0 0;background-color:#473A8F!important;border-collapse:collapse;border-radius:0 0 6px 6px;border-spacing:0;border-top:1px solid #8a7ecb;float:none;hyphens:none;margin:0 auto;padding:0;table-layout:fixed!important;text-align:center;vertical-align:top;width:580px">
+							<tbody style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;hyphens:none">
+								<tr style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;hyphens:none;padding:0;text-align:left;vertical-align:top">
+									<td style="-moz-hyphens:auto;-ms-hyphens:none;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!important;color:#3F3F44;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;hyphens:auto;line-height:1.5;margin:0;padding:0;text-align:left;vertical-align:top;word-wrap:break-word">
+									<table class="spacer" style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;border-collapse:collapse;border-spacing:0;hyphens:none;padding:0;table-layout:fixed!important;text-align:left;vertical-align:top;width:100%">
+										<tbody style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;hyphens:none">
+											<tr style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;hyphens:none;padding:0;text-align:left;vertical-align:top">
+												<td height="60px" style="-moz-hyphens:auto;-ms-hyphens:none;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!important;color:#3F3F44;font-family:Helvetica,Arial,sans-serif;font-size:60px;font-weight:400;hyphens:auto;line-height:60px;margin:0;mso-line-height-rule:exactly;padding:0;text-align:left;vertical-align:top;word-wrap:break-word" class="">&nbsp;</td>
+											</tr>
+										</tbody>
+									</table>
+
+									<table class="row footer-contact collapse" style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;border-collapse:collapse;border-spacing:0;display:table;hyphens:none;padding:0;position:relative;table-layout:fixed!important;text-align:left;vertical-align:top;width:inherit!important">
+										<tbody style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;hyphens:none">
+											<tr style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;hyphens:none;padding:0;text-align:left;vertical-align:top">
+												<th class="small-12 large-3 columns first" style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;Margin:0 auto;color:#3F3F44;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;hyphens:none;line-height:1.5;margin:0 auto;padding:0;padding-bottom:35px;padding-left:0;padding-right:0;text-align:left;width:162.5px">
+												<table style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;border-collapse:collapse;border-spacing:0;hyphens:none;padding:0;table-layout:fixed!important;text-align:left;vertical-align:top;width:100%">
+													<tbody>
+														<tr style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;hyphens:none;padding:0;text-align:left;vertical-align:top">
+															<th style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;Margin:0;color:#3F3F44;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;hyphens:none;line-height:1.5;margin:0;padding:0;text-align:left" class=""><a href="https://hello.heroku.com/e/36622/home/m657zf/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I" style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;Margin:0;color:#8a7ecb;font-family:Helvetica,Arial,sans-serif;font-weight:400;hyphens:none;line-height:1.5;margin:0;padding:0;text-align:left;text-decoration:underline!important"><img alt="Salesforce + Heroku" height="46" src="https://hello.heroku.com/l/36622/2019-04-01/ld6zgb/36622/164963/salesforce_heroku_white.png"
+style="-moz-hyphens:none;-ms-hyphens:none;-ms-interpolation-mode:bicubic;-webkit-hyphens:none;border:none;clear:both;display:block;height:46px;hyphens:none;margin:0 auto;max-width:100%;outline:0;text-decoration:none;width:auto!important"></a></th>
+														</tr>
+													</tbody>
+												</table>
+												</th>
+												<th class="small-12 large-6 columns" style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;Margin:0 auto;color:#3F3F44;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;hyphens:none;line-height:1.5;margin:0 auto;padding:0;padding-bottom:35px;padding-left:0;padding-right:0;text-align:left;width:290px">
+												<table style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;border-collapse:collapse;border-spacing:0;hyphens:none;padding:0;table-layout:fixed!important;text-align:left;vertical-align:top;width:100%">
+													<tbody>
+														<tr style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;hyphens:none;padding:0;text-align:left;vertical-align:top">
+															<th style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;Margin:0;color:#3F3F44;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;hyphens:none;line-height:1.5;margin:0;padding:0;text-align:left" class="">
+															<center data-parsed="" style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;hyphens:none;min-width:185px;width:100%">
+															<p align="center" class="float-center" style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;Margin:0!important;Margin-bottom:30px;color:#8a7ecb;font-family:Helvetica,Arial,sans-serif;font-size:80%;font-weight:400;hyphens:none;line-height:1.5;margin:0!important;margin-bottom:30px;padding:0;padding-bottom:15px!important;text-align:center">Salesforce<br style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;hyphens:none">
+															415 Mission Street, 3rd Floor<br style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;hyphens:none">
+															San Francisco, CA 94105<br style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;hyphens:none">
+															<a href="https://hello.heroku.com/KeepMeuptoDate?ehash=96603dce3d63c1e55cab43fb3d59f4bc29982ad02fd32e0527a0f9294620a3f6&email_id=1204731270&epc_hash=3Xg_n-jKJfU8YIfbbKiqKqWPEw2X7ci6qQui-1scgx0" style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;Margin:0;color:#8a7ecb;font-family:Helvetica,Arial,sans-serif;font-weight:400;hyphens:none;line-height:1.5;margin:0;outline:0!important;padding:0;text-align:left;text-decoration:underline!important">Update your email preferences</a><br style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;hyphens:none">
+															<a href="https://hello.heroku.com/e/36622/company-privacy-/m657zj/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I" style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;Margin:0;color:#8a7ecb;font-family:Helvetica,Arial,sans-serif;font-weight:400;hyphens:none;line-height:1.5;margin:0;outline:0!important;padding:0;text-align:left;text-decoration:underline!important">Privacy</a></p>
+															</center>
+															</th>
+														</tr>
+													</tbody>
+												</table>
+												</th>
+												<th class="social small-12 large-3 columns last" style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;Margin:0 auto;color:#3F3F44;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;hyphens:none;line-height:1.5;margin:0 auto;padding:0;padding-bottom:35px;padding-left:0;padding-right:0;text-align:left;width:162.5px">
+												<table style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;border-collapse:collapse;border-spacing:0;hyphens:none;padding:0;table-layout:fixed!important;text-align:left;vertical-align:top;width:100%">
+													<tbody>
+														<tr style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;hyphens:none;padding:0;text-align:left;vertical-align:top">
+															<th style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;Margin:0;color:#3F3F44;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;hyphens:none;line-height:1.5;margin:0;padding:0;text-align:left" class="">
+															<center data-parsed="" style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;hyphens:none;min-width:40px;width:100%"><a align="center" class="float-center" href="https://hello.heroku.com/e/36622/2024-02-29/m67kv1/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I" style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;Margin:0;color:#8a7ecb;font-family:Helvetica,Arial,sans-serif;font-weight:400;hyphens:none;line-height:1.5;margin:0;padding:0;text-align:left;text-decoration:underline!important"><img alt="Heroku Blog" height="16" src="https://hello.heroku.com/l/36622/2019-03-29/ld3vn2/36622/164933/footer_icon_rss_purple.png"
+style="-moz-hyphens:none;-ms-hyphens:none;-ms-interpolation-mode:bicubic;-webkit-hyphens:none;border:0;clear:both;display:inline;height:16px!important;hyphens:none;max-width:100%;outline:0;text-align:center;text-decoration:none;width:auto!important"></a>&nbsp; <a align="center" class="float-center" href="https://hello.heroku.com/e/36622/podcasts/m657zq/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I" style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;Margin:0;color:#8a7ecb;font-family:Helvetica,Arial,sans-serif;font-weight:400;hyphens:none;line-height:1.5;margin:0;padding:0;text-align:left;text-decoration:underline!important"><img alt="Code[ish] Podcasts" height="16" src="https://hello.heroku.com/l/36622/2019-03-29/ld3vmz/36622/164929/footer_icon_podcast_purple.png"
+style="-moz-hyphens:none;-ms-hyphens:none;-ms-interpolation-mode:bicubic;-webkit-hyphens:none;border:0;clear:both;display:inline;height:16px!important;hyphens:none;max-width:100%;outline:0;text-align:center;text-decoration:none;width:auto!important"></a>&nbsp; <a align="center" class="float-center" href="https://hello.heroku.com/e/36622/heroku/m657xx/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I" style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;Margin:0;color:#8a7ecb;font-family:Helvetica,Arial,sans-serif;font-weight:400;hyphens:none;line-height:1.5;margin:0;padding:0;text-align:left;text-decoration:underline!important"><img alt="Heroku Twitter" height="15" src="https://hello.heroku.com/l/36622/2019-03-29/ld3vn4/36622/164937/footer_icon_twitter_purple.png"
+style="-moz-hyphens:none;-ms-hyphens:none;-ms-interpolation-mode:bicubic;-webkit-hyphens:none;border:0;clear:both;display:inline;height:15px!important;hyphens:none;max-width:100%;outline:0;text-align:center;text-decoration:none;width:auto!important"></a>&nbsp; <a align="center" class="float-center" href="https://hello.heroku.com/e/36622/heroku-/m657zt/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I" style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;Margin:0;color:#8a7ecb;font-family:Helvetica,Arial,sans-serif;font-weight:400;hyphens:none;line-height:1.5;margin:0;padding:0;text-align:left;text-decoration:underline!important"><img alt="Heroku on Instagram" height="16" src="https://hello.heroku.com/l/36622/2019-03-29/ld3vmq/36622/164923/footer_icon_instagram_purple.png"
+style="-moz-hyphens:none;-ms-hyphens:none;-ms-interpolation-mode:bicubic;-webkit-hyphens:none;border:0;clear:both;display:inline;height:16px!important;hyphens:none;max-width:100%;outline:0;text-align:center;text-decoration:none;width:auto!important"></a><br align="center" class="float-center" style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;hyphens:none">
+															<a align="center" class="float-center" href="https://hello.heroku.com/e/36622/Heroku-/m657zx/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I" style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;Margin:0;color:#8a7ecb;font-family:Helvetica,Arial,sans-serif;font-weight:400;hyphens:none;line-height:1.5;margin:0;padding:0;text-align:left;text-decoration:underline!important"><img alt="Heroku on Facebook" height="16" src="https://hello.heroku.com/l/36622/2019-03-29/ld3vmd/36622/164913/footer_icon_facebook_purple.png" style="-moz-hyphens:none;-ms-hyphens:none;-ms-interpolation-mode:bicubic;-webkit-hyphens:none;border:0;clear:both;display:inline;height:16px!important;hyphens:none;max-width:100%;outline:0;text-align:center;text-decoration:none;width:auto!important"></a>&nbsp; <a align="center" class="float-center"
+href="https://hello.heroku.com/e/36622/heroku/m657y7/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I" style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;Margin:0;color:#8a7ecb;font-family:Helvetica,Arial,sans-serif;font-weight:400;hyphens:none;line-height:1.5;margin:0;padding:0;text-align:left;text-decoration:underline!important"><img alt="Heroku on GitHub" height="16" src="https://hello.heroku.com/l/36622/2019-03-29/ld3vmg/36622/164917/footer_icon_github_purple.png" style="-moz-hyphens:none;-ms-hyphens:none;-ms-interpolation-mode:bicubic;-webkit-hyphens:none;border:0;clear:both;display:inline;height:16px!important;hyphens:none;max-width:100%;outline:0;text-align:center;text-decoration:none;width:auto!important"></a>&nbsp; <a align="center" class="float-center"
+href="https://hello.heroku.com/e/36622/company-heroku/m65811/1204731270/h/A8cpO9USfreYMH7jV-Up9DBQMiVwGQZRyNlrHb1P99I" style="-moz-hyphens:none;-ms-hyphens:none;-webkit-hyphens:none;Margin:0;color:#8a7ecb;font-family:Helvetica,Arial,sans-serif;font-weight:400;hyphens:none;line-height:1.5;margin:0;padding:0;text-align:left;text-decoration:underline!important"><img alt="Heroku on LinkedIn" height="16" src="https://hello.heroku.com/l/36622/2019-03-29/ld3vmn/36622/164925/footer_icon_linkedin_purple.png" style="-moz-hyphens:none;-ms-hyphens:none;-ms-interpolation-mode:bicubic;-webkit-hyphens:none;border:0;clear:both;display:inline;height:16px!important;hyphens:none;max-width:100%;outline:0;text-align:center;text-decoration:none;width:auto!important"></a></center>
+															</th>
+														</tr>
+													</tbody>
+												</table>
+												</th>
+											</tr>
+										</tbody>
+									</table>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<!-- Footer End --></td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- prevent Gmail on iOS font size manipulation -->
+
+			<div style="-moz-hyphens: none; -ms-hyphens: none; -webkit-hyphens: none; display: none; font: 15px courier; hyphens: none; line-height: 0; white-space: nowrap; word-break: keep-all">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</div>
+			</center>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<img alt="" src="https://hello.heroku.com/r/36622/1/1204731270/open/1" /></body>
+</html>
+
+--3k8kzBnygNl5=_?:--
+
+

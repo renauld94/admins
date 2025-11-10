@@ -1,0 +1,51 @@
+================================================================================
+CUSTOMIZED FOR: Senior Data Engineer @ Databricks
+MATCH SCORE: 22.2%
+================================================================================
+
+Simon Renauld | Senior Data Engineer & Analytics Professional
+Email: contact@simondatalab.de | LinkedIn: linkedin.com/in/simonrenauld
+Location: Ho Chi Minh City, Vietnam (Willing to relocate to Australia)
+
+PROFESSIONAL SUMMARY
+--------------------------------------------------------------------------------
+15+ years data engineering, analytics, and platform architecture. Specialized in GCP, Kafka, Distributed Systems. Proven track record building scalable systems, leading teams, and delivering business impact. Seeking challenging role in innovative organization.
+
+CORE COMPETENCIES
+--------------------------------------------------------------------------------
+Languages: SQL, Python, Scala, Java, Go, Rust
+Data Platforms: Apache Spark, Apache Airflow, Apache Kafka, Flink, Hive, Presto
+Cloud: AWS (EC2, S3, RDS, Redshift, Lambda, EMR), GCP (Dataflow, BigQuery), Azure (Databricks, Data Factory)
+Databases: PostgreSQL, MySQL, MongoDB, Cassandra, Redis, DynamoDB, Snowflake
+Big Data: Hadoop, Hbase, Pig, Mahout, Druid, Elasticsearch
+Ml Frameworks: TensorFlow, PyTorch, Scikit-learn, XGBoost, LightGBM
+Tools: Git, Docker, Kubernetes, Jenkins, Terraform, Ansible, Jupyter, DBT
+Soft Skills: Leadership, Team Building, Mentoring, Project Management, Cross-functional Collaboration
+
+PROFESSIONAL EXPERIENCE
+--------------------------------------------------------------------------------
+Senior Data Engineer | Tech Company A (2020-2023)
+• Designed and implemented 100M+ event/day data pipeline using Spark + Kafka + Airflow
+• Led team of 8 engineers in building real-time analytics platform
+• Mentored 5 junior engineers; 2 promoted to senior roles
+
+Data Engineer | Tech Company B (2017-2020)
+• Built ETL pipelines processing 50TB+ daily data
+• Implemented Kubernetes cluster managing 200+ jobs daily
+• Designed data warehouse architecture supporting 1000+ concurrent users
+
+Data Analyst | Tech Company C (2015-2017)
+• Developed 50+ dashboards used by 500+ internal users
+• Created data models improving forecast accuracy by 25%
+• Automated 80% of monthly reporting process
+
+EDUCATION
+--------------------------------------------------------------------------------
+B.S. Computer Science - University Name (2009)
+
+CERTIFICATIONS
+--------------------------------------------------------------------------------
+✓ AWS Certified Solutions Architect - Professional
+✓ Google Cloud Professional Data Engineer
+✓ Databricks Certified Associate Data Engineer
+✓ Kubernetes Administrator (CKA)

@@ -1,0 +1,24 @@
+[Unit]
+Description=Job Search Automation - Streamlit Dashboard
+After=network.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=simon
+WorkingDirectory=/home/simon/Learning-Management-System-Academy/job-search-toolkit
+Environment="PATH=/usr/local/bin:/usr/bin:/bin:/home/simon/.local/bin"
+Environment="PYTHONUNBUFFERED=1"
+ExecStart=/usr/bin/python3 -m streamlit run streamlit_dashboard.py \
+    --server.port=8501 \
+    --server.address=0.0.0.0 \
+    --server.headless=true \
+    --logger.level=info
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=job-search-streamlit
+
+[Install]
+WantedBy=multi-user.target

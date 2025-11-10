@@ -1,0 +1,666 @@
+X-GM-THRID: 1714353797614107482
+X-Gmail-Labels: Archived,Important,Category Updates,Unread
+Delivered-To: sn.renauld@gmail.com
+Received: by 2002:a05:7110:4343:b0:fb:6c4:3307 with SMTP id g3csp1916254gee;
+        Fri, 22 Oct 2021 13:39:46 -0700 (PDT)
+X-Google-Smtp-Source: 
+ ABdhPJypPDzOQuOLrnMJAX2m9up3sKGP5F2dpoH3f832Jh3p2MI1SQ3gdos5stlDlHoAo1JHefxf
+X-Received: by 2002:a17:90b:1283:: with SMTP id
+ fw3mr17172919pjb.99.1634935186169;
+        Fri, 22 Oct 2021 13:39:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1634935186; cv=none;
+        d=google.com; s=arc-20160816;
+        b=NaeyZ/PhNXWSUlQGhXfKJcwY1pNheilk/dZZ2JWTUytuQzRwf6jApnDwF9Kari/PRx
+         9SH8qjbsKKSfHlDbyr/5ZGySC//vY9Gr5ioLqiQ4CXyonUU1+mQoKoQCE03nk47b8ZgR
+         31y1O4vsGz/XHB1lrSHqPmiD5rxG8HB3RbtjkxAKB0k7sTRw6kLKoKqIFcdPBqpIk8g8
+         GuPUU2IufbiXe9aPFcfOf77Xe21Asn4MuIStYSlnTYApqZ7yC8qSQc38VzMqc2ymDYIy
+         tVTBMizylxgOlobhT095+vLzhSgQHXJgdF4AuRAruBoniQXmmlz7M1wYSMnhnztuQkae
+         CA1w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20160816;
+        h=to:reply-to:message-id:subject:mime-version:list-unsubscribe:from
+         :date:dkim-signature:dkim-signature;
+        bh=KWMsBxgjFBu20W4e4cFiVS9UDSAO50DCPGI6kYm3pLY=;
+        b=HQBDmBHBVT82izHoiiCB8ETWkr9LljFGCCr2QYV+lGs3OIVeHg3bcC980FUPN+0/Ma
+         IKs1U+v2pOz68r4h73aU7WxzpwHYmJcxfXWF4j5LLpm//1x4KGKMMp8nOE8CwCC2tSIb
+         /HkeOZ9QLRxBSsgQ0KKvlQqDZ90kD0MJrqSceTM1HlxxMa+P7AyAdVcR9HdsKrbDDEuA
+         MxuRYl/mTgrifL50C9iIoXi9dwgZ1wJYqz0QdjeCjVKb965UEn6f1M4DO1RRBPYOQCH6
+         dA7/4Alxy9+FI+fqkUf2mYmgP7ScLY0Pkw32++Z5it4Ti+e3bpjz1ruEgX+XQTXAmI43
+         BWog==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@epam.com header.s=bmy header.b=tr6gt5wn;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=hpC2VOCC;
+       spf=pass (google.com: domain of
+ bounces+15257641-9b85-sn.renauld=gmail.com@trm.epam.com designates
+ 149.72.206.74 as permitted sender)
+ smtp.mailfrom="bounces+15257641-9b85-sn.renauld=gmail.com@trm.epam.com";
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=epam.com
+Return-Path: <bounces+15257641-9b85-sn.renauld=gmail.com@trm.epam.com>
+Received: from wrqvczqx.outbound-mail.sendgrid.net
+ (wrqvczqx.outbound-mail.sendgrid.net. [149.72.206.74])
+        by mx.google.com with ESMTPS id
+ q8si12214272plr.449.2021.10.22.13.39.45
+        for <sn.renauld@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 22 Oct 2021 13:39:46 -0700 (PDT)
+Received-SPF: pass (google.com: domain of
+ bounces+15257641-9b85-sn.renauld=gmail.com@trm.epam.com designates
+ 149.72.206.74 as permitted sender) client-ip=149.72.206.74;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@epam.com header.s=bmy header.b=tr6gt5wn;
+       dkim=pass header.i=@sendgrid.info header.s=smtpapi header.b=hpC2VOCC;
+       spf=pass (google.com: domain of
+ bounces+15257641-9b85-sn.renauld=gmail.com@trm.epam.com designates
+ 149.72.206.74 as permitted sender)
+ smtp.mailfrom="bounces+15257641-9b85-sn.renauld=gmail.com@trm.epam.com";
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=epam.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=epam.com;
+	h=content-type:from:list-unsubscribe:mime-version:subject:reply-to:
+	x-feedback-id:to;
+	s=bmy; bh=KWMsBxgjFBu20W4e4cFiVS9UDSAO50DCPGI6kYm3pLY=;
+	b=tr6gt5wnF9fU32op2j4HBWObuoCX1HL7x5ZLt8213gvlxeAbSopADBe5Nxg6iBQIAO6i
+	bmxMdhgH9kciI0dBgU9IfwpYtC3kumSe2lXiNKU3gGyInby6orykNcFUvRquVn+fuseOZ4
+	a+IR1v0asj24kcFSd7QIRyjXbWkuXvfjuzob5ww+ZsTuqDfLKo3mvPDZGD76KBMauTobOr
+	89LFvc2/tZf9hAI7fUSNCf9fXrMvThTKSPHVKc4wk7MEMkQY7RwkFt5wUJLDVCra6ObqLC
+	0r5KKt/ngPiaavuz7/v2zZT9YKFue5b7A+IbpRH0N/lQjXZySDuVRSsQvhylL1lw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sendgrid.info;
+	h=content-type:from:list-unsubscribe:mime-version:subject:reply-to:
+	x-feedback-id:to;
+	s=smtpapi; bh=KWMsBxgjFBu20W4e4cFiVS9UDSAO50DCPGI6kYm3pLY=;
+	b=hpC2VOCCpmIS0Wc0J8QSTbkQuvDZZD851vmeH5kYkXxP7js3wrG7KE9v6FyN/pjOc+Kt
+	GRoHHJHCf5tCMth4uhkfUFMNtLaGYxyzFB7sGe0uYILeAYta7kQ9FTYZMHPfNtrkCEqaVl
+	ths9VoIkIP/uklcJl8bjjnH6EwTFeZTho=
+Received: by filterdrecv-7b6b466556-7qxpp with SMTP id
+ filterdrecv-7b6b466556-7qxpp-1-61732191-22
+        2021-10-22 20:39:45.371384955 +0000 UTC m=+4400319.141433220
+Received: from MTUyNTc2NDE (unknown)
+	by ismtpd0179p1mdw1.sendgrid.net (SG)
+	with HTTP id yCh1Sl5DRU-R3rLGJTF8VQ
+	for <sn.renauld@gmail.com>;
+	Fri, 22 Oct 2021 20:39:45.305 +0000 (UTC)
+Content-Type: multipart/alternative;
+ boundary=53825a9dcf359acaf52d49018b7baeac58bb6a23edb2202487d6576df3d6
+Date: Fri, 22 Oct 2021 20:39:45 +0000 (UTC)
+From: "Tatiana [EPAM Anywhere]" <tatiana@epam.com>
+List-Unsubscribe: <mailto:tatiana@epam.com>
+Mime-Version: 1.0
+Subject: You have successfully completed the application process
+X-250ok-CID: 
+ 67b4fb7191b6459fa911:e7cd8e43-bdb5-46f6-8012-4d9057773c16:DFMHYwJb5V
+Message-ID: <yCh1Sl5DRU-R3rLGJTF8VQ@ismtpd0179p1mdw1.sendgrid.net>
+Reply-To: "Tatiana [EPAM Anywhere]"
+	<tatiana-epam-anywhere-9ooqsknok@campaign.beamery.com>
+X-Feedback-ID: 15257641:SG
+X-SG-EID: 
+ =?us-ascii?Q?6FYL0bAe7lSwTMGizU3QjyrryaPiafoyObfl0HtYMQttkOPXg50xougLH2k8q0?=
+ =?us-ascii?Q?TCNHZs2VN2h=2FLtOB8lNc0jEB2WjFAo72AaMkov7?=
+ =?us-ascii?Q?+Z23=2FitCxzXBPT2cO5IBHs0Vih5QKS3MCulSp4q?=
+ =?us-ascii?Q?0cYqM7I4FxXGIV9cmNcHQ=2F75z5AWLe+N64umuIo?=
+ =?us-ascii?Q?pb95kjxsgn4e2IXqbYJo6IKUrXhIpTJulOu2p3B?=
+ =?us-ascii?Q?pMqpJfJ7NLpwAoyhh56BPYd2eGyHnfJSO426U8I?=
+ =?us-ascii?Q?Rr3Q3=2FZkmMk8zLe7jAO2w=3D=3D?=
+X-SG-ID: 
+ =?us-ascii?Q?N2C25iY2uzGMFz6rgvQsb8raWjw0ZPf1VmjsCkspi=2FIARr5ApfQLGQYXi0KvHQ?=
+ =?us-ascii?Q?0zeb6ZXQbR+gzXYvJR2oCjPOyShu+d0P9UkVKuj?=
+ =?us-ascii?Q?R5IcUyqhBTF9EDpqUir4NFz6jLxnn4ZL1LFr3ym?=
+ =?us-ascii?Q?Ap7pmQbN4cFyyRTdkilqsr+21gzuZyVUluNI9S4?=
+ =?us-ascii?Q?RImF+4GfFE+GfDxpCOgRtBB3QfiWGvnF7os+he5?=
+ =?us-ascii?Q?wzpGOy2q4JEPz=2F6osbjhiplg1GW2g6zANjdjilF?=
+ =?us-ascii?Q?WPGw06I5cvYi0gmDFJ2mMbBDMg4iTK3aSsxe28m?=
+ =?us-ascii?Q?xJga8CYp4DPl9anWq81KDObHz8GbJ=2FxAdOQQZ+S?=
+ =?us-ascii?Q?5QkNdC6TRM5LaRN4HGW=2FodGjXZkbUct8k37bJjW?=
+ =?us-ascii?Q?iBA7qj0uSYesWZWGlPKyNnbFsK95vyTkBjQuCHM?=
+ =?us-ascii?Q?RGMeYB0C2h8ZqAYFcvhnpyva6C0Yr8KyB3L4TE0?=
+ =?us-ascii?Q?OZ+u61CvVsM4G6v75VbbRFcRVxclbSlRRVn+XQe?=
+ =?us-ascii?Q?C=2FXJ8RvWmNPmk3M+QDCk=2FWyWzWIZTQUgMK5vLOJ?=
+ =?us-ascii?Q?XcjH8JCu8dp1xuffBtVpHl9lpg40X66+wBHv1cw?=
+ =?us-ascii?Q?8Tr4UqdkeejPJ5r69IIat2ABVElgQTvjJtU3Ocj?=
+ =?us-ascii?Q?78U=2F3BUBHUNG0z=2FRj3xu=2FmQ7+sPklMhrQvh943U?=
+ =?us-ascii?Q?rZzyVxT0eu7Gg5PgcLzEVeMm32cVKgnwZ6UojX3?=
+ =?us-ascii?Q?WCBfHhqjBIF=2Fj9P2fa=2FJaObpK76yYiZu8OgSZnT?=
+ =?us-ascii?Q?iI4eF8AqkX=2FQF1PEpobTYo=3D?=
+To: sn.renauld@gmail.com
+X-Entity-ID: BdpOoosqkEb61P5xcL8q3A==
+
+--53825a9dcf359acaf52d49018b7baeac58bb6a23edb2202487d6576df3d6
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0
+
+[http://careerslink.epam.com/ss/c/tyi2sJevxS8GN7VEznc2KfB7P7yNTsdw0Rb9NOcWz=
+hxE8DW7nj18ShOuMJumcSYxxiwqYeK4JO-n6lMK1-b4DKVH9Q_LZY-LMLfkKljDRp2KLBDTDUz4=
+K-PFHCTNEeUMd2fSp9f7EkSIMKHO64lqXcmYNvFw12yXNEyo-WlOVnE/3gd/2UGqkl3PRRmxehb=
+55w2tBA/t0/m_G_j8Eky6bXMMaYdMOyqWQ5M5Ov0ynafaydoIP-LWk]
+Hello Simon!
+
+You've completed the application process and our Talent Acquisition team is
+happy to review your application.
+If your profile passes the review successfully, you'll receive an invitatio=
+n
+email to the General Interview or will be contacted by our recruiting
+specialist. In case we won't be able to find a position that would match yo=
+ur
+qualification and skills, we will also notify you in a letter.
+Please, check your inbox from time to time (including the spam folder) and
+contact support if nobody gets back to you within 1 week.CHECK YOUR APPLICA=
+TION
+STATUS
+[http://careerslink.epam.com/ss/c/xQod6_fREurEz1toDBubEcKGrnYjO5FgL2l_wae60=
+Emo03jp9LQyF9PFhHqbGGRKQY8gaeJxZN_3FrRGnxEazWcn_oUv2k2jEshXUsvlwzYR88lB_U6w=
+w0PSmcb99mm4MSNPBX9ybCHjnRueNBX5rbz9P_LaoEyM-yW2BKqh65-G6QLww_0dmRD6WVwWsvl=
+Xlc5Qs1-6ahEVMVE5QWCDL8nA7aHcRlGFSeLpGPhT11TX6ao7CBpN7zE4u8InxD8C/3gd/2UGqk=
+l3PRRmxehb55w2tBA/t1/9cJZF7PVSXrcUbqoAMI5tXIbACTJzYFNJ_4lI5ZjevM]
+Meanwhile, to make your waiting less boring, check out our website for even=
+ more
+exciting opportunities:
+
+Global community of professionals [http://careerslink.epam.com/ss/c/tyi2sJe=
+vxS8GN7VEznc2KfB7P7yNTsdw0Rb9NOcWzhxE8DW7nj18ShOuMJumcSYxxiwqYeK4JO-n6lMK1-=
+b4DKVH9Q_LZY-LMLfkKljDRp2KLBDTDUz4K-PFHCTNEeUMtBvxIPznp9Og6HGNBMbC0rKsu1QVP=
+3j5y6cw6KzF3Bg/3gd/2UGqkl3PRRmxehb55w2tBA/t2/S1EzZ-EvyJLbFns9t-CCkY_aMU9QRE=
+dFNIGdWDLrbjQ]
+Global community of professionals
+
+Our Community-Z unites the best talents in your domain. Join the communitie=
+s,
+discuss burning topics, and get support from mentors and top professionals.
+
+Learn more [http://careerslink.epam.com/ss/c/xQod6_fREurEz1toDBubEcKGrnYjO5=
+FgL2l_wae60ElmjpF52jqnwj6NtQGmeTjA/3gd/2UGqkl3PRRmxehb55w2tBA/t3/aF03_rEKwr=
+da9oNLTiVxJkEcIqz-TckcZhm3nDpwdOw]Learning opportunities [http://careerslin=
+k.epam.com/ss/c/tyi2sJevxS8GN7VEznc2KfB7P7yNTsdw0Rb9NOcWzhxE8DW7nj18ShOuMJu=
+mcSYxxiwqYeK4JO-n6lMK1-b4DKVH9Q_LZY-LMLfkKljDRp2KLBDTDUz4K-PFHCTNEeUMME6uiM=
+SoCf6b4p1m7pNurEvFs4Y8o7sULfMEDJCTN_Q/3gd/2UGqkl3PRRmxehb55w2tBA/t4/m1czCAI=
+uk9nqY9ZntsHVg5WHyXYD7KtRumh9C0XIATM]
+Learning opportunities
+
+Join EPAM Anywhere and get an access to with 5,000+ online internal courses=
+,
+improve your English language, and read books from our internal library!
+
+Learn more [http://careerslink.epam.com/ss/c/xQod6_fREurEz1toDBubEcKGrnYjO5=
+FgL2l_wae60ElMgmB_BaP9f6LPBZKH9sGW/3gd/2UGqkl3PRRmxehb55w2tBA/t5/M68ngEZVG9=
+d5MMKBOG9CB4_GM1NH9HFR6slbwmvxgU8]Blog on latest tech insights [http://care=
+erslink.epam.com/ss/c/tyi2sJevxS8GN7VEznc2KfB7P7yNTsdw0Rb9NOcWzhxE8DW7nj18S=
+hOuMJumcSYxxiwqYeK4JO-n6lMK1-b4DKVH9Q_LZY-LMLfkKljDRp2KLBDTDUz4K-PFHCTNEeUM=
+lXzIXb2cIRIlB1WhTLmyhvMTTxHo9GSfhnrNfzb8VRI/3gd/2UGqkl3PRRmxehb55w2tBA/t6/y=
+WdPGhpNUqzhOFO6o6wusyToQ0jTjljujhYbS9giS-I]
+Blog on latest tech insights
+
+Keep up with the experts=E2=80=99 tech insights, career advice, and enterta=
+ining
+articles for true techies at heart.
+
+Learn more [http://careerslink.epam.com/ss/c/xQod6_fREurEz1toDBubEcKGrnYjO5=
+FgL2l_wae60ElcBdOWiz2FHV3sxeUD0sKN/3gd/2UGqkl3PRRmxehb55w2tBA/t7/9G68Oa7Vk5=
+vPFg5NHRP8grI8P6yRbUBk84UbTvzQRMk]
+
+
+Email Support [supportme@epam.com?subject=3DEPAM%20Anywhere%20support] in c=
+ase of
+any questions
+
+=C2=A9 2021 EPAM Systems, Inc. All Rights Reserved
+--53825a9dcf359acaf52d49018b7baeac58bb6a23edb2202487d6576df3d6
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset=utf-8
+Mime-Version: 1.0
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.=
+w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html style=3D"width:100%;fon=
+t-family:arial, 'helvetica neue', helvetica, sans-serif;-webkit-text-size-a=
+djust:100%;-ms-text-size-adjust:100%;padding:0;Margin:0;"><head><meta chars=
+et=3D"UTF-8"><meta content=3D"width=3Ddevice-width, initial-scale=3D1" name=
+=3D"viewport"><meta name=3D"x-apple-disable-message-reformatting"><meta htt=
+p-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge"><meta content=3D"telephon=
+e=3Dno" name=3D"format-detection"><title>Thank you for applying</title><!--=
+[if (mso 16)]>
+    <style type=3D"text/css">
+    a {text-decoration: none;}
+    </style>
+    <![endif]--><!--[if gte mso 9]><style>sup { font-size: 100% !important;=
+ }</style><![endif]--><!--[if gte mso 9]>
+<xml>
+    <o:OfficeDocumentSettings>
+    <o:AllowPNG></o:AllowPNG>
+    <o:PixelsPerInch>96</o:PixelsPerInch>
+    </o:OfficeDocumentSettings>
+</xml>
+<![endif]--><style type=3D"text/css">
+#outlook a {
+	padding:0;
+}
+.ExternalClass {
+	width:100%;
+}
+.ExternalClass,
+.ExternalClass p,
+.ExternalClass span,
+.ExternalClass font,
+.ExternalClass td,
+.ExternalClass div {
+	line-height:100%;
+}
+.es-button {
+	mso-style-priority:100!important;
+	text-decoration:none!important;
+}
+a[x-apple-data-detectors] {
+	color:inherit!important;
+	text-decoration:none!important;
+	font-size:inherit!important;
+	font-family:inherit!important;
+	font-weight:inherit!important;
+	line-height:inherit!important;
+}
+.es-desk-hidden {
+	display:none;
+	float:left;
+	overflow:hidden;
+	width:0;
+	max-height:0;
+	line-height:0;
+	mso-hide:all;
+}
+</style></head><body aria-disabled=3D"false" data-gr-ext-installed=3D"" dat=
+a-new-gr-c-s-check-loaded=3D"14.1031.0" data-new-gr-c-s-loaded=3D"14.1031.0=
+" spellcheck=3D"false" style=3D'width: 100%; font-family: arial, "helvetica=
+ neue", helvetica, sans-serif; text-size-adjust: 100%; padding: 0px; margin=
+: 0px;'><div class=3D"es-wrapper-color" style=3D"background-color:#E4EBF5;"=
+><!--[if gte mso 9]>
+			<v:background xmlns:v=3D"urn:schemas-microsoft-com:vml" fill=3D"t">
+				<v:fill type=3D"tile" color=3D"#e4ebf5"></v:fill>
+			</v:background>
+		<![endif]--><table cellpadding=3D"0" cellspacing=3D"0" class=3D"es-wrappe=
+r" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:colla=
+pse;border-spacing:0px;padding:0;Margin:0;width:100%;height:100%;background=
+-repeat:repeat;background-position:center top;" width=3D"100%"><tbody><tr f=
+r-original-style=3D"border-collapse:collapse;" style=3D"border-collapse: co=
+llapse; user-select: none;"><td fr-original-style=3D"padding:0;Margin:0;" s=
+tyle=3D"padding: 0px; margin: 0px; user-select: text; border: 0px;" valign=
+=3D"top"><table align=3D"center" cellpadding=3D"0" cellspacing=3D"0" class=
+=3D"es-content" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-c=
+ollapse:collapse;border-spacing:0px;table-layout:fixed !important;width:100=
+%;"><tbody><tr fr-original-style=3D"border-collapse:collapse;" style=3D"bor=
+der-collapse: collapse; user-select: none;"><td align=3D"center" fr-origina=
+l-style=3D"padding:0;Margin:0;" style=3D"padding: 0px; margin: 0px; user-se=
+lect: text; border: 0px;"><table align=3D"center" bgcolor=3D"#ffffff" cellp=
+adding=3D"0" cellspacing=3D"0" class=3D"es-content-body" style=3D"mso-table=
+-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0p=
+x;background-color:#FFFFFF;width:600px;"><tbody><tr fr-original-style=3D"bo=
+rder-collapse:collapse;" style=3D"border-collapse: collapse; user-select: n=
+one;"><td align=3D"left" background=3D"https://fbuefo.stripocdn.email/conte=
+nt/guids/CABINET_b25bed55d856b97db181d36f030ba654/images/39791608560525687.=
+jpg" bgcolor=3D"#00213D" fr-original-style=3D"padding:0;Margin:0;background=
+-color:#00213D;background-image:url(https://fbuefo.stripocdn.email/content/=
+guids/CABINET_b25bed55d856b97db181d36f030ba654/images/39791608560525687.jpg=
+);background-position:center top;background-repeat:no-repeat no-repeat;" st=
+yle=3D'padding: 0px; margin: 0px; background-color: rgb(0, 33, 61); backgro=
+und-image: url("https://fbuefo.stripocdn.email/content/guids/CABINET_b25bed=
+55d856b97db181d36f030ba654/images/39791608560525687.jpg"); background-posit=
+ion: center top; background-repeat: no-repeat; user-select: text; border: 0=
+px;'><table cellpadding=3D"0" cellspacing=3D"0" style=3D"mso-table-lspace:0=
+pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;" width=
+=3D"100%"><tbody><tr fr-original-style=3D"border-collapse:collapse;" style=
+=3D"border-collapse: collapse; user-select: none;"><td align=3D"center" fr-=
+original-style=3D"padding:0;Margin:0;width:600px;" style=3D"padding: 0px; m=
+argin: 0px; width: 600px; user-select: text; border: 0px;" valign=3D"top"><=
+table cellpadding=3D"0" cellspacing=3D"0" style=3D"mso-table-lspace:0pt;mso=
+-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;" width=3D"10=
+0%"><tbody><tr fr-original-style=3D"border-collapse:collapse;" style=3D"bor=
+der-collapse: collapse; user-select: none;"><td align=3D"center" fr-origina=
+l-style=3D"padding:0;Margin:0;font-size:0px;" style=3D"padding: 0px; margin=
+: 0px; font-size: 0px; user-select: text; border: 0px;"><img src=3D"https:/=
+/fbuefo.stripocdn.email/content/guids/CABINET_b25bed55d856b97db181d36f030ba=
+654/images/8751608646167554.jpg" alt=3D"" style=3D"display: block; border: =
+0px; outline: none; text-decoration: none; cursor: pointer;" width=3D"600" =
+height=3D"203" fr-original-style=3D"display: block; border: 0px; outline: n=
+one; text-decoration: none;" fr-original-class=3D"adapt-img fr-draggable"><=
+/td></tr></tbody></table></td></tr></tbody></table></td></tr><tr fr-origina=
+l-style=3D"border-collapse:collapse;" style=3D"border-collapse: collapse; u=
+ser-select: none;"><td align=3D"left" fr-original-style=3D"padding:0;Margin=
+:0;padding-top:30px;padding-left:30px;padding-right:30px;" style=3D"padding=
+: 30px 30px 0px; margin: 0px; user-select: text; border: 0px;"><table cellp=
+adding=3D"0" cellspacing=3D"0" style=3D"mso-table-lspace:0pt;mso-table-rspa=
+ce:0pt;border-collapse:collapse;border-spacing:0px;" width=3D"100%"><tbody>=
+<tr fr-original-style=3D"border-collapse:collapse;" style=3D"border-collaps=
+e: collapse; user-select: none;"><td align=3D"center" fr-original-style=3D"=
+padding:0;Margin:0;width:540px;" style=3D"padding: 0px; margin: 0px; width:=
+ 540px; user-select: text; border: 0px;" valign=3D"top"><table cellpadding=
+=3D"0" cellspacing=3D"0" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt=
+;border-collapse:collapse;border-spacing:0px;" width=3D"100%"><thead><tr fr=
+-original-style=3D"" style=3D"user-select: none;"><th fr-original-style=3D"=
+" style=3D"user-select: text; border: 0px;"><br></th></tr></thead><tbody><t=
+r fr-original-style=3D"border-collapse:collapse;" style=3D"border-collapse:=
+ collapse; user-select: none;"><td align=3D"left" fr-original-style=3D"padd=
+ing:0;Margin:0;padding-bottom:20px;" style=3D"padding: 0px 0px 20px; margin=
+: 0px; user-select: text; border: 0px;"><p style=3D"Margin:0;-webkit-text-s=
+ize-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font=
+-size:32px;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-=
+height:48px;color:#222222;"><strong>Hello Simon!</strong></p></td></tr><tr =
+fr-original-style=3D"border-collapse:collapse;" style=3D"border-collapse: c=
+ollapse; user-select: none;"><td align=3D"left" fr-original-style=3D"paddin=
+g:0;Margin:0;padding-bottom:30px;" style=3D"padding: 0px 0px 30px; margin: =
+0px; user-select: text; border: 0px;"><div style=3D'box-sizing: border-box;=
+ font-family: "Segoe UI", system-ui, "Apple Color Emoji", "Segoe UI Emoji",=
+ sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures: n=
+ormal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal;=
+ orphans: 2; text-align: start; text-indent: 0px; text-transform: none; whi=
+te-space: normal; widows: 2; word-spacing: 0px;'><span style=3D"font-family=
+: Arial,Helvetica,sans-serif;">You&#39;ve completed the application process=
+ and our Talent Acquisition team is happy to review your application.&nbsp;=
+</span></div><div style=3D'box-sizing: border-box; font-family: "Segoe UI",=
+ system-ui, "Apple Color Emoji", "Segoe UI Emoji", sans-serif; font-size: 1=
+4px; font-style: normal; font-variant-ligatures: normal; font-variant-caps:=
+ normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: =
+start; text-indent: 0px; text-transform: none; white-space: normal; widows:=
+ 2; word-spacing: 0px;'><span style=3D"font-family: Arial,Helvetica,sans-se=
+rif;"><br></span></div><div style=3D'box-sizing: border-box; font-family: "=
+Segoe UI", system-ui, "Apple Color Emoji", "Segoe UI Emoji", sans-serif; fo=
+nt-size: 14px; font-style: normal; font-variant-ligatures: normal; font-var=
+iant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; te=
+xt-align: start; text-indent: 0px; text-transform: none; white-space: norma=
+l; widows: 2; word-spacing: 0px;'><span style=3D"font-family: Arial,Helveti=
+ca,sans-serif;">If your profile passes the review successfully, you&#39;ll =
+receive an invitation email to the General Interview or will be contacted b=
+y our recruiting specialist. In case we won&#39;t be able to find a positio=
+n that would match your qualification and skills, we will also notify you i=
+n a letter.&nbsp;</span></div><div style=3D'box-sizing: border-box; font-fa=
+mily: "Segoe UI", system-ui, "Apple Color Emoji", "Segoe UI Emoji", sans-se=
+rif; font-size: 14px; font-style: normal; font-variant-ligatures: normal; f=
+ont-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans=
+: 2; text-align: start; text-indent: 0px; text-transform: none; white-space=
+: normal; widows: 2; word-spacing: 0px;'><span style=3D"font-family: Arial,=
+Helvetica,sans-serif;"><br></span></div><div style=3D'box-sizing: border-bo=
+x; font-family: "Segoe UI", system-ui, "Apple Color Emoji", "Segoe UI Emoji=
+", sans-serif; font-size: 14px; font-style: normal; font-variant-ligatures:=
+ normal; font-variant-caps: normal; font-weight: 400; letter-spacing: norma=
+l; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; w=
+hite-space: normal; widows: 2; word-spacing: 0px;'><span style=3D"font-fami=
+ly: Arial,Helvetica,sans-serif;">Please, check your inbox from time to time=
+ (including the spam folder) and contact support if nobody gets back to you=
+ <strong>within 1 week</strong>.</span></div></td></tr><tr fr-original-styl=
+e=3D"border-collapse:collapse;" style=3D"border-collapse: collapse; user-se=
+lect: none;"><td align=3D"left" fr-original-style=3D"padding:0;Margin:0;" s=
+tyle=3D"padding: 0px; margin: 0px; user-select: text; border: 0px;"><span c=
+lass=3D"es-button-border" style=3D"border-style:solid;border-color:#008ACE;=
+background:#008ACE none repeat scroll 0% 0%;border-width:0px;display:inline=
+-block;border-radius:0px;width:auto;"><a fr-original-class=3D"es-button" fr=
+-original-style=3D"mso-style-priority:100 !important;text-decoration:none;-=
+webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule=
+:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-si=
+ze:14px;color:#FFFFFF;border-style:solid;border-color:#008ACE;border-width:=
+15px 40px;display:inline-block;background:#008ACE none repeat scroll 0% 0%;=
+border-radius:0px;font-weight:bold;font-style:normal;line-height:17px;width=
+:auto;text-align:center;" href=3D"http://careerslink.epam.com/ss/c/xQod6_fR=
+EurEz1toDBubEcKGrnYjO5FgL2l_wae60Emo03jp9LQyF9PFhHqbGGRKQY8gaeJxZN_3FrRGnxE=
+azWcn_oUv2k2jEshXUsvlwzYR88lB_U6ww0PSmcb99mm4MSNPBX9ybCHjnRueNBX5rbz9P_LaoE=
+yM-yW2BKqh65-G6QLww_0dmRD6WVwWsvlXlc5Qs1-6ahEVMVE5QWCDL8nA7aHcRlGFSeLpGPhT1=
+1TX6ao7CBpN7zE4u8InxD8C/3gd/2UGqkl3PRRmxehb55w2tBA/h8/ImT6dp06AGLyzr4hRYph3=
+To3RumXlJhQj5YniekOAR4" rel=3D"noopener noreferrer" style=3D'text-decoratio=
+n: none; text-size-adjust: none; font-family: arial, "helvetica neue", helv=
+etica, sans-serif; font-size: 14px; color: rgb(255, 255, 255); border-style=
+: solid; border-color: rgb(0, 138, 206); border-width: 15px 40px; display: =
+inline-block; background: none 0% 0% repeat scroll rgb(0, 138, 206); border=
+-radius: 0px; font-weight: bold; font-style: normal; line-height: 17px; wid=
+th: auto; text-align: center; user-select: auto;' target=3D"_blank">CHECK Y=
+OUR APPLICATION STATUS</a></span></td></tr><tr fr-original-style=3D"border-=
+collapse:collapse;" style=3D"border-collapse: collapse; user-select: none;"=
+><td align=3D"center" fr-original-style=3D"padding:0;Margin:0;padding-top:4=
+0px;padding-bottom:40px;font-size:0;" style=3D"padding: 40px 0px; margin: 0=
+px; font-size: 0px; user-select: text; border: 0px;"><table border=3D"0" ce=
+llpadding=3D"0" cellspacing=3D"0" height=3D"100%" style=3D"mso-table-lspace=
+:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;" wid=
+th=3D"100%"><tbody><tr fr-original-style=3D"border-collapse:collapse;" styl=
+e=3D"border-collapse: collapse; user-select: none;"><td fr-original-style=
+=3D"padding:0;Margin:0;border-bottom:1px solid #CCCCCC;background:none;heig=
+ht:1px;width:100%;margin:0px;" style=3D"padding: 0px; border-width: 0px 0px=
+ 1px; border-bottom-style: solid; border-bottom-color: rgb(204, 204, 204); =
+background: none; height: 1px; width: 100%; margin: 0px; user-select: text;=
+ border-top-style: initial; border-right-style: initial; border-left-style:=
+ initial; border-top-color: initial; border-right-color: initial; border-le=
+ft-color: initial; border-image: initial;"><br></td></tr></tbody></table></=
+td></tr><tr fr-original-style=3D"border-collapse:collapse;" style=3D"border=
+-collapse: collapse; user-select: none;"><td align=3D"left" fr-original-sty=
+le=3D"padding:0;Margin:0;padding-bottom:15px;" style=3D"padding: 0px 0px 15=
+px; margin: 0px; user-select: text; border: 0px;"><p style=3D"Margin:0;-web=
+kit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:ex=
+actly;font-size:14px;font-family:arial, 'helvetica neue', helvetica, sans-s=
+erif;line-height:21px;color:#333333;">Meanwhile, to make your waiting less =
+boring, check out our website for even more exciting opportunities:</p></td=
+></tr></tbody></table></td></tr></tbody></table></td></tr><tr fr-original-s=
+tyle=3D"border-collapse:collapse;" style=3D"border-collapse: collapse; user=
+-select: none;"><td align=3D"left" fr-original-style=3D"padding:0;Margin:0;=
+padding-left:30px;padding-right:30px;" style=3D"padding: 0px 30px; margin: =
+0px; user-select: text; border: 0px;"><table cellpadding=3D"0" cellspacing=
+=3D"0" style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:c=
+ollapse;border-spacing:0px;" width=3D"100%"><tbody><tr fr-original-style=3D=
+"border-collapse:collapse;" style=3D"border-collapse: collapse; user-select=
+: none;"><td align=3D"center" fr-original-style=3D"padding:0;Margin:0;width=
+:540px;" style=3D"padding: 0px; margin: 0px; width: 540px; user-select: tex=
+t; border: 0px;" valign=3D"top"><table cellpadding=3D"0" cellspacing=3D"0" =
+style=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse=
+;border-spacing:0px;" width=3D"100%"><tbody><tr fr-original-style=3D"border=
+-collapse:collapse;" style=3D"border-collapse: collapse; user-select: none;=
+"><td align=3D"center" fr-original-style=3D"padding:0;Margin:0;padding-bott=
+om:25px;font-size:0px;" style=3D"padding: 0px 0px 25px; margin: 0px; font-s=
+ize: 0px; user-select: text; border: 0px;"><img src=3D"https://fbuefo.strip=
+ocdn.email/content/guids/CABINET_b25bed55d856b97db181d36f030ba654/images/49=
+21592820259396.png" alt=3D"Global community of professionals" style=3D"disp=
+lay: block; border: 0px; outline: none; text-decoration: none; cursor: poin=
+ter;" title=3D"Global community of professionals" width=3D"540" height=3D"3=
+00" fr-original-style=3D"display: block; border: 0px; outline: none; text-d=
+ecoration: none;" fr-original-class=3D"fr-draggable"></td></tr><tr fr-origi=
+nal-style=3D"border-collapse:collapse;" style=3D"border-collapse: collapse;=
+ user-select: none;"><td align=3D"left" fr-original-style=3D"padding:0;Marg=
+in:0;padding-bottom:15px;" style=3D"padding: 0px 0px 15px; margin: 0px; use=
+r-select: text; border: 0px;"><p style=3D"Margin:0;-webkit-text-size-adjust=
+:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:24px=
+;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:29p=
+x;color:#222222;"><strong>Global community of professionals</strong></p></t=
+d></tr><tr fr-original-style=3D"border-collapse:collapse;" style=3D"border-=
+collapse: collapse; user-select: none;"><td align=3D"left" fr-original-styl=
+e=3D"padding:0;Margin:0;padding-bottom:10px;" style=3D"padding: 0px 0px 10p=
+x; margin: 0px; user-select: text; border: 0px;"><p style=3D"Margin:0;-webk=
+it-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exa=
+ctly;font-size:14px;font-family:arial, 'helvetica neue', helvetica, sans-se=
+rif;line-height:21px;color:#333333;">Our Community-Z unites the best talent=
+s in your domain. Join the communities, discuss burning topics, and get sup=
+port from mentors and top professionals.</p></td></tr><tr fr-original-style=
+=3D"border-collapse:collapse;" style=3D"border-collapse: collapse; user-sel=
+ect: none;"><td align=3D"left" fr-original-style=3D"padding:0;Margin:0;padd=
+ing-bottom:40px;" style=3D"padding: 0px 0px 40px; margin: 0px; user-select:=
+ text; border: 0px;"><a fr-original-style=3D"-webkit-text-size-adjust:none;=
+-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, '=
+helvetica neue', helvetica, sans-serif;font-size:14px;text-decoration:under=
+line;color:#008ACE;" href=3D"http://careerslink.epam.com/ss/c/xQod6_fREurEz=
+1toDBubEcKGrnYjO5FgL2l_wae60ElmjpF52jqnwj6NtQGmeTjA/3gd/2UGqkl3PRRmxehb55w2=
+tBA/h9/TcJFsWJU3LTkDPQRkbW4meG1xMW1kQ6jCrV-z1MkI1Y" style=3D'text-size-adju=
+st: none; font-family: arial, "helvetica neue", helvetica, sans-serif; font=
+-size: 14px; text-decoration: underline; color: rgb(0, 138, 206); user-sele=
+ct: auto;' target=3D"_blank">Learn more</a></td></tr></tbody></table></td><=
+/tr></tbody></table></td></tr><tr fr-original-style=3D"border-collapse:coll=
+apse;" style=3D"border-collapse: collapse; user-select: none;"><td align=3D=
+"left" fr-original-style=3D"padding:0;Margin:0;padding-left:30px;padding-ri=
+ght:30px;" style=3D"padding: 0px 30px; margin: 0px; user-select: text; bord=
+er: 0px;"><table cellpadding=3D"0" cellspacing=3D"0" style=3D"mso-table-lsp=
+ace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;" =
+width=3D"100%"><tbody><tr fr-original-style=3D"border-collapse:collapse;" s=
+tyle=3D"border-collapse: collapse; user-select: none;"><td align=3D"center"=
+ fr-original-style=3D"padding:0;Margin:0;width:540px;" style=3D"padding: 0p=
+x; margin: 0px; width: 540px; user-select: text; border: 0px;" valign=3D"to=
+p"><table cellpadding=3D"0" cellspacing=3D"0" style=3D"mso-table-lspace:0pt=
+;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;" width=
+=3D"100%"><tbody><tr fr-original-style=3D"border-collapse:collapse;" style=
+=3D"border-collapse: collapse; user-select: none;"><td align=3D"center" fr-=
+original-style=3D"padding:0;Margin:0;padding-bottom:25px;font-size:0px;" st=
+yle=3D"padding: 0px 0px 25px; margin: 0px; font-size: 0px; user-select: tex=
+t; border: 0px;"><img src=3D"https://fbuefo.stripocdn.email/content/guids/C=
+ABINET_b25bed55d856b97db181d36f030ba654/images/42731592820243942.png" alt=
+=3D"Learning opportunities" style=3D"display: block; border: 0px; outline: =
+none; text-decoration: none; cursor: pointer;" title=3D"Learning opportunit=
+ies" width=3D"540" height=3D"300" fr-original-style=3D"display: block; bord=
+er: 0px; outline: none; text-decoration: none;" fr-original-class=3D"fr-dra=
+ggable"></td></tr><tr fr-original-style=3D"border-collapse:collapse;" style=
+=3D"border-collapse: collapse; user-select: none;"><td align=3D"left" fr-or=
+iginal-style=3D"padding:0;Margin:0;padding-bottom:15px;" style=3D"padding: =
+0px 0px 15px; margin: 0px; user-select: text; border: 0px;"><p style=3D"Mar=
+gin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-heig=
+ht-rule:exactly;font-size:24px;font-family:arial, 'helvetica neue', helveti=
+ca, sans-serif;line-height:29px;color:#222222;"><strong>Learning opportunit=
+ies</strong></p></td></tr><tr fr-original-style=3D"border-collapse:collapse=
+;" style=3D"border-collapse: collapse; user-select: none;"><td align=3D"lef=
+t" fr-original-style=3D"padding:0;Margin:0;padding-bottom:10px;" style=3D"p=
+adding: 0px 0px 10px; margin: 0px; user-select: text; border: 0px;"><p styl=
+e=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-l=
+ine-height-rule:exactly;font-size:14px;font-family:arial, 'helvetica neue',=
+ helvetica, sans-serif;line-height:21px;color:#333333;">Join EPAM Anywhere =
+and get an access to with 5,000+ online internal courses, improve your Engl=
+ish language, and read books from our internal library!</p></td></tr><tr fr=
+-original-style=3D"border-collapse:collapse;" style=3D"border-collapse: col=
+lapse; user-select: none;"><td align=3D"left" fr-original-style=3D"padding:=
+0;Margin:0;padding-bottom:40px;" style=3D"padding: 0px 0px 40px; margin: 0p=
+x; user-select: text; border: 0px;"><a fr-original-style=3D"-webkit-text-si=
+ze-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-=
+family:arial, 'helvetica neue', helvetica, sans-serif;font-size:14px;text-d=
+ecoration:underline;color:#008ACE;" href=3D"http://careerslink.epam.com/ss/=
+c/xQod6_fREurEz1toDBubEcKGrnYjO5FgL2l_wae60ElMgmB_BaP9f6LPBZKH9sGW/3gd/2UGq=
+kl3PRRmxehb55w2tBA/h10/Y2iloImqhViR1pHKoRhjlPS4-DojVsEvZd1FP1S6jNM" style=
+=3D'text-size-adjust: none; font-family: arial, "helvetica neue", helvetica=
+, sans-serif; font-size: 14px; text-decoration: underline; color: rgb(0, 13=
+8, 206); user-select: auto;' target=3D"_blank">Learn more</a></td></tr></tb=
+ody></table></td></tr></tbody></table></td></tr><tr fr-original-style=3D"bo=
+rder-collapse:collapse;" style=3D"border-collapse: collapse; user-select: n=
+one;"><td align=3D"left" fr-original-style=3D"padding:0;Margin:0;padding-le=
+ft:30px;padding-right:30px;" style=3D"padding: 0px 30px; margin: 0px; user-=
+select: text; border: 0px;"><table cellpadding=3D"0" cellspacing=3D"0" styl=
+e=3D"mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;bor=
+der-spacing:0px;" width=3D"100%"><tbody><tr fr-original-style=3D"border-col=
+lapse:collapse;" style=3D"border-collapse: collapse; user-select: none;"><t=
+d align=3D"center" fr-original-style=3D"padding:0;Margin:0;width:540px;" st=
+yle=3D"padding: 0px; margin: 0px; width: 540px; user-select: text; border: =
+0px;" valign=3D"top"><table cellpadding=3D"0" cellspacing=3D"0" style=3D"ms=
+o-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spa=
+cing:0px;" width=3D"100%"><tbody><tr fr-original-style=3D"border-collapse:c=
+ollapse;" style=3D"border-collapse: collapse; user-select: none;"><td align=
+=3D"center" fr-original-style=3D"padding:0;Margin:0;padding-bottom:25px;fon=
+t-size:0px;" style=3D"padding: 0px 0px 25px; margin: 0px; font-size: 0px; u=
+ser-select: text; border: 0px;"><img src=3D"https://fbuefo.stripocdn.email/=
+content/guids/CABINET_b25bed55d856b97db181d36f030ba654/images/3544159282125=
+6652.png" alt=3D"Blog on latest tech insights" style=3D"display: block; bor=
+der: 0px; outline: none; text-decoration: none; cursor: pointer;" title=3D"=
+Blog on latest tech insights" width=3D"540" height=3D"300" fr-original-styl=
+e=3D"display: block; border: 0px; outline: none; text-decoration: none;" fr=
+-original-class=3D"fr-draggable"></td></tr><tr fr-original-style=3D"border-=
+collapse:collapse;" style=3D"border-collapse: collapse; user-select: none;"=
+><td align=3D"left" fr-original-style=3D"padding:0;Margin:0;padding-bottom:=
+15px;" style=3D"padding: 0px 0px 15px; margin: 0px; user-select: text; bord=
+er: 0px;"><p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-=
+adjust:none;mso-line-height-rule:exactly;font-size:24px;font-family:arial, =
+'helvetica neue', helvetica, sans-serif;line-height:29px;color:#222222;"><s=
+trong>Blog on latest tech insights</strong></p></td></tr><tr fr-original-st=
+yle=3D"border-collapse:collapse;" style=3D"border-collapse: collapse; user-=
+select: none;"><td align=3D"left" fr-original-style=3D"padding:0;Margin:0;p=
+adding-bottom:10px;" style=3D"padding: 0px 0px 10px; margin: 0px; user-sele=
+ct: text; border: 0px;"><p style=3D"Margin:0;-webkit-text-size-adjust:none;=
+-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-size:14px;font-=
+family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;colo=
+r:#333333;">Keep up with the experts&rsquo; tech insights, career advice, a=
+nd entertaining articles for true techies at heart.</p></td></tr><tr fr-ori=
+ginal-style=3D"border-collapse:collapse;" style=3D"border-collapse: collaps=
+e; user-select: none;"><td align=3D"left" fr-original-style=3D"padding:0;Ma=
+rgin:0;" style=3D"padding: 0px; margin: 0px; user-select: text; border: 0px=
+;"><a fr-original-style=3D"-webkit-text-size-adjust:none;-ms-text-size-adju=
+st:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', h=
+elvetica, sans-serif;font-size:14px;text-decoration:underline;color:#008ACE=
+;" href=3D"http://careerslink.epam.com/ss/c/xQod6_fREurEz1toDBubEcKGrnYjO5F=
+gL2l_wae60ElcBdOWiz2FHV3sxeUD0sKN/3gd/2UGqkl3PRRmxehb55w2tBA/h11/Aqo_hcUtiu=
+KqWMUzA-ffeoOAUIn7hw9cFFy71Y_-BrE" style=3D'text-size-adjust: none; font-fa=
+mily: arial, "helvetica neue", helvetica, sans-serif; font-size: 14px; text=
+-decoration: underline; color: rgb(0, 138, 206); user-select: auto;' target=
+=3D"_blank">Learn more</a></td></tr></tbody></table></td></tr></tbody></tab=
+le></td></tr><tr fr-original-style=3D"border-collapse:collapse;" style=3D"b=
+order-collapse: collapse; user-select: none;"><td align=3D"left" fr-origina=
+l-style=3D"Margin:0;padding-left:30px;padding-right:30px;padding-top:40px;p=
+adding-bottom:40px;" style=3D"margin: 0px; padding: 40px 30px; user-select:=
+ text; border: 0px;"><table cellpadding=3D"0" cellspacing=3D"0" style=3D"ms=
+o-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spa=
+cing:0px;" width=3D"100%"><tbody><tr fr-original-style=3D"border-collapse:c=
+ollapse;" style=3D"border-collapse: collapse; user-select: none;"><td align=
+=3D"center" fr-original-style=3D"padding:0;Margin:0;width:540px;" style=3D"=
+padding: 0px; margin: 0px; width: 540px; user-select: text; border: 0px;" v=
+align=3D"top"><table cellpadding=3D"0" cellspacing=3D"0" style=3D"mso-table=
+-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0p=
+x;" width=3D"100%"><tbody><tr fr-original-style=3D"border-collapse:collapse=
+;" style=3D"border-collapse: collapse; user-select: none;"><td align=3D"lef=
+t" fr-original-style=3D"padding:0;Margin:0;padding-top:5px;padding-bottom:2=
+0px;" style=3D"padding: 5px 0px 20px; margin: 0px; user-select: text; borde=
+r: 0px;"><p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-size-a=
+djust:none;mso-line-height-rule:exactly;font-size:14px;font-family:arial, '=
+helvetica neue', helvetica, sans-serif;line-height:21px;color:#333333;"><br=
+></p></td></tr></tbody></table></td></tr></tbody></table></td></tr><tr fr-o=
+riginal-style=3D"border-collapse:collapse;" style=3D"border-collapse: colla=
+pse; user-select: none;"><td align=3D"left" bgcolor=3D"#222222" fr-original=
+-style=3D"Margin:0;padding-top:25px;padding-bottom:25px;padding-left:30px;p=
+adding-right:30px;background-color:#222222;" style=3D"margin: 0px; padding:=
+ 25px 30px; background-color: rgb(34, 34, 34); user-select: text; border: 0=
+px;"><table cellpadding=3D"0" cellspacing=3D"0" style=3D"mso-table-lspace:0=
+pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;" width=
+=3D"100%"><tbody><tr fr-original-style=3D"border-collapse:collapse;" style=
+=3D"border-collapse: collapse; user-select: none;"><td align=3D"center" fr-=
+original-style=3D"padding:0;Margin:0;width:540px;" style=3D"padding: 0px; m=
+argin: 0px; width: 540px; user-select: text; border: 0px;" valign=3D"top"><=
+table cellpadding=3D"0" cellspacing=3D"0" style=3D"mso-table-lspace:0pt;mso=
+-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;" width=3D"10=
+0%"><tbody><tr fr-original-style=3D"border-collapse:collapse;" style=3D"bor=
+der-collapse: collapse; user-select: none;"><td align=3D"center" fr-origina=
+l-style=3D"padding:0;Margin:0;padding-bottom:15px;" style=3D"padding: 0px 0=
+px 15px; margin: 0px; user-select: text; border: 0px;"><p style=3D"Margin:0=
+;-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-ru=
+le:exactly;font-size:12px;font-family:arial, 'helvetica neue', helvetica, s=
+ans-serif;line-height:18px;color:#FFFFFF;">Email <a fr-original-style=3D"-w=
+ebkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:=
+exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-siz=
+e:12px;text-decoration:underline;color:#5CB8E5;" href=3D"mailto:supportme@e=
+pam.com?subject=3DEPAM%20Anywhere%20support" style=3D'text-size-adjust: non=
+e; font-family: arial, "helvetica neue", helvetica, sans-serif; font-size: =
+12px; text-decoration: underline; color: rgb(92, 184, 229); user-select: au=
+to;' target=3D"_blank">Support</a> in case of any questions</p></td></tr><t=
+r fr-original-style=3D"border-collapse:collapse;" style=3D"border-collapse:=
+ collapse; user-select: none;"><td align=3D"center" fr-original-style=3D"pa=
+dding:0;Margin:0;" style=3D"padding: 0px; margin: 0px; user-select: text; b=
+order: 0px;"><p style=3D"Margin:0;-webkit-text-size-adjust:none;-ms-text-si=
+ze-adjust:none;mso-line-height-rule:exactly;font-size:8px;font-family:arial=
+, 'helvetica neue', helvetica, sans-serif;line-height:12px;color:#B2B2B2;">=
+&copy; 2021 EPAM Systems, Inc. All Rights Reserved</p></td></tr></tbody></t=
+able></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody>=
+</table></td></tr></tbody></table></div><img src=3D"http://careerslink.epam=
+.com/ss/o/WvlWcu76BLOppwwoA48_Rw/3gd/2UGqkl3PRRmxehb55w2tBA/ho.gif" alt=3D"=
+" width=3D"1" height=3D"1" border=3D"0" style=3D"height:1px !important;widt=
+h:1px !important;border-width:0 !important;margin-top:0 !important;margin-b=
+ottom:0 !important;margin-right:0 !important;margin-left:0 !important;paddi=
+ng-top:0 !important;padding-bottom:0 !important;padding-right:0 !important;=
+padding-left:0 !important;"/></body></html><span style=3D"font-size: 9px;">=
+Don=E2=80=99t want to receive these e-mails? <a clicktracking=3Doff href=3D=
+"http://beamery.com/unsubscribe/521c1e9661e6a4e81ca32b6299317e813354f375631=
+09ade7719a466882c284fc9b616b6da7ad3d71c68b9ab3e80b087e6835391987c2343ee829b=
+e78587a8e23553ab9e6773595cf427de11291d986c9341c29466cce6c7c1c06775e93b67755=
+1feea4ea9d1e61dca3b52e8365f2a8e6fa400e08a05b19b639006beb43c5e31c38d7d71c33d=
+b9249237fc5005d110f0ef71cf333a089dedff4e60d6db5e395546609e195e1e6cebc5b40be=
+3695d0ab63cd8466e564a31ce7cde70e68c3ef42086fb283c482b261a2690aa7c8c69fa04c7=
+b8f0fe9f0bea0bb8cd95fd790344c85bb69dbdb1ba/false" target=3D"_blank">Click t=
+o unsubscribe</a></span>=20
+ <style> @media print{ #_two50 { background-image:url('http://250okanalytic=
+s.beamery.com/ea/YmJu51wZvF/?t=3Dp&e=3Dsn.renauld@gmail.com&c=3D67b4fb7191b=
+6459fa911:e7cd8e43-bdb5-46f6-8012-4d9057773c16:DFMHYwJb5V'); } } blockquote=
+ #_two50, #mailContainerBody #_two50, div.OutlookMessageHeader, table.moz-e=
+mail-headers-table { background-image:url('http://250okanalytics.beamery.co=
+m/ea/YmJu51wZvF/?t=3Df&e=3Dsn.renauld@gmail.com&c=3D67b4fb7191b6459fa911:e7=
+cd8e43-bdb5-46f6-8012-4d9057773c16:DFMHYwJb5V'); } </style> <div id=3D'_two=
+50'></div> <img id=3D'_two50_img' src=3D'http://250okanalytics.beamery.com/=
+ea/YmJu51wZvF/?e=3Dsn.renauld@gmail.com&c=3D67b4fb7191b6459fa911:e7cd8e43-b=
+db5-46f6-8012-4d9057773c16:DFMHYwJb5V' width=3D'1' height=3D'1' style=3D'ma=
+rgin:0 !important; padding:0 !important; border:0 !important; height:1px !i=
+mportant; width:1px !important;' />
+--53825a9dcf359acaf52d49018b7baeac58bb6a23edb2202487d6576df3d6--
+

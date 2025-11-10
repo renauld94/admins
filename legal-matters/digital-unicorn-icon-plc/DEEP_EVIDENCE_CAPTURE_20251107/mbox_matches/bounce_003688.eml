@@ -1,0 +1,590 @@
+X-GM-THRID: 1823092539199801359
+X-Gmail-Labels: Inbox,Category Promotions,Unread
+Delivered-To: sn.renauld@gmail.com
+Received: by 2002:a17:906:55c5:b0:aab:de38:9884 with SMTP id z5csp2759963ejp;
+        Mon, 3 Feb 2025 18:35:31 -0800 (PST)
+X-Forwarded-Encrypted: i=2;
+ AJvYcCVRiYke58zd9x47H4LAMEskYezuDvvpkv6WdzVLdnPCHlbGqm+Y+9cBIizvNzkChAgD0et9WscHTQHJ@gmail.com
+X-Google-Smtp-Source: 
+ AGHT+IH2MeyVfNDi+m54KD6ypp0avddG5dmeYtLybmB72wc/kTxp25Ssfu1CZaAvGxQTcOjXk6oB
+X-Received: by 2002:a05:622a:903:b0:466:b29a:9b10 with SMTP id
+ d75a77b69052e-46fd0b6ded8mr351919301cf.42.1738636531058;
+        Mon, 03 Feb 2025 18:35:31 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1738636531; cv=none;
+        d=google.com; s=arc-20240605;
+        b=iWURE1x8vSXXltNbaHE2lBhK7rFkMQJM/WgA3VoBs5swye40epB0EnxKe8JY0uu4ZL
+         0hCO4t9MoVHXj8xHT2G9t+mT14ONzhdIVKhWqlptPPyggL/IdgWiCij69X8mp8JzfKey
+         rzv21o4AQm+0WRJ6VMsKWsdy150mWobD54TNyswkd68H3uDwaqtNzLGFgjj0mpj30qWQ
+         kNRDEUEAiCXedJYyw7WlgFGC/0L4UwjBOVWhnqG+SKGSQyJaA8hpIDmGWymLqjxGJnvO
+         RZp7tM6LceAfkySRrhTas3wGhDERvquTCBjpd7vxEyRr/CIfQt3uoagcRFMi8uSmUqqH
+         /MOA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605;
+        h=mime-version:feedback-id:to:message-id:subject:date:from
+         :dkim-signature:dkim-signature:delivered-to;
+        bh=1atWZZFv7u7Xx6qJxlexkqMx4TvgIZGT3FJCzCul8UM=;
+        fh=PtvM+3MFXUjY4IoQonFu3/PZGaDPHwj8XoabnUc3IG8=;
+        b=lcXcKfghYZaRGlR1RfqE/em6DqlysE+2mTqAjBmJ9/fMGc5m9ly7FfZx31MR+V7i2m
+         okMPhSi90P1BO9JItFmVLKD3AloehFDjp1hMxSo4Uino3qpM3JcBp00aRA1wB0SqrmJX
+         5mPdfWBuDphdsPk+q+qvIvEBv14tChufgGx345gMCc5RfaukGfSlZ6s0380wXyH7Aob+
+         HE+gqTMMfJhhcZEko0gB5v189KqhRJHO0ackmTVJxezZJtGAi4yPT+8RhPCnER2WKdX1
+         8BuC3xKkZqQ25EWIUasIG1jlYx79998oohv8APmKH1a5+dRohiVVb1nCfa5rLFqu5LSh
+         4nTQ==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@pm.mtasv.net header.s=pm20241021 header.b=Kv3Bl+Uy;
+       dkim=pass header.i=@openproject.com header.s=20180928205116pm
+ header.b=VzHBgX2F;
+       spf=fail (google.com: domain of pm_bounces@email.openproject.com does
+ not designate 178.33.45.132 as permitted sender)
+ smtp.mailfrom=pm_bounces@email.openproject.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=openproject.com
+Return-Path: <pm_bounces@email.openproject.com>
+Received: from 1.mo554.mail-out.ovh.net (1.mo554.mail-out.ovh.net.
+ [178.33.45.132])
+        by mx.google.com with ESMTPS id
+ d75a77b69052e-47016bd5ce8si15272721cf.552.2025.02.03.18.35.30
+        for <sn.renauld@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Feb 2025 18:35:31 -0800 (PST)
+Received-SPF: fail (google.com: domain of pm_bounces@email.openproject.com
+ does not designate 178.33.45.132 as permitted sender)
+ client-ip=178.33.45.132;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@pm.mtasv.net header.s=pm20241021 header.b=Kv3Bl+Uy;
+       dkim=pass header.i=@openproject.com header.s=20180928205116pm
+ header.b=VzHBgX2F;
+       spf=fail (google.com: domain of pm_bounces@email.openproject.com does
+ not designate 178.33.45.132 as permitted sender)
+ smtp.mailfrom=pm_bounces@email.openproject.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=openproject.com
+Received: from mx1.ovh.net (unknown [10.110.118.5])
+	by mo554.mail-out.ovh.net (Postfix) with SMTP id 4Yn6ss6H7hz1BWK
+	for <sn.renauld@gmail.com>; Tue,  4 Feb 2025 02:35:29 +0000 (UTC)
+Received: from localhost (HELO queueout) (127.0.0.1)
+	by localhost with SMTP; 4 Feb 2025 04:35:29 +0200
+Delivered-To: digitalunicorn.fr-simon.renauld@digitalunicorn.fr
+Received: from localhost (HELO queue) (127.0.0.1)
+	by localhost with SMTP; 4 Feb 2025 04:35:29 +0200
+Received: from unknown (HELO output45.mail.ovh.net) (192.168.13.58)
+  by 192.168.9.22 with AES256-GCM-SHA384 encrypted SMTP;
+ 4 Feb 2025 04:35:29 +0200
+Received: from vr42.mail.ovh.net (unknown [10.101.8.42])
+	by out45.mail.ovh.net (Postfix) with ESMTP id 4Yn6ss1hzyzZ62RDX
+	for <simon.renauld@digitalunicorn.fr>; Tue,  4 Feb 2025 02:35:29 +0000 (UTC)
+Received: from in67.mail.ovh.net (unknown [10.101.4.67])
+	by vr42.mail.ovh.net (Postfix) with ESMTP id 4Yn6sr750hz4dsfbW
+	for <simon.renauld@digitalunicorn.fr>; Tue,  4 Feb 2025 02:35:28 +0000 (UTC)
+Received: from sc-ord-mta115.mtasv.net (sc-ord-mta115.mtasv.net
+ [50.31.156.115])
+	by in67.mail.ovh.net (Postfix) with ESMTPS id 4Yn6sr3lKBz2cMSs
+	for <simon.renauld@digitalunicorn.fr>; Tue,  4 Feb 2025 02:35:28 +0000 (UTC)
+Authentication-Results: in67.mail.ovh.net;
+    dkim=pass (1024-bit rsa key sha256) header.d=openproject.com
+ header.i=support@openproject.com header.b=VzHBgX2F header.a=rsa-sha256
+ header.s=20180928205116pm;
+    dkim=pass (2048-bit rsa key sha256) header.d=pm.mtasv.net
+ header.i=@pm.mtasv.net header.b=Kv3Bl+Uy header.a=rsa-sha256
+ header.s=pm20241021;
+    dmarc=pass policy.published-domain-policy=reject
+ policy.published-subdomain-policy=reject policy.applied-disposition=none
+ policy.evaluated-disposition=none (p=reject,sp=reject,d=none,d.eval=none)
+ policy.policy-from=p header.from=openproject.com;
+    spf=pass smtp.mailfrom=pm_bounces@email.openproject.com
+ smtp.helo=sc-ord-mta115.mtasv.net
+Received-SPF: pass
+    (email.openproject.com: Sender is authorized to use
+ 'pm_bounces@email.openproject.com' in 'mfrom' identity (mechanism
+ 'include:spf.mtasv.net' matched))
+    receiver=in67.mail.ovh.net;
+    identity=mailfrom;
+    envelope-from="pm_bounces@email.openproject.com";
+    helo=sc-ord-mta115.mtasv.net;
+    client-ip=50.31.156.115
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=pm20241021;
+ d=pm.mtasv.net;
+ h=From:Date:Subject:Message-Id:To:MIME-Version:Content-Type:Date:From:
+ Message-ID:Reply-To:Sender:Subject:To:CC; t=1738636528; x=1738722928;
+ bh=1atWZZFv7u7Xx6qJxlexkqMx4TvgIZGT3FJCzCul8UM=;
+ b=Kv3Bl+UynyZi03xH3Vqp5TxErNwYO8Y+fUR3L4Vu7hLFLhFO10zodrKhitrIHJaLvtRBRsYNwTCx
+   Nm7f71FVHDFPjeXozgtymQbnMtoBAo8ulyz6czi1syT9A5LoJlUpc+Dc4ZBdU/ildLQ8jKHjTKBZ
+   X5VWilZvO5+CiKR2+WjRq5pHMV7fwrPZGAhdPgOtIC7oAu5y+suLsGX1ZQ5YCqJudd+4IMr4bkHA
+   bIeLwMqp5DUgdIt4ZJFge/BKsV/ozFwSEtmXxCXJcI6jwVfog1LHTMRBELDrEHAQCk188JPIONIZ
+   N8iaTqw7j020jZJAKnoSWxYoSNR7VD6xi9iKbg==
+Received: by sc-ord-mta115.mtasv.net id hk5ueu3864ov for
+ <simon.renauld@digitalunicorn.fr>;
+ Mon,
+ 3 Feb 2025 21:35:27 -0500 (envelope-from <pm_bounces@email.openproject.com>)
+X-PM-IP: 50.31.156.115
+X-IADB-IP: 50.31.156.115
+X-IADB-IP-REVERSE: 115.156.31.50
+DKIM-Signature: v=1; a=rsa-sha256; d=openproject.com; s=20180928205116pm;
+	c=relaxed/relaxed; i=support@openproject.com; t=1738636527; x=1738809327;
+	h=date:date:from:from:message-id:reply-to:sender:subject:subject:to:to:cc:
+	feedback-id:mime-version:content-type;
+	bh=1atWZZFv7u7Xx6qJxlexkqMx4TvgIZGT3FJCzCul8UM=;
+	b=VzHBgX2FKs4+eUPEDNVVakZwb+h9zfPU0H7dWSBYlaIEQTCyP2Me2w+7fp+WtmlbDXx0WLPixSp
+	4swBjEQydRc22peIejXW+7s2ZLBycnswYM8vwqBtKFhvs8XgEQWBgnTLqpLI6qB9XmR+mVBtWU9BD
+	622PuYMHhbshCMExdDA=
+From: OpenProject <support@openproject.com>
+Date: Tue, 04 Feb 2025 02:35:26 +0000
+Subject: Need an extension of your OpenProject trial? There's still time for
+ you to use OpenProject for Free
+Message-Id: <332bf975-aba0-44f1-b2ad-3f325e91ec47@mtasv.net>
+To: simon.renauld@digitalunicorn.fr
+Feedback-ID: s4657232-_:s4657232:a160591:postmark
+X-Complaints-To: abuse@postmarkapp.com
+X-PM-Message-Id: 332bf975-aba0-44f1-b2ad-3f325e91ec47
+X-PM-RCPT: 
+ |bTB8MTYwNTkxfDQ2NTcyMzJ8c2ltb24ucmVuYXVsZEBkaWdpdGFsdW5pY29ybi5mcg==|
+X-PM-Message-Options: 
+ v1;1.LkAHJt9QH7fnNv9MCZYWyw.vp9fGxwD93ZNsOOXzY0YxwTT3CLuQzddhc8BkvFyhGQpWJjcpoDClqtzJUcnEAqJpSdeAKSNyVcZZpY3e1c6nOW0lcY5ynSuca6UbwiubRyRMKnlmI6CloauxiEtMP5_BspoDtNjrbOQAp66MQif4n1xi3jsshG-Zh4ArBiHNZa6uCrMawDz9TBkeevU5wVE
+MIME-Version: 1.0
+X-PM-MTA-Pool: transactional-1
+Content-Type: multipart/alternative;
+	boundary=mk3-44a3b16fe326416c9cb86667a5cf9356; charset=UTF-8
+X-OVH-Remote: 50.31.156.115 (sc-ord-mta115.mtasv.net)
+X-Ovh-Tracer-Id: 9002695657965337251
+X-VR-SPAMSTATE: MCE
+X-VR-SPAMSCORE: 17
+X-VR-SPAMCAUSE: 
+ gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduleefvdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecundfotefknffkpffiucdludejmdenucfjughrpefhfffukffvgggtsegrtderredttdejnecuhfhrohhmpefqphgvnhfrrhhojhgvtghtuceoshhuphhpohhrthesohhpvghnphhrohhjvggtthdrtghomheqnecuggftrfgrthhtvghrnhepuddtgfdtvddtvdduvedvveehvdefveefuedvheffieffieetheettdfggeekudeinecuffhomhgrihhnpehophgvnhhprhhojhgvtghtrdgtohhmpdihohhuthhusggvrdgtohhmpdhophgvnhhprhhojhgvtghtrdhorhhgpdhgihhthhhusgdrtghomhdpthifihhtthgvrhdrtghomhdplhhinhhkvgguihhnrdgtohhmnecukfhppeehtddrfedurdduheeirdduudehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthephedtrdefuddrudehiedrudduhedphhgvlhhopehstgdqohhrugdqmhhtrgduudehrdhmthgrshhvrdhnvghtpdhmrghilhhfrhhomhepphhmpggsohhunhgtvghssegvmhgrihhlrdhophgvnhhprhhojhgvtghtrdgtohhmpdhnsggprhgtphhtthhopedupdhrtghpthhtohepshhimhhonhdrrhgvnhgruhhlugesughighhithgrlhhunhhitghorhhnrdhfrhdpoffvtefjohhsthepvhhrgedvmgdpughkihhmpehprghsshgmpd
+ hsphhfpehprghsshgmpdhrvghvkffrpehstgdqohhrugdqmhhtrgduudehrdhmthgrshhvrdhnvghtmgdpghgvohfkrfepfgfu
+X-Ovh-Spam-Status: OK
+X-Ovh-Spam-Reason: vr: OK; dkim: disabled; spf: disabled
+X-Ovh-Message-Type: MCE
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 17
+X-VR-SPAMCAUSE: 
+ gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduleefudcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecundfotefknffkpffiucdludejmdenucfjughrpefhfffukffvgggtsegrtderredttdejnecuhfhrohhmpefqphgvnhfrrhhojhgvtghtuceoshhuphhpohhrthesohhpvghnphhrohhjvggtthdrtghomheqnecuggftrfgrthhtvghrnhepuddtgfdtvddtvdduvedvveehvdefveefuedvheffieffieetheettdfggeekudeinecuffhomhgrihhnpehophgvnhhprhhojhgvtghtrdgtohhmpdihohhuthhusggvrdgtohhmpdhophgvnhhprhhojhgvtghtrdhorhhgpdhgihhthhhusgdrtghomhdpthifihhtthgvrhdrtghomhdplhhinhhkvgguihhnrdgtohhmnecukfhppeduvdejrddtrddtrddupdehtddrfedurdduheeirdduudehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpehpmhgpsghouhhntggvshesvghmrghilhdrohhpvghnphhrohhjvggtthdrtghomhdpnhgspghrtghpthhtohepuddprhgtphhtthhopehsnhdrrhgvnhgruhhlugesghhmrghilhdrtghomhdpoffvtefjohhsthepmhhoheehgegmpdhmohguvgepshhmthhpohhuth
+
+--mk3-44a3b16fe326416c9cb86667a5cf9356
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+***************************************************************************=
+**********************
+YOUR FREE OPENPROJECT TRIAL IS ABOUT TO EXPIRE. UPGRADE TO SAVE TIME WITH O=
+PENPROJECT EVERY DAY.
+
+***************************************************************************=
+**********************
+Dear=C2=A0Simon renauld,
+
+Your free OpenProject trial expires in 7 days.
+
+Upgrade to a paid plan to save time with OpenProject every day.
+
+
+You can log in and choose a plan here:=C2=A0digitalunicorn.openproject.com
+
+
+If you need more time to learn how OpenProject can help you, we can extend =
+your free OpenProject trial for another 10 days! Please
+send us a short notice.
+
+If you do not wish to continue working with OpenProject, there is no action=
+ required.
+
+Please contact us if you have any questions regarding our plans and pricing=
+, our services, or any other OpenProject specific
+question.
+
+Sincerely
+Your OpenProject Team
+
+Here you will find further information and help resources:
+Videos [https://www.youtube.com/c/OpenProjectCommunity]  | User guides [htt=
+ps://openproject.org/docs/]  | Trainings
+[https://www.openproject.org/training-and-consulting/]  | Contact us [https=
+://www.openproject.org/contact-us/]
+
+E-Mail: support@openproject.com | Tel.: +49 30 288 777 07 | https://www.ope=
+nproject.org/
+OpenProject GmbH, Krausenstr. 9, 10117 Berlin, Germany
+Director: Niels Lindenthal, Court of Berlin-Charlottenburg, HRB 117935
+UStID: DE211309779
+Terms of service [https://www.openproject.org/legal/terms-of-service/]  | P=
+rivacy policy
+[https://www.openproject.org/legal/privacy/]
+
+
+
+[https://github.com/opf/openproject]  [https://twitter.com/openproject]  [h=
+ttps://www.youtube.com/c/OpenProjectCommunity]=20
+[https://www.linkedin.com/company/openproject-gmbh]=
+
+--mk3-44a3b16fe326416c9cb86667a5cf9356
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.=
+w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns=3D"http://www.w3.=
+org/1999/xhtml" lang=3D"en" xml:lang=3D"en" style=3D"background:#fff!import=
+ant"><head><meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3D=
+utf-8"><meta name=3D"viewport" content=3D"width=3Ddevice-width"><style>@med=
+ia only screen{html{min-height:100%;background:#fff}}@media only screen and=
+ (max-width:583px){.small-float-center{margin:0 auto!important;float:none!i=
+mportant;text-align:center!important}.small-text-center{text-align:center!i=
+mportant}.small-text-left{text-align:left!important}.small-text-right{text-=
+align:right!important}}@media only screen and (max-width:583px){.hide-for-l=
+arge{display:block!important;width:auto!important;overflow:visible!importan=
+t;max-height:none!important;font-size:inherit!important;line-height:inherit=
+!important}}@media only screen and (max-width:583px){table.body table.conta=
+iner .hide-for-large,table.body table.container .row.hide-for-large{display=
+:table!important;width:100%!important}}@media only screen and (max-width:58=
+3px){table.body table.container .callout-inner.hide-for-large{display:table=
+-cell!important;width:100%!important}}@media only screen and (max-width:583=
+px){table.body table.container .show-for-large{display:none!important;width=
+:0;mso-hide:all;overflow:hidden}}@media only screen and (max-width:583px){t=
+able.body center{min-width:0!important}table.body .container{width:95%!impo=
+rtant}table.body .column,table.body .columns{height:auto!important;-moz-box=
+-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box;padd=
+ing-left:21px!important;padding-right:21px!important}table.body .column .co=
+lumn,table.body .column .columns,table.body .columns .column,table.body .co=
+lumns .columns{padding-left:0!important;padding-right:0!important}table.bod=
+y .collapse .column,table.body .collapse .columns{padding-left:0!important;=
+padding-right:0!important}td.small-1,th.small-1{display:inline-block!import=
+ant;width:8.33333%!important}td.small-2,th.small-2{display:inline-block!imp=
+ortant;width:16.66667%!important}td.small-3,th.small-3{display:inline-block=
+!important;width:25%!important}td.small-4,th.small-4{display:inline-block!i=
+mportant;width:33.33333%!important}td.small-5,th.small-5{display:inline-blo=
+ck!important;width:41.66667%!important}td.small-6,th.small-6{display:inline=
+-block!important;width:50%!important}td.small-7,th.small-7{display:inline-b=
+lock!important;width:58.33333%!important}td.small-8,th.small-8{display:inli=
+ne-block!important;width:66.66667%!important}td.small-9,th.small-9{display:=
+inline-block!important;width:75%!important}td.small-10,th.small-10{display:=
+inline-block!important;width:83.33333%!important}td.small-11,th.small-11{di=
+splay:inline-block!important;width:91.66667%!important}td.small-12,th.small=
+-12{display:inline-block!important;width:100%!important}.column td.small-12=
+,.column th.small-12,.columns td.small-12,.columns th.small-12{display:bloc=
+k!important;width:100%!important}table.body td.small-offset-1,table.body th=
+.small-offset-1{margin-left:8.33333%!important;Margin-left:8.33333%!importa=
+nt}table.body td.small-offset-2,table.body th.small-offset-2{margin-left:16=
+.66667%!important;Margin-left:16.66667%!important}table.body td.small-offse=
+t-3,table.body th.small-offset-3{margin-left:25%!important;Margin-left:25%!=
+important}table.body td.small-offset-4,table.body th.small-offset-4{margin-=
+left:33.33333%!important;Margin-left:33.33333%!important}table.body td.smal=
+l-offset-5,table.body th.small-offset-5{margin-left:41.66667%!important;Mar=
+gin-left:41.66667%!important}table.body td.small-offset-6,table.body th.sma=
+ll-offset-6{margin-left:50%!important;Margin-left:50%!important}table.body =
+td.small-offset-7,table.body th.small-offset-7{margin-left:58.33333%!import=
+ant;Margin-left:58.33333%!important}table.body td.small-offset-8,table.body=
+ th.small-offset-8{margin-left:66.66667%!important;Margin-left:66.66667%!im=
+portant}table.body td.small-offset-9,table.body th.small-offset-9{margin-le=
+ft:75%!important;Margin-left:75%!important}table.body td.small-offset-10,ta=
+ble.body th.small-offset-10{margin-left:83.33333%!important;Margin-left:83.=
+33333%!important}table.body td.small-offset-11,table.body th.small-offset-1=
+1{margin-left:91.66667%!important;Margin-left:91.66667%!important}table.bod=
+y table.columns td.expander,table.body table.columns th.expander{display:no=
+ne!important}table.body .right-text-pad,table.body .text-pad-right{padding-=
+left:10px!important}table.body .left-text-pad,table.body .text-pad-left{pad=
+ding-right:10px!important}table.menu{width:100%!important}table.menu td,tab=
+le.menu th{width:auto!important;display:inline-block!important}table.menu.s=
+mall-vertical td,table.menu.small-vertical th,table.menu.vertical td,table.=
+menu.vertical th{display:block!important}table.menu[align=3Dcenter]{width:a=
+uto!important}table.button.small-expand,table.button.small-expanded{width:1=
+00%!important}table.button.small-expand table,table.button.small-expanded t=
+able{width:100%}table.button.small-expand table a,table.button.small-expand=
+ed table a{text-align:center!important;width:100%!important;padding-left:0!=
+important;padding-right:0!important}table.button.small-expand center,table.=
+button.small-expanded center{min-width:0}}@media (max-width:580px){.em-cont=
+ainer p,.em-container td,.em-container th{font-size:20px!important}}@media =
+(max-width:580px){.em-container h1{font-size:32px!important}}@media (max-wi=
+dth:580px){.em-container .em-button{font-size:18px!important}}@media (max-w=
+idth:580px){.em-container .em-section-header{font-size:16px!important}}@med=
+ia (max-width:580px){.em-container .em-section-content{font-size:16px!impor=
+tant}}@media (max-width:580px){.em-container .em-footer,.em-container .em-p=
+ortal{font-size:16px!important}}@media (max-width:580px){.em-container .em-=
+footer p,.em-container .em-footer td,.em-container .em-footer th,.em-contai=
+ner .em-portal p,.em-container .em-portal td,.em-container .em-portal th{fo=
+nt-size:16px!important}}@media (max-width:580px){.em-container .em-footer{m=
+argin-left:-30px;margin-right:-30px}}@media (max-width:580px){.em-container=
+ .em-social-link img{width:24px!important}}@media (max-width:580px){.em-con=
+tainer .em-powered{text-align:center!important}}</style></head><body style=3D=
+"-moz-box-sizing:border-box;-ms-text-size-adjust:100%;-webkit-box-sizing:bo=
+rder-box;-webkit-text-size-adjust:100%;Margin:0;background:#fff!important;b=
+ox-sizing:border-box;color:#202022;font-family:arial,sans-serif;font-size:1=
+4px;font-weight:400;line-height:1.4;margin:0;min-width:100%;padding:0;text-=
+align:left;width:100%!important"><table class=3D"body" style=3D"Margin:0;ba=
+ckground:#fff!important;border-collapse:collapse;border-spacing:0;color:#20=
+2022;font-family:arial,sans-serif;font-size:14px;font-weight:400;height:100=
+%;line-height:1.4;margin:0;padding:0;text-align:left;vertical-align:top;wid=
+th:100%"><tr style=3D"padding:0;text-align:left;vertical-align:top"><td cla=
+ss=3D"center" align=3D"center" valign=3D"top" style=3D"-moz-hyphens:auto;-w=
+ebkit-hyphens:auto;Margin:0;border-collapse:collapse!important;color:#20202=
+2;font-family:arial,sans-serif;font-size:14px;font-weight:400;hyphens:auto;=
+line-height:1.4;margin:0;padding:0;text-align:left;vertical-align:top;word-=
+wrap:break-word"><center data-parsed=3D"" style=3D"min-width:562px;width:10=
+0%"><table class=3D"spacer float-center" style=3D"Margin:0 auto;border-coll=
+apse:collapse;border-spacing:0;float:none;margin:0 auto;padding:0;text-alig=
+n:center;vertical-align:top;width:100%"><tbody><tr style=3D"padding:0;text-=
+align:left;vertical-align:top"><td height=3D"60px" style=3D"-moz-hyphens:au=
+to;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!important;color:#=
+202022;font-family:arial,sans-serif;font-size:60px;font-weight:400;hyphens:=
+auto;line-height:60px;margin:0;mso-line-height-rule:exactly;padding:0;text-=
+align:left;vertical-align:top;word-wrap:break-word">&#xA0;</td></tr></tbody=
+></table><table align=3D"center" class=3D"container em-container float-cent=
+er" style=3D"Margin:0 auto;background:#fff;border-collapse:collapse;border-=
+spacing:0;color:#202022;float:none;font-family:Helvetica,Arial,sans-serif;f=
+ont-size:16px;hyphens:auto;line-height:1.5;margin:0 auto;padding:0;text-ali=
+gn:center;vertical-align:top;width:562px;word-wrap:break-word"><tbody><tr s=
+tyle=3D"padding:0;text-align:left;vertical-align:top"><td style=3D"-moz-hyp=
+hens:auto;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!important;=
+color:#202022;font-family:arial,sans-serif;font-size:16px;font-weight:400;h=
+yphens:auto;line-height:1.5;margin:0;padding:0;text-align:left;vertical-ali=
+gn:top;word-wrap:break-word"><table class=3D"wrapper" align=3D"center" styl=
+e=3D"border-collapse:collapse;border-spacing:0;padding:0;text-align:left;ve=
+rtical-align:top;width:100%"><tr style=3D"padding:0;text-align:left;vertica=
+l-align:top"><td class=3D"wrapper-inner" style=3D"-moz-hyphens:auto;-webkit=
+-hyphens:auto;Margin:0;border-collapse:collapse!important;color:#202022;fon=
+t-family:arial,sans-serif;font-size:16px;font-weight:400;hyphens:auto;line-=
+height:1.5;margin:0;padding:0;text-align:left;vertical-align:top;word-wrap:=
+break-word"><table class=3D"row" style=3D"border-collapse:collapse;border-s=
+pacing:0;display:table;padding:0;position:relative;text-align:left;vertical=
+-align:top;width:100%"><tbody><tr style=3D"padding:0;text-align:left;vertic=
+al-align:top"><th class=3D"small-12 large-12 columns first last" style=3D"M=
+argin:0 auto;color:#202022;font-family:arial,sans-serif;font-size:16px;font=
+-weight:400;line-height:1.5;margin:0 auto;padding:0;padding-bottom:15px;pad=
+ding-left:21px;padding-right:21px;text-align:left;width:541px"><table style=
+=3D"border-collapse:collapse;border-spacing:0;padding:0;text-align:left;ver=
+tical-align:top;width:100%"><tr style=3D"padding:0;text-align:left;vertical=
+-align:top"><th style=3D"Margin:0;color:#202022;font-family:arial,sans-seri=
+f;font-size:16px;font-weight:400;line-height:1.5;margin:0;padding:0;text-al=
+ign:left"><p style=3D"Margin:0;Margin-bottom:12px;color:#202022;font-family=
+:arial,sans-serif;font-size:16px;font-weight:400;line-height:1.5;margin:0!i=
+mportant;margin-bottom:12px;padding:0 0 15px;text-align:center"><img src=3D=
+"https://cb-prod-eu-c1-invoice-logos.s3.eu-central-1.amazonaws.com/openproj=
+ect/logo_1544441203.png" width=3D"250" style=3D"-ms-interpolation-mode:bicu=
+bic;clear:both;display:inline-block;max-width:100%;outline:0;text-decoratio=
+n:none"></p><p style=3D"Margin:0;Margin-bottom:12px;color:#202022;font-fami=
+ly:arial,sans-serif;font-size:16px;font-weight:400;line-height:1.5;margin:0=
+!important;margin-bottom:12px;padding:0 0 15px;text-align:left"></p></th><t=
+h class=3D"expander" style=3D"Margin:0;color:#202022;font-family:arial,sans=
+-serif;font-size:16px;font-weight:400;line-height:1.5;margin:0;padding:0!im=
+portant;text-align:left;visibility:hidden;width:0"></th></tr></table></th><=
+/tr></tbody></table></td></tr></table><table class=3D"spacer" style=3D"bord=
+er-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-al=
+ign:top;width:100%"><tbody><tr style=3D"padding:0;text-align:left;vertical-=
+align:top"><td height=3D"12px" style=3D"-moz-hyphens:auto;-webkit-hyphens:a=
+uto;Margin:0;border-collapse:collapse!important;color:#202022;font-family:a=
+rial,sans-serif;font-size:12px;font-weight:400;hyphens:auto;line-height:12p=
+x;margin:0;mso-line-height-rule:exactly;padding:0;text-align:left;vertical-=
+align:top;word-wrap:break-word">&#xA0;</td></tr></tbody></table><table clas=
+s=3D"wrapper" align=3D"center" style=3D"border-collapse:collapse;border-spa=
+cing:0;padding:0;text-align:left;vertical-align:top;width:100%"><tr style=3D=
+"padding:0;text-align:left;vertical-align:top"><td class=3D"wrapper-inner" =
+style=3D"-moz-hyphens:auto;-webkit-hyphens:auto;Margin:0;border-collapse:co=
+llapse!important;color:#202022;font-family:arial,sans-serif;font-size:16px;=
+font-weight:400;hyphens:auto;line-height:1.5;margin:0;padding:0;text-align:=
+left;vertical-align:top;word-wrap:break-word"><table class=3D"row" style=3D=
+"border-collapse:collapse;border-spacing:0;display:table;padding:0;position=
+:relative;text-align:left;vertical-align:top;width:100%"><tbody><tr style=3D=
+"padding:0;text-align:left;vertical-align:top"><th class=3D"small-12 large-=
+12 columns first last" style=3D"Margin:0 auto;color:#202022;font-family:ari=
+al,sans-serif;font-size:16px;font-weight:400;line-height:1.5;margin:0 auto;=
+padding:0;padding-bottom:15px;padding-left:21px;padding-right:21px;text-ali=
+gn:left;width:541px"><table style=3D"border-collapse:collapse;border-spacin=
+g:0;padding:0;text-align:left;vertical-align:top;width:100%"><tr style=3D"p=
+adding:0;text-align:left;vertical-align:top"><th style=3D"Margin:0;color:#2=
+02022;font-family:arial,sans-serif;font-size:16px;font-weight:400;line-heig=
+ht:1.5;margin:0;padding:0;text-align:left"><h1 style=3D"Margin:0;Margin-bot=
+tom:12px;color:inherit;font-family:arial,sans-serif;font-size:24px;font-wei=
+ght:700;line-height:1.2;margin:0!important;margin-bottom:12px;padding:0 0 3=
+0px;text-align:left;word-wrap:normal">Your free OpenProject trial is about =
+to expire. Upgrade to save time with OpenProject every day.<br></h1><p styl=
+e=3D"Margin:0;Margin-bottom:12px;color:#202022;font-family:arial,sans-serif=
+;font-size:16px;font-weight:400;line-height:1.5;margin:0!important;margin-b=
+ottom:12px;padding:0 0 15px;text-align:left">Dear&#xA0;Simon renauld,</p><p=
+ style=3D"Margin:0;Margin-bottom:12px;color:#202022;font-family:arial,sans-=
+serif;font-size:16px;font-weight:400;line-height:1.5;margin:0!important;mar=
+gin-bottom:12px;padding:0 0 15px;text-align:left">Your free OpenProject tri=
+al expires in 7 days.<br><br>Upgrade to a paid plan to save time with OpenP=
+roject every day.<br></p></th><th class=3D"expander" style=3D"Margin:0;colo=
+r:#202022;font-family:arial,sans-serif;font-size:16px;font-weight:400;line-=
+height:1.5;margin:0;padding:0!important;text-align:left;visibility:hidden;w=
+idth:0"></th></tr></table></th></tr></tbody></table><table class=3D"row" st=
+yle=3D"border-collapse:collapse;border-spacing:0;display:table;padding:0;po=
+sition:relative;text-align:left;vertical-align:top;width:100%"><tbody><tr s=
+tyle=3D"padding:0;text-align:left;vertical-align:top"><th class=3D"small-12=
+ large-12 columns first last" style=3D"Margin:0 auto;color:#202022;font-fam=
+ily:arial,sans-serif;font-size:16px;font-weight:400;line-height:1.5;margin:=
+0 auto;padding:0;padding-bottom:15px;padding-left:21px;padding-right:21px;t=
+ext-align:left;width:541px"><table style=3D"border-collapse:collapse;border=
+-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%"><tr sty=
+le=3D"padding:0;text-align:left;vertical-align:top"><th style=3D"Margin:0;c=
+olor:#202022;font-family:arial,sans-serif;font-size:16px;font-weight:400;li=
+ne-height:1.5;margin:0;padding:0;text-align:left"><p style=3D"Margin:0;Marg=
+in-bottom:12px;color:#202022;font-family:arial,sans-serif;font-size:16px;fo=
+nt-weight:400;line-height:1.5;margin:0!important;margin-bottom:12px;padding=
+:0 0 15px;text-align:left">You can log in and choose a plan here:&#xA0;digi=
+talunicorn.openproject.com<span class=3D"remove-mustache"></span></p></th><=
+th class=3D"expander" style=3D"Margin:0;color:#202022;font-family:arial,san=
+s-serif;font-size:16px;font-weight:400;line-height:1.5;margin:0;padding:0!i=
+mportant;text-align:left;visibility:hidden;width:0"></th></tr></table></th>=
+</tr></tbody></table><table class=3D"row" style=3D"border-collapse:collapse=
+;border-spacing:0;display:table;padding:0;position:relative;text-align:left=
+;vertical-align:top;width:100%"><tbody><tr style=3D"padding:0;text-align:le=
+ft;vertical-align:top"><th class=3D"small-12 large-12 columns first last" s=
+tyle=3D"Margin:0 auto;color:#202022;font-family:arial,sans-serif;font-size:=
+16px;font-weight:400;line-height:1.5;margin:0 auto;padding:0;padding-bottom=
+:15px;padding-left:21px;padding-right:21px;text-align:left;width:541px"><ta=
+ble style=3D"border-collapse:collapse;border-spacing:0;padding:0;text-align=
+:left;vertical-align:top;width:100%"><tr style=3D"padding:0;text-align:left=
+;vertical-align:top"><th style=3D"Margin:0;color:#202022;font-family:arial,=
+sans-serif;font-size:16px;font-weight:400;line-height:1.5;margin:0;padding:=
+0;text-align:left"><p style=3D"Margin:0;Margin-bottom:12px;color:#202022;fo=
+nt-family:arial,sans-serif;font-size:16px;font-weight:400;line-height:1.5;m=
+argin:0!important;margin-bottom:12px;padding:0 0 15px;text-align:left">If y=
+ou need more time to learn how OpenProject can help you, we can extend your=
+ free OpenProject trial for another 10 days! Please send us a short notice.=
+<br><br>If you do not wish to continue working with OpenProject, there is n=
+o action required.<br><br>Please contact us if you have any questions regar=
+ding our plans and pricing, our services, or any other OpenProject specific=
+ question.</p></th><th class=3D"expander" style=3D"Margin:0;color:#202022;f=
+ont-family:arial,sans-serif;font-size:16px;font-weight:400;line-height:1.5;=
+margin:0;padding:0!important;text-align:left;visibility:hidden;width:0"></t=
+h></tr></table></th></tr></tbody></table><table class=3D"row" style=3D"bord=
+er-collapse:collapse;border-spacing:0;display:table;padding:0;position:rela=
+tive;text-align:left;vertical-align:top;width:100%"><tbody><tr style=3D"pad=
+ding:0;text-align:left;vertical-align:top"><th class=3D"small-12 large-12 c=
+olumns first last" style=3D"Margin:0 auto;color:#202022;font-family:arial,s=
+ans-serif;font-size:16px;font-weight:400;line-height:1.5;margin:0 auto;padd=
+ing:0;padding-bottom:15px;padding-left:21px;padding-right:21px;text-align:l=
+eft;width:541px"><table style=3D"border-collapse:collapse;border-spacing:0;=
+padding:0;text-align:left;vertical-align:top;width:100%"><tr style=3D"paddi=
+ng:0;text-align:left;vertical-align:top"><th style=3D"Margin:0;color:#20202=
+2;font-family:arial,sans-serif;font-size:16px;font-weight:400;line-height:1=
+.5;margin:0;padding:0;text-align:left">Sincerely<div>Your OpenProject Team<=
+/div></th><th class=3D"expander" style=3D"Margin:0;color:#202022;font-famil=
+y:arial,sans-serif;font-size:16px;font-weight:400;line-height:1.5;margin:0;=
+padding:0!important;text-align:left;visibility:hidden;width:0"></th></tr></=
+table></th></tr></tbody></table></td></tr></table><table class=3D"spacer" s=
+tyle=3D"border-collapse:collapse;border-spacing:0;padding:0;text-align:left=
+;vertical-align:top;width:100%"><tbody><tr style=3D"padding:0;text-align:le=
+ft;vertical-align:top"><td height=3D"30px" style=3D"-moz-hyphens:auto;-webk=
+it-hyphens:auto;Margin:0;border-collapse:collapse!important;color:#202022;f=
+ont-family:arial,sans-serif;font-size:30px;font-weight:400;hyphens:auto;lin=
+e-height:30px;margin:0;mso-line-height-rule:exactly;padding:0;text-align:le=
+ft;vertical-align:top;word-wrap:break-word">&#xA0;</td></tr></tbody></table=
+><table class=3D"wrapper" align=3D"center" style=3D"border-collapse:collaps=
+e;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%"=
+><tr style=3D"padding:0;text-align:left;vertical-align:top"><td class=3D"wr=
+apper-inner" style=3D"-moz-hyphens:auto;-webkit-hyphens:auto;Margin:0;borde=
+r-collapse:collapse!important;color:#202022;font-family:arial,sans-serif;fo=
+nt-size:16px;font-weight:400;hyphens:auto;line-height:1.5;margin:0;padding:=
+0;text-align:left;vertical-align:top;word-wrap:break-word"><table class=3D"=
+row" style=3D"border-collapse:collapse;border-spacing:0;display:table;paddi=
+ng:0;position:relative;text-align:left;vertical-align:top;width:100%"><tbod=
+y><tr style=3D"padding:0;text-align:left;vertical-align:top"><th class=3D"s=
+mall-12 large-12 columns first last" style=3D"Margin:0 auto;color:#202022;f=
+ont-family:arial,sans-serif;font-size:16px;font-weight:400;line-height:1.5;=
+margin:0 auto;padding:0;padding-bottom:15px;padding-left:21px;padding-right=
+:21px;text-align:left;width:541px"><table style=3D"border-collapse:collapse=
+;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%">=
+<tr style=3D"padding:0;text-align:left;vertical-align:top"><th style=3D"Mar=
+gin:0;color:#202022;font-family:arial,sans-serif;font-size:16px;font-weight=
+:400;line-height:1.5;margin:0;padding:0;text-align:left">Here you will find=
+ further information and help resources:<br><a href=3D"https://www.youtube.=
+com/c/OpenProjectCommunity" style=3D"Margin:0;color:#3367d6;font-family:ari=
+al,sans-serif;font-weight:400;line-height:1.4;margin:0;padding:0;text-align=
+:left;text-decoration:none">Videos</a> | <a href=3D"https://openproject.org=
+/docs/" style=3D"Margin:0;color:#3367d6;font-family:arial,sans-serif;font-w=
+eight:400;line-height:1.4;margin:0;padding:0;text-align:left;text-decoratio=
+n:none">User guides</a> | <a href=3D"https://www.openproject.org/training-a=
+nd-consulting/" style=3D"Margin:0;color:#3367d6;font-family:arial,sans-seri=
+f;font-weight:400;line-height:1.4;margin:0;padding:0;text-align:left;text-d=
+ecoration:none">Trainings</a> | <a href=3D"https://www.openproject.org/cont=
+act-us/" style=3D"Margin:0;color:#3367d6;font-family:arial,sans-serif;font-=
+weight:400;line-height:1.4;margin:0;padding:0;text-align:left;text-decorati=
+on:none">Contact us</a></th><th class=3D"expander" style=3D"Margin:0;color:=
+#202022;font-family:arial,sans-serif;font-size:16px;font-weight:400;line-he=
+ight:1.5;margin:0;padding:0!important;text-align:left;visibility:hidden;wid=
+th:0"></th></tr></table></th></tr></tbody></table><table class=3D"spacer" s=
+tyle=3D"border-collapse:collapse;border-spacing:0;padding:0;text-align:left=
+;vertical-align:top;width:100%"><tbody><tr style=3D"padding:0;text-align:le=
+ft;vertical-align:top"><td height=3D"15px" style=3D"-moz-hyphens:auto;-webk=
+it-hyphens:auto;Margin:0;border-collapse:collapse!important;color:#202022;f=
+ont-family:arial,sans-serif;font-size:15px;font-weight:400;hyphens:auto;lin=
+e-height:15px;margin:0;mso-line-height-rule:exactly;padding:0;text-align:le=
+ft;vertical-align:top;word-wrap:break-word">&#xA0;</td></tr></tbody></table=
+><table class=3D"row" style=3D"border-collapse:collapse;border-spacing:0;di=
+splay:table;padding:0;position:relative;text-align:left;vertical-align:top;=
+width:100%"><tbody><tr style=3D"padding:0;text-align:left;vertical-align:to=
+p"><th class=3D"small-12 large-12 columns first last" style=3D"Margin:0 aut=
+o;color:#202022;font-family:arial,sans-serif;font-size:16px;font-weight:400=
+;line-height:1.5;margin:0 auto;padding:0;padding-bottom:15px;padding-left:2=
+1px;padding-right:21px;text-align:left;width:541px"><table style=3D"border-=
+collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align=
+:top;width:100%"><tr style=3D"padding:0;text-align:left;vertical-align:top"=
+><th style=3D"Margin:0;color:#202022;font-family:arial,sans-serif;font-size=
+:16px;font-weight:400;line-height:1.5;margin:0;padding:0;text-align:left"><=
+div class=3D"em-footer" style=3D"background:#f5f5f5;color:#7f7f7f;font-size=
+:12px;line-height:1.5;padding:24px 30px;text-align:center"><p style=3D"Marg=
+in:0;Margin-bottom:12px;color:#7f7f7f;font-family:arial,sans-serif;font-siz=
+e:12px;font-weight:400;line-height:1.5;margin:0!important;margin-bottom:12p=
+x;padding:0 0 15px;text-align:center">E-Mail: support@openproject.com | Tel=
+.: +49 30 288 777 07 | https://www.openproject.org/<br>OpenProject GmbH, Kr=
+ausenstr. 9, 10117 Berlin, Germany<br>Director: Niels Lindenthal, Court of =
+Berlin-Charlottenburg, HRB 117935<br>UStID: DE211309779<br><a href=3D"https=
+://www.openproject.org/legal/terms-of-service/" style=3D"Margin:0;color:#33=
+67d6;font-family:arial,sans-serif;font-weight:400;line-height:1.4;margin:0;=
+padding:0;text-align:left;text-decoration:none">Terms of service</a> | <a h=
+ref=3D"https://www.openproject.org/legal/privacy/" style=3D"Margin:0;color:=
+#3367d6;font-family:arial,sans-serif;font-weight:400;line-height:1.4;margin=
+:0;padding:0;text-align:left;text-decoration:none">Privacy policy</a><br></=
+p><table class=3D"spacer" style=3D"border-collapse:collapse;border-spacing:=
+0;padding:0;text-align:left;vertical-align:top;width:100%"><tbody><tr style=
+=3D"padding:0;text-align:left;vertical-align:top"><td height=3D"15px" style=
+=3D"-moz-hyphens:auto;-webkit-hyphens:auto;Margin:0;border-collapse:collaps=
+e!important;color:#7f7f7f;font-family:arial,sans-serif;font-size:15px;font-=
+weight:400;hyphens:auto;line-height:15px;margin:0;mso-line-height-rule:exac=
+tly;padding:0;text-align:center;vertical-align:top;word-wrap:break-word">&#=
+xA0;</td></tr></tbody></table><div class=3D"em-social" style=3D"font-size:0=
+;line-height:0;min-height:30px"><a class=3D"em-social-link" href=3D"https:/=
+/github.com/opf/openproject" style=3D"Margin:0;color:#3367d6;display:inline=
+-block;font-family:arial,sans-serif;font-weight:400;line-height:1.4;margin:=
+0;padding:6px;text-align:left;text-decoration:none"><img src=3D"https://d19=
+0vb4jo83j4z.cloudfront.net/notification/social/github.png" style=3D"-ms-int=
+erpolation-mode:bicubic;border:none;clear:both;display:inline-block;max-wid=
+th:100%;outline:0;text-decoration:none;width:18px"> </a><a class=3D"em-soci=
+al-link" href=3D"https://twitter.com/openproject" style=3D"Margin:0;color:#=
+3367d6;display:inline-block;font-family:arial,sans-serif;font-weight:400;li=
+ne-height:1.4;margin:0;padding:6px;text-align:left;text-decoration:none"><i=
+mg src=3D"https://d190vb4jo83j4z.cloudfront.net/notification/social/twitter=
+.png" style=3D"-ms-interpolation-mode:bicubic;border:none;clear:both;displa=
+y:inline-block;max-width:100%;outline:0;text-decoration:none;width:18px"> <=
+/a><a class=3D"em-social-link" href=3D"https://www.youtube.com/c/OpenProjec=
+tCommunity" style=3D"Margin:0;color:#3367d6;display:inline-block;font-famil=
+y:arial,sans-serif;font-weight:400;line-height:1.4;margin:0;padding:6px;tex=
+t-align:left;text-decoration:none"><img src=3D"https://d190vb4jo83j4z.cloud=
+front.net/notification/social/youtube.png" style=3D"-ms-interpolation-mode:=
+bicubic;border:none;clear:both;display:inline-block;max-width:100%;outline:=
+0;text-decoration:none;width:18px"> </a><a class=3D"em-social-link" href=3D=
+"https://www.linkedin.com/company/openproject-gmbh" style=3D"Margin:0;color=
+:#3367d6;display:inline-block;font-family:arial,sans-serif;font-weight:400;=
+line-height:1.4;margin:0;padding:6px;text-align:left;text-decoration:none">=
+<img src=3D"https://d190vb4jo83j4z.cloudfront.net/notification/social/linke=
+din.png" style=3D"-ms-interpolation-mode:bicubic;border:none;clear:both;dis=
+play:inline-block;max-width:100%;outline:0;text-decoration:none;width:18px"=
+></a></div></div></th><th class=3D"expander" style=3D"Margin:0;color:#20202=
+2;font-family:arial,sans-serif;font-size:16px;font-weight:400;line-height:1=
+.5;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0">=
+</th></tr></table></th></tr></tbody></table></td></tr></table></td></tr></t=
+body></table><table class=3D"spacer float-center" style=3D"Margin:0 auto;bo=
+rder-collapse:collapse;border-spacing:0;float:none;margin:0 auto;padding:0;=
+text-align:center;vertical-align:top;width:100%"><tbody><tr style=3D"paddin=
+g:0;text-align:left;vertical-align:top"><td height=3D"45px" style=3D"-moz-h=
+yphens:auto;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!importan=
+t;color:#202022;font-family:arial,sans-serif;font-size:45px;font-weight:400=
+;hyphens:auto;line-height:45px;margin:0;mso-line-height-rule:exactly;paddin=
+g:0;text-align:left;vertical-align:top;word-wrap:break-word">&#xA0;</td></t=
+r></tbody></table></center></td></tr></table><!-- prevent Gmail on iOS font=
+ size manipulation --><div style=3D"display:none;white-space:nowrap;font:15=
+px courier;line-height:0">&#xA0; &#xA0; &#xA0; &#xA0; &#xA0; &#xA0; &#xA0; =
+&#xA0; &#xA0; &#xA0; &#xA0; &#xA0; &#xA0; &#xA0; &#xA0; &#xA0; &#xA0; &#xA0=
+; &#xA0; &#xA0; &#xA0; &#xA0; &#xA0; &#xA0; &#xA0; &#xA0; &#xA0; &#xA0; &#x=
+A0; &#xA0;</div></body></html>=
+
+--mk3-44a3b16fe326416c9cb86667a5cf9356--
+

@@ -1,0 +1,709 @@
+X-GM-THRID: 1818950221399936453
+X-Gmail-Labels: Inbox,Important,Category Updates,Unread
+Delivered-To: sn.renauld@gmail.com
+Received: by 2002:a17:907:7212:b0:aab:de38:9884 with SMTP id
+ dr18csp2405741ejc;
+        Fri, 20 Dec 2024 01:15:09 -0800 (PST)
+X-Forwarded-Encrypted: i=2;
+ AJvYcCVqhLJkkoeEQWfaEAjnpkD0m7pVqtmIV1N37s0FbKe1DUP0Ynrn14G1rGe+705vqWU9QIfV4bkCF/qP@gmail.com
+X-Google-Smtp-Source: 
+ AGHT+IFzkNlWq5HoLUx3btQ+NOIv0Ey3bA5N0f+ZgwWKkyLVobig67C4zXgEUpRHom8mPMOvQFIL
+X-Received: by 2002:a5d:6da8:0:b0:385:edd1:2249 with SMTP id
+ ffacd0b85a97d-38a224088d3mr1672859f8f.50.1734686108979;
+        Fri, 20 Dec 2024 01:15:08 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1734686108; cv=none;
+        d=google.com; s=arc-20240605;
+        b=kOA/lDl+w6tg7mCtLxDqf6UWHCqPtxin//pabXIdeVW2M7eGd4V7fMrWBUKkmBsJ4H
+         ltx2s/XINC2wotD/d3wfEJCm+QrO5M9oyb7lipnYb4vIl1nj1CoUHeZYJ/ZtShz/P5EI
+         UAFTRLJqEuRAabuy/2o00EJs23MG0HbSQvqL4KRghZCE/YZGa75N2tGWuPDgWwyeAxz3
+         Pb+Nb7FCkqa1hCpcfFkvbeTjUrWRg6eYRs2FZBN9Z/kuPm5ao7XgjG9VO4ITIF3ouZj9
+         gv0g2kslReVWr/t6hrUBN6pF6SE4Wo+Bg3pHyc+gRv0FrZGYxUM8GkmEuDKZya4kxFC4
+         HhSw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605;
+        h=message-id:list-unsubscribe:reply-to:feedback-id
+         :list-unsubscribe-post:to:from:subject:mime-version:date:sender
+         :dkim-signature:delivered-to;
+        bh=W2C8aHrpQKePN+kHqKm4/1i97D30NsDoUZE2GWbcBPQ=;
+        fh=PtvM+3MFXUjY4IoQonFu3/PZGaDPHwj8XoabnUc3IG8=;
+        b=RMVcPfYp8HJsVJVjxQyrrStXy4fVph36zIO37+JVkdHFJmhbUgRwsotqLrTIEMlkoQ
+         xebVwDhok9t7Noae+B8MNZSnGwFcgYylF6lrvXyDZ7OQi4gYHTuHT7J5kmeSxvpm6rrL
+         mHGBLkWA8tP8/31lrYFFluqHsy8S/i7cmwAuLN57z9dFf7nDXgaHmGDHy6BPllC49Vyu
+         22zFA+dIrszJl4QPphKLndrLyO5DryiJuE74pmKLm4DY3yJ+HzxKYnPzxv3odIONi731
+         frMB4appdNqGj3UhCokZNd9itCUI5rZjLMdt1dBUC5BA8S4FfF0swg5u0FK9nyMmBIVm
+         Dq8Q==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@email2.anthropic.com header.s=mx header.b=qRZN1pW+;
+       spf=softfail (google.com: domain of transitioning
+ bounce+4ae217.29970ef-simon.renauld=digitalunicorn.fr@email2.anthropic.com
+ does not designate 46.105.72.169 as permitted sender)
+ smtp.mailfrom="bounce+4ae217.29970ef-simon.renauld=digitalunicorn.fr@email2.anthropic.com";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=anthropic.com
+Return-Path: 
+ <bounce+4ae217.29970ef-simon.renauld=digitalunicorn.fr@email2.anthropic.com>
+Received: from 40.mo556.mail-out.ovh.net (40.mo556.mail-out.ovh.net.
+ [46.105.72.169])
+        by mx.google.com with ESMTPS id
+ 5b1f17b1804b1-4366129abcbsi20960935e9.186.2024.12.20.01.15.08
+        for <sn.renauld@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Dec 2024 01:15:08 -0800 (PST)
+Received-SPF: softfail (google.com: domain of transitioning
+ bounce+4ae217.29970ef-simon.renauld=digitalunicorn.fr@email2.anthropic.com
+ does not designate 46.105.72.169 as permitted sender)
+ client-ip=46.105.72.169;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@email2.anthropic.com header.s=mx header.b=qRZN1pW+;
+       spf=softfail (google.com: domain of transitioning
+ bounce+4ae217.29970ef-simon.renauld=digitalunicorn.fr@email2.anthropic.com
+ does not designate 46.105.72.169 as permitted sender)
+ smtp.mailfrom="bounce+4ae217.29970ef-simon.renauld=digitalunicorn.fr@email2.anthropic.com";
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=anthropic.com
+Received: from mx1.ovh.net (unknown [10.110.164.32])
+	by mo556.mail-out.ovh.net (Postfix) with SMTP id 4YF1wD4s8Dz1F7j
+	for <sn.renauld@gmail.com>; Fri, 20 Dec 2024 09:15:08 +0000 (UTC)
+Received: from localhost (HELO queueout) (127.0.0.1)
+	by localhost with SMTP; 20 Dec 2024 11:15:08 +0200
+Delivered-To: digitalunicorn.fr-simon.renauld@digitalunicorn.fr
+Received: from localhost (HELO queue) (127.0.0.1)
+	by localhost with SMTP; 20 Dec 2024 11:15:08 +0200
+Received: from unknown (HELO output48.mail.ovh.net) (192.168.13.59)
+  by 192.168.9.44 with AES256-GCM-SHA384 encrypted SMTP;
+ 20 Dec 2024 11:15:08 +0200
+Received: from vr32.mail.ovh.net (unknown [10.101.8.32])
+	by out48.mail.ovh.net (Postfix) with ESMTP id 4YF1wD1YqczYkljvY
+	for <simon.renauld@digitalunicorn.fr>; Fri, 20 Dec 2024 09:15:08 +0000 (UTC)
+Received: from in57.mail.ovh.net (unknown [10.101.4.57])
+	by vr32.mail.ovh.net (Postfix) with ESMTP id 4YF1wD074Gz4X5Rhx
+	for <simon.renauld@digitalunicorn.fr>; Fri, 20 Dec 2024 09:15:08 +0000 (UTC)
+Received-SPF: Pass (mailfrom) identity=mailfrom; client-ip=204.220.170.144;
+ helo=h144.h22bf2b1.use4.send.mailgun.net;
+ envelope-from=bounce+4ae217.29970ef-simon.renauld=digitalunicorn.fr@email2.anthropic.com;
+ receiver=simon.renauld@digitalunicorn.fr 
+Authentication-Results: in57.mail.ovh.net;
+	dkim=pass (1024-bit key;
+ unprotected) header.d=email2.anthropic.com header.i=@email2.anthropic.com
+ header.b="qRZN1pW+";
+	dkim-atps=neutral
+Received: from h144.h22bf2b1.use4.send.mailgun.net
+ (h144.h22bf2b1.use4.send.mailgun.net [204.220.170.144])
+	by in57.mail.ovh.net (Postfix) with ESMTPS id 4YF1wC3KmSz31RSmS
+	for <simon.renauld@digitalunicorn.fr>; Fri, 20 Dec 2024 09:15:07 +0000 (UTC)
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=email2.anthropic.com;
+ q=dns/txt; s=mx; t=1734686100; x=1734693300;
+ h=Message-Id: List-Unsubscribe: Reply-To: X-Feedback-ID:
+ List-Unsubscribe-Post: To: To: From: From: Subject: Subject: Content-Type:
+ Mime-Version: Date: Sender: Sender;
+ bh=W2C8aHrpQKePN+kHqKm4/1i97D30NsDoUZE2GWbcBPQ=;
+ b=qRZN1pW+JvOGbPDFO0R61IyCiiML52+nEsmOmg+tjI/Pp2qiqQdAU+9OXStwEaOWuCX9q1jjC7TaRRaY49T6oY0R2AX7L76S3Xh61qGAqY0Shxgecqo97eHPPK2nIrCZJJyVMdDeAvAuJMc82QKhV0SyP2feqjwYH+A9hgx78rE=
+X-Mailgun-Sending-Ip: 204.220.170.144
+X-Mailgun-Sending-Ip-Pool-Name: Anthropic_mktg
+X-Mailgun-Sending-Ip-Pool: 66bf76427430cdc7e911e225
+X-Mailgun-Sid: 
+ WyI4ZTdjZCIsInNpbW9uLnJlbmF1bGRAZGlnaXRhbHVuaWNvcm4uZnIiLCIyOTk3MGVmIl0=
+Received: by 688399b81da5 with HTTP id 676535942279308d9ecb0148;
+ Fri, 20 Dec 2024
+ 09:15:00 GMT
+Sender: team@email2.anthropic.com
+Date: Fri, 20 Dec 2024 09:15:00 +0000
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="d08f7cd89be366dc9f20502c94c4c2f2a83452403ae7e58cbeb3ec718088"
+Subject: Finish setting up your Claude account
+From: Anthropic Team <team@email2.anthropic.com>
+To: simon.renauld@digitalunicorn.fr
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+X-Feedback-ID: 14834796:11278452:109689:iterable
+X-Campaign-ID: 11278452
+Feedback-ID: 14834796:11278452:109689:iterable
+Reply-To: team@email2.anthropic.com
+X-Message-ID: 7041ac8e014d4360b6f70894ee0eac1b
+List-Unsubscribe: 
+ <https://links.iterable.com/e/encryptedUnsubscribe?_r=67101f7d500248b386768eecaae4611b&_s=7041ac8e014d4360b6f70894ee0eac1b&_t=-CJByWAQgCOOGiCu8DtwsgjTOJAsSt-ZTuF2wqOJ0ZV3VqzAwJBySg00wnOJK1cIYIeBdElXXHDjGwuTQJpBqQZTubF2ysecGHUKIlO_S0z5xJ4jpfQPQPFMQrdok2lFTw6yiS_owEZ4DKSprjcTyA%3D%3D>,<mailto:unsubscribe+11278452+14834796@unsubscribe.iterable.com>
+X-Mailgun-Variables: {"metadata":
+ "{\"messageId\":\"7041ac8e014d4360b6f70894ee0eac1b\",\"templateId\":14834796,\"projectId\":25150,\"campaignId\":11278452}"}
+Message-Id: <20241220091500.621ad142d8162da9@email2.anthropic.com>
+X-OVH-Remote: 204.220.170.144 (h144.h22bf2b1.use4.send.mailgun.net)
+X-Ovh-Tracer-Id: 3862681106440191651
+X-VR-SPAMSTATE: ACCOUNT
+X-VR-SPAMSCORE: 20
+X-VR-SPAMCAUSE: 
+ gggruggvucftvghtrhhoucdtuddrgeefuddruddtvdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecundettggtohhunhhtucdlvddtmdenucfjughrpehsffggtgfuhffvrhfjkfesrgdtreertddtjeenucfhrhhomheptehnthhhrhhophhitgcuvfgvrghmuceothgvrghmsegvmhgrihhlvddrrghnthhhrhhophhitgdrtghomheqnecuggftrfgrthhtvghrnhephfdtleejhfduffekgedvfefhleduvdejteduffejleeghffhheevudevieefveejnecuffhomhgrihhnpehithgvrhgrsghlvgdrtghomhenucfkphepvddtgedrvddvtddrudejtddrudeggeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvtdegrddvvddtrddujedtrddugeegpdhhvghlohephhdugeegrdhhvddvsghfvdgsuddruhhsvgegrdhsvghnugdrmhgrihhlghhunhdrnhgvthdpmhgrihhlfhhrohhmpegsohhunhgtvgdogegrvgdvudejrddvleeljedtvghfqdhsihhmohhnrdhrvghnrghulhgupeguihhgihhtrghluhhnihgtohhrnhdrfhhrsegvmhgrihhlvddrrghnthhhrhhophhitgdrtghomhdpnhgspghrtghpthhtohepuddprhgtphhtthhopehsihhmohhnrdhrvghnrghulhguseguihhgihhtrghluhhnihgtohhrnhdrfhhrpdfovfetjfhoshhtpehvrhefvdgmpdgukhhimhepphgrshhsmgdpshhpfhepph
+ grshhsmgdprhgvvhfkrfephhdugeegrdhhvddvsghfvdgsuddruhhsvgegrdhsvghnugdrmhgrihhlghhunhdrnhgvthgmpdhgvghokffrpegfuf
+X-Ovh-Spam-Status: OK
+X-Ovh-Spam-Reason: vr: ACCOUNT; dkim: disabled; spf: disabled
+X-Ovh-Message-Type: ACCOUNT
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 20
+X-VR-SPAMCAUSE: 
+ gggruggvucftvghtrhhoucdtuddrgeefuddruddtvdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecundettggtohhunhhtucdlvddtmdenucfjughrpehsffggtgfuhffvrhfjkfesrgdtreertddtjeenucfhrhhomheptehnthhhrhhophhitgcuvfgvrghmuceothgvrghmsegvmhgrihhlvddrrghnthhhrhhophhitgdrtghomheqnecuggftrfgrthhtvghrnhephfdtleejhfduffekgedvfefhleduvdejteduffejleeghffhheevudevieefveejnecuffhomhgrihhnpehithgvrhgrsghlvgdrtghomhenucfkphepuddvjedrtddrtddruddpvddtgedrvddvtddrudejtddrudeggeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepsghouhhntggvodegrggvvddujedrvdelleejtdgvfhdqshhimhhonhdrrhgvnhgruhhlugepughighhithgrlhhunhhitghorhhnrdhfrhesvghmrghilhdvrdgrnhhthhhrohhpihgtrdgtohhmpdhnsggprhgtphhtthhopedupdhrtghpthhtohepshhnrdhrvghnrghulhgusehgmhgrihhlrdgtohhmpdfovfetjfhoshhtpehmohehheeimgdpmhhouggvpehsmhhtphhouhht
+
+--d08f7cd89be366dc9f20502c94c4c2f2a83452403ae7e58cbeb3ec718088
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+
+You=E2=80=99re almost ready to chat with Claude. Complete your sign-up now.=
+=20
+
+
+
+
+
+
+
+You=E2=80=99re almost there.=20
+
+
+
+
+Finish signing up to chat with Claude.
+
+
+
+Complete sign-up <https://claude.ai>=20
+
+
+
+Once you=E2=80=99re set up, you=E2=80=99ll be able to have a conversation a=
+bout any topic.=20
+Claude can also analyze files and images you upload, helping you brainstorm=
+=20
+ideas and move work forward.
+
+
+
+ <https://claude.ai>=20
+
+
+
+We can't wait for you to meet Claude.
+
+=E2=80=94 The Anthropic Team
+
+
+
+Complete sign-up <https://claude.ai>=20
+
+
+
+ <https://www.anthropic.com/?utm_source=3Demail>
+
+ <https://x.com/anthropicai>=20
+<https://www.linkedin.com/company/anthropicresearch>=20
+<https://www.youtube.com/@anthropic-ai>
+
+
+
+=E2=80=8A=20
+
+
+
+This email was sent to simon.renauld@digitalunicorn.fr. Unsubscribe=20
+<https://links.iterable.com/e/encryptedUnsubscribe?_r=3D67101f7d500248b3867=
+68eecaae4611b&_s=3D7041ac8e014d4360b6f70894ee0eac1b&_t=3D-CJByWAQgCOOGiCu8D=
+twsgjTOJAsSt-ZTuF2wqOJ0ZV3VqzAwJBySg00wnOJK1cIYIeBdElXXHDjGwuTQJpBqQZTubF2y=
+secGHUKIlO_S0xWILLiHJH3ss7_TkTzlOX7sZFexIE6Pe7_MCs7BpqSz51y3PQ2xCXawA0HYNxS=
+qIAdV8x0cXpIWbm2b-xiIOS6>
+=2E
+
+
+
+Anthropic PBC, 548 Market St, PMB 90375, San Francisco, CA 94104=20
+
+--d08f7cd89be366dc9f20502c94c4c2f2a83452403ae7e58cbeb3ec718088
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html; charset="utf-8"
+
+<!DOCTYPE html><html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"u=
+rn:schemas-microsoft-com:office:office" lang=3D"en" style=3D"box-sizing: bo=
+rder-box;"><head><title></title><meta http-equiv=3D"Content-Type" content=
+=3D"text/html; charset=3Dutf-8"><meta name=3D"viewport" content=3D"width=3D=
+device-width,initial-scale=3D1"><!--[if mso]><xml><o:OfficeDocumentSettings=
+><o:PixelsPerInch>96</o:PixelsPerInch><o:AllowPNG/></o:OfficeDocumentSettin=
+gs></xml><![endif]--><style>*{box-sizing:border-box}body{margin:0;padding:0=
+}a[x-apple-data-detectors]{color:inherit!important;text-decoration:inherit!=
+important}#MessageViewBody a{color:inherit;text-decoration:none}p{line-heig=
+ht:inherit}.desktop_hide,.desktop_hide table{mso-hide:all;display:none;max-=
+height:0;overflow:hidden}.image_block img+div{display:none}sub,sup{line-hei=
+ght:0;font-size:75%}@media(max-width:620px){.desktop_hide table.icons-outer=
+{display:inline-table!important}.mobile_hide{display:none}.row-content{widt=
+h:100%!important}.stack .column{width:100%;display:block}.mobile_hide{min-h=
+eight:0;max-height:0;max-width:0;overflow:hidden;font-size:0}.desktop_hide,=
+=2Edesktop_hide table{display:table!imp=
+ortant;max-height:none!important}.row-=
+1 .column-1 .block-1.image_block td.pad{padding:15px 0 15px 10px!important}=
+=2Erow-1 .column-1 .block-1.image_block=
+ .alignment div{margin:0 auto 0 0!impo=
+rtant}.row-2 .column-1 .block-1.heading_block td.pad,.row-3 .column-1 .bloc=
+k-1.text_block td.pad,.row-5 .column-1 .block-1.text_block td.pad{padding:5=
+px 15px!important}.row-2 .column-1 .block-1.heading_block h1{font-size:26px=
+!important}.row-7 .column-1 .block-1.text_block td.pad{padding:5px 15px 0!i=
+mportant}.row-9 .column-1 .block-1.icons_block td.pad{padding:10px 15px 0!i=
+mportant}.row-9 .column-2 .block-1.icons_block td.pad{text-align:center!imp=
+ortant;padding:5px 15px 10px!important}.row-10 .column-1 .block-1.divider_b=
+lock td.pad{padding:0 15px 5px!important}.row-10 .column-1 .block-1.divider=
+_block .alignment table{display:inline-table}.row-11 .column-1 .block-1.tex=
+t_block td.pad{padding:10px 15px 20px!important}.row-1 .column-1{padding:10=
+px 0!important}.row-5 .column-1,.row-6 .column-1,.row-7 .column-1{padding:5=
+px 0!important}.row-9 .column-1{padding:10px 0 0!important}.row-10 .column-=
+1,.row-9 .column-2{padding:0!important}.row-11 .column-1{padding:0 0 5px!im=
+portant}}</style><!--[if mso ]><style>sup,sub{font-size:100%!important}sup{=
+mso-text-raise:10%}sub{mso-text-raise:-10%}</style><![endif]--></head><body=
+ class=3D"body" style=3D"box-sizing: border-box; background-color: #fff; ma=
+rgin: 0; padding: 0; -webkit-text-size-adjust: none; text-size-adjust: none=
+;"><span style=3D"color:transparent;visibility:hidden;display:none;opacity:=
+0;height:0;width:0;font-size:0;">You=E2=80=99re almost ready to chat with C=
+laude. Complete your sign-up now. </span><img src=3D"https://links.iterable=
+=2Ecom/e/eo?_t=3D67101f7d500248b386768e=
+ecaae4611b&amp;_m=3D7041ac8e014d4360b6=
+f70894ee0eac1b&amp;_e=3D-CJByWAQgCOOGiCu8DtwsgjTOJAsSt-ZTuF2wqOJ0ZV3VqzAwJB=
+ySg00wnOJK1cIYIeBdElXXHDjGwuTQJpBqQZTubF2ysecGHUKIlO_S0xWILLiHJH3ss7_TkTzlO=
+X7tBorszC_6ITn4v_tnhNsjucMmDPBZlnprFIuEm0H9Io%3D" style=3D"border:0;width:1=
+px;height:1px;border-width:0px!important;display:none!important;line-height=
+:0!important;" width=3D"1" height=3D"1"/><table class=3D"nl-container" widt=
+h=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"present=
+ation" style=3D"box-sizing: border-box; mso-table-lspace: 0; mso-table-rspa=
+ce: 0; background-color: #fff;" bgcolor=3D"#fff"><tbody style=3D"box-sizing=
+: border-box;"><tr style=3D"box-sizing: border-box;"><td style=3D"box-sizin=
+g: border-box;"><table class=3D"row row-1" align=3D"center" width=3D"100%" =
+border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" styl=
+e=3D"box-sizing: border-box; mso-table-lspace: 0; mso-table-rspace: 0;"><tb=
+ody style=3D"box-sizing: border-box;"><tr style=3D"box-sizing: border-box;"=
+><td style=3D"box-sizing: border-box;"><table class=3D"row-content stack" a=
+lign=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pr=
+esentation" style=3D"box-sizing: border-box; mso-table-lspace: 0; mso-table=
+-rspace: 0; background-color: #fafaf8; border-radius: 0; color: #000; width=
+: 600px; margin: 0 auto;" width=3D"600" bgcolor=3D"#fafaf8"><tbody style=3D=
+"box-sizing: border-box;"><tr style=3D"box-sizing: border-box;"><td class=
+=3D"column column-1" width=3D"100%" style=3D"box-sizing: border-box; mso-ta=
+ble-lspace: 0; mso-table-rspace: 0; font-weight: 400; text-align: left; pad=
+ding-bottom: 10px; padding-top: 10px; vertical-align: top; border-top: 0; b=
+order-right: 0; border-bottom: 0; border-left: 0;" align=3D"left" valign=3D=
+"top"><table class=3D"image_block block-1" width=3D"100%" border=3D"0" cell=
+padding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"box-sizing: =
+border-box; mso-table-lspace: 0; mso-table-rspace: 0;"><tr style=3D"box-siz=
+ing: border-box;"><td class=3D"pad" style=3D"box-sizing: border-box; paddin=
+g-bottom: 30px; padding-left: 25px; padding-top: 30px; width: 100%; padding=
+-right: 0;" width=3D"100%"><div class=3D"alignment" align=3D"left" style=3D=
+"box-sizing: border-box; line-height: 10px;"><div style=3D"box-sizing: bord=
+er-box; max-width: 120px;"><img src=3D"https://d15k2d11r6t6rl.cloudfront.ne=
+t/public/users/Integrators/669d5713-9b6a-46bb-bd7e-c542cff6dd6a/6d695a0eb0b=
+548c5910d64c8e507578a/Logo%20for%20email%20outline.png" style=3D"box-sizing=
+: border-box; display: block; height: auto; border: 0; width: 100%;" width=
+=3D"120" alt=3D"Claude logo" title=3D"Claude logo" height=3D"auto"></div></=
+div></td></tr></table></td></tr></tbody></table></td></tr></tbody></table><=
+table class=3D"row row-2" align=3D"center" width=3D"100%" border=3D"0" cell=
+padding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"box-sizing: =
+border-box; mso-table-lspace: 0; mso-table-rspace: 0;"><tbody style=3D"box-=
+sizing: border-box;"><tr style=3D"box-sizing: border-box;"><td style=3D"box=
+-sizing: border-box;"><table class=3D"row-content stack" align=3D"center" b=
+order=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=
+=3D"box-sizing: border-box; mso-table-lspace: 0; mso-table-rspace: 0; backg=
+round-color: #fafaf8; border-radius: 0; color: #000; width: 600px; margin: =
+0 auto;" width=3D"600" bgcolor=3D"#fafaf8"><tbody style=3D"box-sizing: bord=
+er-box;"><tr style=3D"box-sizing: border-box;"><td class=3D"column column-1=
+" width=3D"100%" style=3D"box-sizing: border-box; mso-table-lspace: 0; mso-=
+table-rspace: 0; font-weight: 400; text-align: left; padding-bottom: 5px; p=
+adding-top: 5px; vertical-align: top; border-top: 0; border-right: 0; borde=
+r-bottom: 0; border-left: 0;" align=3D"left" valign=3D"top"><table class=3D=
+"heading_block block-1" width=3D"100%" border=3D"0" cellpadding=3D"0" cells=
+pacing=3D"0" role=3D"presentation" style=3D"box-sizing: border-box; mso-tab=
+le-lspace: 0; mso-table-rspace: 0;"><tr style=3D"box-sizing: border-box;"><=
+td class=3D"pad" style=3D"box-sizing: border-box; padding-left: 30px; paddi=
+ng-right: 30px; text-align: center; width: 100%;" width=3D"100%" align=3D"c=
+enter"><h1 style=3D"box-sizing: border-box; margin: 0; color: #29261b; dire=
+ction: ltr; font-family: Georgia,Times,'Times New Roman',serif; font-size: =
+32px; font-weight: 400; letter-spacing: normal; line-height: 120%; text-ali=
+gn: left; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 38.4px;"><s=
+pan class=3D"tinyMce-placeholder" style=3D"box-sizing: border-box; word-bre=
+ak: break-word;">You=E2=80=99re almost there.&nbsp;</span></h1></td></tr></=
+table></td></tr></tbody></table></td></tr></tbody></table><table class=3D"r=
+ow row-3" align=3D"center" width=3D"100%" border=3D"0" cellpadding=3D"0" ce=
+llspacing=3D"0" role=3D"presentation" style=3D"box-sizing: border-box; mso-=
+table-lspace: 0; mso-table-rspace: 0;"><tbody style=3D"box-sizing: border-b=
+ox;"><tr style=3D"box-sizing: border-box;"><td style=3D"box-sizing: border-=
+box;"><table class=3D"row-content stack" align=3D"center" border=3D"0" cell=
+padding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"box-sizing: =
+border-box; mso-table-lspace: 0; mso-table-rspace: 0; background-color: #fa=
+faf8; border-radius: 0; color: #000; width: 600px; margin: 0 auto;" width=
+=3D"600" bgcolor=3D"#fafaf8"><tbody style=3D"box-sizing: border-box;"><tr s=
+tyle=3D"box-sizing: border-box;"><td class=3D"column column-1" width=3D"100=
+%" style=3D"box-sizing: border-box; mso-table-lspace: 0; mso-table-rspace: =
+0; font-weight: 400; text-align: left; vertical-align: top; border-top: 0; =
+border-right: 0; border-bottom: 0; border-left: 0;" align=3D"left" valign=
+=3D"top"><table class=3D"text_block block-1" width=3D"100%" border=3D"0" ce=
+llpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"box-sizing=
+: border-box; mso-table-lspace: 0; mso-table-rspace: 0; word-break: break-w=
+ord;"><tr style=3D"box-sizing: border-box;"><td class=3D"pad" style=3D"box-=
+sizing: border-box; padding-bottom: 5px; padding-left: 30px; padding-right:=
+ 30px; padding-top: 5px;"><div style=3D"box-sizing: border-box; font-family=
+: Georgia,'Times New Roman',serif;"><div class style=3D"box-sizing: border-=
+box; font-size: 14px; font-family: Georgia,Times,'Times New Roman',serif; m=
+so-line-height-alt: 16.8px; color: #000; line-height: 1.2;"><p style=3D"box=
+-sizing: border-box; line-height: inherit; margin: 0; font-size: 16px; mso-=
+line-height-alt: 19.2px;">Finish signing up to chat with Claude.</p></div><=
+/div></td></tr></table></td></tr></tbody></table></td></tr></tbody></table>=
+<table class=3D"row row-4" align=3D"center" width=3D"100%" border=3D"0" cel=
+lpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"box-sizing:=
+ border-box; mso-table-lspace: 0; mso-table-rspace: 0;"><tbody style=3D"box=
+-sizing: border-box;"><tr style=3D"box-sizing: border-box;"><td style=3D"bo=
+x-sizing: border-box;"> <table class=3D"row-content stack" align=3D"center"=
+ border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" sty=
+le=3D"box-sizing: border-box; mso-table-lspace: 0; mso-table-rspace: 0; bac=
+kground-color: #fafaf8; border-radius: 0; color: #000; width: 600px; margin=
+: 0 auto;" width=3D"600" bgcolor=3D"#fafaf8"><tbody style=3D"box-sizing: bo=
+rder-box;"><tr style=3D"box-sizing: border-box;"><td class=3D"column column=
+-1" width=3D"100%" style=3D"box-sizing: border-box; mso-table-lspace: 0; ms=
+o-table-rspace: 0; font-weight: 400; text-align: left; padding-bottom: 5px;=
+ padding-top: 5px; vertical-align: top; border-top: 0; border-right: 0; bor=
+der-bottom: 0; border-left: 0;" align=3D"left" valign=3D"top"><table class=
+=3D"button_block block-1" width=3D"100%" border=3D"0" cellpadding=3D"10" ce=
+llspacing=3D"0" role=3D"presentation" style=3D"box-sizing: border-box; mso-=
+table-lspace: 0; mso-table-rspace: 0;"><tr style=3D"box-sizing: border-box;=
+"><td class=3D"pad" style=3D"box-sizing: border-box;"><div class=3D"alignme=
+nt" align=3D"center" style=3D"box-sizing: border-box;"><!--[if mso]><v:roun=
+drect xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:w=3D"urn:schemas-micr=
+osoft-com:office:word" href=3D"https://links.iterable.com/u/click?_t=3D6710=
+1f7d500248b386768eecaae4611b&_m=3D7041ac8e014d4360b6f70894ee0eac1b&_e=3DdqI=
+BBAJkBa46fX6HAf4bTRxpSaRbNgtiguFQtgyQC6_yx5Uxwbmx3kTCdZ9neAwr6rD6BcE-Z4GUS2=
+juYP90q6yAq7WLeotnfMn1ivzH42uJtlSanS6gLtDgRZ6Qj_6CqBumJRJQiRCN62kqnWHCdpthl=
+1ARYbuyiMXzFeMb3ZhesxCfqigBjPPkPBJOHVG48wTU-c9p06bIqpxm76aYwjDDc5B3-1-rRylM=
+L4bZoz7FNGBNOE-DCYSXAZ-h4EcmSBbTesTuxxB0SH7K_A5D3hqAx_KoYMmAe1SJNHJ_cTYxr3H=
+wmVYOXegpJnbvPxV5fAJ07MwqKdMPOOgEfMbpeQQa7871_k3-gjszkH0-hEI%3D" style=3D"h=
+eight:45px;width:139px;v-text-anchor:middle;" arcsize=3D"18%" stroke=3D"fal=
+se" fillcolor=3D"#141413"> <w:anchorlock/> <v:textbox inset=3D"0px,0px,0px,=
+0px"> <center dir=3D"false" style=3D"color:#ffffff;font-family:Arial, sans-=
+serif;font-size:14px"><![endif]--> <a href=3D"https://links.iterable.com/u/=
+click?_t=3D67101f7d500248b386768eecaae4611b&_m=3D7041ac8e014d4360b6f70894ee=
+0eac1b&_e=3DdqIBBAJkBa46fX6HAf4bTRxpSaRbNgtiguFQtgyQC6_yx5Uxwbmx3kTCdZ9neAw=
+r6rD6BcE-Z4GUS2juYP90q6yAq7WLeotnfMn1ivzH42uJtlSanS6gLtDgRZ6Qj_6CqBumJRJQiR=
+CN62kqnWHCdpthl1ARYbuyiMXzFeMb3Zi_FH0Ric0TChzxvNLHUx4X_YiPU3QFj1seo2hUQwQHu=
+ZWAN7FgAUgAkL5SHmgKr_BLwMp40BmxPai10R0h9W63pzVgDwulcbFQFwzUy5Yj6ZOAxhGpsQmV=
+A6z5jwU-pm1bnkVwF_2R0YqtKKBcRLtZroC8tDpduyQx5mcPw9-4qPH0mrOwpJd746u7JoCFR-U=
+%3D" target=3D"_blank" style=3D"box-sizing: border-box; background-color: #=
+141413; border-bottom: 0px solid transparent; border-left: 0px solid transp=
+arent; border-radius: 8px; border-right: 0px solid transparent; border-top:=
+ 0px solid transparent; color: #ffffff; display: inline-block; font-family:=
+ Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 14px; font-weig=
+ht: 400; mso-border-alt: none; padding-bottom: 10px; padding-top: 10px; tex=
+t-align: center; text-decoration: none; width: auto; word-break: keep-all;"=
+><span style=3D"box-sizing: border-box; word-break: break-word; padding-lef=
+t: 15px; padding-right: 15px; font-size: 14px; display: inline-block; lette=
+r-spacing: normal;"><span style=3D"box-sizing: border-box; word-break: brea=
+k-word; line-height: 25.2px;">Complete sign-up</span></span></a> <!--[if ms=
+o]></center></v:textbox></v:roundrect><![endif]--></div></td></tr></table><=
+/td></tr></tbody></table></td></tr></tbody></table><table class=3D"row row-=
+5" align=3D"center" width=3D"100%" border=3D"0" cellpadding=3D"0" cellspaci=
+ng=3D"0" role=3D"presentation" style=3D"box-sizing: border-box; mso-table-l=
+space: 0; mso-table-rspace: 0;"><tbody style=3D"box-sizing: border-box;"><t=
+r style=3D"box-sizing: border-box;"><td style=3D"box-sizing: border-box;"><=
+table class=3D"row-content stack" align=3D"center" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"box-sizing: border-=
+box; mso-table-lspace: 0; mso-table-rspace: 0; background-color: #fafaf7; b=
+order-radius: 0; color: #000; width: 600px; margin: 0 auto;" width=3D"600" =
+bgcolor=3D"#fafaf7"><tbody style=3D"box-sizing: border-box;"><tr style=3D"b=
+ox-sizing: border-box;"><td class=3D"column column-1" width=3D"100%" style=
+=3D"box-sizing: border-box; mso-table-lspace: 0; mso-table-rspace: 0; font-=
+weight: 400; text-align: left; padding-bottom: 5px; vertical-align: top; bo=
+rder-top: 0; border-right: 0; border-bottom: 0; border-left: 0;" align=3D"l=
+eft" valign=3D"top"><table class=3D"text_block block-1" width=3D"100%" bord=
+er=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D=
+"box-sizing: border-box; mso-table-lspace: 0; mso-table-rspace: 0; word-bre=
+ak: break-word;"><tr style=3D"box-sizing: border-box;"><td class=3D"pad" st=
+yle=3D"box-sizing: border-box; padding-bottom: 5px; padding-left: 30px; pad=
+ding-right: 30px; padding-top: 5px;"><div style=3D"box-sizing: border-box; =
+font-family: Georgia,'Times New Roman',serif;"><div class style=3D"box-sizi=
+ng: border-box; font-size: 14px; font-family: Georgia,Times,'Times New Roma=
+n',serif; mso-line-height-alt: 16.8px; color: #000; line-height: 1.2;"><p s=
+tyle=3D"box-sizing: border-box; line-height: inherit; margin: 0; font-size:=
+ 14px; text-align: left; mso-line-height-alt: 16.8px;"> <span style=3D"box-=
+sizing: border-box; word-break: break-word; font-size: 16px;">Once you=E2=
+=80=99re set up, you=E2=80=99ll be able to have a conversation about any to=
+pic. Claude can also analyze files and images you upload, helping you brain=
+storm ideas and move work forward.</span></p></div></div></td></tr></table>=
+</td></tr></tbody></table></td></tr></tbody></table><table class=3D"row row=
+-6" align=3D"center" width=3D"100%" border=3D"0" cellpadding=3D"0" cellspac=
+ing=3D"0" role=3D"presentation" style=3D"box-sizing: border-box; mso-table-=
+lspace: 0; mso-table-rspace: 0;"><tbody style=3D"box-sizing: border-box;"><=
+tr style=3D"box-sizing: border-box;"> <td style=3D"box-sizing: border-box;"=
+><table class=3D"row-content stack" align=3D"center" border=3D"0" cellpaddi=
+ng=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"box-sizing: borde=
+r-box; mso-table-lspace: 0; mso-table-rspace: 0; background-color: #fafaf7;=
+ border-radius: 0; color: #000; width: 600px; margin: 0 auto;" width=3D"600=
+" bgcolor=3D"#fafaf7"><tbody style=3D"box-sizing: border-box;"><tr style=3D=
+"box-sizing: border-box;"><td class=3D"column column-1" width=3D"100%" styl=
+e=3D"box-sizing: border-box; mso-table-lspace: 0; mso-table-rspace: 0; font=
+-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vert=
+ical-align: top; border-top: 0; border-right: 0; border-bottom: 0; border-l=
+eft: 0;" align=3D"left" valign=3D"top"><table class=3D"image_block block-1"=
+ width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pr=
+esentation" style=3D"box-sizing: border-box; mso-table-lspace: 0; mso-table=
+-rspace: 0;"><tr style=3D"box-sizing: border-box;"><td class=3D"pad" style=
+=3D"box-sizing: border-box; padding-bottom: 20px; padding-left: 30px; paddi=
+ng-right: 30px; width: 100%;" width=3D"100%"><div class=3D"alignment" align=
+=3D"center" style=3D"box-sizing: border-box; line-height: 10px;"><div style=
+=3D"box-sizing: border-box; max-width: 540px;"><a href=3D"https://links.ite=
+rable.com/u/click?_t=3D67101f7d500248b386768eecaae4611b&_m=3D7041ac8e014d43=
+60b6f70894ee0eac1b&_e=3DdqIBBAJkBa46fX6HAf4bTRxpSaRbNgtiguFQtgyQC6_yx5Uxwbm=
+x3kTCdZ9neAwr6rD6BcE-Z4GUS2juYP90q6yAq7WLeotnfMn1ivzH42uJtlSanS6gLtDgRZ6Qj_=
+6CqBumJRJQiRCN62kqnWHCdpthl1ARYbuyiMXzFeMb3Zjb8WxPdMCPigtd3qtyeIA_rL3PwyG20=
+qfwyo3DL_im6RF6736Jr00q7obEjP_6y-pl7EQ6s-yp8ztCpCwUU2D7MnQp33HwvVCjyaCRke98=
+NF_ZJv_dG5WLoSw-aqYZEVCPavOdAzpHJOTuff3p_cOnv9AShE5PMm9tz0BjvYONK-0u5jigikP=
+kyUC5dypYRc0%3D" target=3D"_blank" style=3D"box-sizing: border-box; outline=
+: none;" tabindex=3D"-1"><img src=3D"https://d15k2d11r6t6rl.cloudfront.net/=
+public/users/Integrators/669d5713-9b6a-46bb-bd7e-c542cff6dd6a/6d695a0eb0b54=
+8c5910d64c8e507578a/Abandon-1-A.png" style=3D"box-sizing: border-box; displ=
+ay: block; height: auto; border: 0; width: 100%;" width=3D"540" alt=3D"Illu=
+stration of Claude creating a slide deck and writing a report with Artifact=
+s" title=3D"Illustration of Claude creating a slide deck and writing a repo=
+rt with Artifacts" height=3D"auto"></a></div></div></td></tr></table></td><=
+/tr></tbody></table></td></tr></tbody></table> <table class=3D"row row-7" a=
+lign=3D"center" width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" style=3D"box-sizing: border-box; mso-table-lsp=
+ace: 0; mso-table-rspace: 0;"><tbody style=3D"box-sizing: border-box;"><tr =
+style=3D"box-sizing: border-box;"><td style=3D"box-sizing: border-box;"><ta=
+ble class=3D"row-content stack" align=3D"center" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"box-sizing: border-=
+box; mso-table-lspace: 0; mso-table-rspace: 0; background-color: #fafaf8; b=
+order-radius: 0; color: #000; width: 600px; margin: 0 auto;" width=3D"600" =
+bgcolor=3D"#fafaf8"><tbody style=3D"box-sizing: border-box;"><tr style=3D"b=
+ox-sizing: border-box;"><td class=3D"column column-1" width=3D"100%" style=
+=3D"box-sizing: border-box; mso-table-lspace: 0; mso-table-rspace: 0; font-=
+weight: 400; text-align: left; padding-top: 5px; vertical-align: top; borde=
+r-top: 0; border-right: 0; border-bottom: 0; border-left: 0;" align=3D"left=
+" valign=3D"top"><table class=3D"text_block block-1" width=3D"100%" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"b=
+ox-sizing: border-box; mso-table-lspace: 0; mso-table-rspace: 0; word-break=
+: break-word;"><tr style=3D"box-sizing: border-box;"><td class=3D"pad" styl=
+e=3D"box-sizing: border-box; padding-left: 30px; padding-right: 30px; paddi=
+ng-top: 5px;"><div style=3D"box-sizing: border-box; font-family: Georgia,'T=
+imes New Roman',serif;"><div class style=3D"box-sizing: border-box; font-si=
+ze: 12px; font-family: Georgia,Times,'Times New Roman',serif; mso-line-heig=
+ht-alt: 14.399999999999999px; color: #000; line-height: 1.2;"><p style=3D"b=
+ox-sizing: border-box; line-height: inherit; margin: 0; font-size: 16px; ms=
+o-line-height-alt: 19.2px;">We can't wait for you to meet Claude.<br style=
+=3D"box-sizing: border-box;"><br style=3D"box-sizing: border-box;">=E2=80=
+=94 The Anthropic Team</p></div></div></td></tr></table></td></tr></tbody><=
+/table></td></tr></tbody></table><table class=3D"row row-8" align=3D"center=
+" width=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"p=
+resentation" style=3D"box-sizing: border-box; mso-table-lspace: 0; mso-tabl=
+e-rspace: 0;"><tbody style=3D"box-sizing: border-box;"><tr style=3D"box-siz=
+ing: border-box;"><td style=3D"box-sizing: border-box;"><table class=3D"row=
+-content stack" align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=
+=3D"0" role=3D"presentation" style=3D"box-sizing: border-box; mso-table-lsp=
+ace: 0; mso-table-rspace: 0; background-color: #fafaf8; border-radius: 0; c=
+olor: #000; width: 600px; margin: 0 auto;" width=3D"600" bgcolor=3D"#fafaf8=
+"><tbody style=3D"box-sizing: border-box;"><tr style=3D"box-sizing: border-=
+box;"><td class=3D"column column-1" width=3D"100%" style=3D"box-sizing: bor=
+der-box; mso-table-lspace: 0; mso-table-rspace: 0; font-weight: 400; text-a=
+lign: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top; bor=
+der-top: 0; border-right: 0; border-bottom: 0; border-left: 0;" align=3D"le=
+ft" valign=3D"top"><table class=3D"button_block block-1" width=3D"100%" bor=
+der=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=
+=3D"box-sizing: border-box; mso-table-lspace: 0; mso-table-rspace: 0;"><tr =
+style=3D"box-sizing: border-box;"><td class=3D"pad" style=3D"box-sizing: bo=
+rder-box; padding-bottom: 50px; padding-left: 10px; padding-right: 10px; pa=
+dding-top: 10px; text-align: center;" align=3D"center"><div class=3D"alignm=
+ent" align=3D"center" style=3D"box-sizing: border-box;"><!--[if mso]><v:rou=
+ndrect xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:w=3D"urn:schemas-mic=
+rosoft-com:office:word" href=3D"https://links.iterable.com/u/click?_t=3D671=
+01f7d500248b386768eecaae4611b&_m=3D7041ac8e014d4360b6f70894ee0eac1b&_e=3Ddq=
+IBBAJkBa46fX6HAf4bTRxpSaRbNgtiguFQtgyQC6_yx5Uxwbmx3kTCdZ9neAwr6rD6BcE-Z4GUS=
+2juYP90q6yAq7WLeotnfMn1ivzH42uJtlSanS6gLtDgRZ6Qj_6CqBumJRJQiRCN62kqnWHCdpth=
+l1ARYbuyiMXzFeMb3ZjOhtAeMRrSrh-P7amcJFkbRMATepSIUvzr5OCd1dCnqJduXQkbDyaDOo7=
+k5Jv18uSwH6lv-CSttWS9rk4Ha8i7bcC8g3p_tcceh-xgTWN6bwLFfnnYs4we_YAOLQgYNI5PG2=
+fdn1VKzxkLuxj8sySPIVc6qK7TVyGdv-mtMznD8TkcfBv1H7tBFbyD7n5abN4%3D" style=3D"=
+height:45px;width:139px;v-text-anchor:middle;" arcsize=3D"18%" stroke=3D"fa=
+lse" fillcolor=3D"#141413"> <w:anchorlock/> <v:textbox inset=3D"0px,0px,0px=
+,0px"> <center dir=3D"false" style=3D"color:#ffffff;font-family:Arial, sans=
+-serif;font-size:14px"><![endif]--> <a href=3D"https://links.iterable.com/u=
+/click?_t=3D67101f7d500248b386768eecaae4611b&_m=3D7041ac8e014d4360b6f70894e=
+e0eac1b&_e=3DdqIBBAJkBa46fX6HAf4bTRxpSaRbNgtiguFQtgyQC6_yx5Uxwbmx3kTCdZ9neA=
+wr6rD6BcE-Z4GUS2juYP90q6yAq7WLeotnfMn1ivzH42uJtlSanS6gLtDgRZ6Qj_6CqBumJRJQi=
+RCN62kqnWHCdpthl1ARYbuyiMXzFeMb3Zg7gShWq-Pqbi9gVnJZ4QPNfjmpa_FWhDv9cSk3mKwe=
+lTkJh--YOPgtKxJ_sVkljeVnHiUaJMe8Ltj6tIxBr5mX0NbG7fWG3esFqohSo7Ae1rEoCCJ9a0h=
+yzYPvM7pqNvdoK6KwrvUruKHB0QHV0ihxoixjyH2nXADFO0Eq4xhX6K-zPMguzFa1yovpCSo0Z2=
+w%3D" target=3D"_blank" style=3D"box-sizing: border-box; background-color: =
+#141413; border-bottom: 0px solid transparent; border-left: 0px solid trans=
+parent; border-radius: 8px; border-right: 0px solid transparent; border-top=
+: 0px solid transparent; color: #ffffff; display: inline-block; font-family=
+: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 14px; font-wei=
+ght: 400; mso-border-alt: none; padding-bottom: 10px; padding-top: 10px; te=
+xt-align: center; text-decoration: none; width: auto; word-break: keep-all;=
+"><span style=3D"box-sizing: border-box; word-break: break-word; padding-le=
+ft: 15px; padding-right: 15px; font-size: 14px; display: inline-block; lett=
+er-spacing: normal;"><span style=3D"box-sizing: border-box; word-break: bre=
+ak-word; line-height: 25.2px;">Complete sign-up</span></span></a> <!--[if m=
+so]></center></v:textbox></v:roundrect><![endif]--></div></td></tr></table>=
+</td></tr></tbody></table></td></tr></tbody></table><table class=3D"row row=
+-9" align=3D"center" width=3D"100%" border=3D"0" cellpadding=3D"0" cellspac=
+ing=3D"0" role=3D"presentation" style=3D"box-sizing: border-box; mso-table-=
+lspace: 0; mso-table-rspace: 0; background-size: auto;"><tbody style=3D"box=
+-sizing: border-box;"><tr style=3D"box-sizing: border-box;"><td style=3D"bo=
+x-sizing: border-box;"><table class=3D"row-content stack" align=3D"center" =
+border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" styl=
+e=3D"box-sizing: border-box; mso-table-lspace: 0; mso-table-rspace: 0; back=
+ground-size: auto; background-color: #141413; border-radius: 0; color: #000=
+; width: 600px; margin: 0 auto;" width=3D"600" bgcolor=3D"#141413"><tbody s=
+tyle=3D"box-sizing: border-box;"><tr style=3D"box-sizing: border-box;"><td =
+class=3D"column column-1" width=3D"25%" style=3D"box-sizing: border-box; ms=
+o-table-lspace: 0; mso-table-rspace: 0; font-weight: 400; text-align: left;=
+ padding-bottom: 10px; vertical-align: bottom; border-top: 0; border-right:=
+ 0; border-bottom: 0; border-left: 0;" align=3D"left" valign=3D"bottom"><ta=
+ble class=3D"icons_block block-1" width=3D"100%" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"box-sizing: border-=
+box; mso-table-lspace: 0; mso-table-rspace: 0; text-align: center; line-hei=
+ght: 0;" align=3D"center"><tr style=3D"box-sizing: border-box;"><td class=
+=3D"pad" style=3D"box-sizing: border-box; vertical-align: middle; color: #0=
+00; font-family: inherit; font-size: 14px; font-weight: 400; padding-left: =
+20px; text-align: center;" valign=3D"middle" align=3D"center"><table class=
+=3D"icons-outer" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" =
+style=3D"box-sizing: border-box; mso-table-lspace: 0; mso-table-rspace: 0; =
+display: inline-table;"><tr style=3D"box-sizing: border-box;"><td style=3D"=
+box-sizing: border-box; vertical-align: middle; text-align: center; padding=
+-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px;" val=
+ign=3D"middle" align=3D"center"> <a href=3D"https://links.iterable.com/u/cl=
+ick?_t=3D67101f7d500248b386768eecaae4611b&_m=3D7041ac8e014d4360b6f70894ee0e=
+ac1b&_e=3DdqIBBAJkBa46fX6HAf4bTThjaGZTa2HjMRQgWAihWootG2uModQ8tEiwJmr67TKpI=
+Rs5cpdxXNX024D_cdRU_L6fBm5RqM9H7tRiBBxsGFgODcE8pbHEhT_ttCpjoDblmXTW03VDbdRB=
+1HPa5OlBL5fJIrOfy8IQNj-OFFezt25NZERtv4368erQBv6QXf8ay7HZJkVHIr1XcNw7npc3gLj=
+f1n5tUu3SAxAqgRak5-yC2SjE6sTBpAkV_Do4jJWj_QQX2pGNxymWx-CXiVSaaBCnUZGwnlqJwa=
+P_ehKyQNrwY0_Y7nfVthVwXiL8oV_T_GYKiFpSKOBqKlREst-AlPQUbIOnqn6cK8m2rYCIzv_CX=
+GYdTnngwrcqXwtjXBZ4" target=3D"_self" style=3D"box-sizing: border-box; text=
+-decoration: none;"><img class=3D"icon" src=3D"https://d15k2d11r6t6rl.cloud=
+front.net/public/users/Integrators/669d5713-9b6a-46bb-bd7e-c542cff6dd6a/6d6=
+95a0eb0b548c5910d64c8e507578a/Anthropic%20wordmark%20-%20Ivory.png" alt=3D"=
+Anthropic logo" height=3D"auto" width=3D"143" align=3D"center" style=3D"box=
+-sizing: border-box; display: block; height: auto; margin: 0 auto; border: =
+0;"></a></td></tr></table></td></tr></table></td><td class=3D"column column=
+-2" width=3D"75%" style=3D"box-sizing: border-box; mso-table-lspace: 0; mso=
+-table-rspace: 0; font-weight: 400; text-align: left; padding-bottom: 5px; =
+padding-top: 20px; vertical-align: bottom; border-top: 0; border-right: 0; =
+border-bottom: 0; border-left: 0;" align=3D"left" valign=3D"bottom"><table =
+class=3D"icons_block block-1" width=3D"100%" border=3D"0" cellpadding=3D"0"=
+ cellspacing=3D"0" role=3D"presentation" style=3D"box-sizing: border-box; m=
+so-table-lspace: 0; mso-table-rspace: 0; text-align: right; line-height: 0;=
+" align=3D"right"><tr style=3D"box-sizing: border-box;"><td class=3D"pad" s=
+tyle=3D"box-sizing: border-box; vertical-align: middle; color: #000; font-f=
+amily: inherit; font-size: 14px; font-weight: 400; padding-bottom: 5px; pad=
+ding-right: 25px; text-align: right;" valign=3D"middle" align=3D"right"><ta=
+ble class=3D"icons-outer" cellpadding=3D"0" cellspacing=3D"0" role=3D"prese=
+ntation" style=3D"box-sizing: border-box; mso-table-lspace: 0; mso-table-rs=
+pace: 0; display: inline-table;"><tr style=3D"box-sizing: border-box;"><td =
+style=3D"box-sizing: border-box; vertical-align: middle; text-align: center=
+; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: =
+5px;" valign=3D"middle" align=3D"center"> <a href=3D"https://links.iterable=
+=2Ecom/u/click?_t=3D67101f7d500248b3867=
+68eecaae4611b&_m=3D7041ac8e014d4360b6f=
+70894ee0eac1b&_e=3DdqIBBAJkBa46fX6HAf4bTYskuk3fCmlbXhM0x7WFyhRW8lMzYHGHJ22c=
+kf0pLGlTZM5UXVVcIsxK_k0OLlcePFMalfsxfQ1bW_K6kv-PBWftqsnCRu8AqEcnA7ddw-TMznN=
+FLlmipo4_JiRCLy_Qs89kGBkafT5vtg7jGuzFGCP9sQryB3BAGmJhE3R1tHPBxWKw4IffBsn4C6=
+XNRHpwaDPLXLULIInQWLRNCGoEfqBPKpxcyRcpyCqsYnYiluJDAP5QJVDpBegp4iMKBNWcaO3dn=
+3emRR_8goq1N-gVl1PZOW4ZodF9Of-be_oECz74NmHD-SHBWq4GiE7hFO0GHhDYO4xWU1sREqeY=
+J6nyiCM%3D" target=3D"_self" style=3D"box-sizing: border-box; text-decorati=
+on: none;"><img class=3D"icon" src=3D"https://d15k2d11r6t6rl.cloudfront.net=
+/public/users/Integrators/669d5713-9b6a-46bb-bd7e-c542cff6dd6a/6d695a0eb0b5=
+48c5910d64c8e507578a/social%20X.png" alt=3D"X icon" height=3D"auto" width=
+=3D"16" align=3D"center" style=3D"box-sizing: border-box; display: block; h=
+eight: auto; margin: 0 auto; border: 0;"></a></td><td style=3D"box-sizing: =
+border-box; vertical-align: middle; text-align: center; padding-top: 5px; p=
+adding-bottom: 5px; padding-left: 5px; padding-right: 5px;" valign=3D"middl=
+e" align=3D"center"><a href=3D"https://links.iterable.com/u/click?_t=3D6710=
+1f7d500248b386768eecaae4611b&_m=3D7041ac8e014d4360b6f70894ee0eac1b&_e=3DdqI=
+BBAJkBa46fX6HAf4bTbcvgoO3xiIuIHMVvsV-gQgQUsXNMzB2dMg7Ido4eDY65L8QCI75UGXIXm=
+QXe4t6sj5G4KNJG9lKUfRjLw6MRpzRuM2l8DCsuqOCXe8N4aCm-Nb4nlB1nRnfBhiSFk2jXXv0S=
+RppZLwg7hJXLgJdv9esk1b9G1tc5oZQsSWt70mTTMX7mJBG_oW1LyF3NiAV13eUpyE-Rzw8BIDX=
+iZpZl_EzolLZ0uXc-OonHxKZZNFs4kS2dfZqJAvaTd2GdxFdPoiJcdyXtcqt7h16tgBYLDe9dPL=
+-YLqZU3kzvFAMmmBR92hSctZXH7LcM-6dZzzMyH8c0ab_iWaW02aMZZE00JH3bAO2xnFW3PjGeW=
+F1ijs2cYiuEBZjjOMpg398CGDWhg%3D%3D" target=3D"_self" style=3D"box-sizing: b=
+order-box; text-decoration: none;"><img class=3D"icon" src=3D"https://d15k2=
+d11r6t6rl.cloudfront.net/public/users/Integrators/669d5713-9b6a-46bb-bd7e-c=
+542cff6dd6a/6d695a0eb0b548c5910d64c8e507578a/social%20linkedin.png" alt=3D"=
+LinkedIn icon" height=3D"auto" width=3D"16" align=3D"center" style=3D"box-s=
+izing: border-box; display: block; height: auto; margin: 0 auto; border: 0;=
+"></a></td><td style=3D"box-sizing: border-box; vertical-align: middle; tex=
+t-align: center; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; =
+padding-right: 5px;" valign=3D"middle" align=3D"center"><a href=3D"https://=
+links.iterable.com/u/click?_t=3D67101f7d500248b386768eecaae4611b&_m=3D7041a=
+c8e014d4360b6f70894ee0eac1b&_e=3DdqIBBAJkBa46fX6HAf4bTVPoCudF8SEUpQNp_6OXDq=
+U1nplvElOthQWxNZoy2jXP7wX6seifkfRX_OfUGcUsePS7hds9p2atEmjvyeDyasNyefGgkHAeJ=
+2zv-33ckjI5b0ok36ckVa7AUccIY_Hc5M9I5mtCwe_v2_JMm4pkBarVk9rZmgM3aGuk-XvIkz_W=
+KUoHxfteh9oi1k4BSw2QANsp-J8x6lsO5HHcFB-N-hk9dX61UP8Pp3FrCPaNreYCO9YWpaJpiDk=
+owdh914OL6pTGjY4-6nPhkStYPc-4mKAuW1GCgklwCy1anxeERfzIlz-PfzxVVq4Zo4z3Ek2qz4=
+uC9eYBl00yFxiugIHCRvJvVlJ5wNbj8rlVRBux_GPJ" target=3D"_self" style=3D"box-s=
+izing: border-box; text-decoration: none;"><img class=3D"icon" src=3D"https=
+://d15k2d11r6t6rl.cloudfront.net/public/users/Integrators/669d5713-9b6a-46b=
+b-bd7e-c542cff6dd6a/6d695a0eb0b548c5910d64c8e507578a/social%20youtube.png" =
+alt=3D"YouTube icon" height=3D"auto" width=3D"16" align=3D"center" style=3D=
+"box-sizing: border-box; display: block; height: auto; margin: 0 auto; bord=
+er: 0;"></a></td></tr></table></td></tr></table></td></tr></tbody></table><=
+/td></tr></tbody></table><table class=3D"row row-10" align=3D"center" width=
+=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presenta=
+tion" style=3D"box-sizing: border-box; mso-table-lspace: 0; mso-table-rspac=
+e: 0;"><tbody style=3D"box-sizing: border-box;"><tr style=3D"box-sizing: bo=
+rder-box;"><td style=3D"box-sizing: border-box;"><table class=3D"row-conten=
+t stack" align=3D"center" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" =
+role=3D"presentation" style=3D"box-sizing: border-box; mso-table-lspace: 0;=
+ mso-table-rspace: 0; background-color: #141413; border-radius: 0; color: #=
+000; width: 600px; margin: 0 auto;" width=3D"600" bgcolor=3D"#141413"><tbod=
+y style=3D"box-sizing: border-box;"><tr style=3D"box-sizing: border-box;"><=
+td class=3D"column column-1" width=3D"100%" style=3D"box-sizing: border-box=
+; mso-table-lspace: 0; mso-table-rspace: 0; font-weight: 400; text-align: l=
+eft; padding-bottom: 5px; padding-top: 5px; vertical-align: top; border-top=
+: 0; border-right: 0; border-bottom: 0; border-left: 0;" align=3D"left" val=
+ign=3D"top"><table class=3D"divider_block block-1" width=3D"100%" border=3D=
+"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"box-=
+sizing: border-box; mso-table-lspace: 0; mso-table-rspace: 0;"><tr style=3D=
+"box-sizing: border-box;"><td class=3D"pad" style=3D"box-sizing: border-box=
+; padding-bottom: 5px; padding-left: 25px; padding-right: 25px; padding-top=
+: 5px;"><div class=3D"alignment" align=3D"center" style=3D"box-sizing: bord=
+er-box;"><table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pr=
+esentation" width=3D"100%" style=3D"box-sizing: border-box; mso-table-lspac=
+e: 0; mso-table-rspace: 0;"><tr style=3D"box-sizing: border-box;"><td class=
+=3D"divider_inner" style=3D"box-sizing: border-box; font-size: 1px; line-he=
+ight: 1px; border-top: 1px solid #a3a299;"><span style=3D"box-sizing: borde=
+r-box; word-break: break-word;">&#8202;</span></td></tr></table></div></td>=
+</tr> </table></td></tr></tbody></table></td></tr></tbody></table><table cl=
+ass=3D"row row-11" align=3D"center" width=3D"100%" border=3D"0" cellpadding=
+=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"box-sizing: border-=
+box; mso-table-lspace: 0; mso-table-rspace: 0;"><tbody style=3D"box-sizing:=
+ border-box;"><tr style=3D"box-sizing: border-box;"><td style=3D"box-sizing=
+: border-box;"><table class=3D"row-content stack" align=3D"center" border=
+=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"presentation" style=3D"b=
+ox-sizing: border-box; mso-table-lspace: 0; mso-table-rspace: 0; background=
+-color: #141413; border-radius: 0; color: #333; width: 600px; margin: 0 aut=
+o;" width=3D"600" bgcolor=3D"#141413"><tbody style=3D"box-sizing: border-bo=
+x;"><tr style=3D"box-sizing: border-box;"><td class=3D"column column-1" wid=
+th=3D"100%" style=3D"box-sizing: border-box; mso-table-lspace: 0; mso-table=
+-rspace: 0; font-weight: 400; text-align: left; padding-bottom: 10px; verti=
+cal-align: top; border-top: 0; border-right: 0; border-bottom: 0; border-le=
+ft: 0;" align=3D"left" valign=3D"top"><table class=3D"text_block block-1" w=
+idth=3D"100%" border=3D"0" cellpadding=3D"0" cellspacing=3D"0" role=3D"pres=
+entation" style=3D"box-sizing: border-box; mso-table-lspace: 0; mso-table-r=
+space: 0; word-break: break-word;"><tr style=3D"box-sizing: border-box;"><t=
+d class=3D"pad" style=3D"box-sizing: border-box; padding-bottom: 15px; padd=
+ing-left: 25px; padding-right: 25px; padding-top: 10px;"><div style=3D"box-=
+sizing: border-box; font-family: Georgia,'Times New Roman',serif;"><div cla=
+ss style=3D"box-sizing: border-box; font-size: 14px; font-family: Georgia,T=
+imes,'Times New Roman',serif; mso-line-height-alt: 16.8px; color: #a3a299; =
+line-height: 1.2;"><p style=3D"box-sizing: border-box; line-height: inherit=
+; margin: 0; font-size: 12px; mso-line-height-alt: 14.399999999999999px;"> =
+<span style=3D"box-sizing: border-box; word-break: break-word; font-size: 1=
+2px;">This email was sent to simon.renauld@digitalunicorn.fr. <a href=3D"ht=
+tps://links.iterable.com/e/encryptedUnsubscribe?_r=3D67101f7d500248b386768e=
+ecaae4611b&_s=3D7041ac8e014d4360b6f70894ee0eac1b&_t=3D-CJByWAQgCOOGiCu8Dtws=
+gjTOJAsSt-ZTuF2wqOJ0ZV3VqzAwJBySg00wnOJK1cIYIeBdElXXHDjGwuTQJpBqQZTubF2ysec=
+GHUKIlO_S0xWILLiHJH3ss7_TkTzlOX7sZFexIE6Pe7_MCs7BpqSz51y3PQ2xCXawA0HYNxSqIA=
+dV8x0cXpIWbm2b-xiIOS6" target=3D"_blank" style=3D"box-sizing: border-box; t=
+ext-decoration: none; color: #1188e6;" rel=3D"noopener">Unsubscribe</a>.</s=
+pan></p><p style=3D"box-sizing: border-box; line-height: inherit; margin: 0=
+; font-size: 12px; mso-line-height-alt: 16.8px;">&nbsp;</p><p style=3D"box-=
+sizing: border-box; line-height: inherit; margin: 0; font-size: 12px; mso-l=
+ine-height-alt: 14.399999999999999px;"> <span style=3D"box-sizing: border-b=
+ox; word-break: break-word; font-size: 12px;">Anthropic PBC, 548 Market St,=
+ PMB 90375, San Francisco, CA 94104&nbsp;</span></p></div></div></td></tr><=
+/table></td></tr></tbody></table></td></tr></tbody></table></td></tr></tbod=
+y></table><!-- End --></body></html>
+--d08f7cd89be366dc9f20502c94c4c2f2a83452403ae7e58cbeb3ec718088--
+

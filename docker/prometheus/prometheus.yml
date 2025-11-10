@@ -1,0 +1,27 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: 'toolbank-monitor'
+    environment: 'production'
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'toolbank_services'
+    static_configs:
+      - targets: ['toolbank_analytics:80', 'toolbank_engagement:80']
+
+  - job_name: 'databases'
+    static_configs:
+      - targets: ['postgres_toolbank:5432', 'redis_toolbank:6379']
+
+  - job_name: 'grafana'
+    static_configs:
+      - targets: ['grafana_dashboard:3000']
+
+  - job_name: 'moodle'
+    static_configs:
+      - targets: ['moodle-databricks:8080']
