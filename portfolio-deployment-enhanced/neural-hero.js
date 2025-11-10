@@ -236,11 +236,31 @@
             geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
             geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
             
+            // Create soft circular cloud texture for nebula
+            const cloudCanvas = document.createElement('canvas');
+            cloudCanvas.width = 128;
+            cloudCanvas.height = 128;
+            const cloudCtx = cloudCanvas.getContext('2d');
+            
+            // Create ultra-soft radial gradient for nebula clouds
+            const cloudGradient = cloudCtx.createRadialGradient(64, 64, 0, 64, 64, 64);
+            cloudGradient.addColorStop(0, 'rgba(255, 255, 255, 0.8)');
+            cloudGradient.addColorStop(0.2, 'rgba(255, 255, 255, 0.4)');
+            cloudGradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.15)');
+            cloudGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+            
+            cloudCtx.fillStyle = cloudGradient;
+            cloudCtx.fillRect(0, 0, 128, 128);
+            
+            const cloudTexture = new THREE.CanvasTexture(cloudCanvas);
+            cloudTexture.needsUpdate = true;
+            
             const material = new THREE.PointsMaterial({
-                size: 30,
+                size: 60,
+                map: cloudTexture,
                 sizeAttenuation: true,
                 transparent: true,
-                opacity: 0.15,
+                opacity: 0.2,
                 vertexColors: true,
                 blending: THREE.AdditiveBlending,
                 depthWrite: false
