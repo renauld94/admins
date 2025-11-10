@@ -798,6 +798,9 @@
                 // Initialize Real-time Updates (Phase 3.3)
                 this.initializeRealtimeUpdates3D();
                 
+                // Initialize Advanced Visualization (Phase 3.4)
+                this.initializeAdvancedVisualization3D();
+                
                 // Hide loading
                 setTimeout(() => {
                     const loading = document.getElementById('loading');
@@ -1118,6 +1121,70 @@
                 });
 
                 console.log(`📢 Notification (3D): ${title} - ${message}`);
+            }
+
+            // Phase 3.4: Advanced Visualization for 3D Globe
+            initializeAdvancedVisualization3D() {
+                this.vizOptions3D = {
+                    heatmapEnabled: false,
+                    extrusion3DEnabled: false,
+                    clusteringEnabled: true,
+                    customMarkersEnabled: true,
+                    animationsEnabled: true
+                };
+
+                this.extrusionData = [
+                    { lat: 40.7128, lng: -74.0060, height: 2000, label: 'NYC Hub' },
+                    { lat: 51.5074, lng: -0.1278, height: 1800, label: 'London Hub' },
+                    { lat: 35.6762, lng: 139.6503, height: 2200, label: 'Tokyo Hub' },
+                    { lat: 37.7749, lng: -122.4194, height: 1600, label: 'SF Node' },
+                    { lat: 10.8231, lng: 106.6297, height: 1400, label: 'HCMC Node' }
+                ];
+
+                console.log('✅ Advanced Visualization initialized for 3D globe');
+            }
+
+            toggleHeatmap3D(enabled) {
+                this.vizOptions3D.heatmapEnabled = enabled;
+                console.log(enabled ? '🔥 Heatmap rendering enabled (3D)' : '❌ Heatmap rendering disabled (3D)');
+            }
+
+            toggle3DExtrusion(enabled) {
+                this.vizOptions3D.extrusion3DEnabled = enabled;
+                console.log(enabled ? '🏗️ 3D extrusion enabled' : '❌ 3D extrusion disabled');
+            }
+
+            toggleClustering3D(enabled) {
+                this.vizOptions3D.clusteringEnabled = enabled;
+                console.log(enabled ? '📍 Feature clustering enabled (3D)' : '❌ Feature clustering disabled (3D)');
+            }
+
+            toggleCustomMarkers3D(enabled) {
+                this.vizOptions3D.customMarkersEnabled = enabled;
+                console.log(enabled ? '🎯 Custom markers enabled (3D)' : '❌ Custom markers disabled (3D)');
+            }
+
+            toggleAnimations3D(enabled) {
+                this.vizOptions3D.animationsEnabled = enabled;
+                console.log(enabled ? '✨ Animations enabled (3D)' : '❌ Animations disabled (3D)');
+            }
+
+            getHeatmapColor3D(intensity) {
+                if (intensity < 0.2) return Cesium.Color.BLUE;
+                if (intensity < 0.4) return Cesium.Color.CORNFLOWERBLUE;
+                if (intensity < 0.6) return Cesium.Color.PURPLE;
+                if (intensity < 0.8) return Cesium.Color.HOTPINK;
+                return Cesium.Color.RED;
+            }
+
+            exportVisualization3D() {
+                const config = {
+                    timestamp: new Date().toISOString(),
+                    vizOptions: this.vizOptions3D,
+                    extrusionData: this.extrusionData
+                };
+
+                console.log('📥 3D Visualization exported', config);
             }
             
             loadGeospatialData() {

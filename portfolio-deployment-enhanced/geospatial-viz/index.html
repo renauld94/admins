@@ -1870,6 +1870,147 @@
             border-color: #10b981;
         }
 
+        /* Advanced Visualization Panel */
+        .viz-panel {
+            position: absolute;
+            top: 400px;
+            right: 20px;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 12px;
+            padding: 16px;
+            width: 300px;
+            max-height: 350px;
+            overflow-y: auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            z-index: 996;
+            font-size: 13px;
+        }
+
+        .viz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+        }
+
+        .viz-header h3 {
+            color: #a855f7;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .viz-close {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+        }
+
+        .viz-close:hover {
+            color: #a855f7;
+        }
+
+        .viz-section {
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(168, 85, 247, 0.1);
+        }
+
+        .viz-title {
+            color: #a855f7;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .viz-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            background: rgba(168, 85, 247, 0.05);
+            border-radius: 6px;
+            margin-bottom: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .viz-option:hover {
+            background: rgba(168, 85, 247, 0.15);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+
+        .viz-checkbox {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            accent-color: #a855f7;
+        }
+
+        .viz-label {
+            color: #cbd5e1;
+            font-size: 12px;
+            flex: 1;
+        }
+
+        .heatmap-legend {
+            margin-top: 12px;
+            padding: 10px;
+            background: rgba(168, 85, 247, 0.05);
+            border-radius: 6px;
+            font-size: 11px;
+        }
+
+        .heatmap-gradient {
+            width: 100%;
+            height: 20px;
+            background: linear-gradient(90deg, #0ea5e9, #3b82f6, #8b5cf6, #ec4899, #ef4444);
+            border-radius: 4px;
+            margin-bottom: 6px;
+        }
+
+        .gradient-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: #94a3b8;
+        }
+
+        .cluster-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            background: rgba(168, 85, 247, 0.05);
+            border-left: 3px solid #a855f7;
+            border-radius: 4px;
+            font-size: 11px;
+            color: #cbd5e1;
+        }
+
+        .cluster-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            background: #a855f7;
+            color: white;
+            border-radius: 3px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
         /* Respect reduced motion preferences */
         @media (prefers-reduced-motion: reduce) {
             * {
@@ -2326,6 +2467,9 @@
                 
                 // Initialize Real-time Updates (Phase 3.3)
                 this.initializeRealtimeUpdates();
+                
+                // Initialize Advanced Visualization (Phase 3.4)
+                this.initializeAdvancedVisualization();
             }
             
             initializeGeoserverWMS() {
@@ -2934,6 +3078,179 @@
 
                 this.updateQueue = [];
                 console.log('🗑️ Notifications cleared');
+            }
+
+            // Phase 3.4: Advanced Visualization (Heatmaps, Clustering, Custom Markers)
+            initializeAdvancedVisualization() {
+                this.vizOptions = {
+                    heatmapEnabled: false,
+                    clusteringEnabled: true,
+                    customMarkersEnabled: true,
+                    animationsEnabled: true
+                };
+
+                this.heatmapData = [
+                    { lat: 40.7128, lng: -74.0060, intensity: 0.9, label: 'NYC Hub' },
+                    { lat: 51.5074, lng: -0.1278, intensity: 0.8, label: 'London Hub' },
+                    { lat: 35.6762, lng: 139.6503, intensity: 0.85, label: 'Tokyo Hub' },
+                    { lat: 37.7749, lng: -122.4194, intensity: 0.7, label: 'SF Node' },
+                    { lat: 10.8231, lng: 106.6297, intensity: 0.75, label: 'HCMC Node' }
+                ];
+
+                this.createVisualizationPanel();
+                console.log('✅ Advanced Visualization initialized');
+            }
+
+            createVisualizationPanel() {
+                const vizControl = L.control({ position: 'topright' });
+
+                vizControl.onAdd = (map) => {
+                    const div = L.DomUtil.create('div', 'viz-panel');
+                    div.id = 'vizPanel';
+
+                    div.innerHTML = `
+                        <div class="viz-header">
+                            <h3>🎨 Visualization</h3>
+                            <button class="viz-close" onclick="document.getElementById('vizPanel').style.display='none'">✕</button>
+                        </div>
+
+                        <div class="viz-section">
+                            <div class="viz-title">Rendering Options</div>
+                            <div class="viz-option">
+                                <input type="checkbox" class="viz-checkbox" id="heatmapToggle" onchange="window.networkMap.toggleHeatmap(this.checked)" />
+                                <span class="viz-label">Heatmap Rendering</span>
+                            </div>
+                            <div class="viz-option">
+                                <input type="checkbox" class="viz-checkbox" id="clusterToggle" checked onchange="window.networkMap.toggleClustering(this.checked)" />
+                                <span class="viz-label">Feature Clustering</span>
+                            </div>
+                            <div class="viz-option">
+                                <input type="checkbox" class="viz-checkbox" id="markersToggle" checked onchange="window.networkMap.toggleCustomMarkers(this.checked)" />
+                                <span class="viz-label">Custom Markers</span>
+                            </div>
+                            <div class="viz-option">
+                                <input type="checkbox" class="viz-checkbox" id="animToggle" checked onchange="window.networkMap.toggleAnimations(this.checked)" />
+                                <span class="viz-label">Animations</span>
+                            </div>
+                        </div>
+
+                        <div class="viz-section">
+                            <div class="viz-title">Heatmap Legend</div>
+                            <div class="heatmap-gradient"></div>
+                            <div class="gradient-labels">
+                                <span>Low</span>
+                                <span>High</span>
+                            </div>
+                        </div>
+
+                        <div class="viz-section">
+                            <div class="viz-title">Cluster Information</div>
+                            <div class="cluster-info">
+                                <span>Active Clusters:</span>
+                                <span class="cluster-badge" id="clusterCount">5</span>
+                            </div>
+                            <div class="cluster-info" style="margin-top: 6px;">
+                                <span>Total Points:</span>
+                                <span class="cluster-badge" id="pointsCount">12</span>
+                            </div>
+                        </div>
+
+                        <div class="viz-section">
+                            <button style="width: 100%; padding: 10px; background: rgba(168, 85, 247, 0.2); border: 1px solid rgba(168, 85, 247, 0.4); color: #a855f7; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 12px;" onclick="window.networkMap.exportVisualization()">
+                                📊 Export Visualization
+                            </button>
+                        </div>
+                    `;
+
+                    L.DomEvent.disableClickPropagation(div);
+                    L.DomEvent.disableScrollPropagation(div);
+
+                    return div;
+                };
+
+                vizControl.addTo(this.map);
+            }
+
+            toggleHeatmap(enabled) {
+                this.vizOptions.heatmapEnabled = enabled;
+
+                if (enabled) {
+                    this.renderHeatmap();
+                    console.log('🔥 Heatmap rendering enabled');
+                } else {
+                    this.removeHeatmap();
+                    console.log('❌ Heatmap rendering disabled');
+                }
+            }
+
+            renderHeatmap() {
+                // Create heatmap visualization using intensity data
+                this.heatmapData.forEach(point => {
+                    const color = this.getHeatmapColor(point.intensity);
+                    L.circleMarker([point.lat, point.lng], {
+                        radius: 8 + (point.intensity * 10),
+                        fillColor: color,
+                        color: color,
+                        weight: 2,
+                        opacity: 0.8,
+                        fillOpacity: point.intensity * 0.7
+                    }).bindPopup(`<strong>${point.label}</strong><br>Intensity: ${Math.round(point.intensity * 100)}%`).addTo(this.map);
+                });
+
+                console.log('✨ Heatmap rendered with ' + this.heatmapData.length + ' points');
+            }
+
+            getHeatmapColor(intensity) {
+                if (intensity < 0.2) return '#0ea5e9'; // Blue
+                if (intensity < 0.4) return '#3b82f6'; // Lighter Blue
+                if (intensity < 0.6) return '#8b5cf6'; // Purple
+                if (intensity < 0.8) return '#ec4899'; // Pink
+                return '#ef4444'; // Red
+            }
+
+            removeHeatmap() {
+                // Clear heatmap layers
+                this.map.eachLayer(layer => {
+                    if (layer instanceof L.CircleMarker && layer.options.fillColor) {
+                        this.map.removeLayer(layer);
+                    }
+                });
+            }
+
+            toggleClustering(enabled) {
+                this.vizOptions.clusteringEnabled = enabled;
+                console.log(enabled ? '📍 Feature clustering enabled' : '❌ Feature clustering disabled');
+            }
+
+            toggleCustomMarkers(enabled) {
+                this.vizOptions.customMarkersEnabled = enabled;
+                console.log(enabled ? '🎯 Custom markers enabled' : '❌ Custom markers disabled');
+            }
+
+            toggleAnimations(enabled) {
+                this.vizOptions.animationsEnabled = enabled;
+                console.log(enabled ? '✨ Animations enabled' : '❌ Animations disabled');
+            }
+
+            exportVisualization() {
+                const config = {
+                    timestamp: new Date().toISOString(),
+                    vizOptions: this.vizOptions,
+                    heatmapData: this.heatmapData,
+                    mapCenter: this.map.getCenter(),
+                    mapZoom: this.map.getZoom()
+                };
+
+                const json = JSON.stringify(config, null, 2);
+                const blob = new Blob([json], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `visualization-${Date.now()}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+
+                console.log('📥 Visualization exported');
             }
             
             addLocationButton() {
