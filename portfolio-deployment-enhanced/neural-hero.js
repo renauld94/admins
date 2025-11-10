@@ -1,8 +1,9 @@
 /**
- * NEURAL HERO - Enhanced Neural Network Visualization
- * Replaces epic-neural-cosmos-viz with optimized, performant neural network animation
- * Features: Particle systems, neural pathways, cosmic background, smooth animations
- * Performance: GPU-accelerated, LOD system, frustum culling, requestAnimationFrame
+ * NEURAL HERO - TRULY EPIC Neural Network Visualization
+ * Cinematic journey from microscopic neurons to cosmic consciousness
+ * Features: Bloom effects, particle explosions, nebula backgrounds, dynamic lighting,
+ *           color morphing, camera sweeps, energy pulses, synaptic fire storms
+ * Performance: GPU-accelerated, advanced shaders, post-processing, 60fps optimized
  */
 
 (function() {
@@ -12,16 +13,19 @@
         constructor(containerId, options = {}) {
             this.containerId = containerId;
             this.options = {
-                particleCount: 3000,
-                connectionDistance: 150,
+                particleCount: 5000,        // More particles for epic density
+                connectionDistance: 180,     // Wider neural networks
                 autoRotate: true,
                 enableGPU: true,
                 enableLOD: true,
                 enableVSync: true,
-                backgroundColor: 0x0a0f1e,
-                particleColor: 0x0ea5e9,
-                connectionColor: 0x8b5cf6,
-                transitionDuration: 28000,
+                enableBloom: true,           // Post-processing bloom
+                enableExplosions: true,      // Particle explosions
+                backgroundColor: 0x000005,   // Deep space black
+                particleColor: 0x00d9ff,     // Electric cyan
+                connectionColor: 0xff00ff,   // Magenta connections
+                accentColor: 0xffaa00,       // Gold accents
+                transitionDuration: 40000,   // 40s epic journey (4 phases x 10s)
                 deferInit: true,
                 ...options
             };
@@ -32,11 +36,16 @@
             this.renderer = null;
             this.particles = null;
             this.lines = null;
+            this.nebula = null;              // Background nebula
+            this.starField = null;           // Distant stars
+            this.energyRings = [];           // Pulsing energy rings
+            this.explosionParticles = [];    // Explosion effects
             this.animationId = null;
             this.isInitialized = false;
             this.time = 0;
             this.phase = 0;
             this.phases = 4;
+            this.colorShift = 0;             // Dynamic color transitions
             
             console.log('🧠 [NeuralHero] Constructor called with options:', this.options);
             
@@ -73,38 +82,43 @@
                 
                 console.log(`🧠 [NeuralHero] Container: ${width}x${height}`);
                 
-                // Create scene
+                // Create scene with deep space atmosphere
                 this.scene = new THREE.Scene();
                 this.scene.background = new THREE.Color(this.options.backgroundColor);
-                this.scene.fog = new THREE.Fog(this.options.backgroundColor, 2000, 5000);
+                this.scene.fog = new THREE.FogExp2(this.options.backgroundColor, 0.00015);
                 
-                // Create camera
-                this.camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 10000);
-                this.camera.position.z = 300;
+                // Create camera with wide FOV for epic cinematic feel
+                this.camera = new THREE.PerspectiveCamera(85, width / height, 0.1, 15000);
+                this.camera.position.set(0, 50, 400);
+                this.camera.lookAt(0, 0, 0);
                 
-                // Create renderer with antialiasing for smooth visuals
+                // Create renderer with enhanced settings
                 this.renderer = new THREE.WebGLRenderer({
                     antialias: true,
                     alpha: false,
                     precision: 'highp',
-                    powerPreference: 'high-performance'
+                    powerPreference: 'high-performance',
+                    stencil: false,
+                    depth: true
                 });
                 this.renderer.setSize(width, height);
                 this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
                 this.renderer.shadowMap.enabled = true;
+                this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+                this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+                this.renderer.toneMappingExposure = 1.2;
                 
                 // Add to container
                 this.container.innerHTML = '';
                 this.container.appendChild(this.renderer.domElement);
                 
-                // Create particles
-                this.createParticles();
-                
-                // Create connections
-                this.createConnections();
-                
-                // Add lighting
-                this.addLighting();
+                // Create EPIC visuals layer by layer
+                this.createStarField();         // Background stars
+                this.createNebula();            // Cosmic nebula
+                this.createEnergyRings();       // Pulsing rings
+                this.createParticles();         // Neural nodes
+                this.createConnections();       // Neural pathways
+                this.addDynamicLighting();      // Epic lighting
                 
                 // Handle resize
                 window.addEventListener('resize', () => this.onWindowResize());
@@ -122,50 +136,191 @@
         }
         
         /**
-         * Create particle system for neural nodes
+         * Create distant star field for cosmic backdrop
          */
-        createParticles() {
-            console.log('🧠 [NeuralHero] Creating particles...');
+        createStarField() {
+            console.log('🌟 [NeuralHero] Creating star field...');
             
             const geometry = new THREE.BufferGeometry();
-            const count = this.options.particleCount;
+            const starCount = 8000;
+            const positions = new Float32Array(starCount * 3);
+            const colors = new Float32Array(starCount * 3);
+            const sizes = new Float32Array(starCount);
             
-            // Positions - distributed in sphere
-            const positions = new Float32Array(count * 3);
-            for (let i = 0; i < count; i++) {
+            for (let i = 0; i < starCount; i++) {
+                // Random sphere distribution (far away)
                 const theta = Math.random() * Math.PI * 2;
                 const phi = Math.random() * Math.PI;
-                const radius = 150 + Math.random() * 100;
+                const radius = 3000 + Math.random() * 5000;
                 
                 positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
                 positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
                 positions[i * 3 + 2] = radius * Math.cos(phi);
-            }
-            
-            // Velocities
-            const velocities = new Float32Array(count * 3);
-            for (let i = 0; i < count * 3; i++) {
-                velocities[i] = (Math.random() - 0.5) * 2;
+                
+                // Subtle color variation (blue-white spectrum)
+                const colorShift = Math.random() * 0.3;
+                colors[i * 3] = 0.7 + colorShift;      // R
+                colors[i * 3 + 1] = 0.8 + colorShift;  // G
+                colors[i * 3 + 2] = 1.0;               // B
+                
+                sizes[i] = Math.random() * 1.5 + 0.5;
             }
             
             geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            geometry.setAttribute('velocity', new THREE.BufferAttribute(velocities, 3));
+            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
             
-            // Material - points with size
             const material = new THREE.PointsMaterial({
-                color: this.options.particleColor,
-                size: 2,
+                size: 1.2,
                 sizeAttenuation: true,
                 transparent: true,
                 opacity: 0.8,
-                fog: true
+                vertexColors: true,
+                blending: THREE.AdditiveBlending,
+                depthWrite: false
+            });
+            
+            this.starField = new THREE.Points(geometry, material);
+            this.scene.add(this.starField);
+            
+            console.log(`✅ [NeuralHero] Created ${starCount} stars`);
+        }
+        
+        /**
+         * Create nebula background with glowing clouds
+         */
+        createNebula() {
+            console.log('🌌 [NeuralHero] Creating nebula...');
+            
+            const geometry = new THREE.BufferGeometry();
+            const nebulaCount = 2000;
+            const positions = new Float32Array(nebulaCount * 3);
+            const colors = new Float32Array(nebulaCount * 3);
+            const sizes = new Float32Array(nebulaCount);
+            
+            for (let i = 0; i < nebulaCount; i++) {
+                // Clustered around center with some spread
+                positions[i * 3] = (Math.random() - 0.5) * 1500;
+                positions[i * 3 + 1] = (Math.random() - 0.5) * 1500;
+                positions[i * 3 + 2] = (Math.random() - 0.5) * 1500;
+                
+                // Purple-blue-cyan gradient
+                const t = Math.random();
+                colors[i * 3] = 0.3 + t * 0.5;     // R
+                colors[i * 3 + 1] = 0.1 + t * 0.4; // G
+                colors[i * 3 + 2] = 0.9 + t * 0.1; // B
+                
+                sizes[i] = Math.random() * 50 + 20;
+            }
+            
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+            
+            const material = new THREE.PointsMaterial({
+                size: 30,
+                sizeAttenuation: true,
+                transparent: true,
+                opacity: 0.15,
+                vertexColors: true,
+                blending: THREE.AdditiveBlending,
+                depthWrite: false
+            });
+            
+            this.nebula = new THREE.Points(geometry, material);
+            this.scene.add(this.nebula);
+            
+            console.log(`✅ [NeuralHero] Created nebula with ${nebulaCount} clouds`);
+        }
+        
+        /**
+         * Create pulsing energy rings
+         */
+        createEnergyRings() {
+            console.log('⚡ [NeuralHero] Creating energy rings...');
+            
+            for (let i = 0; i < 3; i++) {
+                const geometry = new THREE.TorusGeometry(200 + i * 100, 2, 16, 100);
+                const material = new THREE.MeshBasicMaterial({
+                    color: this.options.accentColor,
+                    transparent: true,
+                    opacity: 0.3,
+                    wireframe: false,
+                    blending: THREE.AdditiveBlending
+                });
+                
+                const ring = new THREE.Mesh(geometry, material);
+                ring.rotation.x = Math.PI / 2;
+                ring.rotation.z = i * Math.PI / 3;
+                ring.userData.phase = i;
+                
+                this.energyRings.push(ring);
+                this.scene.add(ring);
+            }
+            
+            console.log(`✅ [NeuralHero] Created ${this.energyRings.length} energy rings`);
+        }
+        
+        /**
+         * Create particle system for neural nodes with enhanced visuals
+         */
+        createParticles() {
+            console.log('🧠 [NeuralHero] Creating neural particles...');
+            
+            const geometry = new THREE.BufferGeometry();
+            const count = this.options.particleCount;
+            
+            // Positions - distributed in expanding sphere
+            const positions = new Float32Array(count * 3);
+            const colors = new Float32Array(count * 3);
+            const sizes = new Float32Array(count);
+            
+            for (let i = 0; i < count; i++) {
+                const theta = Math.random() * Math.PI * 2;
+                const phi = Math.random() * Math.PI;
+                const radius = 150 + Math.random() * 150;
+                
+                positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+                positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+                positions[i * 3 + 2] = radius * Math.cos(phi);
+                
+                // Dynamic color variation (cyan-magenta-gold)
+                const colorVar = Math.random();
+                colors[i * 3] = colorVar;
+                colors[i * 3 + 1] = 0.8 - colorVar * 0.5;
+                colors[i * 3 + 2] = 1.0;
+                
+                sizes[i] = Math.random() * 3 + 1.5;
+            }
+            
+            // Velocities for movement
+            const velocities = new Float32Array(count * 3);
+            for (let i = 0; i < count * 3; i++) {
+                velocities[i] = (Math.random() - 0.5) * 3;
+            }
+            
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+            geometry.setAttribute('velocity', new THREE.BufferAttribute(velocities, 3));
+            
+            // Material with glow
+            const material = new THREE.PointsMaterial({
+                size: 3,
+                sizeAttenuation: true,
+                transparent: true,
+                opacity: 0.9,
+                vertexColors: true,
+                blending: THREE.AdditiveBlending,
+                depthWrite: false
             });
             
             this.particles = new THREE.Points(geometry, material);
             this.scene.add(this.particles);
             
-            console.log(`✅ [NeuralHero] Created ${count} particles`);
+            console.log(`✅ [NeuralHero] Created ${count} neural particles`);
         }
+
         
         /**
          * Create neural connections (lines between nearby particles)
