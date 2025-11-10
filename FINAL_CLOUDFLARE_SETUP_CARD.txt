@@ -1,0 +1,201 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                                                                            ║
+║               🎉 JOB SEARCH DASHBOARD - READY FOR EXTERNAL ACCESS          ║
+║                                                                            ║
+║                        ✅ ONE FINAL STEP TO COMPLETE                       ║
+║                                                                            ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+
+📊 CURRENT STATUS
+════════════════════════════════════════════════════════════════════════════
+
+✅ Dashboard Service:       RUNNING on port 8501
+✅ Nginx Reverse Proxy:     CONFIGURED (port 80 → 8501)
+✅ Internal Access:         WORKING (http://10.0.0.150/)
+✅ DNS CNAME Record:        CREATED (jobs.simondatalab.de)
+✅ Cloudflare Tunnel:       ACTIVE (simondatalab-tunnel)
+✅ Main Domain:             ACCESSIBLE (https://simondatalab.de/)
+
+⏳ External jobs subdomain: WAITING FOR TUNNEL ROUTE
+
+
+🚀 WHAT YOU NEED TO DO NOW (5 minutes)
+════════════════════════════════════════════════════════════════════════════
+
+Step 1: Open Cloudflare Dashboard
+────────────────────────────────
+Visit: https://dash.cloudflare.com
+
+Step 2: Navigate to Tunnels
+──────────────────────────
+Left Menu → Tunnels
+Click on: simondatalab-tunnel
+
+Step 3: Configure Route
+──────────────────────
+Click blue "Configure" button
+Go to: "Public Hostnames" tab
+
+Step 4: Add New Hostname
+───────────────────────
+Click: "Add a public hostname" button
+
+Step 5: Fill the Form
+──────────────────────
+┌─────────────────────────────────────┐
+│ Subdomain:    jobs                  │
+│ Domain:       simondatalab.de       │
+│ Service:      http://10.0.0.150:80  │
+│ Path:         (leave empty)         │
+│ TTL:          Auto                  │
+└─────────────────────────────────────┘
+
+Step 6: Save
+────────────
+Click: "Save" button
+
+Step 7: Wait
+────────────
+DNS propagation: 2-5 minutes
+
+Step 8: Test
+────────────
+curl https://jobs.simondatalab.de/
+OR
+Open in browser: https://jobs.simondatalab.de/
+
+Expected result: Dashboard loads ✅
+
+
+📋 VERIFICATION CHECKLIST
+════════════════════════════════════════════════════════════════════════════
+
+Before you start:
+  ☑ Cloudflare account active
+  ☑ DNS CNAME created (✅ Already done for you)
+  ☑ Tunnel is connected (✅ Verified)
+
+After you add the route:
+  ☐ Route appears in Cloudflare dashboard
+  ☐ Status shows "Healthy" or "Active"
+  ☐ Wait 2-5 minutes for DNS
+
+Final test:
+  ☐ curl https://jobs.simondatalab.de/ → HTTP 200
+  ☐ Dashboard loads in browser
+  ☐ Metrics visible
+  ☐ No 502 or timeout errors
+
+
+⚙️ SYSTEM INFO FOR REFERENCE
+════════════════════════════════════════════════════════════════════════════
+
+Container:       CT 150 (Proxmox)
+Internal IP:     10.0.0.150
+Port (Direct):   8501
+Port (Nginx):    80
+Hostname:        jobs.simondatalab.de
+DNS Type:        CNAME
+DNS Target:      a10f0734-57e8-439f-8d1d-ef7a1cf54da0.cfargotunnel.com
+
+Local access (after adding route):
+  • https://jobs.simondatalab.de/ → External ✅
+  • https://simondatalab.de/ → Main domain ✅
+  • http://10.0.0.150/ → Direct IP (internal)
+
+
+💡 IF SOMETHING GOES WRONG
+════════════════════════════════════════════════════════════════════════════
+
+Issue: "Connection refused" / "Connection timeout"
+→ Route not yet added to Cloudflare tunnel
+→ Double-check subdomain and domain names match exactly
+→ Wait 5+ minutes for propagation
+
+Issue: "502 Bad Gateway"
+→ Dashboard service might be down
+→ Check: ssh -p 2222 root@136.243.155.166
+→ Then: pct exec 150 -- systemctl status job-search-dashboard
+
+Issue: DNS not resolving
+→ Try: nslookup jobs.simondatalab.de
+→ Or: dig jobs.simondatalab.de
+→ Wait a bit longer (DNS can take 5-10 min globally)
+
+Issue: Page loads but styling broken
+→ This is normal - lightweight dashboard has inline styles
+→ Functionality is not affected
+→ Metrics still work
+
+
+🎯 QUICK REFERENCE
+════════════════════════════════════════════════════════════════════════════
+
+Cloudflare Dashboard URL:
+  https://dash.cloudflare.com
+
+Your Zone:
+  simondatalab.de
+
+Your Tunnel:
+  simondatalab-tunnel
+
+DNS Record Created:
+  Type:    CNAME
+  Name:    jobs.simondatalab.de
+  Target:  a10f0734-57e8-439f-8d1d-ef7a1cf54da0.cfargotunnel.com
+  Status:  ✅ Active
+
+Service Running:
+  job-search-dashboard.service (systemd managed)
+
+
+📞 COMMANDS FOR TROUBLESHOOTING
+════════════════════════════════════════════════════════════════════════════
+
+Check service:
+  ssh -p 2222 root@136.243.155.166
+  pct exec 150 -- systemctl status job-search-dashboard
+
+View logs:
+  pct exec 150 -- tail -f /opt/job-search-automation/logs/dashboard.log
+
+Test local access:
+  pct exec 150 -- curl http://localhost:8501/
+
+Test port 80:
+  pct exec 150 -- curl http://localhost/
+
+Reload nginx:
+  pct exec 150 -- systemctl reload nginx
+
+Check nginx errors:
+  pct exec 150 -- tail -f /var/log/nginx/job-search_error.log
+
+
+🎊 WHAT'S NEXT (After testing)
+════════════════════════════════════════════════════════════════════════════
+
+Once external access works:
+  1. ✅ Dashboard accessible at https://jobs.simondatalab.de/
+  2. ✅ Share the link with team members
+  3. ✅ View real-time automation metrics
+  4. ✅ Monitor job search daily
+  5. ✅ Check LinkedIn connections
+  6. ✅ Track resume deliveries
+
+Automation is already running:
+  • 07:00 AM: Job discovery
+  • 07:15 AM: LinkedIn outreach
+  • 07:30 AM: Resume delivery
+  • 08:00 AM: Metrics update
+  • 06:00 PM: Evening check-in
+  • Weekly: Log rotation
+
+
+════════════════════════════════════════════════════════════════════════════
+
+✨ YOU'RE 95% DONE! Just add the route and wait 5 minutes. ✨
+
+════════════════════════════════════════════════════════════════════════════
