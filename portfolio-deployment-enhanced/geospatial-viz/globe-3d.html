@@ -795,6 +795,9 @@
                 // Initialize Layer Search & Filtering (Phase 3.2)
                 this.initializeLayerSearch3D();
                 
+                // Initialize Real-time Updates (Phase 3.3)
+                this.initializeRealtimeUpdates3D();
+                
                 // Hide loading
                 setTimeout(() => {
                     const loading = document.getElementById('loading');
@@ -1082,6 +1085,39 @@
             highlightLayer3D(layerName) {
                 // Add visual feedback for layer highlighting in 3D globe
                 console.log(`✨ Highlighted layer in 3D: ${layerName}`);
+            }
+
+            // Phase 3.3: Real-time Data Updates for 3D Globe
+            initializeRealtimeUpdates3D() {
+                this.realtimeEnabled3D = false;
+                this.updateQueue3D = [];
+                this.connectionStatus3D = 'disconnected';
+
+                console.log('✅ Real-time updates system initialized for 3D globe');
+            }
+
+            connectRealtime3D() {
+                this.realtimeEnabled3D = true;
+                this.connectionStatus3D = 'connected';
+
+                console.log('✅ Real-time connection established (3D)');
+            }
+
+            disconnectRealtime3D() {
+                this.realtimeEnabled3D = false;
+                this.connectionStatus3D = 'disconnected';
+
+                console.log('❌ Real-time connection closed (3D)');
+            }
+
+            addNotification3D(title, message) {
+                this.updateQueue3D.push({
+                    title,
+                    message,
+                    timestamp: new Date()
+                });
+
+                console.log(`📢 Notification (3D): ${title} - ${message}`);
             }
             
             loadGeospatialData() {

@@ -1713,6 +1713,163 @@
             padding: 16px 8px;
         }
 
+        /* Real-time Data Updates & Notifications */
+        .realtime-panel {
+            position: absolute;
+            bottom: 100px;
+            right: 20px;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            padding: 16px;
+            width: 320px;
+            max-height: 400px;
+            overflow-y: auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            z-index: 997;
+            font-size: 13px;
+        }
+
+        .realtime-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .realtime-header h3 {
+            color: #10b981;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .realtime-status {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #10b981;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .realtime-toggle {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 0;
+        }
+
+        .realtime-toggle:hover {
+            color: #10b981;
+        }
+
+        .update-stream {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .update-notification {
+            padding: 10px;
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 3px solid #10b981;
+            border-radius: 4px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .notification-title {
+            color: #10b981;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .notification-content {
+            color: #cbd5e1;
+            font-size: 11px;
+            margin-top: 4px;
+        }
+
+        .notification-time {
+            color: #64748b;
+            font-size: 10px;
+            margin-top: 4px;
+        }
+
+        .connection-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            background: rgba(16, 185, 129, 0.05);
+            border-radius: 6px;
+            margin-bottom: 12px;
+            font-size: 12px;
+            color: #cbd5e1;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+        }
+
+        .status-dot.disconnected {
+            background: #ef4444;
+        }
+
+        .update-controls {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(16, 185, 129, 0.1);
+        }
+
+        .control-btn {
+            flex: 1;
+            padding: 8px;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #10b981;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .control-btn:hover {
+            background: rgba(16, 185, 129, 0.25);
+            border-color: #10b981;
+        }
+
         /* Respect reduced motion preferences */
         @media (prefers-reduced-motion: reduce) {
             * {
@@ -2166,6 +2323,9 @@
                 
                 // Initialize Layer Search & Filtering (Phase 3.2)
                 this.initializeLayerSearch();
+                
+                // Initialize Real-time Updates (Phase 3.3)
+                this.initializeRealtimeUpdates();
             }
             
             initializeGeoserverWMS() {
@@ -2626,6 +2786,154 @@
                 }
 
                 console.log('🗑️ Search cleared');
+            }
+
+            // Phase 3.3: Real-time Data Updates & Streaming
+            initializeRealtimeUpdates() {
+                this.realtimeEnabled = false;
+                this.updateQueue = [];
+                this.maxNotifications = 10;
+                this.connectionStatus = 'disconnected';
+                this.eventSource = null;
+
+                this.createRealtimePanel();
+                this.setupRealtimeConnection();
+
+                console.log('✅ Real-time updates system initialized');
+            }
+
+            createRealtimePanel() {
+                const realtimeControl = L.control({ position: 'bottomright' });
+
+                realtimeControl.onAdd = (map) => {
+                    const div = L.DomUtil.create('div', 'realtime-panel');
+                    div.id = 'realtimePanel';
+
+                    div.innerHTML = `
+                        <div class="realtime-header">
+                            <h3><span class="realtime-status"></span> Live Updates</h3>
+                            <button class="realtime-toggle" onclick="window.networkMap.toggleRealtimeUpdates()">⚙️</button>
+                        </div>
+
+                        <div class="connection-status">
+                            <div class="status-dot disconnected" id="connectionDot"></div>
+                            <span id="connectionText">Disconnected</span>
+                        </div>
+
+                        <div class="update-stream" id="updateStream">
+                            <div style="color: #94a3b8; font-size: 11px; text-align: center; padding: 20px 0;">
+                                Click 'Connect' to start receiving live updates
+                            </div>
+                        </div>
+
+                        <div class="update-controls">
+                            <button class="control-btn" onclick="window.networkMap.connectRealtime()">Connect</button>
+                            <button class="control-btn" onclick="window.networkMap.clearNotifications()">Clear</button>
+                        </div>
+                    `;
+
+                    L.DomEvent.disableClickPropagation(div);
+                    L.DomEvent.disableScrollPropagation(div);
+
+                    return div;
+                };
+
+                realtimeControl.addTo(this.map);
+            }
+
+            setupRealtimeConnection() {
+                // Simulate real-time data updates (in production, connect to WebSocket or SSE)
+                this.simulateUpdates = setInterval(() => {
+                    if (this.realtimeEnabled && Math.random() > 0.5) {
+                        const updates = [
+                            { layer: 'Healthcare Network', message: 'New facility registered', icon: '🏥' },
+                            { layer: 'Research Zones', message: 'Updated research data', icon: '🔬' },
+                            { layer: 'Infrastructure', message: 'Network status changed', icon: '📡' }
+                        ];
+
+                        const update = updates[Math.floor(Math.random() * updates.length)];
+                        this.addNotification(update.layer, update.message, update.icon);
+                    }
+                }, 3000);
+            }
+
+            connectRealtime() {
+                if (this.realtimeEnabled) {
+                    this.disconnectRealtime();
+                    return;
+                }
+
+                this.realtimeEnabled = true;
+                this.connectionStatus = 'connected';
+
+                // Update UI
+                const dot = document.getElementById('connectionDot');
+                const text = document.getElementById('connectionText');
+                if (dot) dot.classList.remove('disconnected');
+                if (text) text.textContent = 'Connected - Receiving updates';
+
+                this.addNotification('System', 'Real-time updates connected', '🟢');
+                console.log('✅ Real-time connection established');
+            }
+
+            disconnectRealtime() {
+                this.realtimeEnabled = false;
+                this.connectionStatus = 'disconnected';
+
+                // Update UI
+                const dot = document.getElementById('connectionDot');
+                const text = document.getElementById('connectionText');
+                if (dot) dot.classList.add('disconnected');
+                if (text) text.textContent = 'Disconnected';
+
+                this.addNotification('System', 'Real-time updates disconnected', '🔴');
+                console.log('❌ Real-time connection closed');
+            }
+
+            toggleRealtimeUpdates() {
+                if (this.realtimeEnabled) {
+                    this.disconnectRealtime();
+                } else {
+                    this.connectRealtime();
+                }
+            }
+
+            addNotification(title, message, icon = '📍') {
+                const stream = document.getElementById('updateStream');
+                if (!stream) return;
+
+                const notification = document.createElement('div');
+                notification.className = 'update-notification';
+                notification.innerHTML = `
+                    <div class="notification-title">${icon} ${title}</div>
+                    <div class="notification-content">${message}</div>
+                    <div class="notification-time">${new Date().toLocaleTimeString()}</div>
+                `;
+
+                stream.insertBefore(notification, stream.firstChild);
+
+                // Keep only maxNotifications
+                while (stream.children.length > this.maxNotifications) {
+                    stream.removeChild(stream.lastChild);
+                }
+
+                this.updateQueue.push({
+                    title,
+                    message,
+                    timestamp: new Date()
+                });
+
+                console.log(`📢 Notification: ${title} - ${message}`);
+            }
+
+            clearNotifications() {
+                const stream = document.getElementById('updateStream');
+                if (stream) {
+                    stream.innerHTML = '<div style="color: #94a3b8; font-size: 11px; text-align: center; padding: 20px 0;">No updates yet</div>';
+                }
+
+                this.updateQueue = [];
+                console.log('🗑️ Notifications cleared');
             }
             
             addLocationButton() {
