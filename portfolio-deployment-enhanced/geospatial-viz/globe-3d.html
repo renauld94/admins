@@ -789,6 +789,9 @@
                 // Setup controls
                 this.setupControls();
                 
+                // Initialize Advanced Styling (Phase 3.1)
+                this.initializeAdvancedStyling3D();
+                
                 // Hide loading
                 setTimeout(() => {
                     const loading = document.getElementById('loading');
@@ -979,6 +982,67 @@
                     }
                 } catch (error) {
                     console.warn('Error toggling WMS layer:', error.message);
+                }
+            }
+
+            // Phase 3.1: Advanced Layer Styling for 3D Globe
+            initializeAdvancedStyling3D() {
+                this.layerStyles3D = {
+                    'Healthcare': { opacity: 0.7 },
+                    'Research': { opacity: 0.6 },
+                    'Infrastructure': { opacity: 0.5 }
+                };
+
+                // Load persisted styles
+                this.loadLayerStyles3D();
+
+                console.log('✅ Advanced Layer Styling initialized for 3D globe');
+            }
+
+            updateWMSLayerOpacity3D(layerName, opacity) {
+                if (!this.layerStyles3D[layerName]) return;
+
+                const opacityValue = parseFloat(opacity);
+                this.layerStyles3D[layerName].opacity = opacityValue;
+                this.saveLayerStyles3D();
+
+                // Update WMS layer opacity in Cesium
+                try {
+                    if (this.wmsLayers[layerName]) {
+                        const layers = this.viewer.imageryLayers;
+                        for (let i = 0; i < layers.length; i++) {
+                            const layer = layers.get(i);
+                            if (layer && layer.imageryProvider === this.wmsLayers[layerName]) {
+                                layer.alpha = opacityValue;
+                                break;
+                            }
+                        }
+                    }
+                } catch (e) {
+                    console.warn('Could not update WMS layer opacity:', e);
+                }
+
+                console.log(`🎨 Updated ${layerName} opacity to ${Math.round(opacityValue * 100)}%`);
+            }
+
+            saveLayerStyles3D() {
+                try {
+                    localStorage.setItem('globe_layer_styles', JSON.stringify(this.layerStyles3D));
+                } catch (e) {
+                    console.warn('Could not save layer styles:', e);
+                }
+            }
+
+            loadLayerStyles3D() {
+                try {
+                    const saved = localStorage.getItem('globe_layer_styles');
+                    if (saved) {
+                        const styles = JSON.parse(saved);
+                        Object.assign(this.layerStyles3D, styles);
+                        console.log('✅ Loaded persisted layer styles for 3D globe');
+                    }
+                } catch (e) {
+                    console.warn('Could not load layer styles:', e);
                 }
             }
             
