@@ -170,11 +170,30 @@
             geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
             geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
             
+            // Create circular sprite texture for round stars with twinkle
+            const starCanvas = document.createElement('canvas');
+            starCanvas.width = 32;
+            starCanvas.height = 32;
+            const starCtx = starCanvas.getContext('2d');
+            
+            // Create radial gradient for star glow
+            const starGradient = starCtx.createRadialGradient(16, 16, 0, 16, 16, 16);
+            starGradient.addColorStop(0, 'rgba(255, 255, 255, 1.0)');
+            starGradient.addColorStop(0.3, 'rgba(255, 255, 255, 0.6)');
+            starGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+            
+            starCtx.fillStyle = starGradient;
+            starCtx.fillRect(0, 0, 32, 32);
+            
+            const starTexture = new THREE.CanvasTexture(starCanvas);
+            starTexture.needsUpdate = true;
+            
             const material = new THREE.PointsMaterial({
-                size: 1.2,
+                size: 2.0,
+                map: starTexture,
                 sizeAttenuation: true,
                 transparent: true,
-                opacity: 0.8,
+                opacity: 0.9,
                 vertexColors: true,
                 blending: THREE.AdditiveBlending,
                 depthWrite: false
