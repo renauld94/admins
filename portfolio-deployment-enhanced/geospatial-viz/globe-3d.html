@@ -792,6 +792,9 @@
                 // Initialize Advanced Styling (Phase 3.1)
                 this.initializeAdvancedStyling3D();
                 
+                // Initialize Layer Search & Filtering (Phase 3.2)
+                this.initializeLayerSearch3D();
+                
                 // Hide loading
                 setTimeout(() => {
                     const loading = document.getElementById('loading');
@@ -1044,6 +1047,41 @@
                 } catch (e) {
                     console.warn('Could not load layer styles:', e);
                 }
+            }
+
+            // Phase 3.2: Layer Search & Filtering for 3D Globe
+            initializeLayerSearch3D() {
+                this.searchIndex3D = {
+                    'Healthcare': ['hospital', 'clinic', 'medical', 'health', 'facility'],
+                    'Research': ['research', 'laboratory', 'institute', 'university', 'study'],
+                    'Infrastructure': ['data', 'center', 'network', 'cloud', 'server']
+                };
+
+                console.log('✅ Layer Search and Filtering initialized for 3D globe');
+            }
+
+            searchLayers3D(query) {
+                if (!query.trim()) return [];
+
+                const searchTerm = query.toLowerCase();
+                const results = [];
+
+                Object.entries(this.searchIndex3D).forEach(([layerName, keywords]) => {
+                    const layerNameLower = layerName.toLowerCase();
+                    if (layerNameLower.includes(searchTerm) || keywords.some(kw => kw.includes(searchTerm))) {
+                        results.push({
+                            name: layerName,
+                            match: layerNameLower.includes(searchTerm) ? 'Layer name' : 'Keyword match'
+                        });
+                    }
+                });
+
+                return results;
+            }
+
+            highlightLayer3D(layerName) {
+                // Add visual feedback for layer highlighting in 3D globe
+                console.log(`✨ Highlighted layer in 3D: ${layerName}`);
             }
             
             loadGeospatialData() {

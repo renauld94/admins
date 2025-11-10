@@ -1529,6 +1529,190 @@
             border: 1px solid rgba(14, 165, 233, 0.3);
         }
 
+        /* Layer Filtering & Search Panel */
+        .layer-search-panel {
+            position: absolute;
+            top: 80px;
+            left: 20px;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            border-radius: 12px;
+            padding: 16px;
+            width: 340px;
+            max-height: 500px;
+            overflow-y: auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            z-index: 998;
+            font-size: 14px;
+        }
+
+        .search-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(14, 165, 233, 0.2);
+        }
+
+        .search-header h3 {
+            color: #0ea5e9;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-close {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-close:hover {
+            color: #0ea5e9;
+        }
+
+        .search-input-wrapper {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 8px 12px;
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            border-radius: 6px;
+            color: #e8eef8;
+            font-size: 13px;
+            font-family: inherit;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #0ea5e9;
+            background: rgba(30, 41, 59, 1);
+        }
+
+        .search-input::placeholder {
+            color: #64748b;
+        }
+
+        .search-btn {
+            padding: 8px 12px;
+            background: rgba(14, 165, 233, 0.2);
+            border: 1px solid rgba(14, 165, 233, 0.4);
+            color: #0ea5e9;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .search-btn:hover {
+            background: rgba(14, 165, 233, 0.3);
+            border-color: #0ea5e9;
+        }
+
+        .filter-section {
+            margin-bottom: 14px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(14, 165, 233, 0.1);
+        }
+
+        .filter-title {
+            color: #0ea5e9;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .filter-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            color: #cbd5e1;
+            user-select: none;
+        }
+
+        .filter-checkbox input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            accent-color: #0ea5e9;
+        }
+
+        .search-results {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(14, 165, 233, 0.2);
+        }
+
+        .results-title {
+            color: #0ea5e9;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .result-item {
+            padding: 8px;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(14, 165, 233, 0.15);
+            border-radius: 6px;
+            margin-bottom: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 12px;
+        }
+
+        .result-item:hover {
+            background: rgba(30, 41, 59, 0.8);
+            border-color: rgba(14, 165, 233, 0.4);
+        }
+
+        .result-name {
+            color: #e8eef8;
+            font-weight: 500;
+        }
+
+        .result-meta {
+            color: #94a3b8;
+            font-size: 11px;
+            margin-top: 2px;
+        }
+
+        .no-results {
+            color: #94a3b8;
+            font-size: 12px;
+            text-align: center;
+            padding: 16px 8px;
+        }
+
         /* Respect reduced motion preferences */
         @media (prefers-reduced-motion: reduce) {
             * {
@@ -1979,6 +2163,9 @@
                 
                 // Initialize Advanced Styling (Phase 3.1)
                 this.initializeAdvancedStyling();
+                
+                // Initialize Layer Search & Filtering (Phase 3.2)
+                this.initializeLayerSearch();
             }
             
             initializeGeoserverWMS() {
@@ -2293,6 +2480,152 @@
                 });
 
                 legend.innerHTML = html;
+            }
+
+            // Phase 3.2: Layer Filtering & Search
+            initializeLayerSearch() {
+                this.searchIndex = {
+                    'Healthcare Network': ['hospital', 'clinic', 'medical', 'health', 'facility', 'center'],
+                    'Research Zones': ['research', 'laboratory', 'institute', 'university', 'study', 'science'],
+                    'Infrastructure': ['data', 'center', 'network', 'cloud', 'server', 'infrastructure']
+                };
+
+                this.createSearchPanel();
+                console.log('✅ Layer Search and Filtering initialized');
+            }
+
+            createSearchPanel() {
+                const searchControl = L.control({ position: 'topleft' });
+
+                searchControl.onAdd = (map) => {
+                    const div = L.DomUtil.create('div', 'layer-search-panel');
+                    div.id = 'layerSearchPanel';
+
+                    div.innerHTML = `
+                        <div class="search-header">
+                            <h3>🔍 Search & Filter</h3>
+                            <button class="search-close" onclick="document.getElementById('layerSearchPanel').style.display='none'">✕</button>
+                        </div>
+
+                        <div class="search-input-wrapper">
+                            <input type="text" class="search-input" id="layerSearchInput" placeholder="Search layers..." onkeyup="window.networkMap.performSearch(this.value)" />
+                            <button class="search-btn" onclick="window.networkMap.clearSearch()">Clear</button>
+                        </div>
+
+                        <div class="filter-section">
+                            <div class="filter-title">Filter by Type</div>
+                            <div class="filter-options">
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" checked onchange="window.networkMap.toggleFilterType('healthcare', this.checked)" />
+                                    <span>Healthcare Facilities</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" checked onchange="window.networkMap.toggleFilterType('research', this.checked)" />
+                                    <span>Research Zones</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" checked onchange="window.networkMap.toggleFilterType('infrastructure', this.checked)" />
+                                    <span>Infrastructure</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="search-results">
+                            <div class="results-title">Search Results</div>
+                            <div id="searchResultsContainer" class="no-results">Enter a search term...</div>
+                        </div>
+                    `;
+
+                    L.DomEvent.disableClickPropagation(div);
+                    L.DomEvent.disableScrollPropagation(div);
+
+                    return div;
+                };
+
+                searchControl.addTo(this.map);
+            }
+
+            performSearch(query) {
+                const resultsContainer = document.getElementById('searchResultsContainer');
+                if (!resultsContainer) return;
+
+                if (!query.trim()) {
+                    resultsContainer.innerHTML = '<div class="no-results">Enter a search term...</div>';
+                    return;
+                }
+
+                const searchTerm = query.toLowerCase();
+                let results = [];
+
+                // Search through all layers
+                Object.entries(this.searchIndex).forEach(([layerName, keywords]) => {
+                    const layerNameLower = layerName.toLowerCase();
+                    
+                    // Check if layer name or keywords match
+                    if (layerNameLower.includes(searchTerm) || keywords.some(kw => kw.includes(searchTerm))) {
+                        results.push({
+                            name: layerName,
+                            match: layerNameLower.includes(searchTerm) ? 'Layer name' : 'Keyword match',
+                            type: 'wms'
+                        });
+                    }
+                });
+
+                // Display results
+                if (results.length === 0) {
+                    resultsContainer.innerHTML = `<div class="no-results">No results for "${query}"</div>`;
+                } else {
+                    let html = '';
+                    results.forEach(result => {
+                        html += `
+                            <div class="result-item" onclick="window.networkMap.highlightLayer('${result.name}')">
+                                <div class="result-name">📍 ${result.name}</div>
+                                <div class="result-meta">${result.match}</div>
+                            </div>
+                        `;
+                    });
+                    resultsContainer.innerHTML = html;
+                }
+
+                console.log(`🔍 Search: found ${results.length} results for "${query}"`);
+            }
+
+            highlightLayer(layerName) {
+                if (!this.wmsLayers[layerName]) return;
+
+                const layer = this.wmsLayers[layerName];
+                
+                // Temporarily increase opacity for visual feedback
+                const originalOpacity = layer.options.opacity;
+                layer.setOpacity(Math.min(1, originalOpacity + 0.2));
+
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    layer.setOpacity(originalOpacity);
+                }, 2000);
+
+                console.log(`✨ Highlighted layer: ${layerName}`);
+            }
+
+            toggleFilterType(type, enabled) {
+                // Store filter preferences
+                try {
+                    localStorage.setItem(`filter_${type}`, enabled ? '1' : '0');
+                } catch (e) {
+                    console.warn('Could not save filter preference:', e);
+                }
+
+                console.log(`🔽 Filter ${type}: ${enabled ? 'enabled' : 'disabled'}`);
+            }
+
+            clearSearch() {
+                const searchInput = document.getElementById('layerSearchInput');
+                if (searchInput) {
+                    searchInput.value = '';
+                    this.performSearch('');
+                }
+
+                console.log('🗑️ Search cleared');
             }
             
             addLocationButton() {
