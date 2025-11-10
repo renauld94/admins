@@ -566,7 +566,13 @@
             <label>Real-Time Data (FREE APIs)</label>
             <div class="checkbox-group">
                 <input type="checkbox" id="showWeatherRadar" onchange="globeApp.toggleWeatherRadar(this.checked)">
-                <label for="showWeatherRadar">Live Weather Radar (RainViewer)</label>
+                <label for="showWeatherRadar">🌧️ Live Weather Radar (RainViewer)</label>
+            </div>
+            <div class="control-group" id="radarOpacityControl" style="display: none;">
+                <label>Radar Opacity: <span id="radarOpacityValue">60%</span></label>
+                <input type="range" id="radarOpacity" min="20" max="100" value="60" 
+                       style="width: 100%;" 
+                       oninput="globeApp.updateRadarOpacity(this.value)">
             </div>
             <div class="checkbox-group">
                 <input type="checkbox" id="showEarthquakes" onchange="globeApp.toggleEarthquakes(this.checked)">
@@ -1712,8 +1718,13 @@
             
             async toggleWeatherRadar(show) {
                 // Live Weather Radar Integration for 3D Globe (RainViewer API)
+                const opacityControl = document.getElementById('radarOpacityControl');
+                
                 if (show) {
                     try {
+                        // Show opacity slider
+                        if (opacityControl) opacityControl.style.display = 'block';
+                        
                         // Fetch RainViewer radar frames
                         const response = await fetch('https://api.rainviewer.com/public/weather-maps.json');
                         const data = await response.json();
@@ -1729,7 +1740,7 @@
                             // Add radar as Cesium ImageryLayer with transparency
                             const radarProvider = new Cesium.UrlTemplateImageryProvider({
                                 url: radarUrl,
-                                credit: 'RainViewer',
+                                credit: 'RainViewer - Live Weather Radar',
                                 maximumLevel: 12
                             });
                             
@@ -1737,7 +1748,7 @@
                             this.radarLayer.alpha = 0.6; // 60% opacity for overlay effect
                             this.radarLayer.brightness = 1.2; // Slightly brighter
                             
-                            console.log('Live weather radar overlay activated on 3D globe');
+                            console.log('🌧️ Live weather radar overlay activated on 3D globe');
                             
                             // Optional: Auto-refresh radar every 10 minutes
                             this.radarRefreshInterval = setInterval(async () => {
@@ -1751,25 +1762,30 @@
                                         
                                         // Update layer
                                         if (this.radarLayer) {
+                                            const currentAlpha = this.radarLayer.alpha;
                                             this.viewer.imageryLayers.remove(this.radarLayer);
+                                            
+                                            const updatedProvider = new Cesium.UrlTemplateImageryProvider({
+                                                url: newUrl,
+                                                credit: 'RainViewer - Live Weather Radar',
+                                                maximumLevel: 12
+                                            });
+                                            this.radarLayer = this.viewer.imageryLayers.addImageryProvider(updatedProvider);
+                                            this.radarLayer.alpha = currentAlpha; // Preserve user's opacity setting
+                                            this.radarLayer.brightness = 1.2;
+                                            console.log('🌧️ Weather radar refreshed');
                                         }
-                                        const updatedProvider = new Cesium.UrlTemplateImageryProvider({
-                                            url: newUrl,
-                                            credit: 'RainViewer',
-                                            maximumLevel: 12
-                                        });
-                                        this.radarLayer = this.viewer.imageryLayers.addImageryProvider(updatedProvider);
-                                        this.radarLayer.alpha = 0.6;
-                                        this.radarLayer.brightness = 1.2;
-                                        console.log('Weather radar refreshed');
                                     }
                                 }
                             }, 600000); // 10 minutes
                         }
                     } catch (error) {
-                        console.error('Error loading weather radar:', error);
+                        console.error('❌ Error loading weather radar:', error);
                     }
                 } else {
+                    // Hide opacity slider
+                    if (opacityControl) opacityControl.style.display = 'none';
+                    
                     // Remove radar layer
                     if (this.radarLayer) {
                         this.viewer.imageryLayers.remove(this.radarLayer);
@@ -1780,6 +1796,14 @@
                         this.radarRefreshInterval = null;
                     }
                     console.log('Weather radar overlay deactivated');
+                }
+            }
+            
+            updateRadarOpacity(value) {
+                // Update radar layer opacity in real-time
+                if (this.radarLayer) {
+                    this.radarLayer.alpha = value / 100;
+                    document.getElementById('radarOpacityValue').textContent = `${value}%`;
                 }
             }
             
